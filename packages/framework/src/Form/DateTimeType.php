@@ -28,7 +28,7 @@ class DateTimeType extends AbstractType
         $resolver->setDefaults([
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
-            'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZone()->getName(),
+            'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName(),
             'html5' => false,
         ]);
     }

@@ -10,11 +10,10 @@ use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Brand\BrandFacade;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
-use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -181,28 +180,20 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'label' => t('Apply according to date and time limit'),
         ]);
 
-        $timeValidationGroup->add('dateValidFrom', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
+        $timeValidationGroup->add('datetimeValidFrom', DateTimeType::class, [
             'required' => false,
-            'label' => t('Valid from (date)'),
-        ])->add('timeValidFrom', TextType::class, [
-            'icon_title' => t('Time format: "hh:mm", e.g.: "07:45", "23:05"'),
-            'constraints' => [
-                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
+            'label' => t('Valid from'),
+            'attr' => [
+                'icon' => true,
+                'iconTitle' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)'),
             ],
+        ])->add('datetimeValidTo', DateTimeType::class, [
             'required' => false,
-            'label' => t('Valid from (time)'),
-        ])->add('dateValidTo', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
-            'required' => false,
-            'label' => t('Valid to (date)'),
-        ])->add('timeValidTo', TextType::class, [
-            'icon_title' => t('Time format: "hh:mm", e.g.: "07:45", "23:05"'),
-            'constraints' => [
-                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
+            'label' => t('Valid to'),
+            'attr' => [
+                'icon' => true,
+                'iconTitle' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)'),
             ],
-            'required' => false,
-            'label' => t('Valid to (time)'),
         ]);
 
         $builder->add($timeValidationGroup);
@@ -318,8 +309,6 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                 'mass_generate' => false,
                 'constraints' => [
                     new Constraints\Callback([$this, 'validateUniquePromoCodeByDomain']),
-                    new Constraints\Callback([$this, 'validateDateTimeFrom']),
-                    new Constraints\Callback([$this, 'validateDateTimeTo']),
                 ],
                 'validation_groups' => static function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
@@ -343,50 +332,6 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     public static function getExtendedTypes(): iterable
     {
         yield PromoCodeFormType::class;
-    }
-
-    /**
-     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
-    public function validateDateTimeFrom(PromoCodeData $promoCodeData, ExecutionContextInterface $context): void
-    {
-        if ($promoCodeData->timeValidFrom !== null &&
-            $promoCodeData->dateValidFrom === null
-        ) {
-            $context->buildViolation(t('If the time FROM is filled in, enter the date FROM too.'))
-                ->atPath('dateValidFrom')
-                ->addViolation();
-        }
-    }
-
-    /**
-     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
-    public function validateDateTimeTo(PromoCodeData $promoCodeData, ExecutionContextInterface $context): void
-    {
-        if ($promoCodeData->timeValidTo !== null &&
-            $promoCodeData->dateValidTo === null
-        ) {
-            $context->buildViolation(t('If the time TO is filled in, enter the date TO too.'))
-                ->atPath('dateValidTo')
-                ->addViolation();
-        }
-    }
-
-    /**
-     * @param string|null $time
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     */
-    public function validateTimeIfIsSet(?string $time, ExecutionContextInterface $context): void
-    {
-        if ($time !== null &&
-            $time !== '' &&
-            preg_match(DateTimeHelper::TIME_REGEX, $time) !== 1
-        ) {
-            $context->addViolation(t('Please enter the correct time format (hh:mm)'));
-        }
     }
 
     /**

@@ -15,9 +15,9 @@ class DatePickerType extends AbstractType
     public const FORMAT_JS = 'dd.mm.yy';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
-    public function __construct(protected readonly ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null)
+    public function __construct(protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
     {
     }
 
@@ -30,11 +30,8 @@ class DatePickerType extends AbstractType
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'html5' => false,
+            'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName(),
         ];
-
-        if ($this->displayTimeZoneProvider !== null) {
-            $defaults['view_timezone'] = $this->displayTimeZoneProvider->getDisplayTimeZone()->getName();
-        }
 
         $resolver->setDefaults($defaults);
     }

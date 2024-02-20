@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreData;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -21,7 +22,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_NAME = 'name';
     private const ATTR_STOCK = 'stockId';
     private const ATTR_IS_DEFAULT = 'isDefault';
-    private const ATTR_IS_ENABLED_BY_DOMAIN = 'isEnabledByDomain';
+    private const ATTR_DOMAIN_ID = 'domainId';
     private const ATTR_DESCRIPTION = 'description';
     private const ATTR_EXTERNAL_ID = 'externalId';
     private const ATTR_STREET = 'street';
@@ -33,16 +34,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_LOCATION_LATITUDE = 'locationLatitude';
     private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
     private const ATTR_IMAGE = 'image';
-
-    private const ENABLED_FIRST_DOMAIN = [
-        1 => true,
-        2 => false,
-    ];
-    private const ENABLED_SECOND_DOMAIN = [
-        1 => false,
-        2 => true,
-    ];
-
     public const STORE_PREFIX = 'store_';
 
     /**
@@ -60,6 +51,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
      */
     public function __construct(
         private readonly StoreFacade $storeFacade,
@@ -67,6 +59,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         private readonly Domain $domain,
         private readonly ImageUploadDataFactory $imageUploadDataFactory,
         private readonly OpeningHoursDataFactory $openingHourDataFactory,
+        private readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
     ) {
     }
 
@@ -99,7 +92,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
+                self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4),
                 self::ATTR_DESCRIPTION => t('Store in Ostrava Přívoz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -115,7 +108,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ], [
                 self::ATTR_NAME => 'Pardubice',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
+                self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
                 self::ATTR_STOCK => null,
                 self::ATTR_DESCRIPTION => t('Store v Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -135,7 +128,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             $stores[] = [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_SECOND_DOMAIN,
+                self::ATTR_DOMAIN_ID => Domain::SECOND_DOMAIN_ID,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14),
                 self::ATTR_DESCRIPTION => t('Store in Žilina', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $secondDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -160,18 +153,12 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function initStoreData(array $demoRow): StoreData
     {
-        $storeData = $this->storeDataFactory->create();
+        $storeData = $this->storeDataFactory->createForDomain($demoRow[self::ATTR_DOMAIN_ID]);
 
         $storeData->uuid = array_pop($this->uuidPool);
 
         $storeData->name = $demoRow[self::ATTR_NAME];
         $storeData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
-
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $storeData->isEnabledOnDomains[$domainId] = $demoRow[self::ATTR_IS_ENABLED_BY_DOMAIN][$domainId] ?? false;
-        }
-
         $storeData->stock = $demoRow[self::ATTR_STOCK];
         $storeData->description = $demoRow[self::ATTR_DESCRIPTION];
         $storeData->externalId = $demoRow[self::ATTR_EXTERNAL_ID];
@@ -201,66 +188,54 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function createOpeningHoursData(): array
     {
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 1;
-        $openingHourData->firstOpeningTime = '06:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '18:00';
+        $openingHoursDataArray = [];
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(1);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('06:00', '11:00'),
+            $this->openingHoursRangeDataFactory->create('13:00', '18:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHoursData[] = $openingHourData;
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(2);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('07:00', '11:00'),
+            $this->openingHoursRangeDataFactory->create('13:00', '17:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 2;
-        $openingHourData->firstOpeningTime = '07:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '17:00';
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(3);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('08:00', '11:00'),
+            $this->openingHoursRangeDataFactory->create('13:00', '16:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHoursData[] = $openingHourData;
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(4);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('09:00', '11:00'),
+            $this->openingHoursRangeDataFactory->create('13:00', '15:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 3;
-        $openingHourData->firstOpeningTime = '08:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '16:00';
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(5);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('10:00', '11:00'),
+            $this->openingHoursRangeDataFactory->create('13:00', '14:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHoursData[] = $openingHourData;
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(6);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('08:00', '11:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 4;
-        $openingHourData->firstOpeningTime = '09:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '15:00';
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(7);
+        $openingHoursData->openingHoursRanges = [
+            $this->openingHoursRangeDataFactory->create('09:00', '11:00'),
+        ];
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHoursData[] = $openingHourData;
-
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 5;
-        $openingHourData->firstOpeningTime = '10:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '14:00';
-
-        $openingHoursData[] = $openingHourData;
-
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 6;
-        $openingHourData->firstOpeningTime = '08:00';
-        $openingHourData->firstClosingTime = '11:00';
-
-        $openingHoursData[] = $openingHourData;
-
-
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 7;
-        $openingHourData->firstOpeningTime = '09:00';
-        $openingHourData->firstClosingTime = '11:00';
-
-        $openingHoursData[] = $openingHourData;
-
-        return $openingHoursData;
+        return $openingHoursDataArray;
     }
 }

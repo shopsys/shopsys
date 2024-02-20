@@ -127,6 +127,9 @@ msgstr ""
 msgid "Number of days to expedite must be whole number."
 msgstr ""
 
+msgid "Opening hours setting is not valid"
+msgstr ""
+
 msgid "Parameter name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -353,6 +356,9 @@ msgid "Please enter telephone number"
 msgstr ""
 
 msgid "Please enter the filename"
+msgstr ""
+
+msgid "Please enter time"
 msgstr ""
 
 msgid "Please enter total price with VAT"

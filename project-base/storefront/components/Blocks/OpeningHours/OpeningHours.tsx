@@ -1,58 +1,69 @@
 import { OpeningHoursApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
+import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHours, className }) => {
     const { t } = useTranslation();
+    const { formatDate } = useFormatDate();
 
-    const dayNames = [
-        t('Monday'),
-        t('Tuesday'),
-        t('Wednesday'),
-        t('Thursday'),
-        t('Friday'),
-        t('Saturday'),
-        t('Sunday'),
-    ];
+    const getDayName = (currentDayOfWeek: number, requestedDayOfWeek: number): string => {
+        const dayNames = [
+            t('Monday'),
+            t('Tuesday'),
+            t('Wednesday'),
+            t('Thursday'),
+            t('Friday'),
+            t('Saturday'),
+            t('Sunday'),
+        ];
+
+        const dayName = dayNames[requestedDayOfWeek - 1];
+
+        switch (requestedDayOfWeek - currentDayOfWeek) {
+            case 0:
+                return t('Today');
+            case 1:
+                return t('Tomorrow');
+            default:
+                return dayName;
+        }
+    };
 
     return (
-        <div className={twMergeCustom('flex w-full flex-col items-center gap-2 text-left', className)}>
-            {openingHours.openingHoursOfDays.map(
-                ({ firstOpeningTime, firstClosingTime, secondOpeningTime, secondClosingTime, dayOfWeek }) => {
-                    const isToday = openingHours.dayOfWeek === dayOfWeek;
-                    const isClosedWholeDay =
-                        (!firstOpeningTime || !firstClosingTime) && (!secondOpeningTime || !secondClosingTime);
-                    const isFirstTime = firstOpeningTime && firstClosingTime;
-                    const isSecondTime = secondOpeningTime && secondClosingTime;
+        <div className={twMergeCustom('flex w-full flex-col text-sm', className)}>
+            {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
+                const isToday = openingHours.dayOfWeek === dayOfWeek;
+                const isClosedWholeDay = openingHoursRanges.length === 0;
 
-                    return (
-                        <div
-                            key={dayOfWeek}
-                            className={twJoin(
-                                'flex w-full flex-col items-center md:w-auto md:flex-row',
-                                isToday ? 'font-bold' : 'font-normal',
+                return (
+                    <div
+                        key={dayOfWeek}
+                        className={twJoin(
+                            'flex flex-row',
+                            isToday && openingHours.isOpen && 'text-greenDark',
+                            isToday && !openingHours.isOpen && 'text-orange',
+                            isToday && isClosedWholeDay && 'text-red',
+                        )}
+                    >
+                        <strong className="basis-32 text-left">
+                            {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date, 'D.M.')}
+                        </strong>
+                        <span className="flex-1">
+                            {isClosedWholeDay ? (
+                                <>&nbsp;{t('Closed')}</>
+                            ) : (
+                                openingHoursRanges.map(({ openingTime, closingTime }, index) => (
+                                    <>
+                                        {index > 0 && ','} {openingTime}&nbsp;-&nbsp;{closingTime}
+                                    </>
+                                ))
                             )}
-                        >
-                            <span className="mr-1 md:basis-28">{dayNames[dayOfWeek - 1]}:</span>
-                            <span className="flex-1">
-                                {isFirstTime && (
-                                    <>
-                                        {firstOpeningTime}&nbsp;-&nbsp;{firstClosingTime}
-                                    </>
-                                )}
-                                {isFirstTime && isSecondTime && ','}
-                                {isSecondTime && (
-                                    <>
-                                        &nbsp;{secondOpeningTime}&nbsp;-&nbsp;{secondClosingTime}
-                                    </>
-                                )}
-                                {isClosedWholeDay && <>&nbsp;{t('Closed')}</>}
-                            </span>
-                        </div>
-                    );
-                },
-            )}
+                        </span>
+                    </div>
+                );
+            })}
         </div>
     );
 };

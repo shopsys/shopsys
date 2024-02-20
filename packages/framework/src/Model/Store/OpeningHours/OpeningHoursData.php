@@ -12,22 +12,7 @@ class OpeningHoursData
     public $dayOfWeek;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData[]
      */
-    public $firstOpeningTime;
-
-    /**
-     * @var string|null
-     */
-    public $firstClosingTime;
-
-    /**
-     * @var string|null
-     */
-    public $secondOpeningTime;
-
-    /**
-     * @var string|null
-     */
-    public $secondClosingTime;
+    public $openingHoursRanges = [];
 }

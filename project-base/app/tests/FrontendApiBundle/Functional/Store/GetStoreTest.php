@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -59,7 +60,14 @@ class GetStoreTest extends GraphQlTestCase
      */
     private ClosedDayFacade $closedDayFacade;
 
+    /**
+     * @inject
+     */
+    private OpeningHoursRangeDataFactory $openingHoursRangeDataFactory;
+
     private DateTimeImmutable $now;
+
+    private DateTimeImmutable $today;
 
     public function testGetStoreByUuid(): void
     {
@@ -161,32 +169,20 @@ class GetStoreTest extends GraphQlTestCase
 
     /**
      * @dataProvider openingHoursDataProvider
-     * @param string|null $firstOpeningTime
-     * @param string|null $firstClosingTime
-     * @param string|null $secondOpeningTime
-     * @param string|null $secondClosingTime
+     * @param array $openingRangesModifiers
      * @param \DateTimeImmutable|null $publicHolidayDate
      * @param array $publicHolidayExcludedStoresIds
      * @param bool $expectedIsOpen
-     * @param string|null $expectedDaysFirstOpeningTime
-     * @param string|null $expectedDaysFirstClosingTime
-     * @param string|null $expectedDaysSecondOpeningTime
-     * @param string|null $expectedDaysSecondClosingTime
+     * @param array $expectedOpeningRangesModifiers
      */
     public function testGetStoreOpeningHours(
-        ?string $firstOpeningTime,
-        ?string $firstClosingTime,
-        ?string $secondOpeningTime,
-        ?string $secondClosingTime,
+        array $openingRangesModifiers,
         ?DateTimeImmutable $publicHolidayDate,
         array $publicHolidayExcludedStoresIds,
         bool $expectedIsOpen,
-        ?string $expectedDaysFirstOpeningTime,
-        ?string $expectedDaysFirstClosingTime,
-        ?string $expectedDaysSecondOpeningTime,
-        ?string $expectedDaysSecondClosingTime,
+        array $expectedOpeningRangesModifiers,
     ): void {
-        $store = $this->updateStoreOpeningHours($firstOpeningTime, $firstClosingTime, $secondOpeningTime, $secondClosingTime);
+        $store = $this->updateStoreOpeningHours($openingRangesModifiers);
         $dayOfWeek = $this->getCurrentDayOfWeek();
 
         if ($publicHolidayDate !== null) {
@@ -197,7 +193,7 @@ class GetStoreTest extends GraphQlTestCase
             'uuid' => $store->getUuid(),
         ]);
 
-        $expectedDays = $this->createExpectedOpeningDays($expectedDaysFirstOpeningTime, $expectedDaysFirstClosingTime, $expectedDaysSecondOpeningTime, $expectedDaysSecondClosingTime);
+        $expectedOpeningRanges = $this->createExpectedOpeningRanges($expectedOpeningRangesModifiers);
 
         self::assertArrayHasKey('data', $response);
         self::assertArrayHasKey('store', $response['data']);
@@ -206,8 +202,8 @@ class GetStoreTest extends GraphQlTestCase
         self::assertArrayHasKey('isOpen', $response['data']['store']['openingHours']);
         self::assertEquals($expectedIsOpen, $response['data']['store']['openingHours']['isOpen']);
         self::assertEquals(
-            array_merge($expectedDays, ['dayOfWeek' => $dayOfWeek]),
-            $response['data']['store']['openingHours']['openingHoursOfDays'][$dayOfWeek - 1],
+            array_merge($expectedOpeningRanges, ['dayOfWeek' => $dayOfWeek]),
+            $response['data']['store']['openingHours']['openingHoursOfDays'][0], // today is always first
         );
     }
 
@@ -216,186 +212,114 @@ class GetStoreTest extends GraphQlTestCase
      */
     protected function openingHoursDataProvider(): iterable
     {
-        yield 'store opened only forenoon' => [
-            'firstOpeningTime' => '-1 hour',
-            'firstClosingTime' => '+1 hour',
-            'secondOpeningTime' => null,
-            'secondClosingTime' => null,
+        yield 'store with one opening range' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+            ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => true,
-            'expectedDaysFirstOpeningTime' => '-1 hour',
-            'expectedDaysFirstClosingTime' => '+1 hour',
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+            ],
         ];
 
-        yield 'store opened only afternoon' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => null,
-            'secondOpeningTime' => '-1 hour',
-            'secondClosingTime' => '+1 hour',
-            'publicHolidayDate' => null,
-            'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => true,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => '-1 hour',
-            'expectedDaysSecondClosingTime' => '+1 hour',
-        ];
-
-        yield 'store opened only forenoon and excluded from the public holiday' => [
-            'firstOpeningTime' => '-1 hour',
-            'firstClosingTime' => '+1 hour',
-            'secondOpeningTime' => null,
-            'secondClosingTime' => null,
-            'publicHolidayDate' => $this->getNow(),
+        yield 'store excluded from the public holiday' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+            ],
+            'publicHolidayDate' => $this->getToday(),
             'publicHolidayExcludedStoresIds' => [1],
             'expectedIsOpen' => true,
-            'expectedDaysFirstOpeningTime' => '-1 hour',
-            'expectedDaysFirstClosingTime' => '+1 hour',
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+            ],
         ];
 
-        yield 'store opened only afternoon and not excluded from the public holiday' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => null,
-            'secondOpeningTime' => '-1 hour',
-            'secondClosingTime' => '+1 hour',
-            'publicHolidayDate' => $this->getNow(),
+        yield 'store not excluded from the public holiday' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+            ],
+            'publicHolidayDate' => $this->getToday(),
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
+            'expectedOpeningRangesModifiers' => [],
         ];
 
         yield 'store not opened at all' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => null,
-            'secondOpeningTime' => null,
-            'secondClosingTime' => null,
+            'openingRangesModifiers' => [],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
+            'expectedOpeningRangesModifiers' => [],
         ];
 
-        yield 'store opens in an hour (forenoon)' => [
-            'firstOpeningTime' => '+1 hour',
-            'firstClosingTime' => '+2 hour',
-            'secondOpeningTime' => null,
-            'secondClosingTime' => null,
+        yield 'store opens in an hour' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
+            ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => '+1 hour',
-            'expectedDaysFirstClosingTime' => '+2 hour',
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
+            ],
         ];
 
-        yield 'store opens in an hour (afternoon)' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => null,
-            'secondOpeningTime' => '+1 hour',
-            'secondClosingTime' => '+2 hour',
+        yield 'store closed an hour ago' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
+            ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => '+1 hour',
-            'expectedDaysSecondClosingTime' => '+2 hour',
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
+            ],
         ];
 
-        yield 'store closed an hour ago (forenoon)' => [
-            'firstOpeningTime' => '-2 hour',
-            'firstClosingTime' => '-1 hour',
-            'secondOpeningTime' => null,
-            'secondClosingTime' => null,
+        yield 'store that closes sooner then opens' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
+            ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => '-2 hour',
-            'expectedDaysFirstClosingTime' => '-1 hour',
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
+            ],
         ];
 
-        yield 'store closed an hour ago (afternoon)' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => null,
-            'secondOpeningTime' => '-2 hour',
-            'secondClosingTime' => '-1 hour',
+        yield 'closed store with multiple opening ranges' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
+                ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
+                ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
+            ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => '-2 hour',
-            'expectedDaysSecondClosingTime' => '-1 hour',
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
+                ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
+                ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
+            ],
         ];
 
-        yield 'store with missing first closing time and missing second opening time' => [
-            'firstOpeningTime' => '-1 hour',
-            'firstClosingTime' => null,
-            'secondOpeningTime' => null,
-            'secondClosingTime' => '+1 hour',
+        yield 'open store with multiple opening ranges' => [
+            'openingRangesModifiers' => [
+                ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
+                ['openingTime' => '-2 hour', 'closingTime' => '+1 hour'],
+                ['openingTime' => '+2 hour', 'closingTime' => '+3 hour'],
+            ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => '-1 hour',
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => '+1 hour',
-        ];
-
-        yield 'store with missing first opening time and missing second closing time' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => '+1 hour',
-            'secondOpeningTime' => '-1 hour',
-            'secondClosingTime' => null,
-            'publicHolidayDate' => null,
-            'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => '+1 hour',
-            'expectedDaysSecondOpeningTime' => '-1 hour',
-            'expectedDaysSecondClosingTime' => null,
-        ];
-
-        yield 'store that closes sooner then opens (forenoon)' => [
-            'firstOpeningTime' => '+1 hour',
-            'firstClosingTime' => '-1 hour',
-            'secondOpeningTime' => null,
-            'secondClosingTime' => null,
-            'publicHolidayDate' => null,
-            'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => '+1 hour',
-            'expectedDaysFirstClosingTime' => '-1 hour',
-            'expectedDaysSecondOpeningTime' => null,
-            'expectedDaysSecondClosingTime' => null,
-        ];
-
-        yield 'store that closes sooner then opens (afternoon)' => [
-            'firstOpeningTime' => null,
-            'firstClosingTime' => null,
-            'secondOpeningTime' => '+1 hour',
-            'secondClosingTime' => '-1 hour',
-            'publicHolidayDate' => null,
-            'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
-            'expectedDaysFirstOpeningTime' => null,
-            'expectedDaysFirstClosingTime' => null,
-            'expectedDaysSecondOpeningTime' => '+1 hour',
-            'expectedDaysSecondClosingTime' => '-1 hour',
+            'expectedIsOpen' => true,
+            'expectedOpeningRangesModifiers' => [
+                ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
+                ['openingTime' => '-2 hour', 'closingTime' => '+1 hour'],
+                ['openingTime' => '+2 hour', 'closingTime' => '+3 hour'],
+            ],
         ];
     }
 
@@ -543,35 +467,28 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param string|null $firstOpeningTime
-     * @param string|null $firstClosingTime
-     * @param string|null $secondOpeningTime
-     * @param string|null $secondClosingTime
+     * @param array $openingRangesModifiers
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
     private function updateStoreOpeningHours(
-        ?string $firstOpeningTime,
-        ?string $firstClosingTime,
-        ?string $secondOpeningTime,
-        ?string $secondClosingTime,
+        array $openingRangesModifiers,
     ): Store {
-        $store = $this->storeFacade->getAllStores()[0];
+        $store = $this->storeFacade->getStoresByDomainId(Domain::FIRST_DOMAIN_ID)[0];
         $dayOfWeek = $this->getCurrentDayOfWeek();
 
         $storeData = $this->storeDataFactory->createFromStore($store);
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
 
-        $openingOneDateTime = $firstOpeningTime ? $this->createOpeningOrClosingHour($firstOpeningTime) : null;
-        $closingOneDateTime = $firstClosingTime ? $this->createOpeningOrClosingHour($firstClosingTime) : null;
-        $openingTwoDateTime = $secondOpeningTime ? $this->createOpeningOrClosingHour($secondOpeningTime) : null;
-        $closingTwoDateTime = $secondClosingTime ? $this->createOpeningOrClosingHour($secondClosingTime) : null;
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek($dayOfWeek);
 
-        $openingHour = $storeData->openingHours[$dayOfWeek - 1];
-        $openingHour->dayOfWeek = $dayOfWeek;
-        $openingHour->firstOpeningTime = $openingOneDateTime?->format('H:i');
-        $openingHour->firstClosingTime = $closingOneDateTime?->format('H:i');
-        $openingHour->secondOpeningTime = $openingTwoDateTime?->format('H:i');
-        $openingHour->secondClosingTime = $closingTwoDateTime?->format('H:i');
+        foreach ($openingRangesModifiers as $modifier) {
+            $openingHoursData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create(
+                $this->createOpeningOrClosingHour($modifier['openingTime'])->format('H:i'),
+                $this->createOpeningOrClosingHour($modifier['closingTime'])->format('H:i'),
+            );
+        }
+
+        $storeData->openingHours = [$openingHoursData];
 
         return $this->storeFacade->edit($store->getId(), $storeData);
     }
@@ -597,24 +514,22 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param string|null $firstOpeningTimeModifier
-     * @param string|null $firstClosingTimeModifier
-     * @param string|null $secondOpeningTimeModifier
-     * @param string|null $secondClosingTimeModifier
+     * @param array $openingHoursModifiers
      * @return array
      */
-    private function createExpectedOpeningDays(
-        ?string $firstOpeningTimeModifier,
-        ?string $firstClosingTimeModifier,
-        ?string $secondOpeningTimeModifier,
-        ?string $secondClosingTimeModifier,
+    private function createExpectedOpeningRanges(
+        array $openingHoursModifiers,
     ): array {
-        return [
-            'firstOpeningTime' => $firstOpeningTimeModifier ? $this->createOpeningOrClosingHour($firstOpeningTimeModifier)->format('H:i') : null,
-            'firstClosingTime' => $firstClosingTimeModifier ? $this->createOpeningOrClosingHour($firstClosingTimeModifier)->format('H:i') : null,
-            'secondOpeningTime' => $secondOpeningTimeModifier ? $this->createOpeningOrClosingHour($secondOpeningTimeModifier)->format('H:i') : null,
-            'secondClosingTime' => $secondClosingTimeModifier ? $this->createOpeningOrClosingHour($secondClosingTimeModifier)->format('H:i') : null,
-        ];
+        $expectedRanges = [];
+
+        foreach ($openingHoursModifiers as $modifier) {
+            $expectedRanges[] = [
+                'openingTime' => $this->getFormattedTime($modifier['openingTime']),
+                'closingTime' => $this->getFormattedTime($modifier['closingTime']),
+            ];
+        }
+
+        return ['openingHoursRanges' => $expectedRanges];
     }
 
     /**
@@ -628,7 +543,7 @@ class GetStoreTest extends GraphQlTestCase
 
         $closedDayData->domainId = $this->domain->getId();
         $closedDayData->name = '';
-        $closedDayData->date = $date->setTime(0, 0);
+        $closedDayData->date = $date;
         $closedDayData->excludedStores = array_map(function (string $storeId): Store {
             /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
             $store = $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId));
@@ -649,5 +564,30 @@ class GetStoreTest extends GraphQlTestCase
         }
 
         return $this->now;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    private function getToday(): DateTimeImmutable
+    {
+        if (!isset($this->today)) {
+            $this->today = new DateTimeImmutable('today', new DateTimeZone('Europe/Prague'));
+        }
+
+        return $this->today;
+    }
+
+    /**
+     * @param string|null $modifier
+     * @return string|null
+     */
+    private function getFormattedTime(?string $modifier): ?string
+    {
+        if ($modifier === null) {
+            return null;
+        }
+
+        return $this->createOpeningOrClosingHour($modifier)->format('H:i');
     }
 }

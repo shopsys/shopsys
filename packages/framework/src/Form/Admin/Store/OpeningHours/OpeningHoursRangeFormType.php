@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours;
 
 use Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
-class OpeningHoursFormType extends AbstractType
+class OpeningHoursRangeFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer $openingHourTimeToStringTransformer
@@ -31,12 +32,14 @@ class OpeningHoursFormType extends AbstractType
             'attr' => [
                 'class' => 'full-width',
             ],
+            'label' => false,
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Please enter time']),
+            ],
         ];
 
-        $builder->add('firstOpeningTime', TimeType::class, $timeOptions);
-        $builder->add('firstClosingTime', TimeType::class, $timeOptions);
-        $builder->add('secondOpeningTime', TimeType::class, $timeOptions);
-        $builder->add('secondClosingTime', TimeType::class, $timeOptions);
+        $builder->add('openingTime', TimeType::class, $timeOptions);
+        $builder->add('closingTime', TimeType::class, $timeOptions);
 
         foreach ($builder->all() as $child) {
             $child->addModelTransformer($this->openingHourTimeToStringTransformer);
@@ -49,7 +52,7 @@ class OpeningHoursFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => OpeningHoursData::class,
+            'data_class' => OpeningHoursRangeData::class,
         ]);
     }
 }

@@ -12,6 +12,9 @@
 {% endblock %}
 
 {% block main_content %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
     <div class="js-multiple-grids-rows-unified">
         <div class="wrap-divider wrap-divider--no-border">
             {{ gridView.render() }}

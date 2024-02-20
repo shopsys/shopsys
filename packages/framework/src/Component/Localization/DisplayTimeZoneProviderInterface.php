@@ -9,7 +9,13 @@ use DateTimeZone;
 interface DisplayTimeZoneProviderInterface
 {
     /**
+     * @param int $domainId
      * @return \DateTimeZone
      */
-    public function getDisplayTimeZone(): DateTimeZone;
+    public function getDisplayTimeZoneByDomainId(int $domainId): DateTimeZone;
+
+    /**
+     * @return \DateTimeZone
+     */
+    public function getDisplayTimeZoneForAdmin(): DateTimeZone;
 }

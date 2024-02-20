@@ -1,19 +1,4 @@
 OpeningHoursOfDay:
     type: object
-    config:
-        fields:
-            dayOfWeek:
-                type: "Int!"
-                description: "Day of the week"
-            firstOpeningTime:
-                type: "String"
-                description: "First opening time"
-            firstClosingTime:
-                type: "String"
-                description: "First closing time"
-            secondOpeningTime:
-                type: "String"
-                description: "Second opening time"
-            secondClosingTime:
-                type: "String"
-                description: "Second closing time"
+    inherits:
+        - 'OpeningHoursOfDayDecorator'

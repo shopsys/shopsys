@@ -1,0 +1,80 @@
+{% block _store_form_openingHours_widget %}
+    {% import _self as self %}
+    {% set dayNamesIndexedByDayNumber = {
+        1: 'Monday'|trans,
+        2: 'Tuesday'|trans,
+        3: 'Wednesday'|trans,
+        4: 'Thursday'|trans,
+        5: 'Friday'|trans,
+        6: 'Saturday'|trans,
+        7: 'Sunday'|trans,
+    } %}
+
+    <div class='form-line__side'>
+        <div class='flex-align-center' style="border-bottom: 2px solid #f3f3f3; margin-bottom: 10px;font-size: 15px; font-weight: 700;">
+            <div style="width: 100px" class='margin-5'><strong>{{ 'Day'|trans }}</strong></div>
+            <div style="display: flex; padding-right: 25px; max-width: 400px" class="full-width">
+                <div style="padding-left: 35px; width: 280px" class='full-width margin-5'><strong>{{ 'Opening time'|trans }}</strong></div>
+                <div style="padding-left: 5px" class='full-width margin-5'><strong>{{ 'Closing time'|trans }}</strong></div>
+            </div>
+        </div>
+
+        {% for openingHours in form %}
+            <div class='flex-align-center' style="border-bottom: 1px solid #f3f3f3; align-items: stretch;">
+                <div style="width: 100px;" class='full-width margin-5'>
+                    <strong>{{ dayNamesIndexedByDayNumber[openingHours.vars.value.dayOfWeek] }}</strong>
+                </div>
+                {% set rangesForm = openingHours.openingHoursRanges %}
+                <div class="js-form-group form-group js-opening-hours-form-group">
+                    <table class="table-form" id="opening-hours">
+                        <tbody class="js-opening-hours" data-prototype="{{ self.openingHoursRangeRow(rangesForm.vars.prototype)|escape }}" data-index="{{ rangesForm|length }}">
+                            {% for key, range in rangesForm %}
+                                {{ self.openingHoursRangeRow(range, key) }}
+                            {% else %}
+                                {% do rangesForm.setRendered %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="form-line form-line--no-top-border">
+                        <div class="form-line__line form-line__line--no-space">
+                            <a href="#" class="js-opening-hours-item-add btn btn--plus margin-left-10">
+                                <i class="btn__icon">+</i>
+                                {{ 'Add opening hours'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock _store_form_openingHours_widget %}
+
+{% block _store_form_openingHours_label %}
+    <label class="form-line__label" style="float: none">
+        {{ label }}
+        <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
+           data-toggle="tooltip" data-placement="bottom"
+           title="{{ 'Enter in the store local time'|trans }}"
+        ></i>
+    </label>
+{% endblock _store_form_openingHours_label %}
+
+{% block _store_form_openingHours_errors %}
+    <div style="position: relative; right: 20px; top: 10px">
+        {{ form_errors(form) }}
+    </div>
+{% endblock _store_form_openingHours_errors %}
+
+{% macro openingHoursRangeRow(openingHoursRange, index) %}
+    <tr class="js-opening-hours-item js-form-group table-form__row" style="border-bottom: none;" data-index="{{ index }}">
+        <td class="table-form__cell table-form__cell--del-before">
+            <div class="input__wrap">
+                {{ form_widget(openingHoursRange, { attr: { class: "opening-hours-widget" } }) }}
+                {{ form_errors(openingHoursRange) }}
+            </div>
+        </td>
+        <td class="table-form__cell table-form__cell--actions">
+            <a href="#" class="js-opening-hours-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+        </td>
+    </tr>
+{% endmacro %}

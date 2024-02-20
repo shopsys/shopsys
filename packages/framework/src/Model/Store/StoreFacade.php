@@ -9,6 +9,9 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory;
 
 class StoreFacade
 {
@@ -19,6 +22,9 @@ class StoreFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory $openingHoursFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory $openingHoursRangeFactory
      */
     public function __construct(
         protected readonly StoreRepository $storeRepository,
@@ -27,15 +33,10 @@ class StoreFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly OpeningHoursFactory $openingHoursFactory,
+        protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
+        protected readonly OpeningHoursRangeFactory $openingHoursRangeFactory,
     ) {
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getAllStores(): array
-    {
-        return $this->storeRepository->getAll();
     }
 
     /**
@@ -45,6 +46,9 @@ class StoreFacade
     public function create(StoreData $storeData): Store
     {
         $store = $this->storeFactory->create($storeData);
+        $store->setOpeningHours(
+            $this->createFullWeekOpeningHours($storeData->openingHours, $store),
+        );
         $this->em->persist($store);
         $this->em->flush();
 
@@ -65,6 +69,7 @@ class StoreFacade
     {
         $store = $this->getById($id);
         $store->edit($storeData);
+        $this->refreshStoreOpeningHours($store, $storeData);
         $this->friendlyUrlFacade->saveUrlListFormData(StoreFriendlyUrlProvider::ROUTE_NAME, $store->getId(), $storeData->urls);
         $this->em->flush();
 
@@ -81,14 +86,12 @@ class StoreFacade
      */
     protected function createFriendlyUrl(Store $store): void
     {
-        foreach ($store->getEnabledDomains() as $storeDomain) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                StoreFriendlyUrlProvider::ROUTE_NAME,
-                $store->getId(),
-                $store->getName(),
-                $storeDomain->getDomainId(),
-            );
-        }
+        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+            StoreFriendlyUrlProvider::ROUTE_NAME,
+            $store->getId(),
+            $store->getName(),
+            $store->getDomainId(),
+        );
     }
 
     /**
@@ -98,23 +101,6 @@ class StoreFacade
     public function getById(int $id): Store
     {
         return $this->storeRepository->getById($id);
-    }
-
-    /**
-     * @param int[] $storeIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getStoresByIdsIndexedById(array $storeIds): array
-    {
-        return $this->storeRepository->getStoresByIdsIndexedById($storeIds);
-    }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllStoresQueryBuilder(): QueryBuilder
-    {
-        return $this->storeRepository->getAllStoresQueryBuilder();
     }
 
     /**
@@ -150,18 +136,18 @@ class StoreFacade
      * @param int|null $offset
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
-    public function getStoresListEnabledOnDomain(int $domainId, ?int $limit = null, ?int $offset = null): array
+    public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
     {
-        return $this->storeRepository->getStoresEnabledOnDomain($domainId, $limit, $offset);
+        return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset);
     }
 
     /**
      * @param int $domainId
      * @return int
      */
-    public function getStoresCountEnabledOnDomain(int $domainId): int
+    public function getStoresCountByDomainId(int $domainId): int
     {
-        return $this->storeRepository->getStoresCountEnabledOnDomain($domainId);
+        return $this->storeRepository->getStoresCountByDomainId($domainId);
     }
 
     /**
@@ -169,9 +155,9 @@ class StoreFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
-    public function getByUuidEnabledOnDomain(string $uuid, int $domainId): Store
+    public function getByUuidAndDomainId(string $uuid, int $domainId): Store
     {
-        return $this->storeRepository->getByUuidEnabledOnDomain($uuid, $domainId);
+        return $this->storeRepository->getByUuidAndDomainId($uuid, $domainId);
     }
 
     /**
@@ -179,9 +165,9 @@ class StoreFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
-    public function getByIdEnabledOnDomain(int $id, int $domainId): Store
+    public function getByIdAndDomainId(int $id, int $domainId): Store
     {
-        return $this->storeRepository->getByIdEnabledOnDomain($id, $domainId);
+        return $this->storeRepository->getByIdAndDomainId($id, $domainId);
     }
 
     /**
@@ -191,5 +177,59 @@ class StoreFacade
     public function getStoresByIds(array $storeIds): array
     {
         return $this->storeRepository->getStoresByIds($storeIds);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursDataArray
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[]
+     */
+    protected function createFullWeekOpeningHours(array $openingHoursDataArray, Store $store): array
+    {
+        $openingHours = [];
+        $daysCovered = [];
+
+        foreach ($openingHoursDataArray as $openingHoursData) {
+            $openingHour = $this->openingHoursFactory->createWithStore($openingHoursData, $store);
+            $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHoursData->openingHoursRanges));
+            $openingHours[] = $openingHour;
+            $daysCovered[] = $openingHoursData->dayOfWeek;
+        }
+
+        $daysOfWeek = range(1, 7);
+        $missingDays = array_diff($daysOfWeek, $daysCovered);
+
+        foreach ($missingDays as $missingDay) {
+            $openingHoursData = $this->openingHoursDataFactory->createForDayOfWeek($missingDay);
+            $openingHour = $this->openingHoursFactory->createWithStore($openingHoursData, $store);
+            $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHoursData->openingHoursRanges));
+            $openingHours[] = $openingHour;
+        }
+
+        return $openingHours;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
+     */
+    protected function refreshStoreOpeningHours(Store $store, StoreData $storeData): void
+    {
+        foreach ($store->getOpeningHours() as $openingHours) {
+            $this->em->remove($openingHours);
+        }
+        $this->em->flush();
+        $store->setOpeningHours(
+            $this->createFullWeekOpeningHours($storeData->openingHours, $store),
+        );
     }
 }

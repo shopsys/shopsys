@@ -1,0 +1,12 @@
+PricingSettingDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents setting of pricing"
+        fields:
+            defaultCurrencyCode:
+                type: "String!"
+                description: "Code of the default currency used on the current domain"
+            minimumFractionDigits:
+                type: "Int!"
+                description: "Minimum number of decimal places for the price on the current domain"

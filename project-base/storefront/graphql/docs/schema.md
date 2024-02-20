@@ -55,6 +55,7 @@
     * [NotificationBar](#notificationbar)
     * [OpeningHours](#openinghours)
     * [OpeningHoursOfDay](#openinghoursofday)
+    * [OpeningHoursRange](#openinghoursrange)
     * [Order](#order)
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
@@ -1012,7 +1013,7 @@ Returns SEO settings for a specific page based on the url slug of that page
 <td valign="top"><a href="#settings">Settings</a></td>
 <td>
 
-Returns current setting
+Returns current settings
 
 </td>
 </tr>
@@ -4903,6 +4904,8 @@ Opening hours for every day of the week (1 for Monday 7 for Sunday)
 
 ### OpeningHoursOfDay
 
+Represents store opening hours for a specific day
+
 <table>
 <thead>
 <tr>
@@ -4914,6 +4917,15 @@ Opening hours for every day of the week (1 for Monday 7 for Sunday)
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>date</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date of day with display timezone for domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>dayOfWeek</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -4923,38 +4935,46 @@ Day of the week
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstClosingTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>openingHoursRanges</strong></td>
+<td valign="top">[<a href="#openinghoursrange">OpeningHoursRange</a>!]!</td>
 <td>
 
-First closing time
+An array of opening hours ranges (each range contains opening and closing time)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OpeningHoursRange
+
+Represents a time period when a store is open
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>closingTime</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Closing time
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstOpeningTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>openingTime</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-First opening time
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>secondClosingTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Second closing time
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>secondOpeningTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Second opening time
+Opening time
 
 </td>
 </tr>
@@ -7209,6 +7229,15 @@ Represents settings of the current domain
 <td>
 
 Main text for contact form
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>displayTimezone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Timezone that is used for displaying time
 
 </td>
 </tr>

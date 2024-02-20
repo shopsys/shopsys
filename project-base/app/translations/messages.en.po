@@ -427,9 +427,6 @@ msgstr ""
 msgid "Date and time of order creation"
 msgstr ""
 
-msgid "Day"
-msgstr ""
-
 msgid "Days until delivery"
 msgstr ""
 
@@ -619,6 +616,12 @@ msgstr ""
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr ""
 
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr ""
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgstr ""
+
 msgid "Entered code is not valid"
 msgstr ""
 
@@ -733,9 +736,6 @@ msgstr ""
 msgid "Free transport and payment - view"
 msgstr ""
 
-msgid "Friday"
-msgstr ""
-
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr ""
 
@@ -785,12 +785,6 @@ msgid "Holidays and internal days"
 msgstr ""
 
 msgid "Home page"
-msgstr ""
-
-msgid "If the time FROM is filled in, enter the date FROM too."
-msgstr ""
-
-msgid "If the time TO is filled in, enter the date TO too."
 msgstr ""
 
 msgid "Image"
@@ -947,9 +941,6 @@ msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
-msgstr ""
-
-msgid "Monday"
 msgstr ""
 
 msgid "Move"
@@ -1222,9 +1213,6 @@ msgstr ""
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
-msgid "Please enter the correct time format (hh:mm)"
-msgstr ""
-
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr ""
 
@@ -1417,9 +1405,6 @@ msgstr ""
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
-msgid "Saturday"
-msgstr ""
-
 msgid "Save"
 msgstr ""
 
@@ -1525,9 +1510,6 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
-msgid "Sunday"
-msgstr ""
-
 msgid "TOP"
 msgstr ""
 
@@ -1573,19 +1555,7 @@ msgstr ""
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
 
-msgid "Thursday"
-msgstr ""
-
 msgid "TikTok URL"
-msgstr ""
-
-msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
-msgstr ""
-
-msgid "Time from"
-msgstr ""
-
-msgid "Time to"
 msgstr ""
 
 msgid "Top categories - full"
@@ -1655,9 +1625,6 @@ msgid "Transports and payments - full"
 msgstr ""
 
 msgid "Transports and payments - view"
-msgstr ""
-
-msgid "Tuesday"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -1741,19 +1708,7 @@ msgstr ""
 msgid "Valid from"
 msgstr ""
 
-msgid "Valid from (date)"
-msgstr ""
-
-msgid "Valid from (time)"
-msgstr ""
-
 msgid "Valid to"
-msgstr ""
-
-msgid "Valid to (date)"
-msgstr ""
-
-msgid "Valid to (time)"
 msgstr ""
 
 msgid "Value"
@@ -1790,9 +1745,6 @@ msgid "Warehouses - view"
 msgstr ""
 
 msgid "We have nothing to show you at this url."
-msgstr ""
-
-msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"

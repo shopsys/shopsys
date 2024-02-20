@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store;
 
-use DateTimeImmutable;
-use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
-use Shopsys\FrameworkBundle\Model\Store\Exception\StoreDomainNotFoundException;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 
 /**
  * @ORM\Table(name="stores")
@@ -38,10 +33,10 @@ class Store implements OrderableEntityInterface
     protected $uuid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\StoreDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\StoreDomain", mappedBy="store", cascade={"persist"})
+     * @var int
+     * @ORM\Column(type="integer")
      */
-    protected $domains;
+    protected $domainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Stock\Stock|null
@@ -102,7 +97,6 @@ class Store implements OrderableEntityInterface
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours>
      * @ORM\OneToMany(targetEntity="\Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours", mappedBy="store", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\OrderBy({"dayOfWeek" = "ASC"})
      */
     protected $openingHours;
 
@@ -142,9 +136,7 @@ class Store implements OrderableEntityInterface
      */
     public function __construct(StoreData $storeData)
     {
-        $this->domains = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->createDomains($storeData);
         $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
         $this->openingHours = new ArrayCollection();
         $this->setData($storeData);
@@ -155,12 +147,7 @@ class Store implements OrderableEntityInterface
      */
     public function edit(StoreData $storeData)
     {
-        $this->setDomains($storeData);
         $this->setData($storeData);
-
-        foreach ($this->openingHours as $index => $openingHours) {
-            $openingHours->edit($storeData->openingHours[$index]);
-        }
     }
 
     /**
@@ -189,32 +176,7 @@ class Store implements OrderableEntityInterface
         $this->specialMessage = $storeData->specialMessage;
         $this->locationLatitude = $storeData->locationLatitude;
         $this->locationLongitude = $storeData->locationLongitude;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
-    protected function createDomains(StoreData $storeData): void
-    {
-        $domainIds = array_keys($storeData->isEnabledOnDomains);
-
-        foreach ($domainIds as $domainId) {
-            $storeDomain = new StoreDomain($this, $domainId);
-            $this->domains->add($storeDomain);
-        }
-
-        $this->setDomains($storeData);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
-    protected function setDomains(StoreData $storeData): void
-    {
-        foreach ($this->domains as $storeDomain) {
-            $domainId = $storeDomain->getDomainId();
-            $storeDomain->setEnabled($storeData->isEnabledOnDomains[$domainId]);
-        }
+        $this->domainId = $storeData->domainId;
     }
 
     /**
@@ -314,68 +276,6 @@ class Store implements OrderableEntityInterface
     }
 
     /**
-     * @param \DateTimeZone $dateTimeZone
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours
-     */
-    public function getTodayOpeningHours(DateTimeZone $dateTimeZone): OpeningHours
-    {
-        $dayOfWeek = (int)(new DateTimeImmutable('now', $dateTimeZone))->format('N');
-
-        foreach ($this->openingHours as $openingHours) {
-            if ($openingHours->getDayOfWeek() === $dayOfWeek) {
-                return $openingHours;
-            }
-        }
-
-        throw new OpeningHoursNotFoundException($this->id, $dayOfWeek);
-    }
-
-    /**
-     * @param \DateTimeImmutable $date
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDays
-     * @return bool
-     */
-    public function isOpen(DateTimeImmutable $date, array $closedDays): bool
-    {
-        $todayOpeningHours = $this->getTodayOpeningHours($date->getTimezone());
-
-        if (array_key_exists($date->format('N'), $closedDays)) {
-            return false;
-        }
-
-        $firstOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstOpeningTime(), $date->getTimezone());
-        $firstClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstClosingTime(), $date->getTimezone());
-        $secondOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondOpeningTime(), $date->getTimezone());
-        $secondClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondClosingTime(), $date->getTimezone());
-
-        $hasFirstTimeSet = $firstOpeningTime !== null && $firstClosingTime !== null;
-        $hasSecondTimeSet = $secondOpeningTime !== null && $secondClosingTime !== null;
-
-        $isFirstTimeOpen = $hasFirstTimeSet && $date >= $firstOpeningTime && $date < $firstClosingTime;
-        $isSecondTimeOpen = $hasSecondTimeSet && $date >= $secondOpeningTime && $date < $secondClosingTime;
-
-        return $isFirstTimeOpen || $isSecondTimeOpen;
-    }
-
-    /**
-     * @param string|null $time
-     * @param \DateTimeZone $dateTimeZone
-     * @return \DateTimeImmutable|null
-     */
-    protected function getTimeWithTimeZone(?string $time, DateTimeZone $dateTimeZone): ?DateTimeImmutable
-    {
-        if ($time === null) {
-            return null;
-        }
-
-        return DateTimeImmutable::createFromFormat(
-            'H:i',
-            $time,
-            $dateTimeZone,
-        );
-    }
-
-    /**
      * @return string|null
      */
     public function getContactInfo()
@@ -408,38 +308,6 @@ class Store implements OrderableEntityInterface
     }
 
     /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isEnabled(int $domainId): bool
-    {
-        return $this->getStoreDomain($domainId)->isEnabled();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreDomain[]
-     */
-    public function getEnabledDomains(): array
-    {
-        return array_filter($this->domains->getValues(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
-    }
-
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreDomain
-     */
-    protected function getStoreDomain(int $domainId): StoreDomain
-    {
-        foreach ($this->domains as $storeDomain) {
-            if ($storeDomain->getDomainId() === $domainId) {
-                return $storeDomain;
-            }
-        }
-
-        throw new StoreDomainNotFoundException($domainId, $this->id);
-    }
-
-    /**
      * @param int $position
      */
     public function setPosition($position): void
@@ -450,5 +318,13 @@ class Store implements OrderableEntityInterface
     public function setDefault(): void
     {
         $this->isDefault = true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 }

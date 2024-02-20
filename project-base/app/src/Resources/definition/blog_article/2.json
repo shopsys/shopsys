@@ -170,7 +170,7 @@
       },
       "publishedAt": {
         "type": "date",
-        "format": "yyyy-MM-dd"
+        "format": "yyyy-MM-dd HH:mm:ss"
       },
       "perex": {
         "type": "text"

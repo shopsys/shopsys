@@ -12,10 +12,6 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 
 class DateTimeHelper
 {
-    public const UTC_TIMEZONE = 'UTC';
-
-    public const TIME_REGEX = '#^([01]?[0-9]|2[0-3]):[0-5][0-9]$#'; //hh:mm
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
@@ -41,29 +37,6 @@ class DateTimeHelper
     }
 
     /**
-     * @param string $original
-     * @return \DateTime
-     */
-    public function convertDatetimeStringFromDisplayTimeZoneToUtc(string $original): DateTime
-    {
-        $dateTime = new DateTime($original, $this->displayTimeZoneProvider->getDisplayTimeZone());
-        $dateTime->setTimezone(new DateTimeZone(self::UTC_TIMEZONE));
-
-        return $dateTime;
-    }
-
-    /**
-     * @param \DateTime $dateTime
-     * @return \DateTime
-     */
-    public function convertDateTimeFromUtcToDisplayTimeZone(DateTime $dateTime): DateTime
-    {
-        $dateTime->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZone());
-
-        return $dateTime;
-    }
-
-    /**
      * @param int $intervalInMinutes
      * @param \DateTimeZone $dateTimeZone
      * @return \DateTimeImmutable
@@ -77,5 +50,26 @@ class DateTimeHelper
         $time->modify('-' . ($time->format('i') % $intervalInMinutes) . ' min');
 
         return DateTimeImmutable::createFromMutable($time);
+    }
+
+    /**
+     * @param string $hoursAndMinutes
+     * @return \DateTimeImmutable
+     */
+    public static function createDateTimeFromTime(string $hoursAndMinutes): DateTimeImmutable
+    {
+        return new DateTimeImmutable(sprintf('1970-01-01 %s:00', $hoursAndMinutes));
+    }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    public function getCurrentDayOfWeek(int $domainId): int
+    {
+        return (int)(new DateTimeImmutable(
+            'now',
+            $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId),
+        ))->format('N');
     }
 }

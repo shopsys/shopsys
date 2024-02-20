@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursRangeCollectionFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
-use Shopsys\FrameworkBundle\Form\DomainsType;
+use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreData;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
+use Spatie\OpeningHours\Exceptions\Exception;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -36,11 +38,13 @@ class StoreFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
      */
     public function __construct(
         private readonly StockFacade $stockFacade,
         private readonly StoreFacade $storeFacade,
         private readonly CountryFacade $countryFacade,
+        private readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
     ) {
     }
 
@@ -80,8 +84,8 @@ class StoreFormType extends AbstractType
                 ],
                 'label' => t('Name'),
             ])
-            ->add('isEnabledOnDomains', DomainsType::class, [
-                'required' => false,
+            ->add('domainId', DomainType::class, [
+                'required' => true,
                 'label' => t('Display on'),
             ])
             ->add('externalId', TextType::class, [
@@ -158,7 +162,7 @@ class StoreFormType extends AbstractType
             ])
             ->add('openingHours', CollectionType::class, [
                 'label' => t('Opening hours'),
-                'entry_type' => OpeningHoursFormType::class,
+                'entry_type' => OpeningHoursRangeCollectionFormType::class,
                 'required' => false,
             ])
             ->add('contactInfo', TextareaType::class, [
@@ -182,6 +186,7 @@ class StoreFormType extends AbstractType
             ->setDefaults([
                 'data_class' => StoreData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => new Constraints\Callback([$this, 'validateOpeningHours']),
             ]);
     }
 
@@ -231,5 +236,21 @@ class StoreFormType extends AbstractType
             'entity' => $options['store'],
             'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
         ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateOpeningHours(StoreData $storeData, ExecutionContextInterface $context): void
+    {
+        try {
+            $this->storeOpeningHoursProvider->getOpeningHoursSettingFromData($storeData->openingHours);
+        } catch (Exception) {
+            $context
+                ->buildViolation(t('Opening hours setting is not valid', [], 'validators'))
+                ->atPath('openingHours')
+                ->addViolation();
+        }
     }
 }

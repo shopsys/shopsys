@@ -128,7 +128,7 @@ Displays text field with box of given color that shows color picker when clicked
 ### [DatePickerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
 
 Displays field that shows date picker when clicked.  
-Value is internally converted from [display timezone](./working-with-date-time-values.md) to UTC, so it have to be persisted in database also as `DateTime` to avoid possible date shifting.
+Value is internally converted from [admin display timezone](./working-with-date-time-values.md) to UTC, so it have to be persisted in database also as `DateTime` to avoid possible date shifting.
 
 #### format
 
@@ -142,7 +142,7 @@ DatePickerType has 2 constants that can be used:
 ### [DateTimeType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DateTimeType.php)
 
 Displays a text field that allows to set date and time.  
-Value is internally converted from [display time zone](./working-with-date-time-values.md) to UTC.
+Value is internally converted from [admin display time zone](./working-with-date-time-values.md) to UTC.
 
 #### format
 

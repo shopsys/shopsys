@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode;
 
 use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
-use DateTime;
-use DateTimeZone;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePromoCodeDataFactory;
@@ -17,13 +14,10 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePr
  */
 class PromoCodeDataFactory extends BasePromoCodeDataFactory
 {
-    public const TIME_VALID_FORMAT = 'H:i';
-
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
      * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
@@ -32,7 +26,6 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         private PromoCodeCategoryRepository $promoCodeCategoryRepository,
         private PromoCodeProductRepository $promoCodeProductRepository,
         private PromoCodeLimitRepository $promoCodeLimitRepository,
-        private DateTimeHelper $dateTimeHelper,
         private PromoCodeBrandRepository $promoCodeBrandRepository,
         private PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
         private PromoCodeFlagRepository $promoCodeFlagRepository,
@@ -71,11 +64,8 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->code = $promoCode->getCode();
         $promoCodeData->domainId = $promoCode->getDomainId();
 
-        $promoCodeData->timeValidFrom = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidFrom());
-        $promoCodeData->timeValidTo = $this->formatTimeFromValidDateTime($promoCode->getDatetimeValidTo());
-
-        $promoCodeData->dateValidFrom = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
-        $promoCodeData->dateValidTo = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
+        $promoCodeData->datetimeValidFrom = $promoCode->getDatetimeValidFrom();
+        $promoCodeData->datetimeValidTo = $promoCode->getDatetimeValidTo();
 
         $promoCodeData->flags = $this->promoCodeFlagRepository->getFlagsByPromoCodeId($promoCode->getId());
         $promoCodeData->categoriesWithSale = $this->promoCodeCategoryRepository->getCategoriesByPromoCodeId($promoCode->getId());
@@ -89,33 +79,5 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->discountType = $promoCode->getDiscountType();
         $promoCodeData->registeredCustomerUserOnly = $promoCode->isRegisteredCustomerUserOnly();
         $promoCodeData->limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId());
-    }
-
-    /**
-     * @param \DateTime|null $dateTime
-     * @return \DateTime|null
-     */
-    private function switchDateFromDatabaseTimeZoneToViewTimezone(?DateTime $dateTime = null): ?DateTime
-    {
-        if ($dateTime !== null) {
-            return new DateTime($dateTime->format('Y-m-d H:i:s'), new DateTimeZone(DateTimeHelper::UTC_TIMEZONE));
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \DateTime|null $dateTime
-     * @return string|null
-     */
-    private function formatTimeFromValidDateTime(?DateTime $dateTime = null): ?string
-    {
-        if ($dateTime !== null) {
-            $this->dateTimeHelper->convertDateTimeFromUtcToDisplayTimeZone($dateTime);
-
-            return $dateTime->format(self::TIME_VALID_FORMAT);
-        }
-
-        return null;
     }
 }

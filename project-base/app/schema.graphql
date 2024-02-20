@@ -1019,17 +1019,22 @@ type OpeningHours {
   openingHoursOfDays: [OpeningHoursOfDay!]!
 }
 
+"Represents store opening hours for a specific day"
 type OpeningHoursOfDay {
+  "Date of day with display timezone for domain"
+  date: DateTime!
   "Day of the week"
   dayOfWeek: Int!
-  "First closing time"
-  firstClosingTime: String
-  "First opening time"
-  firstOpeningTime: String
-  "Second closing time"
-  secondClosingTime: String
-  "Second opening time"
-  secondOpeningTime: String
+  "An array of opening hours ranges (each range contains opening and closing time)"
+  openingHoursRanges: [OpeningHoursRange!]!
+}
+
+"Represents a time period when a store is open"
+type OpeningHoursRange {
+  "Closing time"
+  closingTime: String!
+  "Opening time"
+  openingTime: String!
 }
 
 type Order {
@@ -1778,7 +1783,7 @@ type Query {
   RegularProduct: RegularProduct
   "Returns SEO settings for a specific page based on the url slug of that page"
   seoPage(pageSlug: String!): SeoPage
-  "Returns current setting"
+  "Returns current settings"
   settings: Settings
   "Returns a complete list of the slider items"
   sliderItems: [SliderItem!]!
@@ -1997,6 +2002,8 @@ type SeoSetting {
 type Settings {
   "Main text for contact form"
   contactFormMainText: String!
+  "Timezone that is used for displaying time"
+  displayTimezone: String!
   "Max allowed payment transactions (how many times is user allowed to try the same payment)"
   maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"

@@ -1322,6 +1322,27 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   column `name_tsvector` on table `product_translations`
     -   see #project-base-diff to update your project
 
+-   add display timezone to FE API SettingsQuery ([#2977](https://github.com/shopsys/shopsys/pull/2977))
+
+    -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface` interface was changed:
+        -   `getDisplayTimeZone()` method was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead
+        -   `getDisplayTimeZoneForAdmin()` method was added
+    -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider` class was changed:
+        -   `__construct()` interface has changed:
+        ```diff
+        -    public function __construct(?string $timeZoneString = null)
+        +    public function __construct(protected readonly string $adminDisplayTimeZone, protected readonly Domain $domain)
+        ```
+        -   `getDisplayTimeZone()` was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead (or `getDisplayTimeZoneForAdmin()` in admin context)
+        -   `$displayTimeZone` property was removed
+    -   `shopsys.display_timezone` container parameter was removed, use timezone setting per domain (in `config/domains.yaml`) instead
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+        -   `SettingsQuery` fields (`pricing`, `contactFormMainText`)
+        -   `OpeningHoursResolverMap`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+        -   `@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig` twig form theme
+    -   see #project-base-diff to update your project
+
 -   improve products editing in GrapesJS ([#3008](https://github.com/shopsys/shopsys/pull/3008))
 
     -   see #project-base-diff to update your project
@@ -1706,6 +1727,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   static rewrite paths are now not accessed through the Next.js config based on a JS file, but instead a TS file is provided, which can be accessed directly and includes literal type values
         -   the keys for the static rewrite paths object must be defined based on 2 sources (`process.env` or `publicRuntimeConfig`), because one of them is not accessible on the client (`process.env`) and the other one is not accessible in `middleware.ts` (`publicRuntimeConfig`)
 -   added more verbose error messages when using logException on SF ([#3018](https://github.com/shopsys/shopsys/pull/3018))
+
     -   messages logged to sentry now contain more context
     -   when adding error logs using `logException`, make sure you always provide as much context as possible
+
 -   add hreflang links for flag detail page ([#3022](https://github.com/shopsys/shopsys/pull/3022))
+
+-   add display timezone to FE API SettingsQuery ([#2977](https://github.com/shopsys/shopsys/pull/2977))
+    -   timezone is now taken from API (part of SettingsQuery)
+    -   timezone application was kept in `useFormatDate`
+    -   SF falls back to the timezone set in NextJS config if API is unavailable
+    -   NextJS config timezone was renamed from `timezone` to `fallbackTimezone`
+    -   see #project-base-diff to update your project

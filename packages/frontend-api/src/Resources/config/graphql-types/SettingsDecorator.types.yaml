@@ -12,3 +12,15 @@ SettingsDecorator:
                 type: Int!
                 resolve: "@=query('maxAllowedPaymentTransactionsQuery')"
                 description: "Max allowed payment transactions (how many times is user allowed to try the same payment)"
+            pricing:
+                type: "PricingSetting!"
+                resolve: "@=query('pricingSettingsQuery')"
+                description: "Settings related to pricing"
+            contactFormMainText:
+                type: String!
+                resolve: "@=query('contactFormMainTextQuery')"
+                description: "Main text for contact form"
+            displayTimezone:
+                type: String!
+                resolve: "@=query('displayTimezoneQuery')"
+                description: "Timezone that is used for displaying time"

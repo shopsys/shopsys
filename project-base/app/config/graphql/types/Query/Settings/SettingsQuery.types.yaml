@@ -1,8 +1,0 @@
-SettingsQuery:
-    type: object
-    config:
-        fields:
-            settings:
-                type: 'Settings'
-                resolve: "@=query('settingsQuery')"
-                description: "Returns current setting"

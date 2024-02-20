@@ -23,6 +23,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
         - '@ShopsysFramework/Admin/Form/hreflangSettingFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/paymentTransactionsFormTheme.html.twig'
+        - '@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig'
         - 'Admin/Form/blogCategoriesType.html.twig'
         - 'Admin/Form/blogCategoryCheckboxType.html.twig'
         - 'Admin/Form/productDetailFormTheme.html.twig'
@@ -36,7 +37,6 @@ twig:
         - 'Admin/Form/grapesJsType.html.twig'
         - 'Admin/Form/grapesJsMailType.html.twig'
         - 'Admin/Form/productVideoValue.html.twig'
-        - 'Admin/Form/storeOpeningHoursFormTheme.html.twig'
     strict_variables: true
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'

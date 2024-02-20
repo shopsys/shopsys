@@ -86,7 +86,7 @@ class OrderDataFactory extends BaseOrderDataFactory
 
         if ($orderData->transport->isPersonalPickup()) {
             try {
-                $store = $this->storeFacade->getByUuidEnabledOnDomain(
+                $store = $this->storeFacade->getByUuidAndDomainId(
                     $pickupPlaceIdentifier,
                     $this->domain->getId(),
                 );

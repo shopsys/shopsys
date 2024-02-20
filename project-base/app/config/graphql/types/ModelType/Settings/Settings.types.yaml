@@ -2,14 +2,3 @@ Settings:
     type: object
     inherits:
         - "SettingsDecorator"
-    config:
-        description: "Represents settings of the current domain"
-        fields:
-            pricing:
-                type: "PricingSetting!"
-                resolve: "@=query('pricingSettingsQuery')"
-                description: "Settings related to pricing"
-            contactFormMainText:
-                type: String!
-                resolve: "@=query('contactFormMainTextQuery')"
-                description: "Main text for contact form"

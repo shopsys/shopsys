@@ -8,7 +8,6 @@ use App\Model\NotificationBar\NotificationBar;
 use App\Model\NotificationBar\NotificationBarData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DomainType;
@@ -68,7 +67,6 @@ class NotificationBarFormType extends AbstractType
                 ],
             ])
             ->add('validityFrom', DatePickerType::class, [
-                'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
                 'required' => false,
                 'label' => t('Valid from'),
                 'attr' => [
@@ -76,7 +74,6 @@ class NotificationBarFormType extends AbstractType
                 ],
             ])
             ->add('validityTo', DatePickerType::class, [
-                'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
                 'required' => false,
                 'label' => t('Valid to'),
                 'attr' => [

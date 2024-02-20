@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -23,11 +24,13 @@ class StoreController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreDataFactory $storeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly StoreDataFactory $storeDataFactory,
         protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -47,7 +50,8 @@ class StoreController extends AdminBaseController
      */
     protected function getGrid(): Grid
     {
-        $queryBuilder = $this->storeFacade->getAllStoresQueryBuilder();
+        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $queryBuilder = $this->storeFacade->getStoresByDomainIdQueryBuilder($domainId);
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
@@ -74,7 +78,8 @@ class StoreController extends AdminBaseController
      */
     public function newAction(Request $request): Response
     {
-        $storeData = $this->storeDataFactory->create();
+        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $storeData = $this->storeDataFactory->createForDomain($domainId);
 
         $form = $this->createForm(StoreFormType::class, $storeData, [
             'store' => null,

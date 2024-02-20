@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Settings;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -15,8 +15,8 @@ class PricingSettingsQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        private readonly Domain $domain,
-        private readonly CurrencyFacade $currencyFacade,
+        protected readonly Domain $domain,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 

@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
@@ -37,10 +38,9 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            $locale = $domainConfig->getLocale();
-            $store = $this->storeFacade->getStoresListEnabledOnDomain($domainId)[0];
+            $store = $this->storeFacade->getStoresByDomainId($domainId)[0];
 
-            foreach ($this->getClosedDays($locale) as [$date, $name]) {
+            foreach ($this->getClosedDays($domainConfig) as [$date, $name]) {
                 $closedDayData = $this->closedDayDataFactory->create();
                 $closedDayData->domainId = $domainId;
                 $closedDayData->excludedStores = [$store];
@@ -52,11 +52,13 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return iterable<array{\DateTimeImmutable, string}>
      */
-    private function getClosedDays(string $locale): iterable
+    private function getClosedDays(DomainConfig $domainConfig): iterable
     {
+        $locale = $domainConfig->getLocale();
+
         yield [
             new DateTimeImmutable('24.12.' . date('Y')),
             t('Christmas Eve', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),

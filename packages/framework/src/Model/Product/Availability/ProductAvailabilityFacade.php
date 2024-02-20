@@ -143,7 +143,7 @@ class ProductAvailabilityFacade implements ResetInterface
         Product $product,
         int $domainId,
     ): array {
-        $stores = $this->storeFacade->getStoresListEnabledOnDomain($domainId);
+        $stores = $this->storeFacade->getStoresByDomainId($domainId);
 
         $isAvailable = $this->isProductAvailableOnDomainCached($product, $domainId);
 

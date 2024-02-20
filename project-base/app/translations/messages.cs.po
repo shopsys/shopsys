@@ -427,9 +427,6 @@ msgstr "Datum a čas"
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
 
-msgid "Day"
-msgstr "Den"
-
 msgid "Days until delivery"
 msgstr "Dní do doručení"
 
@@ -619,6 +616,12 @@ msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte z
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
 
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
+
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
 
@@ -733,9 +736,6 @@ msgstr "Doprava a platba zdarma - vše"
 msgid "Free transport and payment - view"
 msgstr "Doprava a platba zdarma - zobrazení"
 
-msgid "Friday"
-msgstr "Pátek"
-
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr "Hezká URL \"%slug%\" byla smazána."
 
@@ -786,12 +786,6 @@ msgstr "Svátky a interní dny"
 
 msgid "Home page"
 msgstr "Domovská stránka"
-
-msgid "If the time FROM is filled in, enter the date FROM too."
-msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
-
-msgid "If the time TO is filled in, enter the date TO too."
-msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
 
 msgid "Image"
 msgstr "Obrázek"
@@ -948,9 +942,6 @@ msgstr "Text zprávy"
 
 msgid "Meta description"
 msgstr "Meta popis"
-
-msgid "Monday"
-msgstr "Pondělí"
 
 msgid "Move"
 msgstr "Posunout"
@@ -1222,9 +1213,6 @@ msgstr "Osobní odběr"
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
-msgid "Please enter the correct time format (hh:mm)"
-msgstr "Prosím vyplňte správný formát času (hh:mm)"
-
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdříve. Případně nás kontaktujte na %mail% nebo telefonicky %phone%."
 
@@ -1417,9 +1405,6 @@ msgstr "Výprodej"
 msgid "Sales overview (last 7 days)"
 msgstr "Přehled prodejů (posledních 7 dní)"
 
-msgid "Saturday"
-msgstr "Sobota"
-
 msgid "Save"
 msgstr "Uložit"
 
@@ -1525,9 +1510,6 @@ msgstr "Prodejny - zobrazení"
 msgid "Street"
 msgstr "Ulice"
 
-msgid "Sunday"
-msgstr "Neděle"
-
 msgid "TOP"
 msgstr "TOP"
 
@@ -1573,20 +1555,8 @@ msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčno
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým objednávkám."
 
-msgid "Thursday"
-msgstr "Čtvrtek"
-
 msgid "TikTok URL"
 msgstr "TikTok URL"
-
-msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
-msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
-
-msgid "Time from"
-msgstr "Čas od"
-
-msgid "Time to"
-msgstr "Čas do"
 
 msgid "Top categories - full"
 msgstr "Promované kategorie - vše"
@@ -1656,9 +1626,6 @@ msgstr "Dopravy a platby - vše"
 
 msgid "Transports and payments - view"
 msgstr "Dopravy a platby - zobrazení"
-
-msgid "Tuesday"
-msgstr "Úterý"
 
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"
@@ -1741,20 +1708,8 @@ msgstr "Uživatelský překlad"
 msgid "Valid from"
 msgstr "Platnost od"
 
-msgid "Valid from (date)"
-msgstr "Datum platnosti OD"
-
-msgid "Valid from (time)"
-msgstr "Čas platnosti OD"
-
 msgid "Valid to"
 msgstr "Platnost do"
-
-msgid "Valid to (date)"
-msgstr "Datum platnosti DO"
-
-msgid "Valid to (time)"
-msgstr "Čas platnosti DO"
 
 msgid "Value"
 msgstr "Hodnota"
@@ -1791,9 +1746,6 @@ msgstr "Sklady - zobrazení"
 
 msgid "We have nothing to show you at this url."
 msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
-
-msgid "Wednesday"
-msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
