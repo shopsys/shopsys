@@ -32,10 +32,12 @@ class ArticleIndex extends AbstractIndex
      * @param int $domainId
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\ExportFieldEnumInterface[] $fields
      * @return array
      */
-    public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
+    public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize, array $fields = []): array
     {
+        // TODO throw unsupported, pokud fields není prázdné
         $results = [];
 
         foreach ($this->articleExportRepository->getAllVisibleArticleSitesByDomainId($domainId, $batchSize, $lastProcessedId) as $article) {
@@ -48,10 +50,12 @@ class ArticleIndex extends AbstractIndex
     /**
      * @param int $domainId
      * @param array $restrictToIds
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\ExportFieldEnumInterface[] $fields
      * @return array
      */
-    public function getExportDataForIds(int $domainId, array $restrictToIds): array
+    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
+        // TODO throw unsupported, pokud fields není prázdné
         $results = [];
 
         foreach ($this->articleExportRepository->getVisibleArticleSitesByDomainIdAndArticleIds($domainId, $restrictToIds) as $article) {

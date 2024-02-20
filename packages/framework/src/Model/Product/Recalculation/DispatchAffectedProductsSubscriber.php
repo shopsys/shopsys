@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeRegistry;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent;
@@ -22,11 +23,13 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade $affectedProductsFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeRegistry $exportScopeRegistry
      */
     public function __construct(
         protected readonly AffectedProductsFacade $affectedProductsFacade,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly ExportScopeRegistry $exportScopeRegistry,
     ) {
     }
 
@@ -37,7 +40,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithBrand($brandEvent->getBrand());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            ['Product::brand'],
+        );
     }
 
     /**
@@ -47,7 +54,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithCategory($categoryEvent->getCategory());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            $this->exportScopeRegistry->getScopesByPropertyNames(['Product::brand']),
+        );
     }
 
     /**
@@ -107,6 +118,7 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         return [
             BrandEvent::DELETE => 'dispatchAffectedByBrand',
+            BrandEvent::UPDATE => 'dispatchAffectedByBrand',
             CategoryEvent::UPDATE => 'dispatchAffectedByCategory',
             CategoryEvent::DELETE => 'dispatchAffectedByCategory',
             CurrencyEvent::UPDATE => [

@@ -52,7 +52,7 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
         }
 
         try {
-            $this->productRecalculationFacade->recalculate($productIds);
+            $this->productRecalculationFacade->recalculate($productIds, $message->affectedPropertyNames);
             $this->ackAll($acknowledgers);
         } catch (Throwable $e) {
             $this->logger->error($e->getMessage());

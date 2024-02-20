@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\ExportableEntityInterface;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -31,7 +32,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainV
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
  */
-class Product extends AbstractTranslatableEntity
+class Product extends AbstractTranslatableEntity implements ExportableEntityInterface
 {
     public const VARIANT_TYPE_NONE = 'none';
     public const VARIANT_TYPE_MAIN = 'main';

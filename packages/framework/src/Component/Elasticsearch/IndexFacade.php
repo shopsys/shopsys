@@ -230,8 +230,9 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param int[] $restrictToIds
+     * @param \Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum[] $fields
      */
-    public function exportIds(AbstractIndex $index, IndexDefinition $indexDefinition, array $restrictToIds): void
+    public function exportIds(AbstractIndex $index, IndexDefinition $indexDefinition, array $restrictToIds, array $fields): void
     {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
@@ -243,7 +244,7 @@ class IndexFacade
         foreach ($chunkedIdsToExport as $idsToExport) {
             // detach objects from manager to prevent memory leaks
             $this->entityManager->clear();
-            $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport);
+            $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport, $fields);
 
             if (count($currentBatchData) > 0) {
                 $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
