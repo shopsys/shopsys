@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -86,6 +87,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     public function load(ObjectManager $manager): void
     {
+        Uuid::setFactory(new UuidFactory());
+
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         /** @var \App\Model\Product\ProductData $productData */
@@ -97,7 +100,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->set0rderingPriority($productData, 1);
         $productData->weight = 3000;
 
-        $parameterTranslations = [];
+        $parameterValues = [];
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
@@ -111,12 +114,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->seoTitles[$domain->getId()] = t('Hello Kitty TV', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
-            $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), UnitDataFixture::UNIT_INCH);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterTranslations($parameterTranslations, t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterValues(
+                $parameterValues,
+                $locale,
+                [
+                    ParameterDataFixture::PARAM_SCREEN_SIZE => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    ParameterDataFixture::PARAM_TECHNOLOGY => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ],
+            );
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Hello Kitty approved', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('Immersive Full HD resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -125,7 +133,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('Adaptive Sync Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setParametersByTranslations($productData, $parameterTranslations);
+        $this->setProductParameterValues($productData, $parameterValues);
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2891.7');
@@ -5522,6 +5530,51 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         return $parameter;
     }
 
+    public function createParameterValues(array $parameterInput): array {
+        $result = [];
+
+        foreach ($parameterInput as $parameterReferenceName => $value) {
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            $parameter = $this->getReference($parameterReferenceName);
+
+            foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+                $locale = $domain->getLocale();
+
+                $parameterValueData = $this->parameterValueDataFactory->create();
+                $parameterValueData->text = t($value, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $parameterValueData->locale = $locale;
+
+                $productParameterValueData = $this->productParameterValueDataFactory->create();
+                $productParameterValueData->parameterValueData = $parameterValueData;
+                $productParameterValueData->parameter = $parameter;
+
+                $result[] = $productParameterValueData;
+            }
+        }
+
+        return $result;
+    }
+
+    public function addParameter(
+        string $parameterReferenceName,
+        string $parameterValue,
+        string $locale,
+        ProductData $productData,
+    ): void {
+        /** @var \App\Model\Product\Parameter\Parameter $parameter */
+        $parameter = $this->getReference($parameterReferenceName);
+
+        $parameterValueData = $this->parameterValueDataFactory->create();
+        $parameterValueData->text = $parameterValue;
+        $parameterValueData->locale = $locale;
+
+        $productParameterValueData = $this->productParameterValueDataFactory->create();
+        $productParameterValueData->parameterValueData = $parameterValueData;
+        $productParameterValueData->parameter = $parameter;
+
+        $productData->parameters[] = $productParameterValueData;
+    }
+
     /**
      * @param \App\Model\Product\ProductData $productData
      * @param array $parametersTranslations
@@ -5533,9 +5586,35 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             foreach ($parameterTranslations['values'] as $locale => $parameterValue) {
                 $productParameterValueData = $this->productParameterValueDataFactory->create();
+
                 $parameterValueData = $this->parameterValueDataFactory->create();
                 $parameterValueData->text = $parameterValue;
                 $parameterValueData->locale = $locale;
+
+                $productParameterValueData->parameterValueData = $parameterValueData;
+                $productParameterValueData->parameter = $parameter;
+
+                $productData->parameters[] = $productParameterValueData;
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param array $parametersValues
+     */
+    private function setProductParameterValues(ProductData $productData, array $parametersValues): void
+    {
+        foreach ($parametersValues as $parameterValues) {
+            $parameter = $parameterValues['parameter'];
+
+            foreach ($parameterValues['values'] as $locale => $parameterValue) {
+                $productParameterValueData = $this->productParameterValueDataFactory->create();
+
+                $parameterValueData = $this->parameterValueDataFactory->create();
+                $parameterValueData->text = $parameterValue;
+                $parameterValueData->locale = $locale;
+
                 $productParameterValueData->parameterValueData = $parameterValueData;
                 $productParameterValueData->parameter = $parameter;
 
@@ -5562,6 +5641,25 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             );
 
             $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
+        }
+    }
+
+    /**
+     * @param array $parameterValues
+     * @param string $locale
+     * @param array $parameterValuesData
+     */
+    private function addParameterValues(
+        array &$parameterValues,
+        string $locale,
+        array $parameterValuesData
+    ): void {
+        $i = 0;
+
+        foreach ($parameterValuesData as $parameterReference => $parameterValue) {
+            $parameterValues[$i]['parameter'] = $this->getReference($parameterReference);
+            $parameterValues[$i]['values'][$locale] = $parameterValue;
+            $i++;
         }
     }
 
@@ -5722,6 +5820,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             UnitDataFixture::class,
             PricingGroupDataFixture::class,
             SettingValueDataFixture::class,
+            ParameterDataFixture::class,
         ];
     }
 

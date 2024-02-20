@@ -9,7 +9,6 @@ use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -227,8 +226,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $choseCategorySeoMixCombinationArray['flagId'] = null;
-        $technologyParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
-        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
+        $technologyParameter = $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY);
+        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAM_HDMI);
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
             $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
@@ -245,9 +244,9 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of TV, audio plasma with HDMI seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
-        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
-        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        $usbParameter = $this->getReference(ParameterDataFixture::PARAM_USB);
         $choseCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryPc->getId(),
@@ -347,6 +346,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             CategoryDataFixture::class,
             FlagDataFixture::class,
             ProductDataFixture::class,
+            ParameterDataFixture::class,
         ];
     }
 }
