@@ -1324,16 +1324,23 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   add display timezone to FE API SettingsQuery ([#2977](https://github.com/shopsys/shopsys/pull/2977))
 
-    -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface::getDisplayTimeZone()` was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead
+    -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface` interface was changed:
+        -   `getDisplayTimeZone()` method was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead
+        -   `getDisplayTimeZoneForAdmin()` method was added
     -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider` class was changed:
         -   `__construct()` interface has changed:
         ```diff
         -    public function __construct(?string $timeZoneString = null)
-        +    public function __construct(protected readonly Domain $domain)
+        +    public function __construct(protected readonly string $adminDisplayTimeZone, protected readonly Domain $domain)
         ```
-        -   `getDisplayTimeZone()` was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead
+        -   `getDisplayTimeZone()` was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead (or `getDisplayTimeZoneForAdmin()` in admin context)
         -   `$displayTimeZone` property was removed
     -   `shopsys.display_timezone` container parameter was removed, use timezone setting per domain (in `config/domains.yaml`) instead
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+        -   `SettingsQuery` fields (`pricing`, `contactFormMainText`)
+        -   `OpeningHoursResolverMap`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+        -   `@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig` twig form theme
     -   see #project-base-diff to update your project
 
 -   improve products editing in GrapesJS ([#3008](https://github.com/shopsys/shopsys/pull/3008))
