@@ -787,9 +787,6 @@ msgstr "Svátky a interní dny"
 msgid "Home page"
 msgstr "Domovská stránka"
 
-msgid "If you want execute refund, you have to setup refund amount."
-msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
-
 msgid "Image"
 msgstr "Obrázek"
 

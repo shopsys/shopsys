@@ -787,9 +787,6 @@ msgstr ""
 msgid "Home page"
 msgstr ""
 
-msgid "If you want execute refund, you have to setup refund amount."
-msgstr ""
-
 msgid "Image"
 msgstr ""
 
