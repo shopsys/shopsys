@@ -202,3 +202,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   docs were rewritten to match this new approach, so you can read them to get a better idea
 -   verbose logging was also added for mutations, so if you need to handle this differently, check `errorExchange.ts`
 -   added .env.development for SF, so you should put all your env variables for development there, if you need to handle them in a specific way, differently from the app being in production mode
+
+#### refactor mobile menu ([#3035](https://github.com/shopsys/shopsys/pull/3035))
+
+-   now the whole component is refactored and is included with new design
