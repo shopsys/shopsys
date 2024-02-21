@@ -98,6 +98,10 @@ function deploy() {
         ["cron-service"]='*/5 * * * *'
         ["cron-export"]='*/5 * * * *'
         ["cron-products"]='*/5 * * * *'
+        ["cron-import-akeneo-product"]='*/5 * * * *'
+        ["cron-gopay"]='*/5 * * * *'
+        ["cron-data-bridge-import"]='*/5 * * * *'
+        ["cron-packetery"]='*/5 * * * *'
     )
 
     VARS=(
