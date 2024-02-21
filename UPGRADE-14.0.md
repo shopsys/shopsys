@@ -1421,6 +1421,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         +       protected readonly FlagRepository $flagRepository,
         ```
     -   see #project-base-diff to update your project
+-   add missing cron instances to `deploy-project-sh` ([#3036](https://github.com/shopsys/shopsys/pull/3036))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
