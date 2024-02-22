@@ -92,4 +92,15 @@ class PromoCodeData extends BasePromoCodeData
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
     public array $limitedPricingGroups = [];
+
+    public function __clone()
+    {
+        foreach ($this->flags as $key => $flag) {
+            $this->flags[$key] = clone $flag;
+        }
+
+        foreach ($this->limits as $key => $limit) {
+            $this->limits[$key] = clone $limit;
+        }
+    }
 }
