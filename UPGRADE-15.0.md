@@ -66,6 +66,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   fix promo code mass generation ([#3039](https://github.com/shopsys/shopsys/pull/3039))
     -   see #project-base-diff to update your project
+-   fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
@@ -73,3 +75,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   queries and mutation names are now part of the request URL, which means query is not made to `/graphql/` but `/graphql/<QueryName>/`
     -   if you do not want this, you can skip the changes (ensure there is no `operationNameExchange` used in your URQL client)
     -   if you apply this change, it should be easier for you to debug requests in tools like Kibana and also see operation names in browser network tab
+-   fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
