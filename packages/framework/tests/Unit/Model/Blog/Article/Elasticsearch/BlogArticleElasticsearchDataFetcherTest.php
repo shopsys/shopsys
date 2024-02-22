@@ -88,7 +88,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
             'uuid' => '',
             'createdAt' => '1970-01-01 00:00:00',
             'visibleOnHomepage' => false,
-            'publishedAt' => '1970-01-01',
+            'publishDate' => '1970-01-01 00:00:00',
             'perex' => null,
             'seoTitle' => null,
             'seoMetaDescription' => null,

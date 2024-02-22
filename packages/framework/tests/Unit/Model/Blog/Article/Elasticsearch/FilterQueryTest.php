@@ -25,7 +25,7 @@ class FilterQueryTest extends TestCase
                 'from' => 0,
                 'size' => 1000,
                 'sort' => [
-                    'publishedAt' => 'desc',
+                    'publishDate' => 'desc',
                     'createdAt' => 'desc',
                     'name.keyword' => 'asc',
                 ],
@@ -61,7 +61,7 @@ class FilterQueryTest extends TestCase
                 'from' => 0,
                 'size' => 1000,
                 'sort' => [
-                    'publishedAt' => 'desc',
+                    'publishDate' => 'desc',
                     'createdAt' => 'desc',
                     'name.keyword' => 'asc',
                 ],
@@ -97,7 +97,7 @@ class FilterQueryTest extends TestCase
                 'from' => 0,
                 'size' => 1000,
                 'sort' => [
-                    'publishedAt' => 'desc',
+                    'publishDate' => 'desc',
                     'createdAt' => 'desc',
                     'name.keyword' => 'asc',
                 ],
@@ -140,7 +140,7 @@ class FilterQueryTest extends TestCase
                 'from' => $expectedFrom,
                 'size' => $expectedSize,
                 'sort' => [
-                    'publishedAt' => 'desc',
+                    'publishDate' => 'desc',
                     'createdAt' => 'desc',
                     'name.keyword' => 'asc',
                 ],

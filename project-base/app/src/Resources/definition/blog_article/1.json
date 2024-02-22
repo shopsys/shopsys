@@ -170,7 +170,7 @@
       "visibleOnHomepage": {
         "type": "boolean"
       },
-      "publishedAt": {
+      "publishDate": {
         "type": "date",
         "format": "yyyy-MM-dd HH:mm:ss"
       },

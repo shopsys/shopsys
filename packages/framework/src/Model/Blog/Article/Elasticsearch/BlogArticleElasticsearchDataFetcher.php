@@ -22,7 +22,7 @@ class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetch
         $result['uuid'] = $data['uuid'] ?? '';
         $result['createdAt'] = $data['createdAt'] ?? '1970-01-01 00:00:00';
         $result['visibleOnHomepage'] = $data['visibleOnHomepage'] ?? false;
-        $result['publishedAt'] = $data['publishedAt'] ?? '1970-01-01';
+        $result['publishDate'] = $data['publishDate'] ?? '1970-01-01 00:00:00';
         $result['perex'] = $data['perex'] ?? null;
         $result['seoTitle'] = $data['seoTitle'] ?? null;
         $result['seoMetaDescription'] = $data['seoMetaDescription'] ?? null;

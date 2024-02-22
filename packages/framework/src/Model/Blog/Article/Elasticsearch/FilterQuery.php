@@ -17,7 +17,7 @@ class FilterQuery extends AbstractFilterQuery
         parent::__construct($indexName);
 
         $this->sorting = [
-            'publishedAt' => 'desc',
+            'publishDate' => 'desc',
             'createdAt' => 'desc',
             'name.keyword' => 'asc',
         ];
