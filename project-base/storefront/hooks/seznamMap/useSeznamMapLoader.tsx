@@ -44,7 +44,7 @@ export const useSeznamMapLoader = (
         };
 
         script.onerror = (error) => {
-            logException(error);
+            logException({ error, location: 'useSeznamMapLoader.onerror' });
 
             if (onError) {
                 onError();
