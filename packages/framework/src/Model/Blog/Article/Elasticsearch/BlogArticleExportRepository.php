@@ -128,7 +128,7 @@ class BlogArticleExportRepository
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
-            'publishedAt' => $blogArticle->getPublishDate()->format('Y-m-d H:i:s'),
+            'publishDate' => $blogArticle->getPublishDate()->format('Y-m-d H:i:s'),
             'perex' => $blogArticle->getPerex($locale),
             'seoTitle' => $blogArticle->getSeoTitle($domainId),
             'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),

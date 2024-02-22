@@ -29,7 +29,7 @@ class BlogArticleResolverMap extends ResolverMap
                     return $this->blogCategoryFacade->getByIds($blogArticleData['categories']);
                 },
                 'publishDate' => static function (array $blogArticleData) {
-                    return new DateTime($blogArticleData['publishedAt']);
+                    return new DateTime($blogArticleData['publishDate']);
                 },
                 'createdAt' => static function (array $blogArticleData) {
                     return new DateTime($blogArticleData['createdAt']);

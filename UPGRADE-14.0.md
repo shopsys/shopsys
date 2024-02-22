@@ -1423,6 +1423,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add missing cron instances to `deploy-project-sh` ([#3036](https://github.com/shopsys/shopsys/pull/3036))
     -   see #project-base-diff to update your project
+-   rename blog article elasticsearch field `publishedAt` to `publishDate` ([#3038](https://github.com/shopsys/shopsys/pull/3038))
+    -   check your custom code for usage of `publishedAt` field on blog article elasticsearch data and replace it with `publishDate`
+    -   remember to immediately export blog articles to elasticsearch after the update using the `php bin/console shopsys:elasticsearch:data-export blog_article` command
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
