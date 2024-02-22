@@ -2,17 +2,21 @@
 
 ## Error verbosity on Storefront
 
-To ease the development process on Storefront, it is possible to change the error message verbosity. This is done by changing the environment variable, which can be one of these values: - `'devel'` - all messages are shown with their full verbosity, this includes GraphQL errors and runtime exceptions - `'user'` - messages are shown as the user would see them
+To ease the development process on Storefront, it is possible to change the error message verbosity. This is done by changing the environment variable `ERROR_LEVEL_DEBUGGING`, which can be one of these values:
+
+-   `console` - all messages are shown with their full verbosity, this includes GraphQL errors and runtime exceptions, but they are only logged in the console
+-   `toast-and-console` - all messages are shown with their full verbosity, this includes GraphQL errors and runtime exceptions, they are shown both in the console and logged as a toast message
+-   `no-debug` - messages are shown as the user would see them, so no debug in console or toasts
 
 Mind that this setting is independent of the node environemnt. This means that you can have full verbosity in a production-built application. Do not forget to limit the verbosity once you want to start showing your application to users.
 
 ### Error toasts
 
-If your verbosity is set to `'devel'`, the error toast messages do not close automatically, they are also not closable by just clicking anywhere on them. This is because they contain a copy-text box with the full error message. You can thus easily copy the full error message in a JSON format.
+If your verbosity is set to `toast-and-console`, the error toast messages do not close automatically, they are also not closable by just clicking anywhere on them. This is because they contain a copy-text box with the full error message. You can thus easily copy the full error message in a JSON format.
 
 ### Exceptions
 
-If your verbosity is set to `'devel'`, the error page for 500 errors also shows a copy-text box with the underlying error. Because of inner Next.js workings, it is impossible to provide a simple 'copy text' button, but you can still easily copy the entire error message in a JSON format.
+If your verbosity is set to `toast-and-console`, the error page for 500 errors also shows a copy-text box with the underlying error. Because of inner Next.js workings, it is impossible to provide a simple 'copy text' button, but you can still easily copy the entire error message in a JSON format.
 
 ## The `logException` function
 
@@ -134,7 +138,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
 );
 ```
 
-The last step is to handle it in the `_error.tsx` page. You can see that we do not log the exception for 404, as this would flood Sentry. However, we do log it if the `errorDebugging` is set to ``true` (env variable is set to `1`). Keep this in mind, as having this setting in an environment which includes Sentry might cause a lot of logs.
+The last step is to handle it in the `_error.tsx` page. You can see that we do not log the exception for 404, as this would flood Sentry. However, we do log it if the `errorDebuggingLevel` is set to `console` or `toast-and-console` (env variable `ERROR_LEVEL_DEBUGGING`is set). Keep this in mind, as having this setting in an environment which includes Sentry might cause a lot of logs.
 
 ```tsx
 ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
@@ -143,22 +147,16 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     const statusCode = middlewareStatusCode || context.res.statusCode || 500;
     ...
 
-    if (statusCode !== 404 && !isWithErrorDebugging) {
+    if (statusCode !== 404 || isWithErrorDebugging) {
         logException({
             message: err,
             statusCode,
             initServerSidePropsResonse: JSON.stringify(serverSideProps),
-            location: 'ErrorPage.getInitialProps.isWithErrorDebugging = false',
+            location: 'ErrorPage.getInitialProps.noErrorDebugging',
         });
     }
 
-    if (isWithErrorDebugging) {
-        logException({
-            message: err,
-            statusCode,
-            initServerSidePropsResonse: JSON.stringify(serverSideProps),
-            location: 'ErrorPage.getInitialProps.isWithErrorDebugging = true',
-        });
+    if (isWithToastAndConsoleErrorDebugging) {
         showErrorMessage(err);
     }
 

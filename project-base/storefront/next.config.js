@@ -38,7 +38,7 @@ const nextConfig = {
         cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn: process.env.SENTRY_DSN ?? '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
-        errorDebugging: process.env.ERROR_DEBUGGING === '1',
+        errorDebuggingLevel: process.env.ERROR_DEBUGGING_LEVEL,
         showSymfonyToolbar: process.env.SHOW_SYMFONY_TOOLBAR,
         domains: [
             {
