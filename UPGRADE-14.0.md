@@ -1736,8 +1736,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add hreflang links for flag detail page ([#3022](https://github.com/shopsys/shopsys/pull/3022))
 
 -   add display timezone to FE API SettingsQuery ([#2977](https://github.com/shopsys/shopsys/pull/2977))
+
     -   timezone is now taken from API (part of SettingsQuery)
     -   timezone application was kept in `useFormatDate`
     -   SF falls back to the timezone set in NextJS config if API is unavailable
     -   NextJS config timezone was renamed from `timezone` to `fallbackTimezone`
     -   see #project-base-diff to update your project
+
+-   removed duplicate update payment mutation call on order payment confirmation page ([#3025](https://github.com/shopsys/shopsys/pull/3025))

@@ -1,10 +1,11 @@
 import { useUpdatePaymentStatusMutationApi } from 'graphql/generated';
 import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage, removeGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPageValidityHash: string | null) => {
     const [{ data: paymentStatusData }, updatePaymentStatusMutation] = useUpdatePaymentStatusMutationApi();
+    const wasPaymentStatusUpdatedRef = useRef(false);
 
     const updatePaymentStatus = async () => {
         const updatePaymentStatusActionResult = await updatePaymentStatusMutation({
@@ -30,7 +31,10 @@ export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPage
     };
 
     useEffect(() => {
-        updatePaymentStatus();
+        if (!wasPaymentStatusUpdatedRef.current) {
+            updatePaymentStatus();
+            wasPaymentStatusUpdatedRef.current = true;
+        }
     }, []);
 
     return paymentStatusData;
