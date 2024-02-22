@@ -6,9 +6,10 @@
         "baseUrl": ".",
         "skipLibCheck": true,
         "strict": true,
+        "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
         "incremental": true,
         "esModuleInterop": true
     },
-    "include": ["**/*.ts", "**/*.cy.ts"]
+    "include": ["**/*.ts", "**/*.cy.ts", "../../graphql/generated/index.tsx"]
 }
