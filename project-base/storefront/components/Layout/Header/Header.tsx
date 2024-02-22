@@ -14,18 +14,13 @@ type HeaderProps = {
     simpleHeader?: boolean;
 };
 
-const TEST_IDENTIFIER = 'layout-header';
-
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
     const onMenuToggleHandler = () => setIsMenuOpened(!isMenuOpened);
 
     return (
-        <div
-            className="flex flex-wrap items-center gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6"
-            data-testid={TEST_IDENTIFIER}
-        >
+        <div className="flex flex-wrap items-center gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6">
             <Logo />
 
             {simpleHeader ? (

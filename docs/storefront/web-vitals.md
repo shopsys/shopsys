@@ -11,7 +11,7 @@ We can basically say elements which don’t require animation and can be hidden/
 On projects, they come most often in a closed state by default. Because of that, it is a perfect scenario for don’t attach them to the DOM in case they are collapsed.
 
 ```tsx
-<FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
+<FilterGroupWrapper>
     <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
     {isGroupOpen && (
         <FilterGroupContent>

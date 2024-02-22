@@ -1,6 +1,7 @@
 import { StoreSelect } from './StoreSelect';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { TIDs } from 'cypress/tids';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -10,8 +11,6 @@ type PickupPlacePopupProps = {
     onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragmentApi | null) => void;
     onClosePickupPlacePopupCallback: () => void;
 };
-
-const TEST_IDENTIFIER = 'pages-order-pickupplace-popup-';
 
 export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
     transport,
@@ -38,7 +37,11 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
     };
 
     return (
-        <Popup className="w-11/12 max-w-4xl" onCloseCallback={onClosePickupPlacePopupHandler}>
+        <Popup
+            className="w-11/12 max-w-4xl"
+            contentClassName="overflow-y-auto"
+            onCloseCallback={onClosePickupPlacePopupHandler}
+        >
             <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
             <StoreSelect
                 selectedStoreUuid={selectedStoreUuid}
@@ -46,12 +49,10 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                 onSelectStoreCallback={onSelectStoreHandler}
             />
             <div className="mt-5 flex justify-between">
-                <Button dataTestId={TEST_IDENTIFIER + 'close'} onClick={onClosePickupPlacePopupHandler}>
-                    {t('Close')}
-                </Button>
+                <Button onClick={onClosePickupPlacePopupHandler}>{t('Close')}</Button>
                 <Button
-                    dataTestId={TEST_IDENTIFIER + 'confirm'}
                     isDisabled={selectedStoreUuid === ''}
+                    tid={TIDs.pages_order_pickupplace_popup_confirm}
                     onClick={onConfirmPickupPlaceHandler}
                 >
                     {t('Confirm')}

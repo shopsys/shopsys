@@ -31,8 +31,6 @@ type ProductDetailContentProps = {
     fetching: boolean;
 };
 
-const TEST_IDENTIFIER = 'pages-productdetail-';
-
 export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, fetching }) => {
     const { t } = useTranslation();
     const scrollTarget = useRef<HTMLUListElement>(null);
@@ -58,24 +56,18 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                     <div className="flex flex-1 flex-col gap-4">
                         <div className="flex flex-col gap-1">
-                            {product.namePrefix && (
-                                <ProductDetailPrefix dataTestId={TEST_IDENTIFIER + 'prefix'}>
-                                    {product.namePrefix}
-                                </ProductDetailPrefix>
-                            )}
+                            {product.namePrefix && <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>}
 
-                            <ProductDetailHeading dataTestId={TEST_IDENTIFIER + 'name'}>
+                            <ProductDetailHeading>
                                 {product.name} {product.nameSuffix}
                             </ProductDetailHeading>
 
-                            <ProductDetailCode dataTestId={TEST_IDENTIFIER + 'code'}>
+                            <ProductDetailCode>
                                 {t('Code')}: {product.catalogNumber}
                             </ProductDetailCode>
                         </div>
 
-                        {product.shortDescription && (
-                            <div data-testid={TEST_IDENTIFIER + 'short-description'}>{product.shortDescription}</div>
-                        )}
+                        {product.shortDescription && <div>{product.shortDescription}</div>}
 
                         {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
 

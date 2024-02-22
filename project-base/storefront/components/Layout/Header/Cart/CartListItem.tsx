@@ -11,18 +11,12 @@ type ListItemProps = {
     onItemRemove: MouseEventHandler<HTMLButtonElement>;
 };
 
-const TEST_IDENTIFIER = 'layout-header-cart-listitem';
-
 export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantity }, onItemRemove }) => {
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
     return (
-        <li
-            key={uuid}
-            className="flex w-full items-center gap-x-3 border-b border-greyLighter py-3"
-            data-testid={TEST_IDENTIFIER}
-        >
+        <li key={uuid} className="flex w-full items-center gap-x-3 border-b border-greyLighter py-3">
             <div className="flex w-11 items-center justify-center">
                 <Image
                     alt={product.mainImage?.name || product.fullName}

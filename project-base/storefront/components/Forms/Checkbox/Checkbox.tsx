@@ -13,11 +13,10 @@ export type CheckboxProps = NativeProps & {
     value: boolean;
     label: ReactNode;
     count?: number;
-    dataTestId?: string;
 };
 
 export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
-    ({ id, name, label, count, required, disabled, onChange, value, dataTestId, className }, checkboxForwardedRef) => (
+    ({ id, name, label, count, required, disabled, onChange, value, className }, checkboxForwardedRef) => (
         <LabelWrapper
             checked={value}
             count={count}
@@ -31,7 +30,6 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
                 // class "peer" is used for styling in LabelWrapper
                 checked={value}
                 className={twMergeCustom('peer sr-only', className)}
-                data-testid={dataTestId}
                 disabled={disabled}
                 id={id}
                 name={name}

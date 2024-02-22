@@ -21,22 +21,16 @@ type CellProps = {
     colSpan?: number;
 };
 
-export const Row: FC = ({ children, className, dataTestId }) => (
-    <tr
-        className={twMergeCustom('border-b border-border text-greyLight last:border-b-0', className)}
-        data-testid={dataTestId}
-    >
-        {children}
-    </tr>
+export const Row: FC = ({ children, className }) => (
+    <tr className={twMergeCustom('border-b border-border text-greyLight last:border-b-0', className)}>{children}</tr>
 );
 
-export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, dataTestId, colSpan }) => {
+export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, colSpan }) => {
     const Tag = isHead ? 'th' : 'td';
 
     return (
         <Tag
             colSpan={colSpan}
-            data-testid={dataTestId}
             className={twMergeCustom(
                 'px-2 py-4 text-sm text-dark ',
 

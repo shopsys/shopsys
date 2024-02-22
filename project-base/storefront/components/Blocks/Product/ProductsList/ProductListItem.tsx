@@ -7,6 +7,7 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { TIDs } from 'cypress/tids';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -26,8 +27,6 @@ type ProductItemProps = {
     toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
 } & FunctionComponentProps;
-
-const getDataTestId = (catalogNumber: string) => 'blocks-product-list-listeditem-' + catalogNumber;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     (
@@ -49,8 +48,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
         return (
             <li
-                data-testid={getDataTestId(product.catalogNumber)}
                 ref={ref}
+                tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
                     'relative flex select-none flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
                     className,
@@ -59,7 +58,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 {gtmProductListName === GtmProductListNameType.wishlist && (
                     <button
                         className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-none transition hover:bg-blueLight"
-                        data-testid={getDataTestId(product.catalogNumber) + '-wishlist-remove'}
                         title={t('Remove from wishlist')}
                         onClick={toggleProductInWishlist}
                     >
@@ -91,12 +89,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         )}
                     </div>
 
-                    <div
-                        className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark"
-                        data-testid={getDataTestId(product.catalogNumber) + '-name'}
-                    >
-                        {product.fullName}
-                    </div>
+                    <div className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark">{product.fullName}</div>
 
                     <ProductPrice productPrice={product.price} />
 

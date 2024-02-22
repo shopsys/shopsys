@@ -8,16 +8,7 @@ type TextInputControlledProps = {
     render: (input: JSX.Element) => ReactElement<any, any> | null;
     textInputProps: Pick<
         TextInputProps,
-        | 'disabled'
-        | 'required'
-        | 'onBlur'
-        | 'onKeyDown'
-        | 'onChange'
-        | 'type'
-        | 'label'
-        | 'inputSize'
-        | 'dataTestId'
-        | 'autoComplete'
+        'disabled' | 'required' | 'onBlur' | 'onKeyDown' | 'onChange' | 'type' | 'label' | 'inputSize' | 'autoComplete'
     >;
     control: Control<any>;
     formName: string;
@@ -56,12 +47,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
                 id={textInputId}
                 onBlur={combinedOnBlurHandler}
             />
-            <FormLineError
-                dataTestId={`${textInputId}-error`}
-                error={error}
-                inputType="text-input"
-                textInputSize={textInputProps.inputSize}
-            />
+            <FormLineError error={error} inputType="text-input" textInputSize={textInputProps.inputSize} />
         </>,
     );
 };

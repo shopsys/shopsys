@@ -8,8 +8,6 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 
-const TEST_IDENTIFIER = 'layout-header-menuiconic';
-
 const MenuIconicItemUserAuthenticated = dynamic(() =>
     import('components/Layout/Header/MenuIconic/MenuIconicItemUserAuthenticated').then(
         (component) => component.MenuIconicItemUserAuthenticated,
@@ -34,30 +32,30 @@ export const MenuIconic: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
 
     return (
-        <ul className="flex items-center gap-1" data-testid={TEST_IDENTIFIER}>
-            <MenuIconicItem className="max-lg:hidden" dataTestId={TEST_IDENTIFIER + '-stores'}>
+        <ul className="flex items-center gap-1">
+            <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
                     <MarkerIcon className="w-4 text-white" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
-            <MenuIconicItem className="relative" dataTestId={TEST_IDENTIFIER + '-login'}>
+            <MenuIconicItem className="relative">
                 {isUserLoggedIn ? (
-                    <MenuIconicItemUserAuthenticated className="relative" dataTestId={TEST_IDENTIFIER + '-login'} />
+                    <MenuIconicItemUserAuthenticated className="relative" />
                 ) : (
-                    <MenuIconicItemUserUnauthenticated dataTestId={TEST_IDENTIFIER + '-login'} />
+                    <MenuIconicItemUserUnauthenticated />
                 )}
             </MenuIconicItem>
 
-            <MenuIconicItem className="max-lg:hidden" dataTestId={TEST_IDENTIFIER + '-comparison'}>
+            <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
                     <CompareIcon className="w-4 text-white" />
                     {!!comparison?.products.length && <span>{comparison.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
-            <MenuIconicItem className="max-lg:hidden" dataTestId={TEST_IDENTIFIER + '-wishlist'}>
+            <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
                     <HeartIcon className="w-4 text-white" isFull={!!wishlist?.products.length} />
                     {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}

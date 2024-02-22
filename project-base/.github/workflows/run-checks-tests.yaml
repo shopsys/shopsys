@@ -32,7 +32,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v4
                 with:
                     name: acceptance-logs
                     path: ./app/var/log
@@ -60,6 +60,12 @@ jobs:
                 with:
                     name: cypress-screenshots
                     path: ./screenshots
+            -   name: Upload Cypress snapshot diffs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v4
+                with:
+                    name: cypress-snapshot-diffs
+                    path: ./snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -114,7 +120,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v4
                 with:
                     name: acceptance-logs
                     path: ./app/var/log

@@ -8,14 +8,11 @@ type HamburgerMenuProps = {
     onMenuToggleHandler: MouseEventHandler<HTMLDivElement>;
 };
 
-const TEST_IDENTIFIER = 'layout-header-hamburgermenu';
-
 export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
     const { t } = useTranslation();
 
     return (
         <div
-            data-testid={TEST_IDENTIFIER}
             className={twJoin(
                 'flex h-10 w-full cursor-pointer items-center rounded bg-orangeLight p-3',
                 isMenuOpened && 'z-aboveMobileMenu',

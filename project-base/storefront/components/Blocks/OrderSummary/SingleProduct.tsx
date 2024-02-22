@@ -7,8 +7,6 @@ type SingleProductProps = {
     item: CartItemFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'blocks-ordersummary-singleproduct-';
-
 export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
     const formatPrice = useFormatPrice();
 
@@ -26,13 +24,13 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
 
             <div className="flex flex-1 items-center">
                 <span className="flex-1 pr-3 text-sm">
-                    <strong data-testid={TEST_IDENTIFIER + 'count'}>
+                    <strong>
                         {item.quantity} {item.product.unit.name} &nbsp;
                     </strong>
-                    <span data-testid={TEST_IDENTIFIER + 'name'}>{item.product.fullName}</span>
+                    <span>{item.product.fullName}</span>
                 </span>
 
-                <strong className="ml-auto w-24 text-right text-sm" data-testid={TEST_IDENTIFIER + 'price'}>
+                <strong className="ml-auto w-24 text-right text-sm">
                     {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
                 </strong>
             </div>

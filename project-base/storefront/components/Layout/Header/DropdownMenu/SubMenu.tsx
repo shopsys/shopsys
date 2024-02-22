@@ -10,8 +10,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { useContext } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
-const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
-
 export const SubMenu: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
@@ -25,15 +23,15 @@ export const SubMenu: FC = () => {
     const { wishlist } = useWishlist();
 
     return (
-        <div className="mt-5 flex flex-col" data-testid={TEST_IDENTIFIER}>
-            <SubMenuItem dataTestId={TEST_IDENTIFIER + '-1'} href={storesUrl} type="stores">
+        <div className="mt-5 flex flex-col">
+            <SubMenuItem href={storesUrl} type="stores">
                 {t('Stores')}
             </SubMenuItem>
-            <SubMenuItem dataTestId={TEST_IDENTIFIER + '-3'} href={productComparisonUrl} type="comparison">
+            <SubMenuItem href={productComparisonUrl} type="comparison">
                 {t('Comparison')}
                 {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
             </SubMenuItem>
-            <SubMenuItem dataTestId={TEST_IDENTIFIER + '-4'} href={wishlistUrl} type="wishlist">
+            <SubMenuItem href={wishlistUrl} type="wishlist">
                 {t('Wishlist')}
                 {!!wishlist?.products.length && <span>&nbsp;({wishlist.products.length})</span>}
             </SubMenuItem>
@@ -41,9 +39,7 @@ export const SubMenu: FC = () => {
             {isUserLoggedIn ? (
                 <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
             ) : (
-                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-2'} href={loginUrl}>
-                    {t('Sign in')}
-                </SubMenuItem>
+                <SubMenuItem href={loginUrl}>{t('Sign in')}</SubMenuItem>
             )}
         </div>
     );
@@ -55,7 +51,7 @@ type SubMenuItemProps = {
     type?: PageType;
 };
 
-const SubMenuItem: FC<SubMenuItemProps> = ({ children, dataTestId, onClick, href, type }) => {
+const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) => {
     const { onMenuToggleHandler } = useContext(DropdownMenuContext);
 
     if (href) {
@@ -73,7 +69,7 @@ const SubMenuItem: FC<SubMenuItemProps> = ({ children, dataTestId, onClick, href
     }
 
     return (
-        <a className="mb-5 px-8 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
+        <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick}>
             {children}
         </a>
     );

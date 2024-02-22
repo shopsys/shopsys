@@ -1,11 +1,7 @@
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { twJoin } from 'tailwind-merge';
 
-export const FilterGroupWrapper: FC = ({ children, dataTestId }) => (
-    <div className="" data-testid={dataTestId}>
-        {children}
-    </div>
-);
+export const FilterGroupWrapper: FC = ({ children }) => <div className="">{children}</div>;
 
 export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () => void }> = ({
     isOpen,
@@ -25,10 +21,8 @@ export const FilterGroupContent: FC = ({ children }) => (
     <div className="flex flex-col flex-wrap gap-3 pb-6">{children}</div>
 );
 
-export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled, dataTestId }) => (
-    <div className={twJoin('', isDisabled && 'pointer-events-none opacity-30')} data-testid={dataTestId}>
-        {children}
-    </div>
+export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled }) => (
+    <div className={twJoin('', isDisabled && 'pointer-events-none opacity-30')}>{children}</div>
 );
 
 export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
@@ -44,8 +38,6 @@ export const SelectedParametersName: FC = ({ children }) => <p className="py-2 t
 
 export const SelectedParametersList: FC = ({ children }) => <ul className="flex flex-wrap gap-2">{children}</ul>;
 
-export const SelectedParametersListItem: FC = ({ children, dataTestId }) => (
-    <li className="rounded bg-creamWhite p-2 text-sm text-dark" data-testid={dataTestId}>
-        {children}
-    </li>
+export const SelectedParametersListItem: FC = ({ children }) => (
+    <li className="rounded bg-creamWhite p-2 text-sm text-dark">{children}</li>
 );

@@ -9,8 +9,6 @@ type FilterGroupInStockProps = {
     inStockCount: number;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-instock';
-
 export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStockCount }) => {
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
@@ -18,7 +16,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
     const { filter, updateFilterInStock } = useQueryParams();
 
     return (
-        <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
+        <FilterGroupWrapper>
             <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>

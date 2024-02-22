@@ -16,8 +16,6 @@ type PaginationProps = {
     isWithLoadMore?: boolean;
 };
 
-const TEST_IDENTIFIER = 'blocks-pagination';
-
 export const Pagination: FC<PaginationProps> = ({
     totalCount,
     paginationScrollTargetRef,
@@ -55,10 +53,7 @@ export const Pagination: FC<PaginationProps> = ({
                     </Button>
                 )}
             </div>
-            <div
-                className="order-1 my-3 flex w-full justify-center gap-1 vl:order-2 vl:w-2/5 vl:justify-end"
-                data-testid={TEST_IDENTIFIER}
-            >
+            <div className="order-1 my-3 flex w-full justify-center gap-1 vl:order-2 vl:w-2/5 vl:justify-end">
                 {paginationButtons.map((pageNumber, index, array) => {
                     const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
                     const pageParams = urlPageNumber
@@ -72,15 +67,9 @@ export const Pagination: FC<PaginationProps> = ({
                                 <PaginationButton isDotButton>&#8230;</PaginationButton>
                             )}
                             {currentPageWithLoadMore === pageNumber ? (
-                                <PaginationButton isActive dataTestId={TEST_IDENTIFIER + '-' + pageNumber}>
-                                    {pageNumber}
-                                </PaginationButton>
+                                <PaginationButton isActive>{pageNumber}</PaginationButton>
                             ) : (
-                                <PaginationButton
-                                    dataTestId={TEST_IDENTIFIER + '-' + pageNumber}
-                                    href={pageHref}
-                                    onClick={onChangePage(pageNumber)}
-                                >
+                                <PaginationButton href={pageHref} onClick={onChangePage(pageNumber)}>
                                     {pageNumber}
                                 </PaginationButton>
                             )}
@@ -105,7 +94,7 @@ type PaginationButtonProps = {
 
 const PaginationButton: FC<PaginationButtonProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, dataTestId, isActive, isDotButton, href, onClick }, _) => {
+    ({ children, isActive, isDotButton, href, onClick }, _) => {
         const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
             e.preventDefault();
 
@@ -118,7 +107,6 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
 
         return (
             <Tag
-                data-testid={dataTestId}
                 href={href}
                 className={twJoin(
                     'flex h-11 w-11 items-center  justify-center rounded border font-bold no-underline hover:no-underline vl:h-7 vl:w-7',

@@ -11,16 +11,12 @@ type NativeProps = ExtractNativePropsFromDefault<
 export type RadiobuttonProps = NativeProps & {
     value: any;
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
-    dataTestId?: string;
     label: ReactNode;
     onChangeCallback?: (newValue: string | null) => void;
 };
 
 export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
-    (
-        { label, onChangeCallback, onChange, id, name, checked, value, disabled, dataTestId, onBlur },
-        radiobuttonForwardedRef,
-    ) => {
+    ({ label, onChangeCallback, onChange, id, name, checked, value, disabled, onBlur }, radiobuttonForwardedRef) => {
         const onClickHandler: MouseEventHandler<HTMLInputElement> = useCallback(
             (event) => {
                 if (!onChangeCallback) {
@@ -41,7 +37,6 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                 <input
                     checked={checked}
                     className="peer sr-only"
-                    data-testid={dataTestId}
                     disabled={disabled}
                     id={id}
                     name={name}

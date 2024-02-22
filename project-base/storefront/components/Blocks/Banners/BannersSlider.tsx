@@ -12,7 +12,7 @@ type BannersSliderProps = {
     sliderItems: SliderItemFragmentApi[];
 };
 
-export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId }) => {
+export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
     const timer = useRef<NodeJS.Timeout | null>(null);
@@ -77,7 +77,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
     };
 
     return (
-        <div className="flex flex-col gap-6 vl:flex-row" data-testid={dataTestId} ref={sliderBoxRef}>
+        <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef}>
             <div className="keen-slider h-[283px] rounded vl:basis-3/4" ref={sliderRef}>
                 {isRecognizingWindowWidth ? (
                     <div className="flex h-full w-full items-center justify-center">

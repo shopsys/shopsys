@@ -9,7 +9,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
-const TEST_IDENTIFIER = 'blocks-blogpreview';
 
 export const BlogPreview: FC = () => {
     const { t } = useTranslation();
@@ -29,7 +28,7 @@ export const BlogPreview: FC = () => {
     );
 
     return (
-        <div className="py-10 vl:py-16 vl:pb-20" data-testid={TEST_IDENTIFIER}>
+        <div className="py-10 vl:py-16 vl:pb-20">
             <div className="mb-5 flex flex-wrap items-baseline">
                 <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9 text-creamWhite">
                     {t('Shopsys magazine')}

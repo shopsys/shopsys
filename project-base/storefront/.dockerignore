@@ -1,5 +1,6 @@
 docs
 cypress
+!cypress/tids.ts
 
 node_modules
 

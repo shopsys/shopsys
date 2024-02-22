@@ -62,6 +62,7 @@ class PaymentsTest extends GraphQlTestCase
                 ],
                 'transports' => [
                     ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                    ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'goPayPaymentMethod' => null,
             ],

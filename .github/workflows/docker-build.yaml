@@ -456,6 +456,12 @@ jobs:
                 with:
                     name: cypress-screenshots
                     path: ./screenshots
+            -   name: Upload Cypress snapshot diffs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v4
+                with:
+                    name: cypress-snapshot-diffs
+                    path: ./snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -666,6 +672,12 @@ jobs:
                 with:
                     name: cypress-screenshots
                     path: ./screenshots
+            -   name: Upload Cypress snapshot diffs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v4
+                with:
+                    name: cypress-snapshot-diffs
+                    path: ./snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm

@@ -7,9 +7,6 @@
 
 # testing
 /coverage
-/cypress/cache
-/cypress/videos
-/cypress/screenshots
 
 # next.js
 /.next/

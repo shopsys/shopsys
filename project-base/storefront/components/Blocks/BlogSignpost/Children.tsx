@@ -9,21 +9,14 @@ type ChildrenProps = {
     itemLevel: number;
 };
 
-const TEST_IDENTIFIER = 'blocks-blogsignpost-children-';
-
 export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => (
     <>
-        {blogCategory.children?.map((blogCategoryChild, index) => {
+        {blogCategory.children?.map((blogCategoryChild) => {
             const isActive = activeItem === blogCategoryChild.uuid;
 
             return (
                 <Fragment key={blogCategoryChild.uuid}>
-                    <BlogSignpostItem
-                        dataTestId={TEST_IDENTIFIER + index}
-                        href={blogCategoryChild.link}
-                        isActive={isActive}
-                        itemLevel={itemLevel}
-                    >
+                    <BlogSignpostItem href={blogCategoryChild.link} isActive={isActive} itemLevel={itemLevel}>
                         <BlogSignpostIcon isActive={isActive} />
                         {blogCategoryChild.name}
                     </BlogSignpostItem>

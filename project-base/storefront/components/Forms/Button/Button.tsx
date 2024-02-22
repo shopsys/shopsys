@@ -12,13 +12,13 @@ export type ButtonProps = NativeButtonProps & {
 
 export const Button: FC<ButtonProps> = forwardRef(
     (
-        { children, dataTestId, className, isDisabled, isWithDisabledLook, size, variant, ...props },
+        { children, tid, className, isDisabled, isWithDisabledLook, size, variant, ...props },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _,
     ) => {
         return (
             <button
-                data-testid={dataTestId}
+                tid={tid}
                 type="button"
                 className={twMergeCustom(
                     'inline-flex w-auto cursor-pointer items-center justify-center gap-2 rounded text-center font-bold uppercase outline-none transition-all hover:no-underline',

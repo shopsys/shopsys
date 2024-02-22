@@ -8,8 +8,6 @@ type ProductCompareButtonProps = {
     toggleProductInComparison: () => void;
 };
 
-const TEST_IDENTIFIER = 'compare-button';
-
 export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     className,
     isWithText,
@@ -21,7 +19,6 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     return (
         <div
             className={twMergeCustom('flex cursor-pointer items-center gap-2 p-2', className)}
-            data-testid={TEST_IDENTIFIER}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             onClick={toggleProductInComparison}
         >

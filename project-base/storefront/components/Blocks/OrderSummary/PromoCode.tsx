@@ -14,20 +14,16 @@ type PromoCodeProps = {
     discount: PriceFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'blocks-ordersummary-promocode';
-
 export const PromoCode: FC<PromoCodeProps> = ({ discount, promoCode }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (
-        <OrderSummaryRowWrapper dataTestId={TEST_IDENTIFIER}>
+        <OrderSummaryRowWrapper>
             <OrderSummaryContent>
                 <OrderSummaryRow>
-                    <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-promocode-name'}>
-                        {`${t('Promo code')}: ${promoCode}`}
-                    </OrderSummaryTextAndImage>
-                    <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-promocode-discount'}>
+                    <OrderSummaryTextAndImage>{`${t('Promo code')}: ${promoCode}`}</OrderSummaryTextAndImage>
+                    <OrderSummaryPrice>
                         <strong>-{formatPrice(discount.priceWithVat)}</strong>
                     </OrderSummaryPrice>
                 </OrderSummaryRow>

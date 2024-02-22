@@ -23,8 +23,6 @@ type FilterGroupGenericProps = {
     defaultNumberOfShownItems: number;
 };
 
-const getDataTestId = (filterField: FilterFieldType) => 'blocks-product-filter-filtergroup-' + filterField;
-
 export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     title,
     options,
@@ -56,7 +54,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     };
 
     return (
-        <FilterGroupWrapper dataTestId={getDataTestId(filterField)}>
+        <FilterGroupWrapper>
             <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>
@@ -69,11 +67,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                                 const isDisabled = option.count === 0 && !isChecked;
 
                                 return (
-                                    <FilterGroupContentItem
-                                        key={option.uuid}
-                                        dataTestId={getDataTestId(filterField) + '-' + index}
-                                        isDisabled={isDisabled}
-                                    >
+                                    <FilterGroupContentItem key={option.uuid} isDisabled={isDisabled}>
                                         <Checkbox
                                             count={option.count}
                                             disabled={isDisabled}

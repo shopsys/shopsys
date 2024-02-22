@@ -3,8 +3,6 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 
-const TEST_IDENTIFIER = 'blocks-freetransport';
-
 export const FreeTransport: FC = () => {
     const { cart } = useCurrentCart();
     const { t } = useTranslation();
@@ -19,7 +17,7 @@ export const FreeTransport: FC = () => {
 
     if (parseInt(amount) > 0) {
         return (
-            <Wrapper dataTestId={TEST_IDENTIFIER}>
+            <Wrapper>
                 <Trans
                     i18nKey="FreeTransportAmountLeft"
                     values={{ amountFormatted: amountFormatted }}
@@ -32,17 +30,14 @@ export const FreeTransport: FC = () => {
     }
 
     return (
-        <Wrapper dataTestId={TEST_IDENTIFIER}>
+        <Wrapper>
             <strong>{t('Your delivery and payment is now free of charge!')}</strong>
         </Wrapper>
     );
 };
 
-const Wrapper: FC = ({ children, dataTestId }) => (
-    <div
-        className="my-2 block rounded bg-greenVeryLight px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-greenDark"
-        data-testid={dataTestId}
-    >
+const Wrapper: FC = ({ children }) => (
+    <div className="my-2 block rounded bg-greenVeryLight px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-greenDark">
         {children}
     </div>
 );

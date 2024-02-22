@@ -3,21 +3,21 @@ import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
-export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
-    <li className={className} data-testid={dataTestId} title={title}>
+export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, title }) => (
+    <li className={className} title={title}>
         {children}
     </li>
 );
 
 type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string; type?: PageType };
 
-export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, dataTestId }) => {
+export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
     if (href) {
         return (
             <ExtendedNextLink
                 className="block py-3 px-5 text-sm text-dark no-underline"
-                data-testid={dataTestId}
                 href={href}
+                tid={tid}
                 type={type}
                 onClick={onClick}
             >
@@ -27,7 +27,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
     }
 
     return (
-        <a className="block py-3 px-5 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
+        <a className="block py-3 px-5 text-sm text-dark no-underline" tid={tid} onClick={onClick}>
             {children}
         </a>
     );
@@ -38,13 +38,13 @@ const menuIconicItemLinkTwClass =
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, className, dataTestId, href, title, type, onClick }, _) => {
+    ({ children, className, tid, href, title, type, onClick }, _) => {
         if (href) {
             return (
                 <ExtendedNextLink
                     className={twMergeCustom(menuIconicItemLinkTwClass, className)}
-                    data-testid={dataTestId}
                     href={href}
+                    tid={tid}
                     title={title}
                     type={type}
                     onClick={onClick}
@@ -57,7 +57,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         return (
             <div
                 className={twMergeCustom(menuIconicItemLinkTwClass, className)}
-                data-testid={dataTestId}
+                tid={tid}
                 title={title}
                 onClick={onClick}
             >

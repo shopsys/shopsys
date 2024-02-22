@@ -24,7 +24,6 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
     required,
     value,
     onChange,
-    dataTestId,
 }) => (
     <ColorLabelWrapper
         bgColor={bgColor}
@@ -38,7 +37,6 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
             aria-label={label}
             checked={value}
             className="peer sr-only"
-            data-testid={dataTestId}
             disabled={disabled}
             id={id}
             name={name}

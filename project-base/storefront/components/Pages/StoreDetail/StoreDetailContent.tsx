@@ -22,8 +22,6 @@ type StoreDetailContentProps = {
     store: StoreDetailFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'pages-storedetail';
-
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const { t } = useTranslation();
     const storeCoordinates = createMapMarker(store.locationLatitude, store.locationLongitude);
@@ -33,7 +31,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
 
     return (
-        <Webline className="mb-10" dataTestId={TEST_IDENTIFIER}>
+        <Webline className="mb-10">
             <div className="flex flex-col vl:flex-row vl:gap-5">
                 <div className="text-center vl:order-2 vl:flex-1">
                     <h1 className="mb-3">{store.storeName}</h1>

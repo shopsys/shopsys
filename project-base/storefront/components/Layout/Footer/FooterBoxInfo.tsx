@@ -13,15 +13,13 @@ const dummyData = {
     opening: 'Po - Út, 10 - 16 hod',
 };
 
-const TEST_IDENTIFIER = 'layout-footer-footerboxinfo';
-
 export const FooterBoxInfo: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <div className="relative mb-11 flex items-center lg:mb-24" data-testid={TEST_IDENTIFIER}>
+        <div className="relative mb-11 flex items-center lg:mb-24">
             <Image
                 alt={t('Need advice?')}
                 className="absolute left-0 bottom-0 block h-12 w-12 translate-y-1/2 lg:h-16 lg:w-16"

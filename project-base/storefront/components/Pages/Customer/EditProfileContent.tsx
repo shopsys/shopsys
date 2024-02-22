@@ -37,8 +37,6 @@ type EditProfileContentProps = {
     currentCustomerUser: CurrentCustomerType;
 };
 
-const TEST_IDENTIFIER = 'form-edit-profile';
-
 export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustomerUser }) => {
     const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutationApi();
@@ -177,7 +175,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             disabled: true,
                             type: 'email',
                             autoComplete: 'email',
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.email.name,
                         }}
                     />
                     <FormLine bottomGap>
@@ -202,7 +199,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'given-name',
-                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name,
                             }}
                         />
                         <TextInputControlled
@@ -219,7 +215,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'family-name',
-                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name,
                             }}
                         />
                     </FormColumn>
@@ -233,7 +228,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             required: true,
                             type: 'tel',
                             autoComplete: 'tel',
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
                         }}
                     />
                     <CheckboxControlled
@@ -242,7 +236,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         name={formMeta.fields.newsletterSubscription.name}
                         checkboxProps={{
                             label: formMeta.fields.newsletterSubscription.label,
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name,
                         }}
                         render={(checkbox) => (
                             <FormLine bottomGap>
@@ -257,7 +250,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         name={formMeta.fields.passwordOld.name}
                         passwordInputProps={{
                             label: formMeta.fields.passwordOld.label,
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name,
                         }}
                         render={(passwordInput) => (
                             <FormColumn>
@@ -274,7 +266,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             name={formMeta.fields.passwordFirst.name}
                             passwordInputProps={{
                                 label: formMeta.fields.passwordFirst.label,
-                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name,
                             }}
                             render={(passwordInput) => (
                                 <FormLine bottomGap className="w-full flex-none lg:w-1/2">
@@ -288,7 +279,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             name={formMeta.fields.passwordSecond.name}
                             passwordInputProps={{
                                 label: formMeta.fields.passwordSecond.label,
-                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name,
                             }}
                             render={(passwordInput) => (
                                 <FormLine bottomGap className="w-full flex-none lg:w-1/2">
@@ -310,7 +300,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     required: false,
                                     type: 'text',
                                     autoComplete: 'organization',
-                                    dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name,
                                 }}
                             />
                             <TextInputControlled
@@ -322,7 +311,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     label: formMeta.fields.companyNumber.label,
                                     required: false,
                                     type: 'text',
-                                    dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name,
                                 }}
                             />
                             <TextInputControlled
@@ -334,7 +322,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     label: formMeta.fields.companyTaxNumber.label,
                                     required: false,
                                     type: 'text',
-                                    dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name,
                                 }}
                             />
                         </>
@@ -350,7 +337,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             required: true,
                             type: 'text',
                             autoComplete: 'street-address',
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.street.name,
                         }}
                     />
                     <FormColumn>
@@ -364,7 +350,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'address-level2',
-                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.city.name,
                             }}
                         />
                         <TextInputControlled
@@ -381,7 +366,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'postal-code',
-                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name,
                             }}
                         />
                     </FormColumn>
@@ -391,7 +375,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             render={({ fieldState: { invalid, error }, field }) => (
                                 <>
                                     <Select
-                                        dataTestId={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
                                         hasError={invalid}
                                         label={formMeta.fields.country.label}
                                         options={countriesAsSelectOptions}

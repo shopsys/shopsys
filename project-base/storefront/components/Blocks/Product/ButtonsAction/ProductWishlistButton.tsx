@@ -12,8 +12,6 @@ type ProductCompareButtonProps = {
     toggleProductInWishlist: () => void;
 };
 
-const TEST_IDENTIFIER = 'wishlist-button';
-
 export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> = ({
     className,
     isWithText,
@@ -25,7 +23,6 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     return (
         <div
             className={twMergeCustom('flex cursor-pointer items-center gap-2 p-2', className)}
-            data-testid={TEST_IDENTIFIER}
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             onClick={toggleProductInWishlist}
         >

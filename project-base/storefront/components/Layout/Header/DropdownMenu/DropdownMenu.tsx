@@ -15,8 +15,6 @@ type DropdownMenuProps = {
     onMenuToggleHandler: () => void;
 };
 
-const TEST_IDENTIFIER = 'layout-header-dropdownmenu';
-
 export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
     const [{ data: navigationData }] = useNavigationQueryApi();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
@@ -48,7 +46,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
     };
 
     return (
-        <div className="transition-all" data-testid={TEST_IDENTIFIER}>
+        <div className="transition-all">
             <CSSTransition unmountOnExit classNames="dropdown" in={isMenuOpened} timeout={300} onEntering={calcHeight}>
                 <DropdownMenuContext.Provider value={{ slideRight, onMenuToggleHandler }}>
                     <div

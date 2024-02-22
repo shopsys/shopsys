@@ -1,3 +1,4 @@
+import { TIDs } from 'cypress/tids';
 import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
@@ -11,8 +12,6 @@ type SpinboxProps = {
     onChangeValueCallback?: (currentValue: number) => void;
     size?: 'default' | 'small';
 };
-
-const TEST_IDENTIFIER = 'forms-spinbox-';
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
     ({ min, max, onChangeValueCallback, step, defaultValue, size, id }, spinboxForwardedRef) => {
@@ -89,7 +88,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const content = (
             <>
                 <SpinboxButton
-                    dataTestId={TEST_IDENTIFIER + 'decrease'}
+                    tid={TIDs.forms_spinbox_decrease}
                     title={t('Decrease')}
                     onClick={() => onChangeValueHandler(-step)}
                     onMouseDown={() => setIsHoldingDecrease(true)}
@@ -102,7 +101,6 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
                     className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-dark outline-none"
-                    data-testid={TEST_IDENTIFIER + 'input'}
                     defaultValue={defaultValue}
                     max={max}
                     min={min}
@@ -112,7 +110,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 />
 
                 <SpinboxButton
-                    dataTestId={TEST_IDENTIFIER + 'increase'}
+                    tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}
                     onClick={() => onChangeValueHandler(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}
@@ -150,10 +148,9 @@ type SpinboxButtonProps = {
     title: string;
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, dataTestId, ...props }) => (
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, ...props }) => (
     <button
         className="flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-dark outline-none"
-        data-testid={dataTestId}
         {...props}
     >
         {children}

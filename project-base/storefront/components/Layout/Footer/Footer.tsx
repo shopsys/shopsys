@@ -10,15 +10,13 @@ type FooterProps = {
     simpleFooter?: boolean;
 };
 
-const FOOTER_TEST_IDENTIFIER = 'layout-footer';
-
 export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
 
     return (
-        <div className="relative mt-auto" data-testid={FOOTER_TEST_IDENTIFIER}>
+        <div className="relative mt-auto">
             <div className="flex flex-col pt-5 pb-11 lg:py-11">
                 {!simpleFooter && (
                     <>

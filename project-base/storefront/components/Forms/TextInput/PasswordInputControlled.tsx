@@ -12,7 +12,6 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type PasswordInputProps = NativeProps & {
     label: string;
     inputSize?: 'small' | 'default';
-    dataTestId?: string;
 };
 
 type PasswordInputControlledProps = {
@@ -34,7 +33,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         fieldState: { invalid, error },
         field,
     } = useController({ name, control });
-    const passwordInputId = formName + name;
+    const passwordInputId = formName + '-' + name;
 
     const [inputType, setInputType] = useState<'text' | 'password'>('password');
 
@@ -46,7 +45,6 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         <>
             <TextInput
                 required
-                dataTestId={passwordInputProps.dataTestId}
                 hasError={invalid}
                 id={passwordInputId}
                 inputSize={passwordInputProps.inputSize}

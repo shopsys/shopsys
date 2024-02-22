@@ -1,5 +1,6 @@
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Portal } from 'components/Basic/Portal/Portal';
+import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useKeypress } from 'hooks/useKeyPress';
 import dynamic from 'next/dynamic';
@@ -9,11 +10,10 @@ const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((c
 type PopupProps = {
     onCloseCallback: () => void;
     hideCloseButton?: boolean;
+    contentClassName?: string;
 };
 
-const TEST_IDENTIFIER = 'layout-popup';
-
-export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButton, className }) => {
+export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButton, className, contentClassName }) => {
     useKeypress('Escape', onCloseCallback);
 
     return (
@@ -21,8 +21,8 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
             <Overlay isActive onClick={onCloseCallback} />
             <div
                 aria-modal
-                data-testid={TEST_IDENTIFIER}
                 role="dialog"
+                tid={TIDs.layout_popup}
                 className={twMergeCustom(
                     'fixed top-1/2 left-1/2 z-aboveOverlay flex max-h-full max-w-screen-lg -translate-x-1/2 -translate-y-1/2 cursor-auto flex-col rounded bg-creamWhite p-1 shadow-2xl transition-opacity',
                     className,
@@ -38,7 +38,7 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
                         </button>
                     </div>
                 )}
-                <div className="p-4">{children}</div>
+                <div className={twMergeCustom('p-4', contentClassName)}>{children}</div>
             </div>
         </Portal>
     );

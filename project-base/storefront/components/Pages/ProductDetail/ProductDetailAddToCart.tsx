@@ -2,6 +2,7 @@ import { CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
+import { TIDs } from 'cypress/tids';
 import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
@@ -13,8 +14,6 @@ import { useRef, useState } from 'react';
 type ProductDetailAddToCartProps = {
     product: ProductDetailFragmentApi;
 };
-
-const TEST_IDENTIFIER = 'pages-productdetail-addtocart';
 
 const AddToCartPopup = dynamic(() =>
     import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
@@ -42,10 +41,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
     return (
         <>
-            <div className="flex flex-col gap-4 rounded bg-blueLight p-3" data-testid={TEST_IDENTIFIER}>
-                <div className="text-2xl font-bold text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
-                    {formatPrice(product.price.priceWithVat)}
-                </div>
+            <div className="flex flex-col gap-4 rounded bg-blueLight p-3">
+                <div className="text-2xl font-bold text-primary">{formatPrice(product.price.priceWithVat)}</div>
                 {product.isSellingDenied ? (
                     <p>{t('This item can no longer be purchased')}</p>
                 ) : (
@@ -62,8 +59,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                             <div className="ml-2 flex-1">
                                 <Button
                                     className="w-full"
-                                    dataTestId={TEST_IDENTIFIER + '-button'}
                                     isDisabled={fetching}
+                                    tid={TIDs.pages_productdetail_addtocart_button}
                                     variant="primary"
                                     onClick={onAddToCartHandler}
                                 >

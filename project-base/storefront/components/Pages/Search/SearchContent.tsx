@@ -1,6 +1,7 @@
 import { ProductsSearch } from './ProductsSearch';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SkeletonPageProductsList } from 'components/Blocks/Skeleton/SkeletonPageProductsList';
+import { TIDs } from 'cypress/tids';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
@@ -13,8 +14,6 @@ type SearchContentProps = {
     searchResults: SearchQueryApi | undefined;
     fetching: boolean;
 };
-
-const TEST_IDENTIFIER = 'search-results';
 
 export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching }) => {
     const router = useRouter();
@@ -31,7 +30,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
 
     return (
         <>
-            <h1 className="mb-3" data-testid={`${TEST_IDENTIFIER}-heading`}>{`${t(
+            <h1 className="mb-3" tid={TIDs.search_results_heading}>{`${t(
                 'Search results for',
             )} "${getStringFromUrlQuery(router.query.q)}"`}</h1>
             {isFetchingInitialData ? (

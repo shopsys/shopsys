@@ -8,7 +8,7 @@ import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 const Index: FC = () => (
     <CommonLayout title="Customer">
         <Webline>
-            <ArticleTitle dataTestId="">Blog or Article title</ArticleTitle>
+            <ArticleTitle>Blog or Article title</ArticleTitle>
             <div className="px-5">
                 <div className="mb-12 flex w-full flex-col">
                     <div className="mb-2 text-left text-xs font-semibold text-grey">

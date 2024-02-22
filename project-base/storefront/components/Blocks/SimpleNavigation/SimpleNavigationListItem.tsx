@@ -15,14 +15,14 @@ type SimpleNavigationListItemProps = {
 export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     listedItem,
     linkType,
-    dataTestId,
+    tid,
     className,
 }) => {
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
     const href = getStringWithoutTrailingSlash(listedItem.slug) + '/';
 
     return (
-        <li data-testid={dataTestId}>
+        <li tid={tid}>
             <ExtendedNextLink
                 href={href}
                 type={linkType}

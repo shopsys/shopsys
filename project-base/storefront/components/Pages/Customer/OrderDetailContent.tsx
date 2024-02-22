@@ -4,6 +4,7 @@ import { OrderStatus } from 'components/Blocks/OrderStatus/OrderStatus';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
+import { TIDs } from 'cypress/tids';
 import { OrderDetailFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
@@ -21,8 +22,6 @@ const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((componen
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;
 };
-
-const TEST_IDENTIFIER = 'pages-customer-orderdetail-';
 
 export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
     const { t } = useTranslation();
@@ -42,7 +41,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
             <Webline className="mb-2">
                 <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
                     <div className="w-1/5" />
-                    <h1 className="mb-3 lg:mb-0">
+                    <h1 className="mb-3 lg:mb-0" tid={TIDs.order_detail_number}>
                         {t('Order number')} {order.number}
                     </h1>
                     <div className="flex items-center justify-end lg:w-1/5">
@@ -61,8 +60,10 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             <Table className="border-0 p-0">
                                 <Row>
                                     <CellMinor>{t('Creation date')}</CellMinor>
-                                    <Cell align="right" dataTestId={TEST_IDENTIFIER + 'creationDate'}>
-                                        {formatDateAndTime(order.creationDate)}
+                                    <Cell align="right">
+                                        <span tid={TIDs.order_detail_creation_date}>
+                                            {formatDateAndTime(order.creationDate)}
+                                        </span>
                                     </Cell>
                                 </Row>
                             </Table>
@@ -74,7 +75,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 <Table className="border-0 p-0">
                                     <Row>
                                         <CellMinor>{t('Package number')}</CellMinor>
-                                        <Cell align="right" dataTestId={TEST_IDENTIFIER + 'trackingUrl'}>
+                                        <Cell align="right">
                                             {order.trackingUrl ? (
                                                 <ExtendedNextLink href={order.trackingUrl} target="_blank">
                                                     {order.trackingNumber}
@@ -93,7 +94,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 <ColumnHeader>{t('Your note')}</ColumnHeader>
                                 <Table>
                                     <Row>
-                                        <Cell dataTestId={TEST_IDENTIFIER + 'note'}>{order.note}</Cell>
+                                        <Cell>{order.note}</Cell>
                                     </Row>
                                 </Table>
                             </Cell>
@@ -129,24 +130,18 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                     <>
                                         <Row>
                                             <CellMinor>{t('Company name')}</CellMinor>
-                                            <Cell dataTestId={TEST_IDENTIFIER + 'companyName'}>
-                                                {order.companyName}
-                                            </Cell>
+                                            <Cell>{order.companyName}</Cell>
                                         </Row>
 
                                         <Row>
                                             <CellMinor>{t('Company number')}</CellMinor>
-                                            <Cell dataTestId={TEST_IDENTIFIER + 'companyNumber'}>
-                                                {order.companyNumber}
-                                            </Cell>
+                                            <Cell>{order.companyNumber}</Cell>
                                         </Row>
 
                                         {!!order.companyTaxNumber && (
                                             <Row>
                                                 <CellMinor>{t('Tax number')}</CellMinor>
-                                                <Cell dataTestId={TEST_IDENTIFIER + 'companyTaxNumber'}>
-                                                    {order.companyTaxNumber}
-                                                </Cell>
+                                                <Cell>{order.companyTaxNumber}</Cell>
                                             </Row>
                                         )}
                                     </>
@@ -156,44 +151,44 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                     <>
                                         <Row>
                                             <CellMinor>{t('First name')}</CellMinor>
-                                            <Cell dataTestId={TEST_IDENTIFIER + 'firstName'}>{order.firstName}</Cell>
+                                            <Cell>{order.firstName}</Cell>
                                         </Row>
 
                                         <Row>
                                             <CellMinor>{t('Last name')}</CellMinor>
-                                            <Cell dataTestId={TEST_IDENTIFIER + 'lastName'}>{order.lastName}</Cell>
+                                            <Cell>{order.lastName}</Cell>
                                         </Row>
                                     </>
                                 )}
 
                                 <Row>
                                     <CellMinor>{t('Email')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'email'}>{order.email}</Cell>
+                                    <Cell>{order.email}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Phone')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'telephone'}>{order.telephone}</Cell>
+                                    <Cell>{order.telephone}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Street and house no.')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'street'}>{order.street}</Cell>
+                                    <Cell>{order.street}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('City')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'city'}>{order.city}</Cell>
+                                    <Cell>{order.city}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Postcode')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'postcode'}>{order.postcode}</Cell>
+                                    <Cell>{order.postcode}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Country')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'country'}>{order.country.name}</Cell>
+                                    <Cell>{order.country.name}</Cell>
                                 </Row>
                             </Table>
                         </Cell>
@@ -204,56 +199,44 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             <Table className="border-0 p-0">
                                 <Row>
                                     <CellMinor>{t('First name')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryFirstName'}>
-                                        {order.deliveryFirstName}
-                                    </Cell>
+                                    <Cell>{order.deliveryFirstName}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Last name')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryLastName'}>
-                                        {order.deliveryLastName}
-                                    </Cell>
+                                    <Cell>{order.deliveryLastName}</Cell>
                                 </Row>
 
                                 {!!order.deliveryCompanyName && (
                                     <Row>
                                         <CellMinor>{t('Company name')}</CellMinor>
-                                        <Cell dataTestId={TEST_IDENTIFIER + 'deliveryCompanyName'}>
-                                            {order.deliveryCompanyName}
-                                        </Cell>
+                                        <Cell>{order.deliveryCompanyName}</Cell>
                                     </Row>
                                 )}
 
                                 <Row>
                                     <CellMinor>{t('Phone')}:</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryTelephone'}>
-                                        {order.deliveryTelephone}
-                                    </Cell>
+                                    <Cell>{order.deliveryTelephone}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Street and house no.')}:</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryStreet'}>{order.deliveryStreet}</Cell>
+                                    <Cell>{order.deliveryStreet}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('City')}:</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryCity'}>{order.deliveryCity}</Cell>
+                                    <Cell>{order.deliveryCity}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Postcode')}:</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryPostcode'}>
-                                        {order.deliveryPostcode}
-                                    </Cell>
+                                    <Cell>{order.deliveryPostcode}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Country')}:</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryCountry'}>
-                                        {order.deliveryCountry?.name}
-                                    </Cell>
+                                    <Cell>{order.deliveryCountry?.name}</Cell>
                                 </Row>
                             </Table>
                         </Cell>
@@ -278,31 +261,19 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             }
                         >
                             {order.items.map((item, index) => (
-                                <Row key={index} dataTestId={TEST_IDENTIFIER + 'item-' + index}>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'item-name'}>{item.name}</Cell>
-                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-unitprice'}>
-                                        {formatPrice(item.unitPrice.priceWithVat)}
-                                    </Cell>
-                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-quantity'}>
+                                <Row key={index}>
+                                    <Cell>{item.name}</Cell>
+                                    <Cell className="text-right">{formatPrice(item.unitPrice.priceWithVat)}</Cell>
+                                    <Cell className="text-right">
                                         {item.quantity} {item.unit}
                                     </Cell>
-                                    <Cell className="nowrap text-right" dataTestId={TEST_IDENTIFIER + 'item-vat'}>
-                                        {parseFloat(item.vatRate)} %
-                                    </Cell>
-                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-price'}>
-                                        {formatPrice(item.totalPrice.priceWithoutVat)}
-                                    </Cell>
-                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-pricevat'}>
-                                        {formatPrice(item.totalPrice.priceWithVat)}
-                                    </Cell>
+                                    <Cell className="nowrap text-right">{parseFloat(item.vatRate)} %</Cell>
+                                    <Cell className="text-right">{formatPrice(item.totalPrice.priceWithoutVat)}</Cell>
+                                    <Cell className="text-right">{formatPrice(item.totalPrice.priceWithVat)}</Cell>
                                 </Row>
                             ))}
                             <Row>
-                                <Cell
-                                    className="w-full text-right"
-                                    colSpan={6}
-                                    dataTestId={TEST_IDENTIFIER + 'ordet-total-pricevat'}
-                                >
+                                <Cell className="w-full text-right" colSpan={6}>
                                     <b>
                                         {t('Total price including VAT')}: {formatPrice(order.totalPrice.priceWithVat)}
                                     </b>

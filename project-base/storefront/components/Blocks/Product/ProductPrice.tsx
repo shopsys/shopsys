@@ -6,14 +6,12 @@ type ProductPriceProps = {
     productPrice: ProductPriceFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-price';
-
 export const ProductPrice: FC<ProductPriceProps> = ({ productPrice }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (
-        <div className="text-lg font-bold text-primary" data-testid={TEST_IDENTIFIER}>
+        <div className="text-lg font-bold text-primary">
             {productPrice.isPriceFrom && t('From') + '\u00A0'}
             {formatPrice(productPrice.priceWithVat)}
         </div>

@@ -39,8 +39,6 @@ const getStep = (min: number, max: number): number => {
     return decimals === 0 ? 1 : Math.pow(10, -decimals);
 };
 
-const TEST_IDENTIFIER = 'basic-rangeslider';
-
 export const RangeSlider: FC<RangeSliderProps> = ({
     min,
     max,
@@ -173,13 +171,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     }, [getPercent, maxValueThumb, minValueThumb]);
 
     return (
-        <div
-            className="relative mb-10 -mt-5 flex h-12 w-full items-center justify-center p-2"
-            data-testid={TEST_IDENTIFIER}
-        >
+        <div className="relative mb-10 -mt-5 flex h-12 w-full items-center justify-center p-2">
             <RangeSliderThumb
                 aria-label={t('from')}
-                data-testid={TEST_IDENTIFIER + '-left-thumb'}
                 disabled={isDisabled}
                 isActive={minValueThumb !== min}
                 max={max}
@@ -191,7 +185,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             />
             <RangeSliderThumb
                 aria-label={t('to')}
-                data-testid={TEST_IDENTIFIER + '-right-thumb'}
                 disabled={isDisabled}
                 isActive={maxValueThumb !== max}
                 max={max}
@@ -207,13 +200,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     className={twJoin('absolute z-[2] h-1 rounded', isDisabled ? 'bg-greyLight' : 'bg-primary')}
                     ref={range}
                 />
-                <div
-                    className="absolute -left-2 mt-5 w-20 text-xs text-black"
-                    data-testid={TEST_IDENTIFIER + '-left-value'}
-                >
+                <div className="absolute -left-2 mt-5 w-20 text-xs text-black">
                     <TextInput
                         disabled={isDisabled}
-                        id={TEST_IDENTIFIER + '-left-value'}
+                        id="basic-rangeslider-left-value"
                         inputSize="small"
                         label={t('from')}
                         type="number"
@@ -223,13 +213,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onKeyDown={onKeyDownHandler}
                     />
                 </div>
-                <div
-                    className="absolute -right-2 mt-5 w-20 text-xs text-dark"
-                    data-testid={TEST_IDENTIFIER + '-right-value'}
-                >
+                <div className="absolute -right-2 mt-5 w-20 text-xs text-dark">
                     <TextInput
                         disabled={isDisabled}
-                        id={TEST_IDENTIFIER + '-right-value'}
+                        id="basic-rangeslider-right-value"
                         inputSize="small"
                         label={t('to')}
                         type="number"
@@ -248,7 +235,7 @@ type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
     isActive: boolean;
 };
 
-const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, disabled, ...props }) => {
+const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ isActive, disabled, ...props }) => {
     const webkitTwClass =
         '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
     const mozTwClass =
@@ -258,7 +245,6 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, dis
 
     return (
         <input
-            data-testid={dataTestId}
             disabled={disabled}
             type="range"
             className={twJoin(

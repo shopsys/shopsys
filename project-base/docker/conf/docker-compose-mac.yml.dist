@@ -48,6 +48,27 @@ services:
         ports:
             - "3000:3000"
 
+    storefront-cypress:
+        build:
+            context: ./storefront
+            dockerfile: ./docker/dev.Dockerfile
+            target: development
+        container_name: shopsys-framework-storefront-cypress
+        command:
+            - build
+        volumes:
+            - storefront:/home/node/app
+        healthcheck:
+            test: wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
+            start_period: 30s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        profiles:
+            - storefront-acceptance-tests
+        ports:
+            - "3000:3000"
+
     cypress:
         build:
             context: ./storefront/cypress
@@ -55,6 +76,7 @@ services:
         container_name: shopsys-framework-cypress
         volumes:
             - ./storefront/cypress:/app:delegated
+            - node_modules:/app/node_modules
         profiles:
             - storefront-acceptance-tests
         network_mode: "host"
@@ -171,6 +193,7 @@ volumes:
         driver: local
     postgres-data:
         driver: local
+    node_modules:
 
 x-mutagen:
     sync:

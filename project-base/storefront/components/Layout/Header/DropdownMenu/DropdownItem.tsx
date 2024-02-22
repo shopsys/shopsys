@@ -17,8 +17,6 @@ type DropdownItemProps = DropdownItemType & {
     columnCategoryChild?: NavigationSubCategoriesLinkFragmentApi['children'][number];
 };
 
-const TEST_IDENTIFIER = 'layout-header-dropdownmenu-item';
-
 export const DropdownItem: FC<DropdownItemProps> = ({
     navigationItem,
     variant,
@@ -54,7 +52,6 @@ export const DropdownItem: FC<DropdownItemProps> = ({
     return (
         <div
             className={twJoin('flex border-b border-greyLighter last:border-b-0', variant === 'small' && 'mx-8')}
-            data-testid={TEST_IDENTIFIER}
             onClick={scrollToTop}
         >
             <ExtendedNextLink

@@ -18,8 +18,6 @@ type ProductsListProps = {
     category?: CategoryDetailFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-list';
-
 const productListTwClass = 'relative mb-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 gap-y-6 pt-6';
 
 export const ProductsList: FC<ProductsListProps> = ({
@@ -41,7 +39,6 @@ export const ProductsList: FC<ProductsListProps> = ({
             <>
                 <ProductsListContent
                     className={productListTwClass}
-                    dataTestId={TEST_IDENTIFIER}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
                     products={products}
@@ -65,7 +62,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     }
 
     return (
-        <div className={productListTwClass} data-testid={TEST_IDENTIFIER}>
+        <div className={productListTwClass}>
             {createEmptyArray(calculatePageSize(currentLoadMore)).map((_, index) => (
                 <SkeletonModuleProductListItem key={index} />
             ))}

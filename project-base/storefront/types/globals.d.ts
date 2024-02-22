@@ -2,9 +2,15 @@ import { FunctionComponent, ReactNode } from 'react';
 
 export type FunctionComponentProps = {
     className?: string;
-    dataTestId?: string;
+    tid?: string;
     children?: ReactNode;
 };
+
+declare module 'react' {
+    interface HTMLAttributes<T> extends DOMAttributes<T> {
+        tid?: string;
+    }
+}
 
 declare global {
     type FC<P = object> = FunctionComponent<P & FunctionComponentProps>;

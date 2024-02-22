@@ -1,5 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
+import { TIDs } from 'cypress/tids';
 import { ImageFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { Translate } from 'next-translate';
@@ -14,8 +15,6 @@ type TransportAndPaymentSelectItemLabelProps = {
     pickupPlaceDetail?: ListedStoreFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'pages-order-selectitem-label';
-
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
     name,
     price,
@@ -28,29 +27,23 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     const formatPrice = useFormatPrice();
 
     return (
-        <div className="flex w-full flex-row items-center gap-3" data-testid={TEST_IDENTIFIER}>
+        <div className="flex w-full flex-row items-center gap-3">
             <div className="flex w-12  items-center">
                 <Image alt={image?.name ?? name} className="w-auto" height={48} src={image?.url} width={48} />
             </div>
 
             <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
                 <div>
-                    <div data-testid={TEST_IDENTIFIER + '-name'}>{name}</div>
+                    <div tid={TIDs.pages_order_selectitem_label_name}>{name}</div>
 
-                    {description && (
-                        <div className="text-greyLight" data-testid={TEST_IDENTIFIER + '-description'}>
-                            {description}
-                        </div>
-                    )}
+                    {description && <div className="text-greyLight">{description}</div>}
                 </div>
 
                 {pickupPlaceDetail && (
                     <div>
-                        <div className="text-greyLight" data-testid={TEST_IDENTIFIER + '-place'}>
-                            {pickupPlaceDetail.name}
-                        </div>
+                        <div className="text-greyLight">{pickupPlaceDetail.name}</div>
 
-                        <div className="text-greyLight" data-testid={TEST_IDENTIFIER + '-address'}>
+                        <div className="text-greyLight">
                             {pickupPlaceDetail.street +
                                 ', ' +
                                 pickupPlaceDetail.postcode +
@@ -65,20 +58,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 )}
 
                 {daysUntilDelivery !== undefined && (
-                    <div
-                        className="text-sm text-inStock lg:ml-auto lg:basis-36 lg:text-right"
-                        data-testid={TEST_IDENTIFIER + '-delivery'}
-                    >
+                    <div className="text-sm text-inStock lg:ml-auto lg:basis-36 lg:text-right">
                         {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                     </div>
                 )}
             </div>
 
             {price && (
-                <div
-                    className="shrink-0 text-right text-sm font-bold lg:basis-20"
-                    data-testid={TEST_IDENTIFIER + '-price'}
-                >
+                <div className="shrink-0 text-right text-sm font-bold lg:basis-20">
                     {formatPrice(price.priceWithVat)}
                 </div>
             )}

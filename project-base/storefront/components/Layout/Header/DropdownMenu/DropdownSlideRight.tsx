@@ -3,15 +3,12 @@ import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/Dropd
 import { useContext } from 'react';
 import { DropdownItemType } from 'types/dropdown';
 
-const TEST_IDENTIFIER = 'layout-header-dropdownmenu-slideright';
-
 export const DropdownSlideRight: FC<DropdownItemType> = (dropdownItemProps) => {
     const context = useContext(DropdownMenuContext);
 
     return (
         <span
             className="flex w-11 cursor-pointer items-center justify-center text-dark"
-            data-testid={TEST_IDENTIFIER}
             onClick={() => context.slideRight(dropdownItemProps)}
         >
             <ArrowIcon className="w-4 -rotate-90" />
