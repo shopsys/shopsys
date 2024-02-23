@@ -53,19 +53,19 @@ jobs:
                 uses: actions/upload-artifact@v4
                 with:
                     name: cypress-videos
-                    path: ./videos
+                    path: ./storefront/cypress/videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
                 with:
                     name: cypress-screenshots
-                    path: ./screenshots
+                    path: ./storefront/cypress/screenshots
             -   name: Upload Cypress snapshot diffs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
                 with:
                     name: cypress-snapshot-diffs
-                    path: ./snapshotDiffs
+                    path: ./storefront/cypress/snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -141,13 +141,19 @@ jobs:
                 uses: actions/upload-artifact@v4
                 with:
                     name: cypress-videos
-                    path: ./videos
+                    path: ./storefront/cypress/videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
                 with:
                     name: cypress-screenshots
-                    path: ./screenshots
+                    path: ./storefront/cypress/screenshots
+            -   name: Upload Cypress snapshot diffs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v4
+                with:
+                    name: cypress-snapshot-diffs
+                    path: ./storefront/cypress/snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
