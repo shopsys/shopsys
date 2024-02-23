@@ -46,6 +46,10 @@ jobs:
                 run: docker compose exec storefront pnpm run check
             -   name: Run storefront unit tests
                 run: docker compose exec storefront pnpm test--no-watch
+            -   name: Switch storefront to production mode
+                run: |
+                    docker compose down storefront
+                    docker compose up -d --wait storefront-cypress
             -   name: Run Cypress tests
                 run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts
@@ -134,6 +138,10 @@ jobs:
                 run: docker compose exec storefront pnpm run check
             -   name: Run storefront unit tests
                 run: docker compose exec storefront pnpm test--no-watch
+            -   name: Switch storefront to production mode
+                run: |
+                    docker compose down storefront
+                    docker compose up -d --wait storefront-cypress
             -   name: Run Cypress tests
                 run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts
