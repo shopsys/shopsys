@@ -134,8 +134,7 @@ test:storefront-acceptance:
         - docker-compose up -d
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
         - cd storefront
-        - docker build -f ./cypress/docker/Dockerfile --compress -t cypress .
-        - docker run --network host -v ${PWD}/cypress/:/app/ -i cypress
+        - docker-compose run cypress
     after_script:
         - docker-compose logs php-fpm > php-fpm-log.txt
         - docker-compose logs webserver > webserver-log.txt

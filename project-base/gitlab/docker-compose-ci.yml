@@ -42,6 +42,18 @@ services:
         ports:
             - "35729:35729"
 
+    cypress:
+        build:
+            context: ./storefront/cypress
+            dockerfile: ./docker/Dockerfile
+        container_name: shopsys-framework-cypress
+        volumes:
+            - ./storefront/cypress:/app
+            - node_modules:/app/node_modules
+        profiles:
+            - storefront-acceptance-tests
+        network_mode: "host"
+
     redis:
         image: redis:5.0-alpine
         container_name: shopsys-framework-redis
@@ -92,3 +104,4 @@ volumes:
         driver_opts:
             type: tmpfs
             device: tmpfs
+    node_modules:
