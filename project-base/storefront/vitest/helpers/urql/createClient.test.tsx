@@ -41,6 +41,7 @@ const QUERY_OBJECT = gql`
         }
     }
 `;
+const OPERATION_NAME = 'NotificationBars';
 const REQUEST_BODY =
     '{"operationName":"NotificationBars","query":"query NotificationBars @redisCache(ttl: 3600) {\\n  notificationBars {\\n    text\\n    __typename\\n  }\\n}","variables":{}}';
 
@@ -82,7 +83,7 @@ describe('createClient test', () => {
 
         await waitFor(() => {
             expect(mockRequestWithFetcher).toBeCalledWith(
-                publicGraphqlEndpoint,
+                publicGraphqlEndpoint + OPERATION_NAME,
                 expect.objectContaining({ body: REQUEST_BODY }),
             );
         });
@@ -102,7 +103,7 @@ describe('createClient test', () => {
         await client.query(QUERY_OBJECT, undefined).toPromise();
 
         expect(mockRequestWithFetcher).toBeCalledWith(
-            publicGraphqlEndpoint,
+            publicGraphqlEndpoint + OPERATION_NAME,
             expect.objectContaining({ body: REQUEST_BODY }),
         );
     });

@@ -1,5 +1,6 @@
 import {
-    changeDayOfWeekInApiResponses,
+    changeDayOfWeekInChangeTransportMutationApiResponse,
+    changeDayOfWeekInTransportsApiResponse,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
 } from './transportAndPaymentSupport';
@@ -25,7 +26,8 @@ describe('Transport select tests', () => {
     });
 
     it('should select personal pickup transport', () => {
-        changeDayOfWeekInApiResponses(1);
+        changeDayOfWeekInTransportsApiResponse(1);
+        changeDayOfWeekInChangeTransportMutationApiResponse(1);
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
         cy.visit(url.order.transportAndPayment);
 

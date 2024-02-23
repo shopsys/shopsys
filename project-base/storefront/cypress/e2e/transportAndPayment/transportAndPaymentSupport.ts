@@ -1,9 +1,7 @@
 import {
-    OpeningHoursFragmentApi,
     OpeningHoursOfDayApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from '../../../graphql/generated/index';
-import { CyHttpMessages } from 'cypress/types/net-stubbing';
 import { transport } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
@@ -24,42 +22,38 @@ export const changeSelectionOfPaymentByName = (paymentName: string) => {
     cy.getByTID([TIDs.pages_order_payment, TIDs.pages_order_selectitem_label_name]).contains(paymentName).click('left');
 };
 
-export const changeDayOfWeekInApiResponses = (dayOfWeek: number) => {
-    cy.intercept('POST', '/graphql/', (req) => {
+export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {
+    cy.intercept('POST', '/graphql/TransportsQuery', (req) => {
         req.reply((response) => {
-            tryChangingDayOfWeekInTransportsApiResponse(response, dayOfWeek);
-            tryChangingDayOfWeekInChangeTransportMutationApiResponse(response, dayOfWeek);
+            response?.body?.data?.transports?.forEach(
+                (transport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
+                    transport?.stores?.edges?.forEach((edge) => {
+                        if (edge?.node?.openingHours) {
+                            edge.node.openingHours.isOpen = true;
+                            edge.node.openingHours.dayOfWeek = dayOfWeek;
+                            edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
+                        }
+                    });
+                },
+            );
         });
     });
 };
 
-const tryChangingDayOfWeekInTransportsApiResponse = (
-    response: CyHttpMessages.IncomingHttpResponse,
-    dayOfWeek: number,
-) => {
-    response?.body?.data?.transports?.forEach((transport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-        transport?.stores?.edges?.forEach((edge) => {
-            if (edge?.node?.openingHours) {
-                edge.node.openingHours.isOpen = true;
-                edge.node.openingHours.dayOfWeek = dayOfWeek;
-                edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
-            }
+export const changeDayOfWeekInChangeTransportMutationApiResponse = (dayOfWeek: number) => {
+    cy.intercept('POST', '/graphql/ChangeTransportInCartMutation', (req) => {
+        req.reply((response) => {
+            (
+                response?.body?.data?.ChangeTransportInCart
+                    ?.transport as TransportWithAvailablePaymentsAndStoresFragmentApi
+            )?.stores?.edges?.forEach((edge) => {
+                if (edge?.node?.openingHours) {
+                    edge.node.openingHours.isOpen = true;
+                    edge.node.openingHours.dayOfWeek = dayOfWeek;
+                    edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
+                }
+            });
         });
-    });
-};
-
-const tryChangingDayOfWeekInChangeTransportMutationApiResponse = (
-    response: CyHttpMessages.IncomingHttpResponse,
-    dayOfWeek: number,
-) => {
-    (
-        response?.body?.data?.ChangeTransportInCart?.transport as TransportWithAvailablePaymentsAndStoresFragmentApi
-    )?.stores?.edges?.forEach((edge) => {
-        if (edge?.node?.openingHours) {
-            edge.node.openingHours.isOpen = true;
-            edge.node.openingHours.dayOfWeek = dayOfWeek;
-            edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
-        }
     });
 };
 
