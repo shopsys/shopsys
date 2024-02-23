@@ -21,7 +21,7 @@ return static function (ECSConfig $ecsConfig): void {
      * so we want to avoid private visibilities in the model namespace
      */
     $services = $ecsConfig->services();
-    $services->set('forbidden_private_visibility_fixer.frontend_api', ForbiddenPrivateVisibilityFixer::class)
+    $services->set('forbidden_private_visibility_fixer.persoo', ForbiddenPrivateVisibilityFixer::class)
         ->call('configure', [
             [
                 'analyzed_namespaces' => [

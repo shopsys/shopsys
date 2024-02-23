@@ -48,7 +48,7 @@ class FlagResolverMap extends ResolverMap
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @return string
      */
-    private function getSlug(Flag $flag): string
+    protected function getSlug(Flag $flag): string
     {
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
