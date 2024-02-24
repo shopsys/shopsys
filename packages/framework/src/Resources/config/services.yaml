@@ -1067,6 +1067,6 @@ services:
         arguments:
             - '%gopay_config%'
 
-    Shopsys\FrameworkBundle\Component\TwoLevelCache\TwoLevelCacheResetListener:
+    Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheResetListener:
         tags:
             - { name: doctrine.event_listener, event: onClear }
