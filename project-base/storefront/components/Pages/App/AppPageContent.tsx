@@ -7,7 +7,7 @@ import { isEnvironment } from 'helpers/isEnvironment';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
-import { useStoreHydration } from 'hooks/app/useStoreHydration';
+import { usePersistStoreHydration } from 'hooks/app/useStoreHydration';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
@@ -59,7 +59,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
         router.reload();
     });
 
-    useStoreHydration();
+    usePersistStoreHydration();
     useSetDomainConfig(pageProps.domainConfig);
     useAuthLoader();
     usePageLoader();
