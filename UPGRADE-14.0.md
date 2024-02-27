@@ -1427,6 +1427,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   check your custom code for usage of `publishedAt` field on blog article elasticsearch data and replace it with `publishDate`
     -   remember to immediately export blog articles to elasticsearch after the update using the `php bin/console shopsys:elasticsearch:data-export blog_article` command
     -   see #project-base-diff to update your project
+-   set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
