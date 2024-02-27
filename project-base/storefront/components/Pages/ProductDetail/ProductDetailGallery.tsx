@@ -31,7 +31,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
 
     return (
         <>
-            <div className="flex basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row">
+            <div key={productName} className="flex basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row">
                 <div className={twJoin('relative flex w-full justify-center vl:order-2')} data-src={mainImage?.url}>
                     <Image
                         priority
