@@ -1,9 +1,9 @@
 {
-    "name": "shopsys/luigis-box",
+    "name": "shopsys/brand-feed-luigis-box",
     "type": "library",
-    "description": "Shopsys Platform connector to Luigi's Box",
-    "keywords": ["api", "Shopsys Platform", "Luigis Box", "SSFW", "SSP"],
-    "license": "proprietary",
+    "description": "Shopsys Platform plugin interface for Luigis Box XML brand feed generation",
+    "keywords": ["Luigis Box", "brand feed", "XML feed", "plugin", "Shopsys Platform", "SSFW", "SSP"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Shopsys",
@@ -12,30 +12,32 @@
     ],
     "autoload": {
         "psr-4": {
-            "Shopsys\\LuigisBoxBundle\\": "src/"
+            "Shopsys\\BrandFeed\\LuigisBoxBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\LuigisBoxBundle\\": "tests/"
+            "Tests\\BrandFeed\\LuigisBoxBundle\\": "tests/"
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "doctrine/dbal": "^3.3.3",
+        "doctrine/doctrine-bundle": "^2.5.7",
+        "doctrine/orm": "^2.11.2",
+        "doctrine/persistence": "^2.4",
         "shopsys/form-types-bundle": "14.0.x-dev",
         "shopsys/framework": "14.0.x-dev",
-        "shopsys/frontend-api": "14.0.x-dev",
         "shopsys/migrations": "14.0.x-dev",
         "shopsys/plugin-interface": "14.0.x-dev",
-        "shopsys/article-feed-luigis-box": "14.0.x-dev",
-        "shopsys/brand-feed-luigis-box": "14.0.x-dev",
-        "shopsys/category-feed-luigis-box": "14.0.x-dev",
-        "shopsys/product-feed-luigis-box": "14.0.x-dev",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
-        "symfony/http-foundation": "^5.4",
+        "symfony/form": "^5.4",
         "symfony/http-kernel": "^5.4",
-        "symfony/routing": "^5.4"
+        "symfony/translation": "^5.4",
+        "twig/twig": "^3.5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",

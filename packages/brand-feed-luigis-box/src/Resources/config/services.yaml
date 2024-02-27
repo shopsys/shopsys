@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\BrandFeed\LuigisBoxBundle\:
+        resource: '../../*'
+
+    Shopsys\BrandFeed\LuigisBoxBundle\LuigisBoxBrandFeed:
+        tags:
+            - { name: shopsys.feed, hours: '*', minutes: '30' }

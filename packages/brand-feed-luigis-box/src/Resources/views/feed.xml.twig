@@ -1,0 +1,19 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<brands>
+{% endblock %}
+
+{% block item %}
+    <brand>
+        <identity>{{ item.identity }}</identity>
+        <name>{{ item.name }}</name>
+        <url>{{ item.url }}</url>
+        {% if item.imageUrl is not null -%}
+            <image_url>{{ item.imageUrl }}</image_url>
+        {% endif %}
+    </brand>
+{% endblock %}
+
+{% block end %}
+</brands>
+{% endblock %}

@@ -20,6 +20,7 @@ return [
     Shopsys\CategoryFeed\LuigisBoxBundle\ShopsysCategoryFeedLuigisBoxBundle::class => ['all' => true],
     Shopsys\ProductFeed\ZboziBundle\ShopsysProductFeedZboziBundle::class => ['all' => true],
     Shopsys\ProductFeed\HeurekaDeliveryBundle\ShopsysProductFeedHeurekaDeliveryBundle::class => ['all' => true],
+    Shopsys\BrandFeed\LuigisBoxBundle\ShopsysBrandFeedLuigisBoxBundle::class => ['all' => true],
     Shopsys\ProductFeed\LuigisBoxBundle\ShopsysProductFeedLuigisBoxBundle::class => ['all' => true],
     Shopsys\ArticleFeed\LuigisBoxBundle\ShopsysArticleFeedLuigisBoxBundle::class => ['all' => true],
     Shopsys\LuigisBoxBundle\ShopsysLuigisBoxBundle::class => ['all' => true],

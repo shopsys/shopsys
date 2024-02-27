@@ -26,6 +26,7 @@ get_all_packages() {
         product-feed-heureka-delivery \
         product-feed-luigis-box \
         article-feed-luigis-box \
+        brand-feed-luigis-box \
         plugin-interface \
         coding-standards \
         http-smoke-testing \

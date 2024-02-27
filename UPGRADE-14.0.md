@@ -1429,6 +1429,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
     -   see #project-base-diff to update your project
+-   add Luigi's Box brand feed ([#3045](https://github.com/shopsys/shopsys/pull/3045))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
