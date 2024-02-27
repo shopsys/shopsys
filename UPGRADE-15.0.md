@@ -59,6 +59,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     - see #project-base-diff to update your project
 -->
 
+-   set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
+    -   see #project-base-diff to update your project
+
 ## [Upgrade from v14.0.0 to v15.0.0-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...15.0)
 
 ### Storefront
