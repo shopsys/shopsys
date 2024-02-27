@@ -183,8 +183,6 @@ class Cart extends BaseCart
      */
     public function removePromoCodeById(int $promoCodeId): void
     {
-        $this->promoCodes->remove($promoCodeId);
-
         foreach ($this->promoCodes as $promoCode) {
             if ($promoCode->getId() === $promoCodeId) {
                 $this->promoCodes->removeElement($promoCode);
