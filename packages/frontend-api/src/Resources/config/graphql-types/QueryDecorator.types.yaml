@@ -43,6 +43,8 @@ QueryDecorator:
                 args:
                     search:
                         type: "String!"
+                    isAutocomplete:
+                        type: "Boolean!"
                 description: "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
             RegularProduct:
                 type: 'RegularProduct'

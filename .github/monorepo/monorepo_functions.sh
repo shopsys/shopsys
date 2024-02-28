@@ -33,7 +33,7 @@ get_all_packages() {
         migrations \
         monorepo-tools \
         php-image \
-        persoo \
+        luigis-box \
         project-base"
 }
 

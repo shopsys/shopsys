@@ -14,6 +14,11 @@
         {% if item.text is not null %}
             <text>{{ item.text }}</text>
         {% endif %}
+        {% if item.imageLinkS is not null -%}
+            <image_link_s>{{ item.imageLinkS }}</image_link_s>
+            <image_link_m>{{ item.imageLinkM }}</image_link_m>
+            <image_link_l>{{ item.imageLinkL }}</image_link_l>
+        {% endif -%}
     </article>
 {% endblock %}
 

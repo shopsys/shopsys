@@ -1,8 +1,8 @@
 {
-    "name": "shopsys/persoo",
+    "name": "shopsys/luigis-box",
     "type": "library",
-    "description": "Shopsys Platform connector to Persoo",
-    "keywords": ["api", "Shopsys Platform", "Persoo", "SSFW", "SSP"],
+    "description": "Shopsys Platform connector to Luigi's Box",
+    "keywords": ["api", "Shopsys Platform", "Luigis Box", "SSFW", "SSP"],
     "license": "proprietary",
     "authors": [
         {
@@ -12,12 +12,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Shopsys\\PersooBundle\\": "src/"
+            "Shopsys\\LuigisBoxBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\PersooBundle\\": "tests/"
+            "Tests\\LuigisBoxBundle\\": "tests/"
         }
     },
     "require": {

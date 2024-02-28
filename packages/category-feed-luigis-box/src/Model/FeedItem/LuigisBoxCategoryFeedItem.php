@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class LuigisBoxCategoryFeedItem implements FeedItemInterface
 {
-    protected const UNIQUE_IDENTIFIER_PREFIX = 'category-';
+    public const UNIQUE_IDENTIFIER_PREFIX = 'category-';
 
     /**
      * @param int $id
