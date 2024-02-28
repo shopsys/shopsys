@@ -41,6 +41,7 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
     {
         $productIds = [];
         $acknowledgers = [];
+        $exportScopes = [];
 
         /**
          * @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
@@ -49,10 +50,11 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
         foreach ($jobs as [$message, $ack]) {
             $productIds[] = $message->productId;
             $acknowledgers[] = $ack;
+            $exportScopes = [...$exportScopes, ...$message->exportScopes];
         }
 
         try {
-            $this->productRecalculationFacade->recalculate($productIds);
+            $this->productRecalculationFacade->recalculate($productIds, $exportScopes);
             $this->ackAll($acknowledgers);
         } catch (Throwable $e) {
             $this->logger->error($e->getMessage());

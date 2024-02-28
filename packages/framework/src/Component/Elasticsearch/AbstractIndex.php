@@ -22,17 +22,24 @@ abstract class AbstractIndex
     /**
      * @param int $domainId
      * @param array $restrictToIds
+     * @param string[] $fields
      * @return array
      */
-    abstract public function getExportDataForIds(int $domainId, array $restrictToIds): array;
+    abstract public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array;
 
     /**
      * @param int $domainId
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param string[] $fields
      * @return array
      */
-    abstract public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array;
+    abstract public function getExportDataForBatch(
+        int $domainId,
+        int $lastProcessedId,
+        int $batchSize,
+        array $fields = [],
+    ): array;
 
     /**
      * @return int

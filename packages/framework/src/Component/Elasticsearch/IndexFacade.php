@@ -93,42 +93,44 @@ class IndexFacade
 
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
-        $domainId = $indexDefinition->getDomainId();
-        $progressBar = $this->progressBarFactory->create(
-            $output,
-            $index->getTotalCount($indexDefinition->getDomainId()),
-        );
-
-        $exportedIds = [];
-        $lastProcessedId = 0;
-
-        do {
-            // detach objects from manager to prevent memory leaks
-            $this->entityManager->clear();
-            $currentBatchData = $index->getExportDataForBatch(
-                $domainId,
-                $lastProcessedId,
-                $index->getExportBatchSize(),
+        try {
+            $domainId = $indexDefinition->getDomainId();
+            $progressBar = $this->progressBarFactory->create(
+                $output,
+                $index->getTotalCount($indexDefinition->getDomainId()),
             );
-            $currentBatchSize = count($currentBatchData);
 
-            if ($currentBatchSize === 0) {
-                break;
-            }
+            $exportedIds = [];
+            $lastProcessedId = 0;
 
-            $this->indexRepository->bulkUpdate($indexDefinition->getIndexAlias(), $currentBatchData);
-            $progressBar->advance($currentBatchSize);
+            do {
+                // detach objects from manager to prevent memory leaks
+                $this->entityManager->clear();
+                $currentBatchData = $index->getExportDataForBatch(
+                    $domainId,
+                    $lastProcessedId,
+                    $index->getExportBatchSize(),
+                );
+                $currentBatchSize = count($currentBatchData);
 
-            $exportedIds = array_merge($exportedIds, array_keys($currentBatchData));
-            $lastProcessedId = array_key_last($currentBatchData);
-        } while ($currentBatchSize >= $index->getExportBatchSize());
+                if ($currentBatchSize === 0) {
+                    break;
+                }
 
-        $this->indexRepository->deleteNotPresent($indexDefinition, $exportedIds);
+                $this->indexRepository->bulkUpdate($indexDefinition->getIndexAlias(), $currentBatchData);
+                $progressBar->advance($currentBatchSize);
 
-        $progressBar->finish();
-        $output->writeln('');
+                $exportedIds = array_merge($exportedIds, array_keys($currentBatchData));
+                $lastProcessedId = array_key_last($currentBatchData);
+            } while ($currentBatchSize >= $index->getExportBatchSize());
 
-        $this->sqlLoggerFacade->reenableLogging();
+            $this->indexRepository->deleteNotPresent($indexDefinition, $exportedIds);
+
+            $progressBar->finish();
+            $output->writeln('');
+        } finally {
+            $this->sqlLoggerFacade->reenableLogging();
+        }
     }
 
     /**
@@ -230,33 +232,40 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param int[] $restrictToIds
+     * @param string[] $fields
      */
-    public function exportIds(AbstractIndex $index, IndexDefinition $indexDefinition, array $restrictToIds): void
-    {
+    public function exportIds(
+        AbstractIndex $index,
+        IndexDefinition $indexDefinition,
+        array $restrictToIds,
+        array $fields = [],
+    ): void {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
-        $indexAlias = $indexDefinition->getIndexAlias();
-        $domainId = $indexDefinition->getDomainId();
+        try {
+            $indexAlias = $indexDefinition->getIndexAlias();
+            $domainId = $indexDefinition->getDomainId();
 
-        $chunkedIdsToExport = array_chunk($restrictToIds, $index->getExportBatchSize());
+            $chunkedIdsToExport = array_chunk($restrictToIds, $index->getExportBatchSize());
 
-        foreach ($chunkedIdsToExport as $idsToExport) {
-            // detach objects from manager to prevent memory leaks
-            $this->entityManager->clear();
-            $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport);
+            foreach ($chunkedIdsToExport as $idsToExport) {
+                // detach objects from manager to prevent memory leaks
+                $this->entityManager->clear();
+                $currentBatchData = $index->getExportDataForIds($domainId, $idsToExport, $fields);
 
-            if (count($currentBatchData) > 0) {
-                $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
+                if (count($currentBatchData) > 0) {
+                    $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
+                }
+
+                $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
+
+                if (count($idsToDelete) > 0) {
+                    $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
+                }
             }
-
-            $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
-
-            if (count($idsToDelete) > 0) {
-                $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
-            }
+        } finally {
+            $this->sqlLoggerFacade->reenableLogging();
         }
-
-        $this->sqlLoggerFacade->reenableLogging();
     }
 
     /**
