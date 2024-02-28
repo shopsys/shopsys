@@ -1,4 +1,3 @@
-import { setLastVisitedProductCatalogNumbers } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedHelpers';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
@@ -18,11 +17,10 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
-const ProductDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
     const [{ data: productData, fetching }] = useProductDetailQueryApi({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -35,12 +33,6 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     useGtmPageViewEvent(pageViewEvent, fetching);
-
-    useEffect(() => {
-        if (product?.catalogNumber) {
-            setLastVisitedProductCatalogNumbers(product.catalogNumber);
-        }
-    }, [product]);
 
     return (
         <CommonLayout
@@ -57,10 +49,8 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
             {product?.__typename === 'MainVariant' && (
                 <ProductDetailMainVariantContent fetching={fetching} product={product} />
             )}
-            <LastVisitedProducts
-                currentProductCatalogNumber={product?.catalogNumber}
-                lastVisitedProductsFromCookies={cookies.lastVisitedProducts}
-            />
+
+            <LastVisitedProducts currentProductCatnum={product?.catalogNumber} />
         </CommonLayout>
     );
 };

@@ -2,6 +2,7 @@ import { Fonts } from './Fonts';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { GtmProvider } from 'gtm/context/GtmProvider';
+import { useCookiesStoreSync } from 'helpers/cookies/cookiesStoreUtils';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { isEnvironment } from 'helpers/isEnvironment';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
@@ -10,7 +11,7 @@ import { usePageLoader } from 'hooks/app/usePageLoader';
 import { usePersistStoreHydration } from 'hooks/app/useStoreHydration';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
-import { useSetDomainConfig } from 'hooks/useDomainConfig';
+import { useSetInitialStoreValues } from 'hooks/useSetInitialStoreValues';
 import { NextComponentType, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
@@ -18,11 +19,8 @@ import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/usePersistStore';
 
-const UserConsentContainer = dynamic(
-    () =>
-        import('components/Blocks/UserConsent/UserConsentContainer').then(
-            (component) => component.UserConsentContainer,
-        ),
+const UserConsent = dynamic(
+    () => import('components/Blocks/UserConsent/UserConsent').then((component) => component.UserConsent),
     {
         ssr: false,
     },
@@ -51,19 +49,21 @@ type AppPageContentProps = {
 };
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
+    usePersistStoreHydration();
+    useAuthLoader();
+    usePageLoader();
+    useReloadCart();
+    useSetInitialStoreValues(pageProps);
+    useCookiesStoreSync();
+
     const router = useRouter();
     const { url } = pageProps.domainConfig;
-    const userConsent = usePersistStore((store) => store.userConsent);
 
     useBroadcastChannel('reloadPage', () => {
         router.reload();
     });
 
-    usePersistStoreHydration();
-    useSetDomainConfig(pageProps.domainConfig);
-    useAuthLoader();
-    usePageLoader();
-    useReloadCart();
+    const userConsent = usePersistStore((store) => store.userConsent);
 
     const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
@@ -72,12 +72,16 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
         <>
             <GtmHeadScript />
             <Fonts />
+
             <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
+
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+
             <GtmProvider>
-                {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
+                {!userConsent && !isConsentUpdatePage && <UserConsent />}
                 {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} />}
             </GtmProvider>
+
             {SymfonyDebugToolbar && <SymfonyDebugToolbar />}
         </>
     );

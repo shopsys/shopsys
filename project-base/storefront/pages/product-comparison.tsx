@@ -12,7 +12,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 
-const ProductComparisonPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const ProductComparisonPage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
@@ -26,7 +26,7 @@ const ProductComparisonPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Product comparison')}>
             <ProductComparison />
 
-            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+            <LastVisitedProducts />
         </CommonLayout>
     );
 };

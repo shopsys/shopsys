@@ -1,5 +1,4 @@
 import { Variables } from '@urql/exchange-graphcache';
-import { getCookies } from 'cookies-next';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -16,6 +15,7 @@ import {
 } from 'graphql/generated';
 import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
+import { getCookiesStore } from 'helpers/cookies/cookiesStoreUtils';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
@@ -31,7 +31,7 @@ export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
     domainConfig: DomainConfigType;
-    cookies: { [key: string]: string };
+    cookiesStore: string | null;
 };
 
 type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
@@ -147,8 +147,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         context.res.statusCode = 503;
     }
 
-    const allCookies = getCookies(context);
-
     return {
         props: {
             ...(await loadNamespaces({
@@ -159,7 +157,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
-            cookies: JSON.parse(JSON.stringify(allCookies)),
+            cookiesStore: getCookiesStore(context),
         },
     };
 };
