@@ -69,6 +69,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php',
             __DIR__ . '/src/Form/Constraints/FileAbstractFilesystemValidator.php',
             __DIR__ . '/tests/Unit/Model/Mail/EnvelopeListenerTest.php',
+            __DIR__ . '/src/Model/Product/Elasticsearch/Scope/ProductExportScopeConfig.php',
         ],
         ClassLengthSniff::class => [
             __DIR__ . '/src/Form/Admin/Product/ProductFormType.php',
@@ -119,6 +120,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
             __DIR__ . '/src/Migrations/Version20231124121921.php',
             __DIR__ . '/src/Model/Blog/Article/Elasticsearch/BlogArticleElasticsearchDataFetcher.php',
+            __DIR__ . '/src/Model/Product/Elasticsearch/ProductExportRepository.php',
         ],
         EmptyStatementSniff::class . '.DetectedCatch' => [
             __DIR__ . '/src/Component/Elasticsearch/Debug/ElasticsearchTracer.php',

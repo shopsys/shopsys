@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
@@ -43,6 +44,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @method mixed getExportedFieldValue(int $domainId, \App\Model\Product\Product $product, string $locale, string $field)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -63,6 +65,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
@@ -81,6 +84,7 @@ class ProductExportRepository extends BaseProductExportRepository
         BrandCachedFacade $brandCachedFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         HreflangLinksFacade $hreflangLinksFacade,
+        ProductExportFieldProvider $productExportFieldProvider,
         private readonly ProductRepository $productRepository,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
@@ -99,6 +103,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $brandCachedFacade,
             $productAvailabilityFacade,
             $hreflangLinksFacade,
+            $productExportFieldProvider,
         );
     }
 
@@ -107,10 +112,16 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param string $locale
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param string[] $fields
      * @return array
      */
-    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
-    {
+    public function getProductsData(
+        int $domainId,
+        string $locale,
+        int $lastProcessedId,
+        int $batchSize,
+        array $fields = [],
+    ): array {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id > :lastProcessedId')
             ->setParameter('lastProcessedId', $lastProcessedId)
@@ -121,7 +132,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $results = [];
         /** @var \App\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
             $this->clearVariantCache();
         }
 
@@ -132,9 +143,10 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int $domainId
      * @param string $locale
      * @param int[] $productIds
+     * @param string[] $fields
      * @return array
      */
-    public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
+    public function getProductsDataForIds(int $domainId, string $locale, array $productIds, array $fields): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id IN (:productIds)')
@@ -145,7 +157,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $result = [];
         /** @var \App\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
             $this->clearVariantCache();
         }
 
@@ -156,9 +168,10 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
+     * @param string[] $fields
      * @return array
      */
-    protected function extractResult(BaseProduct $product, int $domainId, string $locale): array
+    protected function extractResult(BaseProduct $product, int $domainId, string $locale, array $fields): array
     {
         $flagIds = $this->extractFlagsForDomain($domainId, $product);
         $categoryIds = $this->extractCategories($domainId, $product);

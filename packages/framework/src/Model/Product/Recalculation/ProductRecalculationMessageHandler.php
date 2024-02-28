@@ -39,20 +39,20 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
      */
     protected function process(array $jobs): void
     {
-        $productIds = [];
         $acknowledgers = [];
+        $exportScopesIndexedByProductId = [];
 
         /**
          * @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
          * @var \Symfony\Component\Messenger\Handler\Acknowledger $ack
          */
         foreach ($jobs as [$message, $ack]) {
-            $productIds[] = $message->productId;
             $acknowledgers[] = $ack;
+            $exportScopesIndexedByProductId[$message->productId] = $message->exportScopes;
         }
 
         try {
-            $this->productRecalculationFacade->recalculate($productIds);
+            $this->productRecalculationFacade->recalculate($exportScopesIndexedByProductId);
             $this->ackAll($acknowledgers);
         } catch (Throwable $e) {
             $this->logger->error($e->getMessage());
@@ -61,7 +61,7 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
             return;
         }
 
-        $this->logger->info('Product recalculated', ['product_ids' => json_encode($productIds, JSON_THROW_ON_ERROR)]);
+        $this->logger->info('Product recalculated', ['product_ids' => json_encode(array_keys($exportScopesIndexedByProductId), JSON_THROW_ON_ERROR)]);
     }
 
     /**

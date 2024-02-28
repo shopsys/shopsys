@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -36,6 +38,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -49,6 +52,7 @@ class ProductExportRepository
         protected readonly BrandCachedFacade $brandCachedFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly ProductExportFieldProvider $productExportFieldProvider,
     ) {
     }
 
@@ -57,47 +61,38 @@ class ProductExportRepository
      * @param string $locale
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param string[] $fields
      * @return array
      */
-    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
-    {
+    public function getProductsData(
+        int $domainId,
+        string $locale,
+        int $lastProcessedId,
+        int $batchSize,
+        array $fields = [],
+    ): array {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id > :lastProcessedId')
             ->setParameter('lastProcessedId', $lastProcessedId)
             ->setMaxResults($batchSize);
 
-        $query = $queryBuilder->getQuery();
-
-        $results = [];
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
-            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
-        }
-
-        return $results;
+        return $this->getResults($queryBuilder, $fields, $domainId, $locale);
     }
 
     /**
      * @param int $domainId
      * @param string $locale
      * @param int[] $productIds
+     * @param string[] $fields
      * @return array
      */
-    public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
+    public function getProductsDataForIds(int $domainId, string $locale, array $productIds, array $fields): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id IN (:productIds)')
             ->setParameter('productIds', $productIds);
 
-        $query = $queryBuilder->getQuery();
-
-        $result = [];
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
-            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
-        }
-
-        return $result;
+        return $this->getResults($queryBuilder, $fields, $domainId, $locale);
     }
 
     /**
@@ -115,58 +110,70 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
+     * @param string[] $fields
      * @return array
      */
-    protected function extractResult(Product $product, int $domainId, string $locale): array
+    protected function extractResult(Product $product, int $domainId, string $locale, array $fields): array
     {
-        $flagIds = $this->extractFlags($domainId, $product);
-        $categoryIds = $this->extractCategories($domainId, $product);
-        $parameters = $this->extractParameters($locale, $product);
-        $prices = $this->extractPrices($domainId, $product);
-        $visibility = $this->extractVisibility($domainId, $product);
-        $detailUrl = $this->extractDetailUrl($domainId, $product);
-        $variantIds = $this->extractVariantIds($product);
+        $exportedResult = [];
 
-        return [
-            'id' => $product->getId(),
-            'catnum' => $product->getCatnum(),
-            'partno' => $product->getPartno(),
-            'ean' => $product->getEan(),
-            'name' => $product->getName($locale),
-            'description' => $product->getDescription($domainId),
-            'short_description' => $product->getShortDescription($domainId),
-            'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
-            'brand_name' => $product->getBrand() ? $product->getBrand()->getName() : '',
-            'brand_url' => $this->getBrandUrlForDomainByProduct($product, $domainId),
-            'flags' => $flagIds,
-            'categories' => $categoryIds,
-            'main_category_id' => $this->categoryFacade->getProductMainCategoryByDomainId(
+        foreach ($fields as $field) {
+            $exportedResult[$field] = $this->getExportedFieldValue($domainId, $product, $locale, $field);
+        }
+
+        return $exportedResult;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string $locale
+     * @param string $field
+     * @return mixed
+     */
+    protected function getExportedFieldValue(int $domainId, Product $product, string $locale, string $field): mixed
+    {
+        return match ($field) {
+            ProductExportFieldProvider::ID => $product->getId(),
+            ProductExportFieldProvider::CATNUM => $product->getCatnum(),
+            ProductExportFieldProvider::PARTNO => $product->getPartno(),
+            ProductExportFieldProvider::EAN => $product->getEan(),
+            ProductExportFieldProvider::NAME => $product->getName($locale),
+            ProductExportFieldProvider::DESCRIPTION => $product->getDescription($domainId),
+            ProductExportFieldProvider::SHORT_DESCRIPTION => $product->getShortDescription($domainId),
+            ProductExportFieldProvider::BRAND => $product->getBrand() ? $product->getBrand()->getId() : '',
+            ProductExportFieldProvider::BRAND_NAME => $product->getBrand() ? $product->getBrand()->getName() : '',
+            ProductExportFieldProvider::BRAND_URL => $this->getBrandUrlForDomainByProduct($product, $domainId),
+            ProductExportFieldProvider::FLAGS => $this->extractFlags($domainId, $product),
+            ProductExportFieldProvider::CATEGORIES => $this->extractCategories($domainId, $product),
+            ProductExportFieldProvider::MAIN_CATEGORY_ID => $this->categoryFacade->getProductMainCategoryByDomainId(
                 $product,
                 $domainId,
             )->getId(),
-            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
-            'prices' => $prices,
-            'parameters' => $parameters,
-            'ordering_priority' => $product->getOrderingPriority($domainId),
-            'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
-            'selling_denied' => $product->isSellingDenied(),
-            'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
-            'availability_dispatch_time' => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
-            'is_main_variant' => $product->isMainVariant(),
-            'is_variant' => $product->isVariant(),
-            'detail_url' => $detailUrl,
-            'visibility' => $visibility,
-            'uuid' => $product->getUuid(),
-            'unit' => $product->getUnit()->getName($locale),
-            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
-            'variants' => $variantIds,
-            'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
-            'seo_h1' => $product->getSeoH1($domainId),
-            'seo_title' => $product->getSeoTitle($domainId),
-            'seo_meta_description' => $product->getSeoMetaDescription($domainId),
-            'accessories' => $this->extractAccessoriesIds($product),
-            'hreflang_links' => $this->hreflangLinksFacade->getForProduct($product, $domainId),
-        ];
+            ProductExportFieldProvider::IN_STOCK => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
+            ProductExportFieldProvider::PRICES => $this->extractPrices($domainId, $product),
+            ProductExportFieldProvider::PARAMETERS => $this->extractParameters($locale, $product),
+            ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
+            ProductExportFieldProvider::CALCULATED_SELLING_DENIED => $product->getCalculatedSellingDenied(),
+            ProductExportFieldProvider::SELLING_DENIED => $product->isSellingDenied(),
+            ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
+            ProductExportFieldProvider::AVAILABILITY_DISPATCH_TIME => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
+            ProductExportFieldProvider::IS_MAIN_VARIANT => $product->isMainVariant(),
+            ProductExportFieldProvider::IS_VARIANT => $product->isVariant(),
+            ProductExportFieldProvider::DETAIL_URL => $this->extractDetailUrl($domainId, $product),
+            ProductExportFieldProvider::VISIBILITY => $this->extractVisibility($domainId, $product),
+            ProductExportFieldProvider::UUID => $product->getUuid(),
+            ProductExportFieldProvider::UNIT => $product->getUnit()->getName($locale),
+            ProductExportFieldProvider::STOCK_QUANTITY => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
+            ProductExportFieldProvider::VARIANTS => $this->extractVariantIds($product),
+            ProductExportFieldProvider::MAIN_VARIANT_ID => $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            ProductExportFieldProvider::SEO_H1 => $product->getSeoH1($domainId),
+            ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
+            ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
+            ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
+            ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId),
+            default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
+        };
     }
 
     /**
@@ -371,5 +378,29 @@ class ProductExportRepository
         }
 
         return $accessoriesIds;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param array $fields
+     * @param int $domainId
+     * @param string $locale
+     * @return array
+     */
+    protected function getResults(QueryBuilder $queryBuilder, array $fields, int $domainId, string $locale): array
+    {
+        $query = $queryBuilder->getQuery();
+
+        if (count($fields) === 0) {
+            $fields = $this->productExportFieldProvider->getAll();
+        }
+
+        $results = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        foreach ($query->getResult() as $product) {
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
+        }
+
+        return $results;
     }
 }

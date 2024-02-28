@@ -6,4 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 class DispatchAllProductsMessage
 {
+    /**
+     * @param string[] $exportScopes
+     */
+    public function __construct(public readonly array $exportScopes = [])
+    {
+    }
 }
