@@ -10,8 +10,8 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductFilterToLuigisBoxFilterMapper
 {
-    public const string FILTER_OR = 'f';
-    public const string FILTER_AND = 'f_must';
+    protected const string FILTER_OR = 'f';
+    protected const string FILTER_AND = 'f_must';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -22,35 +22,21 @@ class ProductFilterToLuigisBoxFilterMapper
     }
 
     /**
-     * @param string $luigisBoxType
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @return array
      */
-    public function mapForSearch(string $luigisBoxType, ProductFilterData $productFilterData, Domain $domain): array
+    public function mapForSearch(ProductFilterData $productFilterData, Domain $domain): array
     {
         $luigisBoxFilter = [
             self::FILTER_AND => [],
             self::FILTER_OR => [],
         ];
 
-        $luigisBoxFilter = $this->mapType($luigisBoxType, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapPrice($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapAvailability($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapFlags($productFilterData, $luigisBoxFilter, $domain->getLocale());
         $luigisBoxFilter = $this->mapBrands($productFilterData, $luigisBoxFilter);
-
-        return $luigisBoxFilter;
-    }
-
-    /**
-     * @param string $luigisBoxType
-     * @param array $luigisBoxFilter
-     * @return array
-     */
-    protected function mapType(string $luigisBoxType, array $luigisBoxFilter): array
-    {
-        $luigisBoxFilter[self::FILTER_OR][] = 'type:' . $luigisBoxType;
 
         return $luigisBoxFilter;
     }

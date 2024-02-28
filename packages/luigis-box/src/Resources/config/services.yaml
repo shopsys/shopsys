@@ -3,13 +3,16 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader: '@luigis_box_batch_loader'
+
+    Shopsys\LuigisBoxBundle\:
+        resource: '../../**/*{Factory,Loader,Mapper,Provider}.php'
 
     Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient:
         arguments:
             $luigisBoxApiUrl: '%env(string:LUIGIS_BOX_API_URL)%'
             $trackerIdsByDomainIds: '%env(json:LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS)%'
-
-    Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper: ~
 
     Shopsys\LuigisBoxBundle\Model\Product\ProductSearchResultsProvider:
         arguments:
