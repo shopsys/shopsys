@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "@claviska/jquery-minicolors": "^2.3.4",
-        "@shopsys/framework": "13.0.0",
+        "@shopsys/framework": "15.0.0-dev.1",
         "bazinga-translator": "^2.6.6",
         "buffer": "^6.0.3",
         "chart.js": "^2.9.3",
