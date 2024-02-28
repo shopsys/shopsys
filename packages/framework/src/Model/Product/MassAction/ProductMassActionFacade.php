@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\MassAction;
 
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\Exception\UnsupportedSelectionType;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 
 class ProductMassActionFacade
 {
@@ -48,7 +50,7 @@ class ProductMassActionFacade
             $selectedProductIds,
             $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE,
         );
-        $this->productRecalculationDispatcher->dispatchProductIds($selectedProductIds);
+        $this->productRecalculationDispatcher->dispatchProductIds($selectedProductIds, ProductRecalculationPriorityEnum::REGULAR, [ProductExportScopeConfig::SCOPE_HIDDEN]);
     }
 
     /**
