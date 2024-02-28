@@ -8,14 +8,15 @@ use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem;
 use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxActionNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 
 class LuigisBoxClient
 {
-    public const string LUIGIS_BOX_TYPE_PRODUCT = 'item';
-    public const string LUIGIS_BOX_ENDPOINT_SEARCH = 'search';
-    public const string LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE = 'autocomplete/v2';
+    public const string MAIN_TYPE = 'product';
+    public const string ACTION_SEARCH = 'search';
+    public const string ACTION_AUTOCOMPLETE = 'autocomplete/v2';
 
     /**
      * @param string $luigisBoxApiUrl
@@ -48,33 +49,31 @@ class LuigisBoxClient
 
     /**
      * @param string $query
-     * @param string $type
-     * @param string $endpoint
+     * @param string $action
      * @param int $page
-     * @param int $limit
+     * @param array<string, int> $limitsByType
      * @param array $filter
      * @param string|null $orderingMode
-     * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult
+     * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
     public function getData(
         string $query,
-        string $type,
-        string $endpoint,
+        string $action,
         int $page,
-        int $limit,
+        array $limitsByType,
         array $filter,
         ?string $orderingMode,
-    ): LuigisBoxResult {
+    ): array {
         $this->checkNecessaryConfigurationIsSet();
+        $this->validateActionIsValid($action);
 
         $data = json_decode(
             file_get_contents(
                 $this->getLuigisBoxApiUrl(
                     $query,
-                    $type,
-                    $endpoint,
+                    $action,
                     $page,
-                    $limit,
+                    $limitsByType,
                     $filter,
                     $orderingMode,
                 ),
@@ -84,30 +83,21 @@ class LuigisBoxClient
             JSON_THROW_ON_ERROR,
         );
 
-        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_SEARCH) {
+        if ($action === self::ACTION_SEARCH) {
             $data = $data['results'];
         }
 
-        $ids = [];
-
-        foreach ($data['hits'] as $hit) {
-            $ids[] = $this->getIdFromIdentity($hit['url']);
-        }
-
-        return new LuigisBoxResult(
-            $ids,
-            $this->getTotalHitsFromData($data, $endpoint),
-        );
+        return $this->getResultsIndexedByItemType($data, $action, array_keys($limitsByType));
     }
 
     /**
      * @param array $data
-     * @param string $endpoint
+     * @param string $action
      * @return int
      */
-    protected function getTotalHitsFromData(array $data, string $endpoint): int
+    protected function getTotalHitsFromData(array $data, string $action): int
     {
-        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE) {
+        if ($action === self::ACTION_AUTOCOMPLETE) {
             return (int)$data['exact_match_hits_count'] + (int)$data['partial_match_hits_count'];
         }
 
@@ -116,32 +106,33 @@ class LuigisBoxClient
 
     /**
      * @param string $query
-     * @param string $type
-     * @param string $endpoint
-     * @param int $offset
-     * @param int $limit
+     * @param string $action
+     * @param int $page
+     * @param array $limitsByType
      * @param array $filter
      * @param string|null $orderingMode
      * @return string
      */
     protected function getLuigisBoxApiUrl(
         string $query,
-        string $type,
-        string $endpoint,
-        int $offset,
-        int $limit,
+        string $action,
+        int $page,
+        array $limitsByType,
         array $filter,
         ?string $orderingMode,
     ): string {
         $url = $this->luigisBoxApiUrl .
-            $endpoint . '/' .
+            $action . '/' .
             '?tracker_id=' . $this->getTrackerId() .
             '&q=' . urlencode('"' . $query . '"');
 
-        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_SEARCH) {
-            $url .= '&hit_fields=identity' .
-                '&size=' . $limit .
-                '&from=' . $offset;
+        if ($action === self::ACTION_SEARCH) {
+            $url .=
+                '&hit_fields=identity' .
+                '&remove_fields=nested' .
+                '&size=' . $this->getMainTypeLimit($limitsByType) .
+                '&from=' . $page .
+                count($limitsByType) > 1 ? '&quicksearch_types=' . $this->getQuicksearchTypes(array_keys($limitsByType)) : '';
 
             foreach ($filter as $key => $filterValues) {
                 foreach ($filterValues as $filterValue) {
@@ -156,8 +147,10 @@ class LuigisBoxClient
             }
         }
 
-        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE) {
-            $url .= '&type=' . $type . ':' . $limit;
+        if ($action === self::ACTION_AUTOCOMPLETE) {
+            foreach ($limitsByType as $type => $limitByType) {
+                $url .= '&limit=' . $this->mapAppTypeToLuigisBoxType($type) . ':' . $limitByType;
+            }
         }
 
         return $url;
@@ -194,5 +187,85 @@ class LuigisBoxClient
             '',
             $identity,
         );
+    }
+
+    /**
+     * @param array $types
+     * @return string
+     */
+    protected function getQuicksearchTypes(array $types): string
+    {
+        foreach ($types as $key => $type) {
+            if ($type === self::MAIN_TYPE) {
+                unset($types[$key]);
+            }
+        }
+
+        return implode(',', $types);
+    }
+
+    /**
+     * @param array $limitsByType
+     * @return int
+     */
+    protected function getMainTypeLimit(array $limitsByType): int
+    {
+        return $limitsByType[self::MAIN_TYPE];
+    }
+
+    /**
+     * @param array $data
+     * @param string $action
+     * @param array $types
+     * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
+     */
+    protected function getResultsIndexedByItemType(array $data, string $action, array $types): array
+    {
+        $idsByType = [];
+        $resultsByType = [];
+
+        foreach ($data['hits'] as $hit) {
+            $idsByType[$this->getTypeFromHitUrl($hit['url'])][] = $this->getIdFromIdentity($hit['url']);
+        }
+
+        foreach ($types as $type) {
+            $resultsByType[$type] = new LuigisBoxResult(
+                $idsByType[$type] ?? [],
+                $this->getTotalHitsFromData($data, $action),
+            );
+        }
+
+        return $resultsByType;
+    }
+
+    /**
+     * @param string $hitUrl
+     * @return string
+     */
+    protected function getTypeFromHitUrl(string $hitUrl): string
+    {
+        return explode('-', $hitUrl)[0];
+    }
+
+    /**
+     * @param string $appType
+     * @return string
+     */
+    protected function mapAppTypeToLuigisBoxType(string $appType): string
+    {
+        return match ($appType) {
+            'product' => 'item',
+            default => $appType,
+        };
+    }
+
+    /**
+     * @param string $action
+     */
+    protected function validateActionIsValid(string $action): void
+    {
+        if (!in_array($action, [self::ACTION_SEARCH, self::ACTION_AUTOCOMPLETE], true)) {
+            throw new LuigisBoxActionNotRecognizedException($action);
+        }
     }
 }

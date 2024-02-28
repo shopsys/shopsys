@@ -48,7 +48,7 @@ class ProductOrderingModeProvider
     /**
      * @return string
      */
-    protected function getDefaultOrderingModeForSearch(): string
+    public function getDefaultOrderingModeForSearch(): string
     {
         return ProductListOrderingConfig::ORDER_BY_RELEVANCE;
     }
