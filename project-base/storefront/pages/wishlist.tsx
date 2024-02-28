@@ -13,7 +13,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 
-const WishlistPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const WishlistPage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     useGtmPageViewEvent(useGtmStaticPageViewEvent(GtmPageType.other));
     const currentDomainConfig = useDomainConfig();
@@ -27,7 +27,7 @@ const WishlistPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
                 <Wishlist />
             </Webline>
 
-            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+            <LastVisitedProducts />
         </CommonLayout>
     );
 };

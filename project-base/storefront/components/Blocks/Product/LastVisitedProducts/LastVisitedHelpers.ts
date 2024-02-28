@@ -1,33 +1,19 @@
-import { getCookie, setCookie } from 'cookies-next';
-import { GetServerSidePropsContext } from 'next/types';
+import { useEffect } from 'react';
+import { useCookiesStore } from 'store/useCookiesStore';
 
 const LAST_VISITED_MAX_ITEMS = 10;
 
-export const getLastVisitedProductCatalogNumbers = (context?: GetServerSidePropsContext) => {
-    const lastVisitedFromCookies = getCookie('lastVisitedProducts', { req: context?.req, res: context?.res });
+export const useLastVisitedProductView = (visitedProduct: string) => {
+    const lastVisitedProductsCatnums = useCookiesStore((state) => state.lastVisitedProductsCatnums);
+    const setCookiesStoreState = useCookiesStore((state) => state.setCookiesStoreState);
 
-    if (typeof lastVisitedFromCookies === 'string') {
-        return JSON.parse(lastVisitedFromCookies) as string[];
-    }
+    useEffect(() => {
+        const newLastVisitedProductsCatnums = Array.from(
+            new Set([visitedProduct, ...(lastVisitedProductsCatnums || [])]),
+        );
 
-    return null;
-};
-
-export const setLastVisitedProductCatalogNumbers = (newLastVisitedProductsCatalogNumber: string): void => {
-    const currentLastVisitedProductsCatalogNumbers = getLastVisitedProductCatalogNumbers() || [];
-
-    if (!currentLastVisitedProductsCatalogNumbers.includes(newLastVisitedProductsCatalogNumber)) {
-        currentLastVisitedProductsCatalogNumbers.unshift(newLastVisitedProductsCatalogNumber);
-    }
-
-    const uniqueLastVisitedProductsCatalogNumbers = Array.from(new Set(currentLastVisitedProductsCatalogNumbers));
-
-    const lastVisitedProductCatalogNumbers = JSON.stringify(
-        uniqueLastVisitedProductsCatalogNumbers.slice(0, LAST_VISITED_MAX_ITEMS),
-    );
-
-    setCookie('lastVisitedProducts', lastVisitedProductCatalogNumbers, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 30,
-    });
+        setCookiesStoreState({
+            lastVisitedProductsCatnums: newLastVisitedProductsCatnums.slice(0, LAST_VISITED_MAX_ITEMS),
+        });
+    }, []);
 };

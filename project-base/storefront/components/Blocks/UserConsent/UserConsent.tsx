@@ -1,16 +1,16 @@
 import { UserConsentForm } from './UserConsentForm';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
-export const UserConsentContainer: FC = () => {
+export const UserConsent: FC = () => {
     const [isUserConsentVisible, setUserConsentVisibility] = useState(true);
     const userConsent = usePersistStore((store) => store.userConsent);
 
-    const onSetCallback = useCallback(() => {
-        if (userConsent !== null) {
+    const onSetCallback = () => {
+        if (userConsent) {
             setUserConsentVisibility(false);
         }
-    }, [userConsent]);
+    };
 
     if (!isUserConsentVisible) {
         return null;

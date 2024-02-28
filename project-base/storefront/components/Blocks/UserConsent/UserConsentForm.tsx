@@ -6,7 +6,6 @@ import { onGtmConsentUpdateEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmConsentInfo } from 'gtm/helpers/gtm';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
@@ -22,33 +21,33 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const [{ data: cookiesArticleUrlData }] = useCookiesArticleUrlQueryApi();
     const cookiesArticleUrl = cookiesArticleUrlData?.cookiesArticle?.slug;
     const userConsent = usePersistStore((store) => store.userConsent);
-    const setUserConsent = usePersistStore((store) => store.setUserConsent);
+    const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
 
-    const saveCookieChoices = useCallback(() => {
+    const saveCookieChoices = () => {
         const formValues = formProviderMethods.getValues();
-        setUserConsent(formValues);
+        updateUserConsent(formValues);
         onGtmConsentUpdateEventHandler(getGtmConsentInfo(userConsent));
 
         if (onSetCallback) {
             onSetCallback();
         }
-    }, [formProviderMethods, onSetCallback, setUserConsent, userConsent]);
+    };
 
-    const acceptAllCookieChoices = useCallback(() => {
+    const acceptAllCookieChoices = () => {
         for (const key in formMeta.fields) {
             formProviderMethods.setValue(key as keyof UserConsentFormType, true, { shouldValidate: true });
         }
 
         saveCookieChoices();
-    }, [formProviderMethods, saveCookieChoices, formMeta.fields]);
+    };
 
-    const rejectAllCookieChoices = useCallback(() => {
+    const rejectAllCookieChoices = () => {
         for (const key in formMeta.fields) {
             formProviderMethods.setValue(key as keyof UserConsentFormType, false, { shouldValidate: true });
         }
 
         saveCookieChoices();
-    }, [formProviderMethods, saveCookieChoices, formMeta.fields]);
+    };
 
     return (
         <FormProvider {...formProviderMethods}>

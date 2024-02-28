@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
-const BlogCategoryPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
     const [{ data: blogCategoryData, fetching }] = useBlogCategoryQueryApi({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -49,7 +49,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
             title={seoTitle}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
-            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+            <LastVisitedProducts />
         </CommonLayout>
     );
 };

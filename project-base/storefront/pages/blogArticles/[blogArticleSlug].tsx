@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
-const BlogArticleDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
     const [{ data: blogArticleData, fetching }] = useBlogArticleDetailQueryApi({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -41,7 +41,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
             title={blogArticleData?.blogArticle?.seoTitle}
         >
             {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
-            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+            <LastVisitedProducts />
         </CommonLayout>
     );
 };
