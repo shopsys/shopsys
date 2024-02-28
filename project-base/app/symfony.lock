@@ -77,9 +77,6 @@
     "composer/xdebug-handler": {
         "version": "1.4.0"
     },
-    "craue/formflow-bundle": {
-        "version": "3.2.1"
-    },
     "dasprid/enum": {
         "version": "1.0.3"
     },

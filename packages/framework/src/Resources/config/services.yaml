@@ -579,9 +579,6 @@ services:
     Metadata\MetadataFactory:
         alias: prezent_doctrine_translatable.metadata_factory
 
-    Craue\FormFlowBundle\Storage\DataManager:
-        alias: craue.form.flow.data_manager_default
-
     FM\ElfinderBundle\Configuration\ElFinderConfigurationReader:
         alias: fm_elfinder.configurator.default
 

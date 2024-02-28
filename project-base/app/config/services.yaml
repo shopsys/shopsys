@@ -738,9 +738,6 @@ services:
     Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory:
         alias: App\Model\Payment\Grid\PaymentGridFactory
 
-    Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade:
-        alias: App\Model\Order\OrderFlowFacade
-
     App\Component\Error\ErrorPagesFacade:
         arguments:
             $errorPagesDir: '%shopsys.error_pages_dir%'

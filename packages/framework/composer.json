@@ -41,7 +41,6 @@
         "barryvdh/elfinder-flysystem-driver": "^0.4.3",
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^2.2.12",
-        "craue/formflow-bundle": "^3.0.3",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/annotations": "^1.6",
         "doctrine/cache": "^1.7",
