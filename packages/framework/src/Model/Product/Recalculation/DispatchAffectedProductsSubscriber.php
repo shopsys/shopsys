@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent;
 use Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent;
@@ -37,7 +38,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithBrand($brandEvent->getBrand());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_BRAND],
+        );
     }
 
     /**
@@ -47,7 +52,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithCategory($categoryEvent->getCategory());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_CATEGORIES],
+        );
     }
 
     /**
@@ -57,7 +66,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithFlag($flagEvent->getFlag());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_FLAGS],
+        );
     }
 
     /**
@@ -67,7 +80,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithParameter($parameterEvent->getParameter());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_PARAMETERS],
+        );
     }
 
     /**
@@ -87,7 +104,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         $productIds = $this->affectedProductsFacade->getProductIdsWithUnit($unitEvent->getUnit());
 
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
+        $this->productRecalculationDispatcher->dispatchProductIds(
+            $productIds,
+            ProductRecalculationPriorityEnum::REGULAR,
+            [ProductExportScopeConfig::SCOPE_UNIT],
+        );
     }
 
     public function dispatchAllProducts(): void
@@ -107,6 +128,7 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     {
         return [
             BrandEvent::DELETE => 'dispatchAffectedByBrand',
+            BrandEvent::UPDATE => 'dispatchAffectedByBrand',
             CategoryEvent::UPDATE => 'dispatchAffectedByCategory',
             CategoryEvent::DELETE => 'dispatchAffectedByCategory',
             CurrencyEvent::UPDATE => [
