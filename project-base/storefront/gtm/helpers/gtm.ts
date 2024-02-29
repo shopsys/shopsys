@@ -1,5 +1,6 @@
 import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType } from './mappers';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { SHA256 } from 'crypto-js';
 import {
     BlogArticleDetailFragmentApi,
@@ -34,7 +35,6 @@ import { isClient } from 'helpers/isClient';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';

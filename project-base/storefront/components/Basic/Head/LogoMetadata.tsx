@@ -1,4 +1,4 @@
-import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
 
 export const LogoMetadata: FC = () => {

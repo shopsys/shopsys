@@ -1,7 +1,7 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 

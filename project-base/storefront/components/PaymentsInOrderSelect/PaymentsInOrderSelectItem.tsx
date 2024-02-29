@@ -1,8 +1,8 @@
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentListItem } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { SimplePaymentFragmentApi, useGoPaySwiftsQueryApi } from 'graphql/generated';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { Dispatch, SetStateAction } from 'react';
 

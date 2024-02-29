@@ -1,5 +1,5 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AvailabilityStatusEnumApi, MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 

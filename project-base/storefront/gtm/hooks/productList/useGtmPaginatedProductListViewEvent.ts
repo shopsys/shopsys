@@ -1,10 +1,10 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { GtmProductListNameType } from 'gtm/types/enums';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useEffect, useRef } from 'react';
 

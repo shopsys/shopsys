@@ -1,7 +1,7 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSeoPageQueryApi, useSettingsQueryApi } from 'graphql/generated';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'helpers/seo/generateCanonicalUrl';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
