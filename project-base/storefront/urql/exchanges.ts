@@ -1,5 +1,6 @@
 import { dedupExchange } from './dedupExchange';
 import { getErrorExchange } from './errorExchange';
+import { operationNameExchange } from './operationNameExchange';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
@@ -19,5 +20,6 @@ export const getUrqlExchanges = (
     getErrorExchange(t, context),
     ssrExchange,
     authExchange(getAuthExchangeOptions(context)),
+    operationNameExchange,
     fetchExchange,
 ];

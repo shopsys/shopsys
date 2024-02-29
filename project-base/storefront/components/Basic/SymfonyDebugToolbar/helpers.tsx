@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export type ResponseInfo = {
     error: boolean;
-    url: string;
+    operationName: string;
     type: string;
     status: number;
     token: string;
@@ -19,7 +19,7 @@ export const useRequests = (tokenHeader: string, tokenLinkHeader: string) => {
         if (hasProfilerHeaders(headers, tokenLinkHeader, tokenHeader)) {
             const requestInfo: ResponseInfo = {
                 error: false,
-                url: response.url,
+                operationName: response.url.split('graphql/')[1],
                 type: response.type,
                 status: response.status,
                 token: headers.get(tokenHeader) ?? '',

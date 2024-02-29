@@ -65,3 +65,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 ## [Upgrade from v14.0.0 to v15.0.0-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...15.0)
 
 ### Storefront
+
+-   added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
+    -   queries and mutation names are now part of the request URL, which means query is not made to `/graphql/` but `/graphql/<QueryName>/`
+    -   if you do not want this, you can skip the changes (ensure there is no `operationNameExchange` used in your URQL client)
+    -   if you apply this change, it should be easier for you to debug requests in tools like Kibana and also see operation names in browser network tab

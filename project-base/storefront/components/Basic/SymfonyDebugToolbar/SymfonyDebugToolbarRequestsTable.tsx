@@ -23,7 +23,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
                         <TableHeaderCell>Profile</TableHeaderCell>
                         <TableHeaderCell>Type</TableHeaderCell>
                         <TableHeaderCell>Status</TableHeaderCell>
-                        <TableHeaderCell>URL</TableHeaderCell>
+                        <TableHeaderCell>Operation Name</TableHeaderCell>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,9 +35,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
                             </TableCell>
                             <TableCell>{response.type}</TableCell>
                             <TableCell>{response.status}</TableCell>
-                            <TableCell>
-                                <TableLink href={response.url}>{response.url}</TableLink>
-                            </TableCell>
+                            <TableCell>{response.operationName}</TableCell>
                         </tr>
                     ))}
                 </tbody>
