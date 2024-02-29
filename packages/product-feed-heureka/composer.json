@@ -40,12 +40,12 @@
         "symfony/form": "^5.4",
         "symfony/http-kernel": "^5.4",
         "symfony/service-contracts": "^2.5.2",
-        "symfony/translation": "^5.4"
+        "symfony/translation": "^5.4",
+        "twig/twig": "^3.5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "14.0.x-dev",
-        "twig/twig": "^3.5.0"
+        "shopsys/coding-standards": "14.0.x-dev"
     },
     "config": {
         "allow-plugins": {
