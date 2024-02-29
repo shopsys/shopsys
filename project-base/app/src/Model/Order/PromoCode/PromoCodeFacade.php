@@ -20,8 +20,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
  */
 class PromoCodeFacade extends BasePromoCodeFacade
 {
-    private const MASS_CREATE_BATCH_SIZE = 200;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
@@ -33,7 +31,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\String\HashGenerator $hashGenerator
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      * @param \App\Model\Order\PromoCode\PromoCodeBrandFactory $promoCodeBrandFactory
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
@@ -44,19 +41,18 @@ class PromoCodeFacade extends BasePromoCodeFacade
         EntityManagerInterface $em,
         PromoCodeRepository $promoCodeRepository,
         PromoCodeFactoryInterface $promoCodeFactory,
-        private Domain $domain,
-        private PromoCodeProductRepository $promoCodeProductRepository,
-        private PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        private PromoCodeProductFactory $promoCodeProductFactory,
-        private PromoCodeCategoryFactory $promoCodeCategoryFactory,
-        private PromoCodeLimitRepository $promoCodeLimitRepository,
-        private HashGenerator $hashGenerator,
-        private PromoCodeLimitFactory $promoCodeLimitFactory,
-        private PromoCodeBrandRepository $promoCodeBrandRepository,
-        private PromoCodeBrandFactory $promoCodeBrandFactory,
-        private PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
-        private PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
-        private PromoCodeFlagRepository $promoCodeFlagRepository,
+        private readonly Domain $domain,
+        private readonly PromoCodeProductRepository $promoCodeProductRepository,
+        private readonly PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        private readonly PromoCodeProductFactory $promoCodeProductFactory,
+        private readonly PromoCodeCategoryFactory $promoCodeCategoryFactory,
+        private readonly PromoCodeLimitRepository $promoCodeLimitRepository,
+        private readonly HashGenerator $hashGenerator,
+        private readonly PromoCodeBrandRepository $promoCodeBrandRepository,
+        private readonly PromoCodeBrandFactory $promoCodeBrandFactory,
+        private readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        private readonly PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
+        private readonly PromoCodeFlagRepository $promoCodeFlagRepository,
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
     }
@@ -125,33 +121,11 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
             $promoCodeDataForCreate->code = $code;
 
-            $promoCodeDataForCreate->limits = [];
-
-            foreach ($promoCodeData->limits as $promoCodeLimit) {
-                $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create(
-                    $promoCodeLimit->getFromPriceWithVat(),
-                    $promoCodeLimit->getDiscount(),
-                );
-            }
-
-            $promoCode = $this->create($promoCodeDataForCreate);
-            $this->em->persist($promoCode);
+            $this->create($promoCodeDataForCreate);
 
             $existingPromoCodeCodes[] = $code;
             $generatedPromoCodeCount++;
-
-            if ($generatedPromoCodeCount % self::MASS_CREATE_BATCH_SIZE !== 0) {
-                continue;
-            }
-
-            $this->em->flush();
-            $this->em->clear(PromoCodeCategory::class);
-            $this->em->clear(PromoCodeLimit::class);
-            $this->em->clear(PromoCode::class);
         }
-
-        $this->em->flush();
-        $this->em->clear();
     }
 
     /**
