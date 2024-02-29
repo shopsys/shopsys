@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -27,6 +28,7 @@ class ProductRecalculationFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationRepository $productRecalculationRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade $productExportScopeConfigFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
         protected readonly IndexFacade $indexFacade,
@@ -37,6 +39,7 @@ class ProductRecalculationFacade
         protected readonly ProductRecalculationRepository $productRecalculationRepository,
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ProductExportScopeConfigFacade $productExportScopeConfigFacade,
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
     ) {
     }
 
@@ -57,22 +60,43 @@ class ProductRecalculationFacade
      */
     protected function recalculateWithScope(array $productIds, array $exportScopes): void
     {
-        if ($this->productExportScopeConfigFacade->shouldRecalculateVisibility($exportScopes)) {
+        $shouldRecalculateVisibility = $this->productExportScopeConfigFacade->shouldRecalculateVisibility($exportScopes);
+
+        if ($shouldRecalculateVisibility) {
             $this->productVisibilityFacade->calculateProductVisibilityForIds($productIds);
         }
 
-        if ($this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes)) {
+        $shouldRecalculateSellingDenied = $this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes);
+
+        if ($shouldRecalculateSellingDenied) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds);
         }
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
 
         foreach ($this->domain->getAllIds() as $domainId) {
+            $productIdsExistingInElastic = $this->productElasticsearchProvider->getOnlyExistingProductsIds($productIds, $domainId);
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
                 $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
-                $productIds,
+                $productIdsExistingInElastic,
                 $fields,
+            );
+
+            if (!$shouldRecalculateVisibility) {
+                continue;
+            }
+
+            $productIdsNotExistingInElastic = array_diff($productIds, $productIdsExistingInElastic);
+
+            if (count($productIdsNotExistingInElastic) === 0) {
+                continue;
+            }
+
+            $this->indexFacade->exportIds(
+                $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
+                $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
+                $productIdsNotExistingInElastic,
             );
         }
     }

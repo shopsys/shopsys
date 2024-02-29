@@ -292,4 +292,18 @@ class FilterQueryFactory
 
         return $filterQuery;
     }
+
+    /**
+     * @param int[] $productIds
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createOnlyExistingProductIdsFilterQuery(array $productIds, int $domainId): FilterQuery
+    {
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId);
+
+        return $this->create($indexDefinition->getIndexAlias())
+            ->filterByProductIds($productIds)
+            ->restrictFields(['id']);
+    }
 }
