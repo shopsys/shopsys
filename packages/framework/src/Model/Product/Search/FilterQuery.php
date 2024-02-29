@@ -842,4 +842,22 @@ class FilterQuery
 
         return $query;
     }
+
+    /**
+     * @param int $productId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function getExistsProductFilterQuery(int $productId): self
+    {
+        $clone = clone $this;
+
+        $clone->limit = 0;
+        $clone->match = [
+            'term' => [
+                'id' => $productId,
+            ],
+        ];
+
+        return $clone;
+    }
 }

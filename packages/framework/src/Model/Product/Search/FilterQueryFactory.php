@@ -292,4 +292,17 @@ class FilterQueryFactory
 
         return $filterQuery;
     }
+
+    /**
+     * @param int $productId
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createExistsProductFilterQuery(int $productId, int $domainId): FilterQuery
+    {
+        $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId);
+
+        return $this->create($indexDefinition->getIndexAlias())
+            ->getExistsProductFilterQuery($productId);
+    }
 }

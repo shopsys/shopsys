@@ -76,4 +76,14 @@ class ProductElasticsearchProvider
             $this->filterQueryFactory->createSellableProductsByProductUuidsFilter($productUuids),
         );
     }
+
+    /**
+     * @param int $productId
+     * @param int $domainId
+     * @return bool
+     */
+    public function existsProduct(int $productId, int $domainId): bool
+    {
+        return $this->productElasticsearchRepository->existsProduct($productId, $domainId);
+    }
 }

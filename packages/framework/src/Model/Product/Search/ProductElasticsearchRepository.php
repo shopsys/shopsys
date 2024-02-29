@@ -192,6 +192,19 @@ class ProductElasticsearchRepository implements ResetInterface
         return $this->extractHits($result);
     }
 
+    /**
+     * @param int $productId
+     * @param int $domainId
+     * @return bool
+     */
+    public function existsProduct(int $productId, int $domainId): bool
+    {
+        $filterQuery = $this->filterQueryFactory->createExistsProductFilterQuery($productId, $domainId);
+        $result = $this->client->search($filterQuery->getQuery());
+
+        return $this->extractTotalCount($result) > 0;
+    }
+
     public function reset(): void
     {
         $this->foundProductIdsCache = [];
