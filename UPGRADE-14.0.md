@@ -1437,6 +1437,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   moved changes from `App\Model\Product\Brand\BrandFacade` and `App\Model\Product\Brand\BrandRepository` to framework package so these classes have been removed
     -   new public method `getBrandsBySearchText(string $searchText): array` has been introduced in both framework classes
     -   moved method `getVisibleCategoriesByIds` from both `\App\FrontendApi\Model\Category\CategoryFacade` and `\App\FrontendApi\Model\Category\CategoryRepository` to frontend-api package classes
+-   replace search with SearchInput in search queries in Frontend API ([#3044](https://github.com/shopsys/shopsys/pull/3044))
+    -   in `articlesSearch`, `brandSearch`, `categoriesSearch` and `productsSearch` queries, the `search` argument has been replaced with `searchInput` of type `SearchInput` update your usages of these queries appropriately
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
@@ -1786,3 +1789,16 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   they were renamed to `tid` everywhere, so you should do the same
     -   as the docker setup for running acceptance tests was improved, makefile commands (`run-acceptance-tests-base` and `run-acceptance-tests-actual`) should be used to run tests
     -   add `closeOnClick` to all toast messages, as even though this should not be necessary (it is the default option), it does not work without it
+
+-   add new argument to enable personalized search and refactor stores ([#2999](https://github.com/shopsys/shopsys/pull/2999))
+
+    -   additional `userId` argument is added to search queries that is used for `Luigi's box`, this unique `userIdentifier` is generated and saved in persisted store
+    -   `useStoreHydration` is renamed to `usePersistStoreHydration`
+    -   product image during navigation (back in history between products) was not changing, this was fixed by adding `key` prop to gallery component
+    -   in order to improve cookies handling we have refactored this logic for setting cookies
+        -   now we use `CookieStore` to store values for cookies in `Zustand` and then whole store is being synchronized to cookies
+        -   during app initialization cookies are set to `CookieStore`
+        -   `LastVisitedProduct` is also refactored for use `CookiesStore` instead of using and handling cookies directly
+        -   `createUserConsentSlice` is removed and `userConsent` data is part of `createUserSlice`
+        -   we have discovered issue with Zustand store session during SSR, when setting values on server session was not destroyed and was used also for next session, this was solved by moving `CookiesStore` to `Context`, as it is the recommended way to handle such cases
+    -   domainConfig is moved from `SessionStore` to `Context` for easier handling and solve issue with SSR session (see previous comment from cookies refactoring)
