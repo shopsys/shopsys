@@ -6,7 +6,13 @@ import Register from 'framework/common/utils/Register';
     };
 
     const initAdvertForm = function () {
-        if (getCheckedPositionName() === 'productListMiddle') {
+        const positionNamesWithCategoryTree = [
+            'productList',
+            'productListMiddle',
+            'productListSecondRow'
+        ];
+
+        if (positionNamesWithCategoryTree.includes(getCheckedPositionName())) {
             $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').show();
         } else {
             $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').hide();

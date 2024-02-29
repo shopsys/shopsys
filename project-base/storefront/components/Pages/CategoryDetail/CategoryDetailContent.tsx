@@ -66,7 +66,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
                 <div className="flex flex-1 flex-col">
-                    <Adverts className="mt-6" positionName="productList" />
+                    <Adverts className="mt-6" currentCategory={category} positionName="productList" />
 
                     <h1 className="mb-3">{title}</h1>
 

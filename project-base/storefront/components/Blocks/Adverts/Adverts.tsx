@@ -41,49 +41,47 @@ export const Adverts: FC<AdvertsProps> = ({
 
     const content = !!displayedAdverts?.length && (
         <div className={twJoin(withGapBottom && 'mb-8', withGapTop && 'mt-8', !withWebline && className)}>
-            {displayedAdverts.map((advert, index) => {
-                if (advert.__typename === 'AdvertImage') {
-                    if (!shouldBeShown(advert, positionName, currentCategory)) {
-                        return null;
+            {displayedAdverts
+                .filter((advert) => shouldBeShown(advert, positionName, currentCategory))
+                .map((advert, index) => {
+                    if (advert.__typename === 'AdvertImage') {
+                        const mainImage = advert.mainImage;
+                        const mainImageMobile = advert.mainImageMobile;
+
+                        const ImageComponent = (
+                            <>
+                                <Image
+                                    alt={mainImage?.name || advert.name}
+                                    className="hidden lg:block"
+                                    height={400}
+                                    src={mainImage?.url}
+                                    width={1280}
+                                />
+                                <Image
+                                    alt={mainImageMobile?.name || advert.name}
+                                    className="lg:hidden"
+                                    height={300}
+                                    src={mainImageMobile?.url}
+                                    width={770}
+                                />
+                            </>
+                        );
+
+                        return (
+                            <Fragment key={index}>
+                                {advert.link ? (
+                                    <ExtendedNextLink href={advert.link} target="_blank">
+                                        {ImageComponent}
+                                    </ExtendedNextLink>
+                                ) : (
+                                    ImageComponent
+                                )}
+                            </Fragment>
+                        );
                     }
 
-                    const mainImage = advert.mainImage;
-                    const mainImageMobile = advert.mainImageMobile;
-
-                    const ImageComponent = (
-                        <>
-                            <Image
-                                alt={mainImage?.name || advert.name}
-                                className="hidden lg:block"
-                                height={400}
-                                src={mainImage?.url}
-                                width={1280}
-                            />
-                            <Image
-                                alt={mainImageMobile?.name || advert.name}
-                                className="lg:hidden"
-                                height={300}
-                                src={mainImageMobile?.url}
-                                width={770}
-                            />
-                        </>
-                    );
-
-                    return (
-                        <Fragment key={index}>
-                            {advert.link ? (
-                                <ExtendedNextLink href={advert.link} target="_blank">
-                                    {ImageComponent}
-                                </ExtendedNextLink>
-                            ) : (
-                                ImageComponent
-                            )}
-                        </Fragment>
-                    );
-                }
-
-                return <div key={index} dangerouslySetInnerHTML={{ __html: advert.code }} />;
-            })}
+                    return <div key={index} dangerouslySetInnerHTML={{ __html: advert.code }} />;
+                })}
         </div>
     );
 
@@ -103,7 +101,11 @@ const shouldBeShown = (
         return false;
     }
 
-    if (advert.positionName === 'productListMiddle' && !advert.categories.length) {
+    const isAdvertWithCategoryRestriction = ['productList', 'productListMiddle', 'productListSecondRow'].includes(
+        advert.positionName,
+    );
+
+    if (isAdvertWithCategoryRestriction && !advert.categories.length) {
         return false;
     }
 
@@ -113,5 +115,5 @@ const shouldBeShown = (
         }
     }
 
-    return positionName !== 'productListMiddle' && advert.positionName === positionName;
+    return !isAdvertWithCategoryRestriction && advert.positionName === positionName;
 };
