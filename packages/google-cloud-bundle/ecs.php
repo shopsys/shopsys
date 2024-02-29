@@ -21,9 +21,6 @@ return static function (ECSConfig $ecsConfig): void {
         PhpdocToPropertyTypeFixer::class => [
             __DIR__ . '/src/*',
         ],
-        DeclareStrictTypesFixer::class => [
-            __DIR__ . '/src/*',
-        ],
     ]);
 
     $ecsConfig->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);

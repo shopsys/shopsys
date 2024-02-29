@@ -37,9 +37,6 @@ $services->set('forbidden_private_visibility_fixer.article_feed_luigis_box', For
         PhpdocToPropertyTypeFixer::class => [
             __DIR__ . '/src/*',
         ],
-        DeclareStrictTypesFixer::class => [
-            __DIR__ . '/src/*',
-        ],
     ]);
 
     $ecsConfig->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
