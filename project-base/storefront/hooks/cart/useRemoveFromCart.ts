@@ -1,10 +1,10 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { CartFragmentApi, CartItemFragmentApi, useRemoveFromCartMutationApi } from 'graphql/generated';
 import { onGtmRemoveFromCartEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { usePersistStore } from 'store/usePersistStore';
 
 export type RemoveFromCartHandler = (

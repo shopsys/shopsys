@@ -2,6 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     BreadcrumbFragmentApi,
     OrderDetailQueryDocumentApi,
@@ -15,7 +16,6 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 

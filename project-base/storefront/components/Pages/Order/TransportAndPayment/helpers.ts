@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     LastOrderFragmentApi,
@@ -18,7 +19,6 @@ import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import getConfig from 'next/config';
 import { useEffect, useState } from 'react';

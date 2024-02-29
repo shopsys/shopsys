@@ -1,3 +1,4 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
 import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmMappedCart } from 'gtm/helpers/gtm';
@@ -7,7 +8,6 @@ import { showErrorMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
 

@@ -1,6 +1,7 @@
 import { AppPageContent } from 'components/Pages/App/AppPageContent';
 import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/Error500Content';
-import { CookiesStoreProvider } from 'components/providers/cookiesStoreProvider';
+import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
+import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { logException } from 'helpers/errors/logException';
 import { initDayjsLocale } from 'helpers/formaters/formatDate';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
@@ -49,7 +50,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
         <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
             <Provider value={urqlClient}>
                 <CookiesStoreProvider>
-                    <AppPageContent Component={Component} pageProps={pageProps} />
+                    <DomainConfigProvider domainConfig={pageProps.domainConfig}>
+                        <AppPageContent Component={Component} pageProps={pageProps} />
+                    </DomainConfigProvider>
                 </CookiesStoreProvider>
             </Provider>
         </ErrorBoundary>

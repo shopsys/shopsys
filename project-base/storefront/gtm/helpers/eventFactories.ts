@@ -7,6 +7,7 @@ import {
 } from './gtm';
 import { getGtmDeviceType } from './helpers';
 import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     AutocompleteSearchQueryApi,
@@ -61,7 +62,6 @@ import {
 } from 'gtm/types/objects';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
