@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleAlreadyExistsException;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleDoesNotExistException;
+
 class ProductExportScopeConfig
 {
     public const string SCOPE_NAME = 'product_name_scope';
@@ -38,86 +41,138 @@ class ProductExportScopeConfig
     public function getProductExportScopeRules(): array
     {
         if ($this->productExportScopeRules === null) {
-            $this->productExportScopeRules = [
-                self::SCOPE_SELLING_DENIED => new ProductExportScopeRule([
-                    ProductExportFieldProvider::SELLING_DENIED,
-                    ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
-                ], [
-                    self::PRECONDITION_SELLING_DENIED_RECALCULATION,
-                ]),
-                self::SCOPE_UNIT => new ProductExportScopeRule([
-                    ProductExportFieldProvider::UNIT,
-                ]),
-                self::SCOPE_BRAND => new ProductExportScopeRule([
-                    ProductExportFieldProvider::BRAND,
-                    ProductExportFieldProvider::BRAND_NAME,
-                    ProductExportFieldProvider::BRAND_URL,
-                ]),
-                self::SCOPE_STOCKS => new ProductExportScopeRule([
-                    ProductExportFieldProvider::AVAILABILITY,
-                    ProductExportFieldProvider::AVAILABILITY_DISPATCH_TIME,
-                    ProductExportFieldProvider::IN_STOCK,
-                    ProductExportFieldProvider::STOCK_QUANTITY,
-                ]),
-                self::SCOPE_URL => new ProductExportScopeRule([
-                    ProductExportFieldProvider::DETAIL_URL,
-                    ProductExportFieldProvider::HREFLANG_LINKS,
-                ]),
-                self::SCOPE_FLAGS => new ProductExportScopeRule([
-                    ProductExportFieldProvider::FLAGS,
-                ]),
-                self::SCOPE_PARAMETERS => new ProductExportScopeRule([
-                    ProductExportFieldProvider::PARAMETERS,
-                ]),
-                self::SCOPE_NAME => new ProductExportScopeRule([
-                    ProductExportFieldProvider::NAME,
-                    ProductExportFieldProvider::DETAIL_URL,
-                    ProductExportFieldProvider::HREFLANG_LINKS,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                ]),
-                self::SCOPE_HIDDEN => new ProductExportScopeRule([
-                    ProductExportFieldProvider::VISIBILITY,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                ]),
-                self::SCOPE_SELLING_FROM => new ProductExportScopeRule([
-                    ProductExportFieldProvider::VISIBILITY,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                ]),
-                self::SCOPE_SELLING_TO => new ProductExportScopeRule([
-                    ProductExportFieldProvider::VISIBILITY,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                ]),
-                self::SCOPE_PRICE => new ProductExportScopeRule([
-                    ProductExportFieldProvider::PRICES,
-                    ProductExportFieldProvider::VISIBILITY,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                ]),
-                self::SCOPE_CATEGORIES => new ProductExportScopeRule([
-                    ProductExportFieldProvider::CATEGORIES,
-                    ProductExportFieldProvider::MAIN_CATEGORY_ID,
-                    ProductExportFieldProvider::VISIBILITY,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                ]),
-                self::SCOPE_VARIANTS => new ProductExportScopeRule([
-                    ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
-                    ProductExportFieldProvider::VISIBILITY,
-                    ProductExportFieldProvider::VARIANTS,
-                    ProductExportFieldProvider::IS_VARIANT,
-                    ProductExportFieldProvider::IS_MAIN_VARIANT,
-                    ProductExportFieldProvider::MAIN_VARIANT_ID,
-                ], [
-                    self::PRECONDITION_VISIBILITY_RECALCULATION,
-                    self::PRECONDITION_SELLING_DENIED_RECALCULATION,
-                ]),
-            ];
+            $this->loadProductExportScopeRules();
         }
 
         return $this->productExportScopeRules;
+    }
+
+    protected function loadProductExportScopeRules(): void
+    {
+        $this->productExportScopeRules = [];
+
+        $this->addNewExportScopeRule(self::SCOPE_SELLING_DENIED, [
+            ProductExportFieldProvider::SELLING_DENIED,
+            ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
+        ], [
+            self::PRECONDITION_SELLING_DENIED_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_UNIT, [
+            ProductExportFieldProvider::UNIT,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_BRAND, [
+            ProductExportFieldProvider::BRAND,
+            ProductExportFieldProvider::BRAND_NAME,
+            ProductExportFieldProvider::BRAND_URL,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_STOCKS, [
+            ProductExportFieldProvider::AVAILABILITY,
+            ProductExportFieldProvider::AVAILABILITY_DISPATCH_TIME,
+            ProductExportFieldProvider::IN_STOCK,
+            ProductExportFieldProvider::STOCK_QUANTITY,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_URL, [
+            ProductExportFieldProvider::DETAIL_URL,
+            ProductExportFieldProvider::HREFLANG_LINKS,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_FLAGS, [
+            ProductExportFieldProvider::FLAGS,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_PARAMETERS, [
+            ProductExportFieldProvider::PARAMETERS,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_NAME, [
+            ProductExportFieldProvider::NAME,
+            ProductExportFieldProvider::DETAIL_URL,
+            ProductExportFieldProvider::HREFLANG_LINKS,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_HIDDEN, [
+            ProductExportFieldProvider::VISIBILITY,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_SELLING_FROM, [
+            ProductExportFieldProvider::VISIBILITY,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_SELLING_TO, [
+            ProductExportFieldProvider::VISIBILITY,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_PRICE, [
+            ProductExportFieldProvider::PRICES,
+            ProductExportFieldProvider::VISIBILITY,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_CATEGORIES, [
+            ProductExportFieldProvider::CATEGORIES,
+            ProductExportFieldProvider::MAIN_CATEGORY_ID,
+            ProductExportFieldProvider::VISIBILITY,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_VARIANTS, [
+            ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
+            ProductExportFieldProvider::VISIBILITY,
+            ProductExportFieldProvider::VARIANTS,
+            ProductExportFieldProvider::IS_VARIANT,
+            ProductExportFieldProvider::IS_MAIN_VARIANT,
+            ProductExportFieldProvider::MAIN_VARIANT_ID,
+        ], [
+            self::PRECONDITION_VISIBILITY_RECALCULATION,
+            self::PRECONDITION_SELLING_DENIED_RECALCULATION,
+        ]);
+    }
+
+    /**
+     * @param string $scopeName
+     * @param string[] $exportFields
+     * @param string[] $preconditions
+     */
+    protected function addNewExportScopeRule(string $scopeName, array $exportFields, array $preconditions = []): void
+    {
+        if (array_key_exists($scopeName, $this->productExportScopeRules)) {
+            throw new ScopeRuleAlreadyExistsException($scopeName);
+        }
+
+        $this->productExportScopeRules[$scopeName] = new ProductExportScopeRule($exportFields, $preconditions);
+    }
+
+    /**
+     * @param string $scopeName
+     * @param string[] $exportFields
+     */
+    protected function addExportFieldsToExistingScopeRule(string $scopeName, array $exportFields): void
+    {
+        if (!array_key_exists($scopeName, $this->productExportScopeRules)) {
+            throw new ScopeRuleDoesNotExistException($scopeName);
+        }
+        $scopeRule = $this->productExportScopeRules[$scopeName];
+        $this->productExportScopeRules[$scopeName] = new ProductExportScopeRule(
+            [...$scopeRule->productExportFields, ...$exportFields],
+            $scopeRule->productExportPreconditions,
+        );
+    }
+
+    /**
+     * @param string $scopeName
+     * @param array $exportFields
+     * @param array $preconditions
+     */
+    protected function overwriteExportScopeRule(
+        string $scopeName,
+        array $exportFields,
+        array $preconditions = [],
+    ): void {
+        if (!array_key_exists($scopeName, $this->productExportScopeRules)) {
+            throw new ScopeRuleDoesNotExistException($scopeName);
+        }
+
+        $this->productExportScopeRules[$scopeName] = new ProductExportScopeRule($exportFields, $preconditions);
     }
 }

@@ -797,3 +797,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory:
         alias: App\Model\Product\Filter\ProductFilterDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider:
+        alias: App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider
+
+    App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig:
+        alias: App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig
