@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportField
 class ProductExportFieldProvider extends BaseProductExportFieldProvider
 {
     public const string MAIN_CATEGORY_PATH = 'main_category_path';
-    public const string IS_AVAILABLE = 'is_available';
     public const string AVAILABILITY_STATUS = 'availability_status';
     public const string NAME_PREFIX = 'name_prefix';
     public const string NAME_SUFIX = 'name_sufix';

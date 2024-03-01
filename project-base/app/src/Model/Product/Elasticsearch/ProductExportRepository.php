@@ -178,7 +178,6 @@ class ProductExportRepository extends BaseProductExportRepository
         return match ($field) {
             BaseProductExportFieldProvider::FLAGS => $this->extractFlagsForDomain($domainId, $product),
             ProductExportFieldProvider::MAIN_CATEGORY_PATH => $this->extractMainCategoryPath($product, $domainId, $locale),
-            ProductExportFieldProvider::IS_AVAILABLE => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             BaseProductExportFieldProvider::PARAMETERS => $this->extractParametersIncludedVariants($product, $locale, $domainId),
             BaseProductExportFieldProvider::CALCULATED_SELLING_DENIED => $product->getCalculatedSaleExclusion($domainId),
             ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId)->value,
