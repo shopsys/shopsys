@@ -1,0 +1,26 @@
+on:
+    schedule:
+        -   cron: '0 1 * * *'
+    workflow_dispatch:
+name: Storefront npm security check
+jobs:
+    storefront-security-check:
+        name: Run npm security check for branch ${{ matrix.branches }}
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                branches: ['13.0', '14.0', '15.0']
+            fail-fast: false
+        steps:
+            -   name: GIT checkout branch - ${{ matrix.branches }}
+                uses: actions/checkout@v4
+                with:
+                    ref: 'refs/heads/${{ matrix.branches }}'
+            -   name: Prepare variables
+                run: |
+                    DOCKER_STOREFRONT_REPOSITORY_TAG=ghcr.io/${{ github.repository_owner }}/storefront:github-action-${{ github.sha }}
+                    echo "DOCKER_STOREFRONT_REPOSITORY_TAG=${DOCKER_STOREFRONT_REPOSITORY_TAG}" >> $GITHUB_ENV
+            -   name: Run security check inside Storefront container
+                run: |
+                    .github/build-storefront-image.sh $DOCKER_STOREFRONT_REPOSITORY_TAG
+                    docker run -i $DOCKER_STOREFRONT_REPOSITORY_TAG pnpm audit --audit-level=high --ignore-registry-errors

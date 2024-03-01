@@ -221,6 +221,7 @@ security:check:
         -   if: '$CI_COMMIT_BRANCH == "master" && $CI_PIPELINE_SOURCE != "schedule"'
     script:
         - docker run -i ${TAG} composer security-check
+        - docker run -i ${STOREFRONT_TAG} pnpm audit --audit-level=high --ignore-registry-errors
 
 service:merge_request:
     stage: service
