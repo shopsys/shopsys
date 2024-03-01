@@ -81,6 +81,7 @@
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/migrations": "14.0.x-dev",
         "shopsys/plugin-interface": "14.0.x-dev",
+        "shopsys/brand-feed-luigis-box": "14.0.x-dev",
         "shopsys/category-feed-luigis-box": "14.0.x-dev",
         "shopsys/product-feed-google": "14.0.x-dev",
         "shopsys/product-feed-heureka": "14.0.x-dev",

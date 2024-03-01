@@ -146,9 +146,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/*',
             __DIR__ . '/tests/*',
         ],
-        DeclareStrictTypesFixer::class => [
-            __DIR__ . '/src/*',
-        ],
         EarlyExitSniff::class => [
             __DIR__ . '/src/Migrations/Version20231213165330.php',
         ],

@@ -21,13 +21,14 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "shopsys/form-types-bundle": "14.0.x-dev",
         "shopsys/framework": "14.0.x-dev",
         "shopsys/frontend-api": "14.0.x-dev",
         "shopsys/migrations": "14.0.x-dev",
         "shopsys/plugin-interface": "14.0.x-dev",
         "shopsys/article-feed-luigis-box": "14.0.x-dev",
+        "shopsys/brand-feed-luigis-box": "14.0.x-dev",
         "shopsys/category-feed-luigis-box": "14.0.x-dev",
         "shopsys/product-feed-luigis-box": "14.0.x-dev",
         "symfony/config": "^5.4",

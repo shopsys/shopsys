@@ -31,6 +31,7 @@ If you are interested, you can read more about the monorepo approach here - http
 `packages/`
 
 -   [shopsys/framework](https://github.com/shopsys/framework)
+-   [shopsys/brand-feed-luigis-box](https://github.com/shopsys/brand-feed-luigis-box)
 -   [shopsys/category-feed-luigis-box](https://github.com/shopsys/category-feed-luigis-box)
 -   [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
 -   [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
