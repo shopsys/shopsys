@@ -253,9 +253,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
         alias: App\Model\Order\Item\OrderItemDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
-        alias: App\Model\Order\Item\OrderItemFactory
-
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory:
         alias: App\Model\Order\Item\OrderItemFactory
 

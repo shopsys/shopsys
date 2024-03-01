@@ -22,7 +22,7 @@ class OrderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -31,7 +31,7 @@ class OrderItemFacade
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly Domain $domain,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
-        protected readonly OrderItemFactoryInterface $orderItemFactory,
+        protected readonly OrderItemFactory $orderItemFactory,
     ) {
     }
 

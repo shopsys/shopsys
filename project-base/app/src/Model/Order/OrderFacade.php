@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -139,7 +139,7 @@ class OrderFacade extends BaseOrderFacade
         NumberFormatterExtension $numberFormatterExtension,
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
-        OrderItemFactoryInterface $orderItemFactory,
+        OrderItemFactory $orderItemFactory,
         OrderItemDataFactory $orderItemDataFactory,
         PaymentTransactionFacade $paymentTransactionFacade,
         PaymentServiceFacade $paymentServiceFacade,

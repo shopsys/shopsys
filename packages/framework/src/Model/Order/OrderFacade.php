@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
@@ -95,7 +95,7 @@ class OrderFacade
         protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly OrderItemFactoryInterface $orderItemFactory,
+        protected readonly OrderItemFactory $orderItemFactory,
         protected readonly PaymentTransactionFacade $paymentTransactionFacade,
         protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
