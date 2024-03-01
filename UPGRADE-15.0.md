@@ -87,6 +87,68 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   Added check vulnerabilities for javascripts in storefront ([#2993](https://github.com/shopsys/shopsys/pull/2993))
     -   see #project-base-diff to update your project
+-   remove deprecated properties from product entity ([#3027](https://github.com/shopsys/shopsys/pull/3027))
+    -   the following features were removed altogether in favor of `ProductAvailabilityFacade` functionality
+        -   `Product::$outOfStockAction`
+        -   `Product::$outOfStockAvailability`
+        -   `Product::$stockQuantity`
+        -   `Product::$usingStock`
+        -   `Product::$availability`
+        -   `Availability` entity with all the related logic (see `Shopsys\FrameworkBundle\Model\Product\Availability` namespace)
+    -   `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly AvailabilityFacade $availabilityFacade,
+        ```
+    -   `Shopsys\FrameworkBundle\Controller\Admin\ProductController::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly AvailabilityFacade $availabilityFacade,
+        ```
+    -   `assets/js/admin/validation/form/validationProduct.js` was removed
+    -   `Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface::OPERATOR_IS_USED` and `OPERATOR_IS_NOT_USED` constants were removed
+    -   `Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductStockFilter` class was removed
+    -   `Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       ProductStockFilter $productStockFilter,
+                // ..
+        ```
+    -   `Shopsys\FrameworkBundle\Model\Module\ModuleList::PRODUCT_STOCK_CALCULATIONS` constant was removed
+    -   `Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade` class was removed
+    -   `Shopsys\FrameworkBundle\Model\Order\OrderFacade::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly OrderProductFacade $orderProductFacade,
+        ```
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY`, `OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE`, and `OUT_OF_STOCK_ACTION_HIDE` constants were removed
+    -   `Shopsys\FrameworkBundle\Model\ProductProductDataFactory::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly AvailabilityFacade $availabilityFacade,
+        ```
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductFactory::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation,
+        ```
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductRepository::getAllSellableUsingStockInStockQueryBuilder()` method was removed
+    -   `Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade::__construct` interface has changed:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly OrderProductFacade $orderProductFacade,
+        ```
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper::isUsingStock()` method was removed
+    -   FE API: `isUsingStock` field was removed from `ProductDecorator.types`
+    -   double-check the `Shopsys\FrameworkBundle\Migrations\Version20240206145944` migration to ensure it does not break your application
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
