@@ -28,7 +28,7 @@ services:
         resource: '../src/Twig/'
 
     App\:
-        resource: '../src/**/*{Calculation,Collector,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,Validator,Transfer,Helper,Converter,DataFetcher}.php'
+        resource: '../src/**/*{Calculation,Collector,Config,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,Validator,Transfer,Helper,Converter,DataFetcher}.php'
         exclude:
             - '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
             - '../src/FrontendApi/**/*{Resolver,Mapper}.php'
@@ -814,3 +814,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory:
         alias: App\Model\Product\Filter\ProductFilterDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider:
+        alias: App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig:
+        alias: App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig
