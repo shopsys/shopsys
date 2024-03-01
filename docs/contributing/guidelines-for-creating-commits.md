@@ -44,7 +44,7 @@ docs: added rule about title capitalization in Guidelines for Writing Documentat
 ```
 
 ```markdown
-OrderFlowFacade: removed unused uses
+OrderFacade: removed unused uses
 ```
 
 -   Never start the message with the phrase "fix:". Again, it prevents developers from getting confused between a description of the fixed error and a description of the current state.

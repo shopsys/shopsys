@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginListener;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
@@ -33,14 +32,9 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($userMock);
 
-        $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $administratorActivityFacadeMock = $this->createMock(AdministratorActivityFacade::class);
 
-        $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
+        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock);
         $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 
@@ -58,14 +52,9 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($userMock);
 
-        $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $administratorActivityFacadeMock = $this->createMock(AdministratorActivityFacade::class);
 
-        $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
+        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock);
         $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 
@@ -85,15 +74,9 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($userMock);
 
-        $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->onlyMethods(['__construct', 'resetOrderForm'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $orderFlowFacadeMock->expects($this->once())->method('resetOrderForm');
-
         $administratorActivityFacadeMock = $this->createMock(AdministratorActivityFacade::class);
 
-        $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
+        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock);
         $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 
@@ -111,18 +94,13 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($administratorMock);
 
-        $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $administratorActivityFacadeMock = $this->getMockBuilder(AdministratorActivityFacade::class)
             ->onlyMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
         $administratorActivityFacadeMock->expects($this->once())->method('create');
 
-        $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
+        $loginListener = new LoginListener($emMock, $administratorActivityFacadeMock);
         $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 }

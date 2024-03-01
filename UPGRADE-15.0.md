@@ -68,6 +68,23 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
     -   see #project-base-diff to update your project
+-   remove unused order flow ([#3046](https://github.com/shopsys/shopsys/pull/3046))
+    -   class `Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade` was removed
+    -   class `Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface` was removed
+    -   constructor `Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly RouterInterface $router,
+        -       protected readonly OrderFlowFacade $orderFlowFacade,
+        ```
+    -   constructor `Shopsys\FrameworkBundle\Model\Security\LoginListener` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+        -       protected readonly OrderFlowFacade $orderFlowFacade,
+                protected readonly AdministratorActivityFacade $administratorActivityFacade,
+        ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
