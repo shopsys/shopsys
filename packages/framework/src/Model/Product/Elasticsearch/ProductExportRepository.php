@@ -8,10 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
+use Override;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
@@ -20,11 +22,13 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductExportRepository
+class ProductExportRepository implements ResetInterface
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -39,6 +43,9 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variantCache
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -53,6 +60,9 @@ class ProductExportRepository
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly ProductExportFieldProvider $productExportFieldProvider,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ProductRepository $productRepository,
+        protected ?array $variantCache = null,
     ) {
     }
 
@@ -120,6 +130,8 @@ class ProductExportRepository
         foreach ($fields as $field) {
             $exportedResult[$field] = $this->getExportedFieldValue($domainId, $product, $locale, $field);
         }
+
+        $this->reset();
 
         return $exportedResult;
     }
@@ -402,5 +414,26 @@ class ProductExportRepository
         }
 
         return $results;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    protected function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
+    {
+        if ($this->variantCache === null) {
+            $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
+            $this->variantCache = $this->productRepository->getAllSellableVariantsByMainVariant($mainVariant, $domainId, $pricingGroup);
+        }
+
+        return $this->variantCache;
+    }
+
+    #[Override]
+    public function reset(): void
+    {
+        $this->variantCache = null;
     }
 }

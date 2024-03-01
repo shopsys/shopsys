@@ -47,14 +47,11 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @property \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
  * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
+ * @property \App\Model\Product\ProductRepository $productRepository
+ * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
-    /**
-     * @var \App\Model\Product\Product[]|null
-     */
-    private ?array $variantCache = null;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -68,8 +65,8 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
-     * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
@@ -87,8 +84,8 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductAvailabilityFacade $productAvailabilityFacade,
         HreflangLinksFacade $hreflangLinksFacade,
         BaseProductExportFieldProvider $productExportFieldProvider,
-        private readonly ProductRepository $productRepository,
-        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        PricingGroupSettingFacade $pricingGroupSettingFacade,
+        ProductRepository $productRepository,
         private readonly ProductPriceCalculation $productPriceCalculation,
         private readonly BreadcrumbFacade $breadcrumbFacade,
         private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
@@ -106,64 +103,9 @@ class ProductExportRepository extends BaseProductExportRepository
             $productAvailabilityFacade,
             $hreflangLinksFacade,
             $productExportFieldProvider,
+            $pricingGroupSettingFacade,
+            $productRepository,
         );
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param int $lastProcessedId
-     * @param int $batchSize
-     * @param string[] $fields
-     * @return array
-     */
-    public function getProductsData(
-        int $domainId,
-        string $locale,
-        int $lastProcessedId,
-        int $batchSize,
-        array $fields = [],
-    ): array {
-        $queryBuilder = $this->createQueryBuilder($domainId)
-            ->andWhere('p.id > :lastProcessedId')
-            ->setParameter('lastProcessedId', $lastProcessedId)
-            ->setMaxResults($batchSize);
-
-        $query = $queryBuilder->getQuery();
-
-        $results = [];
-        /** @var \App\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
-            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
-            $this->clearVariantCache();
-        }
-
-        return $results;
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param int[] $productIds
-     * @param string[] $fields
-     * @return array
-     */
-    public function getProductsDataForIds(int $domainId, string $locale, array $productIds, array $fields): array
-    {
-        $queryBuilder = $this->createQueryBuilder($domainId)
-            ->andWhere('p.id IN (:productIds)')
-            ->setParameter('productIds', $productIds);
-
-        $query = $queryBuilder->getQuery();
-
-        $result = [];
-        /** @var \App\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
-            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
-            $this->clearVariantCache();
-        }
-
-        return $result;
     }
 
     /**
@@ -564,26 +506,6 @@ class ProductExportRepository extends BaseProductExportRepository
     private function extractBreadcrumb(Product $product, int $domainId, string $locale): array
     {
         return $this->breadcrumbFacade->getBreadcrumbOnDomain($product->getId(), 'front_product_detail', $domainId, $locale);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $mainVariant
-     * @param int $domainId
-     * @return \App\Model\Product\Product[]
-     */
-    private function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
-    {
-        if ($this->variantCache === null) {
-            $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-            $this->variantCache = $this->productRepository->getAllSellableVariantsByMainVariant($mainVariant, $domainId, $pricingGroup);
-        }
-
-        return $this->variantCache;
-    }
-
-    private function clearVariantCache(): void
-    {
-        $this->variantCache = null;
     }
 
     /**
