@@ -1,4 +1,4 @@
-import { isWithErrorDebugging } from './errors/isWithErrorDebugging';
+import { isWithToastAndConsoleErrorDebugging } from './errors/isWithErrorDebugging';
 import { isClient } from './isClient';
 import CopyTextBlock from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { TIDs } from 'cypress/tids';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
-        if (isWithErrorDebugging) {
+        if (isWithToastAndConsoleErrorDebugging) {
             toast.error(() => <CopyTextBlock textToCopy={message} />, {
                 toastId: message,
                 autoClose: false,

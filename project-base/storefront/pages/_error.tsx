@@ -1,6 +1,6 @@
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
-import { isWithErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
+import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
 import { logException } from 'helpers/errors/logException';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -38,22 +38,16 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
         err = JSON.stringify({ name: err.name, message: err.message, stack: err.stack, cause: err.cause });
     }
 
-    if (statusCode !== 404 && !isWithErrorDebugging) {
+    if (statusCode !== 404 || isWithErrorDebugging) {
         logException({
             message: err,
             statusCode,
             initServerSidePropsResonse: JSON.stringify(serverSideProps),
-            location: 'ErrorPage.getInitialProps.isWithErrorDebugging = false',
+            location: 'ErrorPage.getInitialProps.noErrorDebugging',
         });
     }
 
-    if (isWithErrorDebugging) {
-        logException({
-            message: err,
-            statusCode,
-            initServerSidePropsResonse: JSON.stringify(serverSideProps),
-            location: 'ErrorPage.getInitialProps.isWithErrorDebugging = true',
-        });
+    if (isWithToastAndConsoleErrorDebugging) {
         showErrorMessage(err);
     }
 

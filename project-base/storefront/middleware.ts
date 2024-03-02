@@ -74,7 +74,11 @@ export const middleware: NextMiddleware = async (request) => {
 
         return rewriteDynamicPages(pageTypeParsedResponse.route, request.url, search);
     } catch (e) {
-        if (process.env.ERROR_DEBUGGING === '1' && e instanceof Error) {
+        if (
+            (process.env.ERROR_DEBUGGING_LEVEL === 'console' ||
+                process.env.ERROR_DEBUGGING_LEVEL === 'toast-and-console') &&
+            e instanceof Error
+        ) {
             return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
                 headers: [
                     [MIDDLEWARE_STATUS_CODE_KEY, '500'],

@@ -22,7 +22,7 @@ vi.mock('next/config', () => ({
     default: () => ({
         serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/graphql/' },
         publicRuntimeConfig: {
-            errorDebugging: false,
+            errorDebuggingLevel: 'no-debug',
             domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
         },
     }),

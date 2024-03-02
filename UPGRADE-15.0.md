@@ -91,7 +91,17 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 ### Storefront
 
 -   added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
+
     -   queries and mutation names are now part of the request URL, which means query is not made to `/graphql/` but `/graphql/<QueryName>/`
     -   if you do not want this, you can skip the changes (ensure there is no `operationNameExchange` used in your URQL client)
     -   if you apply this change, it should be easier for you to debug requests in tools like Kibana and also see operation names in browser network tab
+
 -   fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
+
+-   refactored different levels of error debugging on SF ([#3033](https://github.com/shopsys/shopsys/pull/3033))
+
+    -   we now have three levels (`console`, `toast-and-console`, `no-debug`) based on which verbose error messages are shown to developers
+    -   in your projects, you should use constants `isWithConsoleErrorDebugging`, `isWithToastAndConsoleErrorDebugging`,`isWithErrorDebugging` to control different debugging in all places where you handle errors or exceptions
+    -   docs were rewritten to match this new approach, so you can read them to get a better idea
+    -   verbose logging was also added for mutations, so if you need to handle this differently, check `errorExchange.ts`
+    -   added .env.development for SF, so you should put all your env variables for development there, if you need to handle them in a specific way, differently from the app being in production mode

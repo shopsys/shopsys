@@ -1,7 +1,7 @@
 import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { isWithErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
+import { isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -36,7 +36,7 @@ export const Error500Content: FC<Error500ContentProps> = ({ err }) => {
                     <ErrorPageTextMain>{t('Please try again later or contact us.')}</ErrorPageTextMain>
                     <ErrorPageButtonLink href="/">{t('Back to shop')}</ErrorPageButtonLink>
                 </ErrorPage>
-                {isWithErrorDebugging && err && (
+                {isWithToastAndConsoleErrorDebugging && err && (
                     <div className="my-3 flex justify-center">
                         <div className="rounded bg-greyLighter">
                             <div className="p-3">

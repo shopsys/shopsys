@@ -4,7 +4,7 @@ import { GtmMessageOriginType } from 'gtm/types/enums';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { isWithErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
+import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
 import { logException } from 'helpers/errors/logException';
 import { mapGraphqlErrorForDevelopment } from 'helpers/errors/mapGraphqlErrorForDevelopment';
 import { isClient } from 'helpers/isClient';
@@ -23,7 +23,13 @@ export const getErrorExchange =
                 operations$,
                 forward,
                 tap(({ error, operation }) => {
-                    if (operation.kind !== 'query' || !error) {
+                    if ((operation.kind !== 'query' && operation.kind !== 'mutation') || !error) {
+                        return;
+                    }
+
+                    if (isWithErrorDebugging && operation.kind === 'mutation') {
+                        handleErrorMessagesForMutation(error);
+
                         return;
                     }
 
@@ -58,9 +64,26 @@ const handleErrorMessagesForDevelopment = (error: CombinedError) => {
         originalError: JSON.stringify(error),
         location: 'getErrorExchange.handleErrorMessagesForDevelopment',
     });
-    error.graphQLErrors
-        .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
-        .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
+
+    if (isWithToastAndConsoleErrorDebugging) {
+        error.graphQLErrors
+            .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
+            .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
+    }
+};
+
+const handleErrorMessagesForMutation = (error: CombinedError) => {
+    logException({
+        message: error.message,
+        originalError: JSON.stringify(error),
+        location: 'getErrorExchange.handleErrorMessagesForMutation',
+    });
+
+    if (isWithToastAndConsoleErrorDebugging) {
+        error.graphQLErrors
+            .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
+            .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
+    }
 };
 
 const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operation: Operation) => {
