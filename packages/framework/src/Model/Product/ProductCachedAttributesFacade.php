@@ -4,33 +4,28 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductCachedAttributesFacade implements ResetInterface
+class ProductCachedAttributesFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
-     */
-    protected array $sellingPricesByProductId;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[][]
-     */
-    protected array $parameterValuesByProductId;
+    protected const SELLING_PRICES_CACHE_NAMESPACE = 'sellingPricesByProductId';
+    protected const PARAMETER_VALUES_CACHE_NAMESPACE = 'parameterValuesByProductId';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly Localization $localization,
+        protected readonly LocalCacheFacade $localCacheFacade,
     ) {
     }
 
@@ -40,8 +35,10 @@ class ProductCachedAttributesFacade implements ResetInterface
      */
     public function getProductSellingPrice(Product $product)
     {
-        if (isset($this->sellingPricesByProductId[$product->getId()])) {
-            return $this->sellingPricesByProductId[$product->getId()];
+        $key = (string)$product->getId();
+
+        if ($this->localCacheFacade->hasItem(static::SELLING_PRICES_CACHE_NAMESPACE, $key)) {
+            return $this->localCacheFacade->getItem(static::SELLING_PRICES_CACHE_NAMESPACE, $key);
         }
 
         try {
@@ -49,7 +46,7 @@ class ProductCachedAttributesFacade implements ResetInterface
         } catch (MainVariantPriceCalculationException $ex) {
             $productPrice = null;
         }
-        $this->sellingPricesByProductId[$product->getId()] = $productPrice;
+        $this->localCacheFacade->save(static::SELLING_PRICES_CACHE_NAMESPACE, $key, $productPrice);
 
         return $productPrice;
     }
@@ -61,8 +58,10 @@ class ProductCachedAttributesFacade implements ResetInterface
      */
     public function getProductParameterValues(Product $product, ?string $locale = null)
     {
-        if (isset($this->parameterValuesByProductId[$product->getId()])) {
-            return $this->parameterValuesByProductId[$product->getId()];
+        $key = (string)$product->getId();
+
+        if ($this->localCacheFacade->hasItem(static::PARAMETER_VALUES_CACHE_NAMESPACE, $key)) {
+            return $this->localCacheFacade->getItem(static::PARAMETER_VALUES_CACHE_NAMESPACE, $key);
         }
         $locale = $locale ?? $this->localization->getLocale();
 
@@ -80,14 +79,8 @@ class ProductCachedAttributesFacade implements ResetInterface
                 unset($productParameterValues[$index]);
             }
         }
-        $this->parameterValuesByProductId[$product->getId()] = $productParameterValues;
+        $this->localCacheFacade->save(static::PARAMETER_VALUES_CACHE_NAMESPACE, $key, $productParameterValues);
 
         return $productParameterValues;
-    }
-
-    public function reset(): void
-    {
-        $this->sellingPricesByProductId = [];
-        $this->parameterValuesByProductId = [];
     }
 }

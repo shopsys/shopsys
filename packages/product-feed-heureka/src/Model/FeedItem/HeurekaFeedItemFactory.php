@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
-use Symfony\Contracts\Service\ResetInterface;
 
-class HeurekaFeedItemFactory implements ResetInterface
+class HeurekaFeedItemFactory
 {
-    /**
-     * @var string[]|null[]
-     */
-    protected array $heurekaCategoryFullNamesCache = [];
+    protected const HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE = 'heurekaCategoryFullNamesCache';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
@@ -26,6 +23,7 @@ class HeurekaFeedItemFactory implements ResetInterface
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
@@ -33,6 +31,7 @@ class HeurekaFeedItemFactory implements ResetInterface
         protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly LocalCacheFacade $localCacheFacade,
     ) {
     }
 
@@ -109,13 +108,19 @@ class HeurekaFeedItemFactory implements ResetInterface
      */
     protected function findHeurekaCategoryFullNameByCategoryIdUsingCache(int $categoryId): ?string
     {
-        if (!array_key_exists($categoryId, $this->heurekaCategoryFullNamesCache)) {
-            $this->heurekaCategoryFullNamesCache[$categoryId] = $this->findHeurekaCategoryFullNameByCategoryId(
-                $categoryId,
+        $key = (string)$categoryId;
+
+        if (!$this->localCacheFacade->hasItem(static::HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE, $key)) {
+            $this->localCacheFacade->save(
+                static::HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE,
+                $key,
+                $this->findHeurekaCategoryFullNameByCategoryId(
+                    $categoryId,
+                ),
             );
         }
 
-        return $this->heurekaCategoryFullNamesCache[$categoryId];
+        return $this->localCacheFacade->getItem(static::HEUREKA_CATEGORY_FULL_NAMES_CACHE_NAMESPACE, $key);
     }
 
     /**
@@ -127,10 +132,5 @@ class HeurekaFeedItemFactory implements ResetInterface
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 
         return $heurekaCategory !== null ? $heurekaCategory->getFullName() : null;
-    }
-
-    public function reset(): void
-    {
-        $this->heurekaCategoryFullNamesCache = [];
     }
 }

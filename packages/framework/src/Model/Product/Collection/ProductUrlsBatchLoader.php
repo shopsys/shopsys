@@ -6,28 +6,24 @@ namespace Shopsys\FrameworkBundle\Model\Product\Collection;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductUrlsBatchLoader implements ResetInterface
+class ProductUrlsBatchLoader
 {
-    /**
-     * @var string[]
-     */
-    protected array $loadedProductUrls = [];
-
-    /**
-     * @var string[]|null[]
-     */
-    protected array $loadedProductImageUrls = [];
+    protected const PRODUCT_URLS_CACHE_NAMESPACE = 'loadedProductUrls';
+    protected const PRODUCT_IMAGE_URLS_CACHE_NAMESPACE = 'loadedProductImageUrls';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
-    public function __construct(protected readonly ProductCollectionFacade $productCollectionFacade)
-    {
+    public function __construct(
+        protected readonly ProductCollectionFacade $productCollectionFacade,
+        protected readonly LocalCacheFacade $localCacheFacade,
+    ) {
     }
 
     /**
@@ -46,8 +42,8 @@ class ProductUrlsBatchLoader implements ResetInterface
             $key = $this->getKey($product, $domainConfig);
             $productId = $product->getId();
 
-            $this->loadedProductUrls[$key] = $productUrlsById[$productId];
-            $this->loadedProductImageUrls[$key] = $productImageUrlsById[$productId];
+            $this->localCacheFacade->save(static::PRODUCT_URLS_CACHE_NAMESPACE, $key, $productUrlsById[$productId]);
+            $this->localCacheFacade->save(static::PRODUCT_IMAGE_URLS_CACHE_NAMESPACE, $key, $productImageUrlsById[$productId]);
         }
     }
 
@@ -60,11 +56,11 @@ class ProductUrlsBatchLoader implements ResetInterface
     {
         $key = $this->getKey($product, $domainConfig);
 
-        if (!array_key_exists($key, $this->loadedProductUrls)) {
+        if (!$this->localCacheFacade->hasItem(static::PRODUCT_URLS_CACHE_NAMESPACE, $key)) {
             throw new ProductUrlNotLoadedException($product, $domainConfig);
         }
 
-        return $this->loadedProductUrls[$key];
+        return $this->localCacheFacade->getItem(static::PRODUCT_URLS_CACHE_NAMESPACE, $key);
     }
 
     /**
@@ -76,11 +72,11 @@ class ProductUrlsBatchLoader implements ResetInterface
     {
         $key = $this->getKey($product, $domainConfig);
 
-        if (!array_key_exists($key, $this->loadedProductImageUrls)) {
+        if (!$this->localCacheFacade->hasItem(static::PRODUCT_IMAGE_URLS_CACHE_NAMESPACE, $key)) {
             throw new ProductImageUrlNotLoadedException($product, $domainConfig);
         }
 
-        return $this->loadedProductImageUrls[$key];
+        return $this->localCacheFacade->getItem(static::PRODUCT_IMAGE_URLS_CACHE_NAMESPACE, $key);
     }
 
     /**
@@ -103,11 +99,5 @@ class ProductUrlsBatchLoader implements ResetInterface
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();
-    }
-
-    public function reset(): void
-    {
-        $this->loadedProductUrls = [];
-        $this->loadedProductImageUrls = [];
     }
 }

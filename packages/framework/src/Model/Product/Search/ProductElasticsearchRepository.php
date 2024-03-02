@@ -7,27 +7,26 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Doctrine\ORM\QueryBuilder;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductElasticsearchRepository implements ResetInterface
+class ProductElasticsearchRepository
 {
-    /**
-     * @var int[][][]
-     */
-    protected array $foundProductIdsCache = [];
+    protected const FOUND_PRODUCT_IDS_CACHE_NAMESPACE = 'foundProductIdsCache';
 
     /**
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
     public function __construct(
         protected readonly Client $client,
         protected readonly ProductElasticsearchConverter $productElasticsearchConverter,
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly LocalCacheFacade $localCacheFacade,
     ) {
     }
 
@@ -69,14 +68,15 @@ class ProductElasticsearchRepository implements ResetInterface
     protected function getFoundProductIds(QueryBuilder $productQueryBuilder, $searchText)
     {
         $domainId = $productQueryBuilder->getParameter('domainId')->getValue();
+        $cacheKey = sprintf('%d~%s', $domainId, $searchText);
 
-        if (!isset($this->foundProductIdsCache[$domainId][$searchText])) {
+        if (!$this->localCacheFacade->hasItem(static::FOUND_PRODUCT_IDS_CACHE_NAMESPACE, $cacheKey)) {
             $foundProductIds = $this->getProductIdsBySearchText($domainId, $searchText);
 
-            $this->foundProductIdsCache[$domainId][$searchText] = $foundProductIds;
+            $this->localCacheFacade->save(static::FOUND_PRODUCT_IDS_CACHE_NAMESPACE, $cacheKey, $foundProductIds);
         }
 
-        return $this->foundProductIdsCache[$domainId][$searchText];
+        return $this->localCacheFacade->getItem(static::FOUND_PRODUCT_IDS_CACHE_NAMESPACE, $cacheKey);
     }
 
     /**
@@ -190,10 +190,5 @@ class ProductElasticsearchRepository implements ResetInterface
         $result = $this->client->search($filterQuery->getQuery());
 
         return $this->extractHits($result);
-    }
-
-    public function reset(): void
-    {
-        $this->foundProductIdsCache = [];
     }
 }
