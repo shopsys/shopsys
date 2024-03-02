@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class CurrentCustomerUser
 {
-    protected const CURRENT_CUSTOMER_USER_CACHE_NAMESPACE = 'currentCustomerUser';
+    protected const string CURRENT_CUSTOMER_USER_CACHE_NAMESPACE = 'currentCustomerUser';
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage

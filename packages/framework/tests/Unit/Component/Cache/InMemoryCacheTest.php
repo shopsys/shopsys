@@ -115,4 +115,19 @@ class InMemoryCacheTest extends TestCase
 
         $this->assertFalse($inMemoryCache->hasItem($namespace, $key));
     }
+
+    public function testDeleteAllItemsInNamespace(): void
+    {
+        $namespace = 'test';
+
+        $inMemoryCache = new InMemoryCache();
+        $inMemoryCache->save($namespace, 'value-1', 1);
+        $inMemoryCache->save($namespace, 'value-2', 2);
+
+        $this->assertCount(2, $inMemoryCache->getValuesByNamespace($namespace));
+
+        $inMemoryCache->deleteAllItemsInNamespace($namespace);
+
+        $this->assertCount(0, $inMemoryCache->getValuesByNamespace($namespace));
+    }
 }

@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 
 use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Spatie\OpeningHours\OpeningHours as SpatieOpeningHours;
-use Symfony\Contracts\Service\ResetInterface;
 
-class StoreOpeningHoursProvider implements ResetInterface
+class StoreOpeningHoursProvider
 {
-    protected const DAY_NUMBERS_TO_ENGLISH_NAMES_MAP = [
+    protected const string STORE_OPENING_HOURS_NAMESPACE = 'store_opening_hours_namespace';
+    protected const array DAY_NUMBERS_TO_ENGLISH_NAMES_MAP = [
         1 => 'monday',
         2 => 'tuesday',
         3 => 'wednesday',
@@ -23,15 +24,12 @@ class StoreOpeningHoursProvider implements ResetInterface
     ];
 
     /**
-     * @var \Spatie\OpeningHours\OpeningHours[]
-     */
-    protected array $openingHoursSetting = [];
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -41,16 +39,14 @@ class StoreOpeningHoursProvider implements ResetInterface
      */
     public function getOpeningHoursSetting(Store $store): SpatieOpeningHours
     {
-        $storeId = $store->getId();
-
-        if (array_key_exists($storeId, $this->openingHoursSetting) === false) {
-            $this->openingHoursSetting[$storeId] = SpatieOpeningHours::create([
+        return $this->inMemoryCache->getOrSaveValue(
+            self::STORE_OPENING_HOURS_NAMESPACE,
+            fn () => SpatieOpeningHours::create([
                 ...$this->getWeekSetting($store),
                 'exceptions' => $this->getExceptions($store),
-            ]);
-        }
-
-        return $this->openingHoursSetting[$storeId];
+            ]),
+            $store->getId(),
+        );
     }
 
     /**
@@ -107,11 +103,6 @@ class StoreOpeningHoursProvider implements ResetInterface
     protected function getEnglishDayNameFromDayNumber(int $dayNumber): string
     {
         return static::DAY_NUMBERS_TO_ENGLISH_NAMES_MAP[$dayNumber] ?? throw new InvalidArgumentException(sprintf('Day number "%s" is not valid. (expected a value in range 1-7)', $dayNumber));
-    }
-
-    public function reset(): void
-    {
-        $this->openingHoursSetting = [];
     }
 
     /**

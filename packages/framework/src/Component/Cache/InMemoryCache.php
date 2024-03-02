@@ -124,6 +124,21 @@ class InMemoryCache implements ResettableInterface
 
     /**
      * @param string $namespace
+     */
+    public function deleteAllItemsInNamespace(string $namespace): void
+    {
+        $namespace = $this->replaceNotAllowedCharactersInKey($namespace);
+
+        if (!$this->hasNamespaceCache($namespace)) {
+            return;
+        }
+
+        $namespaceCache = $this->getNamespaceCache($namespace);
+        $namespaceCache->clear();
+    }
+
+    /**
+     * @param string $namespace
      * @param mixed $value
      * @param mixed $keyParts
      */

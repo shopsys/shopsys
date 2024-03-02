@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
-use Override;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -26,10 +26,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductExportRepository implements ResetInterface
+class ProductExportRepository
 {
+    protected const string VARIANTS_CACHE_NAMESPACE = 'variants';
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -45,7 +46,7 @@ class ProductExportRepository implements ResetInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variantCache
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -62,7 +63,7 @@ class ProductExportRepository implements ResetInterface
         protected readonly ProductExportFieldProvider $productExportFieldProvider,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductRepository $productRepository,
-        protected ?array $variantCache = null,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -424,17 +425,23 @@ class ProductExportRepository implements ResetInterface
      */
     protected function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
     {
-        if ($this->variantCache === null) {
-            $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-            $this->variantCache = $this->productRepository->getAllSellableVariantsByMainVariant($mainVariant, $domainId, $pricingGroup);
-        }
+        $defaultPricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
 
-        return $this->variantCache;
+        return $this->inMemoryCache->getOrSaveValue(
+            static::VARIANTS_CACHE_NAMESPACE,
+            fn () => $this->productRepository->getAllSellableVariantsByMainVariant(
+                $mainVariant,
+                $domainId,
+                $defaultPricingGroup,
+            ),
+            $mainVariant->getId(),
+            $defaultPricingGroup->getId(),
+            $domainId,
+        );
     }
 
-    #[Override]
-    public function reset(): void
+    protected function reset(): void
     {
-        $this->variantCache = null;
+        $this->inMemoryCache->deleteAllItemsInNamespace(static::VARIANTS_CACHE_NAMESPACE);
     }
 }

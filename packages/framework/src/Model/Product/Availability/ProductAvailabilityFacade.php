@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductAvailabilityFacade implements ResetInterface
+class ProductAvailabilityFacade
 {
-    protected const DAYS_IN_WEEK = 7;
+    protected const int DAYS_IN_WEEK = 7;
 
-    /**
-     * @var array<string, bool>
-     */
-    protected array $productAvailabilityDomainCache = [];
+    protected const string PRODUCT_AVAILABILITY_CACHE_NAMESPACE = 'productAvailabilityDomain';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly ProductStockFacade $productStockFacade,
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -123,15 +122,12 @@ class ProductAvailabilityFacade implements ResetInterface
      */
     public function isProductAvailableOnDomainCached(Product $product, int $domainId): bool
     {
-        $cacheKey = sprintf('product:%d-domain:%d', $product->getId(), $domainId);
-
-        if (array_key_exists($cacheKey, $this->productAvailabilityDomainCache)) {
-            return $this->productAvailabilityDomainCache[$cacheKey];
-        }
-
-        $this->productAvailabilityDomainCache[$cacheKey] = $this->productStockFacade->isProductAvailableOnDomain($product, $domainId);
-
-        return $this->productAvailabilityDomainCache[$cacheKey];
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PRODUCT_AVAILABILITY_CACHE_NAMESPACE,
+            fn () => $this->productStockFacade->isProductAvailableOnDomain($product, $domainId),
+            $product->getId(),
+            $domainId,
+        );
     }
 
     /**
@@ -255,11 +251,6 @@ class ProductAvailabilityFacade implements ResetInterface
         }
 
         return $totalProductStocksQuantity;
-    }
-
-    public function reset(): void
-    {
-        $this->productAvailabilityDomainCache = [];
     }
 
     /**

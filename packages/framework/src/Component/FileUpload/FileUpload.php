@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
@@ -22,27 +23,23 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile as ShopsysUpload
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Contracts\Service\ResetInterface;
 
-class FileUpload implements ResetInterface
+class FileUpload
 {
     protected const TEMPORARY_DIRECTORY = 'fileUploads';
     protected const DELETE_OLD_FILES_SECONDS = 86400;
-
-    /**
-     * @var array<string, array<int, array<string, array<string|null, int>>>>
-     */
-    protected array $positionByEntityAndType = [];
+    protected const string POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE = 'positionByEntityAndType';
 
     /**
      * @param string $temporaryDir
-     * @param array<string, string> $directoriesByFileClass
+     * @param array $directoriesByFileClass
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly string $temporaryDir,
@@ -53,6 +50,7 @@ class FileUpload implements ResetInterface
         protected readonly ParameterBagInterface $parameterBag,
         protected readonly ImageRepository $imageRepository,
         protected readonly CustomerUploadedFileRepository $customerUploadedFileRepository,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -263,11 +261,15 @@ class FileUpload implements ResetInterface
         $entityId = $entity->getEntityId();
         $type = $entity->getType();
         $uploadEntityType = $this->getUploadEntityType($entity);
+        $key = $this->inMemoryCache->getKey($entityName, $entityId, $type, $uploadEntityType);
 
-        if (isset($this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type])) {
-            $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type]++;
+        if ($this->inMemoryCache->hasItem(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $key)) {
+            $position = $this->inMemoryCache->getItem(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $key);
+            $position++;
 
-            return $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type];
+            $this->inMemoryCache->save(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $position, $key);
+
+            return $position;
         }
 
         $position = match ($uploadEntityType) {
@@ -286,7 +288,7 @@ class FileUpload implements ResetInterface
             ),
         };
 
-        $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type] = $position;
+        $this->inMemoryCache->save(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $position, $key);
 
         return $position;
     }
@@ -312,11 +314,6 @@ class FileUpload implements ResetInterface
         }
 
         return $uploadEntityType;
-    }
-
-    public function reset(): void
-    {
-        $this->positionByEntityAndType = [];
     }
 
     /**

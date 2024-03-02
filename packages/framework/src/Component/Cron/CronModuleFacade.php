@@ -7,32 +7,28 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
-use Symfony\Contracts\Service\ResetInterface;
 
-class CronModuleFacade implements ResetInterface
+class CronModuleFacade
 {
-    /**
-     * @var array<string, array{cronModuleId: string, minimalDuration: string, maximalDuration: string, averageDuration: string}>|null
-     */
-    protected ?array $calculatedDurationsIndexedByServiceId = null;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModule[]|null
-     */
-    protected ?array $allIndexedByServiceId = null;
+    protected const string CRON_CACHE_NAMESPACE = 'cron';
+    protected const string DURATIONS_CACHE_KEY = 'durations';
+    protected const string CRON_MODULES_CACHE_KEY = 'cronModules';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository $cronModuleRepository
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFilter $cronFilter
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory $cronModuleRunFactory
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CronModuleRepository $cronModuleRepository,
         protected readonly CronFilter $cronFilter,
         protected readonly CronModuleRunFactory $cronModuleRunFactory,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -217,11 +213,11 @@ class CronModuleFacade implements ResetInterface
      */
     public function findAllIndexedByServiceId(): array
     {
-        if ($this->allIndexedByServiceId === null) {
-            $this->allIndexedByServiceId = $this->cronModuleRepository->findAllIndexedByServiceId();
-        }
-
-        return $this->allIndexedByServiceId;
+        return $this->inMemoryCache->getOrSaveValue(
+            static::CRON_CACHE_NAMESPACE,
+            fn () => $this->cronModuleRepository->findAllIndexedByServiceId(),
+            static::CRON_MODULES_CACHE_KEY,
+        );
     }
 
     /**
@@ -249,11 +245,11 @@ class CronModuleFacade implements ResetInterface
      */
     public function getCronCalculatedDurationsIndexedByServiceId(): array
     {
-        if ($this->calculatedDurationsIndexedByServiceId === null) {
-            $this->calculatedDurationsIndexedByServiceId = $this->cronModuleRepository->getCronCalculatedDurationsIndexedByServiceId();
-        }
-
-        return $this->calculatedDurationsIndexedByServiceId;
+        return $this->inMemoryCache->getOrSaveValue(
+            static::CRON_CACHE_NAMESPACE,
+            fn () => $this->cronModuleRepository->getCronCalculatedDurationsIndexedByServiceId(),
+            static::DURATIONS_CACHE_KEY,
+        );
     }
 
     /**
@@ -271,11 +267,5 @@ class CronModuleFacade implements ResetInterface
     public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
     {
         return $this->cronModuleRepository->getRunsByCronModuleQueryBuilder($cronModule);
-    }
-
-    public function reset(): void
-    {
-        $this->calculatedDurationsIndexedByServiceId = null;
-        $this->allIndexedByServiceId = null;
     }
 }

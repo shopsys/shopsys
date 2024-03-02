@@ -6,28 +6,27 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Doctrine\ORM\QueryBuilder;
 use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductElasticsearchRepository implements ResetInterface
+class ProductElasticsearchRepository
 {
-    /**
-     * @var int[][][]
-     */
-    protected array $foundProductIdsCache = [];
+    protected const string FOUND_PRODUCT_IDS_CACHE_NAMESPACE = 'foundProductIds';
 
     /**
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly Client $client,
         protected readonly ProductElasticsearchConverter $productElasticsearchConverter,
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -70,13 +69,12 @@ class ProductElasticsearchRepository implements ResetInterface
     {
         $domainId = $productQueryBuilder->getParameter('domainId')->getValue();
 
-        if (!isset($this->foundProductIdsCache[$domainId][$searchText])) {
-            $foundProductIds = $this->getProductIdsBySearchText($domainId, $searchText);
-
-            $this->foundProductIdsCache[$domainId][$searchText] = $foundProductIds;
-        }
-
-        return $this->foundProductIdsCache[$domainId][$searchText];
+        return $this->inMemoryCache->getOrSaveValue(
+            static::FOUND_PRODUCT_IDS_CACHE_NAMESPACE,
+            fn () => $this->getProductIdsBySearchText($domainId, $searchText),
+            $domainId,
+            $searchText,
+        );
     }
 
     /**
@@ -232,10 +230,5 @@ class ProductElasticsearchRepository implements ResetInterface
         }
 
         return $ids;
-    }
-
-    public function reset(): void
-    {
-        $this->foundProductIdsCache = [];
     }
 }
