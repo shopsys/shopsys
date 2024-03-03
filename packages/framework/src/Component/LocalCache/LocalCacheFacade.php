@@ -11,6 +11,8 @@ use Symfony\Contracts\Service\ResetInterface;
 
 class LocalCacheFacade implements ResetInterface
 {
+    protected const NOT_ALLOWED_CHARS = '{}()/\@:".';
+
     protected ArrayAdapter $namespacesCache;
 
     public function __construct()
@@ -28,6 +30,8 @@ class LocalCacheFacade implements ResetInterface
         if (!$this->hasNamespaceCache($namespace)) {
             throw new NamespaceCacheKeyNotFoundException($namespace);
         }
+
+        $this->fixKey($key);
 
         if (!$this->hasItem($namespace, $key)) {
             throw new ValueCacheKeyNotFoundException($namespace, $key);
@@ -66,6 +70,8 @@ class LocalCacheFacade implements ResetInterface
     public function hasItem(string $namespace, string $key): bool
     {
         if ($this->hasNamespaceCache($namespace)) {
+            $this->fixKey($key);
+
             return $this->getNamespaceCache($namespace)->hasItem($key);
         }
 
@@ -96,6 +102,7 @@ class LocalCacheFacade implements ResetInterface
             return;
         }
 
+        $this->fixKey($key);
         $namespaceCache = $this->getNamespaceCache($namespace);
         $namespaceCache->deleteItem($key);
     }
@@ -107,6 +114,7 @@ class LocalCacheFacade implements ResetInterface
      */
     public function save(string $namespace, string $key, mixed $value): void
     {
+        $this->fixKey($key);
         $namespaceCacheItem = $this->namespacesCache->getItem($namespace);
 
         if (!$this->hasNamespaceCache($namespace)) {
@@ -119,5 +127,15 @@ class LocalCacheFacade implements ResetInterface
         $valueItem = $namespaceCache->getItem($key);
         $valueItem->set($value);
         $namespaceCache->save($valueItem);
+    }
+
+    /**
+     * @param string $key
+     */
+    protected function fixKey(string &$key): void
+    {
+        foreach (str_split(static::NOT_ALLOWED_CHARS) as $char) {
+            $key = str_replace($char, '~', $key);
+        }
     }
 }
