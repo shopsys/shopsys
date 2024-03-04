@@ -71,4 +71,12 @@ services:
         tags:
             - { name: 'shopsys.frontend_api.categories_search_results_provider', priority: 1 }
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver:
+        arguments:
+            $articlesSearchResultsProviders: !tagged 'shopsys.frontend_api.articles_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProvider:
+        tags:
+            - { name: 'shopsys.frontend_api.articles_search_results_provider', priority: 1 }
+
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
