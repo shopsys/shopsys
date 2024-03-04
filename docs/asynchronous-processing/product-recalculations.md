@@ -115,11 +115,56 @@ That way we are sure the code works – the message is truly dispatched, thus th
     Calling `handleDispatchedRecalculationMessages()` method creates a snapshot in Elasticsearch before any changes are exported and restores it afterward.<br>
     Tests are not dependent on the changes made or the order of run.
 
+## Recalculation scope
+
+In many occasions, to optimize the application, you might need to restrict the scope of a product recalculation and elastic export.
+Sometimes you do not need to recalculate visibility or selling denied, or you need to export just particular fields into Elasticsearch.
+For example, when launching a new domain, you need to export just the product URLs into Elasticsearch which takes significantly less time than the full recalculation and export.
+On the other hand, it might be hard to keep in mind all the dependencies (e.g. you need to know you need to recalculate visibility after you change `Product::$sellingFrom`,
+or you need to keep in mind that with a change of product URL, you always need to export `hreflang_links` into Elasticsearch as well, etc.).
+
+For this purpose, recalculation scopes are defined as an associative array in the `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade` class.
+The scopes are represented by instances of the `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeRule` class and indexed by their names.
+Each scope rule defines which fields should be exported to Elasticsearch together (`$productExportFields` property) and whether some actions (recalculations) should be done before the export (`$productExportPreconditions` property).
+
+You can use `./bin/console shopsys:list:export-scopes` command to list and examine all the available scopes.
+
+The scope usage can be seen in action e.g. in `Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAffectedProductsSubscriber` class:
+
+```php
+public function dispatchAffectedByBrand(BrandEvent $brandEvent): void
+{
+    $productIds = $this->affectedProductsFacade->getProductIdsWithBrand($brandEvent->getBrand());
+
+    $this->productRecalculationDispatcher->dispatchProductIds(
+        $productIds,
+        ProductRecalculationPriorityEnum::REGULAR,
+        [ProductExportScopeConfig::SCOPE_BRAND],
+    );
+}
+```
+
+Thanks to the usage of `SCOPE_BRAND` here, no visibility or selling denied recalculations are done after a brand is updated, only the brand-related fields (brand ID, name, and URL) are exported to Elasticsearch for the affected products.
+
+There are several methods that allow you to modify the scopes configuration further to suit your project needs.
+
+-   `addExportFieldsToExistingScopeRule()`
+-   `addNewExportScopeRule()`
+-   `overwriteExportScopeRule()`
+
+You can use the methods in the overridden `App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig::loadProductExportScopeRules()`.
+
+!!! note
+
+    The export fields restriction is ignored in situations when the product is not present in Elasticsearch (e.g. it was not exported yet) and visibility recalculation needs to be done.
+    In such cases, all the product fields are always exported to Elasticsearch to ensure no data are missing for the product.
+
 ## Invoke recalculations manually
 
 It's possible to invoke recalculations manually with the `./bin/console shopsys:dispatch:recalculations` command.
 
-This command accepts ids of products, that should be dispatched, or `--all` option to dispatch all products. You can also define the priority of the recalculations using `--priority` option.
+This command accepts ids of products, that should be dispatched, or `--all` option to dispatch all products.
+You can also define the priority and/or scopes of the recalculations using `--priority`, and/or `--scopes` options.
 
 ```bash
 # dispatch products with ids 1, 2 and 3
@@ -130,4 +175,7 @@ This command accepts ids of products, that should be dispatched, or `--all` opti
 
 # dispatch product with id 22 into the high priority queue
 ./bin/console shopsys:dispatch:recalculations 22 --priority=high
+
+# dispatch all products with the "product_selling_denied_scope" scope
+./bin/console shopsys:dispatch:recalculations --all --scopes=product_selling_denied_scope
 ```
