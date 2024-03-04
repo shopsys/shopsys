@@ -6,8 +6,10 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
+use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult;
 use Shopsys\LuigisBoxBundle\Model\Batch\Exception\ProductSearchIsMandatoryForAllLuigisBoxSearchesUserError;
@@ -24,12 +26,16 @@ class LuigisBoxBatchLoader
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly LuigisBoxClient $luigisBoxClient,
         protected readonly PromiseAdapter $promiseAdapter,
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
         protected readonly FilterQueryFactory $filterQueryFactory,
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -89,10 +95,15 @@ class LuigisBoxBatchLoader
 
             if ($type === 'product') {
                 $mappedDataOfCurrentType = $this->mapProductData($luigisBoxResults[$type], $limit);
+                self::$totalsByType[$type] = $luigisBoxResults[$type]->getItemsCount();
+            }
+
+            if ($type === 'category') {
+                $mappedDataOfCurrentType = $this->mapCategoryData($luigisBoxResults[$type]);
+                self::$totalsByType[$type] = count($mappedDataOfCurrentType);
             }
 
             $mappedData[] = $mappedDataOfCurrentType;
-            self::$totalsByType[$type] = count($mappedDataOfCurrentType) > 0 ? $luigisBoxResults[$type]->getItemsCount() : 0;
         }
 
         return $mappedData;
@@ -108,6 +119,17 @@ class LuigisBoxBatchLoader
         $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($luigisBoxResult->getIds(), $limit);
 
         return $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery)->getHits();
+    }
+
+    /**
+     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    protected function mapCategoryData(LuigisBoxResult $luigisBoxResult): array
+    {
+        $categoryArray = $this->categoryFacade->getVisibleCategoriesByIds([$luigisBoxResult->getIds()], $this->domain->getCurrentDomainConfig());
+
+        return reset($categoryArray);
     }
 
     /**
