@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\LegalConditionsSettingFormType;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;

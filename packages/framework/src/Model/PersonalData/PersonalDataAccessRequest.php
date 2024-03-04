@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

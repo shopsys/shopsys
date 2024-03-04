@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;

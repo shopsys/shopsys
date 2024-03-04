@@ -61,7 +61,6 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
@@ -93,7 +92,6 @@ class OrderFacade
         protected readonly OrderFactoryInterface $orderFactory,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
-        protected readonly FrontOrderDataMapper $frontOrderDataMapper,
         protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
@@ -135,31 +133,6 @@ class OrderFacade
         );
 
         $this->em->flush();
-
-        return $order;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
-     */
-    public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
-    {
-        $orderData->status = $this->orderStatusRepository->getDefault();
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
-
-        $order = $this->createOrder($orderData, $orderPreview, $customerUser);
-
-        $this->cartFacade->deleteCartOfCurrentCustomerUser();
-        $this->currentPromoCodeFacade->removeEnteredPromoCode();
-
-        if ($customerUser instanceof CustomerUser) {
-            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
-        }
 
         return $order;
     }
@@ -235,16 +208,6 @@ class OrderFacade
                 $this->paymentServiceFacade->refundTransaction($paymentTransaction, $paymentTransactionRefundData->refundAmount);
             }
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     */
-    public function prefillFrontOrderData(FrontOrderData $orderData, CustomerUser $customerUser)
-    {
-        $order = $this->orderRepository->findLastByCustomerUserId($customerUser->getId());
-        $this->frontOrderDataMapper->prefillFrontFormData($orderData, $customerUser, $order);
     }
 
     /**
@@ -379,9 +342,7 @@ class OrderFacade
         foreach ($orderPreview->getQuantifiedProducts() as $index => $quantifiedProduct) {
             $product = $quantifiedProduct->getProduct();
 
-            /** @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice */
             $quantifiedItemPrice = $quantifiedItemPrices[$index];
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $quantifiedItemDiscount */
             $quantifiedItemDiscount = $quantifiedItemDiscounts[$index];
 
             $orderItem = $this->orderItemFactory->createProduct(

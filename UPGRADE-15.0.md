@@ -168,6 +168,23 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### remove unused front order classes ([#3054](https://github.com/shopsys/shopsys/pull/3054))
+
+-   class `Shopsys\FrameworkBundle\Model\Order\FrontOrderData` was removed
+-   class `Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper` was removed
+-   class `Shopsys\FrameworkBundle\Model\Order\OrderDataMapper` was removed
+-   `Shopsys\FrameworkBundle\Model\Order\OrderFacade`:
+    -   constructor `__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly FrontOrderDataMapper $frontOrderDataMapper,
+                // ...
+        ```
+    -   method `createOrderFromFront()` was removed
+    -   method `prefillFrontOrderData()` was removed
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
