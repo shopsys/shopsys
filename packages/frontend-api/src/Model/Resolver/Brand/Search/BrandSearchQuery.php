@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BrandSearchQuery extends AbstractQuery
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver $brandSearchResultsProviderResolver
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected readonly BrandFacade $brandFacade,
+        protected readonly BrandSearchResultsProviderResolver $brandSearchResultsProviderResolver,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -24,8 +26,8 @@ class BrandSearchQuery extends AbstractQuery
      */
     public function brandSearchQuery(Argument $argument): array
     {
-        $searchText = $argument['search'] ?? '';
+        $brandSearchResultsProvider = $this->brandSearchResultsProviderResolver->getSearchResultsProviderByDomainIdAndEntityName($this->domain->getId(), 'brand');
 
-        return $this->brandFacade->getBrandsBySearchText($searchText);
+        return $brandSearchResultsProvider->getBrandSearchResults($argument);
     }
 }
