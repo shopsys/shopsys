@@ -39,7 +39,7 @@ class ProductSearchQuery extends AbstractQuery
             $argument,
         );
 
-        $productSearchResultsProvider = $this->productSearchResultsProviderResolver->getProductsSearchResultsProviderByDomainId($this->domain->getId());
+        $productSearchResultsProvider = $this->productSearchResultsProviderResolver->getSearchResultsProviderByDomainIdAndEntityName($this->domain->getId(), 'product');
 
         return $productSearchResultsProvider->getProductsSearchResults($argument, $productFilterData);
     }

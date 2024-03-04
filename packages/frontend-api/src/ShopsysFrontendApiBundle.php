@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle;
 
-use Shopsys\FrontendApiBundle\DependencyInjection\RegisterProductsSearchResultsProvidersCompilerPass;
+use Shopsys\FrontendApiBundle\DependencyInjection\RegisterSearchResultsProvidersCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -17,6 +17,6 @@ class ShopsysFrontendApiBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new RegisterProductsSearchResultsProvidersCompilerPass());
+        $container->addCompilerPass(new RegisterSearchResultsProvidersCompilerPass());
     }
 }
