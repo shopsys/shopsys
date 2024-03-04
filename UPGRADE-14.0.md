@@ -1431,6 +1431,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add Luigi's Box brand feed ([#3045](https://github.com/shopsys/shopsys/pull/3045))
     -   see #project-base-diff to update your project
+-   Luigi's Box now can search in all searchable entities ([#3047](https://github.com/shopsys/shopsys/pull/3047))
+    -    moved changes from `App\FrontendApi\Resolver\Category\CategoriesSearchQuery` to frontend-api package so this class has been removed
+    -    moved `App\FrontendApi\Resolver\Brand\BrandsSearchQuery` to frontend-api package so this class has been removed
+    -    moved changes from `App\Model\Product\Brand\BrandFacade` and `App\Model\Product\Brand\BrandRepository` to framework package so these classes have been removed
+        -   new public method `getBrandsBySearchText(string $searchText): array` has been introduced in both framework classes
 
 ### Storefront
 

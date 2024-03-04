@@ -8,7 +8,6 @@ use App\Form\Constraints\UniqueFlags;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
-use App\Model\Product\Brand\BrandFacade;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
@@ -20,6 +19,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -43,7 +43,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */

@@ -15,7 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper as Ba
  * @property \App\Model\Product\Parameter\ParameterValue[] $parameterValuesByUuid
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData mapFrontendApiFilterToProductFilterData(array $frontendApiFilter)
  * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
- * @method __construct(\App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Product\Brand\BrandFacade $brandFacade, \App\Model\Product\Parameter\ParameterFacade $parameterFacade, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
+ * @method __construct(\App\Model\Product\Flag\FlagFacade $flagFacade, \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade, \App\Model\Product\Parameter\ParameterFacade $parameterFacade, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
  */
 class ProductFilterDataMapper extends BaseProductFilterDataMapper
 {
