@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as FrameworkCategoryRepository;
@@ -94,5 +95,37 @@ class CategoryRepository
             ->andWhere('cd.domainId = :domainId')
             ->andWhere('cd.visible = TRUE')
             ->setParameter('domainId', $domainId);
+    }
+
+    /**
+     * @param int[][] $categoriesIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[][]
+     */
+    public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
+    {
+        $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
+            ->addSelect('cd')
+            ->andWhere('c.id IN(:categoryIds)')
+            ->indexBy('c', 'c.id')
+            ->setParameter('categoryIds', array_merge(...$categoriesIds));
+        $this->categoryRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
+        $result = $queryBuilder->getQuery()->execute();
+
+        $allCategories = [];
+
+        foreach ($categoriesIds as $key => $categoryIds) {
+            $allCategories[$key] = [];
+
+            foreach ($categoryIds as $categoryId) {
+                if (!array_key_exists($categoryId, $result)) {
+                    continue;
+                }
+
+                $allCategories[$key][] = $result[$categoryId];
+            }
+        }
+
+        return array_values($allCategories);
     }
 }

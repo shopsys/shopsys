@@ -22,17 +22,24 @@ class ProductFilterToLuigisBoxFilterMapper
     }
 
     /**
+     * @return array
+     */
+    public function createEmpty(): array
+    {
+        return [
+            self::FILTER_AND => [],
+            self::FILTER_OR => [],
+        ];
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @return array
      */
     public function mapForSearch(ProductFilterData $productFilterData, Domain $domain): array
     {
-        $luigisBoxFilter = [
-            self::FILTER_AND => [],
-            self::FILTER_OR => [],
-        ];
-
+        $luigisBoxFilter = $this->createEmpty();
         $luigisBoxFilter = $this->mapPrice($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapAvailability($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapFlags($productFilterData, $luigisBoxFilter, $domain->getLocale());

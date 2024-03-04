@@ -1436,6 +1436,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   moved `App\FrontendApi\Resolver\Brand\BrandsSearchQuery` to frontend-api package so this class has been removed
     -   moved changes from `App\Model\Product\Brand\BrandFacade` and `App\Model\Product\Brand\BrandRepository` to framework package so these classes have been removed
     -   new public method `getBrandsBySearchText(string $searchText): array` has been introduced in both framework classes
+    -   moved method `getVisibleCategoriesByIds` from both `\App\FrontendApi\Model\Category\CategoryFacade` and `\App\FrontendApi\Model\Category\CategoryRepository` to frontend-api package classes
 
 ### Storefront
 

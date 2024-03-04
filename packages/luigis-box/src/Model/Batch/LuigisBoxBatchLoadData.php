@@ -7,29 +7,29 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 class LuigisBoxBatchLoadData
 {
     /**
-     * @param string $query
      * @param string $type
-     * @param string $endpoint
-     * @param int $page
      * @param int $limit
-     * @param array $filter
+     * @param string|null $query
+     * @param string|null $endpoint
+     * @param int|null $page
+     * @param array|null $filter
      * @param string|null $orderingMode
      */
     public function __construct(
-        protected readonly string $query,
         protected readonly string $type,
-        protected readonly string $endpoint,
-        protected readonly int $page,
         protected readonly int $limit,
-        protected readonly array $filter,
-        protected readonly ?string $orderingMode,
+        protected readonly ?string $query = null,
+        protected readonly ?string $endpoint = null,
+        protected readonly ?int $page = null,
+        protected readonly ?array $filter = null,
+        protected readonly ?string $orderingMode = null,
     ) {
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getQuery(): string
+    public function getQuery(): ?string
     {
         return $this->query;
     }
@@ -43,17 +43,17 @@ class LuigisBoxBatchLoadData
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEndpoint(): string
+    public function getEndpoint(): ?string
     {
         return $this->endpoint;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPage(): int
+    public function getPage(): ?int
     {
         return $this->page;
     }
@@ -67,9 +67,9 @@ class LuigisBoxBatchLoadData
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getFilter(): array
+    public function getFilter(): ?array
     {
         return $this->filter;
     }

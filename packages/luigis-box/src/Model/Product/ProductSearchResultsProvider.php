@@ -17,8 +17,9 @@ use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxF
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Product\Connection\ProductConnectionFactory;
+use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
 
-class ProductSearchResultsProvider implements ProductSearchResultsProviderInterface
+class ProductSearchResultsProvider extends SearchResultsProvider implements ProductSearchResultsProviderInterface
 {
     /**
      * @param string $enabledDomainIds
@@ -32,7 +33,7 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
      * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
      */
     public function __construct(
-        protected readonly string $enabledDomainIds,
+        string $enabledDomainIds,
         protected readonly ProductConnectionFactory $productConnectionFactory,
         protected readonly ProductFacade $productFacade,
         protected readonly LuigisBoxClient $client,
@@ -42,17 +43,7 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
     ) {
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isEnabledOnDomain(int $domainId): bool
-    {
-        $enabledDomainIds = array_map(static fn (string $domainId) => (int)$domainId, explode(',', $this->enabledDomainIds));
-
-        return in_array($domainId, $enabledDomainIds, true);
+        parent::__construct($enabledDomainIds);
     }
 
     /**
@@ -74,11 +65,11 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
             function ($offset, $limit) use ($endpoint, $search, $luigisBoxFilter, $orderingMode) {
                 return $this->luigisBoxBatchLoader->load(
                     new LuigisBoxBatchLoadData(
-                        $search,
                         'product',
+                        $limit,
+                        $search,
                         $endpoint,
                         $offset,
-                        $limit,
                         $luigisBoxFilter,
                         $orderingMode,
                     ),

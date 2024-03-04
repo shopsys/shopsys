@@ -124,7 +124,7 @@ class LuigisBoxClient
         $url = $this->luigisBoxApiUrl .
             $action . '/' .
             '?tracker_id=' . $this->getTrackerId() .
-            '&q=' . urlencode('"' . $query . '"');
+            '&q=' . urlencode($query);
 
         if ($action === self::ACTION_SEARCH) {
             $url .=
@@ -147,10 +147,8 @@ class LuigisBoxClient
             }
         }
 
-        if ($action === self::ACTION_AUTOCOMPLETE) {
-            foreach ($limitsByType as $type => $limitByType) {
-                $url .= '&limit=' . $this->mapAppTypeToLuigisBoxType($type) . ':' . $limitByType;
-            }
+        if ($action === self::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
+            $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
 
         return $url;
@@ -257,6 +255,21 @@ class LuigisBoxClient
             'product' => 'item',
             default => $appType,
         };
+    }
+
+    /**
+     * @param array<string, int> $limitsByType
+     * @return string
+     */
+    protected function mapLimitsByTypeToLuigisBoxLimit(array $limitsByType): string
+    {
+        $luigisBoxLimits = [];
+
+        foreach ($limitsByType as $type => $limitByType) {
+            $luigisBoxLimits[] = $this->mapAppTypeToLuigisBoxType($type) . ':' . $limitByType;
+        }
+
+        return implode(',', $luigisBoxLimits);
     }
 
     /**
