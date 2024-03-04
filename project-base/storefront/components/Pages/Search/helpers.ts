@@ -113,6 +113,7 @@ export const useSearchProductsData = (
                 orderingMode: sort,
                 search: searchString ?? '',
                 pageSize,
+                isAutocomplete: false,
             },
             previousProductsFromCache,
         );
@@ -140,6 +141,7 @@ const readSearchProductsFromCache = (
             filter,
             endCursor,
             pageSize,
+            isAutocomplete: false,
         },
     )?.data?.productsSearch;
 

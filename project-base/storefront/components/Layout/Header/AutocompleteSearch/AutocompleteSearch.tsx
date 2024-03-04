@@ -36,6 +36,7 @@ export const AutocompleteSearch: FC = () => {
             search: debouncedSearchQuery,
             maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
             maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+            isAutocomplete: true,
         },
         pause: debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
         requestPolicy: 'network-only',

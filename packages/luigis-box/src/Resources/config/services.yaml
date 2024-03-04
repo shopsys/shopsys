@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient:
+        arguments:
+            $luigisBoxApiUrl: '%env(string:LUIGIS_BOX_API_URL)%'
+            $trackerIdsByDomainIds: '%env(json:LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS)%'
+
+    Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper: ~
+
+    Shopsys\LuigisBoxBundle\Model\Product\ProductSearchResultsProvider:
+        arguments:
+            $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
+        tags:
+            - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 100 }

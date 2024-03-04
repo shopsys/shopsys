@@ -24,9 +24,6 @@ return static function (ECSConfig $ecsConfig): void {
                 __DIR__ . '/project-base/app/tests/App/Acceptance/*',
                 __DIR__ . '/utils/*',
             ],
-            DeclareStrictTypesFixer::class => [
-                __DIR__ . '/utils/*',
-            ],
             ConstantVisibilityRequiredSniff::class => [
                 __DIR__ . '/project-base/app/src/*',
                 __DIR__ . '/project-base/app/tests/App/*',

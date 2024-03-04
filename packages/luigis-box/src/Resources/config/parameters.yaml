@@ -1,0 +1,4 @@
+parameters:
+    env(LUIGIS_BOX_API_URL): 'https://live.luigisbox.com/'
+    env(LUIGIS_BOX_ENABLED_DOMAIN_IDS): ''
+    env(LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS): '{}'

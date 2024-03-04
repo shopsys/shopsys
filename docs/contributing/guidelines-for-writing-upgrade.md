@@ -42,6 +42,7 @@ Each upgrade file must have a link to the main UPGRADE.md file with general info
 -   shopsys/migrations
 -   shopsys/monorepo-tools
 -   shopsys/plugin-interface
+-   shopsys/brand-feed-luigis-box
 -   shopsys/category-feed-luigis-box
 -   shopsys/product-feed-google
 -   shopsys/product-feed-heureka
@@ -49,7 +50,7 @@ Each upgrade file must have a link to the main UPGRADE.md file with general info
 -   shopsys/product-feed-zbozi
 -   shopsys/product-feed-luigis-box
 -   shopsys/article-feed-luigis-box
--   shopsys/persoo
+-   shopsys/luigis-box
 
 Each section must contain instructions relevant only to the package they cover, and the sections have to be ordered as they are in the list above.
 

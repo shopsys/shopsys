@@ -14,6 +14,7 @@
             "Shopsys\\HttpSmokeTesting\\": "packages/http-smoke-testing/src/",
             "Shopsys\\MigrationBundle\\": "packages/migrations/src/",
             "Shopsys\\Plugin\\": "packages/plugin-interface/src/",
+            "Shopsys\\BrandFeed\\LuigisBoxBundle\\": "packages/brand-feed-luigis-box/src/",
             "Shopsys\\CategoryFeed\\LuigisBoxBundle\\": "packages/category-feed-luigis-box/src/",
             "Shopsys\\ProductFeed\\ZboziBundle\\": "packages/product-feed-zbozi/src/",
             "Shopsys\\ProductFeed\\GoogleBundle\\": "packages/product-feed-google/src/",
@@ -23,7 +24,7 @@
             "Shopsys\\ArticleFeed\\LuigisBoxBundle\\": "packages/article-feed-luigis-box/src/",
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
-            "Shopsys\\PersooBundle\\": "packages/persoo/src/",
+            "Shopsys\\LuigisBoxBundle\\": "packages/luigis-box/src/",
             "Sniffer\\": "project-base/app/sniffer/"
         },
         "classmap": [
@@ -44,13 +45,14 @@
             "Tests\\HttpSmokeTesting\\": "packages/http-smoke-testing/tests/",
             "Tests\\MigrationBundle\\": "packages/migrations/tests/",
             "Tests\\ArticleFeed\\LuigisBoxBundle\\": "packages/article-feed-luigis-box/tests/",
+            "Tests\\BrandFeed\\LuigisBoxBundle\\": "packages/brand-feed-luigis-box/tests/",
             "Tests\\CategoryFeed\\LuigisBoxBundle\\": "packages/category-feed-luigis-box/tests/",
             "Tests\\ProductFeed\\ZboziBundle\\": "packages/product-feed-zbozi/tests/",
             "Tests\\ProductFeed\\GoogleBundle\\": "packages/product-feed-google/tests/",
             "Tests\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/tests/",
             "Tests\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/tests/",
             "Tests\\ProductFeed\\LuigisBoxBundle\\": "packages/product-feed-luigis-box/tests/",
-            "Tests\\PersooBundle\\": "packages/persoo/tests/",
+            "Tests\\LuigisBoxBundle\\": "packages/luigis-box/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
             "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
         }
@@ -259,6 +261,7 @@
     },
     "replace": {
         "shopsys/article-feed-luigis-box": "self.version",
+        "shopsys/brand-feed-luigis-box": "self.version",
         "shopsys/category-feed-luigis-box": "self.version",
         "shopsys/form-types-bundle": "self.version",
         "shopsys/frontend-api": "self.version",
@@ -274,6 +277,6 @@
         "shopsys/framework": "self.version",
         "shopsys/coding-standards": "self.version",
         "shopsys/s3-bridge": "self.version",
-        "shopsys/persoo": "self.version"
+        "shopsys/luigis-box": "self.version"
     }
 }

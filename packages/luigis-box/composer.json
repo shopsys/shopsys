@@ -1,0 +1,50 @@
+{
+    "name": "shopsys/luigis-box",
+    "type": "library",
+    "description": "Shopsys Platform connector to Luigi's Box",
+    "keywords": ["api", "Shopsys Platform", "Luigis Box", "SSFW", "SSP"],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shopsys\\LuigisBoxBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\LuigisBoxBundle\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "shopsys/form-types-bundle": "15.0.x-dev",
+        "shopsys/framework": "15.0.x-dev",
+        "shopsys/frontend-api": "15.0.x-dev",
+        "shopsys/migrations": "15.0.x-dev",
+        "shopsys/plugin-interface": "15.0.x-dev",
+        "shopsys/article-feed-luigis-box": "15.0.x-dev",
+        "shopsys/brand-feed-luigis-box": "15.0.x-dev",
+        "shopsys/category-feed-luigis-box": "15.0.x-dev",
+        "shopsys/product-feed-luigis-box": "15.0.x-dev",
+        "symfony/config": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/routing": "^5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.20",
+        "shopsys/coding-standards": "15.0.x-dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

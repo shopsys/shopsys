@@ -1774,7 +1774,7 @@ type Query {
     catnums: [String!]!
   ): [Product!]!
   "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
-  productsSearch(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
+  productsSearch(after: String, before: String, filter: ProductFilter, first: Int, isAutocomplete: Boolean!, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
   "Returns promoted categories"
   promotedCategories: [Category!]!
   "Returns promoted products"

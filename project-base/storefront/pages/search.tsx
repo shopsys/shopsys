@@ -51,6 +51,7 @@ const SearchPage: FC<ServerSidePropsType> = ({ cookies }) => {
             orderingMode: sort,
             filter: mapParametersFilter(filter),
             pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
+            isAutocomplete: false,
         },
         pause: !searchString,
     });
@@ -108,6 +109,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                           orderingMode,
                           filter,
                           pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                          isAutocomplete: false,
                       },
                   },
                   {
@@ -118,6 +120,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                           filter,
                           endCursor: getEndCursor(page),
                           pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                          isAutocomplete: false,
                       },
                   },
               ],

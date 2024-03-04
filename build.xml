@@ -299,6 +299,12 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
+            <arg value="${path.packages}/brand-feed-luigis-box/phpunit.xml"/>
+            <arg value="${path.packages}/brand-feed-luigis-box/tests"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
             <arg value="${path.packages}/category-feed-luigis-box/phpunit.xml"/>
             <arg value="${path.packages}/category-feed-luigis-box/tests"/>
         </exec>
@@ -369,8 +375,8 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
-            <arg value="${path.packages}/persoo/phpunit.xml"/>
-            <arg value="${path.packages}/persoo/tests/"/>
+            <arg value="${path.packages}/luigis-box/phpunit.xml"/>
+            <arg value="${path.packages}/luigis-box/tests/"/>
         </exec>
     </target>
 
@@ -417,6 +423,15 @@
             <arg value="--dir=${path.packages}/frontend-api/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/frontend-api/src/Resources/translations"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:extract"/>
+            <arg value="--bundle=ShopsysBrandFeedLuigisBoxBundle"/>
+            <arg value="--dir=${path.packages}/brand-feed-luigis-box/src"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.packages}/brand-feed-luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -485,10 +500,10 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="translation:extract"/>
-            <arg value="--bundle=ShopsysPersooBundle"/>
-            <arg value="--dir=${path.packages}/persoo/src"/>
+            <arg value="--bundle=ShopsysLuigisBoxBundle"/>
+            <arg value="--dir=${path.packages}/luigis-box/src"/>
             <arg value="--output-format=po"/>
-            <arg value="--output-dir=${path.packages}/persoo/src/Resources/translations"/>
+            <arg value="--output-dir=${path.packages}/luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
         </exec>
     </target>

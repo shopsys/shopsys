@@ -42,9 +42,6 @@ return static function (ECSConfig $ecsConfig): void {
         PhpdocToPropertyTypeFixer::class => [
             __DIR__ . '/src/*',
         ],
-        DeclareStrictTypesFixer::class => [
-            __DIR__ . '/src/*',
-        ],
         PropertyTypeHintSniff::class => [
             __DIR__ . '/src/Model/Product/ZboziProductDomain.php',
         ],

@@ -4,8 +4,9 @@ query SearchProductsQuery(
     $filter: ProductFilter
     $search: String!
     $pageSize: Int
+    $isAutocomplete: Boolean!
 ) {
-    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, search: $search, first: $pageSize) {
+    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, search: $search, first: $pageSize, isAutocomplete: $isAutocomplete) {
         orderingMode
         defaultOrderingMode
         totalCount

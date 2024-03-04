@@ -21,6 +21,7 @@ class LuigisBoxArticleFeedItemFactory
             $articleData['url'],
             TransformString::convertHtmlToPlainText($articleData['text']),
             TransformString::convertHtmlToPlainText($articleData['perex'] ?? null),
+            $articleData['imageUrl'] ?? null,
         );
     }
 }
