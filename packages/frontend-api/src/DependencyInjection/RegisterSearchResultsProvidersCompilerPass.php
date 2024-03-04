@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\DependencyInjection;
 
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver;
+use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Search\Exception\SearchResultsProviderPriorityNotSetException;
@@ -55,6 +56,7 @@ class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterfac
             'shopsys.frontend_api.products_search_results_provider' => ProductSearchResultsProviderResolver::class,
             'shopsys.frontend_api.categories_search_results_provider' => CategoriesSearchResultsProviderResolver::class,
             'shopsys.frontend_api.articles_search_results_provider' => ArticlesSearchResultsProviderResolver::class,
+            'shopsys.frontend_api.brands_search_results_provider' => BrandSearchResultsProviderResolver::class,
         ];
     }
 }
