@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\DependencyInjection;
 
+use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Search\Exception\SearchResultsProviderPriorityNotSetException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -51,6 +52,7 @@ class RegisterSearchResultsProvidersCompilerPass implements CompilerPassInterfac
     {
         return [
             'shopsys.frontend_api.products_search_results_provider' => ProductSearchResultsProviderResolver::class,
+            'shopsys.frontend_api.categories_search_results_provider' => CategoriesSearchResultsProviderResolver::class,
         ];
     }
 }
