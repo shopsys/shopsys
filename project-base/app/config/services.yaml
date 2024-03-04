@@ -286,12 +286,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator:
         alias: App\Model\Product\ProductSellingDeniedRecalculator
 
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade:
-        alias: App\Model\Product\Brand\BrandFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository:
-        alias: App\Model\Product\Brand\BrandRepository
-
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagData:
         alias: App\Model\Product\Flag\FlagData
 
