@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -28,6 +29,7 @@ class CategoriesSearchQuery extends AbstractQuery
      */
     public function categoriesSearchQuery(Argument $argument)
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $searchText = $argument['search'] ?? '';
