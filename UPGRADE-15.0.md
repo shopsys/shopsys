@@ -280,6 +280,184 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### product recalculations scoping ([#3051](https://github.com/shopsys/shopsys/pull/3051))
+
+-   `Shopsys\FrameworkBundle\Command\DispatchRecalculationMessageCommand` class was changed:
+    -   `executeAll()` method changed its interface:
+        ```diff
+        -   public function executeAll(SymfonyStyle $symfonyStyle): int
+        +   public function executeAll(SymfonyStyle $symfonyStyle, array $scopes): int
+        ```
+    -   `executeIds()` method changed its interface:
+        ```diff
+            public function executeIds(
+                array $productIds,
+                SymfonyStyle $symfonyStyle,
+                ProductRecalculationPriorityEnumInterface $priority,
+        +       array $scopes,
+        ```
+-   `Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex` class was changed:
+    -   `getExportDataForIds()` method changed its interface:
+        ```diff
+            abstract public function getExportDataForIds(
+                int $domainId,
+                array $restrictToIds,
+        +       array $fields = [],
+        ```
+    -   `getExportDataForBatch()` method changed its interface:
+        ```diff
+            abstract public function getExportDataForBatch(
+                int $domainId,
+                 int $lastProcessedId,
+                 int $batchSize,
+        +        array $fields = [],
+        ```
+-   `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade` class was changed:
+    -   `exportIds()` method changed its interface:
+        ```diff
+            public function exportIds(
+                AbstractIndex $index,
+                IndexDefinition $indexDefinition,
+                array $restrictToIds,
+        +       array $fields = [],
+        ```
+-   `Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex` class was changed:
+    -   `getExportDataForIds()` method changed its interface:
+        ```diff
+            public function getExportDataForIds(
+                int $domainId,
+                array $restrictToIds,
+        +       array $fields = [],
+        ```
+    -   `getExportDataForBatch()` method changed its interface:
+        ```diff
+            public function getExportDataForBatch(
+                int $domainId,
+                int $lastProcessedId,
+                int $batchSize,
+        +       array $fields = [],
+        ```
+-   `Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex` class was changed:
+    -   `getExportDataForIds()` method changed its interface:
+        ```diff
+            public function getExportDataForIds(
+                int $domainId,
+                array $restrictToIds,
+        +       array $fields = [],
+        ```
+    -   `getExportDataForBatch()` method changed its interface:
+        ```diff
+            public function getExportDataForBatch(
+                int $domainId,
+                int $lastProcessedId,
+                int $batchSize,
+        +       array $fields = [],
+        ```
+-   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository` class was changed:
+    -   the class now implements `Symfony\Contracts\Service\ResetInterface`
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+                protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        +       protected readonly ProductExportFieldProvider $productExportFieldProvider,
+        +       protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        +       protected readonly ProductRepository $productRepository,
+        +       protected ?array $variantCache = null,
+        ```
+    -   `getProductsData()` method changed its interface:
+        ```diff
+            public function getProductsData(
+                int $domainId,
+                string $locale,
+                int $lastProcessedId,
+                int $batchSize,
+        +       array $fields = [],
+        ```
+    -   `getProductsDataForIds()` method changed its interface:
+        ```diff
+            public function getProductsDataForIds(
+                int $domainId,
+                string $locale,
+                array $productIds,
+        +       array $fields,
+        ```
+    -   `extractResult()` method changed its interface:
+        ```diff
+            protected function extractResult(
+                Product $product,
+                int $domainId,
+                string $locale,
+        +       array $fields,
+        ```
+-   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex` class was changed:
+    -   `getExportDataForIds()` method changed its interface:
+        ```diff
+            public function getExportDataForIds(
+                int $domainId,
+                array $restrictToIds,
+        +       array $fields = [],
+        ```
+    -   `getExportDataForBatch()` method changed its interface:
+        ```diff
+            public function getExportDataForBatch(
+                int $domainId,
+                int $lastProcessedId,
+                int $batchSize,
+        +       array $fields = [],
+        ```
+-   `Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage::__construct` changed its interface:
+    ```diff
+        public function __construct(
+            public readonly int $productId,
+    +       public readonly array $exportScopes = [],
+    ```
+-   `Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher` class was changed:
+    -   `dispatchProducts()` method changed its interface:
+        ```diff
+            public function dispatchProducts(
+                array $products,
+                ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
+        +       array $exportScopes = [],
+        ```
+    -   `dispatchProductIds()` method changed its interface:
+        ```diff
+            public function dispatchProductIds(
+                array $productIds,
+                ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
+        +       array $exportScopes = [],
+        ```
+    -   `dispatchSingleProductId()` method changed its interface:
+        ```diff
+            public function dispatchSingleProductId(
+                int $productId,
+                ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
+        +       array $exportScopes = [],
+        ```
+    -   `dispatchAllProducts()` method changed its interface:
+        ```diff
+            public function dispatchAllProducts(
+        +       array $exportScopes = [],
+        ```
+-   `Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+                protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        +       protected readonly ProductExportScopeConfigFacade $productExportScopeConfigFacade,
+        +       protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
+        ```
+    -   `recalculate()` method changed its interface:
+        ```diff
+            public function recalculate(
+                array $productIds,
+        +       array $exportScopesIndexedByProductId,
+        ```
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
+    -   product variants cache in `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository`
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
