@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 
-class OrderDataFactory implements OrderDataFactoryInterface
+class OrderDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory

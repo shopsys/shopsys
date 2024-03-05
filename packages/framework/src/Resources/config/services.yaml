@@ -774,9 +774,6 @@ services:
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\OrderDataFactory
-
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory
 

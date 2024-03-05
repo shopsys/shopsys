@@ -6,7 +6,7 @@ namespace Tests\App\Functional\Model\Order\Status;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
@@ -27,7 +27,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private OrderDataFactoryInterface $orderDataFactory;
+    private OrderDataFactory $orderDataFactory;
 
     public function testDeleteByIdAndReplace()
     {
