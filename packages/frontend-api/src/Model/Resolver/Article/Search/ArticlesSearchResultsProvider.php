@@ -11,8 +11,6 @@ use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFa
 
 class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInterface
 {
-    protected const int ARTICLE_SEARCH_LIMIT = 50;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -33,7 +31,7 @@ class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInte
         return $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
             $argument['search'] ?? '',
             $this->domain->getId(),
-            static::ARTICLE_SEARCH_LIMIT,
+            ArticlesSearchQuery::ARTICLE_SEARCH_LIMIT,
         );
     }
 

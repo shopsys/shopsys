@@ -6,12 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\CombinedArticle;
 
 use Elasticsearch\Client;
 use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 
 class CombinedArticleElasticsearchRepository
 {
+    public const string TYPE_ARTICLE = 'article';
+    public const string TYPE_BLOG_ARTICLE = 'blog_article';
+
     /**
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
@@ -71,13 +75,13 @@ class CombinedArticleElasticsearchRepository
      */
     protected function getIndexNameFromIndexVersion(string $indexVersion, int $domainId): string
     {
-        $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $domainId)->getVersionedIndexName();
+        $blogArticleVersionedIndexName = $this->getBlogArticleIndex($domainId)->getVersionedIndexName();
 
         if ($indexVersion === $blogArticleVersionedIndexName) {
             return BlogArticleIndex::getName();
         }
 
-        $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $domainId)->getVersionedIndexName();
+        $articleVersionedIndexName = $this->getArticleIndex($domainId)->getVersionedIndexName();
 
         if ($indexVersion === $articleVersionedIndexName) {
             return ArticleIndex::getName();
@@ -107,16 +111,34 @@ class CombinedArticleElasticsearchRepository
      */
     protected function getCombinedArticleIndex(int $domainId): string
     {
-        $articleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
-            ArticleIndex::getName(),
-            $domainId,
-        )->getIndexAlias();
-        $blogArticleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
-            BlogArticleIndex::getName(),
-            $domainId,
-        )->getIndexAlias();
+        $articleIndexName = $this->getArticleIndex($domainId)->getIndexAlias();
+        $blogArticleIndexName = $this->getBlogArticleIndex($domainId)->getIndexAlias();
 
         return implode(',', [$articleIndexName, $blogArticleIndexName]);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
+     */
+    protected function getArticleIndex(int $domainId): IndexDefinition
+    {
+        return $this->indexDefinitionLoader->getIndexDefinition(
+            ArticleIndex::getName(),
+            $domainId,
+        );
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition
+     */
+    protected function getBlogArticleIndex(int $domainId): IndexDefinition
+    {
+        return $this->indexDefinitionLoader->getIndexDefinition(
+            BlogArticleIndex::getName(),
+            $domainId,
+        );
     }
 
     /**
@@ -206,6 +228,72 @@ class CombinedArticleElasticsearchRepository
                         ],
                     ],
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * @param array<string, array<int, string>> $idsByType
+     * @param int $domainId
+     * @param int $limit
+     * @return array
+     */
+    public function getArticlesByIds(array $idsByType, int $domainId, int $limit): array
+    {
+        $result = $this->client->search($this->getArticlesByIdsQuery($idsByType, $domainId, $limit));
+
+        return $this->extractHits($result, $domainId);
+    }
+
+    /**
+     * @param array<string, array<int, string>> $idsByType
+     * @param int $domainId
+     * @param int $limit
+     * @return array
+     */
+    protected function getArticlesByIdsQuery(array $idsByType, int $domainId, int $limit): array
+    {
+        if (count($idsByType) === 0) {
+            return [];
+        }
+
+        $condition = [];
+
+        $i = 0;
+
+        foreach ($idsByType as $type => $ids) {
+            if ($type === self::TYPE_ARTICLE) {
+                $index = $this->getArticleIndex($domainId)->getVersionedIndexName();
+            } else {
+                $index = $this->getBlogArticleIndex($domainId)->getVersionedIndexName();
+            }
+
+            $condition['bool']['should'][$i] = [
+                'bool' => [
+                    'must' => [
+                        [
+                            'terms' => [
+                                '_id' => $ids,
+                            ],
+                        ],
+                        [
+                            'match' => [
+                                '_index' => $index,
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+
+            $i++;
+        }
+
+        return [
+            'index' => $this->getCombinedArticleIndex($domainId),
+            'body' => [
+                'from' => 0,
+                'size' => $limit,
+                'query' => $condition,
             ],
         ];
     }

@@ -7,6 +7,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
@@ -28,6 +29,7 @@ class LuigisBoxBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
      */
     public function __construct(
         protected readonly LuigisBoxClient $luigisBoxClient,
@@ -36,6 +38,7 @@ class LuigisBoxBatchLoader
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
+        protected readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
     ) {
     }
 
@@ -103,6 +106,11 @@ class LuigisBoxBatchLoader
                 self::$totalsByType[$type] = count($mappedDataOfCurrentType);
             }
 
+            if ($type === 'article') {
+                $mappedDataOfCurrentType = $this->mapArticleData($luigisBoxResults[$type]);
+                self::$totalsByType[$type] = count($mappedDataOfCurrentType);
+            }
+
             $mappedData[] = $mappedDataOfCurrentType;
         }
 
@@ -130,6 +138,30 @@ class LuigisBoxBatchLoader
         $categoryArray = $this->categoryFacade->getVisibleCategoriesByIds([$luigisBoxResult->getIds()], $this->domain->getCurrentDomainConfig());
 
         return reset($categoryArray);
+    }
+
+    /**
+     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
+     * @return array
+     */
+    protected function mapArticleData(LuigisBoxResult $luigisBoxResult): array
+    {
+        if (count($luigisBoxResult->getIdsWithPrefix()) === 0) {
+            return [];
+        }
+
+        $idsByType = [];
+
+        foreach ($luigisBoxResult->getIdsWithPrefix() as $idWithPrefix) {
+            [$type, $id] = explode('-', $idWithPrefix);
+            $idsByType[$type][] = $id;
+        }
+
+        return $this->combinedArticleElasticsearchFacade->getArticlesByIds(
+            $idsByType,
+            $this->domain->getId(),
+            count($luigisBoxResult->getIds()),
+        );
     }
 
     /**
