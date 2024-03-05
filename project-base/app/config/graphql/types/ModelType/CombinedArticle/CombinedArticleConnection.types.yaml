@@ -1,0 +1,10 @@
+CombinedArticleConnection:
+    type: relay-connection
+    config:
+        nodeType: ArticleInterface
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of articles"
+    inherits:
+        - 'CombinedArticleConnectionDecorator'

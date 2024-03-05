@@ -35,4 +35,15 @@ class CombinedArticleElasticsearchFacade
     {
         return $this->combinedArticleElasticsearchRepository->getArticlesByDomainId($domainId, $from, $limit);
     }
+
+    /**
+     * @param array<string, array<int, string>> $idsByType
+     * @param int $domainId
+     * @param int $limit
+     * @return array
+     */
+    public function getArticlesByIds(array $idsByType, int $domainId, int $limit = 50): array
+    {
+        return $this->combinedArticleElasticsearchRepository->getArticlesByIds($idsByType, $domainId, $limit);
+    }
 }

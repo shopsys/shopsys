@@ -87,6 +87,8 @@ class LuigisBoxClient
             $data = $data['results'];
         }
 
+        d($data);
+
         return $this->getResultsIndexedByItemType($data, $action, array_keys($limitsByType));
     }
 
@@ -151,6 +153,8 @@ class LuigisBoxClient
             $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
 
+        d($url);
+
         return $url;
     }
 
@@ -181,6 +185,7 @@ class LuigisBoxClient
                 LuigisBoxCategoryFeedItem::UNIQUE_IDENTIFIER_PREFIX,
                 LuigisBoxArticleFeedItem::UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX,
                 LuigisBoxArticleFeedItem::UNIQUE_ARTICLE_IDENTIFIER_PREFIX,
+                '-',
             ],
             '',
             $identity,
@@ -220,15 +225,18 @@ class LuigisBoxClient
     protected function getResultsIndexedByItemType(array $data, string $action, array $types): array
     {
         $idsByType = [];
+        $idsWithPrefixByType = [];
         $resultsByType = [];
 
         foreach ($data['hits'] as $hit) {
+            $idsWithPrefixByType[$this->getTypeFromHitUrl($hit['url'])][] = $hit['url'];
             $idsByType[$this->getTypeFromHitUrl($hit['url'])][] = $this->getIdFromIdentity($hit['url']);
         }
 
         foreach ($types as $type) {
             $resultsByType[$type] = new LuigisBoxResult(
                 $idsByType[$type] ?? [],
+                $idsWithPrefixByType[$type] ?? [],
                 $this->getTotalHitsFromData($data, $action),
             );
         }
@@ -242,7 +250,13 @@ class LuigisBoxClient
      */
     protected function getTypeFromHitUrl(string $hitUrl): string
     {
-        return explode('-', $hitUrl)[0];
+        $type = explode('-', $hitUrl)[0];
+
+        if ($type === LuigisBoxArticleFeedItem::UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX) {
+            return 'article';
+        }
+
+        return $type;
     }
 
     /**
