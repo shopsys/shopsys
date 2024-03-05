@@ -381,11 +381,20 @@ class OrderItem
     }
 
     /**
+     * @param string $type
+     * @return bool
+     */
+    public function isType(string $type): bool
+    {
+        return $this->type === $type;
+    }
+
+    /**
      * @return bool
      */
     public function isTypeProduct(): bool
     {
-        return $this->type === self::TYPE_PRODUCT;
+        return $this->isType(self::TYPE_PRODUCT);
     }
 
     /**
@@ -393,7 +402,7 @@ class OrderItem
      */
     public function isTypePayment(): bool
     {
-        return $this->type === self::TYPE_PAYMENT;
+        return $this->isType(self::TYPE_PAYMENT);
     }
 
     /**
@@ -401,7 +410,7 @@ class OrderItem
      */
     public function isTypeTransport(): bool
     {
-        return $this->type === self::TYPE_TRANSPORT;
+        return $this->isType(self::TYPE_TRANSPORT);
     }
 
     /**
@@ -409,7 +418,7 @@ class OrderItem
      */
     public function isTypeDiscount(): bool
     {
-        return $this->type === self::TYPE_DISCOUNT;
+        return $this->isType(self::TYPE_DISCOUNT);
     }
 
     /**
@@ -417,7 +426,7 @@ class OrderItem
      */
     public function isTypeRounding(): bool
     {
-        return $this->type === self::TYPE_ROUNDING;
+        return $this->isType(self::TYPE_ROUNDING);
     }
 
     /**

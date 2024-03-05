@@ -103,10 +103,10 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($orderFromDb->getProductItems()[0]->getName(), $logs[1]->getEntityIdentifier());
 
         $this->assertSame(EntityLogActionEnum::CREATE, $logs[2]->getAction()); //payment
-        $this->assertSame($orderFromDb->getPaymentName(), $logs[2]->getEntityIdentifier());
+        $this->assertSame($orderFromDb->getPaymentItem()->getName(), $logs[2]->getEntityIdentifier());
 
         $this->assertSame(EntityLogActionEnum::CREATE, $logs[3]->getAction()); //transport
-        $this->assertSame($orderFromDb->getTransportName(), $logs[3]->getEntityIdentifier());
+        $this->assertSame($orderFromDb->getTransportItem()->getName(), $logs[3]->getEntityIdentifier());
     }
 
     public function testRemoveEntity(): void

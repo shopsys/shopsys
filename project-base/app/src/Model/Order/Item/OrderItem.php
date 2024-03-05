@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 /**
  * @ORM\Table(name="order_items")
@@ -27,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  * @method setTransport(\App\Model\Transport\Transport $transport)
  * @method setPayment(\App\Model\Payment\Payment $payment)
  * @method setProduct(\App\Model\Product\Product|null $product)
+ * @method __construct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string $type, string|null $unitName, string|null $catnum)
  */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem extends BaseOrderItem
@@ -43,38 +42,6 @@ class OrderItem extends BaseOrderItem
      * @ORM\JoinColumn(name="related_order_item_id", referencedColumnName="id", nullable=true)
      */
     private $relatedOrderItem;
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string $type
-     * @param string|null $unitName
-     * @param string|null $catnum
-     */
-    public function __construct(
-        BaseOrder $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
-        string $type,
-        ?string $unitName,
-        ?string $catnum,
-    ) {
-        parent::__construct(
-            $order,
-            $name,
-            $price,
-            $vatPercent,
-            $quantity,
-            $type,
-            $unitName,
-            $catnum,
-        );
-    }
 
     /**
      * @return string|null

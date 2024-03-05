@@ -23,6 +23,7 @@ class OrderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -32,6 +33,7 @@ class OrderItemFacade
         protected readonly Domain $domain,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
         protected readonly OrderItemFactory $orderItemFactory,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
@@ -52,18 +54,21 @@ class OrderItemFacade
             $order->getCustomerUser(),
         );
 
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $product->getName($orderDomainConfig->getLocale());
+        $orderItemData->priceWithVat = $productPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $productPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = $product->getVatForDomain($order->getDomainId())->getPercent();
+        $orderItemData->quantity = static::DEFAULT_PRODUCT_QUANTITY;
+        $orderItemData->unitName = $product->getUnit()->getName($orderDomainConfig->getLocale());
+        $orderItemData->catnum = $product->getCatnum();
+
         $orderProduct = $this->orderItemFactory->createProduct(
+            $orderItemData,
             $order,
-            $product->getName($orderDomainConfig->getLocale()),
-            $productPrice,
-            $product->getVatForDomain($order->getDomainId())->getPercent(),
-            static::DEFAULT_PRODUCT_QUANTITY,
-            $product->getUnit()->getName($orderDomainConfig->getLocale()),
-            $product->getCatnum(),
             $product,
         );
 
-        $order->addItem($orderProduct);
         $order->setTotalPrice(
             $this->orderPriceCalculation->getOrderTotalPrice($order),
         );

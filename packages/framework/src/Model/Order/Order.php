@@ -488,7 +488,7 @@ class Order
     {
         $orderTransportData = $orderData->orderTransport;
         $this->transport = $orderTransportData->transport;
-        $this->getOrderTransport()->edit($orderTransportData);
+        $this->getTransportItem()->edit($orderTransportData);
     }
 
     /**
@@ -498,7 +498,7 @@ class Order
     {
         $orderPaymentData = $orderData->orderPayment;
         $this->payment = $orderPaymentData->payment;
-        $this->getOrderPayment()->edit($orderPaymentData);
+        $this->getPaymentItem()->edit($orderPaymentData);
     }
 
     /**
@@ -584,6 +584,7 @@ class Order
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     * @deprecated use getPaymentItem() instead
      */
     public function getPayment()
     {
@@ -591,55 +592,12 @@ class Order
     }
 
     /**
-     * @return string
-     */
-    public function getPaymentName()
-    {
-        return $this->getOrderPayment()->getName();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
-    public function getOrderPayment()
-    {
-        foreach ($this->items as $item) {
-            if ($item->isTypePayment()) {
-                return $item;
-            }
-        }
-
-        throw new OrderItemNotFoundException('Order item `payment` not found.');
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     * @deprecated use getTransportItem() instead
      */
     public function getTransport()
     {
         return $this->transport;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransportName()
-    {
-        return $this->getOrderTransport()->getName();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
-    public function getOrderTransport()
-    {
-        foreach ($this->items as $item) {
-            if ($item->isTypeTransport()) {
-                return $item;
-            }
-        }
-
-        throw new OrderItemNotFoundException('Order item `transport` not found.');
     }
 
     /**
@@ -769,6 +727,70 @@ class Order
     }
 
     /**
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getItemsByType(string $type): array
+    {
+        return array_filter(
+            $this->items->getValues(),
+            fn (OrderItem $item) => $item->isType($type),
+        );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getProductItems(): array
+    {
+        return $this->getItemsByType(OrderItem::TYPE_PRODUCT);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public function getTransportItem(): OrderItem
+    {
+        $transports = $this->getItemsByType(OrderItem::TYPE_TRANSPORT);
+
+        if (count($transports) === 0) {
+            throw new OrderItemNotFoundException('Order item `transport` not found.');
+        }
+
+        return reset($transports);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public function getPaymentItem(): OrderItem
+    {
+        $payments = $this->getItemsByType(OrderItem::TYPE_PAYMENT);
+
+        if (count($payments) === 0) {
+            throw new OrderItemNotFoundException('Order item `payment` not found.');
+        }
+
+        return reset($payments);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getDiscountItems(): array
+    {
+        return $this->getItemsByType(OrderItem::TYPE_DISCOUNT);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getRoundingItems(): array
+    {
+        return $this->getItemsByType(OrderItem::TYPE_ROUNDING);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getItemsWithoutTransportAndPayment()
@@ -782,56 +804,6 @@ class Order
         }
 
         return $itemsWithoutTransportAndPayment;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
-     */
-    protected function getTransportAndPaymentItems()
-    {
-        $transportAndPaymentItems = [];
-
-        foreach ($this->getItems() as $orderItem) {
-            if ($orderItem->isTypeTransport() || $orderItem->isTypePayment()) {
-                $transportAndPaymentItems[] = $orderItem;
-            }
-        }
-
-        return $transportAndPaymentItems;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getTransportAndPaymentPrice()
-    {
-        $transportAndPaymentItems = $this->getTransportAndPaymentItems();
-        $totalPrice = Price::zero();
-
-        foreach ($transportAndPaymentItems as $item) {
-            $itemPrice = new Price($item->getPriceWithoutVat(), $item->getPriceWithVat());
-            $totalPrice = $totalPrice->add($itemPrice);
-        }
-
-        return $totalPrice;
-    }
-
-    /**
-     * @param int $orderItemId
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
-    public function getItemById($orderItemId)
-    {
-        foreach ($this->getItems() as $orderItem) {
-            if ($orderItem->getId() === $orderItemId) {
-                return $orderItem;
-            }
-        }
-
-        throw new OrderItemNotFoundException(sprintf(
-            'Order item id `%d` not found.',
-            $orderItemId,
-        ));
     }
 
     /**
@@ -1016,30 +988,6 @@ class Order
     public function getUrlHash()
     {
         return $this->urlHash;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProductItemsCount()
-    {
-        return count($this->getProductItems());
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
-     */
-    public function getProductItems()
-    {
-        $productItems = [];
-
-        foreach ($this->items as $item) {
-            if ($item->isTypeProduct()) {
-                $productItems[] = $item;
-            }
-        }
-
-        return $productItems;
     }
 
     /**

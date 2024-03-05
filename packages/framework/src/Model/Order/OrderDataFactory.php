@@ -91,8 +91,8 @@ class OrderDataFactory implements OrderDataFactoryInterface
         $orderData->currency = $order->getCurrency();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();
         $orderData->createdAsAdministratorName = $order->getCreatedAsAdministratorName();
-        $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getOrderTransport());
-        $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getOrderPayment());
+        $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getTransportItem());
+        $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getPaymentItem());
 
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
 

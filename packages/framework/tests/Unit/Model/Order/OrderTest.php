@@ -86,7 +86,7 @@ class OrderTest extends TestCase
         $order->addItem($productItem);
         $order->addItem($paymentItem);
 
-        $this->assertSame(1, $order->getProductItemsCount());
+        $this->assertCount(1, $order->getProductItems());
     }
 
     public function testOrderWithDeliveryAddressSameAsBillingAddress()

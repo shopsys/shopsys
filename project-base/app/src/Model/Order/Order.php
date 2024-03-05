@@ -19,13 +19,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @property \App\Model\Transport\Transport $transport
  * @property \App\Model\Payment\Payment $payment
  * @property \App\Model\Administrator\Administrator|null $createdAsAdministrator
- * @method \App\Model\Payment\Payment getPayment()
- * @method \App\Model\Order\Item\OrderItem getOrderPayment()
- * @method \App\Model\Order\Item\OrderItem getOrderTransport()
  * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  * @method \App\Model\Order\Item\OrderItem[] getItems()
- * @method \App\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
- * @method \App\Model\Order\Item\OrderItem getItemById(int $orderItemId)
  * @method \App\Model\Order\Item\OrderItem[] getProductItems()
  * @method \App\Model\Administrator\Administrator|null getCreatedAsAdministrator()
  * @method editOrderTransport(\App\Model\Order\OrderData $orderData)
@@ -37,9 +32,15 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @property \App\Model\Order\Status\OrderStatus $status
  * @method setStatus(\App\Model\Order\Status\OrderStatus $status)
  * @method \App\Model\Order\Status\OrderStatus getStatus()
- * @method \App\Model\Transport\Transport getTransport()
- * @method \App\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
  * @method \Shopsys\FrameworkBundle\Model\Order\OrderEditResult edit(\App\Model\Order\OrderData $orderData)
+ * @method \App\Model\Payment\Payment getPayment()
+ * @method \App\Model\Transport\Transport getTransport()
+ * @method \App\Model\Order\Item\OrderItem[] getItemsByType(string $type)
+ * @method \App\Model\Order\Item\OrderItem[] getDiscountItems()
+ * @method \App\Model\Order\Item\OrderItem[] getRoundingItems()
+ * @method \App\Model\Order\Item\OrderItem getTransportItem()
+ * @method \App\Model\Order\Item\OrderItem getPaymentItem()
+ * @method \App\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
  */
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order extends BaseOrder

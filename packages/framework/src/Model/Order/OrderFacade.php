@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -349,14 +350,18 @@ class OrderFacade
             $quantifiedItemPrice = $quantifiedItemPrices[$index];
             $quantifiedItemDiscount = $quantifiedItemDiscounts[$index];
 
+            $orderItemData = $this->orderItemDataFactory->create();
+            $orderItemData->name = $product->getName($locale);
+            $orderItemData->priceWithVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithVat();
+            $orderItemData->priceWithoutVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithoutVat();
+            $orderItemData->vatPercent = $product->getVatForDomain($order->getDomainId())->getPercent();
+            $orderItemData->quantity = $quantifiedProduct->getQuantity();
+            $orderItemData->unitName = $product->getUnit()->getName($locale);
+            $orderItemData->catnum = $product->getCatnum();
+
             $orderItem = $this->orderItemFactory->createProduct(
+                $orderItemData,
                 $order,
-                $product->getName($locale),
-                $quantifiedItemPrice->getUnitPrice(),
-                $product->getVatForDomain($order->getDomainId())->getPercent(),
-                $quantifiedProduct->getQuantity(),
-                $product->getUnit()->getName($locale),
-                $product->getCatnum(),
                 $product,
             );
 
@@ -387,15 +392,20 @@ class OrderFacade
             $orderPreview->getProductsPrice(),
             $order->getDomainId(),
         );
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $payment->getName($locale);
+        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+
         $orderPayment = $this->orderItemFactory->createPayment(
+            $orderItemData,
             $order,
-            $payment->getName($locale),
-            $paymentPrice,
-            $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent(),
-            1,
             $payment,
         );
-        $order->addItem($orderPayment);
+
         $this->em->persist($orderPayment);
     }
 
@@ -413,15 +423,21 @@ class OrderFacade
             $orderPreview->getProductsPrice(),
             $order->getDomainId(),
         );
-        $orderTransport = $this->orderItemFactory->createTransport(
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $transport->getName($locale);
+        $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $transportPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+
+        $orderPayment = $this->orderItemFactory->createTransport(
+            $orderItemData,
             $order,
-            $transport->getName($locale),
-            $transportPrice,
-            $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent(),
-            1,
             $transport,
         );
-        $order->addItem($orderTransport);
+
+        $this->em->persist($orderPayment);
     }
 
     /**
@@ -431,18 +447,25 @@ class OrderFacade
      */
     protected function fillOrderRounding(Order $order, OrderPreview $orderPreview, string $locale): void
     {
-        if ($orderPreview->getRoundingPrice() !== null) {
-            $this->orderItemFactory->createProduct(
-                $order,
-                t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
-                $orderPreview->getRoundingPrice(),
-                '0',
-                1,
-                null,
-                null,
-                null,
-            );
+        $roundingPrice = $orderPreview->getRoundingPrice();
+
+        if ($roundingPrice === null) {
+            return;
         }
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
+        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->quantity = 1;
+
+        $roundingItem = $this->orderItemFactory->createRounding(
+            $orderItemData,
+            $order,
+        );
+
+        $this->em->persist($roundingItem);
     }
 
     /**
@@ -464,18 +487,19 @@ class OrderFacade
             $orderItem->getName(),
         );
 
-        $discount = $this->orderItemFactory->createProduct(
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $name;
+        $orderItemData->priceWithVat = $quantifiedItemDiscount->inverse()->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $quantifiedItemDiscount->inverse()->getPriceWithoutVat();
+        $orderItemData->vatPercent = $orderItem->getVatPercent();
+        $orderItemData->quantity = 1;
+
+        $discountItem = $this->orderItemFactory->createDiscount(
+            $orderItemData,
             $orderItem->getOrder(),
-            $name,
-            $quantifiedItemDiscount->inverse(),
-            $orderItem->getVatPercent(),
-            1,
-            null,
-            null,
-            null,
         );
 
-        $this->em->persist($discount);
+        $this->em->persist($discountItem);
     }
 
     /**
@@ -500,16 +524,9 @@ class OrderFacade
             $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId());
 
             $newOrderItem = $this->orderItemFactory->createProduct(
+                $newOrderItemData,
                 $order,
-                $newOrderItemData->name,
-                new Price(
-                    $newOrderItemData->priceWithoutVat,
-                    $newOrderItemData->priceWithVat,
-                ),
-                $newOrderItemData->vatPercent,
-                $newOrderItemData->quantity,
-                $newOrderItemData->unitName,
-                $newOrderItemData->catnum,
+                null,
             );
 
             if ($newOrderItemData->usePriceCalculation) {

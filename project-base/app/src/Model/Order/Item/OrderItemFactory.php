@@ -4,86 +4,40 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
-use App\Model\Order\Order;
-use App\Model\Product\Product;
-use BadMethodCallException;
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData as BaseOrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory as BaseOrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 
 /**
- * @method \App\Model\Order\Item\OrderItem createProduct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string|null $unitName, string|null $catnum, \App\Model\Product\Product|null $product = null)
- * @method \App\Model\Order\Item\OrderItem createPayment(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, \App\Model\Payment\Payment $payment)
+ * @method \App\Model\Order\Item\OrderItem createTransport(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order, \App\Model\Transport\Transport $transport)
+ * @method \App\Model\Order\Item\OrderItem createPayment(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
+ * @method \App\Model\Order\Item\OrderItem createDiscount(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order)
+ * @method \App\Model\Order\Item\OrderItem doCreateOrderItem(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order, string $orderItemType)
+ * @method \App\Model\Order\Item\OrderItem createRounding(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order)
  */
 class OrderItemFactory extends BaseOrderItemFactory
 {
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param \App\Model\Transport\Transport $transport
-     * @return \App\Model\Order\Item\OrderItem
-     */
-    public function createTransport(
-        BaseOrder $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
-        Transport $transport,
-    ): BaseOrderItem {
-        throw new BadMethodCallException('Use ' . self::class . '::createTransportByOrderItemData() instead of this method');
-    }
-
     /**
      * @param \App\Model\Order\Item\OrderItemData $orderItemData
      * @param \App\Model\Order\Order $order
      * @param \App\Model\Product\Product|null $product
      * @return \App\Model\Order\Item\OrderItem
      */
-    public function createProductByOrderItemData(
-        OrderItemData $orderItemData,
-        Order $order,
-        ?Product $product,
-    ): OrderItem {
-        /** @var \App\Model\Order\Item\OrderItem $orderItem */
-        $orderItem = parent::createProduct(
-            $order,
-            $orderItemData->name,
-            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
-            $orderItemData->vatPercent,
-            $orderItemData->quantity,
-            $orderItemData->unitName,
-            $orderItemData->catnum,
-            $product,
-        );
-        $orderItem->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
-        $orderItem->setRelatedOrderItem($orderItemData->relatedOrderItem);
+    #[Override]
+    public function createProduct(
+        BaseOrderItemData $orderItemData,
+        BaseOrder $order,
+        ?BaseProduct $product,
+    ): BaseOrderItem {
+        /** @var \App\Model\Order\Item\OrderItem $orderProduct */
+        $orderProduct = parent::createProduct($orderItemData, $order, $product);
 
-        return $orderItem;
-    }
+        $orderProduct->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
+        $orderProduct->setRelatedOrderItem($orderItemData->relatedOrderItem);
 
-    /**
-     * @param \App\Model\Order\Item\OrderItemData $orderItemData
-     * @param \App\Model\Order\Order $order
-     * @return \App\Model\Order\Item\OrderItem
-     */
-    public function createTransportByOrderItemData(OrderItemData $orderItemData, Order $order): OrderItem
-    {
-        /** @var \App\Model\Order\Item\OrderItem $orderItem */
-        $orderItem = parent::createTransport(
-            $order,
-            $orderItemData->name,
-            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
-            $orderItemData->vatPercent,
-            $orderItemData->quantity,
-            $orderItemData->transport,
-        );
-
-        return $orderItem;
+        return $orderProduct;
     }
 }

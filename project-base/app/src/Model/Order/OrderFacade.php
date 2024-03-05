@@ -8,6 +8,7 @@ use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Security\LoginAsUserFacade;
 use App\Model\Transport\Type\TransportType;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -80,6 +81,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\OrderDataFactory $orderDataFactory
  * @method changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
  * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
+ * @method fillOrderRounding(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -274,7 +276,7 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->unitName = $product->getUnit()->getName($locale);
             $orderItemData->catnum = $product->getCatnum();
 
-            $orderItem = $this->orderItemFactory->createProductByOrderItemData(
+            $orderItem = $this->orderItemFactory->createProduct(
                 $orderItemData,
                 $order,
                 $product,
@@ -331,10 +333,9 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->promoCodeIdentifier = $promoCodeIdentifier;
         $orderItemData->relatedOrderItem = $orderItem;
 
-        return $this->orderItemFactory->createProductByOrderItemData(
+        return $this->orderItemFactory->createDiscount(
             $orderItemData,
             $orderItem->getOrder(),
-            null,
         );
     }
 
@@ -367,44 +368,14 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
         $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
         $orderItemData->quantity = 1;
-        $orderItemData->transport = $transport;
 
-        $orderTransport = $this->orderItemFactory->createTransportByOrderItemData(
+        $orderTransport = $this->orderItemFactory->createTransport(
             $orderItemData,
             $order,
+            $transport,
         );
 
-        $order->addItem($orderTransport);
         $this->em->persist($orderTransport);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
-    protected function fillOrderRounding(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
-    {
-        $roundingPrice = $orderPreview->getRoundingPrice();
-
-        if ($roundingPrice === null) {
-            return;
-        }
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
-        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
-        $orderItemData->vatPercent = '0';
-        $orderItemData->quantity = 1;
-
-        $roundingItem = $this->orderItemFactory->createProductByOrderItemData(
-            $orderItemData,
-            $order,
-            null,
-        );
-
-        $this->em->persist($roundingItem);
     }
 
     /**

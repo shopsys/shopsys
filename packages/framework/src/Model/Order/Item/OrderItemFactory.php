@@ -22,165 +22,125 @@ class OrderItemFactory
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string|null $unitName
-     * @param string|null $catnum
+     * @param string $orderItemType
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    protected function doCreateOrderItem(
+        OrderItemData $orderItemData,
+        Order $order,
+        string $orderItemType,
+    ): OrderItem {
+        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
+
+        return new $entityClassName(
+            $order,
+            $orderItemData->name,
+            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
+            $orderItemData->vatPercent,
+            $orderItemData->quantity,
+            $orderItemType,
+            $orderItemData->unitName,
+            $orderItemData->catnum,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
     public function createProduct(
+        OrderItemData $orderItemData,
         Order $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
-        ?string $unitName,
-        ?string $catnum,
-        ?Product $product = null,
+        ?Product $product,
     ): OrderItem {
-        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
-
-        $orderProduct = new $entityClassName(
+        $orderItem = $this->doCreateOrderItem(
+            $orderItemData,
             $order,
-            $name,
-            $price,
-            $vatPercent,
-            $quantity,
             OrderItem::TYPE_PRODUCT,
-            $unitName,
-            $catnum,
         );
 
-        $orderProduct->setProduct($product);
+        $orderItem->setProduct($product);
 
-        return $orderProduct;
+        return $orderItem;
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
-     */
-    public function createPayment(
-        Order $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
-        Payment $payment,
-    ): OrderItem {
-        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
-
-        $orderPayment = new $entityClassName(
-            $order,
-            $name,
-            $price,
-            $vatPercent,
-            $quantity,
-            OrderItem::TYPE_PAYMENT,
-            null,
-            null,
-        );
-
-        $orderPayment->setPayment($payment);
-
-        return $orderPayment;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
     public function createTransport(
+        OrderItemData $orderItemData,
         Order $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
         Transport $transport,
     ): OrderItem {
-        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
-
-        $orderTransport = new $entityClassName(
+        $orderItem = $this->doCreateOrderItem(
+            $orderItemData,
             $order,
-            $name,
-            $price,
-            $vatPercent,
-            $quantity,
             OrderItem::TYPE_TRANSPORT,
-            null,
-            null,
         );
 
-        $orderTransport->setTransport($transport);
+        $orderItem->setTransport($transport);
 
-        return $orderTransport;
+        return $orderItem;
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public function createPayment(
+        OrderItemData $orderItemData,
+        Order $order,
+        Payment $payment,
+    ): OrderItem {
+        $orderItem = $this->doCreateOrderItem(
+            $orderItemData,
+            $order,
+            OrderItem::TYPE_PAYMENT,
+        );
+
+        $orderItem->setPayment($payment);
+
+        return $orderItem;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
     public function createDiscount(
+        OrderItemData $orderItemData,
         Order $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
     ): OrderItem {
-        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
-
-        return new $entityClassName(
+        return $this->doCreateOrderItem(
+            $orderItemData,
             $order,
-            $name,
-            $price,
-            $vatPercent,
-            $quantity,
             OrderItem::TYPE_DISCOUNT,
-            null,
-            null,
         );
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
     public function createRounding(
+        OrderItemData $orderItemData,
         Order $order,
-        string $name,
-        Price $price,
     ): OrderItem {
-        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
-
-        return new $entityClassName(
+        return $this->doCreateOrderItem(
+            $orderItemData,
             $order,
-            $name,
-            $price,
-            '0',
-            1,
             OrderItem::TYPE_ROUNDING,
-            null,
-            null,
         );
     }
 }
