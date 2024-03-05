@@ -31,3 +31,9 @@ services:
             $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
         tags:
             - { name: 'shopsys.frontend_api.articles_search_results_provider', priority: 100 }
+
+    Shopsys\LuigisBoxBundle\Model\Brand\BrandSearchResultsProvider:
+        arguments:
+            $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
+        tags:
+            - { name: 'shopsys.frontend_api.brands_search_results_provider', priority: 100 }

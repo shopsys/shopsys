@@ -87,8 +87,6 @@ class LuigisBoxClient
             $data = $data['results'];
         }
 
-        d($data);
-
         return $this->getResultsIndexedByItemType($data, $action, array_keys($limitsByType));
     }
 
@@ -152,8 +150,6 @@ class LuigisBoxClient
         if ($action === self::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
             $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
-
-        d($url);
 
         return $url;
     }

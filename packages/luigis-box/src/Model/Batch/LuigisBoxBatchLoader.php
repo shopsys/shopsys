@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
@@ -30,6 +31,7 @@ class LuigisBoxBatchLoader
      * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      */
     public function __construct(
         protected readonly LuigisBoxClient $luigisBoxClient,
@@ -39,6 +41,7 @@ class LuigisBoxBatchLoader
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
         protected readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
+        protected readonly BrandFacade $brandFacade,
     ) {
     }
 
@@ -111,6 +114,11 @@ class LuigisBoxBatchLoader
                 self::$totalsByType[$type] = count($mappedDataOfCurrentType);
             }
 
+            if ($type === 'brand') {
+                $mappedDataOfCurrentType = $this->mapBranchData($luigisBoxResults[$type]);
+                self::$totalsByType[$type] = count($mappedDataOfCurrentType);
+            }
+
             $mappedData[] = $mappedDataOfCurrentType;
         }
 
@@ -162,6 +170,15 @@ class LuigisBoxBatchLoader
             $this->domain->getId(),
             count($luigisBoxResult->getIds()),
         );
+    }
+
+    /**
+     * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    protected function mapBranchData(LuigisBoxResult $luigisBoxResult): array
+    {
+        return $this->brandFacade->getBrandsByIds($luigisBoxResult->getIds());
     }
 
     /**
