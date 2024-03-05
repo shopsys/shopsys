@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Order;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;

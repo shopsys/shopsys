@@ -777,9 +777,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\OrderDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory
-
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory
 

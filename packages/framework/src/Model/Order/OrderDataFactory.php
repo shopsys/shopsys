@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 
 class OrderDataFactory implements OrderDataFactoryInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      */
     public function __construct(
-        protected readonly OrderItemDataFactoryInterface $orderItemDataFactory,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
     ) {
     }
