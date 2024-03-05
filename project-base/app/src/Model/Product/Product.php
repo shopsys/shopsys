@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
@@ -50,34 +48,6 @@ class Product extends BaseProduct
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     protected $catnum;
-
-    /**
-     * @var null
-     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     */
-    protected $outOfStockAction;
-
-    /**
-     * @var null
-     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     */
-    protected $outOfStockAvailability;
-
-    /**
-     * @var null
-     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     */
-    protected $stockQuantity;
-
-    /**
-     * @var bool
-     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     */
-    protected $usingStock;
 
     /**
      * @var int|null
@@ -227,14 +197,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function setAvailabilityAndStock(ProductData $productData): void
-    {
-        $this->availability = $productData->availability;
-    }
-
-    /**
      * @param int $domainId
      * @return string[]
      */
@@ -365,48 +327,6 @@ class Product extends BaseProduct
     public function getCalculatedSaleExclusion(int $domainId): bool
     {
         return $this->getProductDomain($domainId)->getCalculatedSaleExclusion();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isUsingStock()
-    {
-        //is always false and is by default set in migration to false.
-        return false;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOutOfStockAction()
-    {
-        throw new Exception('deprecated - outOfStockAction');
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public function getOutOfStockAvailability()
-    {
-        throw new DeprecatedAvailabilityPropertyFromProductException('outOfStockAvailability', $this->outOfStockAvailability);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public function getAvailability()
-    {
-        throw new DeprecatedAvailabilityPropertyFromProductException('availability', $this->availability);
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getStockQuantity()
-    {
-        //this getter isn't possible remove. Because is used in not-extendable code, just return default value.
-        return null;
     }
 
     /**

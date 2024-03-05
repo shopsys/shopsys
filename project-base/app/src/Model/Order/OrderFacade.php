@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
@@ -104,7 +103,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
@@ -138,7 +136,6 @@ class OrderFacade extends BaseOrderFacade
         CustomerUserFacade $customerUserFacade,
         CurrentCustomerUser $currentCustomerUser,
         OrderPreviewFactory $orderPreviewFactory,
-        OrderProductFacade $orderProductFacade,
         HeurekaFacade $heurekaFacade,
         Domain $domain,
         OrderFactoryInterface $orderFactory,
@@ -172,7 +169,6 @@ class OrderFacade extends BaseOrderFacade
             $customerUserFacade,
             $currentCustomerUser,
             $orderPreviewFactory,
-            $orderProductFacade,
             $heurekaFacade,
             $domain,
             $orderFactory,

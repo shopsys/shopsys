@@ -2,21 +2,6 @@ import Register from '../../common/utils/Register';
 
 export default class Product {
     static init ($container) {
-        const usingStockSelection = $('#product_form_displayAvailabilityGroup_usingStock input[type="radio"]');
-        const $outOfStockActionSelection = $('select[name="product_form[displayAvailabilityGroup][stockGroup][outOfStockAction]"]');
-
-        usingStockSelection.change(function () {
-            Product.toggleIsUsingStock($(this).val() === '1');
-        });
-
-        const alternateAvailability = 'setAlternateAvailability';
-        $outOfStockActionSelection.change(function () {
-            Product.toggleIsUsingAlternateAvailability($(this).val() === alternateAvailability);
-        });
-
-        Product.toggleIsUsingStock(usingStockSelection.filter(':checked').val() === '1');
-        Product.toggleIsUsingAlternateAvailability($outOfStockActionSelection.val() === alternateAvailability);
-
         Product.initializeSideNavigation($container);
     }
 
@@ -37,15 +22,6 @@ export default class Product {
                 $('html, body').animate({ scrollTop: scrollOffsetTop }, 'slow');
             });
         });
-    }
-
-    static toggleIsUsingStock (isUsingStock) {
-        $('.js-product-using-stock').toggle(isUsingStock);
-        $('.js-product-not-using-stock').closest('.form-line').toggle(!isUsingStock);
-    }
-
-    static toggleIsUsingAlternateAvailability (isUsingStockAndAlternateAvailability) {
-        $('.js-product-using-stock-and-alternate-availability').closest('.form-line').toggle(isUsingStockAndAlternateAvailability);
     }
 }
 

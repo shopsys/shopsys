@@ -1014,7 +1014,6 @@ export type MainVariantApi = BreadcrumbApi & HreflangApi & ProductApi & SlugApi 
   images: Array<ImageApi>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
-  isUsingStock: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -1871,7 +1870,6 @@ export type ProductApi = {
   images: Array<ImageApi>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
-  isUsingStock: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -2519,7 +2517,6 @@ export type RegularProductApi = BreadcrumbApi & HreflangApi & ProductApi & SlugA
   images: Array<ImageApi>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
-  isUsingStock: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -2852,7 +2849,6 @@ export type VariantApi = BreadcrumbApi & HreflangApi & ProductApi & SlugApi & {
   images: Array<ImageApi>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
-  isUsingStock: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */

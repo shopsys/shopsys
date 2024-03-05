@@ -388,7 +388,6 @@ class SideMenuBuilder
             'edit_payment',
             ['route' => 'admin_payment_edit', 'label' => t('Editing payment'), 'display' => false],
         );
-        $listsMenu->addChild('availabilities', ['route' => 'admin_availability_list', 'label' => t('Availability')]);
         $listsMenu->addChild('flags', ['route' => 'admin_flag_list', 'label' => t('Flags')]);
         $listsMenu->addChild('parameters', ['route' => 'admin_parameter_list', 'label' => t('Parameters')]);
         $listsMenu->addChild(

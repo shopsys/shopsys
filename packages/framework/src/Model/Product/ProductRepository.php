@@ -370,21 +370,6 @@ class ProductRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllSellableUsingStockInStockQueryBuilder($domainId, $pricingGroup)
-    {
-        $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder
-            ->andWhere('p.usingStock = TRUE')
-            ->andWhere('p.stockQuantity > 0');
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int[] $sortedProductIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */

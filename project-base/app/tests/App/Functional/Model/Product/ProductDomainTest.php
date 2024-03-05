@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
@@ -50,8 +49,6 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
         $productData->descriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
-        $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->manualInputPricesByPricingGroupId = [
             1 => Money::zero(),
             2 => Money::zero(),
@@ -95,8 +92,6 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
         $productData->descriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
-        $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->catnum = '123';
         $this->setVats($productData);
 

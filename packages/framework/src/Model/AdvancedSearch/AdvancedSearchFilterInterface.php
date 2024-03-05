@@ -13,8 +13,6 @@ interface AdvancedSearchFilterInterface
     public const OPERATOR_NOT_SET = 'notSet';
     public const OPERATOR_IS = 'is';
     public const OPERATOR_IS_NOT = 'isNot';
-    public const OPERATOR_IS_USED = 'isUsed';
-    public const OPERATOR_IS_NOT_USED = 'isNotUsed';
     public const OPERATOR_BEFORE = 'before';
     public const OPERATOR_AFTER = 'after';
     public const OPERATOR_GT = 'gt';

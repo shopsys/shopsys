@@ -148,7 +148,6 @@ fragment TestProductFragment on Product {
             text
         }
     }
-    isUsingStock
     namePrefix
     nameSuffix
     fullName
@@ -217,7 +216,6 @@ fragment TestMainVariantFragment on MainVariant {
             text
         }
     }
-    isUsingStock
     namePrefix
     nameSuffix
     fullName
