@@ -55,7 +55,7 @@ class OrderTest extends TestCase
         $this->assertContainsOnlyInstancesOf(OrderItem::class, $productItems);
     }
 
-    public function testGetProductItemsCount()
+    public function testGetProductItemsCount(): void
     {
         $payment = new Payment(new PaymentData());
         $paymentItemPrice = Price::zero();

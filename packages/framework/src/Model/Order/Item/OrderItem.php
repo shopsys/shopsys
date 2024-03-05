@@ -144,13 +144,13 @@ class OrderItem
      */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $type,
-        $unitName,
-        $catnum,
+        string $vatPercent,
+        int $quantity,
+        string $type,
+        ?string $unitName,
+        ?string $catnum,
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;

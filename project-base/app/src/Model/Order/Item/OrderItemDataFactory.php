@@ -40,7 +40,7 @@ class OrderItemDataFactory extends BaseOrderItemDataFactory
      * @param \App\Model\Order\Item\OrderItemData $orderItemData
      * @param \App\Model\Order\Item\OrderItem $orderItem
      */
-    protected function fillFromOrderItem(BaseOrderItemData $orderItemData, BaseOrderItem $orderItem)
+    protected function fillFromOrderItem(BaseOrderItemData $orderItemData, BaseOrderItem $orderItem): void
     {
         parent::fillFromOrderItem($orderItemData, $orderItem);
 

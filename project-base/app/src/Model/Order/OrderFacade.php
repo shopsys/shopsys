@@ -183,7 +183,8 @@ class OrderFacade extends BaseOrderFacade
     /**
      * @param \App\Model\Order\OrderData $orderData
      */
-    protected function setOrderDataAdministrator(OrderData $orderData)
+    #[Override]
+    protected function setOrderDataAdministrator(OrderData $orderData): void
     {
         $currentAdministratorLoggedAsCustomer = $this->loginAsUserFacade->getCurrentAdministratorLoggedAsCustomer();
 
@@ -201,6 +202,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Order\Order
      */
+    #[Override]
     public function createOrder(
         BaseOrderData $orderData,
         BaseOrderPreview $orderPreview,
@@ -229,7 +231,8 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderData $orderData
      * @return \App\Model\Order\Order
      */
-    public function edit($orderId, BaseOrderData $orderData)
+    #[Override]
+    public function edit(int $orderId, BaseOrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
         $oldOrderStatus = $order->getStatus();
@@ -248,6 +251,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
+    #[Override]
     protected function fillOrderProducts(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
@@ -339,6 +343,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
+    #[Override]
     protected function fillOrderTransport(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $transport = $order->getTransport();

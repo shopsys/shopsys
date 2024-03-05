@@ -110,8 +110,11 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null)
-    {
+    public function createOrder(
+        OrderData $orderData,
+        OrderPreview $orderPreview,
+        ?CustomerUser $customerUser = null,
+    ): Order {
         $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
 
@@ -163,7 +166,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function edit($orderId, OrderData $orderData)
+    public function edit(int $orderId, OrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
         $originalOrderStatus = $order->getStatus();
@@ -213,7 +216,7 @@ class OrderFacade
     /**
      * @param int $orderId
      */
-    public function deleteById($orderId)
+    public function deleteById(int $orderId): void
     {
         $order = $this->orderRepository->getById($orderId);
 
@@ -225,7 +228,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerUserOrderList(CustomerUser $customerUser)
+    public function getCustomerUserOrderList(CustomerUser $customerUser): array
     {
         return $this->orderRepository->getCustomerUserOrderList($customerUser);
     }
@@ -235,7 +238,7 @@ class OrderFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId($email, $domainId)
+    public function getOrderListForEmailByDomainId(string $email, int $domainId): array
     {
         return $this->orderRepository->getOrderListForEmailByDomainId($email, $domainId);
     }
@@ -244,7 +247,7 @@ class OrderFacade
      * @param int $orderId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getById($orderId)
+    public function getById(int $orderId): Order
     {
         return $this->orderRepository->getById($orderId);
     }
@@ -263,7 +266,7 @@ class OrderFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByUrlHashAndDomain($urlHash, $domainId)
+    public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
@@ -273,7 +276,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser($orderNumber, CustomerUser $customerUser)
+    public function getByOrderNumberAndUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
@@ -282,7 +285,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
             $this->localization->getAdminLocale(),
@@ -293,14 +296,14 @@ class OrderFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function setOrderDataAdministrator(OrderData $orderData)
+    protected function setOrderDataAdministrator(OrderData $orderData): void
     {
         if ($this->administratorFrontSecurityFacade->isAdministratorLoggedAsCustomer()) {
             try {
                 $currentAdmin = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
                 $orderData->createdAsAdministrator = $currentAdmin;
                 $orderData->createdAsAdministratorName = $currentAdmin->getRealName();
-            } catch (AdministratorIsNotLoggedException $ex) {
+            } catch (AdministratorIsNotLoggedException) {
                 return;
             }
         }
@@ -309,8 +312,9 @@ class OrderFacade
     /**
      * @param string $email
      * @param int $domainId
+     * @return int
      */
-    public function getOrdersCountByEmailAndDomainId($email, $domainId)
+    public function getOrdersCountByEmailAndDomainId(string $email, int $domainId): int
     {
         return $this->orderRepository->getOrdersCountByEmailAndDomainId($email, $domainId);
     }
@@ -319,7 +323,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      */
-    protected function fillOrderItems(Order $order, OrderPreview $orderPreview)
+    protected function fillOrderItems(Order $order, OrderPreview $orderPreview): void
     {
         $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 
@@ -543,8 +547,10 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
-    protected function updateOrderDataWithDeliveryAddress(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
-    {
+    protected function updateOrderDataWithDeliveryAddress(
+        OrderData $orderData,
+        ?DeliveryAddress $deliveryAddress,
+    ): void {
         if ($deliveryAddress !== null) {
             $orderData->deliveryFirstName = $deliveryAddress->getFirstName();
             $orderData->deliveryLastName = $deliveryAddress->getLastName();
@@ -561,7 +567,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function updateTransportAndPaymentNamesInOrderData(OrderData $orderData, Order $order)
+    protected function updateTransportAndPaymentNamesInOrderData(OrderData $orderData, Order $order): void
     {
         $orderLocale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 

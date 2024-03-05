@@ -16,8 +16,9 @@ class OrderItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(protected readonly EntityNameResolver $entityNameResolver)
-    {
+    public function __construct(
+        protected readonly EntityNameResolver $entityNameResolver,
+    ) {
     }
 
     /**

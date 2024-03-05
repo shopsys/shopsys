@@ -26,7 +26,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order
 {
-    public const MAX_TRANSACTION_COUNT = 2;
+    public const int MAX_TRANSACTION_COUNT = 2;
 
     /**
      * @var int
@@ -154,19 +154,19 @@ class Order
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $companyName = null;
+    protected $companyName;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $companyNumber = null;
+    protected $companyNumber;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $companyTaxNumber = null;
+    protected $companyTaxNumber;
 
     /**
      * @var string
@@ -324,8 +324,8 @@ class Order
      */
     public function __construct(
         OrderData $orderData,
-        $orderNumber,
-        $urlHash,
+        string $orderNumber,
+        string $urlHash,
         ?CustomerUser $customerUser = null,
     ) {
         $this->fillCommonFields($orderData);
@@ -447,7 +447,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function editData(OrderData $orderData)
+    protected function editData(OrderData $orderData): void
     {
         $this->fillCommonFields($orderData);
 
@@ -484,7 +484,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function editOrderTransport(OrderData $orderData)
+    protected function editOrderTransport(OrderData $orderData): void
     {
         $orderTransportData = $orderData->orderTransport;
         $this->transport = $orderTransportData->transport;
@@ -494,7 +494,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function editOrderPayment(OrderData $orderData)
+    protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
         $this->payment = $orderPaymentData->payment;
@@ -504,7 +504,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function setDeliveryAddress(OrderData $orderData)
+    protected function setDeliveryAddress(OrderData $orderData): void
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
 
@@ -532,7 +532,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
      */
-    public function addItem(OrderItem $item)
+    public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
@@ -542,7 +542,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
      */
-    public function removeItem(OrderItem $item)
+    public function removeItem(OrderItem $item): void
     {
         if ($item->isTypeTransport()) {
             $this->transport = null;
@@ -557,7 +557,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
@@ -567,7 +567,7 @@ class Order
      * @param string|null $companyNumber
      * @param string|null $companyTaxNumber
      */
-    public function setCompanyInfo($companyName = null, $companyNumber = null, $companyTaxNumber = null)
+    public function setCompanyInfo($companyName = null, $companyNumber = null, $companyTaxNumber = null): void
     {
         $this->companyName = $companyName;
         $this->companyNumber = $companyNumber;
