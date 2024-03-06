@@ -268,6 +268,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### fix persist on null object in create delivery address ([#2350](https://github.com/shopsys/shopsys/pull/2350))
+
+-   `Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade` class has changed:
+    -   `create` method was renamed to `createIfAddressFilled` and return type was changed to `?DeliveryAddress`
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
