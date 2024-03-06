@@ -54,9 +54,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   you should remove everything that was not modified in your project and keep just the custom changes using the recommended ways of the [framework extensibility](https://docs.shopsys.com/en/latest/extensibility/)
 
 <!-- Insert upgrade instructions in the following format:
-- general instruction ([#<PR number>](https://github.com/shopsys/shopsys/pull/<PR number>))
-    - additional instructions
-    - see #project-base-diff to update your project
+#### general instruction ([#<PR number>](https://github.com/shopsys/shopsys/pull/<PR number>))
+
+- additional instructions
+- see #project-base-diff to update your project
 -->
 
 ## [Upgrade from v14.0.0 to v15.0.0-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...15.0)
@@ -183,6 +184,76 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         ```
     -   method `createOrderFromFront()` was removed
     -   method `prefillFrontOrderData()` was removed
+-   see #project-base-diff to update your project
+
+#### add rounding and discount as a separate order item types ([#3056](https://github.com/shopsys/shopsys/pull/3056))
+
+-   order items now have proper types for rounding and discount, see `OrderItem::TYPE_*` constants
+-   interface `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface` was removed, use `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory`, or your custom implementation instead
+-   interface `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface` was removed, use `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory`, or your custom implementation instead
+-   interface `Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface` was removed, use `Shopsys\FrameworkBundle\Model\Order\OrderDataFactory`, or your custom implementation instead
+-   the following classes are now strictly typed:
+    -   `Shopsys\FrameworkBundle\Controller\Admin\OrderController`
+    -   `Shopsys\FrameworkBundle\Model\Order\Item\OrderItem`
+    -   `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade`
+    -   `Shopsys\FrameworkBundle\Model\Order\Item\Order`
+    -   `Shopsys\FrameworkBundle\Model\Order\Item\OrderDataFactory`
+    -   `Shopsys\FrameworkBundle\Model\Order\Item\OrderFacade`
+-   constructor `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade::__construct()` was changed:
+    ```diff
+        public function __construct(
+            // ...
+    +       protected readonly OrderItemDataFactory $orderItemDataFactory,
+    ```
+-   `Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory`:
+    -   method `createProduct()` changed its interface:
+        ```diff
+            public function createProduct(
+        +       OrderItemData $orderItemData,
+                Order $order,
+        -       string $name,
+        -       Price $price,
+        -       string $vatPercent,
+        -       int $quantity,
+        -       ?string $unitName,
+        -       ?string $catnum,
+        -       ?Product $product = null,
+        +       ?Product $product,
+            ): OrderItem {
+        ```
+    -   method `createPayment()` changed its interface:
+        ```diff
+            public function createPayment(
+        +       OrderItemData $orderItemData,
+                Order $order,
+        -       string $name,
+        -       Price $price,
+        -       string $vatPercent,
+        -       int $quantity,
+                Payment $payment,
+            ): OrderItem {
+        ```
+    -   method `createTransport()` changed its interface:
+        ```diff
+            public function createTransport(
+        +       OrderItemData $orderItemData,
+                Order $order,
+        -       string $name,
+        -       Price $price,
+        -       string $vatPercent,
+        -       int $quantity,
+                Transport $transport,
+            ): OrderItem {
+        ```
+-   `Shopsys\FrameworkBundle\Model\Order\Order`:
+    -   method `getPaymentName()` was removed, use `getPaymentItem()->getName()` instead
+    -   method `getOrderPayment()` was removed, use `getPaymentItem()` instead
+    -   method `getTransportName()` was removed, use `getTransportItem()->getName()` instead
+    -   method `getOrderTransport()` was removed, use `getTransportItem()` instead
+    -   method `getTransportAndPaymentItems()` was removed, use `getTransportItem()` and `getPaymentItem()` instead
+    -   method `getTransportAndPaymentPrice()` was removed
+    -   method `getItemById()` was removed
+    -   method `getProductItemsCount()` was removed
 -   see #project-base-diff to update your project
 
 ### Storefront
