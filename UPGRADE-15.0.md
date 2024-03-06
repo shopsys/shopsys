@@ -59,9 +59,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     - see #project-base-diff to update your project
 -->
 
--   set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
-    -   see #project-base-diff to update your project
-
 ## [Upgrade from v14.0.0 to v15.0.0-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...15.0)
 
 -   fix promo code mass generation ([#3039](https://github.com/shopsys/shopsys/pull/3039))
@@ -148,6 +145,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper::isUsingStock()` method was removed
     -   FE API: `isUsingStock` field was removed from `ProductDecorator.types`
     -   double-check the `Shopsys\FrameworkBundle\Migrations\Version20240206145944` migration to ensure it does not break your application
+    -   see #project-base-diff to update your project
+-   set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
+    -   see #project-base-diff to update your project
+-   fix removing promo code from cart ([#3043](https://github.com/shopsys/shopsys/pull/3043))
     -   see #project-base-diff to update your project
 
 ### Storefront
