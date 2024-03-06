@@ -18,3 +18,4 @@
 -   [Adding a New Email Template](./adding-a-new-email-template.md)
 -   [Dump variables](./dump-variables.md)
 -   [Create Asynchronous Notifier](./create-asynchronous-notifier.md)
+-   [Adding a New Order Item Type](./adding-a-new-order-item-type.md)

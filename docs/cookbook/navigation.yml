@@ -17,3 +17,4 @@ arrange:
     - create-advanced-grid.md
     - adding-a-new-email-template.md
     - create-asynchronous-notifier.md
+    - adding-a-new-order-item-type.md
