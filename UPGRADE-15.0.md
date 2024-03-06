@@ -61,110 +61,123 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 ## [Upgrade from v14.0.0 to v15.0.0-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...15.0)
 
--   fix promo code mass generation ([#3039](https://github.com/shopsys/shopsys/pull/3039))
-    -   see #project-base-diff to update your project
--   fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
-    -   see #project-base-diff to update your project
--   remove unused order flow ([#3046](https://github.com/shopsys/shopsys/pull/3046))
-    -   class `Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade` was removed
-    -   class `Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface` was removed
-    -   constructor `Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler` changed its interface:
-        ```diff
-            public function __construct(
-                protected readonly RouterInterface $router,
-        -       protected readonly OrderFlowFacade $orderFlowFacade,
-        ```
-    -   constructor `Shopsys\FrameworkBundle\Model\Security\LoginListener` changed its interface:
-        ```diff
-            public function __construct(
-                protected readonly EntityManagerInterface $em,
-        -       protected readonly OrderFlowFacade $orderFlowFacade,
-                protected readonly AdministratorActivityFacade $administratorActivityFacade,
-        ```
-    -   see #project-base-diff to update your project
--   Added check vulnerabilities for javascripts in storefront ([#2993](https://github.com/shopsys/shopsys/pull/2993))
-    -   see #project-base-diff to update your project
--   remove deprecated properties from product entity ([#3027](https://github.com/shopsys/shopsys/pull/3027))
-    -   the following features were removed altogether in favor of `ProductAvailabilityFacade` functionality
-        -   `Product::$outOfStockAction`
-        -   `Product::$outOfStockAvailability`
-        -   `Product::$stockQuantity`
-        -   `Product::$usingStock`
-        -   `Product::$availability`
-        -   `Availability` entity with all the related logic (see `Shopsys\FrameworkBundle\Model\Product\Availability` namespace)
-    -   `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       protected readonly AvailabilityFacade $availabilityFacade,
-        ```
-    -   `Shopsys\FrameworkBundle\Controller\Admin\ProductController::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       protected readonly AvailabilityFacade $availabilityFacade,
-        ```
-    -   `assets/js/admin/validation/form/validationProduct.js` was removed
-    -   `Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface::OPERATOR_IS_USED` and `OPERATOR_IS_NOT_USED` constants were removed
-    -   `Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductStockFilter` class was removed
-    -   `Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       ProductStockFilter $productStockFilter,
-                // ..
-        ```
-    -   `Shopsys\FrameworkBundle\Model\Module\ModuleList::PRODUCT_STOCK_CALCULATIONS` constant was removed
-    -   `Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade` class was removed
-    -   `Shopsys\FrameworkBundle\Model\Order\OrderFacade::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       protected readonly OrderProductFacade $orderProductFacade,
-        ```
-    -   `Shopsys\FrameworkBundle\Model\Product\Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY`, `OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE`, and `OUT_OF_STOCK_ACTION_HIDE` constants were removed
-    -   `Shopsys\FrameworkBundle\Model\ProductProductDataFactory::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       protected readonly AvailabilityFacade $availabilityFacade,
-        ```
-    -   `Shopsys\FrameworkBundle\Model\Product\ProductFactory::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation,
-        ```
-    -   `Shopsys\FrameworkBundle\Model\Product\ProductRepository::getAllSellableUsingStockInStockQueryBuilder()` method was removed
-    -   `Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade::__construct` interface has changed:
-        ```diff
-            public function __construct(
-                // ...
-        -       protected readonly OrderProductFacade $orderProductFacade,
-        ```
-    -   `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper::isUsingStock()` method was removed
-    -   FE API: `isUsingStock` field was removed from `ProductDecorator.types`
-    -   double-check the `Shopsys\FrameworkBundle\Migrations\Version20240206145944` migration to ensure it does not break your application
-    -   see #project-base-diff to update your project
--   set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
-    -   see #project-base-diff to update your project
--   fix removing promo code from cart ([#3043](https://github.com/shopsys/shopsys/pull/3043))
-    -   see #project-base-diff to update your project
+#### fix promo code mass generation ([#3039](https://github.com/shopsys/shopsys/pull/3039))
+
+-   see #project-base-diff to update your project
+
+#### fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
+
+-   see #project-base-diff to update your project
+
+#### remove unused order flow ([#3046](https://github.com/shopsys/shopsys/pull/3046))
+
+-   class `Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade` was removed
+-   class `Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface` was removed
+-   constructor `Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly RouterInterface $router,
+    -       protected readonly OrderFlowFacade $orderFlowFacade,
+    ```
+-   constructor `Shopsys\FrameworkBundle\Model\Security\LoginListener` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+    -       protected readonly OrderFlowFacade $orderFlowFacade,
+            protected readonly AdministratorActivityFacade $administratorActivityFacade,
+    ```
+-   see #project-base-diff to update your project
+
+#### Added check vulnerabilities for javascripts in storefront ([#2993](https://github.com/shopsys/shopsys/pull/2993))
+
+-   see #project-base-diff to update your project
+
+#### remove deprecated properties from product entity ([#3027](https://github.com/shopsys/shopsys/pull/3027))
+
+-   the following features were removed altogether in favor of `ProductAvailabilityFacade` functionality
+    -   `Product::$outOfStockAction`
+    -   `Product::$outOfStockAvailability`
+    -   `Product::$stockQuantity`
+    -   `Product::$usingStock`
+    -   `Product::$availability`
+    -   `Availability` entity with all the related logic (see `Shopsys\FrameworkBundle\Model\Product\Availability` namespace)
+-   `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly AvailabilityFacade $availabilityFacade,
+    ```
+-   `Shopsys\FrameworkBundle\Controller\Admin\ProductController::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly AvailabilityFacade $availabilityFacade,
+    ```
+-   `assets/js/admin/validation/form/validationProduct.js` was removed
+-   `Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface::OPERATOR_IS_USED` and `OPERATOR_IS_NOT_USED` constants were removed
+-   `Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductStockFilter` class was removed
+-   `Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       ProductStockFilter $productStockFilter,
+            // ..
+    ```
+-   `Shopsys\FrameworkBundle\Model\Module\ModuleList::PRODUCT_STOCK_CALCULATIONS` constant was removed
+-   `Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade` class was removed
+-   `Shopsys\FrameworkBundle\Model\Order\OrderFacade::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly OrderProductFacade $orderProductFacade,
+    ```
+-   `Shopsys\FrameworkBundle\Model\Product\Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY`, `OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE`, and `OUT_OF_STOCK_ACTION_HIDE` constants were removed
+-   `Shopsys\FrameworkBundle\Model\ProductProductDataFactory::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly AvailabilityFacade $availabilityFacade,
+    ```
+-   `Shopsys\FrameworkBundle\Model\Product\ProductFactory::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation,
+    ```
+-   `Shopsys\FrameworkBundle\Model\Product\ProductRepository::getAllSellableUsingStockInStockQueryBuilder()` method was removed
+-   `Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly OrderProductFacade $orderProductFacade,
+    ```
+-   `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper::isUsingStock()` method was removed
+-   FE API: `isUsingStock` field was removed from `ProductDecorator.types`
+-   double-check the `Shopsys\FrameworkBundle\Migrations\Version20240206145944` migration to ensure it does not break your application
+-   see #project-base-diff to update your project
+
+#### set version of `friendsofphp/php-cs-fixer` >= `3.50` as conflicting to resolve problems in tests ([#3042](https://github.com/shopsys/shopsys/pull/3042))
+
+-   see #project-base-diff to update your project
+
+#### fix removing promo code from cart ([#3043](https://github.com/shopsys/shopsys/pull/3043))
+
+-   see #project-base-diff to update your project
 
 ### Storefront
 
--   added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
+#### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
 
-    -   queries and mutation names are now part of the request URL, which means query is not made to `/graphql/` but `/graphql/<QueryName>/`
-    -   if you do not want this, you can skip the changes (ensure there is no `operationNameExchange` used in your URQL client)
-    -   if you apply this change, it should be easier for you to debug requests in tools like Kibana and also see operation names in browser network tab
+-   queries and mutation names are now part of the request URL, which means query is not made to `/graphql/` but `/graphql/<QueryName>/`
+-   if you do not want this, you can skip the changes (ensure there is no `operationNameExchange` used in your URQL client)
+-   if you apply this change, it should be easier for you to debug requests in tools like Kibana and also see operation names in browser network tab
 
--   fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
+#### fix display advert in categories ([#3040](https://github.com/shopsys/shopsys/pull/3040))
 
--   refactored different levels of error debugging on SF ([#3033](https://github.com/shopsys/shopsys/pull/3033))
+#### refactored different levels of error debugging on SF ([#3033](https://github.com/shopsys/shopsys/pull/3033))
 
-    -   we now have three levels (`console`, `toast-and-console`, `no-debug`) based on which verbose error messages are shown to developers
-    -   in your projects, you should use constants `isWithConsoleErrorDebugging`, `isWithToastAndConsoleErrorDebugging`,`isWithErrorDebugging` to control different debugging in all places where you handle errors or exceptions
-    -   docs were rewritten to match this new approach, so you can read them to get a better idea
-    -   verbose logging was also added for mutations, so if you need to handle this differently, check `errorExchange.ts`
-    -   added .env.development for SF, so you should put all your env variables for development there, if you need to handle them in a specific way, differently from the app being in production mode
+-   we now have three levels (`console`, `toast-and-console`, `no-debug`) based on which verbose error messages are shown to developers
+-   in your projects, you should use constants `isWithConsoleErrorDebugging`, `isWithToastAndConsoleErrorDebugging`,`isWithErrorDebugging` to control different debugging in all places where you handle errors or exceptions
+-   docs were rewritten to match this new approach, so you can read them to get a better idea
+-   verbose logging was also added for mutations, so if you need to handle this differently, check `errorExchange.ts`
+-   added .env.development for SF, so you should put all your env variables for development there, if you need to handle them in a specific way, differently from the app being in production mode
