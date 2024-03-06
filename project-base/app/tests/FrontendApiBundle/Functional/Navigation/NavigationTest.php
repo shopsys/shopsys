@@ -33,7 +33,7 @@ class NavigationTest extends GraphQlTestCase
                 "navigation": [
                     {
                         "name": "' . t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
-                        "link": "/#",
+                        "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_ELECTRONICS) . '",
                         "categoriesByColumns": [
                             {
                                 "columnNumber": 1,

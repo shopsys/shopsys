@@ -46,7 +46,10 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
             $navigationItemData->name = t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $navigationItemData->url = '#';
+            $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
+                CategoryDataFixture::CATEGORY_ELECTRONICS,
+                $domainId,
+            );
             $navigationItemData->domainId = $domainId;
             $this->addCategoriesToNavigationItem($navigationItemData);
             $this->createItem($navigationItemData);

@@ -256,6 +256,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   method `getProductItemsCount()` was removed
 -   see #project-base-diff to update your project
 
+#### changed link URL for Catalog navigation element ([#3057](https://github.com/shopsys/shopsys/pull/3057))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
