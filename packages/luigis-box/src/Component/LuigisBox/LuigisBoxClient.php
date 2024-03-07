@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxActionNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
+use Symfony\Bridge\Monolog\Logger;
+use Throwable;
 
 class LuigisBoxClient
 {
@@ -27,11 +29,13 @@ class LuigisBoxClient
      * @param string $luigisBoxApiUrl
      * @param array $trackerIdsByDomainIds
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Symfony\Bridge\Monolog\Logger $logger
      */
     public function __construct(
         protected readonly string $luigisBoxApiUrl,
         protected readonly array $trackerIdsByDomainIds,
         protected readonly Domain $domain,
+        protected readonly Logger $logger,
     ) {
     }
 
@@ -74,28 +78,61 @@ class LuigisBoxClient
         $this->checkNecessaryConfigurationIsSet();
         $this->validateActionIsValid($action);
 
-        $data = json_decode(
-            file_get_contents(
-                $this->getLuigisBoxApiUrl(
-                    $query,
-                    $action,
-                    $page,
-                    $limitsByType,
-                    $filter,
-                    $userIdentifier,
-                    $orderingMode,
+        try {
+            $data = json_decode(
+                file_get_contents(
+                    $this->getLuigisBoxApiUrl(
+                        $query,
+                        $action,
+                        $page,
+                        $limitsByType,
+                        $filter,
+                        $userIdentifier,
+                        $orderingMode,
+                    ),
                 ),
-            ),
-            true,
-            512,
-            JSON_THROW_ON_ERROR,
-        );
+                true,
+                512,
+                JSON_THROW_ON_ERROR,
+            );
+        } catch (Throwable $e) {
+            $this->logger->error(
+                'Luigi\'s Box API request failed.',
+                [
+                    'exception' => $e,
+                    'query' => $query,
+                    'action' => $action,
+                    'page' => $page,
+                    'limitsByType' => $limitsByType,
+                    'filter' => $filter,
+                    'userIdentifier' => $userIdentifier,
+                    'orderingMode' => $orderingMode,
+                ],
+            );
+
+            return $this->getEmptyResults(array_keys($limitsByType));
+        }
 
         if ($action === self::ACTION_SEARCH) {
             $data = $data['results'];
         }
 
         return $this->getResultsIndexedByItemType($data, $action, array_keys($limitsByType));
+    }
+
+    /**
+     * @param string[] $types
+     * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
+     */
+    protected function getEmptyResults(array $types): array
+    {
+        $resultsByType = [];
+
+        foreach ($types as $type) {
+            $resultsByType[$type] = new LuigisBoxResult([], [], 0);
+        }
+
+        return $resultsByType;
     }
 
     /**

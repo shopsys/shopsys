@@ -13,6 +13,7 @@ services:
         arguments:
             $luigisBoxApiUrl: '%env(string:LUIGIS_BOX_API_URL)%'
             $trackerIdsByDomainIds: '%env(json:LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS)%'
+            $logger: '@monolog.logger'
 
     Shopsys\LuigisBoxBundle\Model\Product\ProductSearchResultsProvider:
         arguments:
