@@ -1,3 +1,5 @@
 doctrine:
+    dbal:
+        profiling_collect_backtrace: true
     orm:
         auto_generate_proxy_classes: true
