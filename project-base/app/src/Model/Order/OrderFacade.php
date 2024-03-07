@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Security\LoginAsUserFacade;
 use App\Model\Transport\Type\TransportType;
@@ -14,13 +13,11 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
@@ -60,7 +57,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
- * @method prefillFrontOrderData(\App\Model\Order\FrontOrderData $orderData, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderList(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset)
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
@@ -108,7 +104,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
@@ -141,7 +136,6 @@ class OrderFacade extends BaseOrderFacade
         OrderFactoryInterface $orderFactory,
         OrderPriceCalculation $orderPriceCalculation,
         OrderItemPriceCalculation $orderItemPriceCalculation,
-        FrontOrderDataMapper $frontOrderDataMapper,
         NumberFormatterExtension $numberFormatterExtension,
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
@@ -174,7 +168,6 @@ class OrderFacade extends BaseOrderFacade
             $orderFactory,
             $orderPriceCalculation,
             $orderItemPriceCalculation,
-            $frontOrderDataMapper,
             $numberFormatterExtension,
             $paymentPriceCalculation,
             $transportPriceCalculation,
@@ -185,16 +178,6 @@ class OrderFacade extends BaseOrderFacade
             $orderItemDataFactory,
             $orderDataFactory,
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated use App\FrontendApi\Model\Order\PlaceOrderFacade::placeOrder() instead
-     */
-    public function createOrderFromFront(BaseOrderData $orderData, ?DeliveryAddress $deliveryAddress)
-    {
-        throw new DeprecatedMethodException();
     }
 
     /**

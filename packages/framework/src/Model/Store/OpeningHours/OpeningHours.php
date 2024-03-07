@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Store\Store;
 
 /**
  * @ORM\Entity

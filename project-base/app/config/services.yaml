@@ -259,11 +259,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory:
         alias: App\Model\Order\Item\OrderItemFactory
 
-    App\Model\Order\OrderDataMapper: ~
-
-    Shopsys\FrameworkBundle\Model\Order\OrderDataMapper:
-        alias: App\Model\Order\OrderDataMapper
-
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: App\Model\Transport\TransportDataFactory
 
