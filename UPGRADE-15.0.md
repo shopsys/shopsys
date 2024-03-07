@@ -276,6 +276,19 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `create` method was renamed to `createIfAddressFilled` and return type was changed to `?DeliveryAddress`
 -   see #project-base-diff to update your project
 
+#### make delivery address fields not nullable ([#2494](https://github.com/shopsys/shopsys/pull/2494))
+
+-   class `Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType` was removed
+-   check migration `Version20220725104726` if suits your needs
+-   following fields in `Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress` are no longer nullable:
+    -   `$firstName`
+    -   `$lastName`
+    -   `$street`
+    -   `$city`
+    -   `$postcode`
+    -   `$country`
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
