@@ -49,7 +49,7 @@ class DispatchRecalculationMessageCommand extends Command
             ->addOption(
                 'priority',
                 'p',
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_REQUIRED,
                 sprintf('Define the message priority. Possible values are: %s', ProductRecalculationPriorityEnum::getPipeSeparatedValues()),
                 ProductRecalculationPriorityEnum::REGULAR->value,
             )
