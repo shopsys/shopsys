@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
-use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeatureException;
 
 class ArticleIndex extends AbstractIndex
 {
@@ -43,7 +43,7 @@ class ArticleIndex extends AbstractIndex
         array $fields = [],
     ): array {
         if ($fields !== []) {
-            throw new InvalidArgumentException('Scoping export by fields is not supported for articles.');
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for articles.');
         }
         $results = [];
 
@@ -63,7 +63,7 @@ class ArticleIndex extends AbstractIndex
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
         if ($fields !== []) {
-            throw new InvalidArgumentException('Scoping export by fields is not supported for articles.');
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for articles.');
         }
         $results = [];
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
-use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeatureException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface;
 
 class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
@@ -49,7 +49,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
         array $fields = [],
     ): array {
         if ($fields !== []) {
-            throw new InvalidArgumentException('Scoping export by fields is not supported for blog articles.');
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for blog articles.');
         }
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
@@ -71,7 +71,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
         if ($fields !== []) {
-            throw new InvalidArgumentException('Scoping export by fields is not supported for blog articles.');
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for blog articles.');
         }
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
