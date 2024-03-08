@@ -54,10 +54,11 @@ class DispatchRecalculationMessageCommand extends Command
                 ProductRecalculationPriorityEnum::REGULAR->value,
             )
             ->addOption(
-                'scopes',
+                'scope',
                 's',
-                InputOption::VALUE_OPTIONAL,
-                'Define the message scopes, separated with comma. Run "shopsys:list:export-scopes" command for listing available scopes',
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                'Define the message scopes. Run "shopsys:list:export-scopes" command for listing available scopes',
+                [],
             );
     }
 
@@ -69,7 +70,7 @@ class DispatchRecalculationMessageCommand extends Command
         $symfonyStyle = new SymfonyStyle($input, $output);
 
         $productIds = $input->getArgument('productIds');
-        $scopes = $input->getOption('scopes') !== null ? explode(',', $input->getOption('scopes')) : [];
+        $scopes = $input->getOption('scope');
         $shouldRecalculateAll = $input->getOption('all');
         $priority = ProductRecalculationPriorityEnum::tryFrom($input->getOption('priority'));
 
