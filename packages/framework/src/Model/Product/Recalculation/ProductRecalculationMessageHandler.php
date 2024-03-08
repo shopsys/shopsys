@@ -50,7 +50,7 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
         foreach ($jobs as [$message, $ack]) {
             $productIds[] = $message->productId;
             $acknowledgers[] = $ack;
-            $exportScopes = [...$exportScopes, ...$message->exportScopes];
+            $exportScopes[$message->productId] = $message->exportScopes;
         }
 
         try {

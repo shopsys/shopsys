@@ -42,28 +42,38 @@ class ProductRecalculationFacade
 
     /**
      * @param int[] $productIds
+     * @param array<int, string[]> $exportScopesIndexedByProductId
+     */
+    public function recalculate(array $productIds, array $exportScopesIndexedByProductId): void
+    {
+        foreach ($productIds as $productId) {
+            $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculate([$productId]);
+            $this->recalculateWithScope($idsToRecalculate, $exportScopesIndexedByProductId[$productId] ?? []);
+        }
+    }
+
+    /**
+     * @param int[] $productIds
      * @param string[] $exportScopes
      */
-    public function recalculate(array $productIds, array $exportScopes): void
+    protected function recalculateWithScope(array $productIds, array $exportScopes): void
     {
-        $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculate($productIds);
-
         $shouldRecalculateVisibility = $this->productExportScopeConfigFacade->shouldRecalculateVisibility($exportScopes);
 
         if ($shouldRecalculateVisibility) {
-            $this->productVisibilityFacade->calculateProductVisibilityForIds($idsToRecalculate);
+            $this->productVisibilityFacade->calculateProductVisibilityForIds($productIds);
         }
 
         $shouldRecalculateSellingDenied = $this->productExportScopeConfigFacade->shouldRecalculateSellingDenied($exportScopes);
 
         if ($shouldRecalculateSellingDenied) {
-            $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($idsToRecalculate);
+            $this->productSellingDeniedRecalculator->calculateSellingDeniedForProductIds($productIds);
         }
 
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            foreach ($idsToRecalculate as $productId) {
+            foreach ($productIds as $productId) {
                 if ($shouldRecalculateVisibility && $this->productElasticsearchProvider->existsProduct($productId, $domainId) === false) {
                     $fields = [];
                 }
@@ -71,7 +81,7 @@ class ProductRecalculationFacade
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
                 $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
-                $idsToRecalculate,
+                $productIds,
                 $fields,
             );
         }
