@@ -164,7 +164,7 @@ You can use the methods in the overridden `App\Model\Product\Elasticsearch\Scope
 It's possible to invoke recalculations manually with the `./bin/console shopsys:dispatch:recalculations` command.
 
 This command accepts ids of products, that should be dispatched, or `--all` option to dispatch all products.
-You can also define the priority and/or scopes of the recalculations using `--priority`, and/or `--scopes` options.
+You can also define the priority and/or scopes of the recalculations using `--priority`, and/or `--scope` options.
 
 ```bash
 # dispatch products with ids 1, 2 and 3
@@ -177,5 +177,5 @@ You can also define the priority and/or scopes of the recalculations using `--pr
 ./bin/console shopsys:dispatch:recalculations 22 --priority=high
 
 # dispatch all products with the "product_selling_denied_scope" scope
-./bin/console shopsys:dispatch:recalculations --all --scopes=product_selling_denied_scope
+./bin/console shopsys:dispatch:recalculations --all --scope=product_selling_denied_scope
 ```
