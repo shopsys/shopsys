@@ -10,11 +10,20 @@ use ReflectionClassConstant;
 class ReflectionHelper
 {
     /**
+     * @var array<string, string[]>
+     */
+    protected static array $constantsIndexedByFqcn = [];
+
+    /**
      * @param string $fqcn
-     * @return array
+     * @return string[]
      */
     public static function getAllPublicClassConstants(string $fqcn): array
     {
-        return array_values((new ReflectionClass($fqcn))->getConstants(ReflectionClassConstant::IS_PUBLIC));
+        if (array_key_exists($fqcn, self::$constantsIndexedByFqcn) === false) {
+            self::$constantsIndexedByFqcn[$fqcn] = array_values((new ReflectionClass($fqcn))->getConstants(ReflectionClassConstant::IS_PUBLIC));
+        }
+
+        return self::$constantsIndexedByFqcn[$fqcn];
     }
 }
