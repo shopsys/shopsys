@@ -6,9 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope;
 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleAlreadyExistsException;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\Exception\ScopeRuleDoesNotExistException;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductExportScopeConfig implements ResetInterface
+class ProductExportScopeConfig
 {
     public const string SCOPE_NAME = 'product_name_scope';
     public const string SCOPE_UNIT = 'product_unit_scope';
@@ -175,10 +174,5 @@ class ProductExportScopeConfig implements ResetInterface
         }
 
         $this->productExportScopeRules[$scopeName] = new ProductExportScopeRule($exportFields, $preconditions);
-    }
-
-    public function reset(): void
-    {
-        $this->productExportScopeRules = null;
     }
 }
