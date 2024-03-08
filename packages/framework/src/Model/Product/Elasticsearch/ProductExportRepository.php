@@ -432,8 +432,8 @@ class ProductExportRepository implements ResetInterface
     }
 
     #[Override]
- public function reset(): void
- {
-     $this->variantCache = null;
- }
+    public function reset(): void
+    {
+        $this->variantCache = null;
+    }
 }
