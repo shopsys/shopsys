@@ -86,15 +86,7 @@ class ProductExportRepository implements ResetInterface
             ->setParameter('lastProcessedId', $lastProcessedId)
             ->setMaxResults($batchSize);
 
-        $query = $queryBuilder->getQuery();
-
-        $results = [];
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
-            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
-        }
-
-        return $results;
+        return $this->getResults($queryBuilder, $fields, $domainId, $locale);
     }
 
     /**
@@ -110,15 +102,7 @@ class ProductExportRepository implements ResetInterface
             ->andWhere('p.id IN (:productIds)')
             ->setParameter('productIds', $productIds);
 
-        $query = $queryBuilder->getQuery();
-
-        $result = [];
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        foreach ($query->getResult() as $product) {
-            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
-        }
-
-        return $result;
+        return $this->getResults($queryBuilder, $fields, $domainId, $locale);
     }
 
     /**
@@ -141,10 +125,6 @@ class ProductExportRepository implements ResetInterface
      */
     protected function extractResult(Product $product, int $domainId, string $locale, array $fields): array
     {
-        if (count($fields) === 0) {
-            $fields = $this->productExportFieldProvider->getAll();
-        }
-
         $exportedResult = [];
 
         foreach ($fields as $field) {
@@ -425,6 +405,30 @@ class ProductExportRepository implements ResetInterface
         }
 
         return $this->variantCache;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param array $fields
+     * @param int $domainId
+     * @param string $locale
+     * @return array
+     */
+    protected function getResults(QueryBuilder $queryBuilder, array $fields, int $domainId, string $locale): array
+    {
+        $query = $queryBuilder->getQuery();
+
+        if (count($fields) === 0) {
+            $fields = $this->productExportFieldProvider->getAll();
+        }
+
+        $results = [];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        foreach ($query->getResult() as $product) {
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
+        }
+
+        return $results;
     }
 
     #[Override]

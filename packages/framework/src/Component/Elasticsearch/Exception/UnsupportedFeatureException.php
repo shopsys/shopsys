@@ -9,7 +9,7 @@ use Exception;
 class UnsupportedFeatureException extends Exception
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __construct(string $message)
     {
