@@ -55,10 +55,12 @@ export const Pagination: FC<PaginationProps> = ({
             </div>
             <div className="order-1 my-3 flex w-full justify-center gap-1 vl:order-2 vl:w-2/5 vl:justify-end">
                 {paginationButtons.map((pageNumber, index, array) => {
-                    const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
-                    const pageParams = urlPageNumber
-                        ? new URLSearchParams({ ...queryParams, page: urlPageNumber }).toString()
-                        : undefined;
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const { page, ...queryParamsWithoutPage } = queryParams;
+                    const pageParams =
+                        pageNumber > 1
+                            ? new URLSearchParams({ ...queryParams, page: pageNumber.toString() }).toString()
+                            : new URLSearchParams(queryParamsWithoutPage).toString();
                     const pageHref = `${asPathWithoutQueryParams}${pageParams ? `?${pageParams}` : ''}`;
 
                     return (
@@ -66,6 +68,7 @@ export const Pagination: FC<PaginationProps> = ({
                             {isDotKey(array[index - 1] ?? null, pageNumber) && (
                                 <PaginationButton isDotButton>&#8230;</PaginationButton>
                             )}
+
                             {currentPageWithLoadMore === pageNumber ? (
                                 <PaginationButton isActive>{pageNumber}</PaginationButton>
                             ) : (
