@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult;
-use Shopsys\LuigisBoxBundle\Model\Batch\Exception\ProductSearchIsMandatoryForAllLuigisBoxSearchesUserError;
 
 class LuigisBoxBatchLoader
 {
@@ -60,24 +59,15 @@ class LuigisBoxBatchLoader
      */
     public function loadByBatchData(array $luigisBoxBatchLoadData): Promise
     {
-        $this->validateProductSearchIsPresent($luigisBoxBatchLoadData);
-
-        $query = '';
+        $mainBatchLoadData = $this->getMainBatchLoadData($luigisBoxBatchLoadData);
+        $query = $mainBatchLoadData->getQuery();
+        $endpoint = $mainBatchLoadData->getEndpoint();
+        $page = $mainBatchLoadData->getPage();
+        $productFilter = $mainBatchLoadData->getFilter();
+        $productOrderingMode = $mainBatchLoadData->getOrderingMode();
         $limitsByType = [];
-        $endpoint = '';
-        $page = 0;
-        $productFilter = [];
-        $productOrderingMode = null;
 
         foreach ($luigisBoxBatchLoadData as $luigisBoxBatchLoadDataItem) {
-            if ($luigisBoxBatchLoadDataItem->getType() === LuigisBoxClient::MAIN_TYPE) {
-                $query = $luigisBoxBatchLoadDataItem->getQuery();
-                $endpoint = $luigisBoxBatchLoadDataItem->getEndpoint();
-                $page = $luigisBoxBatchLoadDataItem->getPage();
-                $productFilter = $luigisBoxBatchLoadDataItem->getFilter();
-                $productOrderingMode = $luigisBoxBatchLoadDataItem->getOrderingMode();
-            }
-
             $limitsByType[$luigisBoxBatchLoadDataItem->getType()] = $luigisBoxBatchLoadDataItem->getLimit();
         }
 
@@ -99,26 +89,23 @@ class LuigisBoxBatchLoader
         foreach ($limitsByType as $type => $limit) {
             $mappedDataOfCurrentType = [];
 
-            if ($type === 'product') {
+            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT) {
                 $mappedDataOfCurrentType = $this->mapProductData($luigisBoxResults[$type], $limit);
-                self::$totalsByType[$type] = $luigisBoxResults[$type]->getItemsCount();
             }
 
-            if ($type === 'category') {
+            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_CATEGORY) {
                 $mappedDataOfCurrentType = $this->mapCategoryData($luigisBoxResults[$type]);
-                self::$totalsByType[$type] = count($mappedDataOfCurrentType);
             }
 
-            if ($type === 'article') {
+            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_ARTICLE) {
                 $mappedDataOfCurrentType = $this->mapArticleData($luigisBoxResults[$type]);
-                self::$totalsByType[$type] = count($mappedDataOfCurrentType);
             }
 
-            if ($type === 'brand') {
-                $mappedDataOfCurrentType = $this->mapBranchData($luigisBoxResults[$type]);
-                self::$totalsByType[$type] = count($mappedDataOfCurrentType);
+            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_BRAND) {
+                $mappedDataOfCurrentType = $this->mapBrandData($luigisBoxResults[$type]);
             }
 
+            self::$totalsByType[$type] = count($mappedDataOfCurrentType);
             $mappedData[] = $mappedDataOfCurrentType;
         }
 
@@ -176,28 +163,27 @@ class LuigisBoxBatchLoader
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult $luigisBoxResult
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    protected function mapBranchData(LuigisBoxResult $luigisBoxResult): array
+    protected function mapBrandData(LuigisBoxResult $luigisBoxResult): array
     {
         return $this->brandFacade->getBrandsByIds($luigisBoxResult->getIds());
     }
 
     /**
      * @param array $luigisBoxBatchLoadData
+     * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
-    protected function validateProductSearchIsPresent(array $luigisBoxBatchLoadData): void
+    protected function getMainBatchLoadData(array $luigisBoxBatchLoadData): LuigisBoxBatchLoadData
     {
-        $productSearchIsPresent = false;
+        $mainBatchLoadData = null;
 
         foreach ($luigisBoxBatchLoadData as $luigisBoxBatchLoadDataItem) {
-            if ($luigisBoxBatchLoadDataItem->getType() === LuigisBoxClient::MAIN_TYPE) {
-                $productSearchIsPresent = true;
+            if ($luigisBoxBatchLoadDataItem->getType() === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT) {
+                $mainBatchLoadData = $luigisBoxBatchLoadDataItem;
 
                 break;
             }
         }
 
-        if (!$productSearchIsPresent) {
-            throw new ProductSearchIsMandatoryForAllLuigisBoxSearchesUserError();
-        }
+        return $mainBatchLoadData ?? reset($luigisBoxBatchLoadData);
     }
 }

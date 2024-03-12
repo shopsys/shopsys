@@ -10,7 +10,8 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderInterface;
-use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
 
@@ -19,10 +20,12 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
     /**
      * @param string $enabledDomainIds
      * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
      */
     public function __construct(
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
+        protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
     ) {
         parent::__construct($enabledDomainIds);
     }
@@ -35,11 +38,13 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         Argument $argument,
     ): Promise|ConnectionInterface {
         $paginator = new Paginator(
-            function ($offset, $limit) {
+            function ($offset, $limit) use ($argument) {
                 return $this->luigisBoxBatchLoader->load(
-                    new LuigisBoxBatchLoadData(
-                        'category',
+                    $this->luigisBoxBatchLoadDataFactory->create(
+                        LuigisBoxClient::TYPE_IN_LUIGIS_BOX_CATEGORY,
                         $limit,
+                        $offset,
+                        $argument,
                     ),
                 );
             },
@@ -50,7 +55,7 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         $promise = $paginator->auto($argument, 0);
 
         $promise->then(function ($productConnection) {
-            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType('category'));
+            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_CATEGORY));
         });
 
         return $promise;

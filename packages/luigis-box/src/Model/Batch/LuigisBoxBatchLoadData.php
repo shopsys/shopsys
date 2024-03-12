@@ -9,27 +9,27 @@ class LuigisBoxBatchLoadData
     /**
      * @param string $type
      * @param int $limit
-     * @param string|null $query
-     * @param string|null $endpoint
-     * @param int|null $page
-     * @param array|null $filter
+     * @param string $query
+     * @param string $endpoint
+     * @param int $page
+     * @param array $filter
      * @param string|null $orderingMode
      */
     public function __construct(
         protected readonly string $type,
         protected readonly int $limit,
-        protected readonly ?string $query = null,
-        protected readonly ?string $endpoint = null,
-        protected readonly ?int $page = null,
-        protected readonly ?array $filter = null,
+        protected readonly string $query,
+        protected readonly string $endpoint,
+        protected readonly int $page,
+        protected readonly array $filter,
         protected readonly ?string $orderingMode = null,
     ) {
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getQuery(): ?string
+    public function getQuery(): string
     {
         return $this->query;
     }
@@ -43,17 +43,17 @@ class LuigisBoxBatchLoadData
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getEndpoint(): ?string
+    public function getEndpoint(): string
     {
         return $this->endpoint;
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getPage(): ?int
+    public function getPage(): int
     {
         return $this->page;
     }
@@ -67,9 +67,9 @@ class LuigisBoxBatchLoadData
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    public function getFilter(): ?array
+    public function getFilter(): array
     {
         return $this->filter;
     }

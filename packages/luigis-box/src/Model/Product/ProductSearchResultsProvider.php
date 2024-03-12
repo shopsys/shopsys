@@ -15,7 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvide
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
-use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
 
@@ -31,6 +31,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
      */
     public function __construct(
         string $enabledDomainIds,
@@ -42,6 +43,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
+        protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
     ) {
         parent::__construct($enabledDomainIds);
     }
@@ -57,21 +59,18 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
     ): Promise {
         $search = $argument['search'] ?? '';
         $orderingMode = $argument['orderingMode'];
-        $endpoint = $argument['isAutocomplete'] === true ? LuigisBoxClient::ACTION_AUTOCOMPLETE : LuigisBoxClient::ACTION_SEARCH;
-        $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->mapForSearch($productFilterData, $this->domain);
+        $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT, $productFilterData, $this->domain);
 
         return $this->productConnectionFactory->createConnectionPromiseForSearch(
             $search,
-            function ($offset, $limit) use ($endpoint, $search, $luigisBoxFilter, $orderingMode) {
+            function ($offset, $limit) use ($argument, $luigisBoxFilter) {
                 return $this->luigisBoxBatchLoader->load(
-                    new LuigisBoxBatchLoadData(
-                        'product',
+                    $this->luigisBoxBatchLoadDataFactory->create(
+                        LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT,
                         $limit,
-                        $search,
-                        $endpoint,
                         $offset,
+                        $argument,
                         $luigisBoxFilter,
-                        $orderingMode,
                     ),
                 );
             },

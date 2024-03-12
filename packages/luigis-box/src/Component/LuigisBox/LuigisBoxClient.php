@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\LuigisBoxBundle\Component\LuigisBox;
 
 use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem;
+use Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItem;
 use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -14,9 +15,13 @@ use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 
 class LuigisBoxClient
 {
-    public const string MAIN_TYPE = 'product';
     public const string ACTION_SEARCH = 'search';
     public const string ACTION_AUTOCOMPLETE = 'autocomplete/v2';
+
+    public const string TYPE_IN_LUIGIS_BOX_ARTICLE = 'article';
+    public const string TYPE_IN_LUIGIS_BOX_BRAND = 'brand';
+    public const string TYPE_IN_LUIGIS_BOX_CATEGORY = 'category';
+    public const string TYPE_IN_LUIGIS_BOX_PRODUCT = 'item';
 
     /**
      * @param string $luigisBoxApiUrl
@@ -124,15 +129,18 @@ class LuigisBoxClient
         $url = $this->luigisBoxApiUrl .
             $action . '/' .
             '?tracker_id=' . $this->getTrackerId() .
-            '&q=' . urlencode($query);
+            '&q=' . urlencode($query) .
+            '&hit_fields=url';
 
         if ($action === self::ACTION_SEARCH) {
+            $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);
+
             $url .=
-                '&hit_fields=identity' .
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
-                '&from=' . $page .
-                count($limitsByType) > 1 ? '&quicksearch_types=' . $this->getQuicksearchTypes(array_keys($limitsByType)) : '';
+                '&from=' . $page;
+            $url .=
+                $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
 
             foreach ($filter as $key => $filterValues) {
                 foreach ($filterValues as $filterValue) {
@@ -181,6 +189,7 @@ class LuigisBoxClient
                 LuigisBoxCategoryFeedItem::UNIQUE_IDENTIFIER_PREFIX,
                 LuigisBoxArticleFeedItem::UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX,
                 LuigisBoxArticleFeedItem::UNIQUE_ARTICLE_IDENTIFIER_PREFIX,
+                LuigisBoxBrandFeedItem::UNIQUE_BRAND_IDENTIFIER_PREFIX,
                 '-',
             ],
             '',
@@ -192,15 +201,30 @@ class LuigisBoxClient
      * @param array $types
      * @return string
      */
-    protected function getQuicksearchTypes(array $types): string
+    protected function getMainType(array $types): string
     {
-        foreach ($types as $key => $type) {
-            if ($type === self::MAIN_TYPE) {
-                unset($types[$key]);
+        if (in_array(static::TYPE_IN_LUIGIS_BOX_PRODUCT, $types, true)) {
+            return self::TYPE_IN_LUIGIS_BOX_PRODUCT;
+        }
+
+        return reset($types);
+    }
+
+    /**
+     * @param array<string, int> $typesWithLimits
+     * @return string
+     */
+    protected function getQuicksearchTypesWithLimits(array $typesWithLimits): string
+    {
+        $quicksearchTypesWithLimit = [];
+
+        foreach ($typesWithLimits as $type => $limit) {
+            if ($type !== $this->getMainType(array_keys($typesWithLimits))) {
+                $quicksearchTypesWithLimit[] = $type . ':' . $limit;
             }
         }
 
-        return implode(',', $types);
+        return implode(',', $quicksearchTypesWithLimit);
     }
 
     /**
@@ -209,7 +233,7 @@ class LuigisBoxClient
      */
     protected function getMainTypeLimit(array $limitsByType): int
     {
-        return $limitsByType[self::MAIN_TYPE];
+        return $limitsByType[$this->getMainType(array_keys($limitsByType))];
     }
 
     /**
@@ -223,8 +247,9 @@ class LuigisBoxClient
         $idsByType = [];
         $idsWithPrefixByType = [];
         $resultsByType = [];
+        $hits = array_merge($data['hits'], $data['quicksearch_hits'] ?? []);
 
-        foreach ($data['hits'] as $hit) {
+        foreach ($hits as $hit) {
             $idsWithPrefixByType[$this->getTypeFromHitUrl($hit['url'])][] = $hit['url'];
             $idsByType[$this->getTypeFromHitUrl($hit['url'])][] = $this->getIdFromIdentity($hit['url']);
         }
@@ -249,22 +274,14 @@ class LuigisBoxClient
         $type = explode('-', $hitUrl)[0];
 
         if ($type === LuigisBoxArticleFeedItem::UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX) {
-            return 'article';
+            return LuigisBoxArticleFeedItem::UNIQUE_ARTICLE_IDENTIFIER_PREFIX;
+        }
+
+        if ($type === 'product') {
+            return static::TYPE_IN_LUIGIS_BOX_PRODUCT;
         }
 
         return $type;
-    }
-
-    /**
-     * @param string $appType
-     * @return string
-     */
-    protected function mapAppTypeToLuigisBoxType(string $appType): string
-    {
-        return match ($appType) {
-            'product' => 'item',
-            default => $appType,
-        };
     }
 
     /**
@@ -276,7 +293,7 @@ class LuigisBoxClient
         $luigisBoxLimits = [];
 
         foreach ($limitsByType as $type => $limitByType) {
-            $luigisBoxLimits[] = $this->mapAppTypeToLuigisBoxType($type) . ':' . $limitByType;
+            $luigisBoxLimits[] = $type . ':' . $limitByType;
         }
 
         return implode(',', $luigisBoxLimits);

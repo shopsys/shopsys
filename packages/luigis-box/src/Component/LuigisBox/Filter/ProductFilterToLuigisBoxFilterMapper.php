@@ -33,17 +33,43 @@ class ProductFilterToLuigisBoxFilterMapper
     }
 
     /**
+     * @param string $luigisBoxType
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @return array
      */
-    public function mapForSearch(ProductFilterData $productFilterData, Domain $domain): array
+    public function map(string $luigisBoxType, ProductFilterData $productFilterData, Domain $domain): array
     {
         $luigisBoxFilter = $this->createEmpty();
+        $luigisBoxFilter = $this->mapType($luigisBoxType, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapPrice($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapAvailability($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapFlags($productFilterData, $luigisBoxFilter, $domain->getLocale());
         $luigisBoxFilter = $this->mapBrands($productFilterData, $luigisBoxFilter);
+
+        return $luigisBoxFilter;
+    }
+
+    /**
+     * @param string $luigisBoxType
+     * @return array
+     */
+    public function mapOnlyType(string $luigisBoxType): array
+    {
+        $luigisBoxFilter = $this->createEmpty();
+        $luigisBoxFilter = $this->mapType($luigisBoxType, $luigisBoxFilter);
+
+        return $luigisBoxFilter;
+    }
+
+    /**
+     * @param string $luigisBoxType
+     * @param array $luigisBoxFilter
+     * @return array
+     */
+    protected function mapType(string $luigisBoxType, array $luigisBoxFilter): array
+    {
+        $luigisBoxFilter[self::FILTER_OR][] = 'type:' . $luigisBoxType;
 
         return $luigisBoxFilter;
     }

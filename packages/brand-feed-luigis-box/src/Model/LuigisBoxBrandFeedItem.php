@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class LuigisBoxBrandFeedItem implements FeedItemInterface
 {
-    public const UNIQUE_IDENTIFIER_PREFIX = 'brand-';
+    public const UNIQUE_BRAND_IDENTIFIER_PREFIX = 'brand';
 
     /**
      * @param int $id
@@ -37,7 +37,7 @@ class LuigisBoxBrandFeedItem implements FeedItemInterface
      */
     public function getIdentity(): string
     {
-        return static::UNIQUE_IDENTIFIER_PREFIX . $this->id;
+        return static::UNIQUE_BRAND_IDENTIFIER_PREFIX . '-' . $this->id;
     }
 
     /**

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory as FrontendApiProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
 
 class ProductConnectionFactory
@@ -75,7 +76,7 @@ class ProductConnectionFactory
         $promise = $paginator->auto($argument, 0);
 
         $promise->then(function (ProductConnection $productConnection) {
-            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType('product'));
+            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT));
         });
 
         return $promise;
