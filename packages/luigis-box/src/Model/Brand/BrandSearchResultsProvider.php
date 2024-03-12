@@ -8,7 +8,8 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderInterface;
-use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
 
 class BrandSearchResultsProvider extends SearchResultsProvider implements BrandSearchResultsProviderInterface
@@ -18,10 +19,12 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
     /**
      * @param string $enabledDomainIds
      * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
      */
     public function __construct(
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
+        protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
     ) {
         parent::__construct($enabledDomainIds);
     }
@@ -34,9 +37,11 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
         Argument $argument,
     ): Promise|array {
         return $this->luigisBoxBatchLoader->load(
-            new LuigisBoxBatchLoadData(
-                'brand',
+            $this->luigisBoxBatchLoadDataFactory->create(
+                LuigisBoxClient::TYPE_IN_LUIGIS_BOX_BRAND,
                 static::SEARCH_LIMIT,
+                0,
+                $argument,
             ),
         );
     }

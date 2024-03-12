@@ -9,7 +9,8 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderInterface;
-use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
 
 class ArticlesSearchResultsProvider extends SearchResultsProvider implements ArticlesSearchResultsProviderInterface
@@ -17,10 +18,12 @@ class ArticlesSearchResultsProvider extends SearchResultsProvider implements Art
     /**
      * @param string $enabledDomainIds
      * @param \Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
      */
     public function __construct(
         string $enabledDomainIds,
         protected readonly DataLoaderInterface $luigisBoxBatchLoader,
+        protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
     ) {
         parent::__construct($enabledDomainIds);
     }
@@ -33,9 +36,11 @@ class ArticlesSearchResultsProvider extends SearchResultsProvider implements Art
         Argument $argument,
     ): Promise|array {
         return $this->luigisBoxBatchLoader->load(
-            new LuigisBoxBatchLoadData(
-                'article',
+            $this->luigisBoxBatchLoadDataFactory->create(
+                LuigisBoxClient::TYPE_IN_LUIGIS_BOX_ARTICLE,
                 ArticlesSearchQuery::ARTICLE_SEARCH_LIMIT,
+                0,
+                $argument,
             ),
         );
     }
