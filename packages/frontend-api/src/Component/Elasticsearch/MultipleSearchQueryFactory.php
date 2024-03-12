@@ -29,15 +29,20 @@ class MultipleSearchQueryFactory
         return new MultipleSearchQuery($this->getIndexAlias($indexName), $filterQueries);
     }
 
+    public function createForDomain(string $indexName, array $filterQueries, int $domainId): MultipleSearchQuery
+    {
+        return new MultipleSearchQuery($this->getIndexAlias($indexName, $domainId), $filterQueries);
+    }
+
     /**
      * @param string $indexName
      * @return string
      */
-    protected function getIndexAlias(string $indexName): string
+    protected function getIndexAlias(string $indexName, ?int $domainId = null): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
             $indexName,
-            $this->domain->getId(),
+            $domainId ?? $this->domain->getId(),
         )->getIndexAlias();
     }
 }

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScope
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchProvider;
 
 class ProductRecalculationFacade
 {
@@ -25,7 +26,7 @@ class ProductRecalculationFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationRepository $productRecalculationRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade $productExportScopeConfigFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchProvider $productElasticsearchBatchProvider
      */
     public function __construct(
         protected readonly IndexFacade $indexFacade,
@@ -36,7 +37,7 @@ class ProductRecalculationFacade
         protected readonly ProductRecalculationRepository $productRecalculationRepository,
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ProductExportScopeConfigFacade $productExportScopeConfigFacade,
-        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
+        protected readonly ProductElasticsearchBatchProvider $productElasticsearchBatchProvider,
     ) {
     }
 
@@ -58,6 +59,7 @@ class ProductRecalculationFacade
      */
     protected function recalculateWithScope(array $productIds, array $exportScopes): void
     {
+        d(['recalculateWithScope', $productIds]);
         $shouldRecalculateVisibility = $this->productExportScopeConfigFacade->shouldRecalculateVisibility($exportScopes);
 
         if ($shouldRecalculateVisibility) {
@@ -73,11 +75,9 @@ class ProductRecalculationFacade
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            foreach ($productIds as $productId) {
-                if ($shouldRecalculateVisibility && $this->productElasticsearchProvider->existsProduct($productId, $domainId) === false) {
-                    $fields = [];
-                }
-            }
+            d('before getBatchExistsByProductIds');
+            $existsByProductIds = $this->productElasticsearchBatchProvider->getBatchExistsByProductIds([1,2,3,85,34], $domainId);
+            d($existsByProductIds);
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
                 $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),

@@ -47,4 +47,24 @@ class ProductElasticsearchBatchProvider
 
         return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
     }
+
+    /**
+     * @param array $productIds
+     * @param int $domainId
+     * @return array<int, bool>
+     */
+    public function getBatchExistsByProductIds(array $productIds, int $domainId): array
+    {
+        $filterQueries = [];
+        foreach ($productIds as $productId) {
+            $filterQueries[$productId] = $this->filterQueryFactory->createExistsProductFilterQuery($productId, $domainId);
+        }
+d($filterQueries);
+        $batchExists = [];
+        foreach($this->productElasticsearchBatchRepository->getBatchedTotalsByFilterQueries($filterQueries, $domainId) as $key => $total) {
+            $batchExists[$key] = $total > 0;
+        }
+
+        return $batchExists;
+    }
 }

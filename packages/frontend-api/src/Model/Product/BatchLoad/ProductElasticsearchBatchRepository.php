@@ -50,4 +50,23 @@ class ProductElasticsearchBatchRepository
             self::TOTALS_KEY => $totals,
         ];
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
+     * @return int[]
+     */
+    public function getBatchedTotalsByFilterQueries(array $filterQueries, int $domainId): array
+    {
+        $mSearchQuery = $this->multipleSearchQueryFactory->createForDomain(ProductIndex::getName(), $filterQueries, $domainId);
+        $result = $this->client->msearch($mSearchQuery->getQuery());
+d(['msearchresult', $result]);
+        $keys = array_keys($filterQueries);
+        $totals = [];
+
+        foreach ($result['responses'] as $index => $response) {
+            $totals[$keys[$index]] = $this->productElasticsearchRepository->extractTotalCount($response);
+        }
+
+        return $totals;
+    }
 }
