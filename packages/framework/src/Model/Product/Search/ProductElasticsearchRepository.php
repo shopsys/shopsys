@@ -193,16 +193,32 @@ class ProductElasticsearchRepository implements ResetInterface
     }
 
     /**
-     * @param int $productId
+     * @param array $productIds
      * @param int $domainId
-     * @return bool
+     * @return int[]
      */
-    public function existsProduct(int $productId, int $domainId): bool
+    public function getOnlyExistingProductIds(array $productIds, int $domainId): array
     {
-        $filterQuery = $this->filterQueryFactory->createExistsProductFilterQuery($productId, $domainId);
+        $filterQuery = $this->filterQueryFactory->createOnlyExistingProductIdsFilterQuery($productIds, $domainId);
         $result = $this->client->search($filterQuery->getQuery());
 
-        return $this->extractTotalCount($result) > 0;
+        return $this->extractIdsFromFields($result);
+    }
+
+    /**
+     * @param array $result
+     * @return int[]
+     */
+    protected function extractIdsFromFields(array $result): array
+    {
+        $ids = [];
+        foreach ($result['hits']['hits'] as $hit) {
+            foreach ($hit['fields']['id'] as $id) {
+                $ids[] = $id;
+            }
+        }
+
+        return $ids;
     }
 
     public function reset(): void

@@ -78,12 +78,12 @@ class ProductElasticsearchProvider
     }
 
     /**
-     * @param int $productId
+     * @param array $productIds
      * @param int $domainId
-     * @return bool
+     * @return int[]
      */
-    public function existsProduct(int $productId, int $domainId): bool
+    public function getOnlyExistingProductsIds(array $productIds, int $domainId): array
     {
-        return $this->productElasticsearchRepository->existsProduct($productId, $domainId);
+        return $this->productElasticsearchRepository->getOnlyExistingProductIds($productIds, $domainId);
     }
 }

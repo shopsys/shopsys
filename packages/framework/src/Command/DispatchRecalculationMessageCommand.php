@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnumInterface;
@@ -25,6 +26,7 @@ class DispatchRecalculationMessageCommand extends Command
      */
     public function __construct(
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
     ) {
         parent::__construct();
     }
@@ -139,6 +141,8 @@ class DispatchRecalculationMessageCommand extends Command
             return Command::FAILURE;
         }
 
+        $this->productElasticsearchProvider->getOnlyExistingProductsIds($productIds, 1);
+        return Command::SUCCESS;
         $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, $scopes);
         $symfonyStyle->success([
             'Dispatched message for IDs', implode(', ', $dispatchedProductIds),

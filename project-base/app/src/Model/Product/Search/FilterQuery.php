@@ -24,7 +24,7 @@ use stdClass;
  * @method \App\Model\Product\Search\FilterQuery filterByProductIds(int[] $productIds)
  * @method \App\Model\Product\Search\FilterQuery filterByProductUuids(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery filterOutVariants()
- * @method \App\Model\Product\Search\FilterQuery getExistsProductFilterQuery(int $productId)
+ * @method \App\Model\Product\Search\FilterQuery getExistingProductsIdsFilterQuery(int $productIds)
  */
 class FilterQuery extends BaseFilterQuery
 {

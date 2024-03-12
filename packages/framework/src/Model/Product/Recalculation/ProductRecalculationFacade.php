@@ -73,17 +73,22 @@ class ProductRecalculationFacade
         $fields = $this->productExportScopeConfigFacade->getExportFieldsByScopes($exportScopes);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            foreach ($productIds as $productId) {
-                if ($shouldRecalculateVisibility && $this->productElasticsearchProvider->existsProduct($productId, $domainId) === false) {
-                    $fields = [];
-                }
-            }
+            $existingProductIds = $this->productElasticsearchProvider->getOnlyExistingProductsIds($productIds, $domainId);
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
                 $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
-                $productIds,
+                $existingProductIds,
                 $fields,
             );
+
+            if ($shouldRecalculateVisibility) {
+                $nonExistingProductIds = array_diff($productIds, $existingProductIds);
+                $this->indexFacade->exportIds(
+                    $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
+                    $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
+                    $nonExistingProductIds,
+                );
+            }
         }
     }
 }
