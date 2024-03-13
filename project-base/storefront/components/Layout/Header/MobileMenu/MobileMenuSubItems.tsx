@@ -1,4 +1,3 @@
-import { DropdownMenuContext } from './DropdownMenuContext';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
@@ -7,10 +6,13 @@ import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
-import { useContext } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
-export const SubMenu: FC = () => {
+type SubMenuProps = {
+    onNavigate: () => void;
+};
+
+export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -23,53 +25,58 @@ export const SubMenu: FC = () => {
     const { wishlist } = useWishlist();
 
     return (
-        <div className="mt-5 flex flex-col">
-            <SubMenuItem href={storesUrl} type="stores">
+        <div className="flex flex-col mt-auto">
+            <SubMenuItem href={storesUrl} type="stores" onClick={onNavigate}>
                 {t('Stores')}
             </SubMenuItem>
-            <SubMenuItem href={productComparisonUrl} type="comparison">
+
+            <SubMenuItem href={productComparisonUrl} type="comparison" onClick={onNavigate}>
                 {t('Comparison')}
                 {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
             </SubMenuItem>
-            <SubMenuItem href={wishlistUrl} type="wishlist">
+
+            <SubMenuItem href={wishlistUrl} type="wishlist" onClick={onNavigate}>
                 {t('Wishlist')}
                 {!!wishlist?.products.length && <span>&nbsp;({wishlist.products.length})</span>}
             </SubMenuItem>
 
             {isUserLoggedIn ? (
-                <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
+                <SubMenuItem
+                    onClick={() => {
+                        onNavigate();
+                        logout();
+                    }}
+                >
+                    {t('Logout')}
+                </SubMenuItem>
             ) : (
-                <SubMenuItem href={loginUrl}>{t('Sign in')}</SubMenuItem>
+                <SubMenuItem href={loginUrl} onClick={onNavigate}>
+                    {t('Sign in')}
+                </SubMenuItem>
             )}
         </div>
     );
 };
 
 type SubMenuItemProps = {
-    onClick?: () => void;
     href?: string;
     type?: PageType;
+    onClick: () => void;
 };
 
-const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) => {
-    const { onMenuToggleHandler } = useContext(DropdownMenuContext);
+const subMenuItemTwClass = 'py-3 text-sm text-dark no-underline';
 
+const SubMenuItem: FC<SubMenuItemProps> = ({ children, onClick, href, type }) => {
     if (href) {
         return (
-            <ExtendedNextLink
-                passHref
-                className="mb-5 px-8 text-sm text-dark no-underline"
-                href={href}
-                type={type}
-                onClick={onMenuToggleHandler}
-            >
+            <ExtendedNextLink passHref className={subMenuItemTwClass} href={href} type={type} onClick={onClick}>
                 {children}
             </ExtendedNextLink>
         );
     }
 
     return (
-        <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick}>
+        <a className={subMenuItemTwClass} onClick={onClick}>
             {children}
         </a>
     );

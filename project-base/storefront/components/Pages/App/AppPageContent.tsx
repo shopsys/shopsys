@@ -73,7 +73,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <GtmHeadScript />
             <Fonts />
 
-            <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
+            <div id="portal" />
 
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
 

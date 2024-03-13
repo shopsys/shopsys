@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 export const Portal: FC = ({ children }) => {
     const portalElementRef = useRef(document.getElementById('portal'));
 
-    if (portalElementRef.current === null) {
+    if (!portalElementRef.current) {
         return null;
     }
 

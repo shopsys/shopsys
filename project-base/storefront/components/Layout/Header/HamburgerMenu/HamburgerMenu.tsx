@@ -1,28 +1,25 @@
-import { HamburgerIcon } from './HamburgerIcon';
+import { MenuIcon } from 'components/Basic/Icon/IconsSvg';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type HamburgerMenuProps = {
-    isMenuOpened: boolean;
-    onMenuToggleHandler: MouseEventHandler<HTMLDivElement>;
+    onClick: MouseEventHandler<HTMLDivElement>;
 };
 
-export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
+export const HamburgerMenu: FC<HamburgerMenuProps> = ({ onClick }) => {
     const { t } = useTranslation();
 
     return (
         <div
-            className={twJoin(
-                'flex h-10 w-full cursor-pointer items-center rounded bg-orangeLight p-3',
-                isMenuOpened && 'z-aboveMobileMenu',
-            )}
-            onClick={onMenuToggleHandler}
+            className={twJoin('flex h-10 w-full cursor-pointer items-center rounded bg-orangeLight p-3')}
+            onClick={onClick}
         >
             <div className="flex w-4 items-center justify-center">
-                <HamburgerIcon isMenuOpened={isMenuOpened} />
+                <MenuIcon className="w-4" />
             </div>
-            <span className="ml-1 w-7 text-xs">{isMenuOpened ? t('Close') : t('Menu')}</span>
+
+            <span className="ml-1 w-7 text-xs">{t('Menu')}</span>
         </div>
     );
 };
