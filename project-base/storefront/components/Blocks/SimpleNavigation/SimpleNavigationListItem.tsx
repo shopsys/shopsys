@@ -1,3 +1,4 @@
+import { getLinkType } from './helpers';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
@@ -9,17 +10,18 @@ import { ListedItemPropType } from 'types/simpleNavigation';
 type SimpleNavigationListItemProps = {
     listedItem: ListedItemPropType;
     imageType?: string;
-    linkType: PageType;
+    linkTypeOverride?: PageType;
 };
 
 export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     listedItem,
-    linkType,
+    linkTypeOverride,
     tid,
     className,
 }) => {
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
     const href = getStringWithoutTrailingSlash(listedItem.slug) + '/';
+    const linkType = linkTypeOverride ?? getLinkType(listedItem.__typename);
 
     return (
         <li tid={tid}>

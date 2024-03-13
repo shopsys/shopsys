@@ -40,6 +40,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
         case 'productMainVariant':
             return <SkeletonPageProductDetailMainVariant />;
         case 'category':
+        case 'seo_category':
             return <SkeletonPageProductsList />;
         case 'brand':
         case 'flag':

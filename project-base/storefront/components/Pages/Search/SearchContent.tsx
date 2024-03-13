@@ -41,21 +41,21 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                         {!!searchResults.articlesSearch.length && (
                             <div className="mt-6">
                                 <div className="h3 mb-3">{t('Found articles')}</div>
-                                <SimpleNavigation linkType="blogArticle" listedItems={searchResults.articlesSearch} />
+                                <SimpleNavigation listedItems={searchResults.articlesSearch} />
                             </div>
                         )}
 
                         {!!searchResults.brandSearch.length && (
                             <div className="mt-6">
                                 <div className="h3 mb-3">{t('Found brands')}</div>
-                                <SimpleNavigation linkType="brand" listedItems={searchResults.brandSearch} />
+                                <SimpleNavigation listedItems={searchResults.brandSearch} />
                             </div>
                         )}
 
                         {!!mappedCategoriesSearchResults?.length && (
                             <div className="mt-6">
                                 <div className="h3 mb-3">{t('Found categories')}</div>
-                                <SimpleNavigation linkType="category" listedItems={mappedCategoriesSearchResults} />
+                                <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
                             </div>
                         )}
 

@@ -8,7 +8,7 @@ type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
     isWithoutSlider?: true;
     itemClassName?: string;
-    linkType: PageType;
+    linkTypeOverride?: PageType;
 };
 
 export const SimpleNavigation: FC<SimpleNavigationProps> = ({
@@ -16,7 +16,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
     isWithoutSlider,
     className,
     itemClassName,
-    linkType,
+    linkTypeOverride,
 }) => {
     return (
         <ul
@@ -31,7 +31,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
                 <SimpleNavigationListItem
                     key={index}
                     className={itemClassName}
-                    linkType={linkType}
+                    linkTypeOverride={linkTypeOverride}
                     listedItem={listedItem}
                     tid={TIDs.blocks_simplenavigation_ + index}
                 >

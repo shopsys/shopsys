@@ -1,5 +1,7 @@
 import { ImageFragmentApi } from 'graphql/generated';
 
+export type ListedItemPropTypeTypename = 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand' | 'Link';
+
 export type ListedItemPropType = (
     | {
           slug: string;
@@ -17,5 +19,5 @@ export type ListedItemPropType = (
           name: string;
       }
 ) & {
-    __typename?: 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand' | 'Link';
+    __typename?: ListedItemPropTypeTypename;
 };
