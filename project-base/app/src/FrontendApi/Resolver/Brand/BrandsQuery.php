@@ -9,13 +9,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade as BaseBrandFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery as BaseBrandsQuery;
 
-/**
- * @property \App\Model\Product\Brand\BrandFacade $brandFacade
- */
 class BrandsQuery extends BaseBrandsQuery
 {
     /**
-     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Brand\BrandFacade $apiBrandFacade
      */

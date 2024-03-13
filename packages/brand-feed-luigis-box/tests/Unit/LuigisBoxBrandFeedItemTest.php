@@ -43,7 +43,7 @@ class LuigisBoxBrandFeedItemTest extends TestCase
         $luigisBoxBrandFeedItemFactory = new LuigisBoxBrandFeedItemFactory($friendlyUrlFacadeMock, $imageFacadeMock);
         $luigisBoxBrandFeedItem = $luigisBoxBrandFeedItemFactory->create($brand, $defaultDomain);
 
-        $this->assertSame(LuigisBoxBrandFeedItem::UNIQUE_IDENTIFIER_PREFIX . self::BRAND_ID, $luigisBoxBrandFeedItem->getIdentity());
+        $this->assertSame(LuigisBoxBrandFeedItem::UNIQUE_BRAND_IDENTIFIER_PREFIX . '-' . self::BRAND_ID, $luigisBoxBrandFeedItem->getIdentity());
         $this->assertSame(self::BRAND_NAME, $luigisBoxBrandFeedItem->getName());
         $this->assertSame(self::BRAND_URL, $luigisBoxBrandFeedItem->getUrl());
         $this->assertSame(self::BRAND_IMAGE_URL . '?width=100&height=100', $luigisBoxBrandFeedItem->getImageUrl());

@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product\Connection;
 
 use Closure;
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
+use Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory;
 
@@ -44,12 +46,39 @@ class ProductConnectionFactory
         $paginator = new Paginator($retrieveProductClosure);
         $connection = $paginator->auto($argument, $countOfProducts);
 
-        return new ProductConnection(
+        return $this->createConnectionWithoutPaginator(
             $connection->getEdges(),
             $connection->getPageInfo(),
             $getProductFilterConfigClosure,
             $orderingMode,
             $connection->getTotalCount(),
+        );
+    }
+
+    /**
+     * @param array $edges
+     * @param \Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface|null $pageInfo
+     * @param \Closure $getProductFilterConfigClosure
+     * @param string|null $orderingMode
+     * @param int|\GraphQL\Executor\Promise\Promise|null $totalCount
+     * @param string $defaultOrderingMode
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
+     */
+    public function createConnectionWithoutPaginator(
+        array $edges,
+        ?PageInfoInterface $pageInfo,
+        Closure $getProductFilterConfigClosure,
+        ?string $orderingMode,
+        int|Promise|null $totalCount,
+        string $defaultOrderingMode = ProductListOrderingConfig::ORDER_BY_PRIORITY,
+    ): ProductConnection {
+        return new ProductConnection(
+            $edges,
+            $pageInfo,
+            $getProductFilterConfigClosure,
+            $orderingMode,
+            $totalCount,
+            $defaultOrderingMode,
         );
     }
 
@@ -143,46 +172,11 @@ class ProductConnectionFactory
     }
 
     /**
-     * @param array $products
-     * @param string $search
-     * @param int $offset
-     * @param int $limit
-     * @param int $countOfProducts
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string|null $orderingMode
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
-     */
-    public function createConnectionForSearchFromArray(
-        array $products,
-        string $search,
-        int $offset,
-        int $limit,
-        int $countOfProducts,
-        ProductFilterData $productFilterData,
-        ?string $orderingMode = null,
-    ): ProductConnection {
-        $connectionBuilder = new ConnectionBuilder();
-        $connection = $connectionBuilder->connectionFromArray($products);
-
-        $pageInfo = $connection->getPageInfo();
-        $pageInfo->setHasPreviousPage($offset > 0);
-        $pageInfo->setHasNextPage($offset + $limit < $countOfProducts);
-
-        return new ProductConnection(
-            $connection->getEdges(),
-            $pageInfo,
-            $this->getProductFilterOptionsClosure($productFilterData, $search),
-            $orderingMode,
-            $countOfProducts,
-        );
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param mixed $searchText
      * @return \Closure
      */
-    protected function getProductFilterOptionsClosure(ProductFilterData $productFilterData, mixed $searchText): Closure
+    public function getProductFilterOptionsClosure(ProductFilterData $productFilterData, mixed $searchText): Closure
     {
         return function () use ($productFilterData, $searchText) {
             if ($searchText === '') {

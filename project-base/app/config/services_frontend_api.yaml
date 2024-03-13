@@ -92,10 +92,6 @@ services:
         alias: App\FrontendApi\Resolver\Transport\TransportsQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchQuery:
-        alias: App\FrontendApi\Resolver\Category\CategoriesSearchQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery:
         alias: App\FrontendApi\Resolver\Order\OrdersQuery
         public: true
