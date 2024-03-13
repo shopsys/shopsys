@@ -65,6 +65,7 @@ class LuigisBoxBatchLoader
         $page = $mainBatchLoadData->getPage();
         $productFilter = $mainBatchLoadData->getFilter();
         $productOrderingMode = $mainBatchLoadData->getOrderingMode();
+        $userIdentifier = $mainBatchLoadData->getUserIdentifier();
         $limitsByType = [];
 
         foreach ($luigisBoxBatchLoadData as $luigisBoxBatchLoadDataItem) {
@@ -72,7 +73,7 @@ class LuigisBoxBatchLoader
         }
 
         return $this->promiseAdapter->all($this->mapDataByTypes(
-            $this->luigisBoxClient->getData($query, $endpoint, $page, $limitsByType, $productFilter, $productOrderingMode),
+            $this->luigisBoxClient->getData($query, $endpoint, $page, $limitsByType, $productFilter, $userIdentifier, $productOrderingMode),
             $limitsByType,
         ));
     }

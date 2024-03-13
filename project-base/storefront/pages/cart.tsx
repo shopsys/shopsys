@@ -6,6 +6,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CartList } from 'components/Pages/Cart/CartList/CartList';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { CartSummary } from 'components/Pages/Cart/CartSummary';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
@@ -15,7 +16,6 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 
 const CartPage: FC<ServerSidePropsType> = () => {

@@ -1,8 +1,8 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductDetailViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useEffect, useRef } from 'react';
 
 export const useGtmProductDetailViewEvent = (

@@ -1,5 +1,6 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     BreadcrumbFragmentApi,
     CurrentCustomerUserQueryApi,
@@ -11,7 +12,6 @@ import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { createClient } from 'urql/createClient';
 

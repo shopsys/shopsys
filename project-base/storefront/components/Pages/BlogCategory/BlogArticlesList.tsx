@@ -1,8 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedBlogArticleFragmentApi } from 'graphql/generated';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Fragment } from 'react';
 
 type BlogArticlesListProps = {

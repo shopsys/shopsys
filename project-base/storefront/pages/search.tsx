@@ -1,49 +1,36 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BreadcrumbFragmentApi,
-    SearchProductsQueryDocumentApi,
     SearchProductsQueryVariablesApi,
-    SearchQueryDocumentApi,
     SearchQueryVariablesApi,
     useSearchQueryApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
-import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getStringFromUrlQuery,
-} from 'helpers/parsing/urlParsing';
-import {
-    FILTER_QUERY_PARAMETER_NAME,
-    LOAD_MORE_QUERY_PARAMETER_NAME,
-    PAGE_QUERY_PARAMETER_NAME,
-    SEARCH_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
+import { getNumberFromUrlQuery, getSlugFromServerSideUrl } from 'helpers/parsing/urlParsing';
+import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
+import { usePersistStore } from 'store/usePersistStore';
 
-const SearchPage: FC<ServerSidePropsType> = ({ cookies }) => {
+const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { sort, filter, searchString, currentLoadMore } = useQueryParams();
+    const userIdentifier = usePersistStore((state) => state.userId)!;
 
     const [{ data: searchData, fetching }] = useSearchQueryApi({
         variables: {
@@ -52,6 +39,7 @@ const SearchPage: FC<ServerSidePropsType> = ({ cookies }) => {
             filter: mapParametersFilter(filter),
             pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
             isAutocomplete: false,
+            userIdentifier,
         },
         pause: !searchString,
     });
@@ -77,7 +65,7 @@ const SearchPage: FC<ServerSidePropsType> = ({ cookies }) => {
                         </div>
                     )}
                 </Webline>
-                <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+                <LastVisitedProducts />
             </CommonLayout>
         </>
     );
@@ -93,37 +81,8 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         return redirect;
     }
 
-    const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
-    const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
-    const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
-
     return initServerSideProps<SearchQueryVariablesApi | SearchProductsQueryVariablesApi>({
         context,
-        prefetchedQueries: !search
-            ? []
-            : [
-                  {
-                      query: SearchQueryDocumentApi,
-                      variables: {
-                          search,
-                          orderingMode,
-                          filter,
-                          pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                          isAutocomplete: false,
-                      },
-                  },
-                  {
-                      query: SearchProductsQueryDocumentApi,
-                      variables: {
-                          search,
-                          orderingMode,
-                          filter,
-                          endCursor: getEndCursor(page),
-                          pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                          isAutocomplete: false,
-                      },
-                  },
-              ],
         redisClient,
         domainConfig,
         t,

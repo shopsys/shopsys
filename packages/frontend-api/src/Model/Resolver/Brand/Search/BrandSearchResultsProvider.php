@@ -28,7 +28,7 @@ class BrandSearchResultsProvider implements BrandSearchResultsProviderInterface
     public function getBrandSearchResults(
         Argument $argument,
     ): Promise|array {
-        $searchText = $argument['search'] ?? '';
+        $searchText = $argument['searchInput']['search'] ?? '';
 
         return $this->brandFacade->getBrandsBySearchText($searchText);
     }

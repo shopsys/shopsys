@@ -13,6 +13,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { calculatePageSize, getPageSizeInfo, hasReadAllProductsFromCache, mergeProductEdges } from 'helpers/loadMore';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRef, useState, useEffect } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 import { useClient, Client } from 'urql';
 
 export const useSearchProductsData = (
@@ -26,6 +27,8 @@ export const useSearchProductsData = (
     const previousPageRef = useRef(currentPage);
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
 
+    const userIdentifier = usePersistStore((store) => store.userId)!;
+
     const [searchProductsData, setSearchProductsData] = useState(
         readSearchProductsFromCache(
             client,
@@ -34,6 +37,7 @@ export const useSearchProductsData = (
             mappedFilter,
             getEndCursor(currentPage),
             initialPageSizeRef.current,
+            userIdentifier,
         ),
     );
 
@@ -89,6 +93,7 @@ export const useSearchProductsData = (
             DEFAULT_PAGE_SIZE,
             currentPage,
             currentLoadMore,
+            userIdentifier,
         );
 
         if (
@@ -114,6 +119,7 @@ export const useSearchProductsData = (
                 search: searchString ?? '',
                 pageSize,
                 isAutocomplete: false,
+                userIdentifier,
             },
             previousProductsFromCache,
         );
@@ -129,6 +135,7 @@ const readSearchProductsFromCache = (
     filter: Maybe<ProductFilterApi>,
     endCursor: string,
     pageSize: number,
+    userIdentifier: string,
 ): {
     products: ListedProductConnectionFragmentApi['edges'] | undefined;
     hasNextPage: boolean;
@@ -142,6 +149,7 @@ const readSearchProductsFromCache = (
             endCursor,
             pageSize,
             isAutocomplete: false,
+            userIdentifier,
         },
     )?.data?.productsSearch;
 
@@ -159,6 +167,7 @@ const getPreviousProductsFromCache = (
     pageSize: number,
     currentPage: number,
     currentLoadMore: number,
+    userIdentifier: string,
 ) => {
     let cachedPartOfProducts: ListedProductConnectionFragmentApi['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
@@ -172,6 +181,7 @@ const getPreviousProductsFromCache = (
             filter,
             offsetEndCursor,
             pageSize,
+            userIdentifier,
         ).products;
 
         if (currentCacheSlice) {

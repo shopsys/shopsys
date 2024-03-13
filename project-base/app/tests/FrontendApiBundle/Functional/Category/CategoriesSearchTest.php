@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -11,9 +12,11 @@ class CategoriesSearchTest extends GraphQlTestCase
 {
     public function testSearch(): void
     {
+        $userIdentifier = Uuid::uuid4()->toString();
+
         $query = '
             query {
-                categoriesSearch(search: "audio") {
+                categoriesSearch(searchInput: { search: "audio", userIdentifier: "' . $userIdentifier . '" }) {
                     edges {
                         node {
                             name
@@ -31,9 +34,11 @@ class CategoriesSearchTest extends GraphQlTestCase
 
     public function testSearchWithFirstProduct(): void
     {
+        $userIdentifier = Uuid::uuid4()->toString();
+
         $query = '            
             query {
-                categoriesSearch(first: 1, search: "a") {
+                categoriesSearch(first: 1, searchInput: { search: "a", userIdentifier: "' . $userIdentifier . '" }) {
                     edges {
                         node {
                             name
@@ -51,9 +56,11 @@ class CategoriesSearchTest extends GraphQlTestCase
 
     public function testSearchWithLastCategory(): void
     {
+        $userIdentifier = Uuid::uuid4()->toString();
+
         $query = '            
             query {
-                categoriesSearch(last: 1, search: "' . t('audio', [], Translator::TESTS_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '") {
+                categoriesSearch(last: 1, searchInput: { search: "' . t('audio', [], Translator::TESTS_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '", userIdentifier: "' . $userIdentifier . '"}) {
                     edges {
                         node {
                             name

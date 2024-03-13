@@ -1,14 +1,14 @@
-query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $isAutocomplete: Boolean!) {
-    articlesSearch(search: $search) {
+query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
+    articlesSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
         ...SimpleArticleInterfaceFragment
     }
-    brandSearch(search: $search) {
+    brandSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
         ...ListedBrandFragment
     }
-    categoriesSearch(search: $search) {
+    categoriesSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
         ...ListedCategoryConnectionFragment
     }
-    productsSearch: productsSearch(search: $search, orderingMode: $orderingMode, filter: $filter, first: $pageSize, isAutocomplete: $isAutocomplete) {
+    productsSearch: productsSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
         ...ListedProductConnectionPreviewFragment
     }
 }

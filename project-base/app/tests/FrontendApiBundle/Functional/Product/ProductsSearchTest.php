@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ProductsSearchTest extends ProductsGraphQlTestCase
@@ -11,9 +12,11 @@ class ProductsSearchTest extends ProductsGraphQlTestCase
     public function testSearchInAllProducts(): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
+        $userIdentifier = Uuid::uuid4()->toString();
+
         $query = '
             query {
-                productsSearch (first: 5, search: "' . t('book', [], Translator::TESTS_TRANSLATION_DOMAIN, $firstDomainLocale) . '", isAutocomplete: false) {
+                productsSearch (first: 5, searchInput: { search: "' . t('book', [], Translator::TESTS_TRANSLATION_DOMAIN, $firstDomainLocale) . '", isAutocomplete: false, userIdentifier: "' . $userIdentifier . '"}) {
                     edges {
                         node {
                             name

@@ -9,6 +9,7 @@ import {
     useContactInformationForm,
     useContactInformationFormMeta,
 } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateOrderMutationApi } from 'graphql/generated';
@@ -31,7 +32,6 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/ini
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

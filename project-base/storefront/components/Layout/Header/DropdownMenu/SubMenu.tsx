@@ -1,11 +1,11 @@
 import { DropdownMenuContext } from './DropdownMenuContext';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useContext } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';

@@ -1,8 +1,8 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { HreflangLinkApi } from 'graphql/generated';
 import logMessage from 'helpers/errors/logMessage';
 import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import useSeo from 'hooks/seo/useSeo';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

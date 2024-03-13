@@ -1689,7 +1689,7 @@ type Query {
   ): ArticleConnection!
   ArticleSite: ArticleSite
   "Returns list of searched articles and blog articles"
-  articlesSearch(search: String!): [ArticleInterface!]!
+  articlesSearch(searchInput: SearchInput!): [ArticleInterface!]!
   "Returns blog article filtered using UUID or URL slug"
   blogArticle(urlSlug: String, uuid: Uuid): BlogArticle
   "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
@@ -1703,13 +1703,13 @@ type Query {
   "Returns complete list of brands"
   brands: [Brand!]!
   "Returns list of searched brands"
-  brandSearch(search: String!): [Brand!]!
+  brandSearch(searchInput: SearchInput!): [Brand!]!
   "Return cart of logged customer or cart by UUID for anonymous user"
   cart(cartInput: CartInput): Cart
   "Returns complete list of categories"
   categories: [Category!]!
   "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
-  categoriesSearch(after: String, before: String, first: Int, last: Int, search: String!): CategoryConnection!
+  categoriesSearch(after: String, before: String, first: Int, last: Int, searchInput: SearchInput!): CategoryConnection!
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
@@ -1772,7 +1772,7 @@ type Query {
     catnums: [String!]!
   ): [Product!]!
   "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
-  productsSearch(after: String, before: String, filter: ProductFilter, first: Int, isAutocomplete: Boolean!, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
+  productsSearch(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String, searchInput: SearchInput!): ProductConnection!
   "Returns promoted categories"
   promotedCategories: [Category!]!
   "Returns promoted products"
@@ -1963,6 +1963,14 @@ input RemovePromoCodeFromCartInput {
   cartUuid: Uuid = null
   "Promo code to be removed"
   promoCode: String!
+}
+
+"Represents search input object"
+input SearchInput {
+  isAutocomplete: Boolean! = false
+  search: String!
+  "Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/)"
+  userIdentifier: Uuid!
 }
 
 "Represents SEO settings for specific page"

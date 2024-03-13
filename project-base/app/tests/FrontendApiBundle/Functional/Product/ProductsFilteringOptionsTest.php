@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -642,8 +643,10 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetProductFilterOptionsForSencorSearch()
     {
+        $userIdentifier = Uuid::uuid4()->toString();
+
         $query = 'query {
-          productsSearch (search: "sencor", isAutocomplete: false) {
+          productsSearch (searchInput: { search: "sencor", isAutocomplete: false, userIdentifier: "' . $userIdentifier . '"}) {
             productFilterOptions {
               minimalPrice
               maximalPrice

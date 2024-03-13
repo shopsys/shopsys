@@ -1,6 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     BreadcrumbFragmentApi,
     PersonalDataPageTextQueryDocumentApi,
@@ -12,7 +13,6 @@ import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 
 const PersonalDataOverviewPage: FC = () => {

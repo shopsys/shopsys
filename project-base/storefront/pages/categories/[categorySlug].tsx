@@ -36,7 +36,7 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';
 
-const CategoryDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const { filter } = useQueryParams();
     const { categoryData, isFetchingVisible } = useCategoryDetailData(filter);
 
@@ -64,7 +64,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
                 title={seoTitle}
             >
                 {!!categoryData && <CategoryDetailContent category={categoryData} />}
-                <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+                <LastVisitedProducts />
             </CommonLayout>
         </>
     );

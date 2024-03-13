@@ -1,6 +1,7 @@
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductComparison } from 'components/Pages/ProductComparison/ProductComparison';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
@@ -8,11 +9,10 @@ import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 
-const ProductComparisonPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const ProductComparisonPage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
@@ -26,7 +26,7 @@ const ProductComparisonPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Product comparison')}>
             <ProductComparison />
 
-            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+            <LastVisitedProducts />
         </CommonLayout>
     );
 };

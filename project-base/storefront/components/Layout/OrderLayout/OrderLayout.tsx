@@ -6,7 +6,7 @@ import { Footer } from 'components/Layout/Footer/Footer';
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 
 type OrderLayoutProps = {

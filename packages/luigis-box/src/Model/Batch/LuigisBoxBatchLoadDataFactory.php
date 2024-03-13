@@ -37,9 +37,10 @@ class LuigisBoxBatchLoadDataFactory
             $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->mapOnlyType($type);
         }
 
-        $search = $argument['search'] ?? '';
+        $search = $argument['searchInput']['search'] ?? '';
         $orderingMode = $argument['orderingMode'];
-        $endpoint = $argument['isAutocomplete'] === true ? LuigisBoxClient::ACTION_AUTOCOMPLETE : LuigisBoxClient::ACTION_SEARCH;
+        $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxClient::ACTION_AUTOCOMPLETE : LuigisBoxClient::ACTION_SEARCH;
+        $userIdentifier = $argument['searchInput']['userIdentifier'];
 
         return new LuigisBoxBatchLoadData(
             $type,
@@ -48,6 +49,7 @@ class LuigisBoxBatchLoadDataFactory
             $endpoint,
             $page,
             $luigisBoxFilter,
+            $userIdentifier,
             $orderingMode,
         );
     }

@@ -30,7 +30,7 @@ class CategoriesSearchResultsProvider implements CategoriesSearchResultsProvider
     public function getCategoriesSearchResults(
         Argument $argument,
     ): Promise|ConnectionInterface {
-        $searchText = $argument['search'] ?? '';
+        $searchText = $argument['searchInput']['search'] ?? '';
 
         $paginator = new Paginator(function ($offset, $limit) use ($searchText) {
             return $this->categoryFacade->getVisibleCategoriesBySearchText(

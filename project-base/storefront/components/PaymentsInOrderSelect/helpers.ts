@@ -1,8 +1,8 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useChangePaymentInOrderMutationApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 

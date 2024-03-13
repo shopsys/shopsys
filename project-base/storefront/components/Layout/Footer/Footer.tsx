@@ -2,8 +2,8 @@ import { FooterBoxInfo } from './FooterBoxInfo';
 import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 
 type FooterProps = {

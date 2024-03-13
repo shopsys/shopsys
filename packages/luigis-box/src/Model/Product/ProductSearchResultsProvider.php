@@ -57,7 +57,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         Argument $argument,
         ProductFilterData $productFilterData,
     ): Promise {
-        $search = $argument['search'] ?? '';
+        $search = $argument['searchInput']['search'] ?? '';
         $orderingMode = $argument['orderingMode'];
         $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT, $productFilterData, $this->domain);
 
