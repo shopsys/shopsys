@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory as BaseOrderIt
  * @method \App\Model\Order\Item\OrderItemData create()
  * @method addFieldsByOrderItemType(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method bool isUsingPriceCalculation(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
+ * @method \App\Model\Order\Item\OrderItemData createFromOrderItem(\App\Model\Order\Item\OrderItem $orderItem)
  */
 class OrderItemDataFactory extends BaseOrderItemDataFactory
 {
@@ -24,23 +25,10 @@ class OrderItemDataFactory extends BaseOrderItemDataFactory
     }
 
     /**
-     * @param \App\Model\Order\Item\OrderItem $orderItem
-     * @return \App\Model\Order\Item\OrderItemData
-     */
-    public function createFromOrderItem(BaseOrderItem $orderItem): BaseOrderItemData
-    {
-        $orderItemData = new OrderItemData();
-        $this->fillFromOrderItem($orderItemData, $orderItem);
-        $this->addFieldsByOrderItemType($orderItemData, $orderItem);
-
-        return $orderItemData;
-    }
-
-    /**
      * @param \App\Model\Order\Item\OrderItemData $orderItemData
      * @param \App\Model\Order\Item\OrderItem $orderItem
      */
-    protected function fillFromOrderItem(BaseOrderItemData $orderItemData, BaseOrderItem $orderItem)
+    protected function fillFromOrderItem(BaseOrderItemData $orderItemData, BaseOrderItem $orderItem): void
     {
         parent::fillFromOrderItem($orderItemData, $orderItem);
 

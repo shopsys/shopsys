@@ -23,9 +23,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem
 {
-    public const TYPE_PAYMENT = 'payment';
-    public const TYPE_PRODUCT = 'product';
-    public const TYPE_TRANSPORT = 'transport';
+    public const string TYPE_PAYMENT = 'payment';
+    public const string TYPE_PRODUCT = 'product';
+    public const string TYPE_TRANSPORT = 'transport';
+    public const string TYPE_DISCOUNT = 'discount';
+    public const string TYPE_ROUNDING = 'rounding';
 
     /**
      * @var int|null
@@ -142,13 +144,13 @@ class OrderItem
      */
     public function __construct(
         Order $order,
-        $name,
+        string $name,
         Price $price,
-        $vatPercent,
-        $quantity,
-        $type,
-        $unitName,
-        $catnum,
+        string $vatPercent,
+        int $quantity,
+        string $type,
+        ?string $unitName,
+        ?string $catnum,
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
@@ -229,8 +231,8 @@ class OrderItem
      */
     public function setTotalPrice(?Price $totalPrice): void
     {
-        $this->totalPriceWithVat = $totalPrice !== null ? $totalPrice->getPriceWithVat() : null;
-        $this->totalPriceWithoutVat = $totalPrice !== null ? $totalPrice->getPriceWithoutVat() : null;
+        $this->totalPriceWithVat = $totalPrice?->getPriceWithVat();
+        $this->totalPriceWithoutVat = $totalPrice?->getPriceWithoutVat();
     }
 
     /**
@@ -379,11 +381,20 @@ class OrderItem
     }
 
     /**
+     * @param string $type
+     * @return bool
+     */
+    public function isType(string $type): bool
+    {
+        return $this->type === $type;
+    }
+
+    /**
      * @return bool
      */
     public function isTypeProduct(): bool
     {
-        return $this->type === self::TYPE_PRODUCT;
+        return $this->isType(self::TYPE_PRODUCT);
     }
 
     /**
@@ -391,7 +402,7 @@ class OrderItem
      */
     public function isTypePayment(): bool
     {
-        return $this->type === self::TYPE_PAYMENT;
+        return $this->isType(self::TYPE_PAYMENT);
     }
 
     /**
@@ -399,27 +410,57 @@ class OrderItem
      */
     public function isTypeTransport(): bool
     {
-        return $this->type === self::TYPE_TRANSPORT;
+        return $this->isType(self::TYPE_TRANSPORT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTypeDiscount(): bool
+    {
+        return $this->isType(self::TYPE_DISCOUNT);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTypeRounding(): bool
+    {
+        return $this->isType(self::TYPE_ROUNDING);
+    }
+
+    /**
+     * @param string $type
+     */
+    protected function checkTypeOf(string $type): void
+    {
+        if ($this->type !== $type) {
+            throw new WrongItemTypeException($type, $this->type);
+        }
     }
 
     protected function checkTypeTransport(): void
     {
-        if (!$this->isTypeTransport()) {
-            throw new WrongItemTypeException(self::TYPE_TRANSPORT, $this->type);
-        }
+        $this->checkTypeOf(self::TYPE_TRANSPORT);
     }
 
     protected function checkTypePayment(): void
     {
-        if (!$this->isTypePayment()) {
-            throw new WrongItemTypeException(self::TYPE_PAYMENT, $this->type);
-        }
+        $this->checkTypeOf(self::TYPE_PAYMENT);
     }
 
     protected function checkTypeProduct(): void
     {
-        if (!$this->isTypeProduct()) {
-            throw new WrongItemTypeException(self::TYPE_PRODUCT, $this->type);
-        }
+        $this->checkTypeOf(self::TYPE_PRODUCT);
+    }
+
+    protected function checkTypeDiscount(): void
+    {
+        $this->checkTypeOf(self::TYPE_DISCOUNT);
+    }
+
+    protected function checkTypeRounding(): void
+    {
+        $this->checkTypeOf(self::TYPE_DISCOUNT);
     }
 }

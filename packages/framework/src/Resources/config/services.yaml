@@ -660,9 +660,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory
-
     Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory
 
@@ -776,12 +773,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\OrderDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory

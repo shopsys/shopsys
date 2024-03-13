@@ -22,9 +22,10 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundExcepti
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AdminBaseController
@@ -38,7 +39,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade $orderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory $entityLogGridFactory
      */
@@ -51,7 +52,7 @@ class OrderController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly OrderItemFacade $orderItemFacade,
         protected readonly Domain $domain,
-        protected readonly OrderDataFactoryInterface $orderDataFactory,
+        protected readonly OrderDataFactory $orderDataFactory,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly EntityLogGridFactory $entityLogGridFactory,
     ) {
@@ -61,8 +62,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $order = $this->orderFacade->getById($id);
 
@@ -84,7 +86,7 @@ class OrderController extends AdminBaseController
                 );
 
                 return $this->redirectToRoute('admin_order_list');
-            } catch (CustomerUserNotFoundException $e) {
+            } catch (CustomerUserNotFoundException) {
                 $this->addErrorFlash(
                     t('Entered customer not found, please check entered data.'),
                 );
@@ -115,10 +117,11 @@ class OrderController extends AdminBaseController
      * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $orderId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addProductAction(Request $request, $orderId)
+    public function addProductAction(Request $request, int $orderId): Response
     {
-        $productId = $request->get('productId');
+        $productId = (int)$request->request->get('productId');
         $orderItem = $this->orderItemFacade->addProductToOrder($orderId, $productId);
 
         $order = $this->orderFacade->getById($orderId);
@@ -142,8 +145,9 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'orders';
 
@@ -223,7 +227,7 @@ class OrderController extends AdminBaseController
      * @param array $row
      * @return array
      */
-    protected function addOrderEntityToDataSource(array $row)
+    protected function addOrderEntityToDataSource(array $row): array
     {
         $row['order'] = $this->orderFacade->getById($row['id']);
 
@@ -234,8 +238,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $orderNumber = $this->orderFacade->getById($id)->getNumber();
@@ -248,7 +253,7 @@ class OrderController extends AdminBaseController
                     'number' => $orderNumber,
                 ],
             );
-        } catch (OrderNotFoundException $ex) {
+        } catch (OrderNotFoundException) {
             $this->addErrorFlash(t('Selected order doesn\'t exist.'));
         }
 
@@ -260,7 +265,7 @@ class OrderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getRuleFormAction(Request $request)
+    public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
             $request->get('filterName'),
@@ -275,8 +280,9 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewAction($id)
+    public function previewAction(int $id): Response
     {
         $order = $this->orderFacade->getById($id);
 

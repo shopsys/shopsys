@@ -12,7 +12,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as FrameworkOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -41,7 +41,7 @@ class OrderDataFactory extends BaseOrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
-        OrderDataFactoryInterface $orderDataFactory,
+        FrameworkOrderDataFactory $orderDataFactory,
         Domain $domain,
         PaymentFacade $paymentFacade,
         TransportFacade $transportFacade,

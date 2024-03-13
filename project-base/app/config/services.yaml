@@ -244,17 +244,11 @@ services:
     Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade:
         alias: App\Model\LegalConditions\LegalConditionsFacade
 
-    Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
-        alias: App\Model\Order\OrderDataFactory
-
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactory:
         alias: App\Model\Order\OrderDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory:
         alias: App\Model\Order\Item\OrderItemDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
-        alias: App\Model\Order\Item\OrderItemFactory
 
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory:
         alias: App\Model\Order\Item\OrderItemFactory

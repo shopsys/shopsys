@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -21,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
@@ -95,7 +96,7 @@ class OrderFacade
         protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly OrderItemFactoryInterface $orderItemFactory,
+        protected readonly OrderItemFactory $orderItemFactory,
         protected readonly PaymentTransactionFacade $paymentTransactionFacade,
         protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
@@ -110,8 +111,11 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null)
-    {
+    public function createOrder(
+        OrderData $orderData,
+        OrderPreview $orderPreview,
+        ?CustomerUser $customerUser = null,
+    ): Order {
         $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
 
@@ -163,7 +167,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function edit($orderId, OrderData $orderData)
+    public function edit(int $orderId, OrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
         $originalOrderStatus = $order->getStatus();
@@ -213,7 +217,7 @@ class OrderFacade
     /**
      * @param int $orderId
      */
-    public function deleteById($orderId)
+    public function deleteById(int $orderId): void
     {
         $order = $this->orderRepository->getById($orderId);
 
@@ -225,7 +229,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerUserOrderList(CustomerUser $customerUser)
+    public function getCustomerUserOrderList(CustomerUser $customerUser): array
     {
         return $this->orderRepository->getCustomerUserOrderList($customerUser);
     }
@@ -235,7 +239,7 @@ class OrderFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getOrderListForEmailByDomainId($email, $domainId)
+    public function getOrderListForEmailByDomainId(string $email, int $domainId): array
     {
         return $this->orderRepository->getOrderListForEmailByDomainId($email, $domainId);
     }
@@ -244,7 +248,7 @@ class OrderFacade
      * @param int $orderId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getById($orderId)
+    public function getById(int $orderId): Order
     {
         return $this->orderRepository->getById($orderId);
     }
@@ -263,7 +267,7 @@ class OrderFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByUrlHashAndDomain($urlHash, $domainId)
+    public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
@@ -273,7 +277,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser($orderNumber, CustomerUser $customerUser)
+    public function getByOrderNumberAndUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
@@ -282,7 +286,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
             $this->localization->getAdminLocale(),
@@ -293,14 +297,14 @@ class OrderFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function setOrderDataAdministrator(OrderData $orderData)
+    protected function setOrderDataAdministrator(OrderData $orderData): void
     {
         if ($this->administratorFrontSecurityFacade->isAdministratorLoggedAsCustomer()) {
             try {
                 $currentAdmin = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
                 $orderData->createdAsAdministrator = $currentAdmin;
                 $orderData->createdAsAdministratorName = $currentAdmin->getRealName();
-            } catch (AdministratorIsNotLoggedException $ex) {
+            } catch (AdministratorIsNotLoggedException) {
                 return;
             }
         }
@@ -309,8 +313,9 @@ class OrderFacade
     /**
      * @param string $email
      * @param int $domainId
+     * @return int
      */
-    public function getOrdersCountByEmailAndDomainId($email, $domainId)
+    public function getOrdersCountByEmailAndDomainId(string $email, int $domainId): int
     {
         return $this->orderRepository->getOrdersCountByEmailAndDomainId($email, $domainId);
     }
@@ -319,7 +324,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      */
-    protected function fillOrderItems(Order $order, OrderPreview $orderPreview)
+    protected function fillOrderItems(Order $order, OrderPreview $orderPreview): void
     {
         $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 
@@ -345,14 +350,18 @@ class OrderFacade
             $quantifiedItemPrice = $quantifiedItemPrices[$index];
             $quantifiedItemDiscount = $quantifiedItemDiscounts[$index];
 
+            $orderItemData = $this->orderItemDataFactory->create();
+            $orderItemData->name = $product->getName($locale);
+            $orderItemData->priceWithVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithVat();
+            $orderItemData->priceWithoutVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithoutVat();
+            $orderItemData->vatPercent = $product->getVatForDomain($order->getDomainId())->getPercent();
+            $orderItemData->quantity = $quantifiedProduct->getQuantity();
+            $orderItemData->unitName = $product->getUnit()->getName($locale);
+            $orderItemData->catnum = $product->getCatnum();
+
             $orderItem = $this->orderItemFactory->createProduct(
+                $orderItemData,
                 $order,
-                $product->getName($locale),
-                $quantifiedItemPrice->getUnitPrice(),
-                $product->getVatForDomain($order->getDomainId())->getPercent(),
-                $quantifiedProduct->getQuantity(),
-                $product->getUnit()->getName($locale),
-                $product->getCatnum(),
                 $product,
             );
 
@@ -383,15 +392,20 @@ class OrderFacade
             $orderPreview->getProductsPrice(),
             $order->getDomainId(),
         );
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $payment->getName($locale);
+        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+
         $orderPayment = $this->orderItemFactory->createPayment(
+            $orderItemData,
             $order,
-            $payment->getName($locale),
-            $paymentPrice,
-            $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent(),
-            1,
             $payment,
         );
-        $order->addItem($orderPayment);
+
         $this->em->persist($orderPayment);
     }
 
@@ -409,15 +423,21 @@ class OrderFacade
             $orderPreview->getProductsPrice(),
             $order->getDomainId(),
         );
-        $orderTransport = $this->orderItemFactory->createTransport(
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $transport->getName($locale);
+        $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $transportPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+
+        $orderPayment = $this->orderItemFactory->createTransport(
+            $orderItemData,
             $order,
-            $transport->getName($locale),
-            $transportPrice,
-            $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent(),
-            1,
             $transport,
         );
-        $order->addItem($orderTransport);
+
+        $this->em->persist($orderPayment);
     }
 
     /**
@@ -427,18 +447,25 @@ class OrderFacade
      */
     protected function fillOrderRounding(Order $order, OrderPreview $orderPreview, string $locale): void
     {
-        if ($orderPreview->getRoundingPrice() !== null) {
-            $this->orderItemFactory->createProduct(
-                $order,
-                t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
-                $orderPreview->getRoundingPrice(),
-                '0',
-                1,
-                null,
-                null,
-                null,
-            );
+        $roundingPrice = $orderPreview->getRoundingPrice();
+
+        if ($roundingPrice === null) {
+            return;
         }
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
+        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->quantity = 1;
+
+        $roundingItem = $this->orderItemFactory->createRounding(
+            $orderItemData,
+            $order,
+        );
+
+        $this->em->persist($roundingItem);
     }
 
     /**
@@ -460,18 +487,19 @@ class OrderFacade
             $orderItem->getName(),
         );
 
-        $discount = $this->orderItemFactory->createProduct(
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $name;
+        $orderItemData->priceWithVat = $quantifiedItemDiscount->inverse()->getPriceWithVat();
+        $orderItemData->priceWithoutVat = $quantifiedItemDiscount->inverse()->getPriceWithoutVat();
+        $orderItemData->vatPercent = $orderItem->getVatPercent();
+        $orderItemData->quantity = 1;
+
+        $discountItem = $this->orderItemFactory->createDiscount(
+            $orderItemData,
             $orderItem->getOrder(),
-            $name,
-            $quantifiedItemDiscount->inverse(),
-            $orderItem->getVatPercent(),
-            1,
-            null,
-            null,
-            null,
         );
 
-        $this->em->persist($discount);
+        $this->em->persist($discountItem);
     }
 
     /**
@@ -496,16 +524,9 @@ class OrderFacade
             $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId());
 
             $newOrderItem = $this->orderItemFactory->createProduct(
+                $newOrderItemData,
                 $order,
-                $newOrderItemData->name,
-                new Price(
-                    $newOrderItemData->priceWithoutVat,
-                    $newOrderItemData->priceWithVat,
-                ),
-                $newOrderItemData->vatPercent,
-                $newOrderItemData->quantity,
-                $newOrderItemData->unitName,
-                $newOrderItemData->catnum,
+                null,
             );
 
             if ($newOrderItemData->usePriceCalculation) {
@@ -543,8 +564,10 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
-    protected function updateOrderDataWithDeliveryAddress(OrderData $orderData, ?DeliveryAddress $deliveryAddress)
-    {
+    protected function updateOrderDataWithDeliveryAddress(
+        OrderData $orderData,
+        ?DeliveryAddress $deliveryAddress,
+    ): void {
         if ($deliveryAddress !== null) {
             $orderData->deliveryFirstName = $deliveryAddress->getFirstName();
             $orderData->deliveryLastName = $deliveryAddress->getLastName();
@@ -561,7 +584,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function updateTransportAndPaymentNamesInOrderData(OrderData $orderData, Order $order)
+    protected function updateTransportAndPaymentNamesInOrderData(OrderData $orderData, Order $order): void
     {
         $orderLocale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 

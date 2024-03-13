@@ -55,7 +55,7 @@ class OrderTest extends TestCase
         $this->assertContainsOnlyInstancesOf(OrderItem::class, $productItems);
     }
 
-    public function testGetProductItemsCount()
+    public function testGetProductItemsCount(): void
     {
         $payment = new Payment(new PaymentData());
         $paymentItemPrice = Price::zero();
@@ -86,7 +86,7 @@ class OrderTest extends TestCase
         $order->addItem($productItem);
         $order->addItem($paymentItem);
 
-        $this->assertSame(1, $order->getProductItemsCount());
+        $this->assertCount(1, $order->getProductItems());
     }
 
     public function testOrderWithDeliveryAddressSameAsBillingAddress()

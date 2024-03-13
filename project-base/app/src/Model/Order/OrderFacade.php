@@ -8,6 +8,7 @@ use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Security\LoginAsUserFacade;
 use App\Model\Transport\Type\TransportType;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -19,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -80,6 +81,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\OrderDataFactory $orderDataFactory
  * @method changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
  * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
+ * @method fillOrderRounding(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -139,7 +141,7 @@ class OrderFacade extends BaseOrderFacade
         NumberFormatterExtension $numberFormatterExtension,
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
-        OrderItemFactoryInterface $orderItemFactory,
+        OrderItemFactory $orderItemFactory,
         OrderItemDataFactory $orderItemDataFactory,
         PaymentTransactionFacade $paymentTransactionFacade,
         PaymentServiceFacade $paymentServiceFacade,
@@ -183,7 +185,8 @@ class OrderFacade extends BaseOrderFacade
     /**
      * @param \App\Model\Order\OrderData $orderData
      */
-    protected function setOrderDataAdministrator(OrderData $orderData)
+    #[Override]
+    protected function setOrderDataAdministrator(OrderData $orderData): void
     {
         $currentAdministratorLoggedAsCustomer = $this->loginAsUserFacade->getCurrentAdministratorLoggedAsCustomer();
 
@@ -201,6 +204,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Order\Order
      */
+    #[Override]
     public function createOrder(
         BaseOrderData $orderData,
         BaseOrderPreview $orderPreview,
@@ -229,7 +233,8 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderData $orderData
      * @return \App\Model\Order\Order
      */
-    public function edit($orderId, BaseOrderData $orderData)
+    #[Override]
+    public function edit(int $orderId, BaseOrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
         $oldOrderStatus = $order->getStatus();
@@ -248,6 +253,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
+    #[Override]
     protected function fillOrderProducts(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $quantifiedItemPrices = $orderPreview->getQuantifiedItemsPrices();
@@ -270,7 +276,7 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->unitName = $product->getUnit()->getName($locale);
             $orderItemData->catnum = $product->getCatnum();
 
-            $orderItem = $this->orderItemFactory->createProductByOrderItemData(
+            $orderItem = $this->orderItemFactory->createProduct(
                 $orderItemData,
                 $order,
                 $product,
@@ -327,10 +333,9 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->promoCodeIdentifier = $promoCodeIdentifier;
         $orderItemData->relatedOrderItem = $orderItem;
 
-        return $this->orderItemFactory->createProductByOrderItemData(
+        return $this->orderItemFactory->createDiscount(
             $orderItemData,
             $orderItem->getOrder(),
-            null,
         );
     }
 
@@ -339,6 +344,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
+    #[Override]
     protected function fillOrderTransport(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $transport = $order->getTransport();
@@ -362,44 +368,14 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
         $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
         $orderItemData->quantity = 1;
-        $orderItemData->transport = $transport;
 
-        $orderTransport = $this->orderItemFactory->createTransportByOrderItemData(
+        $orderTransport = $this->orderItemFactory->createTransport(
             $orderItemData,
             $order,
+            $transport,
         );
 
-        $order->addItem($orderTransport);
         $this->em->persist($orderTransport);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
-    protected function fillOrderRounding(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
-    {
-        $roundingPrice = $orderPreview->getRoundingPrice();
-
-        if ($roundingPrice === null) {
-            return;
-        }
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
-        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
-        $orderItemData->vatPercent = '0';
-        $orderItemData->quantity = 1;
-
-        $roundingItem = $this->orderItemFactory->createProductByOrderItemData(
-            $orderItemData,
-            $order,
-            null,
-        );
-
-        $this->em->persist($roundingItem);
     }
 
     /**

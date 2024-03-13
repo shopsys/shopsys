@@ -1381,9 +1381,6 @@ msgstr "Název role"
 msgid "Roles"
 msgstr "Role"
 
-msgid "Rounding"
-msgstr "Zaokrouhlení"
-
 msgid "SEO - full"
 msgstr "SEO - vše"
 

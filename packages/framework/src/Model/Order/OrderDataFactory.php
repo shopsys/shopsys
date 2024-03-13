@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 
-class OrderDataFactory implements OrderDataFactoryInterface
+class OrderDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      */
     public function __construct(
-        protected readonly OrderItemDataFactoryInterface $orderItemDataFactory,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
     ) {
     }
@@ -51,7 +51,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function fillFromOrder(OrderData $orderData, Order $order)
+    protected function fillFromOrder(OrderData $orderData, Order $order): void
     {
         $orderData->orderNumber = $order->getNumber();
         $orderData->status = $order->getStatus();
@@ -91,8 +91,8 @@ class OrderDataFactory implements OrderDataFactoryInterface
         $orderData->currency = $order->getCurrency();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();
         $orderData->createdAsAdministratorName = $order->getCreatedAsAdministratorName();
-        $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getOrderTransport());
-        $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getOrderPayment());
+        $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getTransportItem());
+        $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getPaymentItem());
 
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
 

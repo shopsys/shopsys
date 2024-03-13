@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Order\Item\OrderItem;
+use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Order;
-use RuntimeException;
+use App\Model\Order\OrderDataFactory;
+use App\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 {
-    private const ORDER_ID = 10;
-    private const PRODUCT_ITEM_ID = 45;
-    private const PAYMENT_ITEM_ID = 46;
-    private const TRANSPORT_ITEM_ID = 47;
+    private const int ORDER_ID = 10;
+    private const int PRODUCT_ITEM_ID = 45;
+    private const int PAYMENT_ITEM_ID = 46;
+    private const int TRANSPORT_ITEM_ID = 47;
 
     private Order $order;
 
@@ -33,13 +33,12 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private OrderDataFactoryInterface $orderDataFactory;
+    private OrderDataFactory $orderDataFactory;
 
     /**
      * @inject
-     * @phpstan-ignore-next-line Tests are skipped
      */
-    private OrderItemDataFactoryInterface $orderItemDataFactory;
+    private OrderItemDataFactory $orderItemDataFactory;
 
     protected function setUp(): void
     {
@@ -59,7 +58,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->order->getItemById(self::PRODUCT_ITEM_ID);
+        $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(1000)));
@@ -84,7 +83,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->order->getItemById(self::PRODUCT_ITEM_ID);
+        $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(950)));
@@ -96,10 +95,6 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     public function testAddProductItem(): void
     {
-        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
-            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
-
-        // @phpstan-ignore-next-line Tests are skipped
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $this->orderItemDataFactory->create();
@@ -123,10 +118,6 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     public function testAddProductItemWithoutUsingPriceCalculation(): void
     {
-        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
-            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
-
-        // @phpstan-ignore-next-line Tests are skipped
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $this->orderItemDataFactory->create();
@@ -162,7 +153,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->order->getItemById(self::TRANSPORT_ITEM_ID);
+        $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -186,7 +177,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->order->getItemById(self::TRANSPORT_ITEM_ID);
+        $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -206,7 +197,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->order->getItemById(self::PAYMENT_ITEM_ID);
+        $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -230,7 +221,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
-        $orderItem = $this->order->getItemById(self::PAYMENT_ITEM_ID);
+        $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
@@ -244,7 +235,6 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @return \App\Model\Order\Item\OrderItem
-     * @phpstan-ignore-next-line Tests are skipped
      */
     private function getOrderItemByName(Order $order, string $name): OrderItem
     {
@@ -254,7 +244,29 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
             }
         }
 
-        throw new RuntimeException(sprintf('Order item with the name "%s" was not found in the order.', $name));
+        throw new OrderItemNotFoundException(sprintf(
+            'Order item with the name "%s" was not found in the order.',
+            $name,
+        ));
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param int $orderItemId
+     * @return \App\Model\Order\Item\OrderItem
+     */
+    private function getOrderItemById(Order $order, int $orderItemId): OrderItem
+    {
+        foreach ($order->getItems() as $orderItem) {
+            if ($orderItem->getId() === $orderItemId) {
+                return $orderItem;
+            }
+        }
+
+        throw new OrderItemNotFoundException(sprintf(
+            'Order item id `%d` not found.',
+            $orderItemId,
+        ));
     }
 
     protected function setOrderForTests(): void
