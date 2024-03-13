@@ -21,7 +21,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
     {
         $middlewaresWithoutLoggingMiddleware = array_values(array_filter(
             $entityManager->getConnection()->getConfiguration()->getMiddlewares(),
-            fn (MiddlewareInterface $middleware) => !($middleware instanceof LoggingMiddleware)
+            fn (MiddlewareInterface $middleware) => !($middleware instanceof LoggingMiddleware),
         ));
         $entityManager->getConnection()->getConfiguration()->setMiddlewares($middlewaresWithoutLoggingMiddleware);
         $entityManager->clear();
