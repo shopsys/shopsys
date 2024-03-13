@@ -1840,3 +1840,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   `createUserConsentSlice` is removed and `userConsent` data is part of `createUserSlice`
         -   we have discovered issue with Zustand store session during SSR, when setting values on server session was not destroyed and was used also for next session, this was solved by moving `CookiesStore` to `Context`, as it is the recommended way to handle such cases
     -   domainConfig is moved from `SessionStore` to `Context` for easier handling and solve issue with SSR session (see previous comment from cookies refactoring)
+
+-   fix a wrong link type for searched articles ([#3062](https://github.com/shopsys/shopsys/pull/3062))

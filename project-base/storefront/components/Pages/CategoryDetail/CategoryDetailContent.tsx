@@ -78,7 +78,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                     <SimpleNavigation
                         className="mt-6"
-                        linkType="category"
+                        linkTypeOverride="category"
                         listedItems={[...category.children, ...category.linkedCategories]}
                     />
 
