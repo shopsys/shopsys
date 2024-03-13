@@ -97,7 +97,7 @@ class ProductConnectionFactory
         ProductFilterData $productFilterData,
         ?string $orderingMode = null,
     ): ProductConnection {
-        $searchText = $argument['search'] ?? '';
+        $searchText = $argument['searchInput']['search'] ?? '';
         $productFilterOptionsClosure = $this->getProductFilterOptionsClosure($productFilterData, $searchText);
 
         return $this->createConnection(

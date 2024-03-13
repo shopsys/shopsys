@@ -1,6 +1,6 @@
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';

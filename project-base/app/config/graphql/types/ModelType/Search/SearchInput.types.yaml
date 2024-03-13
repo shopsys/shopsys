@@ -1,0 +1,4 @@
+SearchInput:
+    type: input-object
+    inherits:
+        - 'SearchInputDecorator'

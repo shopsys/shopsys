@@ -1,11 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AvailabilityStatusEnumApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { twJoin } from 'tailwind-merge';
 
 type CategoryBestsellersListItemProps = {

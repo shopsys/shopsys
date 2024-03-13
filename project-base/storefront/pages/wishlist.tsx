@@ -2,6 +2,7 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
@@ -9,11 +10,10 @@ import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 
-const WishlistPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
+const WishlistPage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     useGtmPageViewEvent(useGtmStaticPageViewEvent(GtmPageType.other));
     const currentDomainConfig = useDomainConfig();
@@ -27,7 +27,7 @@ const WishlistPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
                 <Wishlist />
             </Webline>
 
-            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+            <LastVisitedProducts />
         </CommonLayout>
     );
 };

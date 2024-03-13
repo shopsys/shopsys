@@ -9,6 +9,7 @@ import { ProductDetailUsps } from './ProductDetailUsps';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
+import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedHelpers';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
@@ -39,6 +40,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
         useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
+    useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (

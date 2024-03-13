@@ -5,6 +5,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutationApi } from 'graphql/generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -12,7 +13,6 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

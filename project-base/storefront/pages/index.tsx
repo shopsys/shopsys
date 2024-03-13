@@ -19,9 +19,10 @@ import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 
-const HomePage: FC<ServerSidePropsType> = ({ cookies }) => {
+const HomePage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.homepage);
@@ -34,18 +35,22 @@ const HomePage: FC<ServerSidePropsType> = ({ cookies }) => {
                 <Webline className="mb-14">
                     <Banners />
                 </Webline>
+
                 <Webline className="mb-6">
                     <h2 className="mb-3">{t('Promoted categories')}</h2>
                     <PromotedCategories />
                 </Webline>
+
                 <Webline className="mb-6">
                     <h2 className="mb-3">{t('Promoted products')}</h2>
                     <PromotedProducts />
                 </Webline>
+
                 <Webline type="blog">
                     <BlogPreview />
                 </Webline>
-                <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
+
+                <LastVisitedProducts />
             </CommonLayout>
         </>
     );

@@ -10,6 +10,7 @@ import {
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/helpers';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import {
     ListedStoreFragmentApi,
@@ -20,7 +21,6 @@ import {
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 
 type TransportAndPaymentSelectProps = {
