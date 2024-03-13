@@ -16,7 +16,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
 /**
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
- * @property \App\Model\Product\Brand\BrandFacade $brandFacade
+ * @property \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
  * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
  * @method \App\Model\Category\Category[] getCategories(array $data)
  * @method \App\Model\Product\Flag\Flag[] getFlags(array $data)
@@ -28,7 +28,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader

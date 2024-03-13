@@ -9,8 +9,8 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class LuigisBoxArticleFeedItem implements FeedItemInterface
 {
-    public const UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX = 'blog_article-';
-    public const UNIQUE_ARTICLE_IDENTIFIER_PREFIX = 'article-';
+    public const UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX = 'blog_article';
+    public const UNIQUE_ARTICLE_IDENTIFIER_PREFIX = 'article';
     protected const SMALL_IMAGE_SIZE = 100;
     protected const MEDIUM_IMAGE_SIZE = 200;
     protected const LARGE_IMAGE_SIZE = 600;

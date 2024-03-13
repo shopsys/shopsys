@@ -294,12 +294,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository:
         alias: App\Model\Product\Availability\AvailabilityRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade:
-        alias: App\Model\Product\Brand\BrandFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository:
-        alias: App\Model\Product\Brand\BrandRepository
-
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagData:
         alias: App\Model\Product\Flag\FlagData
 

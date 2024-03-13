@@ -69,7 +69,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     ];
 
     /**
-     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */

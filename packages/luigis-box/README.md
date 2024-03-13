@@ -31,6 +31,14 @@ LUIGIS_BOX_ENABLED_DOMAIN_IDS // comma separated list of domain ids e.g. '1,2'
 LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS='{"1": "<TRACKER_ID_FOR_DOMAIN_1>", "2": "<TRACKER_ID_FOR_DOMAIN_2>", ...}' // JSON object with domain id as key and tracker id as value
 ```
 
+Add this data loader to your `config/packages/overblog_dataloader.yaml`:
+
+```yaml
+luigisBoxBatchLoader:
+    alias: 'luigis_box_batch_loader'
+    batch_load_fn: "@Shopsys\\LuigisBoxBundle\\Model\\Batch\\LuigisBoxBatchLoader:loadByBatchData"
+```
+
 ## Contributing
 
 Thank you for your contributions to Shopsys LuigisBox package.

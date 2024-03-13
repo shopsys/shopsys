@@ -7,21 +7,31 @@ namespace Shopsys\LuigisBoxBundle\Component\LuigisBox;
 class LuigisBoxResult
 {
     /**
-     * @param array $ids
+     * @param int[] $ids
+     * @param string[] $idsWithPrefix
      * @param int $itemsCount
      */
     public function __construct(
         protected readonly array $ids,
+        protected readonly array $idsWithPrefix,
         protected readonly int $itemsCount,
     ) {
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getIds(): array
     {
         return $this->ids;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getIdsWithPrefix(): array
+    {
+        return $this->idsWithPrefix;
     }
 
     /**

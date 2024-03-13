@@ -159,4 +159,13 @@ class BrandFacade
     {
         return $this->brandRepository->getBrandsByIds($brandsIds);
     }
+
+    /**
+     * @param string $searchText
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsBySearchText(string $searchText): array
+    {
+        return $this->brandRepository->getBrandsBySearchText($searchText);
+    }
 }

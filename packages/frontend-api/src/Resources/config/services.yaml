@@ -63,4 +63,28 @@ services:
         tags:
             - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 1 }
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver:
+        arguments:
+            $categoriesSearchResultsProviders: !tagged 'shopsys.frontend_api.categories_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProvider:
+        tags:
+            - { name: 'shopsys.frontend_api.categories_search_results_provider', priority: 1 }
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver:
+        arguments:
+            $articlesSearchResultsProviders: !tagged 'shopsys.frontend_api.articles_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProvider:
+        tags:
+            - { name: 'shopsys.frontend_api.articles_search_results_provider', priority: 1 }
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver:
+        arguments:
+            $brandSearchResultsProviders: !tagged 'shopsys.frontend_api.brands_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProvider:
+        tags:
+            - { name: 'shopsys.frontend_api.brands_search_results_provider', priority: 1 }
+
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~

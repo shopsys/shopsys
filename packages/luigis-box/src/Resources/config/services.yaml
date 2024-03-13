@@ -3,16 +3,37 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            Overblog\DataLoader\DataLoaderInterface $luigisBoxBatchLoader: '@luigis_box_batch_loader'
+
+    Shopsys\LuigisBoxBundle\:
+        resource: '../../**/*{Factory,Loader,Mapper,Provider}.php'
 
     Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient:
         arguments:
             $luigisBoxApiUrl: '%env(string:LUIGIS_BOX_API_URL)%'
             $trackerIdsByDomainIds: '%env(json:LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS)%'
 
-    Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper: ~
-
     Shopsys\LuigisBoxBundle\Model\Product\ProductSearchResultsProvider:
         arguments:
             $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
         tags:
             - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 100 }
+
+    Shopsys\LuigisBoxBundle\Model\Category\CategoriesSearchResultsProvider:
+        arguments:
+            $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
+        tags:
+            - { name: 'shopsys.frontend_api.categories_search_results_provider', priority: 100 }
+
+    Shopsys\LuigisBoxBundle\Model\Article\ArticlesSearchResultsProvider:
+        arguments:
+            $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
+        tags:
+            - { name: 'shopsys.frontend_api.articles_search_results_provider', priority: 100 }
+
+    Shopsys\LuigisBoxBundle\Model\Brand\BrandSearchResultsProvider:
+        arguments:
+            $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
+        tags:
+            - { name: 'shopsys.frontend_api.brands_search_results_provider', priority: 100 }

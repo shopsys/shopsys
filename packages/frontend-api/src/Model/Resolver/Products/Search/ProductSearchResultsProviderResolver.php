@@ -4,73 +4,27 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 
-use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\Exception\NoProductSearchResultsProviderEnabledOnDomainException;
-use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\Exception\ProductSearchResultsProviderWithSamePriorityAlreadyExistsException;
-use Webmozart\Assert\Assert;
+use Shopsys\FrontendApiBundle\Model\Resolver\Search\SearchResultsProviderResolver;
 
-class ProductSearchResultsProviderResolver
+/**
+ * @method \Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface getSearchResultsProviderByDomainIdAndEntityName(int $domainId, string $searchedEntityName)
+ */
+class ProductSearchResultsProviderResolver extends SearchResultsProviderResolver
 {
-    /**
-     * @var array<int, string>
-     */
-    protected array $productSearchResultsProvidersServiceIdByPriority = [];
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface[] $productSearchResultsProviders
      */
     public function __construct(
         protected readonly iterable $productSearchResultsProviders,
     ) {
+        parent::__construct($productSearchResultsProviders);
     }
 
     /**
-     * @param int $domainId
-     * @return \Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface
+     * @return string
      */
-    public function getProductsSearchResultsProviderByDomainId(
-        int $domainId,
-    ): ProductSearchResultsProviderInterface {
-        Assert::allIsInstanceOf($this->productSearchResultsProviders, ProductSearchResultsProviderInterface::class);
-
-        foreach ($this->getProductsSearchResultsProvidersOrderedByPriority() as $productSearchResultsProvider) {
-            if ($productSearchResultsProvider->isEnabledOnDomain($domainId)) {
-                return $productSearchResultsProvider;
-            }
-        }
-
-        throw new NoProductSearchResultsProviderEnabledOnDomainException($domainId);
-    }
-
-    /**
-     * @return \Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface[]
-     */
-    protected function getProductsSearchResultsProvidersOrderedByPriority(): array
+    protected function getSearchResultsProviderInterface(): string
     {
-        krsort($this->productSearchResultsProvidersServiceIdByPriority, SORT_NUMERIC);
-
-        $productSearchResultsProvidersOrderedByPriority = [];
-
-        foreach ($this->productSearchResultsProvidersServiceIdByPriority as $serviceId) {
-            foreach ($this->productSearchResultsProviders as $productSearchResultsProvider) {
-                if ($productSearchResultsProvider instanceof $serviceId) {
-                    $productSearchResultsProvidersOrderedByPriority[] = $productSearchResultsProvider;
-                }
-            }
-        }
-
-        return $productSearchResultsProvidersOrderedByPriority;
-    }
-
-    /**
-     * @param string $serviceId
-     * @param int $priority
-     */
-    public function registerProductSearchResultsProvider(string $serviceId, int $priority): void
-    {
-        if (array_key_exists($priority, $this->productSearchResultsProvidersServiceIdByPriority)) {
-            throw new ProductSearchResultsProviderWithSamePriorityAlreadyExistsException($serviceId, $priority);
-        }
-
-        $this->productSearchResultsProvidersServiceIdByPriority[$priority] = $serviceId;
+        return ProductSearchResultsProviderInterface::class;
     }
 }
