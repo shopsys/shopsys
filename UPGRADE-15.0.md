@@ -185,6 +185,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   method `createOrderFromFront()` was removed
     -   method `prefillFrontOrderData()` was removed
 -   see #project-base-diff to update your project
+-   fix a problem with deployment for the same commit ([#3061](https://github.com/shopsys/shopsys/pull/3061))
+    -   see #project-base-diff to update your project
 
 #### add rounding and discount as a separate order item types ([#3056](https://github.com/shopsys/shopsys/pull/3056))
 
