@@ -15,6 +15,7 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
+import { useOnFinishHydrationDefaultValuesPrefill } from 'hooks/forms/useOnFinishHydrationDefaultValuesPrefill';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
@@ -97,8 +98,11 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
         }),
     );
     const defaultValues = contactInformationValues;
+    const formProviderMethods = useShopsysForm(resolver, defaultValues);
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
+
+    return [formProviderMethods, defaultValues];
 };
 
 type ContactInformationFormMetaType = {

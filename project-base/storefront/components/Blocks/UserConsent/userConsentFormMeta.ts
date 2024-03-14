@@ -1,3 +1,4 @@
+import { useOnFinishHydrationDefaultValuesPrefill } from 'hooks/forms/useOnFinishHydrationDefaultValuesPrefill';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -12,8 +13,11 @@ export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserC
         marketing: false,
         preferences: false,
     };
+    const formProviderMethods = useShopsysForm(undefined, defaultValues);
 
-    return [useShopsysForm(undefined, defaultValues), defaultValues];
+    useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
+
+    return [formProviderMethods, defaultValues];
 };
 
 type UserConsentFormMeta = {
