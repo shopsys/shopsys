@@ -63,7 +63,7 @@ class GrapesJsParser
             ->allowStaticElements()
             ->allowRelativeLinks()
             ->allowElement('iframe', '*')
-            ->withMaxInputLength(25000);
+            ->withMaxInputLength(-1);
 
         foreach (array_keys(W3CReference::HEAD_ELEMENTS) as $element) {
             $config->allowElement($element, '*');
