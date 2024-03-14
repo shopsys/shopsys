@@ -1467,6 +1467,17 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             protected readonly ProductRepository $productRepository,
     -       EntityNameResolver $entityNameResolver,
     ```
+-   fix not displaying hidden Adverts in frontend API ([#3065](https://github.com/shopsys/shopsys/pull/3065))
+    -   framework classes `AdvertController`, `AdvertFacade` and `AdvertRepository` have now set typehints and return typehints for all methods so you should update your extended project classes accordingly
+    -   method `Shopsys\FrameworkBundle\Model\Advert\AdvertRepository::getAdvertByPositionQueryBuilder()` has been renamed to `Shopsys\FrameworkBundle\Model\Advert\AdvertRepository::getVisibleAdvertByPositionQueryBuilder()` and its visibility has been changed from `protected` to `public`
+    -   constructor `Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository::__constructor()` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+        +       protected readonly FrameworkAdvertRepository $advertRepository,
+            )
+        ```
+    -   methods `getVisibleAdvertsQueryBuilder()` and `getVisibleAdvertsByPositionNameQueryBuilder()` has been removed from `Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository` and code usages has been replaced by usages from framework `AdvertRepository`
 
 ### Storefront
 

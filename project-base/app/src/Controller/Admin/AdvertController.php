@@ -7,7 +7,6 @@ namespace App\Controller\Admin;
 use App\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Controller\Admin\AdvertController as BaseAdvertController;
 use Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType;
-use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +25,7 @@ class AdvertController extends BaseAdvertController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): Response
+    public function editAction(Request $request, int $id): Response
     {
         $advert = $this->advertFacade->getById($id);
 
