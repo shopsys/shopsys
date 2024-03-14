@@ -34,11 +34,15 @@ class DeliveryAddressFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
-    public function create(DeliveryAddressData $deliveryAddressData): DeliveryAddress
+    public function createIfAddressFilled(DeliveryAddressData $deliveryAddressData): ?DeliveryAddress
     {
         $deliveryAddress = $this->deliveryAddressFactory->create($deliveryAddressData);
+
+        if ($deliveryAddress === null) {
+            return null;
+        }
 
         $this->em->persist($deliveryAddress);
         $this->em->flush();

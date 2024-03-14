@@ -63,6 +63,6 @@ class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
         $deliveryAddressData->country = $country;
         $deliveryAddressData->customer = $customerUser->getCustomer();
 
-        return $this->deliveryAddressFacade->create($deliveryAddressData);
+        return $this->deliveryAddressFacade->createIfAddressFilled($deliveryAddressData);
     }
 }

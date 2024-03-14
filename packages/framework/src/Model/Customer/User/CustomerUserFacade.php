@@ -103,10 +103,13 @@ class CustomerUserFacade
             && $customerUserUpdateData->deliveryAddressData->addressFilled
         ) {
             $customerUserUpdateData->deliveryAddressData->customer = $customer;
-            $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
+            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled($customerUserUpdateData->deliveryAddressData);
 
             $customerData = $this->customerDataFactory->createFromCustomer($customer);
-            $customerData->deliveryAddresses[] = $deliveryAddress;
+
+            if ($deliveryAddress !== null) {
+                $customerData->deliveryAddresses[] = $deliveryAddress;
+            }
             $this->customerFacade->edit($customer->getId(), $customerData);
 
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
@@ -158,7 +161,7 @@ class CustomerUserFacade
             && $customerUserUpdateData->deliveryAddressData->addressFilled
         ) {
             $customerUserUpdateData->deliveryAddressData->customer = $customerUser->getCustomer();
-            $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
+            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled($customerUserUpdateData->deliveryAddressData);
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
         }
 
