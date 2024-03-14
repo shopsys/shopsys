@@ -92,7 +92,7 @@ export const cacheUpdates: UpdatesConfig = {
             _args: ChangeTransportInCartMutationVariables,
             cache,
         ) {
-            if (result.ChangeTransportInCart?.uuid) {
+            if (result.ChangeTransportInCart) {
                 manuallyUpdateCartQuery(cache, result.ChangeTransportInCart, result.ChangeTransportInCart.uuid);
             }
         },
@@ -104,7 +104,7 @@ export const cacheUpdates: UpdatesConfig = {
             _args: ChangePaymentInCartMutationVariables,
             cache,
         ) {
-            if (result.ChangePaymentInCart?.uuid) {
+            if (result.ChangePaymentInCart) {
                 manuallyUpdateCartQuery(cache, result.ChangePaymentInCart, result.ChangePaymentInCart.uuid);
             }
         },
