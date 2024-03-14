@@ -264,6 +264,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+### added indexes for columns which were used for order by and where in entites TransferIssue and CronModuleRun ([#3048](https://github.com/shopsys/shopsys/pull/3048))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(
  *     name="transfer_issues",
  *     indexes={
- *          @ORM\Index(columns={"created_at"}),
+ *          @ORM\Index(columns={"created_at", "deleted_at", "transfer_id"}),
  *      }
  * )
  * @ORM\Entity

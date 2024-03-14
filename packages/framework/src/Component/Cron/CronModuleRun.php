@@ -8,7 +8,13 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="cron_module_runs")
+ * @ORM\Table(
+ *      name="cron_module_runs",
+ *      indexes={
+ *           @ORM\Index(columns={"started_at"}),
+ *           @ORM\Index(columns={"finished_at"}),
+ *       }
+ *  )
  * @ORM\Entity
  */
 class CronModuleRun
