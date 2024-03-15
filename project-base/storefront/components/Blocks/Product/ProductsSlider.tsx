@@ -13,8 +13,6 @@ type ProductsSliderProps = {
     gtmMessageOrigin?: GtmMessageOriginType;
 };
 
-const productTwClass = 'snap-center border-b-0 md:snap-start';
-
 export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,
     gtmProductListName,
@@ -75,8 +73,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             )}
 
             <ProductsListContent
-                className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
-                classNameProduct={productTwClass}
+                className="scroll-mb-1.5 grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
+                classNameProduct="snap-center border-b-0 md:snap-start"
                 gtmMessageOrigin={gtmMessageOrigin}
                 gtmProductListName={gtmProductListName}
                 productRefs={productElementRefs}

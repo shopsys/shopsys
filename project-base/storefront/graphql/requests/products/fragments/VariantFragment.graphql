@@ -1,0 +1,8 @@
+fragment VariantFragment on Product {
+    uuid
+    link
+    name
+    images {
+        ...ImageFragment
+    }
+}

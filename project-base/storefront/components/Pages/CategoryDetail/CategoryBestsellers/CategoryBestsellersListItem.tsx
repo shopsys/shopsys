@@ -22,14 +22,12 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
 
-    const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
-
     return (
         <div className="flex flex-wrap items-center gap-y-4 border-t border-greyLight py-4 first-of-type:border-0 lg:flex-nowrap lg:gap-5">
             <ExtendedNextLink
                 className="flex items-center gap-5 font-bold no-underline lg:flex-1"
-                href={productUrl}
-                type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+                href={product.slug}
+                type="product"
                 onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
             >
                 <div className="flex w-20 shrink-0 items-center justify-center">

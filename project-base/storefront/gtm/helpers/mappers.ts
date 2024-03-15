@@ -3,7 +3,6 @@ import {
     LastOrderFragmentApi,
     ListedProductFragmentApi,
     ListedStoreFragmentApi,
-    MainVariantDetailFragmentApi,
     ProductDetailFragmentApi,
     SimpleProductFragmentApi,
 } from 'graphql/generated';
@@ -38,10 +37,8 @@ export const mapGtmListedProductType = (
     listIndex: listIndex + 1,
 });
 
-export const mapGtmProductDetailType = (
-    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
-    domainUrl: string,
-): GtmProductInterface => mapGtmProductInterface(product, domainUrl);
+export const mapGtmProductDetailType = (product: ProductDetailFragmentApi, domainUrl: string): GtmProductInterface =>
+    mapGtmProductInterface(product, domainUrl);
 
 const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUrl: string): GtmProductInterface => {
     let productUrl;

@@ -27,7 +27,6 @@ export const CartListItem: FC<CartListItemProps> = ({
     const spinboxRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
     const onChangeValueHandler = () => {
         if (timeoutRef.current === null) {
@@ -51,7 +50,7 @@ export const CartListItem: FC<CartListItemProps> = ({
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
                 <div className="flex h-12 w-24 shrink-0">
-                    <ExtendedNextLink className="relative h-full w-full" href={productSlug} type="product">
+                    <ExtendedNextLink className="relative h-full w-full" href={product.slug} type="product">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
                             className="mx-auto max-h-full w-auto"
@@ -66,7 +65,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                     <div className="h-full text-left vl:w-[16.875rem]" tid={TIDs.pages_cart_list_item_name}>
                         <ExtendedNextLink
                             className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
-                            href={productSlug}
+                            href={product.slug}
                             type="product"
                         >
                             {product.fullName}

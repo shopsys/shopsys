@@ -13,7 +13,7 @@ const ModalGallery = dynamic(() =>
 type ProductDetailGalleryProps = {
     images: ImageFragmentApi[];
     productName: string;
-    flags: SimpleFlagFragmentApi[];
+    flags: SimpleFlagFragmentApi[] | undefined | null;
     videoIds?: VideoTokenFragmentApi[];
 };
 
@@ -44,7 +44,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                         onClickCapture={() => setSelectedGalleryItemIndex(0)}
                     />
 
-                    {!!flags.length && (
+                    {!!flags?.length && (
                         <div className="absolute top-3 left-4 flex flex-col">
                             <ProductFlags flags={flags} />
                         </div>

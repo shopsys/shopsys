@@ -115,6 +115,7 @@ export const getGtmPageInfoTypeForFriendlyUrl = (
     switch (friendlyUrlPageData?.__typename) {
         case 'RegularProduct':
         case 'MainVariant':
+        case 'Variant':
             pageInfo.type = GtmPageType.product_detail;
             break;
         case 'Category':

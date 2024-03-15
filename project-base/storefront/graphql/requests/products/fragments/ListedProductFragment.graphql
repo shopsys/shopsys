@@ -29,10 +29,4 @@ fragment ListedProductFragment on Product {
         name
     }
     isMainVariant
-
-    ... on Variant {
-        mainVariant {
-            slug
-        }
-    }
 }
