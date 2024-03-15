@@ -117,4 +117,15 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
 
         return $this->repositoryFactory->getRepository($this, $resolvedClassName);
     }
+
+    /**
+     * @param string $className
+     * @return \Doctrine\ORM\Mapping\ClassMetadata
+     */
+    public function getClassMetadata($className)
+    {
+        $resolvedClassName = $this->entityNameResolver->resolve($className);
+
+        return parent::getClassMetadata($resolvedClassName);
+    }
 }
