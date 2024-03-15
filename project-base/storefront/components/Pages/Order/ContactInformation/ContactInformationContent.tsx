@@ -67,7 +67,7 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
                     required: true,
                     type: 'email',
                     autoComplete: 'email',
-                    onChange: () => updateContactInformation({ email: emailValue }),
+                    onChange: (event) => updateContactInformation({ email: event.target.value }),
                 }}
             />
 
