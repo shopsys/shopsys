@@ -31,6 +31,7 @@ export const orderDetail = {
 export const payment = {
     creditCard: {
         uuid: '808f7a8a-6143-538e-a46d-3803519ecf00',
+        name: 'Credit card',
     },
     cash: {
         uuid: '6e48952e-0f71-503c-8b58-f0ae9fc350c0',
@@ -39,6 +40,9 @@ export const payment = {
     onDelivery: {
         uuid: '2c3d2ede-bf1a-56bc-8c7d-44b7a672ef23',
         name: 'Cash on delivery',
+    },
+    payLater: {
+        name: 'Pay later',
     },
 };
 
@@ -91,6 +95,9 @@ export const transport = {
     ppl: {
         uuid: '5d4619f7-a98f-5bff-b296-2a0887430a63',
         name: 'PPL',
+    },
+    droneDelivery: {
+        name: 'Drone delivery',
     },
 };
 

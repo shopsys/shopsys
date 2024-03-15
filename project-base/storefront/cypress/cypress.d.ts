@@ -1,3 +1,5 @@
+import { CreateOrderMutationVariables } from '../graphql/requests/orders/mutations/CreateOrderMutation.generated';
+import { RegistrationDataInput } from '../graphql/types';
 import { TIDs } from 'tids';
 
 declare global {
@@ -13,7 +15,8 @@ declare global {
                 pickupPlaceIdentifier?: string,
             ): Cypress.Chainable<Cypress.Response<any>>;
             preselectPaymentForTest(paymentUuid: string): Cypress.Chainable<Cypress.Response<any>>;
-            registerAsNewUser(registrationInput: RegistrationDataInputApi): Cypress.Chainable<Cypress.Response<any>>;
+            registerAsNewUser(registrationInput: RegistrationDataInput): Cypress.Chainable<string>;
+            createOrder(createOrderInput: CreateOrderMutationVariables): Cypress.Chainable<Cypress.Response<any>>;
 
             setDevicePixelRatio(
                 pixelRatio: number,

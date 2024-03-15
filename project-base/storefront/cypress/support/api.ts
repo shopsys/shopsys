@@ -1,3 +1,4 @@
+import { CreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { RegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
 import 'cypress-set-device-pixel-ratio';
@@ -187,4 +188,100 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: RegistrationDataIn
 Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
     cy.visit(url);
     return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
+});
+
+Cypress.Commands.add('createOrder', (createOrderVariables: CreateOrderMutationVariables) => {
+    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    if (!currentAppStoreAsString) {
+        throw new Error(
+            'Could not load app store from local storage. This is an issue with tests, not with the application.',
+        );
+    }
+
+    return cy.getCookie('accessToken').then((cookie) => {
+        const accessToken = cookie?.value;
+        let cartUuid: string | null = null;
+
+        if (!accessToken && currentAppStoreAsString) {
+            cartUuid = JSON.parse(currentAppStoreAsString).state.cartUuid;
+        }
+
+        return cy
+            .request({
+                method: 'POST',
+                url: 'graphql/',
+                body: JSON.stringify({
+                    operationName: 'CreateOrderMutation',
+                    query: `mutation CreateOrderMutation(
+                    $firstName: String!
+                    $lastName: String!
+                    $email: String!
+                    $telephone: String!
+                    $onCompanyBehalf: Boolean!
+                    $companyName: String
+                    $companyNumber: String
+                    $companyTaxNumber: String
+                    $street: String!
+                    $city: String!
+                    $postcode: String!
+                    $country: String!
+                    $differentDeliveryAddress: Boolean!
+                    $deliveryFirstName: String
+                    $deliveryLastName: String
+                    $deliveryCompanyName: String
+                    $deliveryTelephone: String
+                    $deliveryStreet: String
+                    $deliveryCity: String
+                    $deliveryPostcode: String
+                    $deliveryCountry: String
+                    $deliveryAddressUuid: Uuid
+                    $note: String
+                    $cartUuid: Uuid
+                    $newsletterSubscription: Boolean
+                ) {
+                    CreateOrder(
+                        input: {
+                            firstName: $firstName
+                            lastName: $lastName
+                            email: $email
+                            telephone: $telephone
+                            onCompanyBehalf: $onCompanyBehalf
+                            companyName: $companyName
+                            companyNumber: $companyNumber
+                            companyTaxNumber: $companyTaxNumber
+                            street: $street
+                            city: $city
+                            postcode: $postcode
+                            country: $country
+                            differentDeliveryAddress: $differentDeliveryAddress
+                            deliveryFirstName: $deliveryFirstName
+                            deliveryLastName: $deliveryLastName
+                            deliveryCompanyName: $deliveryCompanyName
+                            deliveryTelephone: $deliveryTelephone
+                            deliveryStreet: $deliveryStreet
+                            deliveryCity: $deliveryCity
+                            deliveryPostcode: $deliveryPostcode
+                            deliveryCountry: $deliveryCountry
+                            deliveryAddressUuid: $deliveryAddressUuid
+                            note: $note
+                            cartUuid: $cartUuid
+                            newsletterSubscription: $newsletterSubscription
+                        }
+                    ) {
+                        order {
+                            number
+                            uuid
+                            urlHash
+                    }
+                }
+            }`,
+                    variables: { ...createOrderVariables, cartUuid },
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
+                },
+            })
+            .its('body.data.CreateOrder.order');
+    });
 });

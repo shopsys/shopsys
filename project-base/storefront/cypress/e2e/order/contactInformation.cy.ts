@@ -1,6 +1,13 @@
-import { DEFAULT_APP_STORE, url } from 'fixtures/demodata';
+import {
+    fillEmailInThirdStep,
+    fillCustomerInformationInThirdStep,
+    fillBillingAdressInThirdStep,
+    clearEmailInThirdStep,
+    clearPostcodeInThirdStep,
+} from './orderSupport';
+import { DEFAULT_APP_STORE, customer1, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkUrl, takeSnapshotAndCompare } from 'support';
+import { checkUrl, loseFocus, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Contact information page tests', () => {
@@ -56,5 +63,38 @@ describe('Contact information page tests', () => {
         checkUrl(url.order.transportAndPayment);
 
         takeSnapshotAndCompare('no-transport-and-payment-in-contact-information-logged-in');
+    });
+
+    it('should keep filled contact information after page refresh', () => {
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.preselectTransportForTest(transport.czechPost.uuid);
+        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+
+        cy.visit(url.order.contactInformation);
+        fillEmailInThirdStep(customer1.email);
+        fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
+        fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
+        loseFocus();
+
+        cy.reload();
+
+        takeSnapshotAndCompare('keep-filled-contact-information-after-reload');
+    });
+
+    it('should keep changed contact information after page refresh for logged-in user', () => {
+        cy.registerAsNewUser(generateCustomerRegistrationData('refresh-page-contact-information@shopsys.com'));
+        cy.addProductToCartForTest();
+        cy.preselectTransportForTest(transport.czechPost.uuid);
+        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+
+        cy.visit(url.order.contactInformation);
+        clearEmailInThirdStep();
+        fillEmailInThirdStep('refresh-page-contact-information-changed@shopsys.com');
+        fillCustomerInformationInThirdStep('123', ' changed', ' changed');
+        clearPostcodeInThirdStep();
+        fillBillingAdressInThirdStep(' changed', ' changed', '29292');
+        loseFocus();
+
+        takeSnapshotAndCompare('keep-changed-contact-information-after-reload');
     });
 });

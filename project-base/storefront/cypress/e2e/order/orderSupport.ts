@@ -5,6 +5,10 @@ export const fillEmailInThirdStep = (email: string) => {
     cy.get('#contact-information-form-email').should('have.attr', 'placeholder', placeholder.email).type(email);
 };
 
+export const clearEmailInThirdStep = () => {
+    cy.get('#contact-information-form-email').clear();
+};
+
 export const fillCustomerInformationInThirdStep = (phone: string, firstName: string, lastName: string) => {
     cy.get('#contact-information-form-telephone').should('have.attr', 'placeholder', placeholder.phone).type(phone);
     cy.get('#contact-information-form-firstName')
@@ -13,6 +17,10 @@ export const fillCustomerInformationInThirdStep = (phone: string, firstName: str
     cy.get('#contact-information-form-lastName')
         .should('have.attr', 'placeholder', placeholder.lastName)
         .type(lastName);
+};
+
+export const clearPostcodeInThirdStep = () => {
+    cy.get('#contact-information-form-postcode').clear();
 };
 
 export const fillBillingAdressInThirdStep = (street: string, city: string, postCode: string) => {

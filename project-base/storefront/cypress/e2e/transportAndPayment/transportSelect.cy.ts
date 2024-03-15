@@ -29,7 +29,7 @@ describe('Transport select tests', () => {
     it('should select personal pickup transport', () => {
         changeDayOfWeekInTransportsApiResponse(1);
         changeDayOfWeekInChangeTransportMutationResponse(1);
-        cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
