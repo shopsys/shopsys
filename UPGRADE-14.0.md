@@ -1440,6 +1440,14 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   replace search with SearchInput in search queries in Frontend API ([#3044](https://github.com/shopsys/shopsys/pull/3044))
     -   in `articlesSearch`, `brandSearch`, `categoriesSearch` and `productsSearch` queries, the `search` argument has been replaced with `searchInput` of type `SearchInput` update your usages of these queries appropriately
     -   see #project-base-diff to update your project
+-   ensure proper entity name is used within getClassMetadata call ([#3068](https://github.com/shopsys/shopsys/pull/3068))
+    -   `Shopsys\FrameworkBundle\Model\Category\CategoryRepository::__contruct()` has changed:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+            protected readonly ProductRepository $productRepository,
+    -       EntityNameResolver $entityNameResolver,
+    ```
 
 ### Storefront
 
