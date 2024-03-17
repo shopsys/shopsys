@@ -4,27 +4,26 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Contracts\Service\ResetInterface;
 
-class CurrentCustomerUser implements ResetInterface
+class CurrentCustomerUser
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
-     */
-    protected array $customerUserCache = [];
+    protected const CURRENT_CUSTOMER_USER_CACHE_NAMESPACE = 'currentCustomerUser';
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly LocalCacheFacade $localCacheFacade,
     ) {
     }
 
@@ -53,8 +52,8 @@ class CurrentCustomerUser implements ResetInterface
             return null;
         }
 
-        if (array_key_exists($token->getUserIdentifier(), $this->customerUserCache) === true) {
-            return $this->customerUserCache[$token->getUserIdentifier()];
+        if ($this->localCacheFacade->hasItem(static::CURRENT_CUSTOMER_USER_CACHE_NAMESPACE, $token->getUserIdentifier())) {
+            return $this->localCacheFacade->getItem(static::CURRENT_CUSTOMER_USER_CACHE_NAMESPACE, $token->getUserIdentifier());
         }
 
         $user = $token->getUser();
@@ -64,22 +63,17 @@ class CurrentCustomerUser implements ResetInterface
             && $user instanceof FrontendApiUser
         ) {
             $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
-            $this->customerUserCache[$token->getUserIdentifier()] = $customerUser;
+            $this->localCacheFacade->save(static::CURRENT_CUSTOMER_USER_CACHE_NAMESPACE, $token->getUserIdentifier(), $customerUser);
 
             return $customerUser;
         }
 
         if ($user instanceof CustomerUser) {
-            $this->customerUserCache[$token->getUserIdentifier()] = $user;
+            $this->localCacheFacade->save(static::CURRENT_CUSTOMER_USER_CACHE_NAMESPACE, $token->getUserIdentifier(), $user);
 
             return $user;
         }
 
         return null;
-    }
-
-    public function reset(): void
-    {
-        $this->customerUserCache = [];
     }
 }

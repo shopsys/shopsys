@@ -13,16 +13,13 @@ use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload as BaseFileUpload;
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile as ShopsysUploadedFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Contracts\Service\ResetInterface;
 
-class FileUpload extends BaseFileUpload implements ResetInterface
+class FileUpload extends BaseFileUpload
 {
-    /**
-     * @var array<string, array<int, array<string, array<string|null, int>>>>
-     */
-    private array $positionByEntityAndType = [];
+    private const POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE = 'positionByEntityAndType';
 
     /**
      * @param string $temporaryDir
@@ -34,6 +31,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
     public function __construct(
         $temporaryDir,
@@ -45,6 +43,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
         ParameterBagInterface $parameterBag,
         private readonly ImageRepository $imageRepository,
         private readonly UploadedFileRepository $uploadedFileRepository,
+        private readonly LocalCacheFacade $localCacheFacade,
     ) {
         parent::__construct(
             $temporaryDir,
@@ -79,11 +78,15 @@ class FileUpload extends BaseFileUpload implements ResetInterface
         $entityId = $entity->getEntityId();
         $type = $entity->getType();
         $uploadEntityType = $this->getUploadEntityType($entity);
+        $key = sprintf('%s~%s~%s~%s', $entityName, $entityId, $type, $uploadEntityType);
 
-        if (isset($this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type])) {
-            $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type]++;
+        if ($this->localCacheFacade->hasItem(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $key)) {
+            $position = $this->localCacheFacade->getItem(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $key);
+            $position++;
 
-            return $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type];
+            $this->localCacheFacade->save(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $key, $position);
+
+            return $position;
         }
 
         if ($uploadEntityType === 'image') {
@@ -100,7 +103,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
             );
         }
 
-        $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type] = $position;
+        $this->localCacheFacade->save(self::POSITION_BY_ENTITY_AND_TYPE_CACHE_NAMESPACE, $key, $position);
 
         return $position;
     }
@@ -124,10 +127,5 @@ class FileUpload extends BaseFileUpload implements ResetInterface
         }
 
         return $uploadEntityType;
-    }
-
-    public function reset(): void
-    {
-        $this->positionByEntityAndType = [];
     }
 }

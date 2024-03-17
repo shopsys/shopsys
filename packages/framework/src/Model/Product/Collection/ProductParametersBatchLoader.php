@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Collection;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductParametersBatchLoader implements ResetInterface
+class ProductParametersBatchLoader
 {
-    /**
-     * @var string[][]|null[][]
-     */
-    protected array $loadedProductParametersByName = [];
+    protected const PARAMETERS_CACHE_NAMESPACE = 'parametersByProductIdAndName';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
-    public function __construct(protected readonly ProductCollectionFacade $productCollectionFacade)
-    {
+    public function __construct(
+        protected readonly ProductCollectionFacade $productCollectionFacade,
+        protected readonly LocalCacheFacade $localCacheFacade,
+    ) {
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductParametersBatchLoader implements ResetInterface
             $key = $this->getKey($product, $domainConfig);
             $productId = $product->getId();
 
-            $this->loadedProductParametersByName[$key] = $parametersByProductIdAndName[$productId] ?? [];
+            $this->localCacheFacade->save(static::PARAMETERS_CACHE_NAMESPACE, $key, $parametersByProductIdAndName[$productId] ?? []);
         }
     }
 
@@ -51,11 +51,11 @@ class ProductParametersBatchLoader implements ResetInterface
     {
         $key = $this->getKey($product, $domainConfig);
 
-        if (!array_key_exists($key, $this->loadedProductParametersByName)) {
+        if (!$this->localCacheFacade->hasItem(static::PARAMETERS_CACHE_NAMESPACE, $key)) {
             throw new ProductParametersNotLoadedException($product, $domainConfig);
         }
 
-        return $this->loadedProductParametersByName[$key];
+        return $this->localCacheFacade->getItem(static::PARAMETERS_CACHE_NAMESPACE, $key);
     }
 
     /**
@@ -66,10 +66,5 @@ class ProductParametersBatchLoader implements ResetInterface
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();
-    }
-
-    public function reset(): void
-    {
-        $this->loadedProductParametersByName = [];
     }
 }

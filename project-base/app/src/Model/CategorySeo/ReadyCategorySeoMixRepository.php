@@ -10,24 +10,22 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ObjectRepository;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Symfony\Contracts\Service\ResetInterface;
 use function GuzzleHttp\json_encode;
 
-class ReadyCategorySeoMixRepository implements ResetInterface
+class ReadyCategorySeoMixRepository
 {
-    /**
-     * @var string[][][]
-     */
-    private array $readySeoCategorySetup;
+    private const READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE = 'readySeoCategorySetup';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\LocalCache\LocalCacheFacade $localCacheFacade
      */
     public function __construct(
-        private EntityManagerInterface $em,
+        private readonly EntityManagerInterface $em,
+        private readonly LocalCacheFacade $localCacheFacade,
     ) {
-        $this->readySeoCategorySetup = [];
     }
 
     /**
@@ -151,7 +149,9 @@ class ReadyCategorySeoMixRepository implements ResetInterface
      */
     private function getReadySeoCategorySetupFromLocalCache(int $categoryId, int $domainId): array
     {
-        if (($this->readySeoCategorySetup[$domainId][$categoryId] ?? null) === null) {
+        $key = sprintf('%d~%d', $categoryId, $domainId);
+
+        if (!$this->localCacheFacade->hasItem(self::READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE, $key)) {
             $scalarData = $this->em->createQueryBuilder()
                 ->select('rcsm.choseCategorySeoMixCombinationJson as json')
                 ->from(ReadyCategorySeoMix::class, 'rcsm')
@@ -167,10 +167,10 @@ class ReadyCategorySeoMixRepository implements ResetInterface
                 $readySeoCategorySetup[] = $data['json'];
             }
 
-            $this->readySeoCategorySetup[$domainId][$categoryId] = $readySeoCategorySetup;
+            $this->localCacheFacade->save(self::READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE, $key, $readySeoCategorySetup);
         }
 
-        return $this->readySeoCategorySetup[$domainId][$categoryId];
+        return $this->localCacheFacade->getItem(self::READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE, $key);
     }
 
     /**
@@ -216,10 +216,5 @@ class ReadyCategorySeoMixRepository implements ResetInterface
             ->getArrayResult();
 
         return array_column($result, 'categoryId');
-    }
-
-    public function reset(): void
-    {
-        $this->readySeoCategorySetup = [];
     }
 }

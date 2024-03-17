@@ -797,9 +797,6 @@ services:
     Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
 
-    App\Model\Customer\User\ClearCurrentCustomerUserCacheDoctrineSubscriber:
-        tags: [ 'doctrine.event_subscriber' ]
-
     App\Model\Customer\User\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser:
