@@ -276,6 +276,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `create` method was renamed to `createIfAddressFilled` and return type was changed to `?DeliveryAddress`
 -   see #project-base-diff to update your project
 
+#### rename reserved database function `normalize` to non-reserved name `normalized` ([#3072](https://github.com/shopsys/shopsys/pull/3072))
+
+-   create migration to change `normalize()` function to `normalized()` if you had used it in some indexes, functions, or somewhere else
+-   don't forget to rename this function in SQLs in repositories, commands, or somewhere else where is used
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
