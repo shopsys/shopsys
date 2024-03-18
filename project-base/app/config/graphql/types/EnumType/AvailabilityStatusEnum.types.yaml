@@ -4,8 +4,8 @@ AvailabilityStatusEnum:
         description: "Product Availability statuses"
         values:
             InStock:
-                value: "in-stock"
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Availability\\AvailabilityStatusEnum::IN_STOCK")'
                 description: "Product availability status in stock"
             OutOfStock:
-                value: "out-of-stock"
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Availability\\AvailabilityStatusEnum::OUT_OF_STOCK")'
                 description: "Product availability status out of stock"
