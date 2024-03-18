@@ -140,13 +140,13 @@ class CustomerUserRepository
             $queryBuilder
                 ->andWhere('
                     (
-                        NORMALIZE(u.lastName) LIKE NORMALIZE(:text)
+                        NORMALIZED(u.lastName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZE(u.email) LIKE NORMALIZE(:text)
+                        NORMALIZED(u.email) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZE(ba.companyName) LIKE NORMALIZE(:text)
+                        NORMALIZED(ba.companyName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZE(u.telephone) LIKE :text
+                        NORMALIZED(u.telephone) LIKE :text
                     )');
             $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);

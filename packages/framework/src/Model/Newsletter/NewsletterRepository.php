@@ -71,7 +71,7 @@ class NewsletterRepository
             ->setParameter('domainId', $domainId);
 
         if ($searchData->text !== null && $searchData->text !== '') {
-            $queryBuilder->andWhere('NORMALIZE(ns.email) LIKE NORMALIZE(:searchData)')
+            $queryBuilder->andWhere('NORMALIZED(ns.email) LIKE NORMALIZED(:searchData)')
                 ->setParameter('searchData', DatabaseSearching::getFullTextLikeSearchString($searchData->text));
         }
 

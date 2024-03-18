@@ -61,11 +61,11 @@ class ProductListAdminRepository
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder->andWhere('
                 (
-                    NORMALIZE(pt.name) LIKE NORMALIZE(:text)
+                    NORMALIZED(pt.name) LIKE NORMALIZED(:text)
                     OR
-                    NORMALIZE(p.catnum) LIKE NORMALIZE(:text)
+                    NORMALIZED(p.catnum) LIKE NORMALIZED(:text)
                     OR
-                    NORMALIZE(p.partno) LIKE NORMALIZE(:text)
+                    NORMALIZED(p.partno) LIKE NORMALIZED(:text)
                 )');
             $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
