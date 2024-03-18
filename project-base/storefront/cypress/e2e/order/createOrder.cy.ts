@@ -21,7 +21,7 @@ describe('Create order tests', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillEmailInThirdStep(customer1.emailRegistered);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
@@ -44,7 +44,7 @@ describe('Create order tests', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
@@ -67,7 +67,7 @@ describe('Create order tests', () => {
         cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
         cy.preselectPaymentForTest(payment.cash.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         cy.url().should('contain', url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
@@ -91,7 +91,7 @@ describe('Create order tests', () => {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         cy.url().should('contain', url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);

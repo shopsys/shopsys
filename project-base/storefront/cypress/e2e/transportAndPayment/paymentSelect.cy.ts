@@ -7,7 +7,7 @@ describe('Payment select tests', () => {
     it('should select payment by cash', () => {
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
         cy.preselectTransportForTest(transport.ppl.uuid);
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         changeSelectionOfPaymentByName(payment.cash.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');
@@ -22,7 +22,7 @@ describe('Payment select tests', () => {
     it('should select a payment, deselect it, and then change the payment option', () => {
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
         cy.preselectTransportForTest(transport.ppl.uuid);
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         changeSelectionOfPaymentByName(payment.cash.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');

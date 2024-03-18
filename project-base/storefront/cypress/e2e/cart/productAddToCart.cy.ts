@@ -18,7 +18,7 @@ describe('Product add to cart tests', () => {
     });
 
     it('should add product to cart from brand list', () => {
-        cy.visit(url.brandsOverwiev);
+        cy.visitAndWaitForStableDOM(url.brandsOverwiev);
         cy.getByTID([[TIDs.blocks_simplenavigation_, 22]])
             .contains(brandSencor)
             .should('be.visible')
@@ -29,21 +29,21 @@ describe('Product add to cart tests', () => {
     });
 
     it('should add product to cart from product detail', () => {
-        cy.visit(products.helloKitty.url);
+        cy.visitAndWaitForStableDOM(products.helloKitty.url);
         cy.getByTID([TIDs.pages_productdetail_addtocart_button]).click();
 
         checkIfCorrectlyAddedHelloKittyToCart();
     });
 
     it('should add product to cart from product list', () => {
-        cy.visit(url.categoryElectronics);
+        cy.visitAndWaitForStableDOM(url.categoryElectronics);
         addProductToCartFromProductList(products.helloKitty.catnum);
 
         checkIfCorrectlyAddedHelloKittyToCart();
     });
 
     it('should add variant product to cart from product detail', () => {
-        cy.visit(products.philips32PFL4308.url);
+        cy.visitAndWaitForStableDOM(products.philips32PFL4308.url);
         cy.getByTID([
             [TIDs.pages_productdetail_variant_, products.philips54CRT.catnum],
             TIDs.blocks_product_addtocart,
@@ -58,14 +58,14 @@ describe('Product add to cart tests', () => {
     });
 
     it('should add product to cart from promoted products on homepage', () => {
-        cy.visit('/');
+        cy.visitAndWaitForStableDOM('/');
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
 
         checkIfCorrectlyAddedHelloKittyToCart();
     });
 
     it('should add product to cart from search results list', () => {
-        cy.visit('/');
+        cy.visitAndWaitForStableDOM('/');
         searchProductByNameTypeEnterAndCheckResult(products.helloKitty.name, products.helloKitty.catnum);
         addProductToCartFromProductList(products.helloKitty.catnum);
 

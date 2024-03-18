@@ -78,7 +78,13 @@ describe('<Domain Specific Functionality> tests', () => {
 });
 ```
 
-### How to write a custom cypress command
+### Custom cypress commands
+
+Below are some examples of custom commands. We mention only those, that should be used instead of the default cypress commands.
+
+-   `cy.visitAndWaitForStableDOM` (instead of `cy.visit`): Use this command for visiting pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements.
+
+#### How to write a custom cypress command
 
 If you want to add a custom cypress command using `Cypress.Commands.add`, which might be helpful if you want to define a command "the cypress way" and allow it to be chained with other commands, you need to add a similar entry in the `/support/index.ts` file. You will need to set its name and interface, together with the actual logic. In the end, you might need to return a suitable cypress object to allow for chaining.
 
