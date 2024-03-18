@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
-enum AvailabilityStatusEnum: string implements AvailabilityStatusEnumInterface
+use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
+
+class AvailabilityStatusEnum extends AbstractEnum
 {
-    case InStock = 'in-stock';
-    case OutOfStock = 'out-of-stock';
+    public const string IN_STOCK = 'InStock';
+    public const string OUT_OF_STOCK = 'OutOfStock';
 }
