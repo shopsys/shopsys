@@ -10,9 +10,9 @@ use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
-class NormalizeFunction extends FunctionNode
+class NormalizedFunction extends FunctionNode
 {
-    protected const FUNCTION_NORMALIZE = 'normalize';
+    protected const FUNCTION_NORMALIZED = 'normalized';
 
     public Node $stringExpression;
 
@@ -33,6 +33,6 @@ class NormalizeFunction extends FunctionNode
      */
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return static::FUNCTION_NORMALIZE . '(' . $this->stringExpression->dispatch($sqlWalker) . ')';
+        return static::FUNCTION_NORMALIZED . '(' . $this->stringExpression->dispatch($sqlWalker) . ')';
     }
 }

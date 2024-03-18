@@ -62,7 +62,7 @@ class OrderPhoneNumberFilter implements AdvancedSearchFilterInterface
             }
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'phoneNumber_' . $index;
-            $queryBuilder->andWhere('NORMALIZE(o.telephone) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+            $queryBuilder->andWhere('NORMALIZED(o.telephone) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }

@@ -20,7 +20,7 @@ doctrine:
             string_functions:
                 bool_and: App\Component\Doctrine\BoolAndFunction
                 collate: Shopsys\FrameworkBundle\Component\Doctrine\CollateFunction
-                normalize: Shopsys\FrameworkBundle\Component\Doctrine\NormalizeFunction
+                normalized: Shopsys\FrameworkBundle\Component\Doctrine\NormalizedFunction
                 field: Shopsys\FrameworkBundle\Component\Doctrine\FieldFunction
         naming_strategy: doctrine.orm.naming_strategy.underscore
         metadata_cache_driver:
