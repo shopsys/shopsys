@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Shopsys Platform" default="list">
 
+    <property name="no-progress-bar" value="false"/>
     <property name="check-and-fix-annotations" value="true"/>
     <property name="npm.framework" value="@shopsys/framework"/>
     <property name="path.root" value="${project.basedir}/project-base/app"/>
@@ -39,9 +40,20 @@
     </target>
 
     <target name="ecs" description="Checks coding standards in all files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">
+        <if>
+            <istrue value="${no-progress-bar}"/>
+            <then>
+                <property name="ecs.no-progress-bar" value="--no-progress-bar" />
+            </then>
+            <else>
+                <property name="ecs.no-progress-bar" value="" />
+            </else>
+        </if>
+
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
+            <arg value="${ecs.no-progress-bar}"/>
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
@@ -236,7 +248,18 @@
     </target>
 
     <target name="phplint" description="Checks syntax of PHP files in the whole monorepo." hidden="true">
+        <if>
+            <istrue value="${no-progress-bar}"/>
+            <then>
+                <property name="phplint.no-progress-bar" value="--no-progress" />
+            </then>
+            <else>
+                <property name="phplint.no-progress-bar" value="" />
+            </else>
+        </if>
+
         <exec executable="${path.phplint.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="${phplint.no-progress-bar}"/>
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
@@ -253,6 +276,16 @@
     </target>
 
     <target name="phpstan" depends="warmup,tests-acceptance-build" description="Performs static analysis of PHP files using PHPStan on all packages." hidden="true">
+        <if>
+            <istrue value="${no-progress-bar}"/>
+            <then>
+                <property name="phpstan.no-progress-bar" value="--no-progress" />
+            </then>
+            <else>
+                <property name="phpstan.no-progress-bar" value="" />
+            </else>
+        </if>
+
         <exec executable="${path.phpstan.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="analyze"/>
             <arg value="-c"/>
@@ -266,6 +299,7 @@
             <arg path="${path.utils}/*/tests"/>
             <arg value="--level=${phpstan.level}"/>
             <arg value="--memory-limit=${phpstan.memory-limit}"/>
+            <arg value="${phpstan.no-progress-bar}"/>
             <arg value="-vvv"/>
         </exec>
     </target>

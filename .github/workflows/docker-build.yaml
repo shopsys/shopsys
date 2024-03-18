@@ -578,7 +578,7 @@ jobs:
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Check standards
-                run: docker compose exec -T php-fpm php phing standards
+                run: docker compose exec -T php-fpm php phing -D no-progress-bar=true standards
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing tests
             -   name: Run acceptance tests
