@@ -433,7 +433,7 @@ class CategoryRepository extends NestedTreeRepository
     public function filterBySearchText(QueryBuilder $queryBuilder, $searchText)
     {
         $queryBuilder->andWhere(
-            'NORMALIZE(ct.name) LIKE NORMALIZE(:searchText)',
+            'NORMALIZED(ct.name) LIKE NORMALIZED(:searchText)',
         );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
     }

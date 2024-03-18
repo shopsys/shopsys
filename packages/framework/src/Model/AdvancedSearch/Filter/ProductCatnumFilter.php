@@ -70,7 +70,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
 
                 $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
                 $parameterName = 'productCatnum_' . $index;
-                $queryBuilder->andWhere('NORMALIZE(p.catnum) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+                $queryBuilder->andWhere('NORMALIZED(p.catnum) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
                 $queryBuilder->setParameter($parameterName, $searchValue);
             }
         }
