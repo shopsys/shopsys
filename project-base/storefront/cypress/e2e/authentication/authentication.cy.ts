@@ -16,7 +16,7 @@ describe('Authentication tests', () => {
     });
 
     it('should login from header and then log out', () => {
-        cy.visit('/');
+        cy.visitAndWaitForStableDOM('/');
         loginFromHeader(customer1.emailRegistered, customer1.password);
         checkUserIsLoggedIn();
         checkAndHideSuccessToast();
@@ -26,7 +26,7 @@ describe('Authentication tests', () => {
     });
 
     it('should login from login page and then log out', () => {
-        cy.visit(url.login);
+        cy.visitAndWaitForStableDOM(url.login);
         fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, customer1.password);
         cy.getByTID([TIDs.pages_login_submit]).click();
         checkUserIsLoggedIn();

@@ -17,7 +17,7 @@ describe('Transport select tests', () => {
 
     it('should select transport to home', () => {
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
 
@@ -29,7 +29,7 @@ describe('Transport select tests', () => {
         changeDayOfWeekInTransportsApiResponse(1);
         changeDayOfWeekInChangeTransportMutationApiResponse(1);
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
 
@@ -39,7 +39,7 @@ describe('Transport select tests', () => {
 
     it('should select a transport, deselect it, and then change the transport option', () => {
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');

@@ -295,3 +295,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### refactor mobile menu ([#3035](https://github.com/shopsys/shopsys/pull/3035))
 
 -   now the whole component is refactored and is included with new design
+
+#### added visitAndWaitForStableDOM for visiting pages in cypress ([#3071](https://github.com/shopsys/shopsys/pull/3071))
+
+-   change all `cy.visit` to `cy.visitAndWaitForStableDOM`, to make sure that cypress waits for the DOM to be stable before interacting

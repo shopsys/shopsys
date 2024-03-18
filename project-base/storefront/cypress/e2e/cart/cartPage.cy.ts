@@ -13,7 +13,7 @@ describe('Cart page tests', () => {
     beforeEach(() => {
         cy.addProductToCartForTest(undefined, 2).then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
         cy.addProductToCartForTest(products.philips32PFL4308.uuid);
-        cy.visit(url.cart);
+        cy.visitAndWaitForStableDOM(url.cart);
     });
 
     it('should increase and decrease product quantity using spinbox in cart (once if clicked fast)', () => {

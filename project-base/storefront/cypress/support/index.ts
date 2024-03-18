@@ -1,8 +1,12 @@
+/// <reference types="cypress-wait-for-stable-dom" />
 import 'cypress-real-events';
 import 'cypress-set-device-pixel-ratio';
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
+import { registerCommand } from 'cypress-wait-for-stable-dom';
 import { DEFAULT_APP_STORE, products } from 'fixtures/demodata';
 import { TIDs } from 'tids';
+
+registerCommand();
 
 Cypress.Commands.add('getByTID', (selectors: ([TIDs, number] | TIDs)[]) => {
     let selectorString = '';
@@ -151,6 +155,11 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
             expect(cart.uuid).equal(currentAppStore.state.cartUuid);
             expect(cart.payment.uuid).equal(paymentUuid);
         });
+});
+
+Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
+    cy.visit(url);
+    return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
 });
 
 compareSnapshotCommand({
