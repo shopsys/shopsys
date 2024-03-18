@@ -81,7 +81,7 @@ class ProductEntityFieldMapper
             'status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId(
                 $product,
                 $this->domain->getId(),
-            )->value,
+            ),
         ];
     }
 

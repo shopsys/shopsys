@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatus;
 
 class ProductsTest extends ProductsGraphQlTestCase
 {
@@ -148,7 +148,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 ],
                 'availability' => [
                     'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'status' => AvailabilityStatusEnum::InStock->name,
+                    'status' => AvailabilityStatus::IN_STOCK,
                 ],
                 'stockQuantity' => 900,
                 'categories' => [

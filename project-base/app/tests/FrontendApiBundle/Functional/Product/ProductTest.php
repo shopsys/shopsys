@@ -9,7 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatus;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -194,7 +194,7 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'availability' => [
                         'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'status' => AvailabilityStatusEnum::InStock->name,
+                        'status' => AvailabilityStatus::IN_STOCK,
                     ],
                     'stockQuantity' => 2700,
                     'categories' => [
@@ -388,13 +388,13 @@ class ProductTest extends GraphQlTestCase
                                 'name' => 'Ostrava',
                             ],
                             'availabilityInformation' => t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
+                            'availabilityStatus' => AvailabilityStatus::IN_STOCK,
                         ], [
                             'store' => [
                                 'name' => 'Pardubice',
                             ],
                             'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
+                            'availabilityStatus' => AvailabilityStatus::IN_STOCK,
                         ],
                     ],
                     'availableStoresCount' => 1,
