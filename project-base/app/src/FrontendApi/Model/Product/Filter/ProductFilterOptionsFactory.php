@@ -255,7 +255,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
-    protected function createProductFilterOptions(
+    public function createProductFilterOptions(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,

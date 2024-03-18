@@ -85,7 +85,7 @@ class ProductFilterToLuigisBoxFilterMapper
             $priceFrom = $productFilterData->minimalPrice === null ? '' : $productFilterData->minimalPrice->getAmount();
             $priceTo = $productFilterData->maximalPrice === null ? '' : $productFilterData->maximalPrice->getAmount();
 
-            $luigisBoxFilter[self::FILTER_AND][] = 'price:' . $priceFrom . '|' . $priceTo;
+            $luigisBoxFilter[self::FILTER_OR][] = 'price_amount:' . $priceFrom . '|' . $priceTo;
         }
 
         return $luigisBoxFilter;
@@ -101,7 +101,7 @@ class ProductFilterToLuigisBoxFilterMapper
         array $luigisBoxFilter,
     ): array {
         if ($productFilterData->inStock === true) {
-            $luigisBoxFilter[self::FILTER_AND][] = 'availability:1';
+            $luigisBoxFilter[self::FILTER_OR][] = 'availability:1';
         }
 
         return $luigisBoxFilter;
