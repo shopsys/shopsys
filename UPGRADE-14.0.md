@@ -1478,6 +1478,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             )
         ```
     -   methods `getVisibleAdvertsQueryBuilder()` and `getVisibleAdvertsByPositionNameQueryBuilder()` has been removed from `Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository` and code usages has been replaced by usages from framework `AdvertRepository`
+-   moved migration `Version20200219145345` from project to framework ([#2975](https://github.com/shopsys/shopsys/pull/2975))
+    -   migration `App\Migrations\Version20200219145345` was moved to framework. You can safety delete it.
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
