@@ -9983,11 +9983,11 @@ One of possible types of the product list
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>WISHLIST</strong></td>
+<td valign="top"><strong>COMPARISON</strong></td>
 <td></td>
 </tr>
 <tr>
-<td valign="top"><strong>COMPARISON</strong></td>
+<td valign="top"><strong>WISHLIST</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -10004,10 +10004,18 @@ One of possible ordering modes for product
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>PRIORITY</strong></td>
+<td valign="top"><strong>NAME_ASC</strong></td>
 <td>
 
-Order by priority
+Order by name ascending
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>NAME_DESC</strong></td>
+<td>
+
+Order by name descending
 
 </td>
 </tr>
@@ -10028,18 +10036,10 @@ Order by price descending
 </td>
 </tr>
 <tr>
-<td valign="top"><strong>NAME_ASC</strong></td>
+<td valign="top"><strong>PRIORITY</strong></td>
 <td>
 
-Order by name ascending
-
-</td>
-</tr>
-<tr>
-<td valign="top"><strong>NAME_DESC</strong></td>
-<td>
-
-Order by name descending
+Order by priority
 
 </td>
 </tr>
