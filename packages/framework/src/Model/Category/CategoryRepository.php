@@ -9,7 +9,6 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
@@ -28,15 +27,12 @@ class CategoryRepository extends NestedTreeRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
-        EntityNameResolver $entityNameResolver,
     ) {
-        $resolvedClassName = $entityNameResolver->resolve(Category::class);
-        $classMetadata = $this->em->getClassMetadata($resolvedClassName);
+        $classMetadata = $this->em->getClassMetadata(Category::class);
 
         parent::__construct($this->em, $classMetadata);
     }
