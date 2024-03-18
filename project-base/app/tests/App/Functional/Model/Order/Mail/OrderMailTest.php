@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Model\Order\Mail;
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
 use App\Model\Order\Mail\OrderMail;
+use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -86,7 +87,7 @@ class OrderMailTest extends TransactionFunctionalTestCase
             $orderUrlGeneratorMock,
         );
 
-        $order = $this->getReference('order_1');
+        $order = $this->getReference('order_1', Order::class);
 
         $mailTemplateData = new MailTemplateData();
         $mailTemplateData->subject = 'subject';

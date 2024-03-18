@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
+use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -25,8 +26,7 @@ class OrderPaymentsTest extends GraphQlTestCase
         // make sure the payment and transport is free
         $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
 
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/OrderPaymentsPricesQuery.graphql',
             [
@@ -154,8 +154,7 @@ class OrderPaymentsTest extends GraphQlTestCase
         string $expectedCurrentPaymentReferenceName,
         array $expectedAvailablePaymentReferenceNames,
     ): void {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference($orderReferenceName);
+        $order = $this->getReference($orderReferenceName, Order::class);
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/OrderPaymentsQuery.graphql',
             [
@@ -178,8 +177,7 @@ class OrderPaymentsTest extends GraphQlTestCase
      */
     private function getExpectedPaymentResponse(string $paymentReferenceName): array
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference($paymentReferenceName);
+        $payment = $this->getReference($paymentReferenceName, Payment::class);
 
         return ['uuid' => $payment->getUuid(), 'name' => $payment->getName($this->getFirstDomainLocale())];
     }

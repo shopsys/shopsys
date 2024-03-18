@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Unit\Unit;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -130,8 +131,7 @@ class UnitDataFixture extends AbstractReferenceFixture
 
     private function setPiecesAsDefaultUnit(): void
     {
-        /** @var \App\Model\Product\Unit\Unit $defaultUnit */
-        $defaultUnit = $this->getReference(self::UNIT_PIECES);
+        $defaultUnit = $this->getReference(self::UNIT_PIECES, Unit::class);
         $this->setting->set(Setting::DEFAULT_UNIT, $defaultUnit->getId());
     }
 }

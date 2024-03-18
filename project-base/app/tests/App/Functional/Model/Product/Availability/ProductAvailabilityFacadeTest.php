@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -56,9 +57,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      */
     public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
     {
-
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -101,8 +100,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $stockQuantity = 5;
         $expected = count($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID)) * $stockQuantity;
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -137,8 +135,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $stockSettingsData->transfer = $transfer;
         $this->stockSettingsDataFacade->edit($stockSettingsData);
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);

@@ -23,8 +23,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
             return $row;
         });
 
-        /** @phpstan-ignore-next-line */
-        $row = $dataSource->getOneRow($this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1'));
+        $row = $dataSource->getOneRow($this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class)->getId());
 
         $this->assertIsArray($row);
         $this->assertArrayHasKey('newField', $row);

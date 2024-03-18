@@ -7,6 +7,9 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Payment\Payment;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
@@ -49,8 +52,7 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
      */
     private function addProductToCart(): array
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $addToCartMutation = 'mutation {
             AddToCart(
@@ -85,8 +87,7 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
      */
     private function addPaymentToCart(string $cartUuid): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
 
         $changePaymentInCartMutation = '
             mutation {
@@ -107,8 +108,7 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
      */
     private function addTransportToCart(string $cartUuid): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
         $changeTransportInCartMutation = '
             mutation {

@@ -8,9 +8,11 @@ use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductFacadeTest extends TransactionFunctionalTestCase
@@ -49,10 +51,9 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
-        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Stock\Stock $stock */
-        $stock = $this->getReference(StocksDataFixture::STOCK_PREFIX . 1);
+        $stock = $this->getReference(StocksDataFixture::STOCK_PREFIX . 1, Stock::class);
 
         $productStockData = $this->productStockDataFactory->createFromStock($stock);
         $productStockData->productQuantity = 10;

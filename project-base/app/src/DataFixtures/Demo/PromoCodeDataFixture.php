@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class PromoCodeDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -119,8 +120,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData->code = 'test-for-vip-pricing-group';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
         $promoCodeData->identifier = 'GG';
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $vipPricingGroup */
-        $vipPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_VIP, Domain::FIRST_DOMAIN_ID);
+        $vipPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_VIP, Domain::FIRST_DOMAIN_ID, PricingGroup::class);
         $promoCodeData->limitedPricingGroups = [$vipPricingGroup];
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);

@@ -27,7 +27,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
     }
 
     public function testNullIsReturnedWhenNotEnabled(): void

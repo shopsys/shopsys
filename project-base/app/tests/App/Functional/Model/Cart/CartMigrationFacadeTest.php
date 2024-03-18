@@ -27,8 +27,8 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
 
     public function testMergeWithCartReturnsCartWithSummedProducts()
     {
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
 
         // Cart merging is bound to Product Id
         $productReflectionClass = new ReflectionClass(Product::class);

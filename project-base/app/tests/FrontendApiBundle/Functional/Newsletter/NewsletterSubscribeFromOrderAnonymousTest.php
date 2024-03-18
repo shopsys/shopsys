@@ -6,6 +6,8 @@ namespace Tests\FrontendApiBundle\Functional\Newsletter;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -30,11 +32,9 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
 
     private function createOrder(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

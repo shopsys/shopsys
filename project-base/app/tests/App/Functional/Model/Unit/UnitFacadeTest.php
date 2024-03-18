@@ -6,8 +6,10 @@ namespace Tests\App\Functional\Model\Unit;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
+use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use App\Model\Product\Unit\Unit;
 use App\Model\Product\Unit\UnitData;
 use App\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -34,10 +36,8 @@ class UnitFacadeTest extends TransactionFunctionalTestCase
         $unitData = new UnitData();
         $unitData->name = ['cs' => 'name'];
         $unitToDelete = $this->unitFacade->create($unitData);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unitToReplaceWith */
-        $unitToReplaceWith = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $unitToReplaceWith = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->unit = $unitToDelete;

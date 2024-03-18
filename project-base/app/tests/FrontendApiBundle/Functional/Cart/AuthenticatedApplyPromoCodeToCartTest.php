@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\VatDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
+use App\Model\Order\PromoCode\PromoCode as AppPromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
@@ -17,6 +18,7 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
@@ -62,10 +64,8 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
      */
     public function testApplyPromoCode(string $promoCodeCode): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain($promoCodeCode, 1);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        $promoCode = $this->getReferenceForDomain($promoCodeCode, 1, AppPromoCode::class);
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
 
         $cartResponseData = $this->createUserCartWithHelloKittyProduct();
 
@@ -116,8 +116,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
     public function testApplyPromoCodeMultipleTimes(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $this->createUserCartWithHelloKittyProduct();
 
@@ -151,8 +150,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
     public function testApplyPromoCodeBeforeCartIsCreatedForUser(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -173,8 +171,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
     public function testModificationAfterProductIsRemoved(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $this->createUserCartWithHelloKittyProduct();
 
@@ -191,8 +188,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
 
-        /** @var \App\Model\Product\Product $productInCart */
-        $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
         $this->hideProduct($productInCart);
 
         $getCartQuery = '{
@@ -230,8 +226,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
     public function testModificationAfterPromoCodeEdited(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $this->createUserCartWithHelloKittyProduct();
 
@@ -292,8 +287,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $promoCodeCode = 'non-existing-promo-code';
 
         if ($promoCodeReferenceName !== null) {
-            /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1);
+            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1, AppPromoCode::class);
             $promoCodeCode = $promoCode->getCode();
         }
 
@@ -351,7 +345,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
      */
     private function createUserCartWithHelloKittyProduct(): array
     {
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

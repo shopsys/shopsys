@@ -32,11 +32,9 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
 
     public function testGetOrderSentPageContent(): void
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
         $order = $this->createOrder($product, $transport, $transport->getPayments()[0]);
 
@@ -52,12 +50,9 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
 
     public function testGetPaymentSuccessfulPageContents(): void
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
 
         $order = $this->createOrder($product, $transport, $payment);
 
@@ -88,12 +83,9 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
 
     public function testGetPaymentFailedPageContents(): void
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
 
         $order = $this->createOrder($product, $transport, $payment);
 

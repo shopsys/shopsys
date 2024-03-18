@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
+use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -32,15 +34,15 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
 
             if ($domainId !== Domain::SECOND_DOMAIN_ID) {
                 $productsIndexedByPosition = [
-                    0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7'),
-                    2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8'),
-                    8 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5'),
+                    0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class),
+                    2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8', Product::class),
+                    8 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class),
                 ];
             } else {
-                $productsIndexedByPosition = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7')];
+                $productsIndexedByPosition = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class)];
             }
             $this->manualBestsellingProductFacade->edit(
-                $this->getReference(CategoryDataFixture::CATEGORY_PHOTO),
+                $this->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class),
                 $domainId,
                 $productsIndexedByPosition,
             );

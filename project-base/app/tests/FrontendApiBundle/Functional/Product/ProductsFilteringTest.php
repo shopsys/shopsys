@@ -8,6 +8,10 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
+use App\Model\Category\Category;
+use App\Model\Product\Brand\Brand;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
@@ -26,7 +30,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterByBrand(): void
     {
-        $brand = $this->getReference(BrandDataFixture::BRAND_APPLE);
+        $brand = $this->getReference(BrandDataFixture::BRAND_APPLE, Brand::class);
 
         $query = '
             query {
@@ -49,7 +53,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterByFlag(): void
     {
-        $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
+        $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class);
 
         $query = '
             query {
@@ -156,7 +160,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterByParameter(): void
     {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById(self::PARAMETER_NUMBER_OF_BUTTONS_ID);
@@ -206,10 +210,8 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterBySliderParameter(): void
     {
-        /** @var \App\Model\Category\Category $category */
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PC);
-        /** @var \App\Model\Product\Parameter\Parameter $parameterSlider */
-        $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
+        $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
 
         $query = '
             query {

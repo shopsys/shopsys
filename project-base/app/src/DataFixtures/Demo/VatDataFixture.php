@@ -93,8 +93,7 @@ class VatDataFixture extends AbstractReferenceFixture
      */
     private function setHighVatAsDefault(int $domainId): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $defaultVat */
-        $defaultVat = $this->getReferenceForDomain(self::VAT_HIGH, $domainId);
+        $defaultVat = $this->getReferenceForDomain(self::VAT_HIGH, $domainId, Vat::class);
         $this->setting->setForDomain(Vat::SETTING_DEFAULT_VAT, $defaultVat->getId(), $domainId);
     }
 }

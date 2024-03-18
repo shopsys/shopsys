@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
 use App\DataFixtures\Demo\BrandDataFixture;
+use App\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -23,7 +23,7 @@ class BrandTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->brand = $this->getReference(BrandDataFixture::BRAND_CANON);
+        $this->brand = $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class);
     }
 
     public function testBrandByUuid(): void

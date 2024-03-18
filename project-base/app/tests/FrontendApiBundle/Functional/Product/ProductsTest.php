@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 
 class ProductsTest extends ProductsGraphQlTestCase
@@ -126,8 +127,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     private function getExpectedDataForFifthProduct(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
 
         return [
             [

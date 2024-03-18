@@ -107,8 +107,7 @@ class GetStoreTest extends GraphQlTestCase
      */
     public function testStoreOnSecondDomainIsNotAvailable(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $storeOnSecondDomain */
-        $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3);
+        $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3, Store::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
             'uuid' => $storeOnSecondDomain->getUuid(),
@@ -545,8 +544,7 @@ class GetStoreTest extends GraphQlTestCase
         $closedDayData->name = '';
         $closedDayData->date = $date;
         $closedDayData->excludedStores = array_map(function (string $storeId): Store {
-            /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-            $store = $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId));
+            $store = $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId), Store::class);
 
             return $store;
         }, $storesIds);

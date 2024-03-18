@@ -6,6 +6,8 @@ namespace Tests\App\Functional\Model\Order\Status;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
+use App\Model\Order\Order;
+use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
@@ -34,10 +36,8 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['en' => 'name'];
         $orderStatusToDelete = $this->orderStatusFacade->create($orderStatusData);
-        /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatusToReplaceWith */
-        $orderStatusToReplaceWith = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '1');
+        $orderStatusToReplaceWith = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '1', Order::class);
 
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->status = $orderStatusToDelete;

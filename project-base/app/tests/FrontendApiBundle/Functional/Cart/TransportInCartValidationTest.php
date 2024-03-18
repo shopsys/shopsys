@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\FrontendApi\Model\Component\Constraints\TransportInCart;
+use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
@@ -38,8 +39,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
 
     public function testHiddenTransport(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->hideTransport($transport);
         $response = $this->addTransportToDemoCart($transport->getUuid());
 
@@ -50,8 +50,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
 
     public function testDeletedTransport(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->transportFacade->deleteById($transport->getId());
         $response = $this->addTransportToDemoCart($transport->getUuid());
 
@@ -62,8 +61,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
 
     public function testDisabledTransport(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->disableTransportOnFirstDomain($transport);
         $response = $this->addTransportToDemoCart($transport->getUuid());
 
@@ -92,8 +90,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
 
     public function testRequiredPickupPlaceIdentifier(): void
     {
-        /** @var \App\Model\Transport\Transport $personalPickupTransport */
-        $personalPickupTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $personalPickupTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $response = $this->addTransportToDemoCart($personalPickupTransport->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -103,11 +100,9 @@ class TransportInCartValidationTest extends GraphQlTestCase
 
     public function testInvalidTransportPaymentCombination(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $this->addPaymentToDemoCart($payment->getUuid());
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
         $response = $this->addTransportToDemoCart($transport->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -155,8 +150,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
      */
     private function addTransportWithNonExistingPickupPlaceToDemoCart(): array
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
 
         return $this->addTransportToDemoCart($transport->getUuid(), Uuid::uuid4()->toString());
     }
@@ -166,8 +160,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
      */
     private function addTransportWithExceededWeightLimitToDemoCart(): array
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
 
         return $this->addTransportToDemoCart($transport->getUuid());
     }

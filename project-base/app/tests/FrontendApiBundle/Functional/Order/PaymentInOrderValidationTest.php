@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PaymentInOrder;
+use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -82,8 +83,7 @@ class PaymentInOrderValidationTest extends GraphQlTestCase
 
     private function hideCardPayment(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
         $paymentData->hidden = true;
         $this->paymentFacade->edit($payment, $paymentData);
@@ -91,8 +91,7 @@ class PaymentInOrderValidationTest extends GraphQlTestCase
 
     private function disableCardPaymentOnFirstDomain(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
         $paymentData->enabled[1] = false;
         $this->paymentFacade->edit($payment, $paymentData);
@@ -100,8 +99,7 @@ class PaymentInOrderValidationTest extends GraphQlTestCase
 
     private function changeCardPaymentPriceOnFirstDomain(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
         $paymentData->pricesIndexedByDomainId[1] = $payment->getPrice(1)->getPrice()->add(Money::create(10));
         $this->paymentFacade->edit($payment, $paymentData);

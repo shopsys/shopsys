@@ -10,6 +10,7 @@ use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -254,8 +255,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     ): Price {
         $domainId = $this->domain->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
         $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
             $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
@@ -322,8 +322,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      */
     protected function getFormattedMoneyAmountConvertedToDomainDefaultCurrency(string $price): string
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $money = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
             Money::create($price),
             $currencyCzk,

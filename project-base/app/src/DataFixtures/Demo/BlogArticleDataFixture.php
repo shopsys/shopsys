@@ -251,7 +251,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
             $blogArticleData->seoTitles[$domain->getId()] = t('title', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->seoH1s[$domain->getId()] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
@@ -290,7 +290,7 @@ EOT));
 
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
             $blogArticleData->seoTitles[$domain->getId()] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->seoH1s[$domain->getId()] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
@@ -348,7 +348,7 @@ EOT));
         }
 
         foreach ($this->domain->getAll() as $domain) {
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
         }
 
         $this->blogArticleFacade->create($blogArticleData);

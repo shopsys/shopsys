@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
+use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -36,13 +37,11 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier(self::CART_UUID);
         $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
         $this->updateCartItemUuid($result->getCartItem()->getId(), '5096bd50-45e1-40a6-bbe8-6192592feb56');
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
         $this->updateCartItemUuid($result->getCartItem()->getId(), 'f0d0cb7c-f873-4107-8187-f733d292b02f');
     }

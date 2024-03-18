@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductListDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
+use App\Model\Product\Product;
 use Iterator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
@@ -129,7 +130,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         array $expectedProductIds,
     ): void {
         $productToAddId = 69;
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         array_unshift($expectedProductIds, $productToAddId);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productListUuid' => $productListUuid,
@@ -151,7 +152,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
     {
         $newUuid = Uuid::uuid4()->toString();
         $productToAddId = 69;
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productListUuid' => $newUuid,
             'productUuid' => $productToAdd->getUuid(),
@@ -171,7 +172,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
     public function testAddProductCreatesNewList(ProductListTypeEnum $productListType): void
     {
         $productToAddId = 69;
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $productToAdd->getUuid(),
             'type' => $productListType->name,
@@ -194,8 +195,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         array $expectedProductIds,
     ): void {
         $productToAddId = $expectedProductIds[0];
-        /** @var \App\Model\Product\Product $productToAdd */
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productListUuid' => $uuid,
             'productUuid' => $productToAdd->getUuid(),
@@ -238,8 +238,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         ProductListTypeEnum $productListType,
         string $uuid,
     ): void {
-        /** @var \App\Model\Product\Product $productThatIsNotInList */
-        $productThatIsNotInList = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 69);
+        $productThatIsNotInList = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 69, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
             'productListUuid' => $uuid,
             'productUuid' => $productThatIsNotInList->getUuid(),
@@ -277,10 +276,8 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
     public function testRemoveProductFromList(ProductListTypeEnum $productListType): void
     {
         $productListUuid = Uuid::uuid4()->toString();
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        /** @var \App\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
         $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productListUuid' => $productListUuid,
             'productUuid' => $product1->getUuid(),
@@ -310,8 +307,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
     public function testRemoveLastProductFromList(ProductListTypeEnum $productListType): void
     {
         $productListUuid = Uuid::uuid4()->toString();
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
         $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productListUuid' => $productListUuid,
             'productUuid' => $product->getUuid(),
@@ -343,8 +339,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
     public function testMergeListsAfterLoginAsCustomerUserWithExistingProductLists(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 1);
+        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 1, CustomerUser::class);
         $this->getResponseContentForGql(__DIR__ . '/graphql/LoginMutation.graphql', [
             'email' => $customerUser->getEmail(),
             'password' => 'user123',
@@ -367,8 +362,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
     public function testMergeListsAfterLoginAsCustomerUserWithoutProductLists(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 2);
+        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 2, CustomerUser::class);
         $this->getResponseContentForGql(__DIR__ . '/graphql/LoginMutation.graphql', [
             'email' => $customerUser->getEmail(),
             'password' => 'no-reply.3',

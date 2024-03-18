@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -117,7 +118,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 $locale,
             );
         }
-        $categoryElectronics = $this->getReference(self::CATEGORY_ELECTRONICS);
+        $categoryElectronics = $this->getReference(self::CATEGORY_ELECTRONICS, Category::class);
         $categoryData->parent = $categoryElectronics;
         $this->createCategory($categoryData, self::CATEGORY_TV);
 

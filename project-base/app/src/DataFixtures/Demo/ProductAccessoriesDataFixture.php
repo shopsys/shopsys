@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -27,41 +28,25 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
      */
     public function load(ObjectManager $manager)
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        /** @var \App\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
-        /** @var \App\Model\Product\Product $product3 */
-        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
-        /** @var \App\Model\Product\Product $product4 */
-        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
-        /** @var \App\Model\Product\Product $product5 */
-        $product5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5');
-        /** @var \App\Model\Product\Product $product6 */
-        $product6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6');
-        /** @var \App\Model\Product\Product $product7 */
-        $product7 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7');
-        /** @var \App\Model\Product\Product $product8 */
-        $product8 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8');
-        /** @var \App\Model\Product\Product $product9 */
-        $product9 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '9');
-        /** @var \App\Model\Product\Product $productSoldOut */
-        $productSoldOut = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '10');
-        /** @var \App\Model\Product\Product $product11 */
-        $product11 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '11');
-        /** @var \App\Model\Product\Product $product13 */
-        $product13 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '13');
-        /** @var \App\Model\Product\Product $product24 */
-        $product24 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '24');
-        /** @var \App\Model\Product\Product $productMainVariant */
-        $productMainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
-        /** @var \App\Model\Product\Product $productExcludedFromSale */
-        $productExcludedFromSale = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '76');
-        /** @var \App\Model\Product\Product $productVariant */
-        $productVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2', Product::class);
+        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3', Product::class);
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4', Product::class);
+        $product5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
+        $product6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6', Product::class);
+        $product7 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class);
+        $product8 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8', Product::class);
+        $product9 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '9', Product::class);
+        $productSoldOut = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '10', Product::class);
+        $product11 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '11', Product::class);
+        $product13 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '13', Product::class);
+        $product24 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '24', Product::class);
+        $productMainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
+        $productExcludedFromSale = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '76', Product::class);
+        $productVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148', Product::class);
 
         $productData->accessories = [
             $product2,

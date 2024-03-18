@@ -10,6 +10,7 @@ use App\Model\Customer\DeliveryAddress;
 use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
@@ -26,8 +27,7 @@ class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
 
     public function testSetDefaultDeliveryAddress(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
         $oldDeliveryAddressUuid = $customerUser->getDefaultDeliveryAddress()->getUuid();
         $newDeliveryAddress = $this->createNewDeliveryAddress($customerUser);
 
@@ -50,8 +50,7 @@ class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
      */
     private function createNewDeliveryAddress(CustomerUser $customerUser): DeliveryAddress
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Country\Country $country */
-        $country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
 
         $deliveryAddressData = $this->deliveryAddressDataFactory->create();
         $deliveryAddressData->addressFilled = true;

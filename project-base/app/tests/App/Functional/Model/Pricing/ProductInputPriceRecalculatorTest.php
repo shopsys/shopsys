@@ -9,9 +9,11 @@ use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator;
@@ -49,14 +51,14 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat()
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
         $productData = $this->productDataFactory->create();
-        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
         $productData->manualInputPricesByPricingGroupId = [
             1 => Money::zero(),
             2 => Money::zero(),
@@ -79,14 +81,14 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
         $productData = $this->productDataFactory->create();
-        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
         $productData->manualInputPricesByPricingGroupId = [
             1 => Money::zero(),
             2 => Money::zero(),

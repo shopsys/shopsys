@@ -8,13 +8,17 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use App\Model\Category\Category;
+use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Filter\ParameterFilterData;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -127,7 +131,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
      */
     private function categoryNoFilterTestCase(): array
     {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
         $filterData = new ProductFilterData();
         $countData = new ProductFilterCountData();
 
@@ -191,9 +195,9 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
      */
     private function categoryOneFlagTestCase(): array
     {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
         $filterData = new ProductFilterData();
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class);
 
         $countData = new ProductFilterCountData();
 
@@ -251,9 +255,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
      */
     private function categoryPriceTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
 
         $filterData = new ProductFilterData();
         $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
@@ -331,10 +334,10 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     private function categoryFlagBrandAndParametersTestCase(): array
     {
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
         $filterData = new ProductFilterData();
-        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
@@ -377,7 +380,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     private function categoryParametersTestCase(): array
     {
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
         $filterData = new ProductFilterData();
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
@@ -516,7 +519,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     private function searchOneFlagTestCase(): array
     {
         $filterData = new ProductFilterData();
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
         $countData = new ProductFilterCountData();
         $countData->countInStock = 1;
         $countData->countByBrandId = [
@@ -537,7 +540,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     private function searchOneBrandTestCase(): array
     {
         $filterData = new ProductFilterData();
-        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON);
+        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class);
         $countData = new ProductFilterCountData();
 
         $countData->countInStock = 4;
@@ -562,8 +565,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     private function searchPriceTestCase(): array
     {
         $filterData = new ProductFilterData();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(5000),
             $currencyCzk,
@@ -618,15 +620,14 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
      */
     private function searchPriceStockFlagBrandsTestCase(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $filterData = new ProductFilterData();
         $filterData->inStock = true;
-        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
-        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DELONGHI);
-        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER);
-        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS);
-        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP);
+        $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
+        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DELONGHI, Brand::class);
+        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_DEFENDER, Brand::class);
+        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_GENIUS, Brand::class);
+        $filterData->brands[] = $this->getReference(BrandDataFixture::BRAND_HP, Brand::class);
         $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(20000),
             $currencyCzk,

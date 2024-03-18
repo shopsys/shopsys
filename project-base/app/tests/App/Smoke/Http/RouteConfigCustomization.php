@@ -7,9 +7,11 @@ namespace Tests\App\Smoke\Http;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Administrator\Administrator;
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule;
 use Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth;
 use Shopsys\HttpSmokeTesting\Auth\NoAuth;
@@ -248,10 +250,8 @@ class RouteConfigCustomization
                     ->setParameter('id', 75);
             })
             ->customizeByRouteName('admin_unit_delete', function (RouteConfig $config) {
-                /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit */
-                $unit = $this->getPersistentReference(UnitDataFixture::UNIT_PIECES);
-                /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $newUnit */
-                $newUnit = $this->getPersistentReference(UnitDataFixture::UNIT_CUBIC_METERS);
+                $unit = $this->getPersistentReference(UnitDataFixture::UNIT_PIECES, entityClassName: Unit::class);
+                $newUnit = $this->getPersistentReference(UnitDataFixture::UNIT_CUBIC_METERS, entityClassName: Unit::class);
 
                 $debugNote = sprintf(
                     'Delete unit "%s" and replace it by "%s".',
@@ -263,10 +263,8 @@ class RouteConfigCustomization
                     ->setParameter('newId', $newUnit->getId());
             })
             ->customizeByRouteName('admin_vat_delete', function (RouteConfig $config) {
-                /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
-                $vat = $this->getPersistentReference(VatDataFixture::VAT_SECOND_LOW, Domain::FIRST_DOMAIN_ID);
-                /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat */
-                $newVat = $this->getPersistentReference(VatDataFixture::VAT_LOW, Domain::FIRST_DOMAIN_ID);
+                $vat = $this->getPersistentReference(VatDataFixture::VAT_SECOND_LOW, Domain::FIRST_DOMAIN_ID, Vat::class);
+                $newVat = $this->getPersistentReference(VatDataFixture::VAT_LOW, Domain::FIRST_DOMAIN_ID, Vat::class);
 
                 $debugNote = sprintf('Delete VAT "%s" and replace it by "%s".', $vat->getName(), $newVat->getName());
                 $config->changeDefaultRequestDataSet($debugNote)
@@ -411,21 +409,23 @@ class RouteConfigCustomization
     }
 
     /**
+     * @template T
      * @param string $name
      * @param int|null $domainId
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    private function getPersistentReference($name, ?int $domainId = null)
+    private function getPersistentReference($name, ?int $domainId = null, ?string $entityClassName = null)
     {
         /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade */
         $persistentReferenceFacade = $this->container
             ->get(PersistentReferenceFacade::class);
 
         if ($domainId !== null) {
-            return $persistentReferenceFacade->getReferenceForDomain($name, $domainId);
+            return $persistentReferenceFacade->getReferenceForDomain($name, $domainId, $entityClassName);
         }
 
-        return $persistentReferenceFacade->getReference($name);
+        return $persistentReferenceFacade->getReference($name, $entityClassName);
     }
 
     /**

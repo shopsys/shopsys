@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class DynamicFieldsInOrderTest extends GraphQlTestCase
@@ -14,8 +15,7 @@ class DynamicFieldsInOrderTest extends GraphQlTestCase
     public function testHasDynamicFields(): void
     {
         $graphQlType = 'CreateOrder';
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

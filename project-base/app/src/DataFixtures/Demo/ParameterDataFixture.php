@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -130,8 +131,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterColor = $this->createParameter(
             $parameterColorNamesByLocale,
             [
-                $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-                $this->getReference(CategoryDataFixture::CATEGORY_TV),
+                $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
+                $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
             ],
             Parameter::PARAMETER_TYPE_COLOR,
             Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
@@ -139,15 +140,14 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterMaterial = $this->createParameter(
             $parameterMaterialNamesByLocale,
             [
-                $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-                $this->getReference(CategoryDataFixture::CATEGORY_TV),
+                $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
+                $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
             ],
             null,
             Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
         );
 
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
@@ -156,8 +156,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetal);
         }
 
-        /** @var \App\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2', Product::class);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueBlack = $this->getParameterValue($locale, t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#000000');
@@ -166,8 +165,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetal);
         }
 
-        /** @var \App\Model\Product\Product $product3 */
-        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
+        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3', Product::class);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
@@ -176,8 +174,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValuePlastic);
         }
 
-        /** @var \App\Model\Product\Product $product4 */
-        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4', Product::class);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
@@ -272,23 +269,16 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterNamesByLocale[$locale] = t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $parameter = $this->createParameter($parameterNamesByLocale, [$this->getReference(CategoryDataFixture::CATEGORY_PC)], Parameter::PARAMETER_TYPE_SLIDER, null);
+        $parameter = $this->createParameter($parameterNamesByLocale, [$this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class)], Parameter::PARAMETER_TYPE_SLIDER, null);
         $this->addReference(self::PARAMETER_SLIDER_WARRANTY, $parameter);
 
-        /** @var \App\Model\Product\Product $product4 */
-        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4);
-        /** @var \App\Model\Product\Product $product9 */
-        $product9 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 9);
-        /** @var \App\Model\Product\Product $product11 */
-        $product11 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 11);
-        /** @var \App\Model\Product\Product $product16 */
-        $product16 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 16);
-        /** @var \App\Model\Product\Product $product18 */
-        $product18 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 18);
-        /** @var \App\Model\Product\Product $product35 */
-        $product35 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 35);
-        /** @var \App\Model\Product\Product $product52 */
-        $product52 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 52);
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4, Product::class);
+        $product9 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 9, Product::class);
+        $product11 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 11, Product::class);
+        $product16 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 16, Product::class);
+        $product18 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 18, Product::class);
+        $product35 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 35, Product::class);
+        $product52 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 52, Product::class);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $this->addParameterValueToProduct($product4, $parameter, $this->getParameterValue($locale, '1'));

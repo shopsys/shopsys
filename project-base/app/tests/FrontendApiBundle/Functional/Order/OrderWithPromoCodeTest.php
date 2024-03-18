@@ -7,9 +7,12 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -51,8 +54,7 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $this->applyPromoCode($cartUuid, $validPromoCode->getCode());
 
@@ -63,8 +65,7 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
     {
         $cartUuid = $this->addProductToCart();
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $this->applyPromoCode($cartUuid, $validPromoCode->getCode());
         $this->addCzechPostTransportToCart($cartUuid);
@@ -99,11 +100,9 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
         $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
@@ -244,8 +243,7 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
      */
     private function addProductToCart(): string
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

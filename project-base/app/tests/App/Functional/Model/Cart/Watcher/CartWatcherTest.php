@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
@@ -60,8 +61,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     public function testGetModifiedPriceItemsAndUpdatePrices()
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
@@ -175,6 +175,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $expectedPricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
         $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)

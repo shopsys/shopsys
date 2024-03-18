@@ -10,10 +10,12 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Payment\Payment;
+use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 trait OrderTestTrait
 {
@@ -24,10 +26,8 @@ trait OrderTestTrait
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
         $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
@@ -70,9 +70,9 @@ trait OrderTestTrait
         $mutation = file_get_contents($filePath);
 
         $replaces = [
-            '___UUID_PAYMENT___' => $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY)->getUuid(),
-            '___UUID_TRANSPORT___' => $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST)->getUuid(),
-            '___UUID_PRODUCT___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1')->getUuid(),
+            '___UUID_PAYMENT___' => $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY, Payment::class)->getUuid(),
+            '___UUID_TRANSPORT___' => $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class)->getUuid(),
+            '___UUID_PRODUCT___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class)->getUuid(),
         ];
 
         return strtr($mutation, $replaces);
@@ -149,8 +149,7 @@ trait OrderTestTrait
      */
     protected function addCzechPostTransportToCart(?string $cartUuid): void
     {
-        /** @var \App\Model\Transport\Transport $transportCzechPost */
-        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
         $this->addTransportToCart($cartUuid, $transportCzechPost);
     }
 
@@ -159,8 +158,7 @@ trait OrderTestTrait
      */
     protected function addPplTransportToCart(?string $cartUuid): void
     {
-        /** @var \App\Model\Transport\Transport $transportPpl */
-        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $this->addTransportToCart($cartUuid, $transportPpl);
     }
 
@@ -169,8 +167,7 @@ trait OrderTestTrait
      */
     protected function addCashOnDeliveryPaymentToCart(?string $cartUuid): void
     {
-        /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
-        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY, Payment::class);
         $this->addPaymentToCart($cartUuid, $paymentCashOnDelivery);
     }
 
@@ -179,8 +176,7 @@ trait OrderTestTrait
      */
     protected function addCardPaymentToCart(?string $cartUuid): void
     {
-        /** @var \App\Model\Payment\Payment $paymentCard */
-        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->addPaymentToCart($cartUuid, $paymentCard);
     }
 
@@ -205,8 +201,7 @@ trait OrderTestTrait
 
     protected function addCardPaymentToDemoCart(): void
     {
-        /** @var \App\Model\Payment\Payment $paymentCard */
-        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->addPaymentToCart(CartDataFixture::CART_UUID, $paymentCard);
     }
 

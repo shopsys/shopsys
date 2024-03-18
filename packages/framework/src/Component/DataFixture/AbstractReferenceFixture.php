@@ -46,12 +46,14 @@ abstract class AbstractReferenceFixture implements FixtureInterface
     }
 
     /**
+     * @template T
      * @param string $name
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    public function getReference($name)
+    public function getReference($name, ?string $entityClassName = null)
     {
-        return $this->persistentReferenceFacade->getReference($name);
+        return $this->persistentReferenceFacade->getReference($name, $entityClassName);
     }
 
     /**
@@ -65,12 +67,14 @@ abstract class AbstractReferenceFixture implements FixtureInterface
     }
 
     /**
+     * @template T
      * @param string $name
      * @param int $domainId
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    public function getReferenceForDomain(string $name, int $domainId)
+    public function getReferenceForDomain(string $name, int $domainId, ?string $entityClassName = null)
     {
-        return $this->persistentReferenceFacade->getReferenceForDomain($name, $domainId);
+        return $this->persistentReferenceFacade->getReferenceForDomain($name, $domainId, $entityClassName);
     }
 }

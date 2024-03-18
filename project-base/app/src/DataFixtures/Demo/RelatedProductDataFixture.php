@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -27,14 +28,13 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
      */
     public function load(ObjectManager $manager)
     {
-        /** @var \App\Model\Product\Product[] $products */
         $products = [
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6'),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '6', Product::class),
         ];
 
         foreach ($products as $key => $product) {

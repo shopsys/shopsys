@@ -7,7 +7,10 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,8 +20,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
 
     public function testCartManipulationWithPromoCode(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $initCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product1->getUuid(),
@@ -28,8 +30,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         $initCartResult = $initCartResponse['data']['AddToCart'];
         $cartUuid = $initCartResult['cart']['uuid'];
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, Domain::FIRST_DOMAIN_ID);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, Domain::FIRST_DOMAIN_ID, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -65,15 +66,13 @@ class CartWithPromoCodeTest extends GraphQlTestCase
             }
         }';
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
 
         $cartData = $this->getResponseContentForQuery($query)['data']['cart'];
         $this->assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('2602.48', $vatHigh), $cartData['totalPrice']);
         $this->assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('289.26', $vatHigh), $cartData['totalDiscountPrice']);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
-        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
 
         $addAnotherToCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,

@@ -6,7 +6,9 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class MultipleProductsInOrderTest extends GraphQlTestCase
@@ -75,11 +77,9 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
         $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
@@ -214,8 +214,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
      */
     private function addProductsToCart(): string
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product1->getUuid(),
@@ -224,8 +223,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
 
         $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
-        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,

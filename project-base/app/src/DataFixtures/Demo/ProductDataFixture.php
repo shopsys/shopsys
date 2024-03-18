@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -22,8 +23,10 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
@@ -189,9 +192,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
-        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
-        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
-        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
@@ -530,7 +533,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
-        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
@@ -5603,10 +5606,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
-            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $pricingGroup->getDomainId());
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-            $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $pricingGroup->getDomainId(), Vat::class);
+            $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
             $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 Money::create($price),
@@ -5719,12 +5720,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setVat(ProductData $productData, ?string $vatReference): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $productVatsIndexedByDomainId */
         $productVatsIndexedByDomainId = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
             if ($vatReference !== null) {
-                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, Domain::FIRST_DOMAIN_ID);
+                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, Domain::FIRST_DOMAIN_ID, Vat::class);
             }
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;

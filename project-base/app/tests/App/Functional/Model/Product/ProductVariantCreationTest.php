@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use Shopsys\FrameworkBundle\Model\Product\Product;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -18,15 +18,15 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 
     public function testVariantWithImageCanBeCreated(): void
     {
-        /** @var \App\Model\Product\Product $mainProduct */
-        $mainProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7');
+        $mainProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class);
 
         $variants = [
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '88'),
-            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '89'),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '88', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '89', Product::class),
         ];
 
+        /** @var \App\Model\Product\Product $mainVariant */
         $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
 
         $this->assertTrue($mainVariant->isMainVariant());
@@ -35,7 +35,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 
     /**
      * @param \App\Model\Product\Product[] $expectedVariants
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
+     * @param \App\Model\Product\Product $mainVariant
      */
     private function assertContainsAllVariants(array $expectedVariants, Product $mainVariant): void
     {

@@ -26,10 +26,12 @@ class PersistentReferenceFacade
     }
 
     /**
+     * @template T
      * @param string $name
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    public function getReference($name)
+    public function getReference(string $name, ?string $entityClassName = null)
     {
         $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
         $entity = $this->em->find($persistentReference->getEntityName(), $persistentReference->getEntityId());
@@ -87,15 +89,17 @@ class PersistentReferenceFacade
     }
 
     /**
+     * @template T
      * @param string $name
      * @param int $domainId
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    public function getReferenceForDomain(string $name, int $domainId)
+    public function getReferenceForDomain(string $name, int $domainId, ?string $entityClassName = null)
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
 
-        return $this->getReference($referenceName);
+        return $this->getReference($referenceName, $entityClassName);
     }
 
     /**

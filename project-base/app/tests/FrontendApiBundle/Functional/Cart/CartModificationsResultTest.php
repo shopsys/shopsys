@@ -19,6 +19,7 @@ use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -65,7 +66,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
     }
 
     public function testModificationTriggeredInAddToCartMutation(): void
@@ -73,7 +74,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $productQuantity = 2;
         $newlyCreatedCart = $this->addTestingProductToNewCart($productQuantity);
 
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72, Product::class);
 
         $this->hideTestingProduct();
 
@@ -93,7 +94,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $productQuantity = 2;
         $newlyCreatedCart = $this->addTestingProductToNewCart($productQuantity);
 
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72, Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $newlyCreatedCart['uuid'],
@@ -104,7 +105,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $cartItemUuid = $response['data']['AddToCart']['cart']['items'][1]['uuid'];
 
         // product has to be refreshed to prevent Doctrine from trying to flush not-persisted entity Vat
-        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
         $this->hideTestingProduct();
 
         $removeFromCartMutation = 'mutation {
@@ -303,8 +304,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         $referenceName = TransportDataFixture::TRANSPORT_PPL;
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference($referenceName);
+        $transport = $this->getReference($referenceName, Transport::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
         $this->changeTransportPrice($referenceName);
 
@@ -328,11 +328,9 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testTransportWithNotExistingPersonalPickupStoreIsReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
         $this->storeFacade->delete($store->getId());
 
@@ -356,11 +354,9 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testValidPersonalPickupStoreIsNotReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
 
         $getCartQuery = '{
@@ -383,8 +379,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testDeletedTransportIsReportedAsUnavailable(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
         $this->transportFacade->deleteById($transport->getId());
         $getCartQuery = '{
@@ -408,8 +403,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         $referenceName = TransportDataFixture::TRANSPORT_PPL;
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference($referenceName);
+        $transport = $this->getReference($referenceName, Transport::class);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
         $this->hideTransport($referenceName);
         $getCartQuery = '{
@@ -432,8 +426,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testTransportWithExceededWeightLimitIsReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
         $cartUuid = $newlyCreatedCart['uuid'];
 
         $this->addTransportToCart($cartUuid, $transport);
@@ -462,8 +455,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         $referenceName = PaymentDataFixture::PAYMENT_CARD;
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference($referenceName);
+        $payment = $this->getReference($referenceName, Payment::class);
         $cartUuid = $newlyCreatedCart['uuid'];
         $this->addPaymentToCart($cartUuid, $payment);
         $this->changePaymentPrice($referenceName);
@@ -488,8 +480,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testUnavailablePaymentIsReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $cartUuid = $newlyCreatedCart['uuid'];
         $this->addPaymentToCart($cartUuid, $payment);
         $this->paymentFacade->deleteById($payment->getId());
@@ -652,8 +643,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     private function changeTransportPrice(string $transportReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference($transportReferenceName);
+        $transport = $this->getReference($transportReferenceName, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
         $transportData->pricesIndexedByDomainId[1] = $transport->getPrice(1)->getPrice()->add(Money::create(10));
         $this->transportFacade->edit($transport, $transportData);
@@ -665,8 +655,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     private function hideTransport(string $transportReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference($transportReferenceName);
+        $transport = $this->getReference($transportReferenceName, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
         $transportData->hidden = true;
         $this->transportFacade->edit($transport, $transportData);
@@ -697,8 +686,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     private function changePaymentPrice(string $paymentReferenceName): void
     {
         // refresh transport, so we're able to work with it as with an entity
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference($paymentReferenceName);
+        $payment = $this->getReference($paymentReferenceName, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
         $paymentData->pricesIndexedByDomainId[1] = $payment->getPrice(1)->getPrice()->add(Money::create(10));
         $this->paymentFacade->edit($payment, $paymentData);

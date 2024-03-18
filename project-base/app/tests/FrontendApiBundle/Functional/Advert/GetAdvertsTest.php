@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Advert;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Advert\AdvertDataFactory;
+use App\Model\Category\Category;
 use League\Flysystem\MountManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
@@ -138,7 +139,7 @@ class GetAdvertsTest extends GraphQlTestCase
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetAdvertsQuery.graphql', [
             'positionName' => 'productListMiddle',
-            'categoryUuid' => $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS)->getUuid(),
+            'categoryUuid' => $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class)->getUuid(),
         ]);
 
         $this->assetAdvertsAreAsExpected($response, array_slice($this->getExpectedAdverts(), 1, 1));
