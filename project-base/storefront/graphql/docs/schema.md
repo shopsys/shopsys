@@ -9998,11 +9998,11 @@ One of possible types of the product list
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>COMPARISON</strong></td>
+<td valign="top"><strong>comparison</strong></td>
 <td></td>
 </tr>
 <tr>
-<td valign="top"><strong>WISHLIST</strong></td>
+<td valign="top"><strong>wishlist</strong></td>
 <td></td>
 </tr>
 </tbody>

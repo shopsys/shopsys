@@ -23,7 +23,7 @@ class ProductListApiFacade
     }
 
     /**
-     * @param array{uuid:string|null, type:\Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum} $input
+     * @param array{uuid:string|null, type:string} $input
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
     public function findProductListByInputData(array $input): ?ProductList

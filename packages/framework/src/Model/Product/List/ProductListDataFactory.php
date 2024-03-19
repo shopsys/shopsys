@@ -17,13 +17,13 @@ class ProductListDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $uuid
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListData
      */
     public function create(
-        ProductListTypeEnumInterface $productListType,
+        string $productListType,
         ?CustomerUser $customerUser,
         ?string $uuid,
     ): ProductListData {

@@ -59,8 +59,8 @@ class ProductList
     protected $updatedAt;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum
-     * @ORM\Column(type="string", length=20, nullable=false, enumType="Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum")
+     * @var string
+     * @ORM\Column(type="string", length=20, nullable=false)
      */
     protected $type;
 
@@ -118,7 +118,7 @@ class ProductList
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum
+     * @return string
      */
     public function getType()
     {

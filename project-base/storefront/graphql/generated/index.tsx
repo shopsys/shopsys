@@ -2001,8 +2001,8 @@ export type ProductListInputApi = {
 
 /** One of possible types of the product list */
 export enum ProductListTypeEnumApi {
-  ComparisonApi = 'COMPARISON',
-  WishlistApi = 'WISHLIST'
+  ComparisonApi = 'comparison',
+  WishlistApi = 'wishlist'
 }
 
 export type ProductListUpdateInputApi = {
