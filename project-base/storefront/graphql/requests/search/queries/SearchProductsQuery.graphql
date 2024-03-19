@@ -7,7 +7,13 @@ query SearchProductsQuery(
     $isAutocomplete: Boolean!
     $userIdentifier: Uuid!
 ) {
-    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize, searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
+    productsSearch(
+        after: $endCursor
+        orderingMode: $orderingMode
+        filter: $filter
+        first: $pageSize
+        searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }
+    ) {
         orderingMode
         defaultOrderingMode
         totalCount

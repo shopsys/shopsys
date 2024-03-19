@@ -24,10 +24,10 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
     return (
         <>
             <ProductsList
-                fetching={fetching}
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.flag_detail}
-                loadMoreFetching={loadMoreFetching}
+                isFetching={fetching}
+                isLoadMoreFetching={loadMoreFetching}
                 products={flagListedProducts}
             />
             <Pagination

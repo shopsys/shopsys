@@ -1627,8 +1627,8 @@ input ProductListInput {
 
 "One of possible types of the product list"
 enum ProductListTypeEnum {
-  COMPARISON
   WISHLIST
+  COMPARISON
 }
 
 input ProductListUpdateInput {
@@ -1639,16 +1639,16 @@ input ProductListUpdateInput {
 
 "One of possible ordering modes for product"
 enum ProductOrderingModeEnum {
-  "Order by name ascending"
-  NAME_ASC
-  "Order by name descending"
-  NAME_DESC
+  "Order by priority"
+  PRIORITY
   "Order by price ascending"
   PRICE_ASC
   "Order by price descending"
   PRICE_DESC
-  "Order by priority"
-  PRIORITY
+  "Order by name ascending"
+  NAME_ASC
+  "Order by name descending"
+  NAME_DESC
   "Order by relevance"
   RELEVANCE
 }

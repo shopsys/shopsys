@@ -37,10 +37,10 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
         <>
             <ProductsList
                 category={category}
-                fetching={fetching}
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={gtmProductListName}
-                loadMoreFetching={loadMoreFetching}
+                isFetching={fetching}
+                isLoadMoreFetching={loadMoreFetching}
                 products={categoryListedProducts}
             />
             <Pagination

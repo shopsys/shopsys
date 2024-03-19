@@ -16,9 +16,7 @@ import { useRef, useState, useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useClient, Client } from 'urql';
 
-export const useSearchProductsData = (
-    totalProductCount: number,
-): [ListedProductConnectionFragmentApi['edges'] | undefined, boolean, boolean, boolean] => {
+export const useSearchProductsData = (totalProductCount?: number) => {
     const client = useClient();
     const { filter, sort, currentPage, currentLoadMore, searchString } = useQueryParams();
     const mappedFilter = mapParametersFilter(filter);
@@ -27,22 +25,11 @@ export const useSearchProductsData = (
     const previousPageRef = useRef(currentPage);
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
 
-    const userIdentifier = usePersistStore((store) => store.userId)!;
-
-    const [searchProductsData, setSearchProductsData] = useState(
-        readSearchProductsFromCache(
-            client,
-            searchString ?? '',
-            sort,
-            mappedFilter,
-            getEndCursor(currentPage),
-            initialPageSizeRef.current,
-            userIdentifier,
-        ),
-    );
-
-    const [fetching, setFetching] = useState(!searchProductsData);
+    const [searchProductsData, setSearchProductsData] = useState<SearchProductsQueryApi | undefined>();
+    const [isFetching, setIsFetching] = useState(!searchProductsData);
     const [loadMoreFetching, setLoadMoreFetching] = useState(false);
+
+    const userIdentifier = usePersistStore((store) => store.userId)!;
 
     const fetchProducts = async (
         variables: SearchProductsQueryVariablesApi,
@@ -52,22 +39,23 @@ export const useSearchProductsData = (
             .query<SearchProductsQueryApi, SearchProductsQueryVariablesApi>(SearchProductsQueryDocumentApi, variables)
             .toPromise();
 
-        if (!response.data) {
-            setSearchProductsData({ products: undefined, hasNextPage: false });
-
+        if (!response.data?.productsSearch) {
             return;
         }
 
         setSearchProductsData({
-            products: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
-            hasNextPage: response.data.productsSearch.pageInfo.hasNextPage,
+            ...response.data,
+            productsSearch: {
+                ...response.data.productsSearch,
+                edges: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
+            },
         });
         stopFetching();
     };
 
     const startFetching = () => {
         if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setFetching(true);
+            setIsFetching(true);
         } else {
             setLoadMoreFetching(true);
             previousLoadMoreRef.current = currentLoadMore;
@@ -75,7 +63,7 @@ export const useSearchProductsData = (
     };
 
     const stopFetching = () => {
-        setFetching(false);
+        setIsFetching(false);
         setLoadMoreFetching(false);
     };
 
@@ -125,10 +113,10 @@ export const useSearchProductsData = (
         );
     }, [searchString, sort, JSON.stringify(filter), currentPage, currentLoadMore]);
 
-    return [searchProductsData.products, searchProductsData.hasNextPage, fetching, loadMoreFetching];
+    return { searchProductsData: searchProductsData?.productsSearch, isFetching, loadMoreFetching };
 };
 
-const readSearchProductsFromCache = (
+const readProductsSearchFromCache = (
     client: Client,
     searchQuery: string,
     orderingMode: ProductOrderingModeEnumApi | null,
@@ -136,10 +124,7 @@ const readSearchProductsFromCache = (
     endCursor: string,
     pageSize: number,
     userIdentifier: string,
-): {
-    products: ListedProductConnectionFragmentApi['edges'] | undefined;
-    hasNextPage: boolean;
-} => {
+): SearchProductsQueryApi['productsSearch'] | undefined => {
     const dataFromCache = client.readQuery<SearchProductsQueryApi, SearchProductsQueryVariablesApi>(
         SearchProductsQueryDocumentApi,
         {
@@ -153,10 +138,7 @@ const readSearchProductsFromCache = (
         },
     )?.data?.productsSearch;
 
-    return {
-        products: dataFromCache?.edges,
-        hasNextPage: !!dataFromCache?.pageInfo.hasNextPage,
-    };
+    return dataFromCache;
 };
 
 const getPreviousProductsFromCache = (
@@ -174,7 +156,7 @@ const getPreviousProductsFromCache = (
 
     while (iterationsCounter > 0) {
         const offsetEndCursor = getEndCursor(currentPage + currentLoadMore - iterationsCounter);
-        const currentCacheSlice = readSearchProductsFromCache(
+        const productsSearchFromCache = readProductsSearchFromCache(
             client,
             searchQuery,
             sort,
@@ -182,13 +164,13 @@ const getPreviousProductsFromCache = (
             offsetEndCursor,
             pageSize,
             userIdentifier,
-        ).products;
+        );
 
-        if (currentCacheSlice) {
+        if (productsSearchFromCache) {
             if (cachedPartOfProducts) {
-                cachedPartOfProducts = mergeProductEdges(cachedPartOfProducts, currentCacheSlice);
+                cachedPartOfProducts = mergeProductEdges(cachedPartOfProducts, productsSearchFromCache.edges);
             } else {
-                cachedPartOfProducts = currentCacheSlice;
+                cachedPartOfProducts = productsSearchFromCache.edges;
             }
         } else {
             return undefined;
