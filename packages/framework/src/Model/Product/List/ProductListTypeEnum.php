@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
-enum ProductListTypeEnum: string implements ProductListTypeEnumInterface
+use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
+
+class ProductListTypeEnum extends AbstractEnum
 {
-    case WISHLIST = 'wishlist';
-    case COMPARISON = 'comparison';
+    public const string WISHLIST = 'WISHLIST';
+    public const string COMPARISON = 'COMPARISON';
 }

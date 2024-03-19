@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnumInterface;
 
 class ProductListDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -57,13 +56,14 @@ class ProductListDataFixture extends AbstractReferenceFixture implements Depende
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string $uuid
      * @param \App\Model\Product\Product[] $products
+     * @throws \Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException
      */
     private function createProductList(
-        ProductListTypeEnumInterface $productListType,
+        string $productListType,
         ?CustomerUser $customerUser,
         string $uuid,
         array $products,
