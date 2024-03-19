@@ -42,7 +42,6 @@ const getStep = (min: number, max: number): number => {
 export const RangeSlider: FC<RangeSliderProps> = ({
     min,
     max,
-    delay = 300,
     minValue,
     maxValue,
     setMinValueCallback,
@@ -59,27 +58,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const [maxValueThumb, setMaxValueThumb] = useState(max);
 
     const range = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (minValueThumb !== minValue) {
-                setMinValueCallback(minValueThumb);
-            }
-        }, delay);
-
-        return () => clearTimeout(timer);
-    }, [minValueThumb, delay]);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (maxValueThumb !== maxValue) {
-                setMaxValueCallback(maxValueThumb);
-            }
-        }, delay);
-
-        return () => clearTimeout(timer);
-    }, [maxValueThumb, delay]);
-
     useEffect(() => {
         if (minValue < min) {
             setMinValueThumb(min);
@@ -134,7 +112,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const onChangeMinInputHandler: ChangeEventHandler<HTMLInputElement> = (event) =>
         setMinValueInput(parseFloat(event.currentTarget.value));
 
-    const onKeyDownHandler: KeyboardEventHandler<HTMLInputElement> = (event) =>
+    const onEnterKeyDownHandler: KeyboardEventHandler<HTMLInputElement> = (event) =>
         event.key === 'Enter' && event.currentTarget.blur();
 
     const onChangeMinHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -148,6 +126,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         setMaxValueThumb(value);
         setMaxValueInput(value);
     };
+
+    const handleMinValueThumbCallback = () => setMinValueCallback(minValueThumb);
+    const handleMaxValueThumbCallback = () => setMaxValueCallback(maxValueThumb);
 
     // Set width of the range to decrease from the left side
     useEffect(() => {
@@ -182,6 +163,8 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 type="range"
                 value={minValueThumb}
                 onChange={onChangeMinHandler}
+                onMouseUp={handleMinValueThumbCallback}
+                onTouchEnd={handleMinValueThumbCallback}
             />
             <RangeSliderThumb
                 aria-label={t('to')}
@@ -193,6 +176,8 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 type="range"
                 value={maxValueThumb}
                 onChange={onChangeMaxHandler}
+                onMouseUp={handleMaxValueThumbCallback}
+                onTouchEnd={handleMaxValueThumbCallback}
             />
             <div className="relative w-full">
                 <div className="absolute z-above h-1 w-full rounded bg-greyLighter" />
@@ -210,7 +195,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         value={minValueInput}
                         onBlur={onBlurMinHandler}
                         onChange={onChangeMinInputHandler}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={onEnterKeyDownHandler}
                     />
                 </div>
                 <div className="absolute -right-2 mt-5 w-20 text-xs text-dark">
@@ -223,7 +208,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         value={maxValueInput}
                         onBlur={onBlurMaxHandler}
                         onChange={onChangeMaxInputHandler}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={onEnterKeyDownHandler}
                     />
                 </div>
             </div>
