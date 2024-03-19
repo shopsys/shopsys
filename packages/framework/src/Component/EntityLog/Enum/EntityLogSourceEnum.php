@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Enum;
 
-enum EntityLogSourceEnum: string implements EntityLogSourceEnumInterface
+use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
+
+class EntityLogSourceEnum extends AbstractEnum
 {
-    case USER = 'user';
-    case ADMIN = 'admin';
-    case API = 'api';
-    case SYSTEM = 'system';
+    public const string USER = 'user';
+    public const string ADMIN = 'admin';
+    public const string API = 'api';
+    public const string SYSTEM = 'system';
 }
