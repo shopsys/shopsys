@@ -1,5 +1,4 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     LastOrderFragmentApi,
     LastOrderQueryApi,
@@ -16,6 +15,7 @@ import {
 import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
@@ -246,8 +246,8 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     changePaymentInCart: ChangePaymentHandler,
 ): [boolean, ListedStoreFragmentApi | null] => {
     const client = useClient();
-    const isUserLoggedIn = !!useCurrentCustomerData();
-    const { transport: currentTransport, payment: currentPayment } = useCurrentCart();
+    const isUserLoggedIn = useIsUserLoggedIn();
+    const { transport: currentTransport, payment: currentPayment, isCartHydrated } = useCurrentCart();
 
     const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<ListedStoreFragmentApi | null>(null);
     const [isLoadingTransportAndPaymentFromLastOrder, setIsLoadingTransportAndPaymentFromLastOrder] = useState(false);
@@ -317,12 +317,10 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     };
 
     useEffect(() => {
-        if (!isUserLoggedIn) {
-            return;
+        if (isUserLoggedIn && isCartHydrated) {
+            loadTransportAndPaymentFromLastOrder();
         }
-
-        loadTransportAndPaymentFromLastOrder();
-    }, []);
+    }, [isUserLoggedIn]);
 
     return [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace];
 };

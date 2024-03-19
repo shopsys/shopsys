@@ -1,3 +1,4 @@
+import { isClient } from 'helpers/isClient';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useRef } from 'react';
 import { CookiesStoreState, useCookiesStore } from 'store/useCookiesStore';
@@ -7,6 +8,7 @@ import { v4 as uuidV4 } from 'uuid';
 export const useSetInitialStoreValues = ({ cookiesStore }: ServerSidePropsType) => {
     const isStoreSet = useRef(false);
 
+    const userId = usePersistStore((store) => store.userId);
     const updateUserId = usePersistStore((store) => store.updateUserId);
     const setCookieStoreValue = useCookiesStore((state) => state.setCookiesStoreState);
 
@@ -17,17 +19,17 @@ export const useSetInitialStoreValues = ({ cookiesStore }: ServerSidePropsType) 
     };
 
     const setPersistStoreValues = () => {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        usePersistStore.persist?.onFinishHydration(({ userId }) => {
-            if (!userId) {
-                updateUserId(uuidV4());
-            }
-        });
+        if (!userId) {
+            updateUserId(uuidV4());
+        }
     };
 
     if (!isStoreSet.current) {
-        setPersistStoreValues();
         setCookiesStoresValues();
+
+        if (isClient) {
+            setPersistStoreValues();
+        }
 
         isStoreSet.current = true;
     }
