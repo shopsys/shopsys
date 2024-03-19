@@ -49,34 +49,30 @@ describe('Create order with delivery address tests', () => {
         takeSnapshotAndCompare('order-with-delivery-address_basic-1_order-detail');
     });
 
-    it(
-        'should keep filled delivery address after unchecking the checkbox for different delivery address and ' +
-            'then checking it again',
-        () => {
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+    it('should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', () => {
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_basic-2_initially-empty');
+        takeSnapshotAndCompare('order-with-delivery-address_basic-2_initially-empty');
 
-            clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-            loseFocus();
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        loseFocus();
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
-            cy.wait(500);
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        cy.wait(500);
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_basic-2');
+        takeSnapshotAndCompare('order-with-delivery-address_basic-2');
 
-            clickOnSendOrderButton();
+        clickOnSendOrderButton();
 
-            checkFinishOrderPageAsUnregistredCustomer();
-            clickOnOrderDetailButtonOnThankYouPage();
+        checkFinishOrderPageAsUnregistredCustomer();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_basic-2_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_basic-2_order-detail');
+    });
 });
 
 describe('Delivery address in order tests (logged-in user)', () => {
@@ -116,110 +112,98 @@ describe('Delivery address in order tests (logged-in user)', () => {
         takeSnapshotAndCompare('order-with-delivery-address_logged-in-1_order-detail');
     });
 
-    it(
-        'should keep filled delivery address for logged-in user after unchecking the checkbox for different delivery ' +
-            'address and then checking it again',
-        () => {
-            cy.registerAsNewUser(
-                generateCustomerRegistrationData(
-                    'keep-filled-delivery-address-logged-in-after-unchecking-and-checking@shopsys.com',
-                ),
-            );
-            cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-            cy.preselectTransportForTest(transport.czechPost.uuid);
-            cy.preselectPaymentForTest(payment.onDelivery.uuid);
+    it('should keep filled delivery address for logged-in user after unchecking the checkbox for different delivery address and then checking it again', () => {
+        cy.registerAsNewUser(
+            generateCustomerRegistrationData(
+                'keep-filled-delivery-address-logged-in-after-unchecking-and-checking@shopsys.com',
+            ),
+        );
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.preselectTransportForTest(transport.czechPost.uuid);
+        cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-            cy.visit(url.order.contactInformation);
+        cy.visit(url.order.contactInformation);
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-2_initially-empty');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-2_initially-empty');
 
-            clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-            loseFocus();
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        loseFocus();
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
-            cy.wait(500);
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        cy.wait(500);
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-2');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-2');
 
-            clickOnSendOrderButton();
-            clickOnOrderDetailButtonOnThankYouPage();
+        clickOnSendOrderButton();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-2_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-2_order-detail');
+    });
 
-    it(
-        'should first select saved default delivery address for logged-in user, but then fill and keep new delivery ' +
-            'address after refresh',
-        () => {
-            registerAndCreateOrderForDeliveryAddressTests(
-                'first-select-saved-then-fill-and-keep-filled-after-refresh@shopsys.com',
-            );
+    it('should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', () => {
+        registerAndCreateOrderForDeliveryAddressTests(
+            'first-select-saved-then-fill-and-keep-filled-after-refresh@shopsys.com',
+        );
 
-            cy.visit(url.order.contactInformation);
+        cy.visit(url.order.contactInformation);
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-3_default_saved_address');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-3_default_saved_address');
 
-            clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
-            clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-            loseFocus();
+        clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        loseFocus();
 
-            cy.reloadAndWaitForStableDOM();
+        cy.reloadAndWaitForStableDOM();
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-3');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-3');
 
-            clickOnSendOrderButton();
-            clickOnOrderDetailButtonOnThankYouPage();
+        clickOnSendOrderButton();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-3_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-3_order-detail');
+    });
 
-    it(
-        'should first select saved default delivery address for logged-in user, then fill new delivery address,' +
-            'then change it to a saved one and back to the new address which should stay filled',
-        () => {
-            registerAndCreateOrderForDeliveryAddressTests(
-                'first-select-saved-then-change-to-new-then-to-saved-and-to-new-again@shopsys.com',
-            );
+    it('should first select saved default delivery address for logged-in user, then fill new delivery address,then change it to a saved one and back to the new address which should stay filled', () => {
+        registerAndCreateOrderForDeliveryAddressTests(
+            'first-select-saved-then-change-to-new-then-to-saved-and-to-new-again@shopsys.com',
+        );
 
-            cy.visit(url.order.contactInformation);
+        cy.visit(url.order.contactInformation);
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-4_default_saved_address');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-4_default_saved_address');
 
-            clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
-            clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
-            loseFocus();
+        clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        loseFocus();
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-4');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-4');
 
-            clickOnLabel('contact-information-formdeliveryAddressUuid0');
-            clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
+        clickOnLabel('contact-information-formdeliveryAddressUuid0');
+        clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-4');
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-4');
 
-            clickOnSendOrderButton();
-            clickOnOrderDetailButtonOnThankYouPage();
+        clickOnSendOrderButton();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_logged-in-4_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_logged-in-4_order-detail');
+    });
 });
 
 describe('Delivery address in order tests (with pickup point)', () => {
@@ -259,34 +243,30 @@ describe('Delivery address in order tests (with pickup point)', () => {
         takeSnapshotAndCompare('order-with-delivery-address_pickup-point-1_order-detail');
     });
 
-    it(
-        'should prefill delivery address from selected pickup point and keep delivery contact after unchecking the ' +
-            'checkbox for different delivery contact and then checking it again',
-        () => {
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+    it('should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', () => {
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-2_initially-empty');
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-2_initially-empty');
 
-            clearAndFillDeliveryContactInThirdStep(deliveryAddress);
-            loseFocus();
+        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        loseFocus();
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
-            cy.wait(500);
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        cy.wait(500);
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-2');
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-2');
 
-            clickOnSendOrderButton();
+        clickOnSendOrderButton();
 
-            checkFinishOrderPageAsUnregistredCustomer();
-            clickOnOrderDetailButtonOnThankYouPage();
+        checkFinishOrderPageAsUnregistredCustomer();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-2_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-2_order-detail');
+    });
 });
 
 describe('Delivery address in order tests (with pickup point, logged-in user)', () => {
@@ -296,73 +276,65 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
         });
     });
 
-    it(
-        'should not prefill delivery contact for logged-in user with saved address and with selected pickup point, ' +
-            'and then keep the filled delivery information after refresh',
-        () => {
-            registerAndCreateOrderForDeliveryAddressTests(
-                'no-prefill-contact-information-with-selected-pickup-place@shopsys.com',
-                transport.personalCollection.uuid,
-                transport.personalCollection.storeOstrava.uuid,
-                payment.cash.uuid,
-            );
+    it('should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', () => {
+        registerAndCreateOrderForDeliveryAddressTests(
+            'no-prefill-contact-information-with-selected-pickup-place@shopsys.com',
+            transport.personalCollection.uuid,
+            transport.personalCollection.storeOstrava.uuid,
+            payment.cash.uuid,
+        );
 
-            cy.visit(url.order.contactInformation);
+        cy.visit(url.order.contactInformation);
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1_initially-empty');
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1_initially-empty');
 
-            clearAndFillDeliveryContactInThirdStep(deliveryAddress);
-            loseFocus();
+        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        loseFocus();
 
-            cy.reloadAndWaitForStableDOM();
+        cy.reloadAndWaitForStableDOM();
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1');
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1');
 
-            clickOnSendOrderButton();
-            clickOnOrderDetailButtonOnThankYouPage();
+        clickOnSendOrderButton();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1_order-detail');
+    });
 
-    it(
-        'should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then' +
-            ' keep the filled delivery information after unchecking and checking the checkbox for different delivery address',
-        () => {
-            registerAndCreateOrderForDeliveryAddressTests(
-                'keep-delivery-address-with-saved-after-uncheck@shopsys.com',
-                transport.personalCollection.uuid,
-                transport.personalCollection.storeOstrava.uuid,
-                payment.cash.uuid,
-            );
+    it('should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after unchecking and checking the checkbox for different delivery address', () => {
+        registerAndCreateOrderForDeliveryAddressTests(
+            'keep-delivery-address-with-saved-after-uncheck@shopsys.com',
+            transport.personalCollection.uuid,
+            transport.personalCollection.storeOstrava.uuid,
+            payment.cash.uuid,
+        );
 
-            cy.visit(url.order.contactInformation);
+        cy.visit(url.order.contactInformation);
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-2_initially-empty');
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-2_initially-empty');
 
-            clearAndFillDeliveryContactInThirdStep(deliveryAddress);
-            loseFocus();
+        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        loseFocus();
 
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
-            cy.wait(500);
-            clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        cy.wait(500);
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-2');
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-2');
 
-            clickOnSendOrderButton();
-            clickOnOrderDetailButtonOnThankYouPage();
+        clickOnSendOrderButton();
+        clickOnOrderDetailButtonOnThankYouPage();
 
-            changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-            changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
-            takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-2_order-detail');
-        },
-    );
+        takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-2_order-detail');
+    });
 });

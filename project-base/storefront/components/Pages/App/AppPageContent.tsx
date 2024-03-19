@@ -10,7 +10,6 @@ import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/usePersistStore';
 import { useAuthLoader } from 'utils/app/useAuthLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
-import { usePersistStoreHydration } from 'utils/app/useStoreHydration';
 import { useReloadCart } from 'utils/cart/useReloadCart';
 import { useCookiesStoreSync } from 'utils/cookies/useCookiesStoreSync';
 import { isEnvironment } from 'utils/isEnvironment';
@@ -49,12 +48,11 @@ type AppPageContentProps = {
 };
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
-    usePersistStoreHydration();
+    useSetInitialStoreValues(pageProps);
+    useCookiesStoreSync();
     useAuthLoader();
     usePageLoader();
     useReloadCart();
-    useSetInitialStoreValues(pageProps);
-    useCookiesStoreSync();
 
     const router = useRouter();
     const { url } = pageProps.domainConfig;

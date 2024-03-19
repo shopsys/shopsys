@@ -1,5 +1,6 @@
 import { TypeOpeningHours } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { twMergeCustom } from 'utils/twMerge';
@@ -55,9 +56,9 @@ export const OpeningHours: FC<{ openingHours: TypeOpeningHours }> = ({ openingHo
                                 <>&nbsp;{t('Closed')}</>
                             ) : (
                                 openingHoursRanges.map(({ openingTime, closingTime }, index) => (
-                                    <>
+                                    <Fragment key={index}>
                                         {index > 0 && ','} {openingTime}&nbsp;-&nbsp;{closingTime}
-                                    </>
+                                    </Fragment>
                                 ))
                             )}
                         </span>
