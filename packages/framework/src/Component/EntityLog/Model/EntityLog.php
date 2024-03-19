@@ -60,8 +60,8 @@ class EntityLog
     protected $entityIdentifier;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum
-     * @ORM\Column(type="string", enumType="Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum")
+     * @var string
+     * @ORM\Column(type="string", length=255)
      */
     protected $source;
 
@@ -180,7 +180,7 @@ class EntityLog
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum
+     * @return string
      */
     public function getSource()
     {

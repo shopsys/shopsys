@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Detection;
 
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum;
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnumInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSource;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\Security\Core\Security;
 
 class DetectionFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum|null
-     */
-    protected ?EntityLogSourceEnumInterface $source = null;
+    protected ?string $source = null;
 
     protected ?string $userIdentifier = null;
 
@@ -30,7 +26,7 @@ class DetectionFacade
 
     public function setFrontendApiSourceAndUserIdentifier(): void
     {
-        $this->source = EntityLogSourceEnum::USER;
+        $this->source = EntityLogSource::USER;
         $this->userIdentifier = 'notLoggedCustomer';
 
         $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -55,13 +51,13 @@ class DetectionFacade
             return $administrator->getUserIdentifier();
         }
 
-        return EntityLogSourceEnum::SYSTEM->value;
+        return EntityLogSource::SYSTEM;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum
+     * @return string
      */
-    public function getEntityLogSource(): EntityLogSourceEnumInterface
+    public function getEntityLogSource(): string
     {
         if ($this->source !== null) {
             return $this->source;
@@ -70,9 +66,9 @@ class DetectionFacade
         $administrator = $this->security->getUser();
 
         if ($administrator) {
-            return EntityLogSourceEnum::ADMIN;
+            return EntityLogSource::ADMIN;
         }
 
-        return EntityLogSourceEnum::SYSTEM;
+        return EntityLogSource::SYSTEM;
     }
 }
