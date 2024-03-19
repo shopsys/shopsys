@@ -1,16 +1,8 @@
 query SlugQuery($slug: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
     slug(slug: $slug) {
         __typename
-        ... on RegularProduct {
+        ... on Product {
             ...ProductDetailFragment
-        }
-        ... on Variant {
-            mainVariant {
-                slug
-            }
-        }
-        ... on MainVariant {
-            ...MainVariantDetailFragment
         }
         ... on Category {
             ...CategoryDetailFragment

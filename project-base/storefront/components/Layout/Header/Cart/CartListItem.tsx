@@ -13,7 +13,6 @@ type ListItemProps = {
 
 export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantity }, onItemRemove }) => {
     const formatPrice = useFormatPrice();
-    const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
     return (
         <li key={uuid} className="flex w-full items-center gap-x-3 border-b border-greyLighter py-3">
@@ -29,7 +28,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
 
             <ExtendedNextLink
                 className="flex-1 cursor-pointer text-sm font-bold text-greyDark no-underline outline-none"
-                href={productSlug}
+                href={product.slug}
                 type="product"
             >
                 {product.fullName}

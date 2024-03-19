@@ -69,7 +69,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     className="flex h-full select-none flex-col gap-3 no-underline hover:no-underline"
                     draggable={false}
                     href={product.slug}
-                    type={product.isMainVariant ? 'productMainVariant' : 'product'}
+                    type="product"
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
                     <div className="relative flex h-56 items-center justify-center">

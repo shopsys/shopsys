@@ -16,7 +16,6 @@ import {
     CartItemFragmentApi,
     ListedProductFragmentApi,
     ListedStoreFragmentApi,
-    MainVariantDetailFragmentApi,
     ProductDetailFragmentApi,
     SimplePaymentFragmentApi,
     SimpleProductFragmentApi,
@@ -185,7 +184,7 @@ export const getGtmProductClickEvent = (
 });
 
 export const getGtmProductDetailViewEvent = (
-    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
+    product: ProductDetailFragmentApi,
     currencyCodeCode: string,
     domainUrl: string,
 ): GtmProductDetailViewEventType => ({

@@ -6,6 +6,7 @@ import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
+import { ProductDetailVariants } from './ProductDetailVariants';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -13,6 +14,7 @@ import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisited
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
+import { getProductVariants } from 'helpers/mappers/products';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
@@ -43,6 +45,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
+    const productVariants = getProductVariants(product);
+
     return (
         <>
             <ProductMetadata product={product} />
@@ -69,9 +73,13 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                             </ProductDetailCode>
                         </div>
 
+                        {!!productVariants && (
+                            <ProductDetailVariants currentProductUuid={product.uuid} variants={productVariants} />
+                        )}
+
                         {product.shortDescription && <div>{product.shortDescription}</div>}
 
-                        {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
+                        {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
                         <ProductDetailAddToCart product={product} />
 
@@ -102,6 +110,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                 {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
             </Webline>
+
             {isPopupCompareOpen && <ProductComparePopup onCloseCallback={() => setIsPopupCompareOpen(false)} />}
         </>
     );

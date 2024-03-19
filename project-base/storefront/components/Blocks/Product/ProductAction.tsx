@@ -21,7 +21,7 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
     if (product.isMainVariant) {
         return (
             <div className={wrapperTwClass}>
-                <ExtendedNextLink href={product.slug} type="productMainVariant">
+                <ExtendedNextLink href={product.slug} type="product">
                     <Button className="w-full py-2" name="choose-variant" size="small">
                         {t('Choose variant')}
                     </Button>

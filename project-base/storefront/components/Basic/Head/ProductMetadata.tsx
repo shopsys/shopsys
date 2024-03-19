@@ -1,10 +1,10 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AvailabilityStatusEnumApi, MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
+import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 type ProductMetadataProps = {
-    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi;
+    product: ProductDetailFragmentApi;
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {

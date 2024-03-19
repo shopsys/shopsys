@@ -5,7 +5,6 @@ import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageOrder } from './SkeletonPageOrder';
 import { SkeletonPageOrders } from './SkeletonPageOrders';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
-import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
 import { SkeletonPageStore } from './SkeletonPageStore';
@@ -37,8 +36,6 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
             return <SkeletonPageHome />;
         case 'product':
             return <SkeletonPageProductDetail />;
-        case 'productMainVariant':
-            return <SkeletonPageProductDetailMainVariant />;
         case 'category':
             return <SkeletonPageProductsList />;
         case 'brand':

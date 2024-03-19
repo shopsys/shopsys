@@ -1,7 +1,6 @@
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
-import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import {
     ProductDetailQueryApi,
     ProductDetailQueryDocumentApi,
@@ -26,10 +25,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
-    const product =
-        productData?.product?.__typename === 'RegularProduct' || productData?.product?.__typename === 'MainVariant'
-            ? productData.product
-            : null;
+    const product = productData?.product;
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     useGtmPageViewEvent(pageViewEvent, fetching);
@@ -44,11 +40,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
             isFetchingData={fetching}
             title={product?.seoTitle || product?.name}
         >
-            {product?.__typename === 'RegularProduct' && <ProductDetailContent fetching={fetching} product={product} />}
-
-            {product?.__typename === 'MainVariant' && (
-                <ProductDetailMainVariantContent fetching={fetching} product={product} />
-            )}
+            {product && <ProductDetailContent fetching={fetching} product={product} />}
 
             <LastVisitedProducts currentProductCatnum={product?.catalogNumber} />
         </CommonLayout>
@@ -82,18 +74,6 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
                 if (serverSideErrorResponse) {
                     return serverSideErrorResponse;
-                }
-
-                if (
-                    productResponse.data?.product?.__typename === 'Variant' &&
-                    productResponse.data.product.mainVariant?.slug
-                ) {
-                    return {
-                        redirect: {
-                            destination: productResponse.data.product.mainVariant.slug,
-                            permanent: false,
-                        },
-                    };
                 }
             }
 

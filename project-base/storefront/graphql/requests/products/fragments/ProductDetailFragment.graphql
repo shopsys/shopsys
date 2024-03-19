@@ -1,9 +1,72 @@
-fragment ProductDetailFragment on RegularProduct {
-    ...ProductDetailInterfaceFragment
+fragment ProductDetailFragment on Product {
+    __typename
+    id
+    uuid
+    slug
+    fullName
+    name
+    namePrefix
+    nameSuffix
     shortDescription
     usps
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    catalogNumber
+    ean
+    description
+    images {
+        ...ImageFragment
+    }
+    price {
+        ...ProductPriceFragment
+    }
+    parameters {
+        ...ParameterFragment
+    }
+    accessories {
+        ...ListedProductFragment
+    }
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
+    flags {
+        ...SimpleFlagFragment
+    }
+    availableStoresCount
+    stockQuantity
     storeAvailabilities {
         ...StoreAvailabilityFragment
     }
-    availableStoresCount
+    isSellingDenied
+    availability {
+        ...AvailabilityFragment
+    }
+    seoTitle
+    seoMetaDescription
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
+    isMainVariant
+    productVideos {
+        ...VideoTokenFragment
+    }
+    relatedProducts {
+        ...ListedProductFragment
+    }
+    ... on MainVariant {
+        variants {
+            ...VariantFragment
+        }
+    }
+    ... on Variant {
+        mainVariant {
+            variants {
+                ...VariantFragment
+            }
+        }
+    }
 }
