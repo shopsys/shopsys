@@ -22,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnumInterface;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -86,12 +85,12 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority nullable because of https://github.com/nikic/PHP-Parser/pull/940
+     * @param string $priority
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public function create(
         ProductData $productData,
-        ?ProductRecalculationPriorityEnumInterface $priority = null,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         $product = $this->productFactory->create($productData);
 
@@ -103,7 +102,7 @@ class ProductFacade
 
         $this->editProductStockRelation($productData, $product);
 
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
 
         return $product;
     }
@@ -136,13 +135,13 @@ class ProductFacade
     /**
      * @param int $productId
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority nullable because of https://github.com/nikic/PHP-Parser/pull/940
+     * @param string $priority
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     public function edit(
         int $productId,
         ProductData $productData,
-        ?ProductRecalculationPriorityEnumInterface $priority = null,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         $product = $this->productRepository->getById($productId);
 
@@ -160,7 +159,7 @@ class ProductFacade
 
         if ($product->isMainVariant()) {
             $removedVariantIds = $product->refreshVariants($productData->variants);
-            $this->productRecalculationDispatcher->dispatchProductIds($removedVariantIds, $priority ?? ProductRecalculationPriorityEnum::REGULAR);
+            $this->productRecalculationDispatcher->dispatchProductIds($removedVariantIds, $priority);
         }
 
         $this->refreshProductAccessories($product, $productData->accessories);
@@ -174,28 +173,28 @@ class ProductFacade
 
         $this->editProductStockRelation($productData, $product);
 
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
 
         return $product;
     }
 
     /**
      * @param int $productId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority nullable because of https://github.com/nikic/PHP-Parser/pull/940
+     * @param string $priority
      */
     public function delete(
         int $productId,
-        ?ProductRecalculationPriorityEnumInterface $priority = null,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): void {
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
 
         foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
+            $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId(), $priority);
         }
 
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
 
         $this->em->remove($product);
         $this->em->flush();
