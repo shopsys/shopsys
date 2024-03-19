@@ -17,7 +17,7 @@ services:
 
     Shopsys\FrameworkBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{Calculation,Dispatcher,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{Calculation,Dispatcher,Enum,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
