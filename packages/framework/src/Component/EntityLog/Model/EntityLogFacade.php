@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig;
 use Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade;
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnumInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Exception\NotLoggableException;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
@@ -58,14 +57,14 @@ class EntityLogFacade
     /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableEntityConfig
-     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum $actionEnum
+     * @param string $action
      * @param array $changes
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog
      */
     public function createEntityLog(
         object $entity,
         LoggableEntityConfig $loggableEntityConfig,
-        EntityLogActionEnumInterface $actionEnum,
+        string $action,
         array $changes = [],
     ): EntityLog {
         $userIdentifier = $this->detectionFacade->getUserIdentifier();
@@ -75,7 +74,7 @@ class EntityLogFacade
         $parentEntity = $parentEntityFunctionName ? call_user_func([$entity, $parentEntityFunctionName]) : null;
 
         $entityLogData = $this->entityLogDataFactory->create();
-        $entityLogData->action = $actionEnum;
+        $entityLogData->action = $action;
         $entityLogData->userIdentifier = $userIdentifier;
         $entityLogData->entityName = $loggableEntityConfig->getEntityName();
         $entityLogData->entityId = $this->getEntityIdentifierByEntityAndLoggableSetup($entity);
