@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid;
 
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter;
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
+use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogAction;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -34,7 +34,7 @@ class EntityLogGridFactory
     {
         $queryBuilder = $this->entityLogRepository->getQueryBuilderByEntityNameAndEntityId($entityName, $entityId);
         $queryBuilder->andWhere('(el.action = :createAction AND el.parentEntityId IS NULL) OR el.action != :createAction');
-        $queryBuilder->setParameter('createAction', EntityLogActionEnum::CREATE);
+        $queryBuilder->setParameter('createAction', EntityLogAction::CREATE);
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,

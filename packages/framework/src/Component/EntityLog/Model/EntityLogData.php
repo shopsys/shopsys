@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 class EntityLogData
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum|null
+     * @var string|null
      */
     public $action = null;
 

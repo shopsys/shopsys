@@ -30,8 +30,8 @@ class EntityLog
     protected $id;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum
-     * @ORM\Column(type="string", enumType="Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum")
+     * @var string
+     * @ORM\Column(type="string", length=255)
      */
     protected $action;
 
@@ -140,7 +140,7 @@ class EntityLog
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum
+     * @return string
      */
     public function getAction()
     {
