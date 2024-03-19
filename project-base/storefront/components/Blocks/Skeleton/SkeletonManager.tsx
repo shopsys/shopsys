@@ -1,3 +1,4 @@
+import { SkeletonModuleProductsList } from './SkeletonModuleProductsList';
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
 import { SkeletonPageComparison } from './SkeletonPageComparison';
@@ -6,7 +7,6 @@ import { SkeletonPageOrder } from './SkeletonPageOrder';
 import { SkeletonPageOrders } from './SkeletonPageOrders';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
-import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
@@ -41,7 +41,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
             return <SkeletonPageProductDetailMainVariant />;
         case 'category':
         case 'seo_category':
-            return <SkeletonPageProductsList />;
+            return <SkeletonModuleProductsList />;
         case 'brand':
         case 'flag':
             return <SkeletonPageProductsListSimple />;
