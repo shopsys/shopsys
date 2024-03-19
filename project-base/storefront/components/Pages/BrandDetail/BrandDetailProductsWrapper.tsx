@@ -27,10 +27,10 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
     return (
         <>
             <ProductsList
-                fetching={fetching}
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.brand_detail}
-                loadMoreFetching={loadMoreFetching}
+                isFetching={fetching}
+                isLoadMoreFetching={loadMoreFetching}
                 products={listedBrandProducts}
             />
             <Pagination
