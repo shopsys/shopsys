@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Detection;
 
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum;
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnumInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\Security\Core\Security;
 
 class DetectionFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum|null
-     */
-    protected ?EntityLogSourceEnumInterface $source = null;
+    protected ?string $source = null;
 
     protected ?string $userIdentifier = null;
 
@@ -55,13 +51,13 @@ class DetectionFacade
             return $administrator->getUserIdentifier();
         }
 
-        return EntityLogSourceEnum::SYSTEM->value;
+        return EntityLogSourceEnum::SYSTEM;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum
+     * @return string
      */
-    public function getEntityLogSource(): EntityLogSourceEnumInterface
+    public function getEntityLogSource(): string
     {
         if ($this->source !== null) {
             return $this->source;

@@ -32,7 +32,7 @@ class EntityLogData
     public $entityIdentifier = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum|null
+     * @var string|null
      */
     public $source = null;
 
