@@ -43,13 +43,11 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForQuery($this->createMinimalOrderQuery());
         $orderUuid = $response['data']['CreateOrder']['order']['uuid'];
 
-        /** @var \App\Model\Product\Product $addedProduct */
-        $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5');
+        $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
         $addedProductQuantity = 6;
         $this->addProductToCustomerCart($addedProduct, $addedProductQuantity);
 
-        /** @var \App\Model\Product\Product $addedProduct2 */
-        $addedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $addedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $addedProductQuantity2 = 1;
         $this->addProductToCustomerCart($addedProduct2, $addedProductQuantity2);
 
@@ -123,13 +121,11 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForQuery($this->createMinimalOrderQuery());
         $orderUuid = $response['data']['CreateOrder']['order']['uuid'];
 
-        /** @var \App\Model\Product\Product $addedProduct */
-        $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5');
+        $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
         $addedProductQuantity = 6;
         $this->addProductToCustomerCart($addedProduct, $addedProductQuantity);
 
-        /** @var \App\Model\Product\Product $addedProduct2 */
-        $addedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $addedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $addedProductQuantity2 = 2800;
         $this->addProductToCustomerCart($addedProduct2, $addedProductQuantity2);
 
@@ -217,8 +213,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
      */
     public function createMinimalOrderQuery(): string
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

@@ -7,6 +7,9 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
@@ -15,8 +18,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
 
     public function testCreateOrderWithPersonalPickupStore()
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
 
         $expected = [
             'data' => [
@@ -37,8 +39,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
             ],
         ];
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
@@ -98,8 +99,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
      */
     private function addPersonalPickupTransportToCart(string $cartUuid, string $pickupPlaceIdentifier): void
     {
-        /** @var \App\Model\Transport\Transport $transportPersonalPickup */
-        $transportPersonalPickup = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transportPersonalPickup = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->addTransportToCart($cartUuid, $transportPersonalPickup, $pickupPlaceIdentifier);
     }
 }

@@ -16,9 +16,6 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-/**
- * @method \App\Model\Category\Category getReference($name)
- */
 class NavigationItemDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
@@ -134,7 +131,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
      */
     private function getCategoryReference(string $name): Category
     {
-        return $this->getReference($name);
+        return $this->getReference($name, Category::class);
     }
 
     /**

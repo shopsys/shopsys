@@ -7,8 +7,10 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Category\Category;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -32,7 +34,7 @@ class RetrieveCartTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
     }
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStock(): void
@@ -74,8 +76,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
         self::assertEquals($expectedAddProductResultData, $newlyCreatedCart['addProductResult']);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
         self::assertEquals($this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, $maximumAvailableQuantity), $newlyCreatedCart['cart']['totalPrice']);
     }
 
@@ -306,8 +307,7 @@ class RetrieveCartTest extends GraphQlTestCase
             $firstDomainLocale,
         );
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
 
         $fullName = sprintf(
             '%s %s %s',
@@ -316,11 +316,9 @@ class RetrieveCartTest extends GraphQlTestCase
             t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        /** @var \App\Model\Category\Category $mainCategory */
-        $mainCategory = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $mainCategory = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
-        /** @var \App\Model\Category\Category $subCategory */
-        $subCategory = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+        $subCategory = $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         return [
             'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

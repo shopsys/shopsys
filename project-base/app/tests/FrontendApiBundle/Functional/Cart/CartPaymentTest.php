@@ -14,8 +14,7 @@ class CartPaymentTest extends GraphQlTestCase
 {
     public function testPaymentIsReturnedFromCart(): void
     {
-        /** @var \App\Model\Payment\Payment $paymentGoPay */
-        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $swift = 'ABCDEFGH';
         $this->addPaymentToDemoCart($paymentGoPay, $swift);
         $getCartQuery = '{
@@ -38,8 +37,7 @@ class CartPaymentTest extends GraphQlTestCase
 
     public function testPaymentIsReturnedAfterAddingToCart(): void
     {
-        /** @var \App\Model\Payment\Payment $paymentGoPay */
-        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $swift = 'ABCDEFGH';
         $response = $this->addPaymentToDemoCart($paymentGoPay, $swift);
         $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInCart');

@@ -7,9 +7,11 @@ namespace Tests\App\Functional\Model\Customer;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class UserFacadeTest extends TransactionFunctionalTestCase
@@ -47,6 +49,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $customerUserUpdateData->customerUserData->pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
         $customerUserUpdateData->customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserUpdateData->customerUserData->email = 'unique-email@shopsys.com';
@@ -59,7 +62,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $billingAddressData->street = '123 Fake Street';
         $billingAddressData->city = 'Springfield';
         $billingAddressData->postcode = '12345';
-        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $customerUserUpdateData->billingAddressData = $billingAddressData;
 
         $this->customerUserFacade->create($customerUserUpdateData);

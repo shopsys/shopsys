@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -17,7 +18,7 @@ class TransportTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $this->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $this->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
         parent::setUp();
     }
@@ -46,8 +47,7 @@ class TransportTest extends GraphQlTestCase
     public function testGetFreeTransport(): void
     {
         $cartUuid = CartDataFixture::CART_UUID;
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,

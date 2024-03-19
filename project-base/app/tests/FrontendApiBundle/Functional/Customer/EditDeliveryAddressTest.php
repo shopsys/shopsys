@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
+use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Constraints\Country;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
@@ -13,8 +14,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
 {
     public function testEditDeliveryAddress(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customer */
-        $customer = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $customer = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
         $deliveryAddress = $customer->getDefaultDeliveryAddress();
 
         $editedValues = [
@@ -55,8 +55,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
 
     public function testEditDeliveryAddressWithInvalidCountry(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customer */
-        $customer = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $customer = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
         $deliveryAddress = $customer->getDefaultDeliveryAddress();
 
         $editedValues = [

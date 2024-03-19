@@ -11,19 +11,24 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture as PerformanceUserDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture as PerformanceProductDataFixture;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Order\Status\OrderStatus;
+use App\Model\Payment\Payment;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
-use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -165,7 +170,7 @@ class OrderDataFixture
 
         $orderData->transport = $this->getRandomTransport();
         $orderData->payment = $this->getRandomPayment();
-        $orderData->status = $this->persistentReferenceFacade->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE);
+        $orderData->status = $this->persistentReferenceFacade->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryFirstName = $this->faker->firstName;
         $orderData->deliveryLastName = $this->faker->lastName;
@@ -178,7 +183,7 @@ class OrderDataFixture
         $orderData->note = $this->faker->text(200);
         $orderData->createdAt = $this->faker->dateTimeBetween('-1 year', 'now');
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $orderData->currency = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
         return $orderData;
     }
@@ -204,9 +209,9 @@ class OrderDataFixture
 
     private function loadPerformanceProductIds()
     {
-        /** @var \App\Model\Product\Product $firstPerformanceProduct */
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
             PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT,
+            Product::class,
         );
 
         $qb = $this->em->createQueryBuilder()
@@ -231,9 +236,9 @@ class OrderDataFixture
 
     private function loadPerformanceUserIdsOnFirstDomain()
     {
-        /** @var \App\Model\Customer\User\CustomerUser $firstPerformanceUser */
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
             PerformanceUserDataFixture::FIRST_PERFORMANCE_USER,
+            CustomerUser::class,
         );
 
         $qb = $this->em->createQueryBuilder()
@@ -276,8 +281,7 @@ class OrderDataFixture
             TransportDataFixture::TRANSPORT_PERSONAL,
         ]);
 
-        /** @var \App\Model\Transport\Transport $randomTransport */
-        $randomTransport = $this->persistentReferenceFacade->getReference($randomTransportReferenceName);
+        $randomTransport = $this->persistentReferenceFacade->getReference($randomTransportReferenceName, Transport::class);
 
         return $randomTransport;
     }
@@ -293,8 +297,7 @@ class OrderDataFixture
             PaymentDataFixture::PAYMENT_CASH,
         ]);
 
-        /** @var \App\Model\Payment\Payment $randomPayment */
-        $randomPayment = $this->persistentReferenceFacade->getReference($randomPaymentReferenceName);
+        $randomPayment = $this->persistentReferenceFacade->getReference($randomPaymentReferenceName, Payment::class);
 
         return $randomPayment;
     }
@@ -309,8 +312,7 @@ class OrderDataFixture
             CountryDataFixture::COUNTRY_SLOVAKIA,
         ]);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Country\Country $randomCountry */
-        $randomCountry = $this->persistentReferenceFacade->getReference($randomCountryReferenceName);
+        $randomCountry = $this->persistentReferenceFacade->getReference($randomCountryReferenceName, Country::class);
 
         return $randomCountry;
     }

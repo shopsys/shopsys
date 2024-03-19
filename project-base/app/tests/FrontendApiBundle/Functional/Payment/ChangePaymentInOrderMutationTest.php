@@ -7,6 +7,8 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 use App\DataFixtures\Demo\GoPayDataFixture;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
+use App\Model\Order\Order;
+use App\Model\Payment\Payment;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -38,10 +40,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         // make sure the payment and transport is free
         $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
 
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        /** @var \App\Model\Payment\Payment $paymentCreditCard */
-        $paymentCreditCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentCreditCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->assertGreaterThan(Money::zero(), $paymentCreditCard->getPrice($this->domain->getId())->getPrice());
 
         $expectedTotalPrice = $order->getTotalPriceWithoutVat()->getAmount();
@@ -62,10 +62,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
     {
         $swiftForFirstDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale());
 
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        /** @var \App\Model\Payment\Payment $paymentGoPayBankAccount */
-        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
@@ -82,8 +80,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderMutationNonExistingOrder(): void
     {
-        /** @var \App\Model\Payment\Payment $paymentGoPayBankAccount */
-        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => '00000000-0000-0000-0000-000000000000',
@@ -100,8 +97,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderMutationNonExistingPayment(): void
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
@@ -121,10 +117,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
      */
     public function testChangePaymentInOrderValidationUnavailablePayment(): void
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        /** @var \App\Model\Payment\Payment $paymentGoPayOnSecondDomain */
-        $paymentGoPayOnSecondDomain = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::SECOND_DOMAIN_ID);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentGoPayOnSecondDomain = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::SECOND_DOMAIN_ID, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
@@ -140,10 +134,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderValidationInvalidPaymentTransportCombination(): void
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        /** @var \App\Model\Payment\Payment $paymentLater */
-        $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
@@ -164,10 +156,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
         $paymentTransactionData->externalPaymentStatus = PaymentStatus::PAID;
         $this->paymentTransactionFacade->edit(1, $paymentTransactionData);
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        /** @var \App\Model\Payment\Payment $paymentLater */
-        $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER, Payment::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
@@ -184,10 +174,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderValidationNotGoPayOrder(): void
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2);
-        /** @var \App\Model\Payment\Payment $paymentLater */
-        $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2, Order::class);
+        $paymentLater = $this->getReference(PaymentDataFixture::PAYMENT_LATER, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
@@ -221,10 +209,8 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
      */
     private function testInvalidSwift(string $swift): void
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        /** @var \App\Model\Payment\Payment $paymentGoPayBankAccount */
-        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),

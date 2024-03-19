@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use App\Model\Product\Product;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
@@ -72,10 +73,9 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
     {
         $promoCodeReference = PromoCodeDataFixture::VALID_PROMO_CODE;
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain($promoCodeReference, 1);
+        $promoCode = $this->getReferenceForDomain($promoCodeReference, 1, PromoCode::class);
 
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
@@ -97,9 +97,6 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
 
         // refresh promo code, so we're able to work with it as with an entity
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain($promoCodeReference, 1);
-
-        return $promoCode;
+        return $this->getReferenceForDomain($promoCodeReference, 1, PromoCode::class);
     }
 }

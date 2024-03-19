@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
+use App\Model\Order\PromoCode\PromoCode as AppPromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
@@ -58,8 +59,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testApplyPromoCode(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -80,8 +80,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testApplyPromoCodeMultipleTimes(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -116,8 +115,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     {
         $invalidCartUuid = '24c11eca-a3f8-45cb-b843-861bcde847c6';
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -139,8 +137,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testApplyPromoCodeWithoutCart(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -161,10 +158,8 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testModificationAfterProductIsRemoved(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
-        /** @var \App\Model\Product\Product $productInCart */
-        $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $productInCart->getUuid(),
@@ -188,8 +183,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
 
         // product has to be re-fetched due to identity map clearing to prevent "A new entity was found through the relationship" error
-        /** @var \App\Model\Product\Product $productInCart */
-        $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $this->hideProduct($productInCart);
 
@@ -227,8 +221,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testModificationAfterPromoCodeEdited(): void
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -282,8 +275,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     {
         $testCartUuid = CartDataFixture::CART_UUID;
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -328,8 +320,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $promoCodeCode = 'non-existing-promo-code';
 
         if ($promoCodeReferenceName !== null) {
-            /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1);
+            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1, AppPromoCode::class);
             $promoCodeCode = $promoCode->getCode();
         }
 

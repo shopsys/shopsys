@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Administrator\Security;
 
 use App\DataFixtures\Demo\AdministratorDataFixture;
+use App\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -35,8 +36,7 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
 
     public function testIsAdministratorLogged()
     {
-        /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
+        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
         $roles = $administrator->getRoles();
         $token = new UsernamePasswordToken(
             $administrator,

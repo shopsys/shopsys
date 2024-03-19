@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
@@ -35,20 +36,13 @@ class ProductListDataFixture extends AbstractReferenceFixture implements Depende
      */
     public function load(ObjectManager $manager): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
-        /** @var \App\Model\Product\Product $productHelloKitty */
-        $productHelloKitty = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        /** @var \App\Model\Product\Product $productIphone */
-        $productIphone = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 5);
-        /** @var \App\Model\Product\Product $productXperia */
-        $productXperia = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 49);
-        /** @var \App\Model\Product\Product $productToiletPaper */
-        $productToiletPaper = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 33);
-        /** @var \App\Model\Product\Product $productPhilipsTv */
-        $productPhilipsTv = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
-        /** @var \App\Model\Product\Product $productLgTv */
-        $productLgTv = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3);
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
+        $productHelloKitty = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $productIphone = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 5, Product::class);
+        $productXperia = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 49, Product::class);
+        $productToiletPaper = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 33, Product::class);
+        $productPhilipsTv = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
+        $productLgTv = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3, Product::class);
 
         $this->createProductList(ProductListTypeEnum::WISHLIST, $customerUser, self::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID, [$productHelloKitty]);
         $this->createProductList(ProductListTypeEnum::COMPARISON, $customerUser, self::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID, [$productIphone, $productXperia]);

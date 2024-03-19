@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterRepository;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -32,15 +34,13 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
      */
     public function load(ObjectManager $manager)
     {
-        /** @var \App\Model\Category\Category $categoryElectronics */
-        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
         $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
         $firstDomainLocale = $firstDomainConfig->getLocale();
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
 
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
-            /** @var \App\Model\Category\Category $category */
-            $category = $this->getReference($constant);
+            $category = $this->getReference($constant, Category::class);
             $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $firstDomainConfig);
             $parametersId = [];
 
@@ -51,8 +51,8 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
 
             if ($category === $categoryElectronics) {
                 $parametersCollapsed = [
-                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
-                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class),
                 ];
             }
             $this->categoryParameterFacade->saveRelation($category, $parametersId, $parametersCollapsed);

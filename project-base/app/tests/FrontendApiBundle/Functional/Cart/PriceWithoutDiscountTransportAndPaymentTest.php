@@ -10,9 +10,11 @@ use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Cart\CartFacade;
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
@@ -24,18 +26,15 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
 
     public function testTotalPriceWithoutDiscountTransportAndPayment(): void
     {
-        /** @var \App\Model\Product\Product $testingProductVoucher */
-        $testingProductVoucher = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $testingProductVoucher = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         $voucherQuantity = 3;
         $newlyCreatedCart = $this->addTestingProductToCart($testingProductVoucher, $voucherQuantity);
 
-        /** @var \App\Model\Product\Product $testingProductBook */
-        $testingProductBook = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '26');
+        $testingProductBook = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '26', Product::class);
         $bookQuantity = 5;
         $this->addTestingProductToCart($testingProductBook, $bookQuantity, $newlyCreatedCart['uuid']);
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $cart = $this->cartFacade->findCartByCartIdentifier($newlyCreatedCart['uuid']);
         self::assertNotNull($cart);
@@ -50,14 +49,12 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
 
-        /** @var \App\Model\Transport\Transport $testingTransport */
-        $testingTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $testingTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
         $pickupPlaceIdentifier = $store->getUuid();
         $this->addTransportToCart($newlyCreatedCart, $testingTransport, $pickupPlaceIdentifier);
 
-        /** @var \App\Model\Payment\Payment $testingPayment */
-        $testingPayment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $testingPayment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->addPaymentToCart($newlyCreatedCart, $testingPayment);
 
         $response = $this->getResponseContentForGql(

@@ -8,6 +8,10 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
+use App\Model\Category\Category;
+use App\Model\Product\Brand\Brand;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Parameter;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -286,7 +290,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetElectronicsBrandFilterOptionsWithAppliedFilter(): void
     {
-        $brandA4tech = $this->getReference(BrandDataFixture::BRAND_A4TECH);
+        $brandA4tech = $this->getReference(BrandDataFixture::BRAND_A4TECH, Brand::class);
 
         $query = $this->getElectronicsQuery('{ brands: ["' . $brandA4tech->getUuid() . '"] }');
 
@@ -328,7 +332,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetElectronicsFlagFilterOptionsWithAppliedFilters(): void
     {
-        $flagAction = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
+        $flagAction = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class);
 
         $query = $this->getElectronicsQuery('{ flags: ["' . $flagAction->getUuid() . '"] }');
 
@@ -583,7 +587,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
      */
     private function getElectronicsQuery(?string $filter = null): string
     {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         if ($filter !== null) {
             $filter = '(filter: ' . $filter . ')';
@@ -707,8 +711,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testSliderParameterFilterOptions(): void
     {
-        /** @var \App\Model\Product\Parameter\Parameter $parameterSliderWarranty */
-        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
@@ -736,8 +739,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
      */
     public function testIsSliderSelectable(bool $isSliderSelectable, array $filter): void
     {
-        /** @var \App\Model\Product\Parameter\Parameter $parameterSliderWarranty */
-        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());

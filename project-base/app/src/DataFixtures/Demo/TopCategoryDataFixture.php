@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -26,9 +27,9 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     public function load(ObjectManager $manager)
     {
         $categories = [
-            $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-            $this->getReference(CategoryDataFixture::CATEGORY_BOOKS),
-            $this->getReference(CategoryDataFixture::CATEGORY_TOYS),
+            $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
+            $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class),
+            $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class),
         ];
 
         foreach ($this->domain->getAllIds() as $domainId) {

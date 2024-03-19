@@ -38,13 +38,11 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
 
     public function testCartIsMergedAfterLogin(): void
     {
-        /** @var \App\Model\Product\Product $anonymouslyAddedProduct */
-        $anonymouslyAddedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5');
+        $anonymouslyAddedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
         $anonymouslyAddedProductQuantity = 6;
         $this->addProductToCustomerCart($anonymouslyAddedProduct, $anonymouslyAddedProductQuantity);
 
-        /** @var \App\Model\Product\Product $anonymouslyAddedProduct2 */
-        $anonymouslyAddedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $anonymouslyAddedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $anonymouslyAddedProductQuantity2 = 1;
         $this->addProductToCustomerCart($anonymouslyAddedProduct2, $anonymouslyAddedProductQuantity2);
 
@@ -79,16 +77,14 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cartItems = $cart->getItems();
         self::assertCount(3, $cartItems);
 
-        /** @var \App\Model\Product\Product $firstProduct */
-        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         self::assertEquals($firstProduct->getFullname(), $cartItems[0]->getName(), 'Third product name mismatch');
         self::assertEquals(3, $cartItems[0]->getQuantity(), 'Third product quantity mismatch');
 
         self::assertEquals($anonymouslyAddedProduct->getFullname(), $cartItems[1]->getName(), 'First product name mismatch');
         self::assertEquals($anonymouslyAddedProductQuantity, $cartItems[1]->getQuantity(), 'First product quantity mismatch');
 
-        /** @var \App\Model\Product\Product $secondProduct */
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         self::assertEquals($secondProduct->getFullname(), $cartItems[2]->getName(), 'Second product name mismatch');
         self::assertEquals(2, $cartItems[2]->getQuantity(), 'Second product quantity mismatch');
 
@@ -98,13 +94,11 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
 
     public function testCartIsOverwrittenAfterLogin(): void
     {
-        /** @var \App\Model\Product\Product $productAddedToCustomerUserCart */
-        $productAddedToCustomerUserCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5');
+        $productAddedToCustomerUserCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
         $productAddedToCustomerUserCartQuantity = 6;
         $this->addProductToCustomerCart($productAddedToCustomerUserCart, $productAddedToCustomerUserCartQuantity);
 
-        /** @var \App\Model\Product\Product $productAddedToCustomerUserCart2 */
-        $productAddedToCustomerUserCart2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $productAddedToCustomerUserCart2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $productAddedToCustomerUserCart2Quantity = 1;
         $this->addProductToCustomerCart($productAddedToCustomerUserCart2, $productAddedToCustomerUserCart2Quantity);
 
@@ -131,13 +125,11 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cartItems = $cart->getItems();
         self::assertCount(2, $cartItems);
 
-        /** @var \App\Model\Product\Product $firstProduct */
-        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         self::assertEquals($firstProduct->getFullname(), $cartItems[0]->getName(), 'First product name mismatch');
         self::assertEquals(2, $cartItems[0]->getQuantity(), 'First product quantity mismatch');
 
-        /** @var \App\Model\Product\Product $secondProduct */
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         self::assertEquals($secondProduct->getFullname(), $cartItems[1]->getName(), 'Second product name mismatch');
         self::assertEquals(2, $cartItems[1]->getQuantity(), 'Second product quantity mismatch');
 
@@ -186,13 +178,11 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cartItems = $cart->getItems();
         self::assertCount(2, $cartItems);
 
-        /** @var \App\Model\Product\Product $secondProduct */
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         self::assertEquals($secondProduct->getFullname(), $cartItems[0]->getName(), 'Second product name mismatch');
         self::assertEquals(2, $cartItems[0]->getQuantity(), 'Second product quantity mismatch');
 
-        /** @var \App\Model\Product\Product $firstProduct */
-        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         self::assertEquals($firstProduct->getFullname(), $cartItems[1]->getName(), 'Third product name mismatch');
         self::assertEquals(2, $cartItems[1]->getQuantity(), 'Third product quantity mismatch');
 

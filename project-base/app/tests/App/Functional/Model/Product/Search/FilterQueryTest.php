@@ -10,6 +10,8 @@ use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -75,13 +77,12 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     public function testMultiFilter(): void
     {
         $this->skipTestIfFirstDomainIsNotInEnglish();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
         $filter = $this->createFilter()
@@ -127,10 +128,10 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     {
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
         $filter = $this->createFilter()

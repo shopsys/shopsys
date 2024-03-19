@@ -271,7 +271,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     protected function setOrderForTests(): void
     {
-        $this->order = $this->getReference(OrderDataFixture::ORDER_PREFIX . self::ORDER_ID);
+        $this->order = $this->getReference(OrderDataFixture::ORDER_PREFIX . self::ORDER_ID, Order::class);
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];

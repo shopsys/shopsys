@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Administrator;
 
 use App\DataFixtures\Demo\AdministratorDataFixture;
+use App\Model\Administrator\Administrator;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
@@ -22,8 +23,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('+60 seconds');
 
-        /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
+        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
 
         $administrator->setMultidomainLoginTokenWithExpiration(
             $validMultidomainLoginToken,
@@ -44,8 +44,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $invalidMultidomainLoginToken = 'invalidMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('+60 seconds');
 
-        /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
+        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
 
         $administrator->setMultidomainLoginTokenWithExpiration(
             $validMultidomainLoginToken,
@@ -63,8 +62,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('-60 seconds');
 
-        /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
+        $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
 
         $administrator->setMultidomainLoginTokenWithExpiration(
             $validMultidomainLoginToken,

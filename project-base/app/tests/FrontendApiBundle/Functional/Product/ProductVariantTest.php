@@ -19,8 +19,8 @@ class ProductVariantTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->productAsMainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 83);
-        $this->productAsVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 75);
+        $this->productAsMainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 83, Product::class);
+        $this->productAsVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 75, Product::class);
     }
 
     public function testProductMainVariantResultData(): void

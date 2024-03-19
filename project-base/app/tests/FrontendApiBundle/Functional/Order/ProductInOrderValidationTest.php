@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ProductInOrder;
+use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -34,8 +35,7 @@ class ProductInOrderValidationTest extends GraphQlTestCase
 
     public function testOrderWithRemovedProductsByAdmin(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77', Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
@@ -62,8 +62,7 @@ class ProductInOrderValidationTest extends GraphQlTestCase
      */
     private function addProductToCartAndRemoveIt(): string
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $addToCartMutation = 'mutation {
             AddToCart(input: {
                 productUuid: "' . $product->getUuid() . '",

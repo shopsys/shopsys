@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -67,7 +68,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
         $products = [];
 
         foreach ($productReferenceNames as $productReferenceName) {
-            $products[] = $this->getReference($productReferenceName);
+            $products[] = $this->getReference($productReferenceName, Product::class);
         }
 
         $this->topProductFacade->saveTopProductsForDomain($domainId, $products);

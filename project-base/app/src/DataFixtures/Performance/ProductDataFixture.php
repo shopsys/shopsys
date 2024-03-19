@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\ProductDataFixture as DemoProductDataFixture;
+use App\Model\Category\Category;
+use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
@@ -13,9 +15,7 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
@@ -206,8 +206,7 @@ class ProductDataFixture
 
         while (true) {
             try {
-                /** @var \App\Model\Product\Product $product */
-                $product = $this->persistentReferenceFacade->getReference(DemoProductDataFixture::PRODUCT_PREFIX . $i);
+                $product = $this->persistentReferenceFacade->getReference(DemoProductDataFixture::PRODUCT_PREFIX . $i, Product::class);
                 $this->productTemplates[] = $product;
                 $i++;
             } catch (PersistentReferenceNotFoundException $e) {
@@ -268,6 +267,7 @@ class ProductDataFixture
         $allCategoryIds = $this->categoryRepository->getAllIds();
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY,
+            Category::class,
         );
         $firstPerformanceCategoryKey = array_search($firstPerformanceCategory->getId(), $allCategoryIds, true);
 
@@ -280,9 +280,9 @@ class ProductDataFixture
      */
     private function isPerformanceCategory(Category $category)
     {
-        /** @var \App\Model\Category\Category $firstPerformanceCategory */
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
             CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY,
+            Category::class,
         );
 
         return $category->getId() >= $firstPerformanceCategory->getId();

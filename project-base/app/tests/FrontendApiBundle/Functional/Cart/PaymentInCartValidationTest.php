@@ -11,6 +11,7 @@ use App\FrontendApi\Model\Component\Constraints\PaymentInCart;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
+use App\Model\Transport\Transport;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -38,8 +39,7 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     public function testHiddenPayment(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->hidePayment($payment);
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
@@ -50,8 +50,7 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     public function testDeletedPayment(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->paymentFacade->deleteById($payment->getId());
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
@@ -62,8 +61,7 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     public function testDisabledPayment(): void
     {
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->disablePaymentOnFirstDomain($payment);
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
@@ -74,11 +72,9 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     public function testInvalidPaymentTransportCombination(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
         $this->addTransportToDemoCart($transport->getUuid());
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);

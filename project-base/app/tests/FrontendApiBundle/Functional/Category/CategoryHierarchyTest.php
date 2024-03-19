@@ -40,40 +40,17 @@ class CategoryHierarchyTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        /** @var \App\Model\Category\Category $categoryTvAudio */
-        $categoryTvAudio = $this->getReference(CategoryDataFixture::CATEGORY_TV);
-        /** @var \App\Model\Category\Category $categoryElectronics */
-        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
-        /** @var \App\Model\Category\Category $categoryPhoto */
-        $categoryPhoto = $this->getReference(CategoryDataFixture::CATEGORY_PHOTO);
-        /** @var \App\Model\Category\Category $categoryPrinters */
-        $categoryPrinters = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
-        /** @var \App\Model\Category\Category $categoryPc */
-        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
-        /** @var \App\Model\Category\Category $categoryPhones */
-        $categoryPhones = $this->getReference(CategoryDataFixture::CATEGORY_PHONES);
-        /** @var \App\Model\Category\Category $categoryCoffee */
-        $categoryCoffee = $this->getReference(CategoryDataFixture::CATEGORY_COFFEE);
-        /** @var \App\Model\Category\Category $categoryFood */
-        $categoryFood = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
-        /** @var \App\Model\Category\Category $categoryGardenTools */
-        $categoryGardenTools = $this->getReference(CategoryDataFixture::CATEGORY_GARDEN_TOOLS);
-        /** @var \App\Model\Category\Category $categoryToys */
-        $categoryToys = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
-        /** @var \App\Model\Category\Category $categoryBooks */
-        $categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
-
-        $this->categoryTvAudio = $categoryTvAudio;
-        $this->categoryElectronics = $categoryElectronics;
-        $this->categoryPhoto = $categoryPhoto;
-        $this->categoryPrinters = $categoryPrinters;
-        $this->categoryPc = $categoryPc;
-        $this->categoryPhones = $categoryPhones;
-        $this->categoryCoffee = $categoryCoffee;
-        $this->categoryFood = $categoryFood;
-        $this->categoryGardenTools = $categoryGardenTools;
-        $this->categoryToys = $categoryToys;
-        $this->categoryBooks = $categoryBooks;
+        $this->categoryTvAudio = $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
+        $this->categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
+        $this->categoryPhoto = $this->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
+        $this->categoryPrinters = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS, Category::class);
+        $this->categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
+        $this->categoryPhones = $this->getReference(CategoryDataFixture::CATEGORY_PHONES, Category::class);
+        $this->categoryCoffee = $this->getReference(CategoryDataFixture::CATEGORY_COFFEE, Category::class);
+        $this->categoryFood = $this->getReference(CategoryDataFixture::CATEGORY_FOOD, Category::class);
+        $this->categoryGardenTools = $this->getReference(CategoryDataFixture::CATEGORY_GARDEN_TOOLS, Category::class);
+        $this->categoryToys = $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class);
+        $this->categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
     }
 
     public function testCategoryHierarchyOnSingleCategory(): void

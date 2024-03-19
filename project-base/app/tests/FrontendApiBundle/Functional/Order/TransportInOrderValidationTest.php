@@ -10,9 +10,11 @@ use App\DataFixtures\Demo\TransportDataFixture;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\TransportInOrder;
 use App\Model\Cart\Transport\CartTransportFacade;
+use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -74,8 +76,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     {
         $this->addCardPaymentToDemoCart();
         $cart = $this->cartFacade->findCart(null, CartDataFixture::CART_UUID);
-        /** @var \App\Model\Transport\Transport $transportDrone */
-        $transportDrone = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
+        $transportDrone = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
         $this->cartTransportFacade->updateTransportInCart($cart, $transportDrone->getUuid(), null);
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
@@ -105,10 +106,8 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testDeletedPickupPlaceUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
-        /** @var \App\Model\Transport\Transport $transportPersonal */
-        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPersonal, $store->getUuid());
         $this->storeFacade->delete($store->getId());
         $mutation = $this->getCreateOrderMutationFromDemoCart();
@@ -126,10 +125,8 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testRequiredPickupPlaceIdentifier(): void
     {
         $this->addCardPaymentToDemoCart();
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
-        /** @var \App\Model\Transport\Transport $transportPersonal */
-        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
+        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $demoCartUuid = CartDataFixture::CART_UUID;
         $this->addTransportToCart($demoCartUuid, $transportPersonal, $store->getUuid());
         $demoCart = $this->cartFacade->findCart(null, $demoCartUuid);
@@ -162,8 +159,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
 
     private function hidePplTransport(): void
     {
-        /** @var \App\Model\Transport\Transport $transportPpl */
-        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transportPpl);
         $transportData->hidden = true;
         $this->transportFacade->edit($transportPpl, $transportData);
@@ -171,8 +167,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
 
     private function changePplTransportPrice(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
         $transportData->pricesIndexedByDomainId[1] = $transport->getPrice(1)->getPrice()->add(Money::create(10));
         $this->transportFacade->edit($transport, $transportData);
@@ -180,8 +175,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
 
     private function setPplTransportWeightLimit(): void
     {
-        /** @var \App\Model\Transport\Transport $transportPpl */
-        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transportPpl);
         $transportData->maxWeight = 1;
         $this->transportFacade->edit($transportPpl, $transportData);

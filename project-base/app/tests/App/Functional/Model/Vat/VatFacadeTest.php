@@ -7,9 +7,12 @@ namespace Tests\App\Functional\Model\Vat;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
@@ -50,15 +53,12 @@ class VatFacadeTest extends TransactionFunctionalTestCase
         $vatData->percent = '10';
         $vatToDelete = $this->vatFacade->create($vatData, Domain::FIRST_DOMAIN_ID);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatToReplaceWith */
-        $vatToReplaceWith = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID);
+        $vatToReplaceWith = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID, Vat::class);
 
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
 
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
 
         $transportData->vatsIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $vatToDelete;

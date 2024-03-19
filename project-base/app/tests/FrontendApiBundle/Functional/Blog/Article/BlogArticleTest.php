@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -35,7 +36,7 @@ class BlogArticleTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->blogArticle = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE);
+        $this->blogArticle = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE, BlogArticle::class);
     }
 
     public function testGetBlogArticleByUuid(): void
@@ -157,8 +158,7 @@ class BlogArticleTest extends GraphQlTestCase
         $locale = $this->getFirstDomainLocale();
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogarticle_detail', $this->blogArticle->getId());
 
-        /** @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $firstBlogCategory */
-        $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY);
+        $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 
         $description = t(

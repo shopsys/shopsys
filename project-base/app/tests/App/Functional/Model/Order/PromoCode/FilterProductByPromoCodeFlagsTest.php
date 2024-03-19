@@ -182,10 +182,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
      */
     private function getProductWithActionFlag(): Product
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
-
-        return $product;
+        return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
     }
 
     /**
@@ -193,10 +190,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
      */
     private function getProductWithoutFlag(): Product
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3);
-
-        return $product;
+        return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3, Product::class);
     }
 
     /**
@@ -204,10 +198,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
      */
     private function getProductWithNewAndMadeInCzFlags(): Product
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 19);
-
-        return $product;
+        return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 19, Product::class);
     }
 
     /**
@@ -216,9 +207,6 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
      */
     private function getFlag(string $referenceName): Flag
     {
-        /** @var \App\Model\Product\Flag\Flag $flag */
-        $flag = $this->getReference($referenceName);
-
-        return $flag;
+        return $this->getReference($referenceName, Flag::class);
     }
 }

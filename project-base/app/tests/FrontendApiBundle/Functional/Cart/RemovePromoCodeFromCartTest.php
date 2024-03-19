@@ -63,8 +63,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
      */
     public function applyValidPromoCodeToDefaultCart(): PromoCode
     {
-        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {

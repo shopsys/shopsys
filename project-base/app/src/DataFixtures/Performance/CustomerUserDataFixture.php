@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -105,7 +106,7 @@ class CustomerUserDataFixture
     private function getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber)
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
-        $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
 
         $customerUserData = $this->customerUserDataFactory->createForDomainId($domainId);
         $customerUserData->firstName = $this->faker->firstName;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -24,8 +25,7 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 
     public function testSellingDeniedOnDomain(): void
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 132);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 132, Product::class);
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
         $productData->saleExclusion[$this->domain->getId()] = true;

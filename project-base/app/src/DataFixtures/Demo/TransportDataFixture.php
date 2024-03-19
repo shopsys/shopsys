@@ -13,7 +13,9 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
@@ -136,12 +138,10 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      */
     private function setPriceForAllDomains(TransportData $transportData, Money $price): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
-            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId(), Vat::class);
 
             $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 $price,

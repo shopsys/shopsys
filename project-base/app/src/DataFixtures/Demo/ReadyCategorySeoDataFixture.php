@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -77,8 +80,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of 2 litre coffeemakers in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        /** @var \App\Model\Category\Category $categoryElectronics */
-        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         $choseCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
@@ -188,8 +190,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Electronics in red seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        /** @var \App\Model\Category\Category $categoryTv */
-        $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+        $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
         $choseCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryTv->getId(),
@@ -210,8 +211,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of TV, audio from the cheapest seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        /** @var \App\Model\Product\Flag\Flag $saleFlag */
-        $saleFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_SALE);
+        $saleFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_SALE, Flag::class);
         $choseCategorySeoMixCombinationArray['flagId'] = $saleFlag->getId();
         $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $this->createReadyCategorySeoMix(
@@ -227,10 +227,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $choseCategorySeoMixCombinationArray['flagId'] = null;
-        /** @var \App\Model\Product\Parameter\Parameter $technologyParameter */
-        $technologyParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale));
-        /** @var \App\Model\Product\Parameter\Parameter $hdmiParameter */
-        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale));
+        $technologyParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
+        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
             $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
@@ -247,12 +245,9 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of TV, audio plasma with HDMI seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        /** @var \App\Model\Category\Category $categoryPc */
-        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
-        /** @var \App\Model\Product\Flag\Flag $newFlag */
-        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
-        /** @var \App\Model\Product\Parameter\Parameter $usbParameter */
-        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale));
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
+        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
+        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
         $choseCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryPc->getId(),

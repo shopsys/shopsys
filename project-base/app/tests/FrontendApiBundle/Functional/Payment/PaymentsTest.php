@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentsTest extends GraphQlTestCase
@@ -16,10 +17,8 @@ class PaymentsTest extends GraphQlTestCase
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentsQuery.graphql');
         $responseData = $this->getResponseDataForGraphQlType($response, 'payments');
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId());
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId(), Vat::class);
 
         $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $arrayExpected = [

@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
+use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -13,9 +14,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class PaymentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -140,8 +144,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->transports = [];
 
         foreach ($transportsReferenceNames as $transportReferenceName) {
-            /** @var \App\Model\Transport\Transport $transport */
-            $transport = $this->getReference($transportReferenceName);
+            $transport = $this->getReference($transportReferenceName, Transport::class);
             $paymentData->transports[] = $transport;
         }
 
@@ -169,12 +172,10 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
-        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
-            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId(), Vat::class);
 
             $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 $price,
@@ -207,7 +208,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $paymentData->czkRounding = false;
-        $paymentData->goPayPaymentMethod = $this->getReferenceForDomain(GoPayDataFixture::BANK_ACCOUNT_METHOD, $domainConfig->getId());
+        $paymentData->goPayPaymentMethod = $this->getReferenceForDomain(GoPayDataFixture::BANK_ACCOUNT_METHOD, $domainConfig->getId(), GoPayPaymentMethod::class);
         $paymentData->hidden = false;
         $this->createPayment(self::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . $domainConfig->getId(), $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
@@ -237,7 +238,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
         $paymentData->czkRounding = false;
 
-        $paymentData->goPayPaymentMethod = $this->getReferenceForDomain(GoPayDataFixture::PAYMENT_CARD_METHOD, $domainConfig->getId());
+        $paymentData->goPayPaymentMethod = $this->getReferenceForDomain(GoPayDataFixture::PAYMENT_CARD_METHOD, $domainConfig->getId(), GoPayPaymentMethod::class);
 
         $paymentData->hidden = false;
         $this->createPayment(self::PAYMENT_GOPAY_DOMAIN . $domainConfig->getId(), $paymentData, [

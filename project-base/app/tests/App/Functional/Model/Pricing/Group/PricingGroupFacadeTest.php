@@ -10,6 +10,7 @@ use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -46,10 +47,10 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
         $pricingGroupToDelete = $this->pricingGroupFacade->create($pricingGroupData, Domain::FIRST_DOMAIN_ID);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroupToReplaceWith */
         $pricingGroupToReplaceWith = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
         $customerUser = $this->customerUserFacade->getCustomerUserById(1);
 

@@ -16,15 +16,14 @@ class RemoveFromCartTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
     }
 
     public function testItemIsRemovedFromCart(): void
     {
         $firstProductQuantity = 6;
         $newlyCreatedCart = $this->addTestingProductToNewCart($firstProductQuantity);
-        /** @var \App\Model\Product\Product $secondProduct */
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72, Product::class);
         $secondProductQuantity = 3;
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [

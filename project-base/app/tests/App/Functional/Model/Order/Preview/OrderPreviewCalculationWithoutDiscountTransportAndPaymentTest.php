@@ -9,6 +9,10 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Order\Preview\OrderPreviewCalculation;
+use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Payment\Payment;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -27,8 +31,7 @@ class OrderPreviewCalculationWithoutDiscountTransportAndPaymentTest extends Tran
     {
         $currency = new Currency(new CurrencyData());
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $productQuantity = 5;
 
         $quantifiedProduct = new QuantifiedProduct(
@@ -40,14 +43,11 @@ class OrderPreviewCalculationWithoutDiscountTransportAndPaymentTest extends Tran
             $quantifiedProduct,
         ];
 
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
 
-        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $orderPreview = $this->orderPreviewCalculation->calculatePreview(
             $currency,

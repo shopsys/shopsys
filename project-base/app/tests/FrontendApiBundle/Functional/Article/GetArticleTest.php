@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Article;
 
 use App\DataFixtures\Demo\ArticleDataFixture;
+use App\Model\Article\Article;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -130,12 +130,9 @@ class GetArticleTest extends GraphQlTestCase
      */
     private function getSpecialArticleDataProvider(): array
     {
-        /** @var \App\Model\Article\Article $termsAndConditionsArticle */
-        $termsAndConditionsArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, 1);
-        /** @var \App\Model\Article\Article $privacyPolicyArticle */
-        $privacyPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, 1);
-        /** @var \App\Model\Article\Article $cookiesArticle */
-        $cookiesArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, 1);
+        $termsAndConditionsArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, 1, Article::class);
+        $privacyPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, 1, Article::class);
+        $cookiesArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, 1, Article::class);
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 

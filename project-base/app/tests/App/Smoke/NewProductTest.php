@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\UnitDataFixture;
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
@@ -69,8 +70,7 @@ class NewProductTest extends ApplicationTestCase
      */
     private function fillForm(Form $form): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit */
-        $unit = $this->getReference(UnitDataFixture::UNIT_CUBIC_METERS);
+        $unit = $this->getReference(UnitDataFixture::UNIT_CUBIC_METERS, Unit::class);
 
         /** @var \Symfony\Component\DomCrawler\Field\InputFormField[] $nameForms */
         $nameForms = $form->get('product_form[name]');

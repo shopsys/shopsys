@@ -7,14 +7,14 @@ namespace Tests\FrontendApiBundle\Functional\Customer\User;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ExistingEmail;
 use App\FrontendApi\Model\Component\Constraints\ResetPasswordHash;
+use App\Model\Customer\User\CustomerUser;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RecoverPasswordTest extends GraphQlTestCase
 {
     public function testRequestPasswordRecovery(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
         $query = '
             mutation {
                 RecoverPassword(input: {
@@ -42,8 +42,7 @@ class RecoverPasswordTest extends GraphQlTestCase
 
     public function testRequestPasswordRecoveryWithInvalidHash(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
         $query = '
             mutation {
                 RecoverPassword(input: {
@@ -68,8 +67,7 @@ class RecoverPasswordTest extends GraphQlTestCase
 
     public function testRequestPasswordRecoveryWithInvalidEmail(): void
     {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH, CustomerUser::class);
         $query = '
             mutation {
                 RecoverPassword(input: {

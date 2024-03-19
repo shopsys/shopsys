@@ -8,14 +8,17 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Payment\Payment;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartTotalItemsPriceTest extends GraphQlTestCase
 {
     public function testCartTotalItemsPriceDoesNotIncludeTransportAndPaymentPrice(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, 1);
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, 1, Vat::class);
 
         $cartUuid = $this->getResponseDataForGraphQlType($this->addHelloKittyToNewCart(), 'AddToCart')['cart']['uuid'];
         $this->addPaymentCardToCart($cartUuid);
@@ -33,8 +36,7 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
      */
     private function addHelloKittyToNewCart(): array
     {
-        /** @var \App\Model\Product\Product $helloKittyProduct */
-        $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $helloKittyProduct->getUuid(),
@@ -47,8 +49,7 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
      */
     private function addPaymentCardToCart(string $cartUuid): void
     {
-        /** @var \App\Model\Payment\Payment $paymentCard */
-        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $changePaymentInCartMutation = '
             mutation {
                 ChangePaymentInCart(input:{
@@ -68,8 +69,7 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
      */
     private function addTransportPplToCart(string $cartUuid): void
     {
-        /** @var \App\Model\Transport\Transport $transportPpl */
-        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $changeTransportInCartMutation = '
             mutation {
                 ChangeTransportInCart(input:{

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Order\Order;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
@@ -86,8 +87,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $ordersArray = [];
 
         foreach (self::EXPECTED_ORDER_IDS as $orderId) {
-            /** @var \App\Model\Order\Order $order */
-            $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . $orderId);
+            $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . $orderId, Order::class);
 
             $ordersArray[] = [
                 'status' => $order->getStatus()->getName(),

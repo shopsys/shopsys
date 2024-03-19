@@ -9,6 +9,7 @@ use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
 use App\Model\Mail\MailTemplateDataFactory;
+use App\Model\Order\Status\OrderStatus;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -63,7 +64,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
                 . 'Products: {products} <br />'
                 . '{transport_instructions} <br />'
                 . '{payment_instructions}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
 
             $this->createMailTemplate($manager, 'order_status_1', $mailTemplateData, $domainId);
 
@@ -71,21 +72,21 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
                 . 'Your order is being processed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS);
+            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
 
             $this->createMailTemplate($manager, 'order_status_2', $mailTemplateData, $domainId);
 
             $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
                 . 'Processing your order has been finished.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE);
+            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
 
             $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
 
             $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
                 . 'Your order has been cancelled.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED);
+            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
 
             $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
 

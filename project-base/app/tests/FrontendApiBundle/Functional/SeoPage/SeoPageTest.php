@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\SeoPage;
 
 use App\DataFixtures\Demo\SeoPageDataFixture;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class SeoPageTest extends GraphQlTestCase
@@ -21,8 +22,7 @@ class SeoPageTest extends GraphQlTestCase
 
         $data = $this->getResponseDataForGraphQlType($response, 'seoPage');
 
-        /** @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage */
-        $seoPage = $this->getReference($pageSlug);
+        $seoPage = $this->getReference($pageSlug, SeoPage::class);
 
         $domainId = $this->domain->getId();
 

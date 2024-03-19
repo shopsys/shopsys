@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreData;
@@ -93,13 +95,13 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
                 self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
-                self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4),
+                self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4, Stock::class),
                 self::ATTR_DESCRIPTION => t('Store in Ostrava Přívoz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
                 self::ATTR_STREET => 'Koksární 10',
                 self::ATTR_CITY => 'Ostrava',
                 self::ATTR_POSTCODE => '70200',
-                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
                 self::ATTR_CONTACT_INFO => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.8574975',
@@ -115,7 +117,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_STREET => 'Bratranců Veverkových 2722',
                 self::ATTR_CITY => 'Pardubice',
                 self::ATTR_POSTCODE => '53002',
-                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
                 self::ATTR_CONTACT_INFO => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.0346875',
@@ -129,12 +131,12 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
                 self::ATTR_DOMAIN_ID => Domain::SECOND_DOMAIN_ID,
-                self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14),
+                self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14, Stock::class),
                 self::ATTR_DESCRIPTION => t('Store in Žilina', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $secondDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
                 self::ATTR_STREET => 'Pribinova 62',
                 self::ATTR_CITY => 'Žilina',
-                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA),
+                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
                 self::ATTR_POSTCODE => '01007',
                 self::ATTR_CONTACT_INFO => null,
                 self::ATTR_SPECIAL_MESSAGE => null,

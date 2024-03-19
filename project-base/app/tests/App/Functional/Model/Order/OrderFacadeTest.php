@@ -8,16 +8,20 @@ use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\Model\Order\Item\OrderItemData;
+use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -79,7 +83,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData = new OrderData();
         $orderData->transport = $transport;
         $orderData->payment = $payment;
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
         $orderData->email = 'email';
@@ -90,7 +94,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->street = 'street';
         $orderData->city = 'city';
         $orderData->postcode = 'postcode';
-        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
@@ -99,10 +103,10 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->deliveryStreet = 'deliveryStreet';
         $orderData->deliveryCity = 'deliveryCity';
         $orderData->deliveryPostcode = 'deliveryPostcode';
-        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->note = 'note';
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
         $orderPreview = $this->orderPreviewFactory->create(
             $orderData->currency,
@@ -145,7 +149,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
             . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
 
         // @phpstan-ignore-next-line Tests are skipped
-        $order = $this->getReference('order_1');
+        $order = $this->getReference('order_1', Order::class);
 
         $this->assertCount(4, $order->getItems());
 

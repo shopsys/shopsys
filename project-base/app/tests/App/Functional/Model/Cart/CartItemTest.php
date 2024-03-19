@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Model\Cart;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
@@ -33,7 +34,7 @@ class CartItemTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->catnum = '123';
-        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
 
         $productVatsIndexedByDomainId = [];
 

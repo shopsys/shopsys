@@ -6,6 +6,8 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
@@ -58,11 +60,9 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
 
     private function initializeCart(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

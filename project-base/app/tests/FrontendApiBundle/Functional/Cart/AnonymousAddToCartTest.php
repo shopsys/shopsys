@@ -24,7 +24,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
     }
 
     public function testNewCartIsCreated(): void
@@ -70,7 +70,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
         $productQuantity = 2;
         $newlyCreatedCart = $this->addTestingProductToNewCart($productQuantity);
 
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72, Product::class);
         $secondProductQuantity = 5;
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [

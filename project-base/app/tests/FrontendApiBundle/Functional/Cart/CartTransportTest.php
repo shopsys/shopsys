@@ -9,7 +9,11 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Product;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartTransportTest extends GraphQlTestCase
@@ -31,8 +35,7 @@ class CartTransportTest extends GraphQlTestCase
     {
         $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => CartDataFixture::CART_UUID,
@@ -50,8 +53,7 @@ class CartTransportTest extends GraphQlTestCase
      */
     private function getExpectedTransport(): array
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId());
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId(), Vat::class);
 
         return [
             'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -95,8 +97,7 @@ class CartTransportTest extends GraphQlTestCase
     public function testRemoveTransportFromCart(): void
     {
         $referenceName = TransportDataFixture::TRANSPORT_PERSONAL;
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference($referenceName);
+        $transport = $this->getReference($referenceName, Transport::class);
         $this->addDemoTransportToDemoCart($referenceName);
         $cartQuery = 'query {
           cart(cartInput:{
@@ -119,8 +120,7 @@ class CartTransportTest extends GraphQlTestCase
     {
         $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_CZECH_POST);
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => CartDataFixture::CART_UUID,
@@ -149,8 +149,7 @@ class CartTransportTest extends GraphQlTestCase
     public function testTransportPickupPlaceIdentifierIsReturnedFromCart(): void
     {
         $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
         $pickupPlaceIdentifier = $store->getUuid();
         $getCartQuery = '{
             cart(cartInput: {
@@ -169,8 +168,7 @@ class CartTransportTest extends GraphQlTestCase
     public function testTransportPickupPlaceIdentifierIsReturnedAfterAddingToCart(): void
     {
         $response = $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
         $pickupPlaceIdentifier = $store->getUuid();
         $responseData = $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
 
@@ -183,13 +181,11 @@ class CartTransportTest extends GraphQlTestCase
      */
     private function addDemoTransportToDemoCart(string $transportReferenceName): array
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference($transportReferenceName);
+        $transport = $this->getReference($transportReferenceName, Transport::class);
         $pickupPlaceIdentifier = null;
 
         if ($transportReferenceName === TransportDataFixture::TRANSPORT_PERSONAL) {
-            /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
             $pickupPlaceIdentifier = $store->getUuid();
         }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -109,8 +110,7 @@ class RegisterTest extends GraphQlTestCase
 
     public function testRegisterWithOrderPairing()
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 19);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 19, Order::class);
         $graphQlType = 'Register';
         $mutationVariables = self::getRegisterQueryVariables(
             'not-registered-user@shopsys.com',
@@ -131,8 +131,7 @@ class RegisterTest extends GraphQlTestCase
 
     public function testRegisterWithOrderPairingError(): void
     {
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
         $mutationVariables = self::getRegisterQueryVariables(
             'new-one-no-reply@shopsys.com',
             'Adam',

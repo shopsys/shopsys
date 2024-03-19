@@ -6,7 +6,9 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -43,14 +45,13 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      */
     private function getAllListableQueryBuilderTest($productReferenceId, $isExpectedInResult)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId, Product::class);
         $productId = $product->getId();
 
         $queryBuilder = $this->productRepository->getAllListableQueryBuilder($this->domain->getId(), $pricingGroup);
@@ -87,14 +88,13 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      */
     private function getAllSellableQueryBuilderTest($productReferenceId, $isExpectedInResult)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId, Product::class);
         $productId = $product->getId();
 
         $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($this->domain->getId(), $pricingGroup);
@@ -131,14 +131,13 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      */
     private function getAllOfferedQueryBuilderTest($productReferenceId, $isExpectedInResult)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productReferenceId, Product::class);
         $productId = $product->getId();
 
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($this->domain->getId(), $pricingGroup);
@@ -151,20 +150,16 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
     public function testGetSortedProductsByIds()
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        /** @var \App\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
-        /** @var \App\Model\Product\Product $product3 */
-        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3);
-        /** @var \App\Model\Product\Product $product4 */
-        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4);
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
+        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3, Product::class);
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4, Product::class);
 
         $sortedProducts = [
             $product4,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Controller;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -24,7 +25,7 @@ class CdnTest extends FunctionalTestCase
         $_ENV['CDN_DOMAIN'] = $cdnDomain;
         $imageFacade = self::getContainer()->get(ImageFacade::class);
 
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $productImageUrl = $imageFacade->getImageUrl(
             $this->domain->getCurrentDomainConfig(),

@@ -9,13 +9,16 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
+use App\Model\Category\Category;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\Unit\Unit;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
@@ -56,8 +59,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      */
     private function getDefaultProductData()
     {
-        /** @var \App\Model\Category\Category $category */
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
@@ -69,7 +71,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->name = $names;
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
         $productData->catnum = '123';
-        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
         $this->setPriceForAllDomains($productData, Money::create(100));
         $this->setVatsForAllDomains($productData);
         $this->setDescriptionForAllDomain($productData);
@@ -151,10 +153,10 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      */
     private function getVisibilityForProduct(Product $productAgain): ProductVisibility
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
         return $this->em->getRepository(ProductVisibility::class)->findOneBy([
@@ -286,8 +288,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testIsVisibleInVisibileCategory(): void
     {
-        /** @var \App\Model\Category\Category $category */
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class);
 
         $productData = $this->getDefaultProductData();
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
@@ -309,12 +310,9 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testRefreshProductsVisibilityVisibleVariants(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
-        /** @var \App\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53', Product::class);
+        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54', Product::class);
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->hidden = true;
@@ -329,20 +327,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testRefreshProductsVisibilityNotVisibleVariants(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
-        /** @var \App\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
-        /** @var \App\Model\Product\Product $variant4 */
-        $variant4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '149');
-        /** @var \App\Model\Product\Product $variant5 */
-        $variant5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '150');
-        /** @var \App\Model\Product\Product $variant6 */
-        $variant6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '151');
-        /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53', Product::class);
+        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54', Product::class);
+        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148', Product::class);
+        $variant4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '149', Product::class);
+        $variant5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '150', Product::class);
+        $variant6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '151', Product::class);
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->hidden = true;
@@ -381,12 +372,9 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     public function testRefreshProductsVisibilityNotVisibleMainVariant(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
-        /** @var \App\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53', Product::class);
+        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54', Product::class);
+        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69', Product::class);
 
         $mainVariantProductData = $this->productDataFactory->createFromProduct($mainVariant);
         $mainVariantProductData->hidden = true;

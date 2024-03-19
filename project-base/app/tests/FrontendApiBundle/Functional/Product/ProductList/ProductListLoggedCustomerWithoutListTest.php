@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
@@ -50,7 +51,7 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
     public function testAddProductCreatesNewList(ProductListTypeEnum $productListType): void
     {
         $productToAddId = 69;
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $productToAdd->getUuid(),
             'type' => $productListType->name,
@@ -84,10 +85,8 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
      */
     public function testRemoveProductFromList(ProductListTypeEnum $productListType): void
     {
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        /** @var \App\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
         $addProductResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $product1->getUuid(),
             'type' => $productListType->name,
@@ -114,8 +113,7 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
      */
     public function testRemoveLastProductFromList(ProductListTypeEnum $productListType): void
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
         $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'type' => $productListType->name,

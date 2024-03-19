@@ -10,6 +10,7 @@ use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -34,7 +35,7 @@ class CartTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->catnum = '123';
-        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
         $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $this->setVats($productData);
         $product1 = Product::create($productData);

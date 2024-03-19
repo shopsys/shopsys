@@ -7,8 +7,10 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Category\Category;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -26,7 +28,7 @@ class ProductTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $this->product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
     }
 
     public function testProductDetailNameByUuid(): void
@@ -146,8 +148,7 @@ class ProductTest extends GraphQlTestCase
             $firstDomainLocale,
         );
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
 
         $fullName = sprintf(
             '%s %s %s',
@@ -156,11 +157,9 @@ class ProductTest extends GraphQlTestCase
             t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        /** @var \App\Model\Category\Category $mainCategory */
-        $mainCategory = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $mainCategory = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
-        /** @var \App\Model\Category\Category $subCategory */
-        $subCategory = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+        $subCategory = $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         return [
             'data' => [

@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductListDataFixture;
+use App\Model\Product\Product;
 use Iterator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
@@ -112,7 +113,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         array $expectedProductIds,
     ): void {
         $productToAddId = 69;
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         array_unshift($expectedProductIds, $productToAddId);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $productToAdd->getUuid(),
@@ -133,7 +134,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     {
         $newUuid = Uuid::uuid4()->toString();
         $productToAddId = 69;
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productListUuid' => $newUuid,
             'productUuid' => $productToAdd->getUuid(),
@@ -158,8 +159,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         array $expectedProductIds,
     ): void {
         $productToAddId = $expectedProductIds[0];
-        /** @var \App\Model\Product\Product $productToAdd */
-        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $productToAdd->getUuid(),
             'type' => $productListType->name,
@@ -194,8 +194,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
      */
     public function testRemoveProductFromListProductNotInListUserError(ProductListTypeEnum $productListType): void
     {
-        /** @var \App\Model\Product\Product $productThatIsNotInList */
-        $productThatIsNotInList = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 69);
+        $productThatIsNotInList = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 69, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
             'productUuid' => $productThatIsNotInList->getUuid(),
             'type' => $productListType->name,

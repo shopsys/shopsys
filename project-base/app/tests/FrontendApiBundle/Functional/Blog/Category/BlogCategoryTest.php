@@ -30,7 +30,7 @@ class BlogCategoryTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->blogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY);
+        $this->blogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class);
     }
 
     public function testGetBlogCategoryByUuid(): void
@@ -233,8 +233,7 @@ class BlogCategoryTest extends GraphQlTestCase
         $locale = $this->getFirstDomainLocale();
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogcategory_detail', $this->blogCategory->getId());
 
-        /** @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $firstBlogCategory */
-        $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY);
+        $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 
         return [

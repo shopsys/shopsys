@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedRetrieveCartTest extends GraphQlWithLoginTestCase
 {
     public function testGetCartWithoutArguments(): void
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),

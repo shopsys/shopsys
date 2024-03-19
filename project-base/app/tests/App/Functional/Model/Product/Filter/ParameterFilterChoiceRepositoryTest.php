@@ -6,7 +6,9 @@ namespace Tests\App\Functional\Model\Product\Filter;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
+use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
@@ -60,14 +62,13 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
     protected function getParameterValueIdsForCategoryReferenceIndexedByParameterId(
         string $categoryReferenceName,
     ): array {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
         );
 
-        /** @var \App\Model\Category\Category $category */
-        $category = $this->getReference($categoryReferenceName);
+        $category = $this->getReference($categoryReferenceName, Category::class);
 
         $domainConfig1 = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 

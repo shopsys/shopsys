@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Component\Setting\Setting;
+use App\Model\Article\Article;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -13,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
@@ -48,10 +51,10 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 );
             }
 
-            /** @var \App\Model\Article\Article $termsAndConditions */
             $termsAndConditions = $this->getReferenceForDomain(
                 ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS,
                 $domainId,
+                Article::class,
             );
             $this->setting->setForDomain(
                 Setting::TERMS_AND_CONDITIONS_ARTICLE_ID,
@@ -59,12 +62,10 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId,
             );
 
-            /** @var \App\Model\Article\Article $privacyPolicy */
-            $privacyPolicy = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId);
+            $privacyPolicy = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId, Article::class);
             $this->setting->setForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $privacyPolicy->getId(), $domainId);
 
-            /** @var \App\Model\Article\Article $cookies */
-            $cookies = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, $domainId);
+            $cookies = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, $domainId, Article::class);
             $this->setting->setForDomain(Setting::COOKIES_ARTICLE_ID, $cookies->getId(), $domainId);
 
             $personalDataDisplaySiteContent = t(
@@ -96,8 +97,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId,
             );
 
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-            $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, $domainId);
+            $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, $domainId, PricingGroup::class);
             $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);
 
             $this->setting->setForDomain(
@@ -143,11 +143,9 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     private function setDomainDefaultCurrency(int $domainId): void
     {
         if ($domainId === Domain::SECOND_DOMAIN_ID) {
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $defaultCurrency */
-            $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+            $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         } else {
-            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $defaultCurrency */
-            $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
+            $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR, Currency::class);
         }
         $this->setting->setForDomain(PricingSetting::DEFAULT_DOMAIN_CURRENCY, $defaultCurrency->getId(), $domainId);
     }

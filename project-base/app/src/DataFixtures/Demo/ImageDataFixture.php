@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
+use App\Model\Payment\Payment;
+use App\Model\Product\Brand\Brand;
 use App\Model\Slider\SliderItemFacade;
+use App\Model\Transport\Transport;
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\DBAL\Types\Types;
@@ -15,6 +19,7 @@ use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -110,8 +115,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($brandsImagesData as $imageId => $brandName) {
-            /** @var \App\Model\Product\Brand\Brand $brand */
-            $brand = $this->getReference($brandName);
+            $brand = $this->getReference($brandName, Brand::class);
 
             $names = [];
 
@@ -140,8 +144,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($categoriesImagesData as $imageId => $categoryName) {
-            /** @var \App\Model\Category\Category $category */
-            $category = $this->getReference($categoryName);
+            $category = $this->getReference($categoryName, Category::class);
 
             $names = [];
 
@@ -162,8 +165,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($paymentsImagesData as $imageId => $paymentName) {
-            /** @var \App\Model\Payment\Payment $payment */
-            $payment = $this->getReference($paymentName);
+            $payment = $this->getReference($paymentName, Payment::class);
 
             $names = [];
 
@@ -184,8 +186,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($transportsImagesData as $imageId => $transportName) {
-            /** @var \App\Model\Transport\Transport $transport */
-            $transport = $this->getReference($transportName);
+            $transport = $this->getReference($transportName, Transport::class);
 
             $names = [];
 
@@ -291,8 +292,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($storesImagesData as $imageId) {
-            /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . '1');
+            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . '1', Store::class);
             $names = [];
 
             foreach ($this->domain->getAllLocales() as $locale) {

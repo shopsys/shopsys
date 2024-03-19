@@ -87,22 +87,29 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     }
 
     /**
+     * @template T
      * @param string $referenceName
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    protected function getReference(string $referenceName): object
+    protected function getReference(string $referenceName, ?string $entityClassName = null)
     {
-        return $this->persistentReferenceFacade->getReference($referenceName);
+        return $this->persistentReferenceFacade->getReference($referenceName, $entityClassName);
     }
 
     /**
+     * @template T
      * @param string $referenceName
      * @param int $domainId
-     * @return object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    protected function getReferenceForDomain(string $referenceName, int $domainId): object
-    {
-        return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId);
+    protected function getReferenceForDomain(
+        string $referenceName,
+        int $domainId,
+        ?string $entityClassName = null,
+    ) {
+        return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId, $entityClassName);
     }
 
     /**

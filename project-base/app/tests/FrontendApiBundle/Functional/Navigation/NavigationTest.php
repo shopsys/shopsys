@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Navigation;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -103,7 +104,7 @@ class NavigationTest extends GraphQlTestCase
         return $this->getLocalizedPathOnFirstDomainByRouteName(
             'front_product_list',
             [
-                'id' => $this->getReference($categoryReferenceName)->getId(),
+                'id' => $this->getReference($categoryReferenceName, Category::class)->getId(),
             ],
             UrlGeneratorInterface::ABSOLUTE_PATH,
         );
