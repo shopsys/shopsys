@@ -11,8 +11,10 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const ContactInformationFormWrapper: FC = () => {
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
@@ -58,6 +60,7 @@ export const ContactInformationFormWrapper: FC = () => {
                     textareaProps={{
                         label: formMeta.fields.note.label,
                         rows: 3,
+                        onBlur: (event) => updateContactInformation({ note: event.currentTarget.value }),
                     }}
                 />
             </div>

@@ -4,8 +4,9 @@ import {
     fillBillingAdressInThirdStep,
     clearEmailInThirdStep,
     clearPostcodeInThirdStep,
+    fillInNoteInThirdStep,
 } from './orderSupport';
-import { DEFAULT_APP_STORE, customer1, payment, transport, url } from 'fixtures/demodata';
+import { DEFAULT_APP_STORE, customer1, orderNote, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import { checkUrl, loseFocus, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
@@ -74,6 +75,7 @@ describe('Contact information page tests', () => {
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
+        fillInNoteInThirdStep(orderNote);
         loseFocus();
 
         cy.reload();
@@ -93,6 +95,7 @@ describe('Contact information page tests', () => {
         fillCustomerInformationInThirdStep('123', ' changed', ' changed');
         clearPostcodeInThirdStep();
         fillBillingAdressInThirdStep(' changed', ' changed', '29292');
+        fillInNoteInThirdStep(orderNote);
         loseFocus();
 
         takeSnapshotAndCompare('keep-changed-contact-information-after-reload');
