@@ -1931,7 +1931,7 @@ export type TypeProductConnection = {
   /** Information to aid in pagination. */
   pageInfo: TypePageInfo;
   productFilterOptions: TypeProductFilterOptions;
-  /** Total number of products */
+  /** Total number of products (-1 means that the total count is not available) */
   totalCount: Scalars['Int']['output'];
 };
 

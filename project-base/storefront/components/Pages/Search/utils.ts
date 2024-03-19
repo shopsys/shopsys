@@ -21,9 +21,7 @@ import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchStringQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 
-export const useSearchProductsData = (
-    totalProductCount: number,
-): [TypeListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
+export const useSearchProductsData = (totalProductCount?: number) => {
     const client = useClient();
     const currentPage = useCurrentPageQuery();
     const currentFilter = useCurrentFilterQuery();
@@ -36,22 +34,11 @@ export const useSearchProductsData = (
     const previousPageRef = useRef(currentPage);
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
 
+    const [searchProductsData, setSearchProductsData] = useState<TypeSearchProductsQuery | undefined>();
+    const [isFetching, setIsFetching] = useState(!searchProductsData);
+    const [isLoadMoreFetching, setIsLoadMoreFetching] = useState(false);
+
     const userIdentifier = usePersistStore((store) => store.userId)!;
-
-    const [searchProductsData, setSearchProductsData] = useState(
-        readSearchProductsFromCache(
-            client,
-            currentSearchString ?? '',
-            currentSort,
-            mappedFilter,
-            getEndCursor(currentPage),
-            initialPageSizeRef.current,
-            userIdentifier,
-        ),
-    );
-
-    const [fetching, setFetching] = useState(!searchProductsData);
-    const [loadMoreFetching, setLoadMoreFetching] = useState(false);
 
     const fetchProducts = async (
         variables: TypeSearchProductsQueryVariables,
@@ -61,31 +48,32 @@ export const useSearchProductsData = (
             .query<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
             .toPromise();
 
-        if (!response.data) {
-            setSearchProductsData({ products: undefined, hasNextPage: false });
-
+        if (!response.data?.productsSearch) {
             return;
         }
 
         setSearchProductsData({
-            products: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
-            hasNextPage: response.data.productsSearch.pageInfo.hasNextPage,
+            ...response.data,
+            productsSearch: {
+                ...response.data.productsSearch,
+                edges: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
+            },
         });
         stopFetching();
     };
 
     const startFetching = () => {
         if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setFetching(true);
+            setIsFetching(true);
         } else {
-            setLoadMoreFetching(true);
+            setIsLoadMoreFetching(true);
             previousLoadMoreRef.current = currentLoadMore;
         }
     };
 
     const stopFetching = () => {
-        setFetching(false);
-        setLoadMoreFetching(false);
+        setIsFetching(false);
+        setIsLoadMoreFetching(false);
     };
 
     useEffect(() => {
@@ -134,10 +122,10 @@ export const useSearchProductsData = (
         );
     }, [currentSearchString, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
 
-    return [searchProductsData.products, searchProductsData.hasNextPage, fetching, loadMoreFetching];
+    return { searchProductsData: searchProductsData?.productsSearch, isFetching, isLoadMoreFetching };
 };
 
-const readSearchProductsFromCache = (
+const readProductsSearchFromCache = (
     client: Client,
     TypeSearchQuery: string,
     orderingMode: TypeProductOrderingModeEnum | null,
@@ -145,10 +133,7 @@ const readSearchProductsFromCache = (
     endCursor: string,
     pageSize: number,
     userIdentifier: string,
-): {
-    products: TypeListedProductConnectionFragment['edges'] | undefined;
-    hasNextPage: boolean;
-} => {
+): TypeListedProductConnectionFragment | undefined => {
     const dataFromCache = client.readQuery<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(
         SearchProductsQueryDocument,
         {
@@ -162,10 +147,7 @@ const readSearchProductsFromCache = (
         },
     )?.data?.productsSearch;
 
-    return {
-        products: dataFromCache?.edges,
-        hasNextPage: !!dataFromCache?.pageInfo.hasNextPage,
-    };
+    return dataFromCache;
 };
 
 const getPreviousProductsFromCache = (
@@ -183,7 +165,7 @@ const getPreviousProductsFromCache = (
 
     while (iterationsCounter > 0) {
         const offsetEndCursor = getEndCursor(currentPage + currentLoadMore - iterationsCounter);
-        const currentCacheSlice = readSearchProductsFromCache(
+        const productsSearchFromCache = readProductsSearchFromCache(
             client,
             TypeSearchQuery,
             sort,
@@ -191,13 +173,13 @@ const getPreviousProductsFromCache = (
             offsetEndCursor,
             pageSize,
             userIdentifier,
-        ).products;
+        );
 
-        if (currentCacheSlice) {
+        if (productsSearchFromCache) {
             if (cachedPartOfProducts) {
-                cachedPartOfProducts = mergeProductEdges(cachedPartOfProducts, currentCacheSlice);
+                cachedPartOfProducts = mergeProductEdges(cachedPartOfProducts, productsSearchFromCache.edges);
             } else {
-                cachedPartOfProducts = currentCacheSlice;
+                cachedPartOfProducts = productsSearchFromCache.edges;
             }
         } else {
             return undefined;

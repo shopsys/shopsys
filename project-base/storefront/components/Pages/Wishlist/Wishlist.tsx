@@ -34,9 +34,9 @@ export const Wishlist: FC = () => {
 
                     <div>
                         <ProductsList
-                            fetching={fetching}
                             gtmMessageOrigin={GtmMessageOriginType.other}
                             gtmProductListName={GtmProductListNameType.wishlist}
+                            isFetching={fetching}
                             products={wishlist.products}
                         />
                     </div>

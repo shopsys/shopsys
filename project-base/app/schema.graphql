@@ -1557,7 +1557,7 @@ type ProductConnection {
   "Information to aid in pagination."
   pageInfo: PageInfo!
   productFilterOptions: ProductFilterOptions!
-  "Total number of products"
+  "Total number of products (-1 means that the total count is not available)"
   totalCount: Int!
 }
 
