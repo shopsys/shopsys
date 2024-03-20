@@ -94,6 +94,7 @@ class LuigisBoxBatchLoader
                     $mainBatchLoadData->getFacetNames(),
                 ),
                 $limitsByType,
+                $mainBatchLoadData->getEndpoint(),
             ),
         );
     }
@@ -101,9 +102,10 @@ class LuigisBoxBatchLoader
     /**
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[] $luigisBoxResults
      * @param array $limitsByType
+     * @param string $endpoint
      * @return array
      */
-    protected function mapDataByTypes(array $luigisBoxResults, array $limitsByType): array
+    protected function mapDataByTypes(array $luigisBoxResults, array $limitsByType, string $endpoint): array
     {
         $mappedData = [];
 
@@ -126,14 +128,13 @@ class LuigisBoxBatchLoader
                 $mappedDataOfCurrentType = $this->mapBrandData($luigisBoxResults[$type]);
             }
 
-            if ($type === $this->getMainType()) {
+            if ($endpoint === LuigisBoxClient::ACTION_SEARCH && $type === $this->getMainType()) {
                 static::$facets = $luigisBoxResults[$type]->getFacets();
                 static::$totalsByType[$type] = $luigisBoxResults[$type]->getItemsCount();
             } else {
                 static::$totalsByType[$type] = -1;
             }
 
-            static::$totalsByType[$type] = count($mappedDataOfCurrentType);
             $mappedData[] = $mappedDataOfCurrentType;
         }
 
