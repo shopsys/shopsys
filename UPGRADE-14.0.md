@@ -647,6 +647,25 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   product filtering from Elasticsearch (check `Product\Filter` namespace)
     -   see #project-base-diff to update your project
 -   docker-compose: add rabbitMQ and php-consumer containers for review stage on gitlab CI [#2953](https://github.com/shopsys/shopsys/pull/2953)
+    -   if you are using GitlabCI, add rabbitMQ container to the GitlabCI server `docker-compose.yml` configuration file (you find it on the server in `/home/ci/` directory)
+        ```diff
+        +   rabbitmq:
+        +       image: rabbitmq:3.12-management-alpine
+        +       restart: always
+        +       depends_on:
+        +           - traefik
+        +       labels:
+        +           - traefik.backend=rabbitmq
+        +           - traefik.frontend.rule=Host:rabbitmq.<put-your-ci-domain-here>
+        +           - traefik.docker.network=ci_traefik-network
+        +           - traefik.port=15672
+        +       networks:
+        +           - traefik-network
+        +           - default
+        ```
+        -   the docker-compose config should be on the server in `/home/ci/` directory
+        -   you must be logged as root (`sudo su`) to be able to make changes in the file
+        -   after you save the changes, you need to run `docker-compose up -d` on the server to start the container
     -   see #project-base-diff to update your project
 -   define elasticsearch type for ID in structure ([#2495](https://github.com/shopsys/shopsys/pull/2495))
     -   see #project-base-diff to update your project
