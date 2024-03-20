@@ -1478,6 +1478,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             )
         ```
     -   methods `getVisibleAdvertsQueryBuilder()` and `getVisibleAdvertsByPositionNameQueryBuilder()` has been removed from `Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository` and code usages has been replaced by usages from framework `AdvertRepository`
+-   enable product filters provided by Luigi's Box when using Luigi's Box ([#3074](https://github.com/shopsys/shopsys/pull/3074))
+    -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory::createProductFilterOptions()` has changed its visibility to `public`
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
