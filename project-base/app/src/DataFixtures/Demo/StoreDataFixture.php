@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
@@ -21,6 +22,8 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class StoreDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    private const string UUID_NAMESPACE = '6ffdbcc0-fd5d-4f60-bf8d-1349366b3d93';
+
     private const ATTR_NAME = 'name';
     private const ATTR_STOCK = 'stockId';
     private const ATTR_IS_DEFAULT = 'isDefault';
@@ -37,15 +40,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
     private const ATTR_IMAGE = 'image';
     public const STORE_PREFIX = 'store_';
-
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '6ffdbcc0-fd5d-4f60-bf8d-1349366b3d93',
-        '60a0cd42-5c7b-47a8-ac79-aec5808931ff',
-        '9be1392b-c39a-4130-a107-aedc56e7175e',
-    ];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
@@ -157,7 +151,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         $storeData = $this->storeDataFactory->createForDomain($demoRow[self::ATTR_DOMAIN_ID]);
 
-        $storeData->uuid = array_pop($this->uuidPool);
+        $storeData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $demoRow[self::ATTR_NAME])->toString();
 
         $storeData->name = $demoRow[self::ATTR_NAME];
         $storeData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];

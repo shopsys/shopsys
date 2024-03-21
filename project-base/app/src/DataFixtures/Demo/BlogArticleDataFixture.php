@@ -6,8 +6,8 @@ namespace App\DataFixtures\Demo;
 
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -22,33 +22,13 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 
 class BlogArticleDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    private const string UUID_NAMESPACE = '7cd16792-7f6c-433c-b038-34ad5f31a215';
+
     public const PAGES_IN_CATEGORY = 15;
 
     public const FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
     public const FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
     public const FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
-
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '7cd16792-7f6c-433c-b038-34ad5f31a215', 'c9fff5b3-82a1-417f-b709-96ed61851f0f', 'e27956d6-7668-4cc6-92c8-f0b5c8f32372',
-        '9a361890-683c-4dca-81a1-352f40b15691', '9fcbf9e1-b61c-4991-a220-953d1120f33c', 'bc08accd-7334-48e9-871f-036878dfee19',
-        '649be426-b4ce-4cf0-a6da-e0bd2cccbc59', '12285722-d933-4796-a83b-c88b844f393a', '2856b769-92f6-48e2-831e-ea4cac631f88',
-        'fb9f8e37-8807-45d3-a249-0a150f925a26', '3e4dd917-0fea-4cb7-8869-785e74178bb1', '653b9044-002b-485a-b537-e975a5369bc1',
-        'b283f63a-57a6-4444-8981-8341ec5b9326', 'cfd629f5-de34-41fa-b414-fa6a347d1df3', 'f1b84790-938e-4716-b824-cbb545be7533',
-        'ad516d3c-456c-4e11-a462-e0d9f052b8a3', 'e7eb1163-95a8-400d-b2a4-d0348b87ac23', 'f917454e-bafd-4312-9de0-f35904e7e9b0',
-        '05e390a9-4ff0-43f3-9282-8be8c67ff234', 'c6e8e941-b568-4aaf-b74c-de4053f22d8f', '0796a3a6-5226-4083-a4ad-c9b92077fd82',
-        '1731e79a-788e-4151-a2b8-3a475c05af5c', '3ec93db3-fdef-4c75-86e6-d2ac9c02c20c', 'c3758696-d814-4402-8687-180c0a8eb0ed',
-        'edbec10c-3372-46cd-97b4-d1b35920cd21', '509e682f-8088-47f3-905a-dffaa2700c30', '14b33e96-b7b0-41ee-adf9-5d60423b1e15',
-        '826fe5ea-3113-4b25-9c1e-78b16a3d3bcf', '1ca426c3-528e-4686-92fe-8708cdd2387c', 'badaeb17-5c21-49a4-b9f8-d936641b0712',
-        '98828098-a901-4e49-922a-6fe151b82feb', '67741a23-42d6-4c3b-b1f9-ee585613c8f2', '5fa60c37-f1af-4275-9419-bf6015874a7d',
-        '62c66c64-0f4f-48e6-a76e-f8b05d8d3d28', '69bd0825-d687-43fa-8cf5-2a231639f291', '5f93c6ca-8a23-4e25-8897-6a23b37d5a04',
-        'f1dc28d4-6d8d-44d1-8beb-64b407ca1c46', '184cf1cb-9885-4338-b3c8-91634a621687', '3eb20f86-e59f-412c-a537-3254b708d5f9',
-        '3abe40ff-f1d0-4b06-9ffd-a09da457cee4', '694cff26-f479-46b8-9ddf-d7647468f722', '38e46427-9aac-4148-b152-6ed92f75a572',
-        '1f4fba66-bb78-40cc-a9ef-1d589ac384ea', '7b384079-c744-4816-bea4-4484ca654756', 'fba0c8d4-cbcd-4c4a-96d9-f8759c0dbecc',
-        '41b8d6bf-1fe0-462d-91ba-e17adcdd3944', '654be677-983f-4f33-a8f6-996bf0b2a7c2', '064d88ef-a017-440f-8cab-7641aaab256f',
-    ];
 
     private int $articleCounter = 1;
 
@@ -59,7 +39,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade $blogVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         private BlogArticleFacade $blogArticleFacade,
@@ -68,7 +47,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         private Domain $domain,
         private BlogVisibilityFacade $blogVisibilityFacade,
         private BlogCategoryDataFactory $blogCategoryDataFactory,
-        private EntityManagerInterface $em,
     ) {
     }
 
@@ -78,10 +56,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     public function load(ObjectManager $manager)
     {
         $mainPageBlogCategory = $this->blogCategoryFacade->getById(BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID);
-
-        $this->updateBlogCategoryUuid($mainPageBlogCategory->getId(), '5247c908-b258-43ee-b184-015ee77df608');
-        $this->updateBlogCategoryUuid($mainPageBlogCategory->getParent()->getId(), '77f0ef08-871e-4099-855f-07650eaaf64d');
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
+        $mainPageBlogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Main blog page')->toString();
 
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
@@ -149,28 +125,30 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private function createSubcategory(BlogCategory $parentCategory, int $subcategoryOrder): BlogCategoryData
     {
         $blogCategoryData = $this->blogCategoryDataFactory->create();
-        $blogCategoryData->uuid = array_pop($this->uuidPool);
         $blogCategoryData->parent = $parentCategory;
 
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
 
             if ($subcategoryOrder === 1) {
-                $h1 = t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $title = t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $name = t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $description = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoH1s[$domain->getId()] = t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoTitles[$domain->getId()] = t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->names[$locale] = t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->descriptions[$locale] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoMetaDescriptions[$domain->getId()] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             } else {
-                $h1 = t('Second subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $title = t('title - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $name = t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $description = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoH1s[$domain->getId()] = t('Second subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoTitles[$domain->getId()] = t('title - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->names[$locale] = t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->descriptions[$locale] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoMetaDescriptions[$domain->getId()] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             }
-            $blogCategoryData->seoH1s[$domain->getId()] = $h1;
-            $blogCategoryData->seoTitles[$domain->getId()] = $title;
-            $blogCategoryData->seoMetaDescriptions[$domain->getId()] = $description;
-            $blogCategoryData->names[$locale] = $name;
-            $blogCategoryData->descriptions[$locale] = $description;
+        }
+
+        if ($subcategoryOrder === 1) {
+            $blogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'First subsection')->toString();
+        } else {
+            $blogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Second subsection')->toString();
         }
 
         return $blogCategoryData;
@@ -184,10 +162,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
 
-        $blogArticleData->uuid = array_pop($this->uuidPool);
-
         $dateTime = new DateTime(sprintf('-%s days', $this->articleCounter + 3));
         $blogArticleData->publishDate = $dateTime->setTime(0, 0);
+        $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article example ' . $this->articleCounter)->toString();
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -240,7 +217,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private function createBlogArticleForSearchingTest(): void
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
-        $blogArticleData->uuid = array_pop($this->uuidPool);
+        $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for search testing')->toString();
         $blogArticleData->publishDate = new DateTime('-1 days');
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -265,6 +242,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
         $blogArticleData->publishDate = new DateTime('-2 days');
+        $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for products testing')->toString();
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -305,6 +283,7 @@ EOT));
         $blogArticleData = $this->blogArticleDataFactory->create();
         $blogArticleData->publishDate = new DateTime('-3 days');
         $firstDomainUrl = $this->domain->getDomainConfigById(1)->getUrl();
+        $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'GrapesJS page')->toString();
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -364,23 +343,5 @@ EOT));
         return [
             ProductDataFixture::class,
         ];
-    }
-
-    /**
-     * @param int $id
-     * @param string $uuid
-     */
-    private function updateBlogCategoryUuid(int $id, string $uuid): void
-    {
-        $this->em
-            ->createQuery(
-                sprintf(
-                    'UPDATE %s bc SET bc.uuid = \'%s\' WHERE bc.id = %d',
-                    BlogCategory::class,
-                    $uuid,
-                    $id,
-                ),
-            )
-            ->execute();
     }
 }

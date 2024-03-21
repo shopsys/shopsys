@@ -81,29 +81,29 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 $this->getLastCountOfArticlesResponse(1),
-                array_slice($this->getExpectedArticles(), 18, 1),
+                array_slice($this->getExpectedArticles(), 17, 1),
             ],
             [
                 $this->getLastCountOfArticlesResponse(2),
-                array_slice($this->getExpectedArticles(), 17, 2),
+                array_slice($this->getExpectedArticles(), 16, 2),
             ],
             [
                 $this->getFirstArticlesCountResponse(1, [Article::PLACEMENT_FOOTER_4]),
-                array_slice($this->getExpectedArticles(), 13, 1),
+                array_slice($this->getExpectedArticles(), 12, 1),
             ],
             [
                 $this->getLastCountOfArticlesResponse(1, [Article::PLACEMENT_FOOTER_4]),
-                array_slice($this->getExpectedArticles(), 15, 1),
+                array_slice($this->getExpectedArticles(), 14, 1),
             ],
             [
                 $this->getFirstArticlesCountResponse(self::ARTICLES_TOTAL_COUNT, [Article::PLACEMENT_FOOTER_4]),
-                array_slice($this->getExpectedArticles(), 13, 3),
+                array_slice($this->getExpectedArticles(), 12, 3),
             ],
             [
                 $this->getFirstArticlesCountResponse(self::ARTICLES_TOTAL_COUNT, [Article::PLACEMENT_FOOTER_1, Article::PLACEMENT_FOOTER_4]),
                 [
                     ...array_slice($this->getExpectedArticles(), 0, 5),
-                    ...array_slice($this->getExpectedArticles(), 13, 3),
+                    ...array_slice($this->getExpectedArticles(), 12, 3),
                 ],
             ],
         ];
@@ -239,19 +239,6 @@ class GetArticlesTest extends GraphQlTestCase
             [
                 'name' => t('Complaint', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'placement' => Article::PLACEMENT_FOOTER_2,
-                'text' => '<div class="gjs-text-ckeditor">' . t(
-                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
-                    [],
-                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale,
-                ) . '</div>',
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
-            ],
-            [
-                'name' => t('Frequently Asked Questions FAQ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'placement' => Article::PLACEMENT_FOOTER_3,
                 'text' => '<div class="gjs-text-ckeditor">' . t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],

@@ -19,6 +19,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -35,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockRepository;
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PRODUCT_PREFIX = 'product_';
+    private const string UUID_NAMESPACE = '5d92301d-1583-4505-842a-27fe6854f587';
 
     private int $productNo = 1;
 
@@ -42,63 +44,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @var int[]
      */
     private array $productIdsByCatnum = [];
-
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '5d92301d-1583-4505-842a-27fe6854f587', '06cdd679-9a04-439c-b950-c9de7392f142', '789d9b6e-c40a-4462-af66-c7aa1131d427',
-        '261e430c-dc24-488b-ade8-d34ae13a56f5', 'c8284983-1158-42be-bf6c-2821427242ae', 'f4ee85cc-ad0b-463d-9f3e-427d7c27f166',
-        '65410d11-c223-49d3-8dc8-31627ce2c81e', 'c710b55d-b4c2-45e6-bed2-6fd25c8d9200', '69d7de81-9811-44ef-aeed-e8f59c3ef896',
-        'bcaaf5a4-e7f1-4288-bf83-2b074a4be011', '2259d657-2b8e-495f-9684-38b92b823b24', '1ee088f5-6717-4182-8b95-03a2e74bb4a2',
-        '4fecaec6-b25d-4ae6-91e0-f114925c8c4b', '84cf4963-b747-432c-9c06-300c6ef32046', '97999af8-b1c1-4f72-a07c-288ea3f2f259',
-        'd5ea5f11-dd11-4867-867d-4df71a063b1e', '13d862a6-7856-46ed-ac7c-181bf6376cf5', '96faf2b6-aae4-488b-b653-326d41e70ffe',
-        'd924182d-0d0d-434f-a099-1f69a70ec0ae', '0e6693ae-3c2a-4615-bc3c-5e7eadd81a5b', '686baf7a-1688-42ba-a21d-e0e1090ae7d1',
-        'fc5a9f22-2425-4af4-a97a-4964b057791f', 'd50d80c2-dbba-4b4b-bad9-cf0b6204b0fd', '352ee59b-4e9a-4421-bddb-2543cd5def1e',
-        'a3bf9a5d-017b-4574-99d8-f906347e69a8', 'a55c54fc-1720-4683-8a6a-979a8368d6cb', 'cc8b7c72-b109-4a7a-96de-75db9a0b243d',
-        '2514a42f-535a-48e5-9ef3-1cceb2a2547f', 'af59a3f3-dbe8-4b12-ba3b-53fc73903e72', '1b1f7b38-f8a3-4898-9162-09321fdd2f3c',
-        '06ec8224-f068-4e4c-ab1b-807f0e7f825c', 'ff43c17c-c2af-479e-a9cc-3b382dd67969', '95479dc7-da74-44d6-b65b-a5a73ade8e40',
-        'd187efb2-6278-45fe-9653-55876bf19fcd', '98385437-9120-4dde-b064-7e2a439ce6d8', '288b69fb-2760-4135-b99a-2f5eb5a497f3',
-        '2aff0ccc-8ea1-44e3-9928-c8172db515cf', '1a86597d-acfa-4c30-b86e-ce462a3d3c9b', '8805f5c6-835b-41e0-b30d-0e8ca959e056',
-        '7c66e321-b1e6-4545-93f4-1e252aea2ef5', '3091cdbd-8d79-47ab-a858-53212eb3a91e', '6f392be6-1b71-431a-be6d-56297c0f978a',
-        'e20ce277-8208-4a96-8700-7ce0342a25f6', '3d3b7eab-5fb5-455b-922b-648654524327', '43d8cd8c-4871-4068-b0f0-7c7e7d582671',
-        'ec98aa55-908d-4cc2-bfa1-7aca317c7ef1', 'b620db85-b7c0-4d19-b1d0-9fdcd94ea01a', '8f2c75b6-16ac-4339-8541-94ce0ff5177e',
-        'bb9d70f3-1df7-4daf-a7b5-ec856aadecb1', '75f273b4-574d-4b8c-a757-de919984eeda', '04d4abb2-375b-4a99-a77c-444d8a24227f',
-        '0d37507d-7c5e-4bdb-a8ca-80d0253a143f', 'ead53d15-44db-448d-9794-48977953fc43', 'a34fd0fe-eff8-4897-a3be-3b0f293b9507',
-        '4f5fcfe0-b8cc-4801-a3e9-920e8b5d9064', '25ce34ff-c441-4a2d-add4-2c8b0488c0cd', '25c2746d-f0d5-4a98-a6c4-12dbf62f9b2d',
-        '278e16f3-0a5c-490b-ba94-3215d93600bd', '21f49338-63dd-41a4-a3f7-ab4657edae54', 'a27735e0-6baa-475d-9532-480f161f1803',
-        'aa1dd79f-8c41-479f-96ea-8ec4e129fa06', '04c7ce3a-ab7c-4ab7-9a91-fb388397ddd1', '4907b9ba-30b7-44d0-9d0a-ae6dcc426192',
-        '4948d5bd-dd6b-417c-8c38-d78d843ceb94', '8374c3be-6781-4223-a9c9-816d73cd3373', '991756a8-6488-4d45-b808-eadf33d1fa97',
-        'd96af534-9797-42a9-8441-e2ee18c25467', '260e3314-4612-4eff-aefd-fc6547255708', 'a1c4b3c0-a043-4428-8bb7-076f38d76f89',
-        '7ac686ce-4db8-4242-957e-b65bcff6f427', '4e86dacf-d0db-43f5-9fe8-3846409acc3f', '25693e70-2566-4338-ac2b-5d4c392aaf4e',
-        '0141c798-e90f-4c7d-8f73-e4966d00f267', 'ca18d0fa-5814-4a88-8f6c-fec6af7c77da', 'ed8373c6-2ec2-46a6-8fd3-b33c67dfd1ee',
-        'bafb2eed-9713-4a8b-a624-1009d095ad5d', 'e411c045-5a1f-4d62-9050-a6d28aca77be', '3fa5039b-83c5-4d4b-85c0-1c8ec52dc03e',
-        'c4ed61a4-b9eb-4e41-9802-a02cf20d9a1a', '4d1f4265-2715-4385-8d6a-45dd5b42d716', 'dc7249ff-7a50-45ef-8212-f66a511bbe74',
-        '765b50c2-b470-42a6-a904-8db468d12792', '9434a5ad-c880-402c-93e2-727f67619f31', 'ef51e43d-d2d1-4ce0-b9f1-4be762df6616',
-        '47650da2-2b67-4669-b303-cd464cb4b732', '388c2721-432f-4ca7-a971-7bdb2b7de06e', 'a29d990c-dde5-49c1-bc1f-15741fb68965',
-        '74ce26de-c2b9-4a0f-a027-eff70122df77', '6d87eac1-7aca-454d-8753-bee3be0c097a', '167acf4d-de3a-40a8-a2d1-76dcd4c03d54',
-        '86379dd8-211d-44b7-a3d2-e3b88a7fa830', '2fffee69-8027-4d60-a262-be0594bdbd04', 'ab4ca0c8-6bb6-4c55-b757-64e9ed36c1d4',
-        'aa2654e3-2c44-447c-9df7-563347fed03e', '33a38bea-8646-47c6-9d25-286e188bc5c7', 'dd76892c-35bf-4e5c-9b9a-82e8b4645f9c',
-        '51da5060-4ead-45eb-99b0-3a1aafb39b9d', 'fd4900bf-f709-4025-bc39-c0a48f26e9fa', '42bb397d-5e1d-475f-94bf-51c1d9afc16f',
-        '346f52f0-1e4e-45ad-9931-8f89a0102bb1', '028aa298-a140-4d07-b6a3-f13928dd6622', '5cd30df1-6ec5-49a9-a13f-84a3c66eb186',
-        'f2153d68-24d5-4be1-bbbf-ce1a6912b70b', 'ffc33582-f784-44b7-9841-89a46bd67708', '5786be24-6fad-43a7-b8d5-788f882b7a69',
-        '4ef37ea7-f820-4441-a3e5-b83d6bd55456', '0bfd6623-6ed9-48ae-bbff-bd09c3d31365', 'e8ef6e8e-4f13-4e53-ae38-3e3d3b448dde',
-        '784c253e-ff9d-4eff-8356-176262c2d46d', '19741bef-a9d7-4e02-b142-1e97a6472188', '010fcce7-2360-4253-b154-6a5b54baebc5',
-        'ee25f5de-4968-4046-b259-58e277e86ae2', 'c8cf94dc-5834-4131-98cc-970b189a621b', '27a89829-d5e9-47e2-a100-7a514006f1b4',
-        '8a46c0ae-caf3-4fcd-be47-dcad38b61f2e', '3650928f-6657-47db-adaf-d175a5ad1bb4', 'e9d7a12d-d6f7-4bb9-968b-7efd6952708c',
-        '95b9af97-c9fd-47fc-bb69-5e938648e107', '582da6f1-6cda-4642-a50e-0a66755833eb', '3cecf96f-0c50-480e-a083-233eb63cea10',
-        'b4cd58af-f962-48af-9ac7-12bf7ad6f29f', '4b7d8d79-e6a4-4ee7-b28e-06711b2733bf', '158c8a14-e357-4dc8-9361-24f06e1689e6',
-        '6e9eb128-3037-4ed4-aeb1-b5e53fb17562', '776881d3-b2cb-4c80-a433-dfad38bad18d', 'ed297c65-dd3f-4189-a108-a5c4ddb96336',
-        'becfaa8f-9270-4677-8ff7-5a7075b92d36', '4d8c9aa6-f64a-46f0-b010-6266038659a6', '32f82f2b-c9db-407f-b7b5-18c55afe3fb4',
-        '58661e7f-7deb-4adc-b5cb-1f017af6e6c1', '720e1508-96a9-41cb-8fef-de9c7c46b845', 'f087d427-f91c-4049-a505-4323b73b8711',
-        '9a6390ce-55de-41fc-8a2d-0b034ab0b174', 'debf3087-c21f-4498-a209-ea0ae25f1558', '1eb283ce-5988-4c8f-9cb9-4cbc8e2de575',
-        '17cf823e-877b-4855-81ee-e14058d7bd15', '259123df-8ea7-455b-bbbc-26ca33f075fa', '687b88c1-94cc-429c-92de-23c7450dd1db',
-        'dd18d988-3fb4-4bf9-9875-d852d9b2f89d', '1ee3d5a0-4f6e-4dc7-bf6b-02595092af93', '5bd706d2-fb06-4a90-bfe7-9970cce6043f',
-        'd4f44460-f40e-48bd-8aae-9d17a7887e4b', '46933250-89a8-4d15-b736-15ac6b66a739', 'a3f3f907-b3f1-46d2-b493-7eeff3e1c350',
-        '5e44c902-2478-44b6-a2b1-7ff8a5ba6df2', '6096344f-7492-4f54-b40e-4743902a599a', '2409abb1-bf67-4ab4-b05f-51947511cbdf',
-        'af821f54-645e-4546-9d67-747c03b71c48', 'b9c83950-db85-47c5-80e3-951b9f3a588f', '62fa5f87-bd9a-4bf5-816a-04f557af98c3',
-        'aac54887-f9d9-4e02-9739-65a9d070f4cc', '5271462b-1d38-4a18-9d76-fbc06247c6f0', '8c44b857-527d-41e2-a128-fc042b41736f',
-    ];
 
     /**
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -5483,7 +5428,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function createProduct(ProductData $productData): Product
     {
-        $productData->uuid = array_pop($this->uuidPool);
+        $productData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $productData->catnum)->toString();
 
         $product = $this->productFacade->create($productData);
 

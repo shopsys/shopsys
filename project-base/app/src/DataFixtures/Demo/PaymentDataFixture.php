@@ -9,6 +9,7 @@ use App\Model\Payment\PaymentDataFactory;
 use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,21 +24,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class PaymentDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    private const string UUID_NAMESPACE = '6ffdbcc0-fd5d-4f60-bf8d-1349366b3d93';
+
     public const PAYMENT_CARD = 'payment_card';
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
     public const PAYMENT_GOPAY_DOMAIN = Payment::TYPE_GOPAY . '_domain_';
     public const PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN = 'goPay_bank_account_transfer_domain_';
     public const PAYMENT_LATER = 'payment_later';
-
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '60b0df97-047f-48e4-8864-1d90ba1aaf84', '5a8d0623-fecc-432e-a4a7-330e96da2dab',
-        '7adc774b-aa39-4727-b373-544345814929', '1dd4fd71-3d82-48cb-b2b0-eecff0f297d3',
-        'a22b0dde-77ab-448f-be5e-831c0b2b5a32',
-    ];
 
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
@@ -136,11 +130,11 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param array $transportsReferenceNames
      */
     private function createPayment(
-        $referenceName,
+        string $referenceName,
         PaymentData $paymentData,
         array $transportsReferenceNames,
     ) {
-        $paymentData->uuid = array_pop($this->uuidPool);
+        $paymentData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
         $paymentData->transports = [];
 
         foreach ($transportsReferenceNames as $transportReferenceName) {

@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -15,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 
 class CategoryDataFixture extends AbstractReferenceFixture
 {
+    private const string UUID_NAMESPACE = '7ba89a28-77ab-419a-b154-ef747d7a98ce';
+
     public const CATEGORY_ELECTRONICS = 'category_electronics';
     public const CATEGORY_TV = 'category_tv';
     public const CATEGORY_PHOTO = 'category_photo';
@@ -26,24 +29,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
     public const CATEGORY_TOYS = 'category_toys';
     public const CATEGORY_GARDEN_TOOLS = 'category_garden_tools';
     public const CATEGORY_FOOD = 'category_food';
-
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '7ba89a28-77ab-419a-b154-ef747d7a98ce',
-        '57157d5a-b15b-495c-b689-65d395f1c50f',
-        '8075297b-30b7-49e0-bd89-b4e5dec2f5b8',
-        'c5d5a03e-1d11-43e6-9b24-9058d13346b3',
-        'b4700dea-4b83-43d3-9df1-f162a114cacd',
-        '8d18e212-ca21-43d0-9a61-4677bc2ed0a7',
-        '6eaaa31b-0b11-45c8-bee0-0423423a799a',
-        'f79ade94-3f89-4244-b424-3911a1d82a64',
-        'a1c81439-e169-48f3-8432-98934b0ee2d7',
-        '4b31f43c-ed0a-4db6-979b-10c27d7791f3',
-        'c8154b52-af56-45cf-b8b7-36b00bf490c3',
-        'dea6764b-a03b-4171-8243-46e730c8b90b',
-    ];
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -260,12 +245,12 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \App\Model\Category\CategoryData $categoryData
-     * @param string|null $referenceName
+     * @param string $referenceName
      * @return \App\Model\Category\Category
      */
-    private function createCategory(CategoryData $categoryData, $referenceName = null)
+    private function createCategory(CategoryData $categoryData, string $referenceName)
     {
-        $categoryData->uuid = array_pop($this->uuidPool);
+        $categoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);
