@@ -301,3 +301,17 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### added visitAndWaitForStableDOM for visiting pages in cypress ([#3071](https://github.com/shopsys/shopsys/pull/3071))
 
 -   change all `cy.visit` to `cy.visitAndWaitForStableDOM`, to make sure that cypress waits for the DOM to be stable before interacting
+
+#### SF bundle size reduction changes ([#3077](https://github.com/shopsys/shopsys/pull/3077))
+
+-   we removed `react-dom/server` from the client bundle by removing it from `SeznamMapMarkerLayer`, since we did not use it anywhere else, that was enough for us. If you are using it anywhere else, you should also remove that from the client, as it bloats the bundle
+-   URQL is now loaded using dynamic import to load it in a separate chunk, same as other parts of the \_app file, which means you should ideally do it with other large parts of your \_app as well, to separate it into multiple chunks
+-   the GQL schema in a JSON format used for teh URQL client is now purified using `@urql/introspection` and the smaller file is used, so keep in mind to change all your imports
+
+```diff
+- import schema from 'schema.graphql.json';
++ import schema from 'schema-compressed.graphql.json';
+```
+
+-   inside i18n.js, we now report exceptions by sending it to a new Next.js API route `/api/log-exception`, which is done to avoid importing the entire Sentry package on the client, so you should also remove direct imports of Sentry from all the files which are not webpack-compiled, as that has an immense negative effect on performance
+-   redis is now blocked from the client bundle by specifying it in the webpack config inside next.config.js, and you should block all other packages which are in your client bundle, but should not be there (check by running `npm run analyze` in the SF folder)
