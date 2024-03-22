@@ -1,26 +1,20 @@
-import { AppPageContent } from 'components/Pages/App/AppPageContent';
-import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/Error500Content';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { logException } from 'helpers/errors/logException';
 import { initDayjsLocale } from 'helpers/formaters/formatDate';
-import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
-import useTranslation from 'next-translate/useTranslation';
 import { AppProps as NextAppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import 'nprogress/nprogress.css';
-import { ReactElement, useMemo } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ReactElement } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import 'styles/user-text.css';
-import { Provider, ssrExchange } from 'urql';
-import { createClient } from 'urql/createClient';
 
 type AppProps = {
-    pageProps: ServerSidePropsType;
+    pageProps: any;
 } & Omit<NextAppProps, 'pageProps'>;
 
 process.on('unhandledRejection', (reason: unknown) =>
@@ -35,26 +29,31 @@ process.on('uncaughtException', (error: Error, origin: unknown) =>
     }),
 );
 
-function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
-    const { defaultLocale, publicGraphqlEndpoint } = pageProps.domainConfig;
-    initDayjsLocale(defaultLocale);
-    const { t } = useTranslation();
+const UrqlWrapper = dynamic(() => import('components/Layout/UrqlWrapper').then((component) => component.UrqlWrapper));
 
-    const urqlClient = useMemo(
-        () =>
-            createClient({ t, ssrExchange: ssrExchange({ initialState: pageProps.urqlState }), publicGraphqlEndpoint }),
-        [publicGraphqlEndpoint, pageProps.urqlState, t],
-    );
+const AppPageContent = dynamic(() =>
+    import('components/Pages/App/AppPageContent').then((component) => component.AppPageContent),
+);
+
+const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => component.ErrorBoundary));
+
+const Error500ContentWithBoundary = dynamic(() =>
+    import('components/Pages/ErrorPage/Error500Content').then((component) => component.Error500ContentWithBoundary),
+);
+
+function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
+    const { defaultLocale } = pageProps.domainConfig;
+    initDayjsLocale(defaultLocale);
 
     return (
         <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
-            <Provider value={urqlClient}>
+            <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
                         <AppPageContent Component={Component} pageProps={pageProps} />
                     </DomainConfigProvider>
                 </CookiesStoreProvider>
-            </Provider>
+            </UrqlWrapper>
         </ErrorBoundary>
     );
 }
