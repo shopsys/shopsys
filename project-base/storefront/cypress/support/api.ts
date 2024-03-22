@@ -190,6 +190,41 @@ Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
     return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
 });
 
+Cypress.Commands.add('logout', () => {
+    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    if (!currentAppStoreAsString) {
+        throw new Error(
+            'Could not load app store from local storage. This is an issue with tests, not with the application.',
+        );
+    }
+
+    return cy.getCookie('accessToken').then((cookie) => {
+        const accessToken = cookie?.value;
+
+        return cy
+            .request({
+                method: 'POST',
+                url: 'graphql/',
+                body: JSON.stringify({
+                    operationName: 'LogoutMutation',
+                    query: `mutation LogoutMutation {
+                    Logout
+                }`,
+                    variables: {},
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
+                },
+            })
+            .then((logoutResponse) => {
+                expect(logoutResponse.body.data.Logout).to.be.true;
+                cy.clearCookie('accessToken');
+                cy.clearCookie('refreshToken');
+            });
+    });
+});
+
 Cypress.Commands.add('createOrder', (createOrderVariables: CreateOrderMutationVariables) => {
     const currentAppStoreAsString = window.localStorage.getItem('app-store');
     if (!currentAppStoreAsString) {

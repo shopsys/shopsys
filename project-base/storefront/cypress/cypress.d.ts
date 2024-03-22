@@ -16,6 +16,7 @@ declare global {
             ): Cypress.Chainable<Cypress.Response<any>>;
             preselectPaymentForTest(paymentUuid: string): Cypress.Chainable<Cypress.Response<any>>;
             registerAsNewUser(registrationInput: RegistrationDataInput): Cypress.Chainable<string>;
+            logout(): Cypress.Chainable<Cypress.Response<any>>;
             createOrder(createOrderInput: CreateOrderMutationVariables): Cypress.Chainable<Cypress.Response<any>>;
 
             setDevicePixelRatio(

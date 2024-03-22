@@ -5,10 +5,12 @@ import {
     clearEmailInThirdStep,
     clearPostcodeInThirdStep,
     fillInNoteInThirdStep,
+    clearAndFillDeliveryAdressInThirdStep,
+    checkThatContactInformationWasRemovedFromLocalStorage,
 } from './orderSupport';
-import { DEFAULT_APP_STORE, customer1, orderNote, payment, transport, url } from 'fixtures/demodata';
+import { DEFAULT_APP_STORE, customer1, deliveryAddress, orderNote, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkUrl, loseFocus, takeSnapshotAndCompare } from 'support';
+import { checkUrl, clickOnLabel, loseFocus, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Contact information page tests', () => {
@@ -99,5 +101,29 @@ describe('Contact information page tests', () => {
         loseFocus();
 
         takeSnapshotAndCompare('keep-changed-contact-information-after-reload');
+    });
+
+    it('should remove contact information after logout', () => {
+        cy.registerAsNewUser(generateCustomerRegistrationData('remove-contact-information-after-logout@shopsys.com'));
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.preselectTransportForTest(transport.czechPost.uuid);
+        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+
+        cy.visit(url.order.contactInformation);
+
+        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        loseFocus();
+
+        takeSnapshotAndCompare('should-remove-contact-information-after-logout_initially-filled');
+
+        cy.logout();
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.preselectTransportForTest(transport.czechPost.uuid);
+        cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.reload();
+
+        takeSnapshotAndCompare('should-remove-contact-information-after-logout');
+        checkThatContactInformationWasRemovedFromLocalStorage();
     });
 });

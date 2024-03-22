@@ -1,4 +1,13 @@
-import { customer1, deliveryAddress, link, payment, placeholder, transport, url } from 'fixtures/demodata';
+import {
+    DEFAULT_APP_STORE,
+    customer1,
+    deliveryAddress,
+    link,
+    payment,
+    placeholder,
+    transport,
+    url,
+} from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
 import { TIDs } from 'tids';
 
@@ -152,4 +161,15 @@ export const fillBillingInfoForDeliveryAddressTests = () => {
     fillEmailInThirdStep(customer1.email);
     fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
     fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
+};
+
+export const checkThatContactInformationWasRemovedFromLocalStorage = () => {
+    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    if (!currentAppStoreAsString) {
+        throw new Error(
+            'Could not load app store from local storage. This is an issue with tests, not with the application.',
+        );
+    }
+
+    expect(currentAppStoreAsString).to.equal(JSON.stringify(DEFAULT_APP_STORE));
 };
