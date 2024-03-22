@@ -191,7 +191,6 @@ There are some extra make commands you can use:
     + generateCustomerRegistrationData()
     ```
     -   if you only need to run the test with registration one more time, it might be easier for you to use the `prepare-data-for-acceptance-tests` make command. It only runs the most necessary data preparation logic, such as cleaning the database and uploading fresh demo data.
--   because we run
 
 #### Screenshots containing mouse cursor when running cypress interactive GUI
 
