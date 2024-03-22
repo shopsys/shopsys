@@ -4,12 +4,9 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCountriesQuery } from 'graphql/requests/countries/queries/CountriesQuery.generated';
-import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
+import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useMemo } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 
@@ -17,34 +14,8 @@ export const ContactInformationAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const [{ data: countriesData }] = useCountriesQuery();
-    const user = useCurrentCustomerData();
-    const countriesAsSelectOptions = useMemo(
-        () => mapCountriesToSelectOptions(countriesData?.countries),
-        [countriesData?.countries],
-    );
-    const [countryValue] = useWatch({
-        name: [formMeta.fields.country.name],
-        control: formProviderMethods.control,
-    });
-
-    useEffect(() => {
-        if (countriesAsSelectOptions.length && !countryValue.value) {
-            const selectedCountryOption = countriesAsSelectOptions.find(
-                (option) => option.value === user?.country.code,
-            );
-
-            setValue(formMeta.fields.country.name, selectedCountryOption || countriesAsSelectOptions[0], {
-                shouldValidate: true,
-            });
-        }
-    }, [countriesAsSelectOptions, countryValue, formMeta.fields.country.name]);
-
-    if (countriesAsSelectOptions.length === 0) {
-        return null;
-    }
+    const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     return (
         <>

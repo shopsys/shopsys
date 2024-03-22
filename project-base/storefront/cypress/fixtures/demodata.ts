@@ -16,6 +16,17 @@ export const customer1 = {
     password: 'user123',
 };
 
+export const deliveryAddress = {
+    firstName: 'Janek',
+    lastName: 'Zpodgrunia',
+    company: 'Jankostaw',
+    phone: '162736482',
+    street: 'Jankowice 153a',
+    city: 'Jankowice',
+    postCode: '73961',
+    country: 'CZ',
+};
+
 export const link = {
     orderDetail: 'Track',
     myAccount: 'My account',
@@ -57,6 +68,7 @@ export const placeholder = {
     postCode: 'Postcode',
     coupone: 'Coupon',
     note: 'Note',
+    company: 'Company',
 };
 
 export const products = {
@@ -143,7 +155,7 @@ export const DEFAULT_APP_STORE = {
             deliveryCity: '',
             deliveryPostcode: '',
             deliveryCountry: { value: '', label: '' },
-            deliveryAddressUuid: null,
+            deliveryAddressUuid: '',
             newsletterSubscription: false,
             note: '',
         },

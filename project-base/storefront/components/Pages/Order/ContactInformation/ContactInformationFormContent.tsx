@@ -1,10 +1,10 @@
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
-import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
-import { ContactInformationCompany } from 'components/Pages/Order/ContactInformation/ContactInformationCompany';
-import { ContactInformationCustomer } from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
-import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
-import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser';
+import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationAddress';
+import { ContactInformationCompany } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationCompany';
+import { ContactInformationCustomer } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationCustomer';
+import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
+import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import useTranslation from 'next-translate/useTranslation';
@@ -13,7 +13,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 
-export const ContactInformationFormWrapper: FC = () => {
+export const ContactInformationFormContent: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const contentElement = useRef<HTMLDivElement>(null);

@@ -52,6 +52,10 @@ export const checkLoaderOverlayIsNotVisible = (timeout?: number) => {
     cy.getByTID([TIDs.loader_overlay]).should('be.visible', { timeout });
 };
 
+export const clickOnLabel = (parentElementId: string) => {
+    cy.get(`[for="${parentElementId}"]`).click();
+};
+
 export const takeSnapshotAndCompare = (snapshotName: string) => {
     cy.wait(200);
     cy.setDevicePixelRatio(1);

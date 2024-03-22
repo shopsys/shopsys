@@ -8,7 +8,7 @@ import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefau
 type NativeProps = ExtractNativePropsFromDefault<
     Props,
     'options' | 'onChange',
-    'defaultValue' | 'value' | 'isDisabled'
+    'defaultValue' | 'value' | 'isDisabled' | 'id'
 >;
 
 type SelectProps = NativeProps & {
@@ -49,6 +49,7 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
             classNamePrefix="select"
             components={{ Control, DropdownIndicator }}
             defaultValue={defaultValue}
+            inputId={props.id}
             isDisabled={isDisabled}
             isSearchable={false}
             options={options}

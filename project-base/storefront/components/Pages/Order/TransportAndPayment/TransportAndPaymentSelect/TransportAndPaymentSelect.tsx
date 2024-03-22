@@ -70,7 +70,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         price={transportItem.price}
                     />
                 }
-                onChangeCallback={changeTransport}
+                onClick={changeTransport}
             />
         </TransportAndPaymentListItem>
     );
@@ -96,7 +96,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             price={paymentItem.price}
                         />
                     }
-                    onChangeCallback={changePayment}
+                    onClick={changePayment}
                 />
                 {isGoPaySwiftPayment && goPaySwiftSelect}
             </TransportAndPaymentListItem>
@@ -114,7 +114,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     label={goPaySwift.name}
                     name="goPaySwift"
                     value={goPaySwift.swift}
-                    onChangeCallback={changeGoPaySwift}
+                    onChange={(event) => changeGoPaySwift(event.target.value)}
                 />
             ))}
         </div>

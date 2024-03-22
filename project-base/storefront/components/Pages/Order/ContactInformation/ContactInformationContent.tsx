@@ -1,116 +1,265 @@
-import { ContactInformationFormWrapper } from './ContactInformationFormWrapper';
-import { useContactInformationFormMeta } from './contactInformationFormMeta';
-import { Link } from 'components/Basic/Link/Link';
-import { Button } from 'components/Forms/Button/Button';
-import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { FormLine } from 'components/Forms/Lib/FormLine';
-import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
-import { useTermsAndConditionsArticleUrlQuery } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
-import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import Trans from 'next-translate/Trans';
+import { ContactInformationFormContent } from './ContactInformationFormContent';
+import { ContactInformationEmail } from './FormBlocks/ContactInformationEmail';
+import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformationSendOrderButton';
+import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
+import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
+import { Login } from 'components/Blocks/Popup/Login/Login';
+import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
+import { Form } from 'components/Forms/Form/Form';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { handleCartModifications } from 'connectors/cart/Cart';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useCreateOrderMutation } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
+import {
+    useGtmStaticPageViewEvent,
+    getGtmCreateOrderEventOrderPart,
+    getGtmCreateOrderEventUserPart,
+} from 'gtm/helpers/eventFactories';
+import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
+import { getGtmReviewConsents } from 'gtm/helpers/gtm';
+import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/helpers';
+import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType, GtmMessageOriginType } from 'gtm/types/enums';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
+import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { OrderConfirmationQuery } from 'pages/order-confirmation';
+import { useState } from 'react';
+import { useWatch, SubmitHandler, FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
-import { twJoin } from 'tailwind-merge';
 
-type ContactInformationContentProps = {
-    setIsLoginPopupOpened: Dispatch<SetStateAction<boolean>>;
-};
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
-export const ContactInformationContent: FC<ContactInformationContentProps> = ({ setIsLoginPopupOpened }) => {
+export const ContactInformationWrapper: FC = () => {
+    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
+    const router = useRouter();
+    const domainConfig = useDomainConfig();
+    const cartUuid = usePersistStore((store) => store.cartUuid);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+    const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
+    const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
+        ['/order/transport-and-payment', '/order-confirmation'],
+        domainConfig.url,
+    );
+    const [orderCreating, setOrderCreating] = useState(false);
+    const currentCart = useCurrentCart(false);
+    const [changePaymentInCart] = useChangePaymentInCart();
     const { t } = useTranslation();
-    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
-    const formProviderMethods = useFormContext<ContactInformation>();
-    const isUserLoggedIn = useIsUserLoggedIn();
-    const { formState } = formProviderMethods;
-
+    const [{ fetching }, createOrder] = useCreateOrderMutation();
+    const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQuery();
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const user = useCurrentCustomerData();
+    const userContactInformation = useCurrentUserContactInformation();
+    const isEmailFilledCorrectly = !!emailValue && !formProviderMethods.formState.errors.email;
+    const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
-    const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
-    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
-    const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
+    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    useGtmContactInformationPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQuery({
-        variables: {
-            email: emailValue,
-        },
-        pause: !isEmailFilledCorrectly,
-    });
+    const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
+        setOrderCreating(true);
 
-    useEffect(() => {
-        if (isUserLoggedIn) {
-            setIsLoginPopupOpened(false);
+        let deliveryInfo = {
+            deliveryFirstName: formValues.differentDeliveryAddress ? formValues.deliveryFirstName : '',
+            deliveryLastName: formValues.differentDeliveryAddress ? formValues.deliveryLastName : '',
+            deliveryCompanyName: formValues.differentDeliveryAddress ? formValues.deliveryCompanyName : '',
+            deliveryTelephone: formValues.differentDeliveryAddress ? formValues.deliveryTelephone : '',
+            deliveryStreet: formValues.differentDeliveryAddress ? formValues.deliveryStreet : '',
+            deliveryCity: formValues.differentDeliveryAddress ? formValues.deliveryCity : '',
+            deliveryPostcode: formValues.differentDeliveryAddress ? formValues.deliveryPostcode : '',
+            deliveryCountry: formValues.differentDeliveryAddress ? formValues.deliveryCountry.value : '',
+            differentDeliveryAddress: formValues.differentDeliveryAddress,
+        };
+        const deliveryAddress = user?.deliveryAddresses.find(
+            (address) => address.uuid === formValues.deliveryAddressUuid,
+        );
+
+        if (currentCart.pickupPlace) {
+            deliveryInfo = {
+                deliveryFirstName: formValues.differentDeliveryAddress
+                    ? formValues.deliveryFirstName
+                    : formValues.firstName,
+                deliveryLastName: formValues.differentDeliveryAddress
+                    ? formValues.deliveryLastName
+                    : formValues.lastName,
+                deliveryCompanyName: '',
+                deliveryTelephone: formValues.differentDeliveryAddress
+                    ? formValues.deliveryTelephone
+                    : formValues.telephone,
+                deliveryStreet: currentCart.pickupPlace.street,
+                deliveryCity: currentCart.pickupPlace.city,
+                deliveryPostcode: currentCart.pickupPlace.postcode,
+                deliveryCountry: currentCart.pickupPlace.country.code,
+                differentDeliveryAddress: true,
+            };
+        } else if (deliveryAddress) {
+            const selectedCountryOption = countriesAsSelectOptions.find(
+                (option) => option.label === deliveryAddress.country,
+            )!;
+
+            if (countriesAsSelectOptions.length) {
+                deliveryInfo = {
+                    deliveryFirstName: deliveryAddress.firstName,
+                    deliveryLastName: deliveryAddress.lastName,
+                    deliveryCompanyName: deliveryAddress.companyName,
+                    deliveryCountry: selectedCountryOption.value,
+                    deliveryTelephone: deliveryAddress.telephone,
+                    deliveryStreet: deliveryAddress.street,
+                    deliveryCity: deliveryAddress.city,
+                    deliveryPostcode: deliveryAddress.postcode,
+                    differentDeliveryAddress: true,
+                };
+            }
         }
-    }, [isUserLoggedIn]);
+
+        let deliveryAddressUuid = null;
+
+        if (formValues.deliveryAddressUuid !== '') {
+            deliveryAddressUuid = formValues.deliveryAddressUuid;
+        }
+
+        const createOrderResult = await createOrder({
+            cartUuid,
+            ...formValues,
+            ...deliveryInfo,
+            deliveryAddressUuid,
+            onCompanyBehalf: formValues.customer === 'companyCustomer',
+            country: formValues.country.value,
+        });
+
+        if (
+            createOrderResult.data &&
+            createOrderResult.data.CreateOrder.orderCreated &&
+            createOrderResult.data.CreateOrder.order &&
+            currentCart.cart &&
+            currentCart.transport &&
+            currentCart.payment
+        ) {
+            const gtmCreateOrderEventOrderPart = getGtmCreateOrderEventOrderPart(
+                currentCart.cart,
+                currentCart.payment,
+                currentCart.promoCode,
+                createOrderResult.data.CreateOrder.order.number,
+                getGtmReviewConsents(),
+                domainConfig,
+            );
+            const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, userContactInformation);
+
+            const isPaymentWithPaymentGate = getIsPaymentWithPaymentGate(currentCart.payment.type);
+            if (isPaymentWithPaymentGate) {
+                saveGtmCreateOrderEventInLocalStorage(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart);
+            }
+
+            const isPaymentSuccessful = isPaymentWithPaymentGate ? undefined : true;
+
+            const query: OrderConfirmationQuery = {
+                orderUuid: createOrderResult.data.CreateOrder.order.uuid,
+                orderEmail: formValues.email,
+                orderPaymentType: createOrderResult.data.CreateOrder.order.payment.type,
+            };
+
+            if (!user) {
+                query.registrationData = JSON.stringify(formValues);
+            }
+
+            router
+                .replace(
+                    {
+                        pathname: orderConfirmationUrl,
+                        query,
+                    },
+                    orderConfirmationUrl,
+                )
+                .then(() => {
+                    if (cartUuid) {
+                        updateCartUuid(null);
+                    }
+
+                    resetContactInformation();
+                });
+
+            onGtmCreateOrderEventHandler(
+                gtmCreateOrderEventOrderPart,
+                gtmCreateOrderEventUserPart,
+                isPaymentSuccessful,
+            );
+
+            return;
+        }
+
+        setOrderCreating(false);
+
+        if (
+            createOrderResult.data &&
+            !createOrderResult.data.CreateOrder.orderCreated &&
+            createOrderResult.data.CreateOrder.cart
+        ) {
+            handleCartModifications(createOrderResult.data.CreateOrder.cart.modifications, t, changePaymentInCart);
+        }
+
+        handleFormErrors(
+            createOrderResult.error,
+            formProviderMethods,
+            t,
+            formMeta.messages.error,
+            undefined,
+            GtmMessageOriginType.contact_information_page,
+        );
+    };
+
+    if (orderCreating) {
+        return <SkeletonOrderContent />;
+    }
 
     return (
-        <>
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.email.name}
-                render={(textInput) => (
-                    <FormLine bottomGap className="flex-none lg:w-[65%]">
-                        {textInput}
-                    </FormLine>
-                )}
-                textInputProps={{
-                    label: formMeta.fields.email.label,
-                    required: true,
-                    type: 'email',
-                    autoComplete: 'email',
-                    onChange: (event) => updateContactInformation({ email: event.target.value }),
-                }}
-            />
+        <OrderContentWrapper activeStep={3}>
+            <FormProvider {...formProviderMethods}>
+                <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
+                    <>
+                        <ContactInformationEmail setIsLoginPopupOpened={setIsLoginPopupOpened} />
+                        {isEmailFilledCorrectly && <ContactInformationFormContent />}
+                        <ContactInformationSendOrderButton />
+                    </>
+                    <OrderAction
+                        withGapBottom
+                        buttonBack={t('Back')}
+                        buttonBackLink={transportAndPaymentUrl}
+                        buttonNext={t('Submit order')}
+                        hasDisabledLook={!formProviderMethods.formState.isValid}
+                        isLoading={fetching}
+                        withGapTop={false}
+                    />
+                </Form>
+            </FormProvider>
 
-            {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <Button className="mb-5" size="small" type="button" onClick={() => setIsLoginPopupOpened(true)}>
-                    {t('User with this email is already registered. Do you want to sign in')}
-                </Button>
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                />
             )}
 
-            {isEmailFilledCorrectly && <ContactInformationFormWrapper />}
-
-            <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
-                <p className="mb-4">
-                    <Trans
-                        defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
-                        i18nKey="ContactInformationInfo"
-                        components={{
-                            lnk1:
-                                termsAndConditionsArticleUrl !== undefined ? (
-                                    <Link isExternal href={termsAndConditionsArticleUrl} target="_blank" />
-                                ) : (
-                                    <span />
-                                ),
-                            lnk2:
-                                privacyPolicyArticleUrl !== undefined ? (
-                                    <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
-                                ) : (
-                                    <span />
-                                ),
-                        }}
-                    />
-                </p>
-
-                <CheckboxControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.newsletterSubscription.name}
-                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                    checkboxProps={{
-                        label: formMeta.fields.newsletterSubscription.label,
-                    }}
-                />
-            </div>
-        </>
+            {isLoginPopupOpened && (
+                <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
+                    <div className="h2 mb-3">{t('Login')}</div>
+                    <Login shouldOverwriteCustomerUserCart defaultEmail={emailValue} />
+                </Popup>
+            )}
+        </OrderContentWrapper>
     );
 };

@@ -14,8 +14,8 @@ import {
     validateTelephone,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useOnFinishHydrationDefaultValuesPrefill } from 'hooks/forms/useOnFinishHydrationDefaultValuesPrefill';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
@@ -27,7 +27,9 @@ import * as Yup from 'yup';
 
 export const useContactInformationForm = (): [UseFormReturn<ContactInformation>, ContactInformation] => {
     const { t } = useTranslation();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const contactInformationValues = useCurrentUserContactInformation();
+    const { pickupPlace } = useCurrentCart();
 
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof ContactInformation, any>>({
@@ -56,53 +58,97 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 otherwise: Yup.string(),
             }),
             differentDeliveryAddress: Yup.boolean(),
-            deliveryFirstName: Yup.string().when('differentDeliveryAddress', {
-                is: true,
+            deliveryFirstName: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(isUserLoggedIn, differentDeliveryAddress, deliveryAddressUuid),
                 then: validateFirstName(t),
                 otherwise: Yup.string(),
             }),
-            deliveryLastName: Yup.string().when('differentDeliveryAddress', {
-                is: true,
+            deliveryLastName: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(isUserLoggedIn, differentDeliveryAddress, deliveryAddressUuid),
                 then: validateLastName(t),
                 otherwise: Yup.string(),
             }),
             deliveryCompanyName: Yup.string(),
-            deliveryTelephone: Yup.string().when('differentDeliveryAddress', {
-                is: true,
+            deliveryTelephone: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(isUserLoggedIn, differentDeliveryAddress, deliveryAddressUuid),
                 then: validateTelephone(t),
                 otherwise: Yup.string(),
             }),
-            deliveryStreet: Yup.string().when('differentDeliveryAddress', {
-                is: true,
+            deliveryStreet: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                    ),
                 then: validateStreet(t),
                 otherwise: Yup.string(),
             }),
-            deliveryCity: Yup.string().when('differentDeliveryAddress', {
-                is: true,
+            deliveryCity: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                    ),
                 then: validateCity(t),
                 otherwise: Yup.string(),
             }),
-            deliveryPostcode: Yup.string().when('differentDeliveryAddress', {
-                is: true,
+            deliveryPostcode: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                    ),
                 then: validatePostcode(t),
                 otherwise: Yup.string(),
             }),
-
-            deliveryCountry: Yup.object().when('differentDeliveryAddress', {
-                is: true,
+            deliveryCountry: Yup.object().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
+                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                    ),
                 then: validateCountry(t),
             }),
             newsletterSubscription: Yup.boolean(),
-            deliveryAddressUuid: Yup.string().optional().nullable(),
+            deliveryAddressUuid: Yup.string().optional(),
             note: Yup.string().optional().nullable(),
         }),
     );
-    const defaultValues = contactInformationValues;
+    const defaultValues = {
+        ...contactInformationValues,
+        deliveryAddressUuid: pickupPlace ? '' : contactInformationValues.deliveryAddressUuid,
+    };
     const formProviderMethods = useShopsysForm(resolver, defaultValues);
 
-    useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
-
     return [formProviderMethods, defaultValues];
+};
+
+const shouldValidateDeliveryAddressField = (
+    isUserLoggedIn: boolean,
+    differentDeliveryAddress: boolean,
+    deliveryAddressUuid: string,
+    isPickupPlaceSelected?: boolean,
+) => {
+    if (!differentDeliveryAddress || isPickupPlaceSelected) {
+        return false;
+    }
+
+    if (isUserLoggedIn) {
+        return deliveryAddressUuid === '';
+    }
+
+    return true;
 };
 
 type ContactInformationFormMetaType = {
@@ -235,7 +281,7 @@ export const useContactInformationFormMeta = (
                 },
                 deliveryStreet: {
                     name: 'deliveryStreet' as const,
-                    label: t('Street and house number'),
+                    label: t('Street and house no.'),
                     errorMessage: differentDeliveryAddressValue ? errors.deliveryStreet?.message : undefined,
                 },
                 deliveryCity: {

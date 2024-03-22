@@ -1,5 +1,5 @@
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
-import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
+import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -12,25 +12,22 @@ export type RadiobuttonProps = NativeProps & {
     value: any;
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
     label: ReactNode;
-    onChangeCallback?: (newValue: string | null) => void;
+    onClick?: (newValue: string | null) => void;
 };
 
 export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
-    ({ label, onChangeCallback, onChange, id, name, checked, value, disabled, onBlur }, radiobuttonForwardedRef) => {
-        const onClickHandler: MouseEventHandler<HTMLInputElement> = useCallback(
-            (event) => {
-                if (!onChangeCallback) {
-                    return;
-                }
+    ({ label, onChange, id, name, checked, value, disabled, onBlur, onClick }, radiobuttonForwardedRef) => {
+        const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
+            if (!onClick) {
+                return;
+            }
 
-                if (checked) {
-                    onChangeCallback(null);
-                } else {
-                    onChangeCallback(event.currentTarget.value);
-                }
-            },
-            [checked, onChangeCallback],
-        );
+            if (checked) {
+                onClick(null);
+            } else {
+                onClick(event.currentTarget.value);
+            }
+        };
 
         return (
             <LabelWrapper checked={checked} disabled={disabled} htmlFor={id} inputType="radio" label={label}>
