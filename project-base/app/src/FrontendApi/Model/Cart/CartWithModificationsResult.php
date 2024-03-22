@@ -6,11 +6,11 @@ namespace App\FrontendApi\Model\Cart;
 
 use App\Model\Cart\Cart;
 use App\Model\Cart\Item\CartItem;
-use App\Model\Payment\Payment;
-use App\Model\Transport\Transport;
 use LogicException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class CartWithModificationsResult
 {

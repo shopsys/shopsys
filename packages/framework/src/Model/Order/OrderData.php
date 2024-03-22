@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+
 class OrderData
 {
     public const NEW_ITEM_PREFIX = 'new_';
@@ -193,11 +197,22 @@ class OrderData
      */
     public $paymentTransactionRefunds;
 
+    public Price $totalPrice;
+
+    /**
+     * @var array<string, \Shopsys\FrameworkBundle\Model\Pricing\Price>
+     */
+    public array $totalPriceByItemType = [];
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
         $this->paymentTransactionRefunds = [];
+
+        $this->totalPrice = new Price(Money::zero(), Money::zero());
+
+        $this->setZeroPricesForAllTypes();
     }
 
     /**
@@ -214,5 +229,14 @@ class OrderData
         }
 
         return $newItemsWithoutTransportAndPayment;
+    }
+
+    protected function setZeroPricesForAllTypes(): void
+    {
+        $this->totalPriceByItemType[OrderItem::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
     }
 }

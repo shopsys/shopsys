@@ -40,9 +40,6 @@ class OrderResolverMap extends ResolverMap
                 'status' => function (Order $order) {
                     return $order->getStatus()->getName($this->domain->getLocale());
                 },
-                'totalPrice' => function (Order $order) {
-                    return new Price($order->getTotalPriceWithoutVat(), $order->getTotalPriceWithVat());
-                },
             ],
         ];
     }

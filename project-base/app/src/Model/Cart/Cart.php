@@ -43,13 +43,6 @@ class Cart extends BaseCart
     private $promoCodes;
 
     /**
-     * @var \App\Model\Transport\Transport|null
-     * @ORM\ManyToOne(targetEntity="App\Model\Transport\Transport")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    private ?Transport $transport = null;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
@@ -60,13 +53,6 @@ class Cart extends BaseCart
      * @ORM\Column(type="string", nullable=true)
      */
     private ?string $pickupPlaceIdentifier = null;
-
-    /**
-     * @var \App\Model\Payment\Payment|null
-     * @ORM\ManyToOne(targetEntity="App\Model\Payment\Payment")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    private ?Payment $payment = null;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
@@ -248,14 +234,6 @@ class Cart extends BaseCart
     }
 
     /**
-     * @return \App\Model\Transport\Transport|null
-     */
-    public function getTransport(): ?Transport
-    {
-        return $this->transport;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public function getTransportWatchedPrice(): ?Money
@@ -282,14 +260,6 @@ class Cart extends BaseCart
     public function setTransportWatchedPrice(?Money $transportWatchedPrice): void
     {
         $this->transportWatchedPrice = $transportWatchedPrice;
-    }
-
-    /**
-     * @return \App\Model\Payment\Payment|null
-     */
-    public function getPayment(): ?Payment
-    {
-        return $this->payment;
     }
 
     /**

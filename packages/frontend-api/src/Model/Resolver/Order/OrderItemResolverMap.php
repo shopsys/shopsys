@@ -29,7 +29,7 @@ class OrderItemResolverMap extends ResolverMap
                     return $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
                 },
                 'unitPrice' => function (OrderItem $orderItem) {
-                    return new Price($orderItem->getPriceWithoutVat(), $orderItem->getPriceWithVat());
+                    return $orderItem->getPrice();
                 },
                 'unit' => function (OrderItem $orderItem) {
                     return $orderItem->getUnitName();

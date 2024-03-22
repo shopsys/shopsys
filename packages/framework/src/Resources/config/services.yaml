@@ -1054,3 +1054,13 @@ services:
     Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
         arguments:
             - '%gopay_config%'
+
+    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack:
+        arguments:
+            $processingMiddlewares:
+                - '@Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware'
+                - '@Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware'
+                - '@Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware'
+                - '@Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware'
+
+    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor: ~

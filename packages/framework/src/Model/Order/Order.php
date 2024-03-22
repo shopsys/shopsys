@@ -101,30 +101,17 @@ class Order
     protected $status;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @ORM\Embedded(class="Shopsys\FrameworkBundle\Model\Pricing\Price")
      */
-    protected $totalPriceWithVat;
+    protected $totalPrice;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
-     */
-    protected $totalPriceWithoutVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @ORM\Embedded(class="Shopsys\FrameworkBundle\Model\Pricing\Price")
      */
     #[ExcludeLog]
-    protected $totalProductPriceWithoutVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
-     */
-    #[ExcludeLog]
-    protected $totalProductPriceWithVat;
+    protected $totalProductPrice;
 
     /**
      * @var string
@@ -613,7 +600,7 @@ class Order
      */
     public function getTotalPriceWithVat()
     {
-        return $this->totalPriceWithVat;
+        return $this->totalPrice->getPriceWithVat();
     }
 
     /**
@@ -621,7 +608,15 @@ class Order
      */
     public function getTotalPriceWithoutVat()
     {
-        return $this->totalPriceWithoutVat;
+        return $this->totalPrice->getPriceWithoutVat();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
     }
 
     /**
@@ -629,7 +624,7 @@ class Order
      */
     public function getTotalVatAmount(): Money
     {
-        return $this->totalPriceWithVat->subtract($this->totalPriceWithoutVat);
+        return $this->totalPrice->getVatAmount();
     }
 
     /**
@@ -645,10 +640,8 @@ class Order
      */
     public function setTotalPrice(OrderTotalPrice $orderTotalPrice): void
     {
-        $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
-        $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
-        $this->totalProductPriceWithVat = $orderTotalPrice->getProductPriceWithVat();
-        $this->totalProductPriceWithoutVat = $orderTotalPrice->getProductPriceWithoutVat();
+        $this->totalPrice = new Price($orderTotalPrice->getPriceWithoutVat(), $orderTotalPrice->getPriceWithVat());
+        $this->totalProductPrice = new Price($orderTotalPrice->getProductPriceWithoutVat(), $orderTotalPrice->getProductPriceWithVat());
     }
 
     /**
@@ -1052,6 +1045,6 @@ class Order
      */
     public function getTotalProductsPrice(): Price
     {
-        return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
+        return $this->totalProductPrice;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
+use App\Model\Payment\Payment;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -54,6 +55,20 @@ class Cart
      * @ORM\Column(type="datetime")
      */
     protected $modifiedAt;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    protected $transport;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    protected $payment;
 
     /**
      * @param string $cartIdentifier
@@ -211,5 +226,21 @@ class Cart
     public function getCustomerUser()
     {
         return $this->customerUser;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport|null
+     */
+    public function getTransport()
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }

@@ -46,7 +46,12 @@ class ProductPromoCodeFiller
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $promoCode);
         }
 
-        return $this->fillPromoCodes($quantifiedProducts, $totalAllowedProductIds, $promoCode);
+        return $this->fillPromoCodes(
+            $quantifiedProducts,
+            $totalAllowedProductIds,
+            $promoCode,
+            $domainId,
+        );
     }
 
     /**
@@ -79,19 +84,21 @@ class ProductPromoCodeFiller
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int[] $allowedProductIds
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
+     * @param int $domainId
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
     private function fillPromoCodes(
         array $quantifiedProducts,
         array $allowedProductIds,
         PromoCode $validEnteredPromoCode,
+        int $domainId,
     ): array {
         $promoCodeDiscountPercentPerProduct = [];
 
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
-            $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode);
+            $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode, $domainId);
 
             if ($allowedProduct === null) {
                 continue;
@@ -109,13 +116,14 @@ class ProductPromoCodeFiller
     /**
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
+     * @param int $domainId
      * @return \App\Model\Product\Product|null
      */
-    public function filterProductByPromoCodeFlags(Product $product, PromoCode $validEnteredPromoCode): ?Product
+    public function filterProductByPromoCodeFlags(Product $product, PromoCode $validEnteredPromoCode, int $domainId): ?Product
     {
         $promoCodeFlags = $this->promoCodeFlagRepository->getFlagsByPromoCodeId($validEnteredPromoCode->getId());
 
-        $productFlagIds = $product->getFlagsIdsForDomain($this->domain->getId());
+        $productFlagIds = $product->getFlagsIdsForDomain($domainId);
         $productSatisfies = true;
 
         foreach ($promoCodeFlags as $promoCodeFlag) {

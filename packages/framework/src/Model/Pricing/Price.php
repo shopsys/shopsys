@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
+use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
+/**
+ * @ORM\Embeddable
+ */
 class Price
 {
     protected Money $vatAmount;
@@ -14,8 +18,12 @@ class Price
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      */
-    public function __construct(protected readonly Money $priceWithoutVat, protected readonly Money $priceWithVat)
-    {
+    public function __construct(
+        /** @ORM\Column(type="money", precision=20, scale=6, name="without_vat") */
+        protected readonly Money $priceWithoutVat,
+        /** @ORM\Column(type="money", precision=20, scale=6, name="with_vat") */
+        protected readonly Money $priceWithVat,
+    ) {
         $this->vatAmount = $priceWithVat->subtract($priceWithoutVat);
     }
 

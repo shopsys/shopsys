@@ -200,7 +200,7 @@ class OrderController extends AdminBaseController
             $grid->addColumn('domain_id', 'o.domainId', t('Domain'), true);
         }
         $grid->addColumn('status_name', 'statusName', t('Status'), true);
-        $grid->addColumn('total_price', 'o.totalPriceWithVat', t('Total price'), false)
+        $grid->addColumn('total_price', 'totalPrice.priceWithVat', t('Total price'), false)
             ->setClassAttribute('text-right text-no-wrap');
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

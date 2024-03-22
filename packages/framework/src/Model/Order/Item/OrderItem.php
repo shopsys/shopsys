@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrderedException;
-use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -58,34 +57,19 @@ class OrderItem
     protected $name;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @ORM\Embedded(class="Shopsys\FrameworkBundle\Model\Pricing\Price")
      */
-    protected $priceWithoutVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6)
-     */
-    protected $priceWithVat;
+    protected $price;
 
     /**
      * This property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @ORM\Embedded(class="Shopsys\FrameworkBundle\Model\Pricing\Price")
      */
-    protected $totalPriceWithoutVat;
-
-    /**
-     * This property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
-     *
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
-     */
-    protected $totalPriceWithVat;
+    protected $totalPrice;
 
     /**
      * @var string
@@ -154,8 +138,7 @@ class OrderItem
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
-        $this->priceWithoutVat = $price->getPriceWithoutVat();
-        $this->priceWithVat = $price->getPriceWithVat();
+        $this->price = $price;
         $this->vatPercent = Decimal::create($vatPercent, 6)->innerValue();
         $this->quantity = $quantity;
         $this->type = $type;
@@ -194,7 +177,7 @@ class OrderItem
      */
     public function getPriceWithoutVat()
     {
-        return $this->priceWithoutVat;
+        return $this->price->getPriceWithoutVat();
     }
 
     /**
@@ -202,7 +185,12 @@ class OrderItem
      */
     public function getPriceWithVat()
     {
-        return $this->priceWithVat;
+        return $this->price->getPriceWithVat();
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
     }
 
     /**
@@ -210,7 +198,7 @@ class OrderItem
      */
     public function getTotalPriceWithoutVat()
     {
-        return $this->hasForcedTotalPrice() ? $this->totalPriceWithoutVat : null;
+        return $this->hasForcedTotalPrice() ? $this->totalPrice->getPriceWithoutVat() : null;
     }
 
     /**
@@ -218,9 +206,17 @@ class OrderItem
      */
     public function getTotalPriceWithVat()
     {
-        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
+        return $this->hasForcedTotalPrice() ? $this->totalPrice->getPriceWithVat() : $this->price->getPriceWithVat()->multiply(
             $this->quantity,
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
     }
 
     /**
@@ -231,8 +227,7 @@ class OrderItem
      */
     public function setTotalPrice(?Price $totalPrice): void
     {
-        $this->totalPriceWithVat = $totalPrice?->getPriceWithVat();
-        $this->totalPriceWithoutVat = $totalPrice?->getPriceWithoutVat();
+        $this->totalPrice = $totalPrice;
     }
 
     /**
@@ -240,11 +235,7 @@ class OrderItem
      */
     public function hasForcedTotalPrice(): bool
     {
-        if ($this->totalPriceWithVat === null xor $this->totalPriceWithoutVat === null) {
-            throw new OrderItemHasOnlyOneTotalPriceException($this->totalPriceWithVat, $this->totalPriceWithoutVat);
-        }
-
-        return $this->totalPriceWithoutVat !== null && $this->totalPriceWithVat !== null;
+        return $this->totalPrice !== null;
     }
 
     /**
@@ -285,8 +276,7 @@ class OrderItem
     public function edit(OrderItemData $orderItemData)
     {
         $this->name = $orderItemData->name;
-        $this->priceWithoutVat = $orderItemData->priceWithoutVat;
-        $this->priceWithVat = $orderItemData->priceWithVat;
+        $this->price = new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat);
 
         if ($orderItemData->usePriceCalculation) {
             $this->setTotalPrice(null);

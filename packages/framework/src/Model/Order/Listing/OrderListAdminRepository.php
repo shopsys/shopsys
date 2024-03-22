@@ -30,7 +30,7 @@ class OrderListAdminRepository
                 o.domainId,
                 o.createdAt,
                 MAX(ost.name) AS statusName,
-                o.totalPriceWithVat,
+                o.totalPrice.priceWithVat,
                 (CASE WHEN o.companyName IS NOT NULL
                     THEN o.companyName
                     ELSE CONCAT(o.lastName, \' \', o.firstName)
