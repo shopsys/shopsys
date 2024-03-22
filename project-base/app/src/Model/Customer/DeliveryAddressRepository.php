@@ -16,21 +16,6 @@ class DeliveryAddressRepository extends BaseDeliveryAddressRepository
     /**
      * @param string $uuid
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \App\Model\Customer\DeliveryAddress|null
-     */
-    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
-    {
-        return $this->getDeliveryAddressRepository()->findOneBy(
-            [
-                'uuid' => $uuid,
-                'customer' => $customer,
-            ],
-        );
-    }
-
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \App\Model\Customer\DeliveryAddress
      */
     public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress

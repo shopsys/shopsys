@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\Model\Cart\AddProductResult;
+use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
 
 class AddToCartResult
 {
     protected CartWithModificationsResult $cartWithModifications;
 
     /**
-     * @param \App\FrontendApi\Model\Cart\CartWithModificationsResult $cart
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult $cart
      * @param \App\Model\Cart\AddProductResult $addProductResult
      */
     public function __construct(CartWithModificationsResult $cart, private AddProductResult $addProductResult)
@@ -20,7 +21,7 @@ class AddToCartResult
     }
 
     /**
-     * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
+     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
      */
     public function getCart(): CartWithModificationsResult
     {

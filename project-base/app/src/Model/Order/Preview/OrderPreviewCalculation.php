@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation as BaseOrderPreviewCalculation;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -73,7 +74,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
         ?Store $personalPickupStore = null,
-        ?PromoCode $promoCode = null,
+        ?BasePromoCode $promoCode = null,
     ): BaseOrderPreview {
         $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $promoCode);
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(

@@ -6,12 +6,14 @@ namespace Shopsys\FrameworkBundle\Model\Order\Preview;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
@@ -41,6 +43,8 @@ class OrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $personalPickupStore
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
@@ -51,6 +55,8 @@ class OrderPreviewCalculation
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
+        ?Store $personalPickupStore = null,
+        ?PromoCode $promoCode = null,
     ): OrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,

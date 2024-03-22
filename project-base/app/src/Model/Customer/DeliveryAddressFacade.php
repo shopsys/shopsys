@@ -58,14 +58,4 @@ class DeliveryAddressFacade extends BaseDeliveryAddressFacade
     {
         return $this->deliveryAddressRepository->getByUuidAndCustomer($uuid, $customer);
     }
-
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \App\Model\Customer\DeliveryAddress|null
-     */
-    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
-    {
-        return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
-    }
 }

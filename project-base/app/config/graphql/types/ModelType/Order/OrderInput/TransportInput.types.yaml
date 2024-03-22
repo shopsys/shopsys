@@ -1,4 +1,0 @@
-TransportInput:
-    type: input-object
-    inherits:
-        - 'TransportInputDecorator'

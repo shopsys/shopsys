@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Component\Constraints;
 
-use App\FrontendApi\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
-use App\FrontendApi\Model\Payment\PaymentValidationFacade;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
+use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -19,7 +19,7 @@ class PaymentInCartValidator extends ConstraintValidator
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Model\Payment\PaymentValidationFacade $paymentValidationFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      */
     public function __construct(
         private PaymentFacade $paymentFacade,

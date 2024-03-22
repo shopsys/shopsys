@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Transformer;
 
-use App\Model\Order\PromoCode\PromoCodeLimit;
-use App\Model\Order\PromoCode\PromoCodeLimitFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class PromoCodeLimitTransformer implements DataTransformerInterface
 {
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory $promoCodeLimitFactory
      */
     public function __construct(private PromoCodeLimitFactory $promoCodeLimitFactory)
     {
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeLimit|null $promoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit|null $promoCodeLimit
      * @return array|null
      */
     public function transform($promoCodeLimit): ?array
@@ -35,7 +35,7 @@ class PromoCodeLimitTransformer implements DataTransformerInterface
 
     /**
      * @param mixed $value
-     * @return \App\Model\Order\PromoCode\PromoCodeLimit
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit
      */
     public function reverseTransform($value): PromoCodeLimit
     {

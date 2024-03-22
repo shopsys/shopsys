@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Model\Product\Pricing;
 
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator;
-use App\Model\Order\PromoCode\PromoCodeLimit;
-use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
@@ -20,10 +20,10 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalcu
 class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscountCalculation
 {
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     * @param \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator
      */
     public function __construct(
         private PromoCodeLimitResolver $promoCodeLimitResolver,
@@ -120,7 +120,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
@@ -170,7 +170,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
-     * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalApplicableProductsPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
@@ -222,7 +222,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
@@ -260,7 +260,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
-     * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode\Grid;
 
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeLimit;
-use App\Model\Order\PromoCode\PromoCodeLimitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as BasePromoCodeGridFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository;
 
 class PromoCodeGridFactory extends BasePromoCodeGridFactory
 {
@@ -19,7 +19,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
      */
     public function __construct(
         EntityManagerInterface $em,

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueFlagsValidator extends ConstraintValidator
 {
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $values
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
     public function validate($values, Constraint $constraint): void

@@ -193,6 +193,11 @@ class OrderData
      */
     public $paymentTransactionRefunds;
 
+    /**
+     * @var bool|null
+     */
+    public $newsletterSubscription;
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];

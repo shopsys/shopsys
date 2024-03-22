@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Transformer;
 
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class PromoCodeFlagTransformer implements DataTransformerInterface
 {
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
      */
     public function __construct(private PromoCodeFlagFactory $promoCodeFlagFactory)
     {
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag|null $value
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag|null $value
      * @return array|null
      */
     public function transform($value): ?array
@@ -35,7 +35,7 @@ class PromoCodeFlagTransformer implements DataTransformerInterface
 
     /**
      * @param mixed $value
-     * @return \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag|null
      */
     public function reverseTransform($value): ?PromoCodeFlag
     {

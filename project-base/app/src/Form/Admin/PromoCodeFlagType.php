@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Form\Admin\Transformer\PromoCodeFlagTransformer;
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use App\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;

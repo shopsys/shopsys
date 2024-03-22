@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
+use App\Model\Customer\DeliveryAddress;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DeliveryAddressFacade
@@ -71,5 +72,15 @@ class DeliveryAddressFacade
     public function getById(int $deliveryAddressId): DeliveryAddress
     {
         return $this->deliveryAddressRepository->getById($deliveryAddressId);
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
+    {
+        return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
     }
 }

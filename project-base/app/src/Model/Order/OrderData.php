@@ -48,11 +48,6 @@ class OrderData extends BaseOrderData
      */
     public ?string $pickupPlaceIdentifier;
 
-    /**
-     * @var bool|null
-     */
-    public ?bool $newsletterSubscription = null;
-
     public function __construct()
     {
         parent::__construct();

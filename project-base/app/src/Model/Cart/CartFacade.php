@@ -215,20 +215,6 @@ class CartFacade extends BaseCartFacade
     }
 
     /**
-     * @param \App\Model\Cart\Cart $cart
-     */
-    public function deleteCart(BaseCart $cart)
-    {
-        foreach ($cart->getItems() as $item) {
-            $this->em->remove($item);
-        }
-
-        $cart->clean();
-        $this->em->remove($cart);
-        $this->em->flush();
-    }
-
-    /**
      * @param string $cartUuid
      * @return \App\Model\Cart\Cart
      */

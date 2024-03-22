@@ -69,12 +69,12 @@ class PromoCodeData extends BasePromoCodeData
     public $quantity;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimit[]
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[]
      */
     public $limits = [];
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[]
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[]
      */
     public array $flags = [];
 

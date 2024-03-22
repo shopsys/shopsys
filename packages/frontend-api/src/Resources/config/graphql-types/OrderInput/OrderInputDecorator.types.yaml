@@ -203,23 +203,3 @@ OrderInputDecorator:
             note:
                 type: "String"
                 description: "Other information related to the order"
-
-            payment:
-                type: "PaymentInput!"
-                description: "Payment method applied to the order"
-                validation:
-                    -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentCanBeUsed: ~
-            transport:
-                type: "TransportInput!"
-                description: "Transport method applied to the order"
-                validation:
-                    -   Shopsys\FrontendApiBundle\Component\Constraints\TransportCanBeUsed: ~
-
-            products:
-                type: "[OrderProductInput!]!"
-                description: "A list of products to order to"
-                validation:
-                    -   NotBlank:
-                            message: "Please enter at least one product"
-                    -   All:
-                            -   Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrdered: ~

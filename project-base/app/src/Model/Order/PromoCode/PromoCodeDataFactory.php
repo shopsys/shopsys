@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePromoCodeDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
 
 /**
  * @method \App\Model\Order\PromoCode\PromoCodeData createInstance()
@@ -15,12 +20,12 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePr
 class PromoCodeDataFactory extends BasePromoCodeDataFactory
 {
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
-     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository $promoCodeBrandRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
         private PromoCodeCategoryRepository $promoCodeCategoryRepository,

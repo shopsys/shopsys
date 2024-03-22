@@ -5,12 +5,21 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode;
 
 use App\Component\String\HashGenerator;
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade as BasePromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
 
 /**
@@ -25,17 +34,17 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
-     * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory $promoCodeProductFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory $promoCodeCategoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\String\HashGenerator $hashGenerator
-     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeBrandFactory $promoCodeBrandFactory
-     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
-     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupFactory $promoCodePricingGroupFactory
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository $promoCodeBrandRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandFactory $promoCodeBrandFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupFactory $promoCodePricingGroupFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -138,7 +147,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \App\Model\Order\PromoCode\PromoCodeLimit[] $limits
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[] $limits
      */
     private function refreshPromoCodeLimits(PromoCode $promoCode, array $limits): void
     {
@@ -306,7 +315,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $flags
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $flags
      */
     private function refreshPromoCodeFlags(PromoCode $promoCode, array $flags): void
     {

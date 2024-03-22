@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
+use App\Model\Customer\DeliveryAddress;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
@@ -43,5 +44,20 @@ class DeliveryAddressRepository
         }
 
         return $deliveryAddress;
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
+    {
+        return $this->getDeliveryAddressRepository()->findOneBy(
+            [
+                'uuid' => $uuid,
+                'customer' => $customer,
+            ],
+        );
     }
 }

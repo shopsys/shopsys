@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Cart;
 
 use App\Model\Cart\Item\CartItem;
-use App\Model\Cart\Payment\CartPaymentData;
-use App\Model\Cart\Transport\CartTransportData;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
@@ -18,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentData;
+use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportData;
 
 /**
  * @ORM\Table(name="carts")
@@ -218,7 +218,7 @@ class Cart extends BaseCart
     }
 
     /**
-     * @param \App\Model\Cart\Transport\CartTransportData $cartTransportData
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportData $cartTransportData
      */
     public function editCartTransport(CartTransportData $cartTransportData): void
     {
@@ -229,7 +229,7 @@ class Cart extends BaseCart
     }
 
     /**
-     * @param \App\Model\Cart\Payment\CartPaymentData $cartPaymentData
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentData $cartPaymentData
      */
     public function editCartPayment(CartPaymentData $cartPaymentData): void
     {

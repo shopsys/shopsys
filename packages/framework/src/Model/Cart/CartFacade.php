@@ -144,10 +144,13 @@ class CartFacade
      */
     public function deleteCart(Cart $cart)
     {
+        foreach ($cart->getItems() as $item) {
+            $this->em->remove($item);
+        }
+
+        $cart->clean();
         $this->em->remove($cart);
         $this->em->flush();
-
-        $this->cleanAdditionalData();
     }
 
     /**
@@ -165,11 +168,6 @@ class CartFacade
         }
 
         return $cart->getItemById($cartItemId)->getProduct();
-    }
-
-    public function cleanAdditionalData()
-    {
-        $this->currentPromoCodeFacade->removeEnteredPromoCode();
     }
 
     /**

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Component\Constraints;
 
 use App\FrontendApi\Model\Cart\CartFacade;
-use App\FrontendApi\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
-use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
-use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
-use App\FrontendApi\Model\Transport\TransportValidationFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
+use Shopsys\FrontendApiBundle\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
+use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportWeightLimitExceededException;
+use Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -26,7 +26,7 @@ class TransportInCartValidator extends ConstraintValidator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
-     * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade $transportValidationFacade
      */
     public function __construct(
         private TransportFacade $transportFacade,
