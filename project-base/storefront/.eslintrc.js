@@ -13,6 +13,7 @@ module.exports = {
         'config/*',
         '.eslintrc.js',
         'schema.graphql.json',
+        'schema-compressed.graphql.json',
         'pnpm-lock.json',
         'package.json',
         'tsconfig.json',

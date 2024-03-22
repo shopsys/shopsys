@@ -76,7 +76,7 @@ const nextConfig = {
     },
     // FE build error fix: "ModuleNotFoundError: Module not found: Error: Can't resolve 'net' in '/app/node_modules/@node-redis/client/dist/lib/client'"
     // https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-761853289
-    webpack: (config) => {
+    webpack: (config, { isServer }) => {
         config.resolve.fallback = {
             child_process: false,
             fs: false,
@@ -91,13 +91,16 @@ const nextConfig = {
             stream: false,
             zlib: false,
         };
+        if (!isServer) {
+            config.resolve.alias.redis = false;
+        }
 
         return config;
     },
 };
 
 const SentryWebpackPluginOptions = {
-    errorHandler: (err, invokeErr, compilation) => {
+    errorHandler: (err, _invokeErr, compilation) => {
         compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
     },
 };

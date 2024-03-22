@@ -1,17 +1,32 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { captureException } = require('@sentry/nextjs');
-
 const REDIS_URL = `redis://${process.env.REDIS_HOST}`;
 const REDIS_PREFIX = `${process.env.REDIS_PREFIX}:fe:translates:`;
 const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
 
-const logException = (e) => {
+const logException = async (e) => {
     if (process.env.APP_ENV === 'development') {
         // eslint-disable-next-line no-console
         console.error(e);
     }
 
-    captureException(e);
+    let parsedException;
+
+    try {
+        if (e instanceof Error) {
+            parsedException = { message: e.message, cause: e.cause, name: e.name, stack: e.stack };
+        } else {
+            parsedException = JSON.stringify(e);
+        }
+    } catch {
+        parsedException = 'Unknown exception thrown inside i18n.js loadLocaleFrom function';
+    }
+
+    fetch(process.env.INTERNAL_ENDPOINT + '/api/log-exception', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ exception: parsedException }),
+    });
 };
 
 module.exports = {

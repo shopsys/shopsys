@@ -1,6 +1,4 @@
-import { SeznamMapMarkerIcon } from './SeznamMapMarkerIcon';
 import { useCallback, useEffect, useRef } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 import { MapMarker } from 'types/map';
 
 const CLUSTERER_MAX_DISTANCE = 75;
@@ -20,14 +18,21 @@ export const SeznamMapMarkerLayer: FC<SeznamMapMarkerLayerProps> = ({
 }) => {
     const layerRef = useRef<SMap.LayerMarker>();
 
-    const creteMarkerIcon = useCallback(
+    const createMarkerIcon = useCallback(
         (isActive: boolean) => {
-            const iconWrapper = document.createElement('div');
-            iconWrapper.innerHTML = renderToStaticMarkup(
-                <SeznamMapMarkerIcon isActive={isActive} isClickable={isMarkersClickable} />,
-            );
+            const iconElement = document.createElement('div');
 
-            return iconWrapper;
+            iconElement.innerHTML = `
+            <svg class="${[
+                'w-8',
+                'transition-transform',
+                isActive ? 'origin-bottom scale-125 text-orange' : 'text-greyDark',
+                isMarkersClickable ? 'cursor-pointer' : 'cursor-default',
+            ].join(' ')}" viewBox="0 0 30 38" xmlns="http://www.w3.org/2000/svg">
+                <path d="M30,15A15,15,0,1,0,10.089,29.161L15,38l4.911-8.839A14.994,14.994,0,0,0,30,15Z" fill="currentColor" />
+            </svg>`;
+
+            return iconElement;
         },
         [isMarkersClickable],
     );
@@ -64,7 +69,7 @@ export const SeznamMapMarkerLayer: FC<SeznamMapMarkerLayerProps> = ({
             allMarkersCoords.push(coords);
 
             return new SMap.Marker(coords, id, {
-                url: creteMarkerIcon(id === activeMarkerId),
+                url: createMarkerIcon(id === activeMarkerId),
             });
         });
 
@@ -75,7 +80,7 @@ export const SeznamMapMarkerLayer: FC<SeznamMapMarkerLayerProps> = ({
 
             map.setCenterZoom(center, zoom);
         }
-    }, [map, activeMarkerId, creteMarkerIcon, markers]);
+    }, [map, activeMarkerId, createMarkerIcon, markers]);
 
     return null;
 };

@@ -2,7 +2,7 @@ import { optimisticUpdates } from './optimistic';
 import { cacheUpdates } from './updates';
 import { cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
-import schema from 'schema.graphql.json';
+import schema from 'schema-compressed.graphql.json';
 
 const keyNull = () => null;
 const keyUuid = (data: Data) => data.uuid as string | null;
