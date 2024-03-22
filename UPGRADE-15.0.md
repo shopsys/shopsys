@@ -301,3 +301,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### added visitAndWaitForStableDOM for visiting pages in cypress ([#3071](https://github.com/shopsys/shopsys/pull/3071))
 
 -   change all `cy.visit` to `cy.visitAndWaitForStableDOM`, to make sure that cypress waits for the DOM to be stable before interacting
+
+#### cypress with GUI ([#3069](https://github.com/shopsys/shopsys/pull/3069))
+
+-   cypress tests can now be run using cypress interactive GUI
+-   read the docs (`cypress.md`) for detailed info
