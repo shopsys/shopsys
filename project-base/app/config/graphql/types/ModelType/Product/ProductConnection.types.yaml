@@ -5,7 +5,7 @@ ProductConnection:
         connectionFields:
             totalCount:
                 type: "Int!"
-                description: "Total number of products"
+                description: "Total number of products (-1 means that the total count is not available)"
             productFilterOptions:
                 type: "ProductFilterOptions!"
             orderingMode:

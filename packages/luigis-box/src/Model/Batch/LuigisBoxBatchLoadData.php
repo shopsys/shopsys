@@ -15,6 +15,7 @@ class LuigisBoxBatchLoadData
      * @param array $filter
      * @param string $userIdentifier
      * @param string|null $orderingMode
+     * @param string[] $facetNames
      */
     public function __construct(
         protected readonly string $type,
@@ -25,6 +26,7 @@ class LuigisBoxBatchLoadData
         protected readonly array $filter,
         protected readonly string $userIdentifier,
         protected readonly ?string $orderingMode = null,
+        protected readonly array $facetNames = [],
     ) {
     }
 
@@ -90,5 +92,13 @@ class LuigisBoxBatchLoadData
     public function getUserIdentifier(): string
     {
         return $this->userIdentifier;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFacetNames(): array
+    {
+        return $this->facetNames;
     }
 }

@@ -1,8 +1,12 @@
-import { useEffect } from 'react';
+import { isClient } from 'helpers/isClient';
+import { useRef } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const usePersistStoreHydration = () => {
-    useEffect(() => {
+    const isPersistStoreHydrated = useRef(false);
+
+    if (!isPersistStoreHydrated.current && isClient) {
         usePersistStore.persist.rehydrate();
-    }, []);
+        isPersistStoreHydrated.current = true;
+    }
 };

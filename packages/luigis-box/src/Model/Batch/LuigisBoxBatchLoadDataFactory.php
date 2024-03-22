@@ -7,6 +7,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
+use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
 
 class LuigisBoxBatchLoadDataFactory
 {
@@ -51,6 +52,19 @@ class LuigisBoxBatchLoadDataFactory
             $luigisBoxFilter,
             $userIdentifier,
             $orderingMode,
+            $this->getFacetNamesByType($type),
         );
+    }
+
+    /**
+     * @param string $type
+     * @return string[]
+     */
+    protected function getFacetNamesByType(string $type): array
+    {
+        return match ($type) {
+            LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
+            default => [],
+        };
     }
 }
