@@ -515,3 +515,35 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 - typesSuffix: 'Api',
 +
 ```
+
+#### order process fixes ([#3032](https://github.com/shopsys/shopsys/pull/3032))
+
+-   to handle access management on order pages, use the new `useOrderPagesAccess` hook, which handles both loading state and possible redirects
+-   there was a bug with manual cache updates for mutations which are deduplicated, to fix this for any other mutations you might have, follow the example added to `graphcache.md`
+-   move all your cypress API custom commands to `/cypress/support/api.ts`
+-   in cache updates, make sure you do not condition your code on properties, which are sometimes not available
+    -   this issue was for example present during transport and payment change for logged in user, where it was caused by the manual cache updates being conditioned on the presence of cart UUID, which is never present for a logged in user
+    -   in this case, we caused it by now checking the entire response object (cart nullability)
+-   make sure you do not make any actions conditioned on presence of transport/payment during the initial renders, as they are null, because the cart is not loaded yet
+    -   this issue was for example present during transport and payment pre-selection based on previous order, where because of asynchronicity of zustand store hydration, when the decision was made to pre-select transport/payment from previous order, transport and payment were always null, thus the transport and payment were always pre-selected, even though the user has already changed his decision
+-   check that if you provide multiple identical handlers to any type of inputs (such as multiple `onBlur` or `onChange` as we have in `TextInputControlled`), you correctly combine them into a single handler and call that
+    -   you can get insipred in the aforementioned `TextInputControlled`
+-   use the newly provided `useOnFinishHydrationDefaultValuesPrefill` if you want to prefill your form with default values which might not be available during the initial load (e.g. because of store hydration)
+-   fixed issue with email value update in order third step, where the value was not correctly updated, because the update function used an outdated value of the field. Instead, we now use the event target value, which solves this issue
+    -   you should check for similar issues in your code, and make sure that any `onBlur` or `onChange` handlers operate on the newest value
+-   contact information page (and form) now loads only after cart is fully loaded, which means you can remove any custom async logic which reacts to cart being loaded and depend on it being there from the beginning
+-   `CurrentCustomerUser.ts` was removed and the code moved, as it was used only in a single place, so if you are using it in multiple places, you should keep it
+-   radiobutton component now does not accept `onChangeCallback` prop anymore, so you should provide your actions and callbacks via `onClick` if you need to to provide "unchecking" functionality, or `onChange` if you do not
+-   select component now accepts ID which is given to the select input and can be used for tests and similar
+-   `ContactInformationFormWrapper` was renamed to a better-suited `ContactInformationFormContent`, as it does not wrap the form, but rather contains it
+-   `deliveryAddressUuid` is now never null, but we operate with an empty string or an actual UUID, which was done for easier operations with the property, so your application does not need to check for null, but you should check your conditions if they correctly check the empty string value (however, it still has to be mapped to null just before sending to API)
+-   removed various useEffects for contact information and rather approached the problem from a synchronous and controlled POV
+    -   countries are now loaded during SSR, so we do not have to set the default value using useEffect
+    -   we do not set delivery address fields based on `deliveryAddressUuid` using useEffect in the form, but rather just put it in the mutation later, which simplifies the logic
+    -   we do the same with pickup place details, which required a more complex validation logic, where we validate delivery address fields based on pickup place, delivery address UUID, and currently logged-in user
+    -   what this means for you is that you should ideally also avoid these hacky useEffects, ideally only fill your form with the data you (really) need, and map it later for your mutation
+    -   you also now cannot expect the contact information form to contain the information from the delivery address selected by UUID (deliveryAddressUuid) and from the pickup place
+-   contact information is now removed from store (and session storage) after logout, so you should either not expect it there, or not accept these changes
+-   `useCountriesAsSelectOptions` was added to get mapped countries as select options, which uses `mapCountriesToSelectOptions` internally and thus the function is not exported anymore
+    `useCountriesAsSelectOptions` should be used to get countries as select options now
+-   removed `useHandleContactInformationNonTextChanges` and instead use `onChange` handlers
