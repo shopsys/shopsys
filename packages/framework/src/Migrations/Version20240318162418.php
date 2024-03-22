@@ -14,6 +14,14 @@ class Version20240318162418 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
+        $postgresqlVersion = $this->sql('SELECT version();')->fetchOne();
+        $postgresqlVersion = substr($postgresqlVersion, 11, 2);
+        $existsNormalizeFunction = $this->sql('SELECT 1 FROM pg_proc WHERE proname = \'normalize\'')->fetchOne();
+
+        if ($postgresqlVersion > 12 || $existsNormalizeFunction !== 1) {
+            return;
+        }
+
         $this->sql('ALTER FUNCTION normalize(text) RENAME TO normalized;');
 
         $this->editDefaultDbIndexes();
