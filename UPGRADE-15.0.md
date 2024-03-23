@@ -315,3 +315,16 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   inside i18n.js, we now report exceptions by sending it to a new Next.js API route `/api/log-exception`, which is done to avoid importing the entire Sentry package on the client, so you should also remove direct imports of Sentry from all the files which are not webpack-compiled, as that has an immense negative effect on performance
 -   redis is now blocked from the client bundle by specifying it in the webpack config inside next.config.js, and you should block all other packages which are in your client bundle, but should not be there (check by running `npm run analyze` in the SF folder)
+
+#### GQL generated files split ([#3078](https://github.com/shopsys/shopsys/pull/3078))
+
+-   you should update all the necessary imports of GQL generated files
+    -   remove all imports from `/graphql/generated`
+    -   instead import from the given `/graphql/requests/**/*.generated.tsx` file or from `/graphql/types.ts`
+-   remove all `Api` suffixes from all generated types
+    -   or if you want to keep them, do not accept this change to `codegen-config.ts`:
+
+```diff
+- typesSuffix: 'Api',
++
+```
