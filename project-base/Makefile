@@ -19,7 +19,7 @@ prepare-data-for-acceptance-tests:
 define run_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
 	docker compose stop storefront
-	docker compose up -d --wait storefront-cypress
+	docker compose up -d --wait storefront-cypress --force-recreate
 	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress;
 	docker compose stop storefront-cypress
 	docker compose up -d storefront

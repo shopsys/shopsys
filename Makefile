@@ -46,7 +46,7 @@ get_ip = $(shell ifconfig | awk '/^[a-z0-9]+: /{iface=substr($$1, 1, length($$1)
 define open_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
 	docker compose stop storefront
-	docker compose up -d --wait storefront-cypress
+	docker compose up -d --wait storefront-cypress --force-recreate
 	xhost + $(get_ip);
 	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress;
 	docker compose stop storefront-cypress
