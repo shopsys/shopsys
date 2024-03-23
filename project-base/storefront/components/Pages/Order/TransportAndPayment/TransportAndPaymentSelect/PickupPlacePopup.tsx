@@ -2,13 +2,14 @@ import { StoreSelect } from './StoreSelect';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { TIDs } from 'cypress/tids';
-import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
 type PickupPlacePopupProps = {
-    transport: TransportWithAvailablePaymentsAndStoresFragmentApi;
-    onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragmentApi | null) => void;
+    transport: TransportWithAvailablePaymentsAndStoresFragment;
+    onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragment | null) => void;
     onClosePickupPlacePopupCallback: () => void;
 };
 

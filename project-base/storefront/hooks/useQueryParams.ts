@@ -1,5 +1,5 @@
 import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import {
@@ -36,7 +36,7 @@ export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 export type UrlQueries = {
     [FILTER_QUERY_PARAMETER_NAME]?: string;
     [SEARCH_QUERY_PARAMETER_NAME]?: string;
-    [SORT_QUERY_PARAMETER_NAME]?: ProductOrderingModeEnumApi;
+    [SORT_QUERY_PARAMETER_NAME]?: ProductOrderingModeEnum;
     [PAGE_QUERY_PARAMETER_NAME]?: string;
     [LOAD_MORE_QUERY_PARAMETER_NAME]?: string;
 };
@@ -74,7 +74,7 @@ export const useQueryParams = () => {
     const filterQuery = query[FILTER_QUERY_PARAMETER_NAME];
     const filter = filterQuery ? (JSON.parse(filterQuery) as FilterOptionsUrlQueryType) : null;
 
-    const updateSort = (sorting: ProductOrderingModeEnumApi) => {
+    const updateSort = (sorting: ProductOrderingModeEnum) => {
         if (SEO_SENSITIVE_FILTERS.SORT && originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(
@@ -315,7 +315,7 @@ export const useQueryParams = () => {
         pushQueryFilter(undefined, originalCategorySlug);
     };
 
-    const pushQuerySort = (sorting: ProductOrderingModeEnumApi) => {
+    const pushQuerySort = (sorting: ProductOrderingModeEnum) => {
         const newQuery: UrlQueries = {
             ...query,
             [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
@@ -339,7 +339,7 @@ export const useQueryParams = () => {
     const pushQueryFilter = (
         newFilter?: FilterQueries,
         pathnameOverride?: string,
-        sortOverride?: ProductOrderingModeEnumApi,
+        sortOverride?: ProductOrderingModeEnum,
     ) => {
         const newQuery = buildNewQueryAfterFilterChange(query, getFilterWithoutEmpty(newFilter), sortOverride);
 

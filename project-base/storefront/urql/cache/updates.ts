@@ -1,111 +1,123 @@
 import { invalidateFields } from './helpers';
 import { Cache, UpdatesConfig } from '@urql/exchange-graphcache';
+import { LoginMutation, LoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.generated';
+import { LogoutMutation, LogoutMutationVariables } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
+import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import {
-    AddToCartMutationVariablesApi,
-    ApplyPromoCodeToCartMutationVariablesApi,
-    CartQueryDocumentApi,
-    ChangePaymentInCartMutationVariablesApi,
-    ChangeTransportInCartMutationVariablesApi,
-    RemoveFromCartMutationVariablesApi,
-    RemovePromoCodeFromCartMutationVariablesApi,
-    AddOrderItemsToCartMutationVariablesApi,
-    RemoveProductListMutationVariablesApi,
-    ProductListInputApi,
-    RemoveProductFromListMutationVariablesApi,
-    AddProductToListMutationVariablesApi,
-    ProductListQueryDocumentApi,
-    AddProductToListMutationApi,
-    RemoveProductFromListMutationApi,
-    ProductListFragmentApi,
-    AddToCartMutationApi,
-    CartFragmentApi,
-    LoginMutationApi,
-    LogoutMutationApi,
-    DeleteDeliveryAddressMutationApi,
-    CreateOrderMutationApi,
-    AddOrderItemsToCartMutationApi,
-    ChangeTransportInCartMutationApi,
-    ChangePaymentInCartMutationApi,
-    RemoveFromCartMutationApi,
-    ApplyPromoCodeToCartMutationApi,
-    RemovePromoCodeFromCartMutationApi,
-    LoginMutationVariablesApi,
-    LogoutMutationVariablesApi,
-    DeleteDeliveryAddressMutationVariablesApi,
-    CreateOrderMutationVariablesApi,
-    RemoveProductListMutationApi,
-    CartQueryApi,
-    CartQueryVariablesApi,
-    ProductListQueryApi,
-    ProductListQueryVariablesApi,
-} from 'graphql/generated';
+    AddOrderItemsToCartMutation,
+    AddOrderItemsToCartMutationVariables,
+} from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
+import {
+    AddToCartMutation,
+    AddToCartMutationVariables,
+} from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+import {
+    ApplyPromoCodeToCartMutation,
+    ApplyPromoCodeToCartMutationVariables,
+} from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
+import {
+    ChangePaymentInCartMutation,
+    ChangePaymentInCartMutationVariables,
+} from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
+import {
+    ChangeTransportInCartMutation,
+    ChangeTransportInCartMutationVariables,
+} from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
+import {
+    RemoveFromCartMutation,
+    RemoveFromCartMutationVariables,
+} from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
+import {
+    RemovePromoCodeFromCartMutation,
+    RemovePromoCodeFromCartMutationVariables,
+} from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
+import { CartQuery, CartQueryDocument, CartQueryVariables } from 'graphql/requests/cart/queries/CartQuery.generated';
+import {
+    DeleteDeliveryAddressMutation,
+    DeleteDeliveryAddressMutationVariables,
+} from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
+import {
+    CreateOrderMutation,
+    CreateOrderMutationVariables,
+} from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
+import { ProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import {
+    AddProductToListMutation,
+    AddProductToListMutationVariables,
+} from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
+import {
+    RemoveProductFromListMutation,
+    RemoveProductFromListMutationVariables,
+} from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
+import {
+    RemoveProductListMutation,
+    RemoveProductListMutationVariables,
+} from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
+import {
+    ProductListQuery,
+    ProductListQueryDocument,
+    ProductListQueryVariables,
+} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+import { ProductListInput } from 'graphql/types';
 
 export const cacheUpdates: UpdatesConfig = {
     Mutation: {
-        Login(_result: LoginMutationApi, _args: LoginMutationVariablesApi, cache) {
+        Login(_result: LoginMutation, _args: LoginMutationVariables, cache) {
             invalidateFields(cache, ['cart']);
         },
-        Logout(_result: LogoutMutationApi, _args: LogoutMutationVariablesApi, cache) {
+        Logout(_result: LogoutMutation, _args: LogoutMutationVariables, cache) {
             invalidateFields(cache, ['cart']);
         },
         DeleteDeliveryAddress(
-            _result: DeleteDeliveryAddressMutationApi,
-            _args: DeleteDeliveryAddressMutationVariablesApi,
+            _result: DeleteDeliveryAddressMutation,
+            _args: DeleteDeliveryAddressMutationVariables,
             cache,
         ) {
             invalidateFields(cache, ['currentCustomerUser']);
         },
-        CreateOrder(_result: CreateOrderMutationApi, _args: CreateOrderMutationVariablesApi, cache) {
+        CreateOrder(_result: CreateOrderMutation, _args: CreateOrderMutationVariables, cache) {
             invalidateFields(cache, ['currentCustomerUser']);
         },
-        AddToCart(result: AddToCartMutationApi, _args: AddToCartMutationVariablesApi, cache) {
+        AddToCart(result: AddToCartMutation, _args: AddToCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.AddToCart.cart, result.AddToCart.cart.uuid);
         },
-        AddOrderItemsToCart(
-            result: AddOrderItemsToCartMutationApi,
-            _args: AddOrderItemsToCartMutationVariablesApi,
-            cache,
-        ) {
+        AddOrderItemsToCart(result: AddOrderItemsToCartMutation, _args: AddOrderItemsToCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.AddOrderItemsToCart, result.AddOrderItemsToCart.uuid);
         },
         ChangeTransportInCart(
-            result: ChangeTransportInCartMutationApi,
-            _args: ChangeTransportInCartMutationVariablesApi,
+            result: ChangeTransportInCartMutation,
+            _args: ChangeTransportInCartMutationVariables,
             cache,
         ) {
             manuallyUpdateCartQuery(cache, result.ChangeTransportInCart, result.ChangeTransportInCart.uuid);
         },
-        ChangePaymentInCart(
-            result: ChangePaymentInCartMutationApi,
-            _args: ChangePaymentInCartMutationVariablesApi,
-            cache,
-        ) {
+        ChangePaymentInCart(result: ChangePaymentInCartMutation, _args: ChangePaymentInCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.ChangePaymentInCart, result.ChangePaymentInCart.uuid);
         },
-        RemoveFromCart(result: RemoveFromCartMutationApi, _args: RemoveFromCartMutationVariablesApi, cache) {
+        RemoveFromCart(result: RemoveFromCartMutation, _args: RemoveFromCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.RemoveFromCart, result.RemoveFromCart.uuid);
         },
         ApplyPromoCodeToCart(
-            result: ApplyPromoCodeToCartMutationApi,
-            _args: ApplyPromoCodeToCartMutationVariablesApi,
+            result: ApplyPromoCodeToCartMutation,
+            _args: ApplyPromoCodeToCartMutationVariables,
             cache,
         ) {
             manuallyUpdateCartQuery(cache, result.ApplyPromoCodeToCart, result.ApplyPromoCodeToCart.uuid);
         },
         RemovePromoCodeFromCart(
-            result: RemovePromoCodeFromCartMutationApi,
-            _args: RemovePromoCodeFromCartMutationVariablesApi,
+            result: RemovePromoCodeFromCartMutation,
+            _args: RemovePromoCodeFromCartMutationVariables,
             cache,
         ) {
             manuallyUpdateCartQuery(cache, result.RemovePromoCodeFromCart, result.RemovePromoCodeFromCart.uuid);
         },
-        AddProductToList(result: AddProductToListMutationApi, args: AddProductToListMutationVariablesApi, cache) {
+        AddProductToList(result: AddProductToListMutation, args: AddProductToListMutationVariables, cache) {
             cache.invalidate('Query');
             manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
         },
         RemoveProductFromList(
-            result: RemoveProductFromListMutationApi,
-            args: RemoveProductFromListMutationVariablesApi,
+            result: RemoveProductFromListMutation,
+            args: RemoveProductFromListMutationVariables,
             cache,
         ) {
             if (result.RemoveProductFromList === null) {
@@ -114,7 +126,7 @@ export const cacheUpdates: UpdatesConfig = {
                 manuallyUpdateProductListQuery(args.input.productListInput, result.RemoveProductFromList, cache);
             }
         },
-        RemoveProductList(_result: RemoveProductListMutationApi, args: RemoveProductListMutationVariablesApi, cache) {
+        RemoveProductList(_result: RemoveProductListMutation, args: RemoveProductListMutationVariables, cache) {
             manuallyRemoveProductListQuery(cache, args.input);
         },
         ChangePaymentInOrder(_result, _args, cache) {
@@ -123,25 +135,25 @@ export const cacheUpdates: UpdatesConfig = {
     },
 };
 
-const manuallyUpdateCartQuery = (cache: Cache, newCart: CartFragmentApi, cartUuid: string | null) => {
-    cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
-        { query: CartQueryDocumentApi, variables: { cartUuid } },
-        () => ({ __typename: 'Query', cart: newCart }),
-    );
+const manuallyUpdateCartQuery = (cache: Cache, newCart: CartFragment, cartUuid: string | null) => {
+    cache.updateQuery<CartQuery, CartQueryVariables>({ query: CartQueryDocument, variables: { cartUuid } }, () => ({
+        __typename: 'Query',
+        cart: newCart,
+    }));
 };
 
-const manuallyRemoveProductListQuery = (cache: Cache, args: ProductListInputApi) => {
-    cache.updateQuery<ProductListQueryApi, ProductListQueryVariablesApi>(
-        { query: ProductListQueryDocumentApi, variables: { input: args } },
+const manuallyRemoveProductListQuery = (cache: Cache, args: ProductListInput) => {
+    cache.updateQuery<ProductListQuery, ProductListQueryVariables>(
+        { query: ProductListQueryDocument, variables: { input: args } },
         () => ({ __typename: 'Query', productList: null }),
     );
 };
 
-const manuallyUpdateProductListQuery = (input: ProductListInputApi, result: ProductListFragmentApi, cache: Cache) => {
+const manuallyUpdateProductListQuery = (input: ProductListInput, result: ProductListFragment, cache: Cache) => {
     const uuid = input.uuid ?? result.uuid;
-    cache.updateQuery<ProductListQueryApi, ProductListQueryVariablesApi>(
+    cache.updateQuery<ProductListQuery, ProductListQueryVariables>(
         {
-            query: ProductListQueryDocumentApi,
+            query: ProductListQueryDocument,
             variables: {
                 input: { type: input.type, uuid },
             },

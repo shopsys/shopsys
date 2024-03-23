@@ -1,7 +1,7 @@
-import { ProductListTypeEnumApi } from 'graphql/generated';
+import { ProductListTypeEnum } from 'graphql/types';
 import { usePersistStore } from 'store/usePersistStore';
 
-export const useUpdateProductListUuid = (productListType: ProductListTypeEnumApi) => {
+export const useUpdateProductListUuid = (productListType: ProductListTypeEnum) => {
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 

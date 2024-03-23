@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
@@ -7,7 +7,7 @@ import { GtmProductListNameType } from 'gtm/types/enums';
 import { useEffect, useRef } from 'react';
 
 export const useGtmSliderProductListViewEvent = (
-    products: ListedProductFragmentApi[] | undefined,
+    products: ListedProductFragment[] | undefined,
     gtmProuctListName: GtmProductListNameType,
 ): void => {
     const wasViewedRef = useRef(false);

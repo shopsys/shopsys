@@ -1,14 +1,12 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    ProductOrderingModeEnumApi,
-    Maybe,
-    ProductFilterApi,
-    SearchProductsQueryApi,
-    SearchProductsQueryVariablesApi,
-    SearchProductsQueryDocumentApi,
-    ListedProductConnectionFragmentApi,
-} from 'graphql/generated';
+    SearchProductsQueryVariables,
+    SearchProductsQuery,
+    SearchProductsQueryDocument,
+} from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+import { ProductOrderingModeEnum, Maybe, ProductFilter } from 'graphql/types';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { calculatePageSize, getPageSizeInfo, hasReadAllProductsFromCache, mergeProductEdges } from 'helpers/loadMore';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -18,7 +16,7 @@ import { useClient, Client } from 'urql';
 
 export const useSearchProductsData = (
     totalProductCount: number,
-): [ListedProductConnectionFragmentApi['edges'] | undefined, boolean, boolean, boolean] => {
+): [ListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
     const client = useClient();
     const { filter, sort, currentPage, currentLoadMore, searchString } = useQueryParams();
     const mappedFilter = mapParametersFilter(filter);
@@ -45,11 +43,11 @@ export const useSearchProductsData = (
     const [loadMoreFetching, setLoadMoreFetching] = useState(false);
 
     const fetchProducts = async (
-        variables: SearchProductsQueryVariablesApi,
-        previouslyQueriedProductsFromCache: ListedProductConnectionFragmentApi['edges'] | undefined,
+        variables: SearchProductsQueryVariables,
+        previouslyQueriedProductsFromCache: ListedProductConnectionFragment['edges'] | undefined,
     ) => {
         const response = await client
-            .query<SearchProductsQueryApi, SearchProductsQueryVariablesApi>(SearchProductsQueryDocumentApi, variables)
+            .query<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
             .toPromise();
 
         if (!response.data) {
@@ -131,17 +129,17 @@ export const useSearchProductsData = (
 const readSearchProductsFromCache = (
     client: Client,
     searchQuery: string,
-    orderingMode: ProductOrderingModeEnumApi | null,
-    filter: Maybe<ProductFilterApi>,
+    orderingMode: ProductOrderingModeEnum | null,
+    filter: Maybe<ProductFilter>,
     endCursor: string,
     pageSize: number,
     userIdentifier: string,
 ): {
-    products: ListedProductConnectionFragmentApi['edges'] | undefined;
+    products: ListedProductConnectionFragment['edges'] | undefined;
     hasNextPage: boolean;
 } => {
-    const dataFromCache = client.readQuery<SearchProductsQueryApi, SearchProductsQueryVariablesApi>(
-        SearchProductsQueryDocumentApi,
+    const dataFromCache = client.readQuery<SearchProductsQuery, SearchProductsQueryVariables>(
+        SearchProductsQueryDocument,
         {
             search: searchQuery,
             orderingMode,
@@ -162,14 +160,14 @@ const readSearchProductsFromCache = (
 const getPreviousProductsFromCache = (
     client: Client,
     searchQuery: string,
-    sort: ProductOrderingModeEnumApi | null,
-    filter: Maybe<ProductFilterApi>,
+    sort: ProductOrderingModeEnum | null,
+    filter: Maybe<ProductFilter>,
     pageSize: number,
     currentPage: number,
     currentLoadMore: number,
     userIdentifier: string,
 ) => {
-    let cachedPartOfProducts: ListedProductConnectionFragmentApi['edges'] | undefined;
+    let cachedPartOfProducts: ListedProductConnectionFragment['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
 
     while (iterationsCounter > 0) {

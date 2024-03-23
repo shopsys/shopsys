@@ -1,7 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
+import { AdvertsFragment } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
+import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
+import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -18,7 +20,7 @@ type AdvertsProps = {
     withGapBottom?: boolean;
     withGapTop?: boolean;
     withWebline?: boolean;
-    currentCategory?: CategoryDetailFragmentApi;
+    currentCategory?: CategoryDetailFragment;
     isSingle?: boolean;
 };
 
@@ -31,7 +33,7 @@ export const Adverts: FC<AdvertsProps> = ({
     className,
     isSingle,
 }) => {
-    const [{ data: advertsData }] = useAdvertsQueryApi();
+    const [{ data: advertsData }] = useAdvertsQuery();
 
     const filteredAdverts = advertsData?.adverts.filter((advert) => advert.positionName === positionName);
     const displayedAdverts =
@@ -93,9 +95,9 @@ export const Adverts: FC<AdvertsProps> = ({
 };
 
 const shouldBeShown = (
-    advert: AdvertsFragmentApi | undefined,
+    advert: AdvertsFragment | undefined,
     positionName: PositionNameType,
-    currentCategory?: CategoryDetailFragmentApi,
+    currentCategory?: CategoryDetailFragment,
 ): boolean => {
     if (!advert || advert.positionName !== positionName) {
         return false;

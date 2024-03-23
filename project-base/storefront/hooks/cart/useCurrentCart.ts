@@ -1,9 +1,7 @@
-import {
-    ListedStoreFragmentApi,
-    Maybe,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useCartQueryApi,
-} from 'graphql/generated';
+import { useCartQuery } from 'graphql/requests/cart/queries/CartQuery.generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { Maybe } from 'graphql/types';
 import { isStoreHydrated } from 'helpers/isStoreHydrated';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { usePersistStore } from 'store/usePersistStore';
@@ -16,7 +14,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     const isWithCart = isUserLoggedIn || !!cartUuid;
 
-    const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQueryApi({
+    const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
         pause: !isWithCart,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
@@ -44,10 +42,10 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 };
 
 const getSelectedPickupPlace = (
-    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi> | undefined,
+    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragment> | undefined,
     pickupPlaceIdentifier: string | null | undefined,
-    packeteryPickupPoint: ListedStoreFragmentApi | null,
-): ListedStoreFragmentApi | null => {
+    packeteryPickupPoint: ListedStoreFragment | null,
+): ListedStoreFragment | null => {
     if (!transport || !pickupPlaceIdentifier) {
         return null;
     }

@@ -1,4 +1,5 @@
-import { CartFragmentApi, useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
+import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { useRemovePromoCodeFromCartMutation } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
@@ -9,10 +10,10 @@ import { usePersistStore } from 'store/usePersistStore';
 type RemovePromoCodeHandler = (
     promoCodeToBeRemoved: string,
     messages: { success: string; error: string },
-) => Promise<CartFragmentApi | undefined | null>;
+) => Promise<CartFragment | undefined | null>;
 
 export const useRemovePromoCodeFromCart = (): [RemovePromoCodeHandler, boolean] => {
-    const [{ fetching }, removePromoCode] = useRemovePromoCodeFromCartMutationApi();
+    const [{ fetching }, removePromoCode] = useRemovePromoCodeFromCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
 

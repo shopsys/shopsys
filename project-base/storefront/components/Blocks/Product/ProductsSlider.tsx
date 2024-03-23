@@ -1,6 +1,6 @@
 import { ProductsListContent } from './ProductsList/ProductsListContent';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
-import { ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
@@ -8,7 +8,7 @@ import { RefObject, createRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 
 type ProductsSliderProps = {
-    products: ListedProductFragmentApi[];
+    products: ListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin?: GtmMessageOriginType;
 };

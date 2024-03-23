@@ -1,9 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { ColumnCategoriesFragmentApi } from 'graphql/generated';
+import { ColumnCategoriesFragment } from 'graphql/requests/navigation/fragments/ColumnCategoriesFragment.generated';
 
 type NavigationItemColumnProps = {
-    columnCategories: ColumnCategoriesFragmentApi[];
+    columnCategories: ColumnCategoriesFragment[];
     onLinkClick: () => void;
 };
 

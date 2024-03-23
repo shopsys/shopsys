@@ -2,7 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useNotificationBarsApi } from 'graphql/generated';
+import { useNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
 import { getTokensFromCookies } from 'helpers/auth/tokens';
 import { useAuth } from 'hooks/auth/useAuth';
 import { jwtDecode } from 'jwt-decode';
@@ -12,7 +12,7 @@ import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
 
 export const NotificationBars: FC = memo(function NotificationBars() {
-    const [{ data: notificationBarsData }] = useNotificationBarsApi();
+    const [{ data: notificationBarsData }] = useNotificationBars();
     const user = useCurrentCustomerData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const bars = notificationBarsData?.notificationBars;

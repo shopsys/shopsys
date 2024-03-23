@@ -1,5 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { CategoryProductsQueryDocumentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
+import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { getOffsetPageAndLoadMore, getPreviousProductsFromCache, getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
     FILTER_QUERY_PARAMETER_NAME,
@@ -18,10 +19,10 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
     test('previous products should be undefined if loadMore is 0', () => {
         expect(
             getPreviousProductsFromCache(
-                CategoryProductsQueryDocumentApi,
+                CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnumApi.PriorityApi,
+                ProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -36,10 +37,10 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
         let callCounter = 0;
         expect(
             getPreviousProductsFromCache(
-                CategoryProductsQueryDocumentApi,
+                CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnumApi.PriorityApi,
+                ProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -65,10 +66,10 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
     test('previous products should return one slice if loadMore is 1', () => {
         expect(
             getPreviousProductsFromCache(
-                CategoryProductsQueryDocumentApi,
+                CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnumApi.PriorityApi,
+                ProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -84,10 +85,10 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
     test('previous products should return one slice if loadMore is 1', () => {
         expect(
             getPreviousProductsFromCache(
-                CategoryProductsQueryDocumentApi,
+                CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnumApi.PriorityApi,
+                ProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,

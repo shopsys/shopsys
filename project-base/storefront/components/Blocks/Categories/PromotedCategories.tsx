@@ -1,9 +1,9 @@
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
-import { usePromotedCategoriesQueryApi } from 'graphql/generated';
+import { usePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 
 export const PromotedCategories: FC = () => {
-    const [{ data: promotedCategoriesData, fetching }] = usePromotedCategoriesQueryApi();
+    const [{ data: promotedCategoriesData, fetching }] = usePromotedCategoriesQuery();
 
     if (fetching) {
         return <SkeletonModulePromotedCategories />;

@@ -1,11 +1,12 @@
 import { PlayIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
-import { VideoTokenFragmentApi, ImageFragmentApi } from 'graphql/generated';
+import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ModalGalleryCarouselProps = {
-    items: (VideoTokenFragmentApi | ImageFragmentApi)[];
+    items: (VideoTokenFragment | ImageFragment)[];
     itemsRefs: RefObject<HTMLLIElement>[];
     selectedIndex: number;
     galleryName: string;

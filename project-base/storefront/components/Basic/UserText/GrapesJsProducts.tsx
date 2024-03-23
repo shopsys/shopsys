@@ -1,13 +1,13 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
-import { ProductsByCatnumsApi } from 'graphql/generated';
+import { ProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 
 type GrapesJsProps = {
     rawProductPart: string;
-    allFetchedProducts?: ProductsByCatnumsApi | undefined;
+    allFetchedProducts?: ProductsByCatnums | undefined;
     fetching: boolean;
 };
 

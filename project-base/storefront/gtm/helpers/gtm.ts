@@ -2,13 +2,11 @@ import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType } from './mappers';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { SHA256 } from 'crypto-js';
-import {
-    BlogArticleDetailFragmentApi,
-    BrandDetailFragmentApi,
-    BreadcrumbFragmentApi,
-    CartFragmentApi,
-    CategoryDetailFragmentApi,
-} from 'graphql/generated';
+import { BlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
+import { BrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import {
     GtmConsent,
     GtmEventType,
@@ -61,7 +59,7 @@ export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartL
 };
 
 export const getGtmMappedCart = (
-    cart: CartFragmentApi,
+    cart: CartFragment,
     promoCode: string | null,
     isUserLoggedIn: boolean,
     domain: DomainConfigType,
@@ -147,7 +145,7 @@ export const getGtmPageInfoTypeForFriendlyUrl = (
 
 const getPageInfoForCategoryDetailPage = (
     defaultPageInfo: GtmPageInfoInterface,
-    categoryDetailData: CategoryDetailFragmentApi,
+    categoryDetailData: CategoryDetailFragment,
 ): GtmCategoryDetailPageInfoType => ({
     ...defaultPageInfo,
     type: getCategoryOrSeoCategoryGtmPageType(categoryDetailData.originalCategorySlug),
@@ -157,7 +155,7 @@ const getPageInfoForCategoryDetailPage = (
 
 const getPageInfoForBlogArticleDetailPage = (
     defaultPageInfo: GtmPageInfoType,
-    blogArticleDetailData: BlogArticleDetailFragmentApi,
+    blogArticleDetailData: BlogArticleDetailFragment,
 ): GtmBlogArticleDetailPageInfoType => ({
     ...defaultPageInfo,
     type: GtmPageType.blog_article_detail,
@@ -166,7 +164,7 @@ const getPageInfoForBlogArticleDetailPage = (
 
 const getPageInfoForBrandDetailPage = (
     defaultPageInfo: GtmPageInfoType,
-    brandDetailData: BrandDetailFragmentApi,
+    brandDetailData: BrandDetailFragment,
 ): GtmBrandDetailPageInfoType => ({
     ...defaultPageInfo,
     type: GtmPageType.brand_detail,
@@ -175,7 +173,7 @@ const getPageInfoForBrandDetailPage = (
 
 export const getGtmPageInfoType = (
     pageType: GtmPageType,
-    breadcrumbs?: BreadcrumbFragmentApi[],
+    breadcrumbs?: BreadcrumbFragment[],
 ): GtmPageInfoInterface => ({
     type: pageType,
     pageId: getRandomPageId(),

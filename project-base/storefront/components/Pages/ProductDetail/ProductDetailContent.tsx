@@ -11,7 +11,7 @@ import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/Pr
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedHelpers';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ProductDetailFragmentApi } from 'graphql/generated';
+import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
@@ -28,7 +28,7 @@ const ProductComparePopup = dynamic(() =>
 );
 
 type ProductDetailContentProps = {
-    product: ProductDetailFragmentApi;
+    product: ProductDetailFragment;
     fetching: boolean;
 };
 

@@ -11,5 +11,5 @@
         "incremental": true,
         "esModuleInterop": true
     },
-    "include": ["**/*.ts", "**/*.cy.ts", "../../graphql/generated/index.tsx"]
+    "include": ["**/*.ts", "**/*.cy.ts", "../../graphql/types.ts", "../../graphql/**/*.generated.*"]
 }

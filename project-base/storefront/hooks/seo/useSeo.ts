@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSeoPageQueryApi, useSettingsQueryApi } from 'graphql/generated';
+import { useSeoPageQuery } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { CanonicalQueryParameters, generateCanonicalUrl } from 'helpers/seo/generateCanonicalUrl';
 import { useRouter } from 'next/router';
@@ -19,8 +20,8 @@ const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseS
         return extractSeoPageSlugFromUrl(router.asPath, url);
     }, [router.asPath, url]);
 
-    const [{ data: settingsData }] = useSettingsQueryApi();
-    const [{ data: seoPageData }] = useSeoPageQueryApi({
+    const [{ data: settingsData }] = useSettingsQuery();
+    const [{ data: seoPageData }] = useSeoPageQuery({
         variables: {
             pageSlug: pageSlug!,
         },

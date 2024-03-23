@@ -2,7 +2,10 @@ import { SkeletonPagePersonalDataOverview } from 'components/Blocks/Skeleton/Ske
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
-import { PersonalDataDetailQueryVariablesApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
+import {
+    usePersonalDataDetailQuery,
+    PersonalDataDetailQueryVariables,
+} from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -15,7 +18,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     const { query } = useRouter();
     const hash = getStringFromUrlQuery(query.hash);
 
-    const [{ data, fetching }] = usePersonalDataDetailQueryApi({ variables: { hash } });
+    const [{ data, fetching }] = usePersonalDataDetailQuery({ variables: { hash } });
 
     const content = data ? (
         <PersonalDataDetailContent data={data} />
@@ -31,7 +34,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps<PersonalDataDetailQueryVariablesApi>({
+            initServerSideProps<PersonalDataDetailQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,

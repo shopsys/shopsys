@@ -1,18 +1,19 @@
 import { Variables } from '@urql/exchange-graphcache';
 import { DocumentNode } from 'graphql';
+import { AdvertsQueryDocument } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import {
-    AdvertsQueryDocumentApi,
-    ArticlePlacementTypeEnumApi,
-    ArticlesQueryDocumentApi,
-    ArticlesQueryVariablesApi,
-    CurrentCustomerUserQueryDocumentApi,
-    NavigationQueryDocumentApi,
-    NotificationBarsDocumentApi,
-    SeoPageQueryDocumentApi,
-    SeoPageQueryVariablesApi,
-    SettingsQueryDocumentApi,
-    SettingsQueryVariablesApi,
-} from 'graphql/generated';
+    ArticlesQueryVariables,
+    ArticlesQueryDocument,
+} from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
+import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import { NavigationQueryDocument } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { NotificationBarsDocument } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
+import { SeoPageQueryVariables, SeoPageQueryDocument } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import {
+    SettingsQueryVariables,
+    SettingsQueryDocument,
+} from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { ArticlePlacementTypeEnum } from 'graphql/types';
 import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
 import { getCookiesStore } from 'helpers/cookies/cookiesStoreUtils';
@@ -80,29 +81,29 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 
     const prefetchQueries: QueriesArray<
-        ArticlesQueryVariablesApi | SettingsQueryVariablesApi | SeoPageQueryVariablesApi | VariablesType
+        ArticlesQueryVariables | SettingsQueryVariables | SeoPageQueryVariables | VariablesType
     > = [
-        { query: NotificationBarsDocumentApi },
-        { query: NavigationQueryDocumentApi },
+        { query: NotificationBarsDocument },
+        { query: NavigationQueryDocument },
         {
-            query: ArticlesQueryDocumentApi,
+            query: ArticlesQueryDocument,
             variables: {
                 placement: [
-                    ArticlePlacementTypeEnumApi.Footer1Api,
-                    ArticlePlacementTypeEnumApi.Footer2Api,
-                    ArticlePlacementTypeEnumApi.Footer3Api,
-                    ArticlePlacementTypeEnumApi.Footer4Api,
+                    ArticlePlacementTypeEnum.Footer1,
+                    ArticlePlacementTypeEnum.Footer2,
+                    ArticlePlacementTypeEnum.Footer3,
+                    ArticlePlacementTypeEnum.Footer4,
                 ],
                 first: 100,
             },
         },
-        { query: AdvertsQueryDocumentApi },
-        { query: CurrentCustomerUserQueryDocumentApi },
-        { query: SettingsQueryDocumentApi },
+        { query: AdvertsQueryDocument },
+        { query: CurrentCustomerUserQueryDocument },
+        { query: SettingsQueryDocument },
         ...(seoPageSlug
             ? [
                   {
-                      query: SeoPageQueryDocumentApi,
+                      query: SeoPageQueryDocument,
                       variables: {
                           pageSlug: seoPageSlug,
                       },

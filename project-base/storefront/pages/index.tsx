@@ -7,13 +7,13 @@ import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import {
-    BlogArticlesQueryDocumentApi,
-    BlogArticlesQueryVariablesApi,
-    BlogUrlQueryDocumentApi,
-    PromotedCategoriesQueryDocumentApi,
-    PromotedProductsQueryDocumentApi,
-    SliderItemsQueryDocumentApi,
-} from 'graphql/generated';
+    BlogArticlesQueryDocument,
+    BlogArticlesQueryVariables,
+} from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
+import { BlogUrlQueryDocument } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
+import { PromotedCategoriesQueryDocument } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
+import { PromotedProductsQueryDocument } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
+import { SliderItemsQueryDocument } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -59,16 +59,16 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps<BlogArticlesQueryVariablesApi>({
+            initServerSideProps<BlogArticlesQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,
                 prefetchedQueries: [
-                    { query: PromotedCategoriesQueryDocumentApi },
-                    { query: SliderItemsQueryDocumentApi },
-                    { query: PromotedProductsQueryDocumentApi },
-                    { query: BlogArticlesQueryDocumentApi, variables: BLOG_PREVIEW_VARIABLES },
-                    { query: BlogUrlQueryDocumentApi },
+                    { query: PromotedCategoriesQueryDocument },
+                    { query: SliderItemsQueryDocument },
+                    { query: PromotedProductsQueryDocument },
+                    { query: BlogArticlesQueryDocument, variables: BLOG_PREVIEW_VARIABLES },
+                    { query: BlogUrlQueryDocument },
                 ],
                 t,
             }),

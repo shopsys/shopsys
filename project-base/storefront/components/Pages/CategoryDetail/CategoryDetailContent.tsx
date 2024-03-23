@@ -7,7 +7,7 @@ import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { CategoryDetailFragmentApi } from 'graphql/generated';
+import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,7 +18,7 @@ import { twJoin } from 'tailwind-merge';
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type CategoryDetailContentProps = {
-    category: CategoryDetailFragmentApi;
+    category: CategoryDetailFragment;
 };
 
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {

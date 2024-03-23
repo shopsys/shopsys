@@ -1,12 +1,12 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
-    ArticleDetailQueryApi,
-    ArticleDetailQueryDocumentApi,
-    ArticleDetailQueryVariablesApi,
-    ProductsByCatnumsDocumentApi,
-    useArticleDetailQueryApi,
-} from 'graphql/generated';
+    useArticleDetailQuery,
+    ArticleDetailQuery,
+    ArticleDetailQueryVariables,
+    ArticleDetailQueryDocument,
+} from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
+import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -22,7 +22,7 @@ import { createClient } from 'urql/createClient';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
-    const [{ data: articleDetailData, fetching }] = useArticleDetailQueryApi({
+    const [{ data: articleDetailData, fetching }] = useArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -50,12 +50,11 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const articleResponse: OperationResult<ArticleDetailQueryApi, ArticleDetailQueryVariablesApi> =
-                    await client!
-                        .query(ArticleDetailQueryDocumentApi, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
+                const articleResponse: OperationResult<ArticleDetailQuery, ArticleDetailQueryVariables> = await client!
+                    .query(ArticleDetailQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
                 const article =
                     articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
@@ -63,7 +62,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const parsedCatnums = parseCatnums(article?.text ?? '');
 
                 await client!
-                    .query(ProductsByCatnumsDocumentApi, {
+                    .query(ProductsByCatnumsDocument, {
                         catnums: parsedCatnums,
                     })
                     .toPromise();

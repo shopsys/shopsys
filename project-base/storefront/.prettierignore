@@ -9,7 +9,8 @@ __snapshots__/
 __tests__/
 pnpm-lock.yaml
 .pnpm-store/
-generated/
+graphql/types.ts
+*.generated.*
 */dist/
 pages/_error.js
 schema.graphql.json

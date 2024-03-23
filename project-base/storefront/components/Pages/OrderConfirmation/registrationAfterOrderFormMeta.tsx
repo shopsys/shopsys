@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
-import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
+import { useTermsAndConditionsArticleUrlQuery } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -52,7 +52,7 @@ export const useRegistrationAfterOrderFormMeta = (
     formProviderMethods: UseFormReturn<RegistrationAfterOrderFormType>,
 ): RegistrationAfterOrderFormMetaType => {
     const { t } = useTranslation();
-    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQueryApi();
+    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQuery();
     const termsAndConditionUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
 
     const formMeta = useMemo(

@@ -1,6 +1,6 @@
 import { GrapesJsProducts } from './GrapesJsProducts';
 import { UserText } from './UserText';
-import { useProductsByCatnumsApi } from 'graphql/generated';
+import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { memo } from 'react';
 
@@ -10,7 +10,7 @@ type GrapesJsParserProps = {
 
 export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
     const catnums = parseCatnums(text);
-    const [{ data: allProductsResponse, fetching }] = useProductsByCatnumsApi({ variables: { catnums } });
+    const [{ data: allProductsResponse, fetching }] = useProductsByCatnums({ variables: { catnums } });
 
     const dividedParts = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
 

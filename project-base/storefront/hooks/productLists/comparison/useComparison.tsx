@@ -1,4 +1,4 @@
-import { ProductListTypeEnumApi } from 'graphql/generated';
+import { ProductListTypeEnum } from 'graphql/types';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useProductList } from 'hooks/productLists/useProductList';
 import { useUpdateProductListUuid } from 'hooks/productLists/useUpdateProductListUuid';
@@ -7,11 +7,11 @@ import { useState } from 'react';
 
 export const useComparison = () => {
     const { t } = useTranslation();
-    const updateComparisonUuid = useUpdateProductListUuid(ProductListTypeEnumApi.ComparisonApi);
+    const updateComparisonUuid = useUpdateProductListUuid(ProductListTypeEnum.Comparison);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
 
     const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
-        ProductListTypeEnumApi.ComparisonApi,
+        ProductListTypeEnum.Comparison,
 
         {
             addProductError: () => showErrorMessage(t('Unable to add product to comparison.')),

@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { describe, expect, test, vi } from 'vitest';
@@ -21,7 +21,7 @@ vi.mock('store/useSessionStore', () => ({
         return selector({
             defaultProductFiltersMap: {
                 flags: new Set(),
-                sort: ProductOrderingModeEnumApi.PriorityApi,
+                sort: ProductOrderingModeEnum.Priority,
                 parameters: new Map(),
             },
             originalCategorySlug: null,

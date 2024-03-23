@@ -1,11 +1,11 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { getEmptyDefaultProductFiltersMap } from 'helpers/filterOptions/seoCategories';
 import { StateCreator } from 'zustand';
 
 export type DefaultProductFiltersMapType = {
     flags: Set<string>;
     brands: Set<string>;
-    sort: ProductOrderingModeEnumApi;
+    sort: ProductOrderingModeEnum;
     parameters: Map<string, Set<string>>;
 };
 

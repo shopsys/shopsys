@@ -1,7 +1,7 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
-import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
+import { useCookiesArticleUrlQuery } from 'graphql/requests/articles/queries/CookiesArticleUrlQuery.generated';
 import { onGtmConsentUpdateEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmConsentInfo } from 'gtm/helpers/gtm';
 import Trans from 'next-translate/Trans';
@@ -18,7 +18,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const { t } = useTranslation();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
-    const [{ data: cookiesArticleUrlData }] = useCookiesArticleUrlQueryApi();
+    const [{ data: cookiesArticleUrlData }] = useCookiesArticleUrlQuery();
     const cookiesArticleUrl = cookiesArticleUrlData?.cookiesArticle?.slug;
     const userConsent = usePersistStore((store) => store.userConsent);
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);

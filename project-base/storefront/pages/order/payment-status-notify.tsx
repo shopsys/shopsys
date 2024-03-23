@@ -1,11 +1,11 @@
-import { useUpdatePaymentStatusMutationApi } from 'graphql/generated';
+import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
-    const [, updatePaymentStatus] = useUpdatePaymentStatusMutationApi();
+    const [, updatePaymentStatus] = useUpdatePaymentStatusMutation();
     const router = useRouter();
     const { orderIdentifier } = router.query;
 

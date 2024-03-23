@@ -1,19 +1,20 @@
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
-import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useMemo } from 'react';
 
 type StoreSelectProps = {
     selectedStoreUuid: string;
-    transport: TransportWithAvailablePaymentsAndStoresFragmentApi;
+    transport: TransportWithAvailablePaymentsAndStoresFragment;
     onSelectStoreCallback: (newStoreUuid: string | null) => void;
 };
 
 export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport, onSelectStoreCallback }) => {
     const mappedStores = useMemo(
-        () => mapConnectionEdges<ListedStoreFragmentApi>(transport.stores?.edges),
+        () => mapConnectionEdges<ListedStoreFragment>(transport.stores?.edges),
         [transport.stores?.edges],
     );
 

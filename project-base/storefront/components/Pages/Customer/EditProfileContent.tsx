@@ -13,11 +13,9 @@ import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/customerChangeProfileFormMeta';
-import {
-    useChangePasswordMutationApi,
-    useChangePersonalDataMutationApi,
-    useCountriesQueryApi,
-} from 'graphql/generated';
+import { useCountriesQuery } from 'graphql/requests/countries/queries/CountriesQuery.generated';
+import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
+import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
@@ -39,7 +37,7 @@ type EditProfileContentProps = {
 
 export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustomerUser }) => {
     const { t } = useTranslation();
-    const [, customerEditProfile] = useChangePersonalDataMutationApi();
+    const [, customerEditProfile] = useChangePersonalDataMutation();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
@@ -50,12 +48,12 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const [{ data: countriesData }] = useCountriesQueryApi();
+    const [{ data: countriesData }] = useCountriesQuery();
     const countriesAsSelectOptions = useMemo(
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],
     );
-    const [, changePassword] = useChangePasswordMutationApi();
+    const [, changePassword] = useChangePasswordMutation();
 
     const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (
         data,

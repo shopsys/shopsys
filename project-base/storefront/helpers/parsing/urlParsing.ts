@@ -1,5 +1,5 @@
 import { getStringWithoutLeadingSlash } from './stringWIthoutSlash';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { UrlQueries } from 'hooks/useQueryParams';
 import { ParsedUrlQuery } from 'querystring';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
@@ -88,10 +88,10 @@ export const getUrlQueriesWithoutFalsyValues = (queries: UrlQueries) => {
 
 export const getProductListSortFromUrlQuery = (
     sortQuery: string | string[] | undefined,
-): ProductOrderingModeEnumApi | null => {
+): ProductOrderingModeEnum | null => {
     const sortQueryAsString = getStringFromUrlQuery(sortQuery);
 
-    return Object.values(ProductOrderingModeEnumApi).some((sort) => sort === sortQueryAsString)
-        ? (sortQueryAsString as ProductOrderingModeEnumApi)
+    return Object.values(ProductOrderingModeEnum).some((sort) => sort === sortQueryAsString)
+        ? (sortQueryAsString as ProductOrderingModeEnum)
         : null;
 };

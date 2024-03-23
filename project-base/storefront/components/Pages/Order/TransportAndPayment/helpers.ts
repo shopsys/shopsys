@@ -1,18 +1,20 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { LastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
 import {
-    LastOrderFragmentApi,
-    LastOrderQueryApi,
-    LastOrderQueryDocumentApi,
-    LastOrderQueryVariablesApi,
-    ListedStoreFragmentApi,
-    Maybe,
-    SimplePaymentFragmentApi,
-    StoreQueryApi,
-    StoreQueryDocumentApi,
-    StoreQueryVariablesApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-} from 'graphql/generated';
+    LastOrderQuery,
+    LastOrderQueryVariables,
+    LastOrderQueryDocument,
+} from 'graphql/requests/orders/queries/LastOrderQuery.generated';
+import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import {
+    StoreQuery,
+    StoreQueryVariables,
+    StoreQueryDocument,
+} from 'graphql/requests/stores/queries/StoreQuery.generated';
+import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { Maybe } from 'graphql/types';
 import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
@@ -42,15 +44,15 @@ export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentHand
 };
 
 export const useTransportChangeInSelect = (
-    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[] | undefined,
-    lastOrderPickupPlace: ListedStoreFragmentApi | null,
+    transports: TransportWithAvailablePaymentsAndStoresFragment[] | undefined,
+    lastOrderPickupPlace: ListedStoreFragment | null,
     changeTransportHandler: ChangeTransportHandler,
     changePaymentHandler: ChangePaymentHandler,
 ) => {
     const { defaultLocale } = useDomainConfig();
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState(lastOrderPickupPlace);
     const [preSelectedTransport, setPreselectedTransport] =
-        useState<TransportWithAvailablePaymentsAndStoresFragmentApi | null>(null);
+        useState<TransportWithAvailablePaymentsAndStoresFragment | null>(null);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const { transport: currentTransport, pickupPlace: currentPickupPlace } = useCurrentCart();
@@ -93,7 +95,7 @@ export const useTransportChangeInSelect = (
         }
     };
 
-    const openPacketeryPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
+    const openPacketeryPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragment) => {
         if (!currentPickupPlace) {
             const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
 
@@ -116,7 +118,7 @@ export const useTransportChangeInSelect = (
         }
     };
 
-    const openPersonalPickupPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
+    const openPersonalPickupPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragment) => {
         if (newTransport.transportType.code === 'packetery') {
             openPacketeryPopup(newTransport);
 
@@ -127,7 +129,7 @@ export const useTransportChangeInSelect = (
         setPreselectedTransport(newTransport);
     };
 
-    const changePickupPlace = (selectedPickupPlace: ListedStoreFragmentApi | null) => {
+    const changePickupPlace = (selectedPickupPlace: ListedStoreFragment | null) => {
         if (selectedPickupPlace && preSelectedTransport) {
             changeTransportHandler(preSelectedTransport.uuid, selectedPickupPlace);
         } else {
@@ -153,11 +155,11 @@ export const useTransportChangeInSelect = (
 };
 
 export const getLastOrderPickupPlace = (
-    lastOrder: LastOrderFragmentApi,
+    lastOrder: LastOrderFragment,
     lastOrderPickupPlaceIdentifier: string,
-    lastOrderPickupPlaceFromApi: ListedStoreFragmentApi | undefined | null,
-    packeteryPickupPoint: ListedStoreFragmentApi | null,
-): ListedStoreFragmentApi | null => {
+    lastOrderPickupPlaceFromApi: ListedStoreFragment | undefined | null,
+    packeteryPickupPoint: ListedStoreFragment | null,
+): ListedStoreFragment | null => {
     if (packeteryPickupPoint?.identifier === lastOrderPickupPlaceIdentifier) {
         return packeteryPickupPoint;
     }
@@ -188,9 +190,9 @@ type TransportAndPaymentErrorsType = {
 };
 
 export const getTransportAndPaymentValidationMessages = (
-    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi>,
-    pickupPlace: Maybe<ListedStoreFragmentApi>,
-    payment: Maybe<SimplePaymentFragmentApi>,
+    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragment>,
+    pickupPlace: Maybe<ListedStoreFragment>,
+    payment: Maybe<SimplePaymentFragment>,
     paymentGoPayBankSwift: Maybe<string>,
     t: Translate,
 ) => {
@@ -232,9 +234,9 @@ export const getTransportAndPaymentValidationMessages = (
 };
 
 export const getPickupPlaceDetail = (
-    selectedTransport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi>,
-    selectedPickupPlace: ListedStoreFragmentApi | null,
-    transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    selectedTransport: Maybe<TransportWithAvailablePaymentsAndStoresFragment>,
+    selectedPickupPlace: ListedStoreFragment | null,
+    transportItem: TransportWithAvailablePaymentsAndStoresFragment,
 ) =>
     selectedTransport?.uuid === transportItem.uuid &&
     transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === selectedPickupPlace?.identifier)
@@ -244,17 +246,17 @@ export const getPickupPlaceDetail = (
 export const useLoadTransportAndPaymentFromLastOrder = (
     changeTransportInCart: ChangeTransportHandler,
     changePaymentInCart: ChangePaymentHandler,
-): [boolean, ListedStoreFragmentApi | null] => {
+): [boolean, ListedStoreFragment | null] => {
     const client = useClient();
     const isUserLoggedIn = !!useCurrentCustomerData();
     const { transport: currentTransport, payment: currentPayment } = useCurrentCart();
 
-    const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<ListedStoreFragmentApi | null>(null);
+    const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<ListedStoreFragment | null>(null);
     const [isLoadingTransportAndPaymentFromLastOrder, setIsLoadingTransportAndPaymentFromLastOrder] = useState(false);
 
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
-    const loadLastOrderPickupPlace = async (lastOrder: LastOrderQueryApi | undefined) => {
+    const loadLastOrderPickupPlace = async (lastOrder: LastOrderQuery | undefined) => {
         if (!lastOrder?.lastOrder?.pickupPlaceIdentifier) {
             return null;
         }
@@ -263,7 +265,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         if (lastOrder.lastOrder.transport.transportType.code !== 'packetery') {
             lastOrderPickupPlaceDataFromApi = (
                 await client
-                    .query<StoreQueryApi, StoreQueryVariablesApi>(StoreQueryDocumentApi, {
+                    .query<StoreQuery, StoreQueryVariables>(StoreQueryDocument, {
                         uuid: lastOrder.lastOrder.pickupPlaceIdentifier,
                     })
                     .toPromise()
@@ -289,9 +291,9 @@ export const useLoadTransportAndPaymentFromLastOrder = (
 
         const { data: lastOrderData } = await client
             .query<
-                LastOrderQueryApi,
-                LastOrderQueryVariablesApi
-            >(LastOrderQueryDocumentApi, {}, { requestPolicy: 'network-only' })
+                LastOrderQuery,
+                LastOrderQueryVariables
+            >(LastOrderQueryDocument, {}, { requestPolicy: 'network-only' })
             .toPromise();
 
         const lastOrderPickupPlace = await loadLastOrderPickupPlace(lastOrderData);

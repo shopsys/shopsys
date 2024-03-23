@@ -1,6 +1,7 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
-import { BreadcrumbFragmentApi, StoresQueryDocumentApi, useStoresQueryApi } from 'graphql/generated';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { useStoresQuery, StoresQueryDocument } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -10,8 +11,8 @@ import useTranslation from 'next-translate/useTranslation';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const [{ data: storesData, fetching }] = useStoresQueryApi();
-    const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
+    const [{ data: storesData, fetching }] = useStoresQuery();
+    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.stores, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -28,7 +29,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
         async (context) =>
             initServerSideProps({
                 context,
-                prefetchedQueries: [{ query: StoresQueryDocumentApi }],
+                prefetchedQueries: [{ query: StoresQueryDocument }],
                 redisClient,
                 domainConfig,
                 t,

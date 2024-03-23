@@ -7,7 +7,7 @@ import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/Skeleto
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { ListedOrderFragmentApi } from 'graphql/generated';
+import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
@@ -23,7 +23,7 @@ const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((componen
 
 type OrdersContentProps = {
     isLoading: boolean;
-    orders: ListedOrderFragmentApi[] | undefined;
+    orders: ListedOrderFragment[] | undefined;
     totalCount: number | undefined;
 };
 

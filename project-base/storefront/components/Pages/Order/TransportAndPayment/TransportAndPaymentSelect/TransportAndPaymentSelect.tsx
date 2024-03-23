@@ -12,20 +12,18 @@ import {
 } from 'components/Pages/Order/TransportAndPayment/helpers';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import {
-    ListedStoreFragmentApi,
-    SimplePaymentFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useGoPaySwiftsQueryApi,
-} from 'graphql/generated';
+import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 
 type TransportAndPaymentSelectProps = {
-    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[];
-    lastOrderPickupPlace: ListedStoreFragmentApi | null;
+    transports: TransportWithAvailablePaymentsAndStoresFragment[];
+    lastOrderPickupPlace: ListedStoreFragment | null;
     changeTransportInCart: ChangeTransportHandler;
     changePaymentInCart: ChangePaymentHandler;
     isTransportSelectionLoading: boolean;
@@ -41,7 +39,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const { t } = useTranslation();
     const { currencyCode } = useDomainConfig();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
+    const [getGoPaySwiftsResult] = useGoPaySwiftsQuery({ variables: { currencyCode } });
     const { changePayment, changeGoPaySwift, resetPaymentAndGoPayBankSwift } =
         usePaymentChangeInSelect(changePaymentInCart);
     const {
@@ -53,7 +51,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     } = useTransportChangeInSelect(transports, lastOrderPickupPlace, changeTransportInCart, changePaymentInCart);
 
     const renderTransportListItem = (
-        transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi,
+        transportItem: TransportWithAvailablePaymentsAndStoresFragment,
         isActive: boolean,
     ) => (
         <TransportAndPaymentListItem key={transportItem.uuid} isActive={isActive}>
@@ -77,7 +75,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         </TransportAndPaymentListItem>
     );
 
-    const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => {
+    const renderPaymentListItem = (paymentItem: SimplePaymentFragment, isActive: boolean) => {
         const isGoPaySwiftPayment =
             paymentItem.uuid === payment?.uuid &&
             payment.type === 'goPay' &&

@@ -1,6 +1,6 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
-import { useProductsByCatnumsApi } from 'graphql/generated';
+import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmProductListNameType } from 'gtm/types/enums';
 
 type LastVisitedProductsProps = {
@@ -8,7 +8,7 @@ type LastVisitedProductsProps = {
 };
 
 export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ productsCatnums }) => {
-    const [{ data: result, fetching }] = useProductsByCatnumsApi({
+    const [{ data: result, fetching }] = useProductsByCatnums({
         variables: { catnums: productsCatnums },
     });
 

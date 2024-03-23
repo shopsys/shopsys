@@ -3,7 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
-import { CartItemFragmentApi } from 'graphql/generated';
+import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -11,7 +11,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useRef } from 'react';
 
 type CartListItemProps = {
-    item: CartItemFragmentApi;
+    item: CartItemFragment;
     listIndex: number;
     onItemRemove: MouseEventHandler<HTMLButtonElement>;
     onItemQuantityChange: AddToCartAction;

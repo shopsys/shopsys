@@ -1,11 +1,12 @@
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
-import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
+import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { AvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailAvailabilityProps = {
-    product: ProductDetailFragmentApi;
+    product: ProductDetailFragment;
     scrollTarget: RefObject<HTMLUListElement>;
 };
 
@@ -23,10 +24,8 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
             <div
                 className={twJoin(
                     'flex cursor-pointer items-center font-bold no-underline hover:no-underline',
-                    product.availability.status === AvailabilityStatusEnumApi.InStockApi &&
-                        'text-inStock hover:text-inStock',
-                    product.availability.status === AvailabilityStatusEnumApi.OutOfStockApi &&
-                        'text-red hover:text-red',
+                    product.availability.status === AvailabilityStatusEnum.InStock && 'text-inStock hover:text-inStock',
+                    product.availability.status === AvailabilityStatusEnum.OutOfStock && 'text-red hover:text-red',
                 )}
                 onClick={scrollOnClickHandler}
             >

@@ -3,7 +3,9 @@ import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
-import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
+import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
+import { useBlogUrlQuery } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -12,18 +14,18 @@ export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 
 export const BlogPreview: FC = () => {
     const { t } = useTranslation();
-    const [{ data: blogPreviewData, fetching: fetchingArticles }] = useBlogArticlesQueryApi({
+    const [{ data: blogPreviewData, fetching: fetchingArticles }] = useBlogArticlesQuery({
         variables: BLOG_PREVIEW_VARIABLES,
     });
-    const [{ data: blogUrlData, fetching: fetchingBlogUrl }] = useBlogUrlQueryApi();
+    const [{ data: blogUrlData, fetching: fetchingBlogUrl }] = useBlogUrlQuery();
     const blogUrl = blogUrlData?.blogCategories[0].link;
 
     const blogMainItems = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
+        () => mapConnectionEdges<ListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
         [blogPreviewData?.blogArticles.edges],
     );
     const blogSideItems = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(2)),
+        () => mapConnectionEdges<ListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(2)),
         [blogPreviewData?.blogArticles.edges],
     );
 

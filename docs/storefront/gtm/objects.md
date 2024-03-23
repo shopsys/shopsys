@@ -25,7 +25,7 @@ export type GtmPageInfoInterface<
 > = ExtendedPageProperties & {
   type: PageType; // type of the page, can be GtmPageType.category_detail or GtmPageType.seo_category_detail, GtmPageType.blog_article_detail or GtmPageType.brand_detail
   pageId: string; // unique identifier of the page
-  breadcrumbs: BreadcrumbFragmentApi[]; // breadcrumbs to the current page
+  breadcrumbs: BreadcrumbFragment[]; // breadcrumbs to the current page
 };
 ```
 
