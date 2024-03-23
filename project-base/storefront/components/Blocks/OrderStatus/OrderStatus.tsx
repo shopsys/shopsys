@@ -1,9 +1,10 @@
-import { ListedOrderFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
+import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
+import { OrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { PaymentTypeEnum } from 'types/payment';
 
 type OrderStatusProps = {
-    order: ListedOrderFragmentApi | OrderDetailFragmentApi;
+    order: ListedOrderFragment | OrderDetailFragment;
 };
 
 export const OrderStatus: FC<OrderStatusProps> = ({ order }) => {

@@ -1,24 +1,22 @@
 import { useUpdateProductListUuid } from './useUpdateProductListUuid';
-import {
-    ProductListFragmentApi,
-    ProductListTypeEnumApi,
-    useAddProductToListMutationApi,
-    useRemoveProductListMutationApi,
-    useProductListQueryApi,
-    useRemoveProductFromListMutationApi,
-} from 'graphql/generated';
+import { ProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { useAddProductToListMutation } from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
+import { useRemoveProductFromListMutation } from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
+import { useRemoveProductListMutation } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
+import { useProductListQuery } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+import { ProductListTypeEnum } from 'graphql/types';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useProductList = (
-    productListType: ProductListTypeEnumApi,
+    productListType: ProductListTypeEnum,
     callbacks: {
         removeSuccess: () => void;
         removeError: () => void;
-        addProductSuccess: (result: ProductListFragmentApi | null | undefined) => void;
+        addProductSuccess: (result: ProductListFragment | null | undefined) => void;
         addProductError: () => void;
-        removeProductSuccess: (result: ProductListFragmentApi | null | undefined) => void;
+        removeProductSuccess: (result: ProductListFragment | null | undefined) => void;
         removeProductError: () => void;
     },
 ) => {
@@ -27,11 +25,11 @@ export const useProductList = (
     const productListUuid = productListUuids[productListType] ?? null;
     const isUserLoggedIn = useIsUserLoggedIn();
 
-    const [, addProductToListMutation] = useAddProductToListMutationApi();
-    const [, removeProductFromListMutation] = useRemoveProductFromListMutationApi();
-    const [, removeListMutation] = useRemoveProductListMutationApi();
+    const [, addProductToListMutation] = useAddProductToListMutation();
+    const [, removeProductFromListMutation] = useRemoveProductFromListMutation();
+    const [, removeListMutation] = useRemoveProductListMutation();
 
-    const [{ data: productListData, fetching }] = useProductListQueryApi({
+    const [{ data: productListData, fetching }] = useProductListQuery({
         variables: {
             input: {
                 type: productListType,

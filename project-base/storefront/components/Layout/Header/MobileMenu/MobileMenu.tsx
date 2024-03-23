@@ -1,6 +1,6 @@
 import { MobileMenuContent } from './MobileMenuContent';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
-import { useNavigationQueryApi } from 'graphql/generated';
+import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -12,7 +12,7 @@ export type MenuItem = {
 };
 
 export const MobileMenu: FC = () => {
-    const [{ data: navigationData }] = useNavigationQueryApi();
+    const [{ data: navigationData }] = useNavigationQuery();
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
     useEffect(() => {

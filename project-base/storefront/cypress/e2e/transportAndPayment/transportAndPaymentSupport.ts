@@ -1,7 +1,5 @@
-import {
-    OpeningHoursOfDayApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-} from '../../../graphql/generated/index';
+import { TransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { OpeningHoursOfDay } from '../../../graphql/types';
 import { transport } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
@@ -25,27 +23,25 @@ export const changeSelectionOfPaymentByName = (paymentName: string) => {
 export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {
     cy.intercept('POST', '/graphql/TransportsQuery', (req) => {
         req.reply((response) => {
-            response?.body?.data?.transports?.forEach(
-                (transport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-                    transport?.stores?.edges?.forEach((edge) => {
-                        if (edge?.node?.openingHours) {
-                            edge.node.openingHours.isOpen = true;
-                            edge.node.openingHours.dayOfWeek = dayOfWeek;
-                            edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
-                        }
-                    });
-                },
-            );
+            response?.body?.data?.transports?.forEach((transport: TransportWithAvailablePaymentsAndStoresFragment) => {
+                transport?.stores?.edges?.forEach((edge) => {
+                    if (edge?.node?.openingHours) {
+                        edge.node.openingHours.isOpen = true;
+                        edge.node.openingHours.dayOfWeek = dayOfWeek;
+                        edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
+                    }
+                });
+            });
         });
     });
 };
 
-export const changeDayOfWeekInChangeTransportMutationApiResponse = (dayOfWeek: number) => {
+export const changeDayOfWeekInChangeTransportMutationResponse = (dayOfWeek: number) => {
     cy.intercept('POST', '/graphql/ChangeTransportInCartMutation', (req) => {
         req.reply((response) => {
             (
                 response?.body?.data?.ChangeTransportInCart
-                    ?.transport as TransportWithAvailablePaymentsAndStoresFragmentApi
+                    ?.transport as TransportWithAvailablePaymentsAndStoresFragment
             )?.stores?.edges?.forEach((edge) => {
                 if (edge?.node?.openingHours) {
                     edge.node.openingHours.isOpen = true;
@@ -57,7 +53,7 @@ export const changeDayOfWeekInChangeTransportMutationApiResponse = (dayOfWeek: n
     });
 };
 
-const getStaticOpeningHoursOfDays = (): OpeningHoursOfDayApi[] => [
+const getStaticOpeningHoursOfDays = (): OpeningHoursOfDay[] => [
     {
         __typename: 'OpeningHoursOfDay',
         date: '2024-02-19T00:00:00+01:00',

@@ -1,6 +1,6 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandsContent } from 'components/Pages/Brands/BrandsContent';
-import { BrandsQueryDocumentApi } from 'graphql/generated';
+import { BrandsQueryDocument } from 'graphql/requests/brands/queries/BrandsQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -24,7 +24,7 @@ const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     return initServerSideProps({
         context,
-        prefetchedQueries: [{ query: BrandsQueryDocumentApi }],
+        prefetchedQueries: [{ query: BrandsQueryDocument }],
         redisClient,
         domainConfig,
         t,

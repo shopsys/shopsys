@@ -2,11 +2,11 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    BreadcrumbFragmentApi,
-    PersonalDataPageTextQueryDocumentApi,
-    usePersonalDataPageTextQueryApi,
-} from 'graphql/generated';
+    usePersonalDataPageTextQuery,
+    PersonalDataPageTextQueryDocument,
+} from 'graphql/requests/personalData/queries/PersonalDataPageTextQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -19,10 +19,10 @@ const PersonalDataExportPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [personalDataExportUrl] = getInternationalizedStaticUrls(['/personal-data-export'], url);
-    const breadcrumbs: BreadcrumbFragmentApi[] = [
+    const breadcrumbs: BreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Personal Data Export'), slug: personalDataExportUrl },
     ];
-    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
+    const [personalDataPageTextResult] = usePersonalDataPageTextQuery();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -44,7 +44,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
         async (context) =>
             initServerSideProps({
                 context,
-                prefetchedQueries: [{ query: PersonalDataPageTextQueryDocumentApi }],
+                prefetchedQueries: [{ query: PersonalDataPageTextQueryDocument }],
                 redisClient,
                 domainConfig,
                 t,

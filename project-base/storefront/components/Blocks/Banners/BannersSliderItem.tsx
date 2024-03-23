@@ -1,8 +1,8 @@
 import { Image } from 'components/Basic/Image/Image';
-import { SliderItemFragmentApi } from 'graphql/generated';
+import { SliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 
 type BannersSliderItemProps = {
-    item: SliderItemFragmentApi;
+    item: SliderItemFragment;
     isDesktop: boolean;
 };
 

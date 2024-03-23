@@ -1,6 +1,7 @@
 import { ArrowIcon, PhoneIcon, RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
-import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
+import { useDeleteDeliveryAddressMutation } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
+import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,8 +19,8 @@ type AddressListProps = {
 
 export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deliveryAddresses }) => {
     const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
-    const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
-    const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutationApi();
+    const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutation();
+    const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutation();
     const { t } = useTranslation();
 
     const deleteItemHandler = async (deliveryAddressUuid: string | undefined) => {

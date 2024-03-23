@@ -5,7 +5,8 @@ import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { PersonalDataAccessRequestTypeEnumApi, usePersonalDataRequestMutationApi } from 'graphql/generated';
+import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
+import { PersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -26,7 +27,7 @@ type PersonalDataOverviewContentProps = {
 
 export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ contentSiteText }) => {
     const { t } = useTranslation();
-    const [, personalDataOverview] = usePersonalDataRequestMutationApi();
+    const [, personalDataOverview] = usePersonalDataRequestMutation();
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
@@ -36,7 +37,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
             blurInput();
             const personalDataOverviewResult = await personalDataOverview({
                 email: data.email,
-                type: PersonalDataAccessRequestTypeEnumApi.DisplayApi,
+                type: PersonalDataAccessRequestTypeEnum.Display,
             });
 
             if (personalDataOverviewResult.data?.RequestPersonalDataAccess !== undefined) {

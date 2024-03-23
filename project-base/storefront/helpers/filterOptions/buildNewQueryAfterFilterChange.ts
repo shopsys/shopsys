@@ -1,5 +1,5 @@
 import { DEFAULT_SORT } from 'config/constants';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -11,7 +11,7 @@ import { UrlQueries, FilterQueries } from 'hooks/useQueryParams';
 export const buildNewQueryAfterFilterChange = (
     currentQuery: UrlQueries,
     newFilter: FilterQueries,
-    newSort: ProductOrderingModeEnumApi | undefined,
+    newSort: ProductOrderingModeEnum | undefined,
 ) => {
     const isWithFilterParams =
         !!newFilter &&

@@ -7,7 +7,9 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQueryApi } from 'graphql/generated';
+import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useContactMutation } from 'graphql/requests/contact/mutations/ContactMutation.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -26,11 +28,11 @@ export const ContactContent: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
-    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
+    const [{ data }] = useSettingsQuery({ requestPolicy: 'cache-only' });
+    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const [, contact] = useContactMutationApi();
+    const [, contact] = useContactMutation();
 
     const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
         async (values) => {

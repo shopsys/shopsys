@@ -1,17 +1,15 @@
-import {
-    CartItemModificationsFragmentApi,
-    CartModificationsFragmentApi,
-    CartPaymentModificationsFragmentApi,
-    CartPromoCodeModificationsFragmentApi,
-    CartTransportModificationsFragmentApi,
-} from 'graphql/generated';
+import { CartItemModificationsFragment } from 'graphql/requests/cart/fragments/CartItemModificationsFragment.generated';
+import { CartModificationsFragment } from 'graphql/requests/cart/fragments/CartModificationsFragment.generated';
+import { CartPaymentModificationsFragment } from 'graphql/requests/cart/fragments/CartPaymentModificationsFragment.generated';
+import { CartPromoCodeModificationsFragment } from 'graphql/requests/cart/fragments/CartPromoCodeModificationsFragment.generated';
+import { CartTransportModificationsFragment } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { showInfoMessage } from 'helpers/toasts';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { Translate } from 'next-translate';
 
 export const handleCartModifications = (
-    cartModifications: CartModificationsFragmentApi,
+    cartModifications: CartModificationsFragment,
     t: Translate,
     changePaymentInCart: ChangePaymentHandler,
 ): void => {
@@ -32,7 +30,7 @@ const handleRemovedProductFromEshopModifications = (someProductWasRemovedFromEsh
 };
 
 const handleCartTransportModifications = (
-    transportModifications: CartTransportModificationsFragmentApi,
+    transportModifications: CartTransportModificationsFragment,
     t: Translate,
     changePaymentInCart: ChangePaymentHandler,
 ): void => {
@@ -51,10 +49,7 @@ const handleCartTransportModifications = (
     }
 };
 
-const handleCartPaymentModifications = (
-    paymentModifications: CartPaymentModificationsFragmentApi,
-    t: Translate,
-): void => {
+const handleCartPaymentModifications = (paymentModifications: CartPaymentModificationsFragment, t: Translate): void => {
     if (paymentModifications.paymentPriceChanged) {
         showInfoMessage(t('The price of the payment you selected has changed.'), GtmMessageOriginType.cart);
     }
@@ -63,7 +58,7 @@ const handleCartPaymentModifications = (
     }
 };
 
-const handleCartItemModifications = (itemModifications: CartItemModificationsFragmentApi, t: Translate): void => {
+const handleCartItemModifications = (itemModifications: CartItemModificationsFragment, t: Translate): void => {
     for (const cartItemWithChangedQuantity of itemModifications.cartItemsWithChangedQuantity) {
         showInfoMessage(
             t('The quantity of item {{ itemName }} has changed.', {
@@ -95,7 +90,7 @@ const handleCartItemModifications = (itemModifications: CartItemModificationsFra
 };
 
 const handleCartPromoCodeModifications = (
-    promoCodeModifications: CartPromoCodeModificationsFragmentApi,
+    promoCodeModifications: CartPromoCodeModificationsFragment,
     t: Translate,
 ): void => {
     for (const nonApplicablePromoCode of promoCodeModifications.noLongerApplicablePromoCode) {

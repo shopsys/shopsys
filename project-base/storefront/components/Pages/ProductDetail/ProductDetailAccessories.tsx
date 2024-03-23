@@ -1,10 +1,10 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailAccessoriesProps = {
-    accessories: ListedProductFragmentApi[];
+    accessories: ListedProductFragment[];
 };
 
 export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {

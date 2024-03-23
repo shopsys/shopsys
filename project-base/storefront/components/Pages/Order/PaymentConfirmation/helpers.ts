@@ -1,10 +1,10 @@
-import { useUpdatePaymentStatusMutationApi } from 'graphql/generated';
+import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
 import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage, removeGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
 import { useEffect, useRef } from 'react';
 
 export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPageValidityHash: string | null) => {
-    const [{ data: paymentStatusData }, updatePaymentStatusMutation] = useUpdatePaymentStatusMutationApi();
+    const [{ data: paymentStatusData }, updatePaymentStatusMutation] = useUpdatePaymentStatusMutation();
     const wasPaymentStatusUpdatedRef = useRef(false);
 
     const updatePaymentStatus = async () => {

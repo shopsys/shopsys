@@ -2,11 +2,11 @@ import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
-import { BlogArticleDetailFragmentApi } from 'graphql/generated';
+import { BlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 
 type BlogArticleDetailContentProps = {
-    blogArticle: BlogArticleDetailFragmentApi;
+    blogArticle: BlogArticleDetailFragment;
 };
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {

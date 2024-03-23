@@ -1,6 +1,7 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { FlagDetailFragmentApi, FlagProductsQueryDocumentApi } from 'graphql/generated';
+import { FlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
+import { FlagProductsQueryDocument } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useProductsData } from 'helpers/loadMore';
@@ -8,13 +9,13 @@ import { getMappedProducts } from 'helpers/mappers/products';
 import { RefObject } from 'react';
 
 type FlagDetailProductsWrapperProps = {
-    flag: FlagDetailFragmentApi;
+    flag: FlagDetailFragment;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
 export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, paginationScrollTargetRef }) => {
     const [flagProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
-        FlagProductsQueryDocumentApi,
+        FlagProductsQueryDocument,
         flag.products.totalCount,
     );
     const flagListedProducts = getMappedProducts(flagProductsData);

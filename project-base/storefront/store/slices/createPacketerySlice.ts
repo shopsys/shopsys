@@ -1,10 +1,10 @@
-import { ListedStoreFragmentApi } from 'graphql/generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { StateCreator } from 'zustand';
 
 export type PacketerySlice = {
-    packeteryPickupPoint: ListedStoreFragmentApi | null;
+    packeteryPickupPoint: ListedStoreFragment | null;
 
-    setPacketeryPickupPoint: (mappedPacketeryPoint: ListedStoreFragmentApi) => void;
+    setPacketeryPickupPoint: (mappedPacketeryPoint: ListedStoreFragment) => void;
     clearPacketeryPickupPoint: () => void;
 };
 

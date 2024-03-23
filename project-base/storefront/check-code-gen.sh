@@ -2,7 +2,7 @@
 
 set -e
 
-GENERATED_FILENAME=./graphql/generated/index.tsx
+GENERATED_FILENAME=./graphql/types.ts
 ORIGINAL_HASH=$(md5sum $GENERATED_FILENAME | awk '{ print $1 }')
 
 pnpm run gql

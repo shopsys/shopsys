@@ -1,4 +1,5 @@
-import { RegistrationDataInputApi, useRegistrationMutationApi } from 'graphql/generated';
+import { useRegistrationMutation } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
+import { RegistrationDataInput } from 'graphql/types';
 import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmFormType } from 'gtm/types/enums';
 import { setTokensToCookies } from 'helpers/auth/tokens';
@@ -8,7 +9,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 
 export const useRegistration = () => {
-    const [, registerMutation] = useRegistrationMutationApi();
+    const [, registerMutation] = useRegistrationMutation();
     const router = useRouter();
     const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -16,7 +17,7 @@ export const useRegistration = () => {
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
-    const register = async (registrationInput: Omit<RegistrationDataInputApi, 'productListsUuids'>) => {
+    const register = async (registrationInput: Omit<RegistrationDataInput, 'productListsUuids'>) => {
         blurInput();
         const registerResult = await registerMutation({
             input: {

@@ -1,4 +1,5 @@
-import { CartFragmentApi, useApplyPromoCodeToCartMutationApi } from 'graphql/generated';
+import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { useApplyPromoCodeToCartMutation } from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
@@ -9,10 +10,10 @@ import { usePersistStore } from 'store/usePersistStore';
 type ApplyPromoCodeHandler = (
     newPromoCode: string,
     messages: { success: string; error: string },
-) => Promise<CartFragmentApi | undefined | null>;
+) => Promise<CartFragment | undefined | null>;
 
 export const useApplyPromoCodeToCart = (): [ApplyPromoCodeHandler, boolean] => {
-    const [{ fetching }, applyPromoCodeToCart] = useApplyPromoCodeToCartMutationApi();
+    const [{ fetching }, applyPromoCodeToCart] = useApplyPromoCodeToCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
 

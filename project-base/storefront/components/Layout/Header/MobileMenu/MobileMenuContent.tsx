@@ -2,7 +2,7 @@ import { DropdownMenuListItem } from './MobileMenuListItem';
 import { SubMenu } from './MobileMenuSubItems';
 import { mapNavigationMenuItems } from './helpers';
 import { ArrowIcon, CloseIcon } from 'components/Basic/Icon/IconsSvg';
-import { NavigationQueryApi } from 'graphql/generated';
+import { NavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
@@ -14,7 +14,7 @@ export type MenuItem = {
 };
 
 type MobileMenuContentProps = {
-    navigationItems: NavigationQueryApi['navigation'];
+    navigationItems: NavigationQuery['navigation'];
     onMenuToggleHandler: () => void;
 };
 

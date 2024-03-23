@@ -4,7 +4,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { ProductInProductListFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
@@ -12,7 +13,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 
 type ProductComparisonItemProps = {
-    product: ProductInProductListFragmentApi;
+    product: ProductInProductListFragment;
     productsCompareCount: number;
     listIndex: number;
     toggleProductInComparison: () => void;
@@ -29,7 +30,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);
 
     const onProductDetailRedirectHandler = useCallback(
-        (product: ListedProductFragmentApi, listName: GtmProductListNameType, index: number) => {
+        (product: ListedProductFragment, listName: GtmProductListNameType, index: number) => {
             onGtmProductClickEventHandler(product, listName, index, url);
         },
         [url],

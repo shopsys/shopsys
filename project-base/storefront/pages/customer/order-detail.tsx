@@ -3,12 +3,12 @@ import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    BreadcrumbFragmentApi,
-    OrderDetailQueryDocumentApi,
-    OrderDetailQueryVariablesApi,
-    useOrderDetailQueryApi,
-} from 'graphql/generated';
+    useOrderDetailQuery,
+    OrderDetailQueryVariables,
+    OrderDetailQueryDocument,
+} from 'graphql/requests/orders/queries/OrderDetailQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -25,10 +25,10 @@ const OrderDetailPage: FC = () => {
     const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(['/customer', '/customer/orders'], url);
     const router = useRouter();
     const orderNumber = getStringFromUrlQuery(router.query.orderNumber);
-    const [{ data: orderData, fetching, error }] = useOrderDetailQueryApi({
+    const [{ data: orderData, fetching, error }] = useOrderDetailQuery({
         variables: { orderNumber },
     });
-    const breadcrumbs: BreadcrumbFragmentApi[] = [
+    const breadcrumbs: BreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
         { __typename: 'Link', name: orderNumber, slug: '' },
@@ -62,12 +62,10 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps<OrderDetailQueryVariablesApi>({
+    return initServerSideProps<OrderDetailQueryVariables>({
         context,
         authenticationRequired: true,
-        prefetchedQueries: [
-            { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
-        ],
+        prefetchedQueries: [{ query: OrderDetailQueryDocument, variables: { orderNumber: context.query.orderNumber } }],
         redisClient,
         domainConfig,
         t,

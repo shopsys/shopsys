@@ -1,18 +1,20 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { DocumentNode } from 'graphql';
+import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    BrandProductsQueryApi,
-    BrandProductsQueryVariablesApi,
-    CategoryProductsQueryApi,
-    CategoryProductsQueryVariablesApi,
-    FlagProductsQueryApi,
-    FlagProductsQueryVariablesApi,
-    ListedProductConnectionFragmentApi,
-    Maybe,
-    ProductFilterApi,
-    ProductOrderingModeEnumApi,
-} from 'graphql/generated';
+    BrandProductsQueryVariables,
+    BrandProductsQuery,
+} from 'graphql/requests/products/queries/BrandProductsQuery.generated';
+import {
+    CategoryProductsQueryVariables,
+    CategoryProductsQuery,
+} from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
+import {
+    FlagProductsQueryVariables,
+    FlagProductsQuery,
+} from 'graphql/requests/products/queries/FlagProductsQuery.generated';
+import { ProductOrderingModeEnum, Maybe, ProductFilter } from 'graphql/types';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getSlugFromUrl, getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
@@ -26,23 +28,23 @@ import { Client, useClient } from 'urql';
 const PRODUCT_LIST_LIMIT = 100;
 
 export const mergeProductEdges = (
-    previousProductEdges?: ListedProductConnectionFragmentApi['edges'],
-    newProductEdges?: ListedProductConnectionFragmentApi['edges'],
+    previousProductEdges?: ListedProductConnectionFragment['edges'],
+    newProductEdges?: ListedProductConnectionFragment['edges'],
 ) => [...(previousProductEdges || []), ...(newProductEdges || [])];
 
 export const getPreviousProductsFromCache = (
     queryDocument: DocumentNode,
     client: Client,
     urlSlug: string,
-    sort: ProductOrderingModeEnumApi | null,
-    filter: Maybe<ProductFilterApi>,
+    sort: ProductOrderingModeEnum | null,
+    filter: Maybe<ProductFilter>,
     pageSize: number,
     initialPageSize: number,
     currentPage: number,
     currentLoadMore: number,
     readProducts: typeof readProductsFromCache,
-): ListedProductConnectionFragmentApi['edges'] | undefined => {
-    let cachedPartOfProducts: ListedProductConnectionFragmentApi['edges'] | undefined;
+): ListedProductConnectionFragment['edges'] | undefined => {
+    let cachedPartOfProducts: ListedProductConnectionFragment['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
 
     if (initialPageSize !== pageSize) {
@@ -196,7 +198,7 @@ export const useProductsData = (
         shouldAbortFetchingProducts: boolean;
         abortedFetchCallback: () => void;
     },
-): [ListedProductConnectionFragmentApi['edges'] | undefined, boolean, boolean, boolean] => {
+): [ListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
     const client = useClient();
     const { asPath } = useRouter();
     const { filter, sort, currentPage, currentLoadMore } = useQueryParams();
@@ -223,12 +225,12 @@ export const useProductsData = (
     const [loadMoreFetching, setLoadMoreFetching] = useState(false);
 
     const fetchProducts = async (
-        variables: CategoryProductsQueryVariablesApi | FlagProductsQueryVariablesApi | BrandProductsQueryVariablesApi,
-        previouslyQueriedProductsFromCache: ListedProductConnectionFragmentApi['edges'] | undefined,
+        variables: CategoryProductsQueryVariables | FlagProductsQueryVariables | BrandProductsQueryVariables,
+        previouslyQueriedProductsFromCache: ListedProductConnectionFragment['edges'] | undefined,
     ) => {
         const response = await client
             .query<
-                CategoryProductsQueryApi | BrandProductsQueryApi | FlagProductsQueryApi,
+                CategoryProductsQuery | BrandProductsQuery | FlagProductsQuery,
                 typeof variables
             >(queryDocument, variables)
             .toPromise();
@@ -319,15 +321,15 @@ const readProductsFromCache = (
     queryDocument: DocumentNode,
     client: Client,
     urlSlug: string,
-    orderingMode: ProductOrderingModeEnumApi | null,
-    filter: Maybe<ProductFilterApi>,
+    orderingMode: ProductOrderingModeEnum | null,
+    filter: Maybe<ProductFilter>,
     endCursor: string,
     pageSize: number,
 ): {
-    products: ListedProductConnectionFragmentApi['edges'] | undefined;
+    products: ListedProductConnectionFragment['edges'] | undefined;
     hasNextPage: boolean;
 } => {
-    const dataFromCache = client.readQuery<CategoryProductsQueryApi | BrandProductsQueryApi | FlagProductsQueryApi>(
+    const dataFromCache = client.readQuery<CategoryProductsQuery | BrandProductsQuery | FlagProductsQuery>(
         queryDocument,
         {
             urlSlug,

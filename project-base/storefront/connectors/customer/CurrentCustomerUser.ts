@@ -1,9 +1,12 @@
-import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'graphql/generated';
+import {
+    useCurrentCustomerUserQuery,
+    CurrentCustomerUserQuery,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
 
 export function useCurrentCustomerContactInformationQuery(): ContactInformation | null | undefined {
-    const [{ data }] = useCurrentCustomerUserQueryApi();
+    const [{ data }] = useCurrentCustomerUserQuery();
 
     if (data?.currentCustomerUser === undefined) {
         return undefined;
@@ -13,7 +16,7 @@ export function useCurrentCustomerContactInformationQuery(): ContactInformation 
 }
 
 const mapCurrentCustomerContactInformationApiData = (
-    apiCurrentCustomerUserData: CurrentCustomerUserQueryApi['currentCustomerUser'],
+    apiCurrentCustomerUserData: CurrentCustomerUserQuery['currentCustomerUser'],
 ): ContactInformation | null => {
     if (apiCurrentCustomerUserData === null) {
         return null;

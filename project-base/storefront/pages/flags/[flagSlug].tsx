@@ -3,14 +3,16 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
-    FlagDetailQueryApi,
-    FlagDetailQueryDocumentApi,
-    FlagDetailQueryVariablesApi,
-    FlagProductsQueryApi,
-    FlagProductsQueryDocumentApi,
-    FlagProductsQueryVariablesApi,
-    useFlagDetailQueryApi,
-} from 'graphql/generated';
+    useFlagDetailQuery,
+    FlagDetailQuery,
+    FlagDetailQueryVariables,
+    FlagDetailQueryDocument,
+} from 'graphql/requests/flags/queries/FlagDetailQuery.generated';
+import {
+    FlagProductsQuery,
+    FlagProductsQueryVariables,
+    FlagProductsQueryDocument,
+} from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -41,7 +43,7 @@ const FlagDetailPage: NextPage = () => {
     const orderingMode = getProductListSortFromUrlQuery(router.query[SORT_QUERY_PARAMETER_NAME]);
     const filter = getMappedProductFilter(router.query[FILTER_QUERY_PARAMETER_NAME]);
 
-    const [{ data: flagDetailData, fetching }] = useFlagDetailQueryApi({
+    const [{ data: flagDetailData, fetching }] = useFlagDetailQuery({
         variables: {
             urlSlug: getSlugFromUrl(router.asPath),
             orderingMode,
@@ -92,7 +94,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
                 const flagDetailResponsePromise = client!
-                    .query<FlagDetailQueryApi, FlagDetailQueryVariablesApi>(FlagDetailQueryDocumentApi, {
+                    .query<FlagDetailQuery, FlagDetailQueryVariables>(FlagDetailQueryDocument, {
                         urlSlug,
                         filter,
                         orderingMode,
@@ -100,7 +102,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     .toPromise();
 
                 const flagProductsResponsePromise = client!
-                    .query<FlagProductsQueryApi, FlagProductsQueryVariablesApi>(FlagProductsQueryDocumentApi, {
+                    .query<FlagProductsQuery, FlagProductsQueryVariables>(FlagProductsQueryDocument, {
                         endCursor: getEndCursor(page),
                         orderingMode,
                         filter,

@@ -3,14 +3,14 @@ import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemov
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
-import { ProductInProductListFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonContentProps = {
-    comparedProducts: ProductInProductListFragmentApi[];
+    comparedProducts: ProductInProductListFragment[];
 };
 
 export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ comparedProducts }) => {

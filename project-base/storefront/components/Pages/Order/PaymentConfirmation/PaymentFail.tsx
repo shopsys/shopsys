@@ -1,6 +1,6 @@
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
-import { useOrderPaymentFailedContentQueryApi } from 'graphql/generated';
+import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -18,7 +18,7 @@ export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, lastUsedOrderPaym
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_fail);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: contentData, fetching }] = useOrderPaymentFailedContentQueryApi({ variables: { orderUuid } });
+    const [{ data: contentData, fetching }] = useOrderPaymentFailedContentQuery({ variables: { orderUuid } });
 
     return (
         <ConfirmationPageContent

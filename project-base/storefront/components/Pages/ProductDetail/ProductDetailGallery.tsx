@@ -1,7 +1,9 @@
 import { PlayIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { ImageFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
+import { SimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -11,10 +13,10 @@ const ModalGallery = dynamic(() =>
 );
 
 type ProductDetailGalleryProps = {
-    images: ImageFragmentApi[];
+    images: ImageFragment[];
     productName: string;
-    flags: SimpleFlagFragmentApi[];
-    videoIds?: VideoTokenFragmentApi[];
+    flags: SimpleFlagFragment[];
+    videoIds?: VideoTokenFragment[];
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;

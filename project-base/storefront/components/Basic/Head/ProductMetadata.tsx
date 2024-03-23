@@ -1,10 +1,12 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AvailabilityStatusEnumApi, MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
+import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { AvailabilityStatusEnum } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 type ProductMetadataProps = {
-    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi;
+    product: ProductDetailFragment | MainVariantDetailFragment;
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
@@ -37,7 +39,7 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                             price: product.price.priceWithVat,
                             itemCondition: 'https://schema.org/NewCondition',
                             availability:
-                                product.availability.status === AvailabilityStatusEnumApi.InStockApi
+                                product.availability.status === AvailabilityStatusEnum.InStock
                                     ? 'https://schema.org/InStock'
                                     : 'https://schema.org/OutOfStock',
                         },

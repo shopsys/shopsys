@@ -1,11 +1,11 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import {
-    StoreDetailQueryApi,
-    StoreDetailQueryDocumentApi,
-    StoreDetailQueryVariablesApi,
-    useStoreDetailQueryApi,
-} from 'graphql/generated';
+    useStoreDetailQuery,
+    StoreDetailQuery,
+    StoreDetailQueryVariables,
+    StoreDetailQueryDocument,
+} from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -20,7 +20,7 @@ import { createClient } from 'urql/createClient';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();
-    const [{ data: storeDetailData, fetching }] = useStoreDetailQueryApi({
+    const [{ data: storeDetailData, fetching }] = useStoreDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -51,8 +51,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const storeResponse: OperationResult<StoreDetailQueryApi, StoreDetailQueryVariablesApi> = await client!
-                    .query(StoreDetailQueryDocumentApi, {
+                const storeResponse: OperationResult<StoreDetailQuery, StoreDetailQueryVariables> = await client!
+                    .query(StoreDetailQueryDocument, {
                         urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
                     })
                     .toPromise();

@@ -1,9 +1,9 @@
-import { ProductListTypeEnumApi } from 'graphql/generated';
+import { ProductListTypeEnum } from 'graphql/types';
 import { UserConsentFormType } from 'types/form';
 import { StateCreator } from 'zustand';
 
 type ProductListStoreValue = Partial<{
-    [key in ProductListTypeEnumApi]: string;
+    [key in ProductListTypeEnum]: string;
 }>;
 
 export type UserSlice = {

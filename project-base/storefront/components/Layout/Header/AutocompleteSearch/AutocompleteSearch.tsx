@@ -1,7 +1,10 @@
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
+import {
+    AutocompleteSearchQuery,
+    useAutocompleteSearchQuery,
+} from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDebounce } from 'hooks/helpers/useDebounce';
@@ -27,7 +30,7 @@ export const AutocompleteSearch: FC = () => {
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
-    const [searchData, setSearchData] = useState<AutocompleteSearchQueryApi>();
+    const [searchData, setSearchData] = useState<AutocompleteSearchQuery>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
     const userIdentifier = usePersistStore((store) => store.userId)!;
@@ -35,7 +38,7 @@ export const AutocompleteSearch: FC = () => {
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
-    const [{ data: fetchedSearchData, fetching: isFetchingSearchData }] = useAutocompleteSearchQueryApi({
+    const [{ data: fetchedSearchData, fetching: isFetchingSearchData }] = useAutocompleteSearchQuery({
         variables: {
             search: debouncedSearchQuery,
             maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,

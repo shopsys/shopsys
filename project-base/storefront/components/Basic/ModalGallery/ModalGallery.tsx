@@ -1,7 +1,8 @@
 import { ModalGalleryCarousel } from './ModalGalleryCarousel';
 import { SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
-import { VideoTokenFragmentApi, ImageFragmentApi } from 'graphql/generated';
+import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useKeypress } from 'hooks/useKeyPress';
 import useTranslation from 'next-translate/useTranslation';
@@ -10,7 +11,7 @@ import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 
 type ModalGalleryProps = {
-    items: (VideoTokenFragmentApi | ImageFragmentApi)[];
+    items: (VideoTokenFragment | ImageFragment)[];
     initialIndex: number;
     galleryName: string;
     onCloseModal: () => void;

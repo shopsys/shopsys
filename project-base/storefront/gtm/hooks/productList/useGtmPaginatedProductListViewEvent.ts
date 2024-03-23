@@ -1,6 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
@@ -9,7 +9,7 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { useEffect, useRef } from 'react';
 
 export const useGtmPaginatedProductListViewEvent = (
-    paginatedProducts: ListedProductFragmentApi[] | undefined,
+    paginatedProducts: ListedProductFragment[] | undefined,
     gtmProductListName: GtmProductListNameType,
 ): void => {
     const lastViewedStringifiedProducts = useRef<string>();

@@ -3,11 +3,11 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import {
-    ProductDetailQueryApi,
-    ProductDetailQueryDocumentApi,
-    ProductDetailQueryVariablesApi,
-    useProductDetailQueryApi,
-} from 'graphql/generated';
+    useProductDetailQuery,
+    ProductDetailQuery,
+    ProductDetailQueryVariables,
+    ProductDetailQueryDocument,
+} from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -22,7 +22,7 @@ import { createClient } from 'urql/createClient';
 
 const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
-    const [{ data: productData, fetching }] = useProductDetailQueryApi({
+    const [{ data: productData, fetching }] = useProductDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -67,12 +67,11 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const productResponse: OperationResult<ProductDetailQueryApi, ProductDetailQueryVariablesApi> =
-                    await client!
-                        .query(ProductDetailQueryDocumentApi, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
+                const productResponse: OperationResult<ProductDetailQuery, ProductDetailQueryVariables> = await client!
+                    .query(ProductDetailQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     productResponse.error?.graphQLErrors,

@@ -11,14 +11,12 @@ import {
     getGtmTransportChangeEvent,
 } from './eventFactories';
 import { gtmSafePushEvent } from './gtm';
-import {
-    CartItemFragmentApi,
-    ListedProductFragmentApi,
-    ListedStoreFragmentApi,
-    SimplePaymentFragmentApi,
-    SimpleProductFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-} from 'graphql/generated';
+import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { SimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import {
     GtmEventType,
     GtmFormType,
@@ -58,7 +56,7 @@ export const onGtmSendFormEventHandler = (form: GtmFormType): void => {
 };
 
 export const onGtmProductClickEventHandler = (
-    product: ListedProductFragmentApi | SimpleProductFragmentApi,
+    product: ListedProductFragment | SimpleProductFragment,
     gtmProductListName: GtmProductListNameType,
     index: number,
     domainUrl: string,
@@ -75,7 +73,7 @@ export const onGtmAutocompleteResultClickEventHandler = (
 };
 
 export const onGtmRemoveFromCartEventHandler = (
-    removedCartItem: CartItemFragmentApi,
+    removedCartItem: CartItemFragment,
     currencyCode: string,
     eventValueWithoutVat: number,
     eventValueWithVat: number,
@@ -101,7 +99,7 @@ export const onGtmRemoveFromCartEventHandler = (
 };
 
 export const onGtmChangeCartItemEventHandler = (
-    addedCartItem: CartItemFragmentApi,
+    addedCartItem: CartItemFragment,
     currencyCode: string,
     eventValueWithoutVat: number,
     eventValueWithVat: number,
@@ -134,7 +132,7 @@ export const onGtmChangeCartItemEventHandler = (
 
 export const onGtmPaymentChangeEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
-    updatedPayment: SimplePaymentFragmentApi | null,
+    updatedPayment: SimplePaymentFragment | null,
 ): void => {
     if (gtmCartInfo && updatedPayment !== null) {
         gtmSafePushEvent(getGtmPaymentChangeEvent(gtmCartInfo, updatedPayment));
@@ -143,8 +141,8 @@ export const onGtmPaymentChangeEventHandler = (
 
 export const onGtmTransportChangeEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
-    updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
-    updatedPickupPlace: ListedStoreFragmentApi | null,
+    updatedTransport: TransportWithAvailablePaymentsAndStoresFragment | null,
+    updatedPickupPlace: ListedStoreFragment | null,
     paymentName: string | undefined,
 ): void => {
     if (gtmCartInfo && updatedTransport !== null) {

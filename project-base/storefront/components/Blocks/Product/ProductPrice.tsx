@@ -1,9 +1,9 @@
-import { ProductPriceFragmentApi } from 'graphql/generated';
+import { ProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductPriceProps = {
-    productPrice: ProductPriceFragmentApi;
+    productPrice: ProductPriceFragment;
 };
 
 export const ProductPrice: FC<ProductPriceProps> = ({ productPrice }) => {

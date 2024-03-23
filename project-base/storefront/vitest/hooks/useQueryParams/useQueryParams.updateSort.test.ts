@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -32,7 +32,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
     },
 }));
 const setWasRedirectedFromSeoCategoryMock = vi.fn();
-const mockDefaultSort = vi.fn(() => ProductOrderingModeEnumApi.PriorityApi);
+const mockDefaultSort = vi.fn(() => ProductOrderingModeEnum.Priority);
 vi.mock('config/constants', async (importOriginal) => {
     const actualConstantsModule = await importOriginal<any>();
 
@@ -72,7 +72,7 @@ vi.mock('store/useSessionStore', () => ({
 
 describe('useQueryParams().updateSort tests', () => {
     test('sort should not be updated if updating with the default sort', () => {
-        useQueryParams().updateSort(ProductOrderingModeEnumApi.PriorityApi);
+        useQueryParams().updateSort(ProductOrderingModeEnum.Priority);
 
         expect(mockPush).toBeCalledWith(
             { pathname: CATEGORY_PATHNAME, query: { categorySlug: CATEGORY_URL } },
@@ -85,20 +85,20 @@ describe('useQueryParams().updateSort tests', () => {
     });
 
     test('sort should be updated if updating with new sort', () => {
-        useQueryParams().updateSort(ProductOrderingModeEnumApi.PriceAscApi);
+        useQueryParams().updateSort(ProductOrderingModeEnum.PriceAsc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
             { shallow: true },
@@ -109,7 +109,7 @@ describe('useQueryParams().updateSort tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnumApi.PriceAscApi,
+                    sort: ProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
@@ -119,7 +119,7 @@ describe('useQueryParams().updateSort tests', () => {
             });
         });
 
-        useQueryParams().updateSort(ProductOrderingModeEnumApi.PriceDescApi);
+        useQueryParams().updateSort(ProductOrderingModeEnum.PriceDesc);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -140,7 +140,7 @@ describe('useQueryParams().updateSort tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -160,7 +160,7 @@ describe('useQueryParams().updateSort tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -178,7 +178,7 @@ describe('useQueryParams().updateSort tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnumApi.PriceAscApi,
+                    sort: ProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
@@ -186,20 +186,20 @@ describe('useQueryParams().updateSort tests', () => {
             });
         });
 
-        useQueryParams().updateSort(ProductOrderingModeEnumApi.PriceDescApi);
+        useQueryParams().updateSort(ProductOrderingModeEnum.PriceDesc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -219,20 +219,20 @@ describe('useQueryParams().updateSort tests', () => {
             },
         }));
 
-        useQueryParams().updateSort(ProductOrderingModeEnumApi.PriceAscApi);
+        useQueryParams().updateSort(ProductOrderingModeEnum.PriceAsc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
             { shallow: true },

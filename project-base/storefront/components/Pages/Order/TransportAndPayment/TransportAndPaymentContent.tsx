@@ -4,7 +4,7 @@ import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useTransportsQueryApi } from 'graphql/generated';
+import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
@@ -33,7 +33,7 @@ export const TransportAndPaymentContent: FC = () => {
 
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
-    const [{ data: transportsData, fetching: areTransportsLoading }] = useTransportsQueryApi({
+    const [{ data: transportsData, fetching: areTransportsLoading }] = useTransportsQuery({
         variables: { cartUuid },
         requestPolicy: 'network-only',
     });

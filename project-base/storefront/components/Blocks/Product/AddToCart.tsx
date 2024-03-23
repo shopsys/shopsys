@@ -3,7 +3,7 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { TIDs } from 'cypress/tids';
-import { CartItemFragmentApi } from 'graphql/generated';
+import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
@@ -36,7 +36,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
     const [changeCartItemQuantity, fetching] = useAddToCart(gtmMessageOrigin, gtmProductListName);
-    const [popupData, setPopupData] = useState<CartItemFragmentApi | undefined>(undefined);
+    const [popupData, setPopupData] = useState<CartItemFragment | undefined>(undefined);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {

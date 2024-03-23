@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -9,7 +9,7 @@ import { describe, expect, Mock, test, vi } from 'vitest';
 
 const CATEGORY_URL = '/category-url';
 const CATEGORY_PATHNAME = '/categories/[categorySlug]';
-const mockDefaultSort = vi.fn(() => ProductOrderingModeEnumApi.PriorityApi);
+const mockDefaultSort = vi.fn(() => ProductOrderingModeEnum.Priority);
 
 const mockPush = vi.fn();
 const mockPageQueryGetter = vi.fn();

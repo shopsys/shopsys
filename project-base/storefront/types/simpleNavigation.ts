@@ -1,17 +1,17 @@
-import { ImageFragmentApi } from 'graphql/generated';
+import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 
 export type ListedItemPropTypeTypename = 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand' | 'Link';
 
 export type ListedItemPropType = (
     | {
           slug: string;
-          mainImage: ImageFragmentApi;
+          mainImage: ImageFragment;
           name: string;
           totalCount?: number;
       }
     | {
           slug: string;
-          mainImage: ImageFragmentApi;
+          mainImage: ImageFragment;
           name: string;
       }
     | {

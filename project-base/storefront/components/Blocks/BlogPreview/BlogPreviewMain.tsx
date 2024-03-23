@@ -1,11 +1,11 @@
 import { ArticleLink } from './BlogPreviewElements';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
-import { ListedBlogArticleFragmentApi } from 'graphql/generated';
+import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
 
 type MainProps = {
-    articles: ListedBlogArticleFragmentApi[];
+    articles: ListedBlogArticleFragment[];
 };
 
 export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (

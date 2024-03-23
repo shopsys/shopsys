@@ -5,7 +5,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { useIsCustomerUserRegisteredQueryApi } from 'graphql/generated';
+import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { blurInput } from 'helpers/forms/blurInput';
@@ -40,7 +40,7 @@ export const RegistrationAfterOrder: FC = () => {
     );
 
     const [{ data: isCustomerUserRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
-        useIsCustomerUserRegisteredQueryApi({
+        useIsCustomerUserRegisteredQuery({
             variables: {
                 email: orderEmail!,
             },

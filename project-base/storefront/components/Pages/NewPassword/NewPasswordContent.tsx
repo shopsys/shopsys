@@ -6,7 +6,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useRecoverPasswordMutationApi } from 'graphql/generated';
+import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
@@ -30,7 +30,7 @@ type NewPasswordContentProps = {
 
 export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash }) => {
     const { t } = useTranslation();
-    const [, newPassword] = useRecoverPasswordMutationApi();
+    const [, newPassword] = useRecoverPasswordMutation();
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();

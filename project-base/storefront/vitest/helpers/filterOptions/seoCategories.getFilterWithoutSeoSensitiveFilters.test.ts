@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { getFilterWithoutSeoSensitiveFilters } from 'helpers/filterOptions/seoCategories';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 import { describe, expect, test, vi } from 'vitest';
@@ -68,9 +68,7 @@ describe('seoCategories.getFilterWithoutSeoSensitiveFilters tests', () => {
     test('should set sort to undefined if sort is SEO sensitive', () => {
         mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ ...DEFAULT_SEO_SENSITIVE_CONFIG, SORT: true }));
 
-        expect(getFilterWithoutSeoSensitiveFilters({}, ProductOrderingModeEnumApi.PriceAscApi).filteredSort).toBe(
-            undefined,
-        );
+        expect(getFilterWithoutSeoSensitiveFilters({}, ProductOrderingModeEnum.PriceAsc).filteredSort).toBe(undefined);
     });
 
     test('should set sort to undefined if current sort is null', () => {
@@ -78,8 +76,8 @@ describe('seoCategories.getFilterWithoutSeoSensitiveFilters tests', () => {
     });
 
     test('should keep sort if sort is not SEO sensitive and is defined', () => {
-        expect(getFilterWithoutSeoSensitiveFilters({}, ProductOrderingModeEnumApi.PriceAscApi).filteredSort).toBe(
-            ProductOrderingModeEnumApi.PriceAscApi,
+        expect(getFilterWithoutSeoSensitiveFilters({}, ProductOrderingModeEnum.PriceAsc).filteredSort).toBe(
+            ProductOrderingModeEnum.PriceAsc,
         );
     });
 

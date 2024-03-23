@@ -1,7 +1,7 @@
-import { CountryFragmentApi } from 'graphql/generated';
+import { CountryFragment } from 'graphql/requests/countries/fragments/CountryFragment.generated';
 import { SelectOptionType } from 'types/selectOptions';
 
-export const mapCountriesToSelectOptions = (countries: CountryFragmentApi[] | undefined): SelectOptionType[] =>
+export const mapCountriesToSelectOptions = (countries: CountryFragment[] | undefined): SelectOptionType[] =>
     countries?.map((country) => {
         return {
             label: country.name,
