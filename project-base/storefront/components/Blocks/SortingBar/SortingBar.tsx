@@ -1,5 +1,5 @@
 import { SortingBarItem } from './SortingBarItem';
-import { SortIcon } from 'components/Basic/Icon/IconsSvg';
+import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';

@@ -1,5 +1,5 @@
 import { PromoCodeInfo } from './PromoCodeInfo';
-import { PlusIcon } from 'components/Basic/Icon/IconsSvg';
+import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

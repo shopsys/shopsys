@@ -1,4 +1,4 @@
-import { MenuIcon } from 'components/Basic/Icon/IconsSvg';
+import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
 import { twJoin } from 'tailwind-merge';

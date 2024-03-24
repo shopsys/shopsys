@@ -1,7 +1,7 @@
 import { PickupPlacePopup } from './PickupPlacePopup';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';

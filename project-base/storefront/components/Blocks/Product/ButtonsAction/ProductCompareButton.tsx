@@ -1,4 +1,4 @@
-import { CompareIcon } from 'components/Basic/Icon/IconsSvg';
+import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 

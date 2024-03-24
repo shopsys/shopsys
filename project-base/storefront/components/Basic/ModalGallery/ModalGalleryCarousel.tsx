@@ -1,4 +1,4 @@
-import { PlayIcon } from 'components/Basic/Icon/IconsSvg';
+import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';

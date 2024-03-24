@@ -1,6 +1,6 @@
 import needAdviceImage from '/public/images/need_advice.webp';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { PhoneIcon } from 'components/Basic/Icon/IconsSvg';
+import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';

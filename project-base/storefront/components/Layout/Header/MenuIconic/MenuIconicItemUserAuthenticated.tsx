@@ -1,6 +1,6 @@
 import { MenuIconicItemLink, MenuIconicSubItemLink } from './MenuIconicElements';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { UserIcon } from 'components/Basic/Icon/IconsSvg';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
