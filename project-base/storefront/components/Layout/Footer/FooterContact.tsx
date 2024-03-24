@@ -1,5 +1,6 @@
 import { IconImage } from 'components/Basic/Icon/IconImage';
-import { InstagramIcon, YoutubeIcon } from 'components/Basic/Icon/IconsSvg';
+import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
+import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 import useTranslation from 'next-translate/useTranslation';
 
 export const FooterContact: FC = () => {

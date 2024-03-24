@@ -1,4 +1,4 @@
-import { TriangleIcon } from 'components/Basic/Icon/IconsSvg';
+import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem';
 import { SliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { desktopFirstSizes } from 'helpers/mediaQueries';

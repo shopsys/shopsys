@@ -1,7 +1,7 @@
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';

@@ -1,5 +1,5 @@
 import { ModalGalleryCarousel } from './ModalGalleryCarousel';
-import { SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
+import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';

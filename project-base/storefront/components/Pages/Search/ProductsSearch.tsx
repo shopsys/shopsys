@@ -1,5 +1,5 @@
 import { SearchProductsWrapper } from './SearchProductsWrapper';
-import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
+import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';

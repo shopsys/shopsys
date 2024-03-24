@@ -1,6 +1,6 @@
 import { StoreInfoBox } from './StoreInfoBox';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
+import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';

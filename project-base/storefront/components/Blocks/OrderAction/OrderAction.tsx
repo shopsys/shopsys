@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowIcon, SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TIDs } from 'cypress/tids';
 import { useRouter } from 'next/router';

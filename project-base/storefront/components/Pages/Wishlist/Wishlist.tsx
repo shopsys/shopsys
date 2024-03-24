@@ -1,4 +1,5 @@
-import { InfoIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';

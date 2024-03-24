@@ -1,4 +1,4 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { twMergeCustom } from 'helpers/twMerge';
 import { LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

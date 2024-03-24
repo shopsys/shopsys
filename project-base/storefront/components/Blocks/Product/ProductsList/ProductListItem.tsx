@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { RemoveBoldIcon } from 'components/Basic/Icon/IconsSvg';
+import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';

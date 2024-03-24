@@ -1,4 +1,4 @@
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import React, { useState } from 'react';
 import {
     Tab,

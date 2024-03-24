@@ -1,4 +1,4 @@
-import { RemoveBoldIcon } from 'components/Basic/Icon/IconsSvg';
+import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';

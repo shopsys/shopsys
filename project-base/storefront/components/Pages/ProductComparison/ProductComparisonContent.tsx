@@ -2,7 +2,7 @@ import { ProductComparisonBody } from './ProductComparisonBody';
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';

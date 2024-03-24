@@ -1,5 +1,6 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
-import { RemoveIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';

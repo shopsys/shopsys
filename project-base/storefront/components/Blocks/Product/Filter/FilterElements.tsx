@@ -1,4 +1,4 @@
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { twJoin } from 'tailwind-merge';
 
 export const FilterGroupWrapper: FC = ({ children }) => <div className="">{children}</div>;

@@ -1,4 +1,4 @@
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { ReactNode } from 'react';
 import SelectReact from 'react-select';

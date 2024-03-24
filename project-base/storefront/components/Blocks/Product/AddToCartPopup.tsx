@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
