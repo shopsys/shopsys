@@ -1,6 +1,6 @@
 import { isWithToastAndConsoleErrorDebugging } from './errors/isWithErrorDebugging';
 import { isClient } from './isClient';
-import CopyTextBlock from 'components/Basic/CopyTextBlock/CopyTextBlock';
+import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { TIDs } from 'cypress/tids';
 import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
