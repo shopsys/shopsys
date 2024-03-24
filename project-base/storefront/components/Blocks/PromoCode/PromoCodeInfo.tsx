@@ -1,4 +1,4 @@
-import { CrossIcon } from 'components/Basic/Icon/IconsSvg';
+import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 

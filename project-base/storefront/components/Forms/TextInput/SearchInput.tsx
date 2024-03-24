@@ -1,4 +1,5 @@
-import { CloseIcon, SearchIcon } from 'components/Basic/Icon/IconsSvg';
+import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';

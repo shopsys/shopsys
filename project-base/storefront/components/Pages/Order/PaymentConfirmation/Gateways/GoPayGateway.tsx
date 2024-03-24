@@ -1,4 +1,4 @@
-import { SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
+import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
 import { GoPayCreatePaymentSetup } from 'graphql/types';

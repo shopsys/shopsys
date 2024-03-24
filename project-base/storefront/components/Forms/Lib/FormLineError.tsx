@@ -1,4 +1,4 @@
-import { CrossIcon } from 'components/Basic/Icon/IconsSvg';
+import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
 import { FieldError } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 

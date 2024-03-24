@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, SVGProps } from 'react';
 
 export type FunctionComponentProps = {
     className?: string;
@@ -14,6 +14,7 @@ declare module 'react' {
 
 declare global {
     type FC<P = object> = FunctionComponent<P & FunctionComponentProps>;
+    type SvgFC<P = object> = FC<P & SVGProps<SVGSVGElement>>;
 
     interface Window {
         Packeta: {

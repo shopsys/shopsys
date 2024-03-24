@@ -1,4 +1,4 @@
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { twJoin } from 'tailwind-merge';
 
 type BlogSignpostIconProps = { isActive: boolean };
