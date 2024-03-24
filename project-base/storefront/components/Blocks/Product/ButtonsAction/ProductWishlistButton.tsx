@@ -1,4 +1,4 @@
-import { HeartIcon } from 'components/Basic/Icon/IconsSvg';
+import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';

@@ -1,6 +1,7 @@
 import { ListItem } from './CartListItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { EmptyCartIcon, CartIcon } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
+import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';

@@ -1,7 +1,7 @@
 import { AdvancedSeoCategories } from './AdvancedSeoCategories';
 import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
+import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
