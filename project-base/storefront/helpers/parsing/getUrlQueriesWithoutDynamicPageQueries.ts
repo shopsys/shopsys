@@ -1,5 +1,5 @@
-import { UrlQueries } from 'hooks/useQueryParams';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
+import { UrlQueries } from 'types/urlQueries';
 
 export const getUrlQueriesWithoutDynamicPageQueries = (queries: UrlQueries) => {
     const filteredQueries = { ...queries };

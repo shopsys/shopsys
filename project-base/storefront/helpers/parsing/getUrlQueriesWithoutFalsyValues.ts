@@ -1,4 +1,4 @@
-import { UrlQueries } from 'hooks/useQueryParams';
+import { UrlQueries } from 'types/urlQueries';
 
 export const getUrlQueriesWithoutFalsyValues = (queries: UrlQueries) => {
     const filteredQueries = { ...queries };
