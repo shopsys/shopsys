@@ -1,14 +1,14 @@
-namespace: Tests\App\Test\Codeception
 actor: Tester
-paths:
-    tests: ../tests/App/Acceptance
-    log: ../var/log/codeception
-    data: ../tests/App/Acceptance/data
-    support: ../tests/App/Test/Codeception
-    output: ../var/log/codeception
+namespace: Tests\App\Test\Codeception
 params:
     - ../.env
     - ../.env.acc
+paths:
+    data: ../tests/App/Acceptance/data
+    log: ../var/log/codeception
+    output: ../var/log/codeception
+    support: ../tests/App/Test/Codeception
+    tests: ../tests/App/Acceptance
 settings:
     colors: true
     memory_limit: 1024M

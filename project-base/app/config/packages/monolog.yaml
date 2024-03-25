@@ -1,10 +1,6 @@
 monolog:
     channels: ["cron", "queue", "slow"]
     handlers:
-        sentry:
-            type: stream
-            path: "%shopsys.log_stream%"
-            level: debug
         # display cron.DEBUG messages in console for -v, -vv and -vvv verbosities
         console_output:
             type: console
@@ -27,3 +23,7 @@ monolog:
             path: "%shopsys.log_stream%"
             level: info
             formatter: "monolog.formatter.line"
+        sentry:
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: debug

@@ -1,19 +1,19 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     Shopsys\ProductFeed\GoogleBundle\:
         resource: '../../*'
 
-    Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
-        tags:
-            - { name: shopsys.feed, hours: '1', minutes: '0' }
-
     Shopsys\ProductFeed\GoogleBundle\Form\GoogleProductCrudExtension:
         tags:
             - { name: shopsys.crud_extension, type: product }
+
+    Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
+        tags:
+            - { name: shopsys.feed, hours: '1', minutes: '0' }
 
     Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactoryInterface:
         alias: Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactory

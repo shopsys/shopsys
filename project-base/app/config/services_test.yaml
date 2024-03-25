@@ -3,21 +3,33 @@ framework:
 
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: true
 
-    test.client:
-        alias: Tests\App\Test\Client
-    Tests\App\Test\Client:
+    League\Flysystem\FilesystemOperator:
+        alias: 'main_filesystem'
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
-        class: Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
         arguments:
             - "%shopsys.entity_extension.map%"
+        class: Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
 
-    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
-        alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
+    Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
+        alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
+
+    Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
+
+    Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
+        arguments: ['@fragment.handler']
+
+    Symfony\Component\HttpFoundation\RequestStack:
+        arguments:
+            $container: '@test.service_container'
+            $requestStack: '@request_stack'
+        class: Tests\App\Test\HttpFoundation\RequestStack
+
+    Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
 
     Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber:
         arguments:
@@ -25,25 +37,13 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -10 }
 
-    Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
-        arguments: ['@fragment.handler']
-
-    Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
-
-    League\Flysystem\FilesystemOperator:
-        alias: 'main_filesystem'
+    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
+        alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
+    Tests\App\Test\Client:
 
     Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory:
         arguments:
             - '%gopay_config%'
 
-    Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
-        alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
-
-    Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
-
-    Symfony\Component\HttpFoundation\RequestStack:
-        class: Tests\App\Test\HttpFoundation\RequestStack
-        arguments:
-            $container: '@test.service_container'
-            $requestStack: '@request_stack'
+    test.client:
+        alias: Tests\App\Test\Client

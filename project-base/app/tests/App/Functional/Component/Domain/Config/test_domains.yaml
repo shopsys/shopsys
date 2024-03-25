@@ -1,17 +1,17 @@
 domains:
     -   id: 1
-        name: shopsys
         locale: cs
+        name: shopsys
         timezone: Europe/Prague
 
     -   id: 2
-        name: 2.shopsys
         locale: en
+        name: 2.shopsys
         styles_directory: domain2
         timezone: Europe/Prague
 
     -   id: 3
-        name: 2.shopsys
         locale: en
+        name: 2.shopsys
         styles_directory: domain2
         timezone: Europe/Prague

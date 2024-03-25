@@ -1,14 +1,14 @@
 monolog:
     handlers:
-        main:
-            type: "null"
-            level: emergency
-            excluded_http_codes: []
         log_stream:
             type: stream
             path: "%shopsys.log_stream%"
             level: notice
             formatter: "monolog.formatter.line"
+        main:
+            type: "null"
+            level: emergency
+            excluded_http_codes: []
         sentry:
             type: stream
             path: "%shopsys.log_stream%"

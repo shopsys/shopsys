@@ -2,31 +2,31 @@ framework:
     annotations:
         cache: file
         file_cache_dir: '%kernel.cache_dir%/annotations'
-    secret: "%env(APP_SECRET)%"
-    router:
-        utf8: true
-        strict_requirements: true
-    form:
-        legacy_error_messages: false
-    csrf_protection: ~
-    validation: { enable_annotations: true }
-    trusted_hosts: ~
-    trusted_proxies: '%env(TRUSTED_PROXIES)%)'
-    session:
-        storage_factory_id: session.storage.factory.native
-        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
-        cookie_httponly: true
-        # Disable the default PHP session garbage collection.
-        # Session garbage collection is responsibility of hosting.
-        gc_probability: 0
-        cookie_lifetime: 31536000 # 365 days * 24 hours * 3600 seconds
-    fragments: ~
-    http_method_override: true
-    profiler:
-        enabled: false
-        collect: false
     assets:
         base_urls:
             - '%env(CDN_DOMAIN)%'
+    csrf_protection: ~
 
     error_controller: 'App\Controller\Admin\ErrorController::showAction'
+    form:
+        legacy_error_messages: false
+    fragments: ~
+    http_method_override: true
+    profiler:
+        collect: false
+        enabled: false
+    router:
+        strict_requirements: true
+        utf8: true
+    secret: "%env(APP_SECRET)%"
+    session:
+        cookie_httponly: true
+        cookie_lifetime: 31536000 # 365 days * 24 hours * 3600 seconds
+        # Disable the default PHP session garbage collection.
+        # Session garbage collection is responsibility of hosting.
+        gc_probability: 0
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
+        storage_factory_id: session.storage.factory.native
+    trusted_hosts: ~
+    trusted_proxies: '%env(TRUSTED_PROXIES)%)'
+    validation: { enable_annotations: true }

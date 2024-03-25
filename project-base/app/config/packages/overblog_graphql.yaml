@@ -1,12 +1,6 @@
 overblog_graphql:
     definitions:
-        schema:
-            query: Query
-            mutation: Mutation
-        mappings:
-            types:
-                -   type: yaml
-                    dir: "%kernel.project_dir%/config/graphql/types"
+        auto_compile: true
         builders:
             args:
                 -   alias: "ProductPaginatorArgumentsBuilder"
@@ -15,15 +9,21 @@ overblog_graphql:
                     class: Shopsys\FrontendApiBundle\Component\Arguments\ProductSearchPaginatorArgumentsBuilder
                 -   alias: "BlogArticlePaginatorArgumentsBuilder"
                     class: Shopsys\FrontendApiBundle\Component\Arguments\BlogArticlePaginatorArgumentsBuilder
+        cache_dir: '%kernel.project_dir%/var/overblogCompiledClasses'
+        mappings:
+            types:
+                -   type: yaml
+                    dir: "%kernel.project_dir%/config/graphql/types"
+        schema:
+            query: Query
+            mutation: Mutation
         # these settings are suggested by docs: https://github.com/overblog/GraphQLBundle/blob/master/docs/index.md#composer-autoloader-configuration-optional
         use_classloader_listener: false
-        auto_compile: true
-        cache_dir: '%kernel.project_dir%/var/overblogCompiledClasses'
-    security:
-        handle_cors: true
-        query_max_complexity: 1110
-        enable_introspection: '%kernel.debug%'
-    services:
-        promise_adapter: "webonyx_graphql.sync_promise_adapter"
     errors_handler:
         logger_service: Shopsys\FrontendApiBundle\Model\Logger\FrontendApiLogger
+    security:
+        enable_introspection: '%kernel.debug%'
+        handle_cors: true
+        query_max_complexity: 1110
+    services:
+        promise_adapter: "webonyx_graphql.sync_promise_adapter"

@@ -1,3 +1,9 @@
+
+front_brand_list:
+    path: /prehled-znacek
+
+front_customer_activation:
+    path: /povrzeni-registrace
 front_customer_order_detail_registered:
     path: /zakaznik/detail-objednavky/{orderNumber}
 
@@ -15,17 +21,8 @@ front_order_paid:
     path: /potvrzeni-platby-objednavky
 
 front_order_payment_status_notify:
-    path: /order/payment-status-notify
     methods: [GET]
-
-front_registration_set_new_password:
-    path: /nove-heslo
-
-front_customer_activation:
-    path: /povrzeni-registrace
-
-front_brand_list:
-    path: /prehled-znacek
+    path: /order/payment-status-notify
 
 front_personal_data:
     path: /prehled-osobnich-udaju
@@ -35,6 +32,9 @@ front_personal_data_access:
 
 front_personal_data_export:
     path: /export-osobnich-udaju
+
+front_registration_set_new_password:
+    path: /nove-heslo
 
 front_stores:
     path: /obchodni-domy

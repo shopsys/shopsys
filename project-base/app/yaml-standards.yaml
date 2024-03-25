@@ -5,6 +5,7 @@
             parameters:
                 { indents: 4, indentsCommentsWithoutParent: default }
         -   pathToChecker: YamlStandards\Model\YamlServiceAliasing\YamlServiceAliasingChecker
+
             parameters:
                 { serviceAliasingType: long, indents: 4 }
         -   pathToChecker: YamlStandards\Model\YamlEmptyLineAtEnd\YamlEmptyLineAtEndChecker

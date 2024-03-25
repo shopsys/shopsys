@@ -1,4 +1,4 @@
 debug:
+    dump_destination: tcp://0.0.0.0:9912 # dumps are available in profiler or for reading dumps start server php bin/console server:dump
     max_items: 500
     max_string_length: 5000
-    dump_destination: tcp://0.0.0.0:9912 # dumps are available in profiler or for reading dumps start server php bin/console server:dump

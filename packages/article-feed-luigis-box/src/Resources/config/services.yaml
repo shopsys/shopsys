@@ -1,7 +1,7 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     Shopsys\ArticleFeed\LuigisBoxBundle\:

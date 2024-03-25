@@ -1,3 +1,9 @@
+
+front_brand_list:
+    path: /brands-overview
+
+front_customer_activation:
+    path: /registration-confirmation
 front_customer_order_detail_registered:
     path: /customer/orders/detail/{orderNumber}
 
@@ -15,17 +21,8 @@ front_order_paid:
     path: /order-payment-confirmation
 
 front_order_payment_status_notify:
-    path: /order/payment-status-notify
     methods: [GET]
-
-front_registration_set_new_password:
-    path: /new-password
-
-front_customer_activation:
-    path: /registration-confirmation
-
-front_brand_list:
-    path: /brands-overview
+    path: /order/payment-status-notify
 
 front_personal_data:
     path: /personal-data-overview
@@ -35,6 +32,9 @@ front_personal_data_access:
 
 front_personal_data_export:
     path: /personal-data-export
+
+front_registration_set_new_password:
+    path: /new-password
 
 front_stores:
     path: /stores
