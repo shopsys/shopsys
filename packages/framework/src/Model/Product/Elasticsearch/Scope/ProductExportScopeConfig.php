@@ -47,6 +47,14 @@ class ProductExportScopeConfig
         return $this->productExportScopeRules;
     }
 
+    /**
+     * @return string[]
+     */
+    public function getAllProductExportScopes(): array
+    {
+        return array_keys($this->getProductExportScopeRules());
+    }
+
     protected function loadProductExportScopeRules(): void
     {
         $this->productExportScopeRules = [];
