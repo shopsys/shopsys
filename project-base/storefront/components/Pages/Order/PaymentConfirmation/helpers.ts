@@ -1,6 +1,9 @@
 import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
-import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
-import { getGtmCreateOrderEventFromLocalStorage, removeGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
+import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
+import {
+    getGtmCreateOrderEventFromLocalStorage,
+    removeGtmCreateOrderEventFromLocalStorage,
+} from 'gtm/helpers/gtmCreateOrderEventLocalStorage';
 import { useEffect, useRef } from 'react';
 
 export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPageValidityHash: string | null) => {

@@ -7,7 +7,7 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';

@@ -1,7 +1,8 @@
 import { Popup } from 'components/Layout/Popup/Popup';
-import { getGtmShowMessageEvent } from 'gtm/helpers/eventFactories';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
-import { GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmMessageType } from 'gtm/enums/GtmMessageType';
+import { getGtmShowMessageEvent } from 'gtm/factories/getGtmShowMessageEvent';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, useEffect, useMemo } from 'react';
 

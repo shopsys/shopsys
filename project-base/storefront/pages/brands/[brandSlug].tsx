@@ -13,7 +13,7 @@ import {
     BrandProductsQueryVariables,
     BrandProductsQueryDocument,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';

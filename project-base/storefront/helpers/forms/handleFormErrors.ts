@@ -1,4 +1,4 @@
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'helpers/toasts';
 import { Translate } from 'next-translate';

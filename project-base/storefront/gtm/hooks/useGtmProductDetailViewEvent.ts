@@ -2,8 +2,8 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
-import { getGtmProductDetailViewEvent } from 'gtm/helpers/eventFactories';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
+import { getGtmProductDetailViewEvent } from 'gtm/factories/getGtmProductDetailViewEvent';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { useEffect, useRef } from 'react';
 
 export const useGtmProductDetailViewEvent = (

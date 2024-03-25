@@ -3,14 +3,13 @@ import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
+import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { useBlogUrlQuery } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
-
-export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 
 export const BlogPreview: FC = () => {
     const { t } = useTranslation();

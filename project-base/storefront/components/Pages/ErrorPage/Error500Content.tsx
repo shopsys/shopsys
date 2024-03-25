@@ -1,25 +1,8 @@
-import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
+import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain, ErrorPageButtonLink } from './ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { FallbackProps } from 'react-error-boundary';
-
-export const Error500ContentWithBoundary: FC<FallbackProps> = ({ resetErrorBoundary }) => {
-    const router = useRouter();
-
-    useEffect(() => {
-        router.events.on('routeChangeComplete', resetErrorBoundary);
-
-        return () => {
-            router.events.off('routeChangeComplete', resetErrorBoundary);
-        };
-    }, [resetErrorBoundary, router.events]);
-
-    return <Error500Content />;
-};
 
 type Error500ContentProps = {
     err?: string;

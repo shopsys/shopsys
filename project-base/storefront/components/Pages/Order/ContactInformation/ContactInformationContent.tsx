@@ -11,17 +11,15 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateOrderMutation } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import {
-    useGtmStaticPageViewEvent,
-    getGtmCreateOrderEventOrderPart,
-    getGtmCreateOrderEventUserPart,
-} from 'gtm/helpers/eventFactories';
-import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
-import { getGtmReviewConsents } from 'gtm/helpers/gtm';
-import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/helpers';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
+import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
+import { getGtmReviewConsents } from 'gtm/helpers/getGtmReviewConsents';
+import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/gtmCreateOrderEventLocalStorage';
 import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType, GtmMessageOriginType } from 'gtm/types/enums';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';

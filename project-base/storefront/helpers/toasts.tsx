@@ -2,8 +2,10 @@ import { isWithToastAndConsoleErrorDebugging } from './errors/isWithErrorDebuggi
 import { isClient } from './isClient';
 import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { TIDs } from 'cypress/tids';
-import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
+import { GtmMessageDetailType } from 'gtm/enums/GtmMessageDetailType';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmMessageType } from 'gtm/enums/GtmMessageType';
+import { onGtmShowMessageEventHandler } from 'gtm/handlers/onGtmShowMessageEventHandler';
 import { toast } from 'react-toastify';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {

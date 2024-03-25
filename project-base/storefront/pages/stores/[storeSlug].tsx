@@ -6,7 +6,7 @@ import {
     StoreDetailQueryVariables,
     StoreDetailQueryDocument,
 } from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';

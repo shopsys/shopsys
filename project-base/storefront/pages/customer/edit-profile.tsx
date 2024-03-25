@@ -5,9 +5,9 @@ import { EditProfileContent } from 'components/Pages/Customer/EditProfileContent
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';

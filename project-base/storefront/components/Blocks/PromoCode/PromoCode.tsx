@@ -5,7 +5,7 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { TIDs } from 'cypress/tids';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';

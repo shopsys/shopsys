@@ -1,5 +1,5 @@
 import { useGtmContext } from 'gtm/context/useGtmContext';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useRouter } from 'next/router';

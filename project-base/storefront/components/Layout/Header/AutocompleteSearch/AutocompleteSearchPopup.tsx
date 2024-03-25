@@ -1,3 +1,9 @@
+import {
+    AUTOCOMPLETE_PRODUCT_LIMIT,
+    AUTOCOMPLETE_BRAND_LIMIT,
+    AUTOCOMPLETE_CATEGORY_LIMIT,
+    AUTOCOMPLETE_ARTICLE_LIMIT,
+} from './constants';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { IconImage } from 'components/Basic/Icon/IconImage';
 import { Image } from 'components/Basic/Image/Image';
@@ -8,8 +14,10 @@ import { SimpleCategoryFragment } from 'graphql/requests/categories/fragments/Si
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { SimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
 import { AutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { onGtmAutocompleteResultClickEventHandler, onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmProductListNameType, GtmSectionType } from 'gtm/types/enums';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { GtmSectionType } from 'gtm/enums/GtmSectionType';
+import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
+import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -17,11 +25,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { forwardRef, useMemo } from 'react';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
-
-export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
-export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
-export const AUTOCOMPLETE_CATEGORY_LIMIT = 3 as const;
-export const AUTOCOMPLETE_ARTICLE_LIMIT = 3 as const;
 
 type AutocompleteProps = {
     autocompleteSearchResults: AutocompleteSearchQuery;

@@ -6,7 +6,7 @@ import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderCo
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';

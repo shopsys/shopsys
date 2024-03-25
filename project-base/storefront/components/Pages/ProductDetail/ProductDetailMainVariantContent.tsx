@@ -1,5 +1,5 @@
-import { ProductDetailCode, ProductDetailHeading, ProductDetailPrefix } from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories';
+import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';

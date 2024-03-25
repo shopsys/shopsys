@@ -1,7 +1,7 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
-import { GtmProductListNameType } from 'gtm/types/enums';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];

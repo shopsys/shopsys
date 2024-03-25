@@ -1,4 +1,4 @@
-import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
+import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
@@ -20,8 +20,6 @@ const AutocompleteSearchPopup = dynamic(() =>
 );
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
-
-export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 
 export const AutocompleteSearch: FC = () => {
     const { t } = useTranslation();

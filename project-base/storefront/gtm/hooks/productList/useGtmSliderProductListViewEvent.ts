@@ -1,9 +1,9 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
-import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
-import { GtmProductListNameType } from 'gtm/types/enums';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { getGtmProductListViewEvent } from 'gtm/factories/getGtmProductListViewEvent';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { useEffect, useRef } from 'react';
 
 export const useGtmSliderProductListViewEvent = (

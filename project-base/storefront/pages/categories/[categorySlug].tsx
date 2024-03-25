@@ -11,7 +11,7 @@ import {
     CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';

@@ -1,7 +1,8 @@
 import { ProductsListContent } from './ProductsList/ProductsListContent';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useState } from 'react';

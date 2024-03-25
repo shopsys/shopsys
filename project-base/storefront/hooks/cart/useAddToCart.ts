@@ -1,8 +1,9 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AddToCartMutation, useAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
-import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
-import { getGtmMappedCart } from 'gtm/helpers/gtm';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { onGtmChangeCartItemEventHandler } from 'gtm/handlers/onGtmChangeCartItemEventHandler';
+import { getGtmMappedCart } from 'gtm/helpers/getGtmMappedCart';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { showErrorMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';

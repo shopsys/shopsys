@@ -1,9 +1,9 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useGtmPaymentAndTransportPageViewEvent } from 'gtm/hooks/useGtmPaymentAndTransportPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import Script from 'next/script';

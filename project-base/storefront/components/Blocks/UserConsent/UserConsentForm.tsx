@@ -2,8 +2,8 @@ import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMet
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { useCookiesArticleUrlQuery } from 'graphql/requests/articles/queries/CookiesArticleUrlQuery.generated';
-import { onGtmConsentUpdateEventHandler } from 'gtm/helpers/eventHandlers';
-import { getGtmConsentInfo } from 'gtm/helpers/gtm';
+import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
+import { getGtmConsentInfo } from 'gtm/helpers/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider } from 'react-hook-form';
