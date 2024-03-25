@@ -61,7 +61,10 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
             return;
         }
 
-        $this->logger->info('Product recalculated', ['product_ids' => json_encode(array_keys($exportScopesIndexedByProductId), JSON_THROW_ON_ERROR)]);
+        $this->logger->info('Product recalculated', [
+            'product_ids' => json_encode(array_keys($exportScopesIndexedByProductId), JSON_THROW_ON_ERROR),
+            'export_scopes' => json_encode($exportScopesIndexedByProductId, JSON_THROW_ON_ERROR),
+        ]);
     }
 
     /**
