@@ -18,7 +18,7 @@ import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRe
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
 import { getCookiesStore } from 'helpers/cookies/getCookiesStore';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/staticUrls/getServerSideInternationalizedStaticUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';

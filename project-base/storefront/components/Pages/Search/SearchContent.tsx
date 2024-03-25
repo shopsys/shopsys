@@ -5,7 +5,7 @@ import { TIDs } from 'cypress/tids';
 import { SimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
 import { SearchQuery } from 'graphql/requests/search/queries/SearchQuery.generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';

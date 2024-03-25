@@ -15,7 +15,7 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';

@@ -3,8 +3,6 @@ import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.gener
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { onGtmRemoveFromCartEventHandler } from 'gtm/handlers/onGtmRemoveFromCartEventHandler';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { usePersistStore } from 'store/usePersistStore';
@@ -34,20 +32,9 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [
         if (removeItemFromCartActionResult.data?.RemoveFromCart.uuid !== undefined) {
             updateCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid);
 
-            const absoluteEventValueWithoutVat =
-                mapPriceForCalculations(cartItem.product.price.priceWithoutVat) * cartItem.quantity;
-            const absoluteEventValueWithVat =
-                mapPriceForCalculations(cartItem.product.price.priceWithVat) * cartItem.quantity;
-
-            onGtmRemoveFromCartEventHandler(
-                cartItem,
-                currencyCode,
-                absoluteEventValueWithoutVat,
-                absoluteEventValueWithVat,
-                listIndex,
-                gtmProductListName,
-                url,
-            );
+            import('gtm/handlers/onGtmRemoveFromCartEventHandler').then(({ onGtmRemoveFromCartEventHandler }) => {
+                onGtmRemoveFromCartEventHandler(cartItem, currencyCode, listIndex, gtmProductListName, url);
+            });
 
             dispatchBroadcastChannel('refetchCart');
         }

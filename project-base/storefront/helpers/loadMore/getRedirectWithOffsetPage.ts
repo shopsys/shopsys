@@ -1,6 +1,6 @@
 import { getOffsetPageAndLoadMore } from './getOffsetPageAndLoadMore';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { PAGE_QUERY_PARAMETER_NAME, LOAD_MORE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { Redirect } from 'next';
 import { ParsedUrlQuery } from 'querystring';

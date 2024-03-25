@@ -1,7 +1,7 @@
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 
