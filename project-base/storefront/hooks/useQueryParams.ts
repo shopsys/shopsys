@@ -2,12 +2,10 @@ import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
-import {
-    getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
-    getUrlQueriesWithoutFalsyValues,
-    getUrlQueriesWithoutDynamicPageQueries,
-} from 'helpers/parsing/urlParsing';
-import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
+import { getDynamicPageQueryKey } from 'helpers/parsing/getDynamicPageQueryKey';
+import { getQueryWithoutSlugTypeParameterFromParsedUrlQuery } from 'helpers/parsing/getQueryWithoutSlugTypeParameterFromParsedUrlQuery';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { getUrlQueriesWithoutFalsyValues } from 'helpers/parsing/getUrlQueriesWithoutFalsyValues';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,

@@ -13,7 +13,8 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
-import { getNumberFromUrlQuery, getSlugFromServerSideUrl } from 'helpers/parsing/urlParsing';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';

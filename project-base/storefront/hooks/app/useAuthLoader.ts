@@ -1,6 +1,6 @@
 import { getCookies } from 'cookies-next';
 import { isClient } from 'helpers/isClient';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { showInfoMessage } from 'helpers/toasts/showInfoMessage';
 import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';

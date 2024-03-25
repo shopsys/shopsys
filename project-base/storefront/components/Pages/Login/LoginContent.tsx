@@ -8,7 +8,7 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { useAuth } from 'hooks/auth/useAuth';
+import { useLogin } from 'hooks/auth/useLogin';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
@@ -23,7 +23,7 @@ export const LoginContent: FC = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
-    const { login } = useAuth();
+    const login = useLogin();
 
     const onLoginHandler = async (data: { email: string; password: string }) => {
         let redirectUrl = url;

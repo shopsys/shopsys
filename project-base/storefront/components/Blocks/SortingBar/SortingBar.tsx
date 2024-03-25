@@ -2,7 +2,7 @@ import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';

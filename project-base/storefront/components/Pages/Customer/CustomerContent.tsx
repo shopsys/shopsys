@@ -3,12 +3,12 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
+import { useLogout } from 'hooks/auth/useLogout';
 import useTranslation from 'next-translate/useTranslation';
 
 export const CustomerContent: FC = () => {
     const { t } = useTranslation();
-    const { logout } = useAuth();
+    const logout = useLogout();
     const { url } = useDomainConfig();
     const [customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/customer/orders', '/customer/edit-profile'],

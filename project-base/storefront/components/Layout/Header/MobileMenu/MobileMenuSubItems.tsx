@@ -1,8 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { useLogout } from 'hooks/auth/useLogout';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
@@ -20,7 +20,7 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
         ['/stores', '/login', '/product-comparison', '/wishlist'],
         url,
     );
-    const { logout } = useAuth();
+    const logout = useLogout();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
 

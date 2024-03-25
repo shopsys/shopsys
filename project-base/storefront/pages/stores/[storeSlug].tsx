@@ -10,7 +10,8 @@ import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageVie
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';

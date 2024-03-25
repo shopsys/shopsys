@@ -1,7 +1,8 @@
 import { setCookie } from 'cookies-next';
 import { OptionsType } from 'cookies-next/lib/types';
 import { useEffect } from 'react';
-import { CookiesStoreState, useCookiesStore } from 'store/useCookiesStore';
+import { CookiesStoreState } from 'store/createCookieStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 
 const COOKIES_STORE_NAME = 'cookiesStore' as const;
 const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;

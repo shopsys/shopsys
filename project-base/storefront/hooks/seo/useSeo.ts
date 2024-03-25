@@ -12,7 +12,7 @@ type UseSeoHookProps = {
     canonicalQueryParams?: CanonicalQueryParameters;
 };
 
-const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps) => {
+export const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps) => {
     const { url } = useDomainConfig();
     const router = useRouter();
 
@@ -52,5 +52,3 @@ const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseS
         canonicalUrl,
     };
 };
-
-export default useSeo;

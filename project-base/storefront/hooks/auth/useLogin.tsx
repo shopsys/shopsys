@@ -3,13 +3,10 @@ import {
     LoginMutation,
     useLoginMutation,
 } from 'graphql/requests/auth/mutations/LoginMutation.generated';
-import { useLogoutMutation } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
-import { removeTokensFromCookies } from 'helpers/auth/removeTokensFromCookies';
 import { setTokensToCookies } from 'helpers/auth/setTokensToCookies';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
-import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 
 type LoginHandler = (
@@ -17,18 +14,13 @@ type LoginHandler = (
     rewriteUrl?: string,
 ) => Promise<OperationResult<LoginMutation, LoginMutationVariables>>;
 
-type LogoutHandler = () => Promise<void>;
-
-export const useAuth = () => {
+export const useLogin = () => {
     const [, loginMutation] = useLoginMutation();
-    const [, logoutMutation] = useLogoutMutation();
 
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
-    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
-    const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
 
     const router = useRouter();
 
@@ -60,21 +52,5 @@ export const useAuth = () => {
         return loginResult;
     };
 
-    const logout: LogoutHandler = async () => {
-        const logoutResult = await logoutMutation({});
-
-        if (logoutResult.data?.Logout) {
-            updateProductListUuids({});
-            removeTokensFromCookies();
-            updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
-            updateAuthLoadingState('logout-loading');
-            resetContactInformation();
-
-            router.reload();
-        }
-
-        dispatchBroadcastChannel('reloadPage');
-    };
-
-    return { login, logout };
+    return login;
 };

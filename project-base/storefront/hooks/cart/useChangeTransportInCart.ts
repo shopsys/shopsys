@@ -2,7 +2,6 @@ import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.gener
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { onGtmTransportChangeEventHandler } from 'gtm/handlers/onGtmTransportChangeEventHandler';
 import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
@@ -57,12 +56,14 @@ export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] =>
                 return null;
             }
 
-            onGtmTransportChangeEventHandler(
-                gtmCart.current,
-                changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
-                newPickupPlace,
-                changeTransportResult.data?.ChangeTransportInCart.payment?.name,
-            );
+            import('gtm/handlers/onGtmTransportChangeEventHandler').then(({ onGtmTransportChangeEventHandler }) => {
+                onGtmTransportChangeEventHandler(
+                    gtmCart.current,
+                    changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
+                    newPickupPlace,
+                    changeTransportResult.data?.ChangeTransportInCart.payment?.name,
+                );
+            });
 
             return changeTransportResult.data?.ChangeTransportInCart;
         },

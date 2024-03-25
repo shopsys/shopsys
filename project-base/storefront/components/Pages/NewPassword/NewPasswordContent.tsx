@@ -12,7 +12,7 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
-import { useAuth } from 'hooks/auth/useAuth';
+import { useLogin } from 'hooks/auth/useLogin';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -37,7 +37,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const { login } = useAuth();
+    const login = useLogin();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
         fieldState: { invalid: isNewPasswordInvalid },

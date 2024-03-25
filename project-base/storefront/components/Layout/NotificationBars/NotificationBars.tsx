@@ -4,7 +4,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
 import { getTokensFromCookies } from 'helpers/auth/getTokensFromCookies';
-import { useAuth } from 'hooks/auth/useAuth';
+import { useLogout } from 'hooks/auth/useLogout';
 import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
     const user = useCurrentCustomerData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const bars = notificationBarsData?.notificationBars;
-    const { logout } = useAuth();
+    const logout = useLogout();
 
     useEffect(() => {
         const { accessToken: encodedAccessToken } = getTokensFromCookies();

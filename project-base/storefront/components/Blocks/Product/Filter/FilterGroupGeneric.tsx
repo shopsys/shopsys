@@ -5,8 +5,8 @@ import {
     FilterGroupWrapper,
     ShowAllButton,
 } from './FilterElements';
+import { useFilterShowLess } from './helpers/useFilterShowLess';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';

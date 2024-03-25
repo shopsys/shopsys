@@ -2,9 +2,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AddToCartMutation, useAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { onGtmChangeCartItemEventHandler } from 'gtm/handlers/onGtmChangeCartItemEventHandler';
-import { getGtmMappedCart } from 'gtm/helpers/getGtmMappedCart';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
@@ -74,31 +71,18 @@ export const useAddToCart = (
             );
         }
 
-        const quantityDifference = isAbsoluteQuantity
-            ? addToCartResult.addProductResult.addedQuantity - initialQuantity
-            : addToCartResult.addProductResult.addedQuantity;
-        const absoluteEventValueWithoutVat =
-            mapPriceForCalculations(addedCartItem.product.price.priceWithoutVat) * Math.abs(quantityDifference);
-        const absoluteEventValueWithVat =
-            mapPriceForCalculations(addedCartItem.product.price.priceWithVat) * Math.abs(quantityDifference);
-
-        onGtmChangeCartItemEventHandler(
-            addedCartItem,
-            domainConfig.currencyCode,
-            absoluteEventValueWithoutVat,
-            absoluteEventValueWithVat,
-            listIndex,
-            quantityDifference,
-            gtmProductListName,
-            domainConfig.url,
-            getGtmMappedCart(
-                addToCartResult.cart,
-                addToCartResult.cart.promoCode,
-                isUserLoggedIn,
+        import('gtm/handlers/onGtmChangeCartItemEventHandler').then(({ onGtmChangeCartItemEventHandler }) => {
+            onGtmChangeCartItemEventHandler(
+                initialQuantity,
+                isAbsoluteQuantity,
+                addToCartResult,
+                addedCartItem,
                 domainConfig,
-                cartUuid,
-            ),
-        );
+                listIndex,
+                gtmProductListName,
+                isUserLoggedIn,
+            );
+        });
 
         return addToCartResult;
     };

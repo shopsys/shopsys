@@ -12,7 +12,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { blurInput } from 'helpers/forms/blurInput';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
+import { useLogin } from 'hooks/auth/useLogin';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
@@ -34,7 +34,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUse
         url,
     );
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: defaultEmail ?? '', password: '' });
-    const { login } = useAuth();
+    const login = useLogin();
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data) => {
         blurInput();

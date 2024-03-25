@@ -1,5 +1,5 @@
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
