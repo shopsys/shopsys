@@ -8,7 +8,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';

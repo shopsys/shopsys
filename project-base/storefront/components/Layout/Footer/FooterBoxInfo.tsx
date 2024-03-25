@@ -4,7 +4,7 @@ import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 
 // TODO PRG

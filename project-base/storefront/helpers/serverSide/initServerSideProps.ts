@@ -16,11 +16,11 @@ import {
 import { ArticlePlacementTypeEnum } from 'graphql/types';
 import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
-import { getCookiesStore } from 'helpers/cookies/cookiesStoreUtils';
+import { getCookiesStore } from 'helpers/cookies/getCookiesStore';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
+import { getServerSideInternationalizedStaticUrl } from 'helpers/staticUrls/getServerSideInternationalizedStaticUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';

@@ -19,7 +19,8 @@ import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutatio
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

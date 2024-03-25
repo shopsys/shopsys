@@ -7,8 +7,8 @@ import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/Ca
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { createEmptyArray } from 'helpers/arrayUtils';
-import { calculatePageSize } from 'helpers/loadMore';
+import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
+import { calculatePageSize } from 'helpers/loadMore/calculatePageSize';
 import { useQueryParams } from 'hooks/useQueryParams';
 
 type ProductsListProps = {

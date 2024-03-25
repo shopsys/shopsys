@@ -3,7 +3,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
-import { getTokensFromCookies } from 'helpers/auth/tokens';
+import { getTokensFromCookies } from 'helpers/auth/getTokensFromCookies';
 import { useAuth } from 'hooks/auth/useAuth';
 import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';

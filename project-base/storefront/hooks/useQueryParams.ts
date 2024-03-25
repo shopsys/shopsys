@@ -3,18 +3,6 @@ import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import {
-    getChangedDefaultFilters,
-    getChangedDefaultFiltersAfterAvailabilityChange,
-    getChangedDefaultFiltersAfterBrandChange,
-    getChangedDefaultFiltersAfterFlagChange,
-    getChangedDefaultFiltersAfterMaximumPriceChange,
-    getChangedDefaultFiltersAfterMinimumPriceChange,
-    getChangedDefaultFiltersAfterParameterChange,
-    getChangedDefaultFiltersAfterPriceChange,
-    getChangedDefaultFiltersAfterSliderParameterChange,
-    useRedirectFromSeoCategory,
-} from 'helpers/filterOptions/seoCategories';
-import {
     getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
     getUrlQueriesWithoutFalsyValues,
     getUrlQueriesWithoutDynamicPageQueries,
@@ -27,6 +15,18 @@ import {
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
+import {
+    getChangedDefaultFilters,
+    getChangedDefaultFiltersAfterAvailabilityChange,
+    getChangedDefaultFiltersAfterBrandChange,
+    getChangedDefaultFiltersAfterFlagChange,
+    getChangedDefaultFiltersAfterMaximumPriceChange,
+    getChangedDefaultFiltersAfterMinimumPriceChange,
+    getChangedDefaultFiltersAfterParameterChange,
+    getChangedDefaultFiltersAfterPriceChange,
+    getChangedDefaultFiltersAfterSliderParameterChange,
+    useRedirectFromSeoCategory,
+} from 'helpers/seoCategories/queryParamsHelpers';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';

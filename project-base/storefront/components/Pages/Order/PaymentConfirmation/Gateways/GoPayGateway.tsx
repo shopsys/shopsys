@@ -2,7 +2,7 @@ import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
 import { GoPayCreatePaymentSetup } from 'graphql/types';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import useTranslation from 'next-translate/useTranslation';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';

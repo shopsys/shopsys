@@ -5,7 +5,7 @@ import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonMo
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogCategoryArticles } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
-import { createEmptyArray } from 'helpers/arrayUtils';
+import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { RefObject, useMemo } from 'react';

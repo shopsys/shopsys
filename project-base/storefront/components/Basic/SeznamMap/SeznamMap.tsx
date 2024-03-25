@@ -4,7 +4,7 @@ import { SeznamMapMarkerLayer } from './SeznamMapMarkerLayer';
 import { SeznamMapMounter } from './SeznamMapMounter';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { LatLngLiteral, MapMarker } from 'types/map';

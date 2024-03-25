@@ -8,7 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { StoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 import { createMapMarker } from 'helpers/createMapMarker';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';

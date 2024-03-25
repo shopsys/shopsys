@@ -8,7 +8,10 @@ import {
 } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
 import { ProductOrderingModeEnum, Maybe, ProductFilter } from 'graphql/types';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { calculatePageSize, getPageSizeInfo, hasReadAllProductsFromCache, mergeProductEdges } from 'helpers/loadMore';
+import { calculatePageSize } from 'helpers/loadMore/calculatePageSize';
+import { getPageSizeInfo } from 'helpers/loadMore/getPageSizeInfo';
+import { hasReadAllProductsFromCache } from 'helpers/loadMore/hasReadAllProductsFromCache';
+import { mergeProductEdges } from 'helpers/loadMore/mergeProductEdges';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRef, useState, useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';

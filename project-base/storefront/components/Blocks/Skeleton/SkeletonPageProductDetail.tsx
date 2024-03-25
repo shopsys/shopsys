@@ -1,6 +1,6 @@
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { createEmptyArray } from 'helpers/arrayUtils';
+import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageProductDetail: FC = () => (

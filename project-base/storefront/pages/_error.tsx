@@ -4,7 +4,7 @@ import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'helpe
 import { logException } from 'helpers/errors/logException';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { NextPage } from 'next';
 import { ReactElement } from 'react';
 

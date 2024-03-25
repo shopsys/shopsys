@@ -23,10 +23,10 @@ import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/gtmCreateOrde
 import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
