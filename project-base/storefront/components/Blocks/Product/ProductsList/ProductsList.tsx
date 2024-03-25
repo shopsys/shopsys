@@ -5,7 +5,8 @@ import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/Ca
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { calculatePageSize } from 'helpers/loadMore';
 import { useQueryParams } from 'hooks/useQueryParams';

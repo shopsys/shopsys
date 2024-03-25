@@ -1,6 +1,6 @@
 import { useGtmContext } from 'gtm/context/useGtmContext';
-import { getGtmCartViewEvent } from 'gtm/helpers/eventFactories';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
+import { getGtmCartViewEvent } from 'gtm/factories/getGtmCartViewEvent';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { useEffect, useRef } from 'react';
 

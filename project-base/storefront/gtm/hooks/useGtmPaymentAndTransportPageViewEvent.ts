@@ -1,6 +1,6 @@
 import { useGtmContext } from 'gtm/context/useGtmContext';
-import { getGtmPaymentAndTransportPageViewEvent } from 'gtm/helpers/eventFactories';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
+import { getGtmTransportAndPaymentPageViewEvent } from 'gtm/factories/getGtmTransportAndPaymentPageViewEvent';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { useEffect, useRef } from 'react';
 
@@ -18,7 +18,7 @@ export const useGtmPaymentAndTransportPageViewEvent = (gtmPageViewEvent: GtmPage
         ) {
             wasViewedRef.current = true;
             gtmSafePushEvent(
-                getGtmPaymentAndTransportPageViewEvent(gtmPageViewEvent.cart.currencyCode, gtmPageViewEvent.cart),
+                getGtmTransportAndPaymentPageViewEvent(gtmPageViewEvent.cart.currencyCode, gtmPageViewEvent.cart),
             );
         }
     }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, didPageViewRun]);

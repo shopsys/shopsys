@@ -1,7 +1,7 @@
 import { useRegistrationMutation } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
 import { RegistrationDataInput } from 'graphql/types';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmFormType } from 'gtm/types/enums';
+import { GtmFormType } from 'gtm/enums/GtmFormType';
+import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { useRouter } from 'next/router';

@@ -4,8 +4,8 @@ import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAv
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { AvailabilityStatusEnum } from 'graphql/types';
-import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmProductListNameType } from 'gtm/types/enums';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { twJoin } from 'tailwind-merge';
 

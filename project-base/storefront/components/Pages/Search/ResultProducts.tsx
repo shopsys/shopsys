@@ -1,6 +1,7 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 

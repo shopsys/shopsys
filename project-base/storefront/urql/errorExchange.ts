@@ -1,6 +1,6 @@
 import { Kind } from 'graphql';
 import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';

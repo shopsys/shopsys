@@ -1,7 +1,7 @@
 import { AutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
-import { getGtmAutocompleteResultsViewEvent } from 'gtm/helpers/eventFactories';
-import { gtmSafePushEvent } from 'gtm/helpers/gtm';
+import { getGtmAutocompleteResultsViewEvent } from 'gtm/factories/getGtmAutocompleteResultsViewEvent';
+import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { useEffect, useRef } from 'react';
 
 export const useGtmAutocompleteResultsViewEvent = (
