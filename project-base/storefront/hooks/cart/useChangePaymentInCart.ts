@@ -1,7 +1,6 @@
 import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangePaymentInCartMutation } from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { onGtmPaymentChangeEventHandler } from 'gtm/handlers/onGtmPaymentChangeEventHandler';
 import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
@@ -52,10 +51,12 @@ export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
                 return null;
             }
 
-            onGtmPaymentChangeEventHandler(
-                gtmCart.current,
-                changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
-            );
+            import('gtm/handlers/onGtmPaymentChangeEventHandler').then(({ onGtmPaymentChangeEventHandler }) => {
+                onGtmPaymentChangeEventHandler(
+                    gtmCart.current,
+                    changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
+                );
+            });
 
             return changePaymentResult.data?.ChangePaymentInCart;
         },

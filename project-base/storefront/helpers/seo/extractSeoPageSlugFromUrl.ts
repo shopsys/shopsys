@@ -1,5 +1,5 @@
 import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 
 export const extractSeoPageSlugFromUrl = (url: string, domain: string): string | null => {
     const staticRewritePathsForDomain = STATIC_REWRITE_PATHS[domain];

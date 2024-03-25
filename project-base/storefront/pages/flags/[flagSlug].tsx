@@ -19,12 +19,10 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/han
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getSlugFromUrl,
-} from 'helpers/parsing/urlParsing';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'helpers/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,

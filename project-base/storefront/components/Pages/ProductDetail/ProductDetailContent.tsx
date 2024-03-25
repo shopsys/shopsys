@@ -13,7 +13,7 @@ import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisited
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';

@@ -1,6 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useQueryParams } from 'hooks/useQueryParams';

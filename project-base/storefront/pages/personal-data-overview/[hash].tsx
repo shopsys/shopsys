@@ -6,7 +6,7 @@ import {
     usePersonalDataDetailQuery,
     PersonalDataDetailQueryVariables,
 } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
-import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';

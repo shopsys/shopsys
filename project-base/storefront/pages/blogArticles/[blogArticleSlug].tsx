@@ -12,8 +12,9 @@ import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageVie
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';

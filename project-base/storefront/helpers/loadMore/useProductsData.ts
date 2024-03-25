@@ -21,7 +21,7 @@ import {
     FlagProductsQuery,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';

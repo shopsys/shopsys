@@ -4,12 +4,12 @@ import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
+import { useLogout } from 'hooks/auth/useLogout';
 import useTranslation from 'next-translate/useTranslation';
 
 export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
-    const { logout } = useAuth();
+    const logout = useLogout();
     const { url } = useDomainConfig();
     const [customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/customer', '/customer/orders', '/customer/edit-profile'],

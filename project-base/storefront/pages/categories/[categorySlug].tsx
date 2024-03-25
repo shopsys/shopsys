@@ -3,7 +3,7 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCur
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
-import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
+import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/helpers';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     CategoryDetailQuery,
@@ -17,11 +17,9 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/han
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-} from 'helpers/parsing/urlParsing';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'helpers/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
@@ -31,7 +29,6 @@ import {
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useHandleDefaultFiltersUpdate } from 'hooks/seoCategories/useHandleDefaultFiltersUpdate';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';

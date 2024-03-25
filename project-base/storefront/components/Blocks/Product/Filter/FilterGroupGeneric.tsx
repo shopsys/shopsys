@@ -6,7 +6,6 @@ import {
     ShowAllButton,
 } from './FilterElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -92,4 +91,25 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             )}
         </FilterGroupWrapper>
     );
+};
+
+const useFilterShowLess = (
+    options: MappedFilterOption[] | undefined,
+    defaultNumberOfItems: number,
+    selectedItems: string[] | null | undefined,
+) => {
+    const hiddenOptions = options?.slice(defaultNumberOfItems, options.length);
+    const isWithHiddenCheckedItem = hiddenOptions?.some((o) => !!selectedItems?.includes(o.uuid));
+
+    const [isWithAllItemsShown, setAreAllItemsShown] = useState(isWithHiddenCheckedItem);
+
+    const shownOptions = options?.slice(0, defaultNumberOfItems);
+    const defaultOptions = isWithAllItemsShown ? options : shownOptions;
+
+    return {
+        isShowLessMoreShown: !!hiddenOptions?.length,
+        defaultOptions,
+        isWithAllItemsShown,
+        setAreAllItemsShown,
+    };
 };
