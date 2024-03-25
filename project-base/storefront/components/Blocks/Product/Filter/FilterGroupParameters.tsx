@@ -8,7 +8,8 @@ import {
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
+import { useUpdateFilter } from 'hooks/queryParams/useUpdateFilter';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
@@ -30,10 +31,11 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 }) => {
     const { t } = useTranslation();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
-    const { filter, updateFilterParameters } = useQueryParams();
+    const currentFilter = useCurrentFilter();
+    const { updateFilterParameters } = useUpdateFilter();
     const defaultSelectedParameters = useSessionStore((s) => s.defaultProductFiltersMap.parameters);
 
-    const selectedParameter = filter?.parameters?.find((p) => p.parameter === parameter.uuid);
+    const selectedParameter = currentFilter?.parameters?.find((p) => p.parameter === parameter.uuid);
 
     const isCheckboxType = parameter.__typename === 'ParameterCheckboxFilterOption';
 

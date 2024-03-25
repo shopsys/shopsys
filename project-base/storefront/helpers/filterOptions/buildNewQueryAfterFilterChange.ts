@@ -6,7 +6,7 @@ import {
     FILTER_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { UrlQueries, FilterQueries } from 'hooks/useQueryParams';
+import { UrlQueries, FilterQueries } from 'types/urlQueries';
 
 export const buildNewQueryAfterFilterChange = (
     currentQuery: UrlQueries,

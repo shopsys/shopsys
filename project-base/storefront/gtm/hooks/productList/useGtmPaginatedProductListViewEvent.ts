@@ -5,7 +5,8 @@ import { useGtmContext } from 'gtm/context/useGtmContext';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmProductListViewEvent } from 'gtm/factories/getGtmProductListViewEvent';
 import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentLoadMore } from 'hooks/queryParams/useCurrentLoadMore';
+import { useCurrentPage } from 'hooks/queryParams/useCurrentPage';
 import { useEffect, useRef } from 'react';
 
 export const useGtmPaginatedProductListViewEvent = (
@@ -13,7 +14,8 @@ export const useGtmPaginatedProductListViewEvent = (
     gtmProductListName: GtmProductListNameType,
 ): void => {
     const lastViewedStringifiedProducts = useRef<string>();
-    const { currentPage, currentLoadMore } = useQueryParams();
+    const currentPage = useCurrentPage();
+    const currentLoadMore = useCurrentLoadMore();
     const previousLoadMoreRef = useRef(currentLoadMore);
     const { url } = useDomainConfig();
     const stringifiedProducts = JSON.stringify(paginatedProducts);

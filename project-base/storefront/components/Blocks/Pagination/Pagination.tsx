@@ -1,9 +1,12 @@
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { useCurrentLoadMore } from 'hooks/queryParams/useCurrentLoadMore';
+import { useCurrentPage } from 'hooks/queryParams/useCurrentPage';
+import { useLoadMore } from 'hooks/queryParams/useLoadMore';
+import { useUpdatePagination } from 'hooks/queryParams/useUpdatePagination';
 import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
@@ -24,7 +27,10 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
     const router = useRouter();
     const isDesktop = useMediaMin('sm');
-    const { currentPage, updatePagination, loadMore, currentLoadMore } = useQueryParams();
+    const currentPage = useCurrentPage();
+    const currentLoadMore = useCurrentLoadMore();
+    const updatePagination = useUpdatePagination();
+    const loadMore = useLoadMore();
     const currentPageWithLoadMore = Math.min(currentPage + currentLoadMore, Math.ceil(totalCount / DEFAULT_PAGE_SIZE));
     const paginationButtons = usePagination(totalCount, currentPageWithLoadMore, !isDesktop, DEFAULT_PAGE_SIZE);
     const { t } = useTranslation();
