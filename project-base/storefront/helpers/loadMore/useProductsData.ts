@@ -22,7 +22,10 @@ import {
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
+import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
+import { useCurrentSortQuery } from 'hooks/queryParams/useCurrentSortQuery';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import { useClient } from 'urql';
@@ -37,9 +40,12 @@ export const useProductsData = (
 ): [ListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
     const client = useClient();
     const { asPath } = useRouter();
-    const { filter, sort, currentPage, currentLoadMore } = useQueryParams();
+    const currentPage = useCurrentPageQuery();
+    const currentFilter = useCurrentFilterQuery();
+    const currentSort = useCurrentSortQuery();
+    const currentLoadMore = useCurrentLoadMoreQuery();
     const urlSlug = getSlugFromUrl(asPath);
-    const mappedFilter = mapParametersFilter(filter);
+    const mappedFilter = mapParametersFilter(currentFilter);
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
@@ -50,7 +56,7 @@ export const useProductsData = (
             queryDocument,
             client,
             urlSlug,
-            sort,
+            currentSort,
             mappedFilter,
             getEndCursor(currentPage),
             initialPageSizeRef.current,
@@ -114,7 +120,7 @@ export const useProductsData = (
             queryDocument,
             client,
             urlSlug,
-            sort,
+            currentSort,
             mappedFilter,
             DEFAULT_PAGE_SIZE,
             initialPageSizeRef.current,
@@ -142,13 +148,13 @@ export const useProductsData = (
             {
                 endCursor,
                 filter: mappedFilter,
-                orderingMode: sort,
+                orderingMode: currentSort,
                 urlSlug,
                 pageSize,
             },
             previousProductsFromCache,
         );
-    }, [urlSlug, sort, JSON.stringify(filter), currentPage, currentLoadMore]);
+    }, [urlSlug, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
 
     return [productsData.products, productsData.hasNextPage, fetching, loadMoreFetching];
 };

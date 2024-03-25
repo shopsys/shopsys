@@ -12,7 +12,11 @@ import { calculatePageSize } from 'helpers/loadMore/calculatePageSize';
 import { getPageSizeInfo } from 'helpers/loadMore/getPageSizeInfo';
 import { hasReadAllProductsFromCache } from 'helpers/loadMore/hasReadAllProductsFromCache';
 import { mergeProductEdges } from 'helpers/loadMore/mergeProductEdges';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
+import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
+import { useCurrentSearchStringQuery } from 'hooks/queryParams/useCurrentSearchStringQuery';
+import { useCurrentSortQuery } from 'hooks/queryParams/useCurrentSortQuery';
 import { useRef, useState, useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useClient, Client } from 'urql';
@@ -21,8 +25,12 @@ export const useSearchProductsData = (
     totalProductCount: number,
 ): [ListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
     const client = useClient();
-    const { filter, sort, currentPage, currentLoadMore, searchString } = useQueryParams();
-    const mappedFilter = mapParametersFilter(filter);
+    const currentPage = useCurrentPageQuery();
+    const currentFilter = useCurrentFilterQuery();
+    const currentSort = useCurrentSortQuery();
+    const currentSearchString = useCurrentSearchStringQuery();
+    const currentLoadMore = useCurrentLoadMoreQuery();
+    const mappedFilter = mapParametersFilter(currentFilter);
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
@@ -33,8 +41,8 @@ export const useSearchProductsData = (
     const [searchProductsData, setSearchProductsData] = useState(
         readSearchProductsFromCache(
             client,
-            searchString ?? '',
-            sort,
+            currentSearchString ?? '',
+            currentSort,
             mappedFilter,
             getEndCursor(currentPage),
             initialPageSizeRef.current,
@@ -88,8 +96,8 @@ export const useSearchProductsData = (
 
         const previousProductsFromCache = getPreviousProductsFromCache(
             client,
-            searchString ?? '',
-            sort,
+            currentSearchString ?? '',
+            currentSort,
             mappedFilter,
             DEFAULT_PAGE_SIZE,
             currentPage,
@@ -116,15 +124,15 @@ export const useSearchProductsData = (
             {
                 endCursor,
                 filter: mappedFilter,
-                orderingMode: sort,
-                search: searchString ?? '',
+                orderingMode: currentSort,
+                search: currentSearchString ?? '',
                 pageSize,
                 isAutocomplete: false,
                 userIdentifier,
             },
             previousProductsFromCache,
         );
-    }, [searchString, sort, JSON.stringify(filter), currentPage, currentLoadMore]);
+    }, [currentSearchString, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
 
     return [searchProductsData.products, searchProductsData.hasNextPage, fetching, loadMoreFetching];
 };

@@ -4,7 +4,8 @@ import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
 import { twMergeCustom } from 'helpers/twMerge';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentSortQuery } from 'hooks/queryParams/useCurrentSortQuery';
+import { useUpdateSortQuery } from 'hooks/queryParams/useUpdateSortQuery';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -25,7 +26,8 @@ const DEFAULT_SORT_OPTIONS = [
 export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSortOptions, className }) => {
     const { t } = useTranslation();
     const router = useRouter();
-    const { sort: sortSelected, updateSort } = useQueryParams();
+    const currentSort = useCurrentSortQuery();
+    const updateSort = useUpdateSortQuery();
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
@@ -40,7 +42,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     };
 
     const sortOptions = customSortOptions || DEFAULT_SORT_OPTIONS;
-    const selectedSortOption = sortSelected || sorting || DEFAULT_SORT;
+    const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
 
     return (
         <div

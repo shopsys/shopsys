@@ -5,7 +5,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
@@ -66,7 +66,7 @@ vi.mock('store/useSessionStore', () => ({
     }),
 }));
 
-describe('useQueryParams().updateFilterParameters tests', () => {
+describe('useUpdateFilter().updateFilterParameters tests', () => {
     test('checkbox parameter value should be added to query if parameter is already present but value is not', () => {
         (useRouter as Mock).mockImplementation(() => ({
             pathname: CATEGORY_PATHNAME,
@@ -88,7 +88,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-1', 'default-parameter-value-2');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-1', 'default-parameter-value-2');
 
         expect(mockPush).toBeCalledWith(
             {
@@ -149,7 +149,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', 'default-parameter-value-3');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-3');
 
         expect(mockPush).toBeCalledWith(
             {
@@ -214,7 +214,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', 'default-parameter-value-4');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-4');
 
         expect(mockPush).toBeCalledWith(
             {
@@ -279,7 +279,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', 'default-parameter-value-3');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-3');
 
         expect(mockPush).toBeCalledWith(
             {
@@ -333,7 +333,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', undefined, 200, 2000);
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', undefined, 200, 2000);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -404,7 +404,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', undefined, 300, 3000);
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', undefined, 300, 3000);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -475,7 +475,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', undefined, undefined, undefined);
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', undefined, undefined, undefined);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -527,7 +527,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             });
         });
 
-        useQueryParams().updateFilterParameters('default-parameter-2', 'default-parameter-value-4');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-4');
 
         expect(mockPush).toBeCalledWith(
             {
@@ -594,7 +594,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             });
         });
 
-        useQueryParams().updateFilterParameters('default-parameter-2', 'default-parameter-value-5');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-5');
 
         expect(mockPush).toBeCalledWith(
             {
@@ -647,7 +647,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             });
         });
 
-        useQueryParams().updateFilterParameters('default-parameter-3', undefined, 100, 1000);
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-3', undefined, 100, 1000);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -719,7 +719,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             });
         });
 
-        useQueryParams().updateFilterParameters('default-parameter-3', undefined, 100, 1000);
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-3', undefined, 100, 1000);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -768,7 +768,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterParameters('default-parameter-2', 'default-parameter-value-5');
+        useUpdateFilterQuery().updateFilterParametersQuery('default-parameter-2', 'default-parameter-value-5');
 
         expect(mockPush).toBeCalledWith(
             {

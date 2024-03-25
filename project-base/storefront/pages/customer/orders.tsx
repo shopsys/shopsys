@@ -20,13 +20,13 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 
 const OrdersPage: FC = () => {
     const { t } = useTranslation();
-    const { currentPage } = useQueryParams();
+    const currentPage = useCurrentPageQuery();
     const { url } = useDomainConfig();
     const [{ data: ordersData, fetching }] = useOrdersQuery({
         variables: { after: getEndCursor(currentPage), first: DEFAULT_PAGE_SIZE },

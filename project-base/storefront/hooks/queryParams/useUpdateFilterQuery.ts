@@ -1,20 +1,11 @@
-import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
+import { pushQueries } from './pushQueries';
+import { useCurrentFilterQuery } from './useCurrentFilterQuery';
+import { SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
-import { getDynamicPageQueryKey } from 'helpers/parsing/getDynamicPageQueryKey';
 import { getQueryWithoutSlugTypeParameterFromParsedUrlQuery } from 'helpers/parsing/getQueryWithoutSlugTypeParameterFromParsedUrlQuery';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
-import { getUrlQueriesWithoutFalsyValues } from 'helpers/parsing/getUrlQueriesWithoutFalsyValues';
 import {
-    FILTER_QUERY_PARAMETER_NAME,
-    LOAD_MORE_QUERY_PARAMETER_NAME,
-    PAGE_QUERY_PARAMETER_NAME,
-    SEARCH_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
-import {
-    getChangedDefaultFilters,
     getChangedDefaultFiltersAfterAvailabilityChange,
     getChangedDefaultFiltersAfterBrandChange,
     getChangedDefaultFiltersAfterFlagChange,
@@ -28,16 +19,7 @@ import {
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
-
-export type FilterQueries = FilterOptionsUrlQueryType | undefined;
-
-export type UrlQueries = {
-    [FILTER_QUERY_PARAMETER_NAME]?: string;
-    [SEARCH_QUERY_PARAMETER_NAME]?: string;
-    [SORT_QUERY_PARAMETER_NAME]?: ProductOrderingModeEnum;
-    [PAGE_QUERY_PARAMETER_NAME]?: string;
-    [LOAD_MORE_QUERY_PARAMETER_NAME]?: string;
-};
+import { UrlQueries, FilterQueries } from 'types/urlQueries';
 
 const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | undefined): string[] | undefined => {
     if (!selectedUuid) {
@@ -58,55 +40,19 @@ const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | 
     return newItems;
 };
 
-export const useQueryParams = () => {
+export const useUpdateFilterQuery = () => {
     const router = useRouter();
     const query = getQueryWithoutSlugTypeParameterFromParsedUrlQuery(router.query) as UrlQueries;
+    const currentFilter = useCurrentFilterQuery();
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
     const redirectFromSeoCategory = useRedirectFromSeoCategory();
 
-    const currentPage = Number(query[PAGE_QUERY_PARAMETER_NAME] || 1);
-    const currentLoadMore = Number(query[LOAD_MORE_QUERY_PARAMETER_NAME] || 0);
-    const searchString = query[SEARCH_QUERY_PARAMETER_NAME];
-    const sort = query[SORT_QUERY_PARAMETER_NAME] ?? null;
-    const filterQuery = query[FILTER_QUERY_PARAMETER_NAME];
-    const filter = filterQuery ? (JSON.parse(filterQuery) as FilterOptionsUrlQueryType) : null;
-
-    const updateSort = (sorting: ProductOrderingModeEnum) => {
-        if (SEO_SENSITIVE_FILTERS.SORT && originalCategorySlug) {
-            redirectFromSeoCategory(() =>
-                pushQueryFilter(
-                    getChangedDefaultFilters(defaultProductFiltersMap, filter),
-                    originalCategorySlug,
-                    sorting,
-                ),
-            );
-
-            return;
-        }
-
-        pushQuerySort(sorting);
-    };
-
-    const updatePagination = (page: number) => {
-        pushQueryPage(page);
-    };
-
-    const loadMore = () => {
-        const updatedLoadMore = currentLoadMore + 1;
-        const newQuery: UrlQueries = {
-            ...query,
-            [LOAD_MORE_QUERY_PARAMETER_NAME]: updatedLoadMore > 0 ? updatedLoadMore.toString() : undefined,
-        } as const;
-
-        pushQueries(newQuery, true);
-    };
-
-    const updateFilterInStock = (value: FilterOptionsUrlQueryType['onlyInStock']) => {
+    const updateFilterInStockQuery = (value: FilterOptionsUrlQueryType['onlyInStock']) => {
         if (SEO_SENSITIVE_FILTERS.AVAILABILITY && originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(
-                    getChangedDefaultFiltersAfterAvailabilityChange(defaultProductFiltersMap, filter, !!value),
+                    getChangedDefaultFiltersAfterAvailabilityChange(defaultProductFiltersMap, currentFilter, !!value),
                     originalCategorySlug,
                     defaultProductFiltersMap.sort,
                 ),
@@ -115,10 +61,10 @@ export const useQueryParams = () => {
             return;
         }
 
-        pushQueryFilter({ ...filter, onlyInStock: value || undefined });
+        pushQueryFilter({ ...currentFilter, onlyInStock: value || undefined });
     };
 
-    const updateFilterPrices = (values: {
+    const updateFilterPricesQuery = (values: {
         minimalPrice: FilterOptionsUrlQueryType['minimalPrice'];
         maximalPrice: FilterOptionsUrlQueryType['maximalPrice'];
     }) => {
@@ -127,7 +73,7 @@ export const useQueryParams = () => {
                 pushQueryFilter(
                     getChangedDefaultFiltersAfterPriceChange(
                         defaultProductFiltersMap,
-                        filter,
+                        currentFilter,
                         values.minimalPrice,
                         values.maximalPrice,
                     ),
@@ -139,14 +85,18 @@ export const useQueryParams = () => {
             return;
         }
 
-        pushQueryFilter({ ...filter, ...values });
+        pushQueryFilter({ ...currentFilter, ...values });
     };
 
-    const updateFilterPriceMaximum = (newMaxPrice: FilterOptionsUrlQueryType['maximalPrice']) => {
+    const updateFilterPriceMaximumQuery = (newMaxPrice: FilterOptionsUrlQueryType['maximalPrice']) => {
         if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(
-                    getChangedDefaultFiltersAfterMaximumPriceChange(defaultProductFiltersMap, filter, newMaxPrice),
+                    getChangedDefaultFiltersAfterMaximumPriceChange(
+                        defaultProductFiltersMap,
+                        currentFilter,
+                        newMaxPrice,
+                    ),
                     originalCategorySlug,
                     defaultProductFiltersMap.sort,
                 ),
@@ -155,14 +105,18 @@ export const useQueryParams = () => {
             return;
         }
 
-        pushQueryFilter({ ...filter, maximalPrice: newMaxPrice });
+        pushQueryFilter({ ...currentFilter, maximalPrice: newMaxPrice });
     };
 
-    const updateFilterPriceMinimum = (newMinPrice: FilterOptionsUrlQueryType['minimalPrice']) => {
+    const updateFilterPriceMinimumQuery = (newMinPrice: FilterOptionsUrlQueryType['minimalPrice']) => {
         if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(
-                    getChangedDefaultFiltersAfterMinimumPriceChange(defaultProductFiltersMap, filter, newMinPrice),
+                    getChangedDefaultFiltersAfterMinimumPriceChange(
+                        defaultProductFiltersMap,
+                        currentFilter,
+                        newMinPrice,
+                    ),
                     originalCategorySlug,
                     defaultProductFiltersMap.sort,
                 ),
@@ -171,14 +125,14 @@ export const useQueryParams = () => {
             return;
         }
 
-        pushQueryFilter({ ...filter, minimalPrice: newMinPrice });
+        pushQueryFilter({ ...currentFilter, minimalPrice: newMinPrice });
     };
 
-    const updateFilterBrands = (selectedUuid: string) => {
+    const updateFilterBrandsQuery = (selectedUuid: string) => {
         if (SEO_SENSITIVE_FILTERS.BRANDS && originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(
-                    getChangedDefaultFiltersAfterBrandChange(defaultProductFiltersMap, filter, selectedUuid),
+                    getChangedDefaultFiltersAfterBrandChange(defaultProductFiltersMap, currentFilter, selectedUuid),
                     originalCategorySlug,
                     defaultProductFiltersMap.sort,
                 ),
@@ -187,14 +141,14 @@ export const useQueryParams = () => {
             return;
         }
 
-        pushQueryFilter({ ...filter, brands: handleUpdateFilter(selectedUuid, filter?.brands) });
+        pushQueryFilter({ ...currentFilter, brands: handleUpdateFilter(selectedUuid, currentFilter?.brands) });
     };
 
-    const updateFilterFlags = (selectedUuid: string) => {
+    const updateFilterFlagsQuery = (selectedUuid: string) => {
         if (SEO_SENSITIVE_FILTERS.FLAGS && originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(
-                    getChangedDefaultFiltersAfterFlagChange(defaultProductFiltersMap, filter, selectedUuid),
+                    getChangedDefaultFiltersAfterFlagChange(defaultProductFiltersMap, currentFilter, selectedUuid),
                     originalCategorySlug,
                     defaultProductFiltersMap.sort,
                 ),
@@ -203,10 +157,10 @@ export const useQueryParams = () => {
             return;
         }
 
-        pushQueryFilter({ ...filter, flags: handleUpdateFilter(selectedUuid, filter?.flags) });
+        pushQueryFilter({ ...currentFilter, flags: handleUpdateFilter(selectedUuid, currentFilter?.flags) });
     };
 
-    const updateFilterParameters = (
+    const updateFilterParametersQuery = (
         parameterUuid: string,
         paramaterOptionUuid: string | undefined,
         minimalValue?: number,
@@ -221,7 +175,7 @@ export const useQueryParams = () => {
                     pushQueryFilter(
                         getChangedDefaultFiltersAfterSliderParameterChange(
                             defaultProductFiltersMap,
-                            filter,
+                            currentFilter,
                             parameterUuid,
                             minimalValue,
                             maximalValue,
@@ -238,7 +192,7 @@ export const useQueryParams = () => {
                     pushQueryFilter(
                         getChangedDefaultFiltersAfterParameterChange(
                             defaultProductFiltersMap,
-                            filter,
+                            currentFilter,
                             parameterUuid,
                             paramaterOptionUuid,
                         ),
@@ -254,7 +208,7 @@ export const useQueryParams = () => {
         const parameters: FilterOptionsParameterUrlQueryType[] | undefined = (() => {
             // deep clone parameters
             const newParameters: FilterOptionsParameterUrlQueryType[] = JSON.parse(
-                JSON.stringify(filter?.parameters || []),
+                JSON.stringify(currentFilter?.parameters || []),
             );
 
             const updatedParamaterIndex = newParameters.findIndex(
@@ -271,7 +225,7 @@ export const useQueryParams = () => {
             if (updatedParamaterIndex !== -1) {
                 const newValues = handleUpdateFilter(
                     paramaterOptionUuid,
-                    filter?.parameters![updatedParamaterIndex].values,
+                    currentFilter?.parameters![updatedParamaterIndex].values,
                 );
 
                 newParameters[updatedParamaterIndex] = {
@@ -296,12 +250,12 @@ export const useQueryParams = () => {
         })();
 
         pushQueryFilter({
-            ...filter,
+            ...currentFilter,
             parameters,
         });
     };
 
-    const resetAllFilters = () => {
+    const resetAllFilterQueries = () => {
         if (originalCategorySlug) {
             redirectFromSeoCategory(() =>
                 pushQueryFilter(undefined, originalCategorySlug, defaultProductFiltersMap.sort),
@@ -313,27 +267,6 @@ export const useQueryParams = () => {
         pushQueryFilter(undefined, originalCategorySlug);
     };
 
-    const pushQuerySort = (sorting: ProductOrderingModeEnum) => {
-        const newQuery: UrlQueries = {
-            ...query,
-            [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
-            [PAGE_QUERY_PARAMETER_NAME]: undefined,
-            [SORT_QUERY_PARAMETER_NAME]: sorting !== DEFAULT_SORT ? sorting : undefined,
-        } as const;
-
-        pushQueries(newQuery, true);
-    };
-
-    const pushQueryPage = (page: number) => {
-        const newQuery: UrlQueries = {
-            ...query,
-            [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
-            [PAGE_QUERY_PARAMETER_NAME]: page > 1 ? page.toString() : undefined,
-        } as const;
-
-        pushQueries(newQuery, true);
-    };
-
     const pushQueryFilter = (
         newFilter?: FilterQueries,
         pathnameOverride?: string,
@@ -341,53 +274,17 @@ export const useQueryParams = () => {
     ) => {
         const newQuery = buildNewQueryAfterFilterChange(query, getFilterWithoutEmpty(newFilter), sortOverride);
 
-        pushQueries(newQuery, true, pathnameOverride);
-    };
-
-    const pushQueries = (queries: UrlQueries, isPush?: boolean, pathnameOverride?: string) => {
-        // remove queries which are not set or removed
-        const filteredQueries = getUrlQueriesWithoutDynamicPageQueries(getUrlQueriesWithoutFalsyValues(queries));
-
-        const asPathname = router.asPath.split('?')[0];
-        const dynamicPageQueryKey = getDynamicPageQueryKey(router.pathname);
-
-        let filteredQueriesWithDynamicParam = filteredQueries;
-        if (dynamicPageQueryKey) {
-            filteredQueriesWithDynamicParam = {
-                [dynamicPageQueryKey]: pathnameOverride || asPathname,
-                ...filteredQueries,
-            };
-        }
-
-        router[isPush ? 'push' : 'replace'](
-            {
-                pathname: router.pathname,
-                query: filteredQueriesWithDynamicParam,
-            },
-            {
-                pathname: pathnameOverride || asPathname,
-                query: filteredQueries,
-            },
-            { shallow: true },
-        );
+        pushQueries(router, newQuery, true, pathnameOverride);
     };
 
     return {
-        currentPage,
-        currentLoadMore,
-        searchString,
-        sort,
-        filter,
-        updateSort,
-        updatePagination,
-        loadMore,
-        updateFilterInStock,
-        updateFilterPrices,
-        updateFilterPriceMaximum,
-        updateFilterPriceMinimum,
-        updateFilterBrands,
-        updateFilterFlags,
-        updateFilterParameters,
-        resetAllFilters,
+        updateFilterInStockQuery,
+        updateFilterPricesQuery,
+        updateFilterPriceMaximumQuery,
+        updateFilterPriceMinimumQuery,
+        updateFilterBrandsQuery,
+        updateFilterFlagsQuery,
+        updateFilterParametersQuery,
+        resetAllFilterQueries,
     };
 };

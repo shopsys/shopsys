@@ -19,27 +19,33 @@ import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpe
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
+import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentSearchStringQuery } from 'hooks/queryParams/useCurrentSearchStringQuery';
+import { useCurrentSortQuery } from 'hooks/queryParams/useCurrentSortQuery';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const { sort, filter, searchString, currentLoadMore } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const sort = useCurrentSortQuery();
+    const currentSearchString = useCurrentSearchStringQuery();
+    const currentLoadMore = useCurrentLoadMoreQuery();
     const userIdentifier = usePersistStore((state) => state.userId)!;
 
     const [{ data: searchData, fetching }] = useSearchQuery({
         variables: {
-            search: searchString!,
+            search: currentSearchString!,
             orderingMode: sort,
-            filter: mapParametersFilter(filter),
+            filter: mapParametersFilter(currentFilter),
             pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
             isAutocomplete: false,
             userIdentifier,
         },
-        pause: !searchString,
+        pause: !currentSearchString,
     });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -55,7 +61,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout breadcrumbs={breadcrumbs} title={title}>
                 <Webline>
-                    {searchString ? (
+                    {currentSearchString ? (
                         <SearchContent fetching={fetching} searchResults={searchData} />
                     ) : (
                         <div className="mb-5 p-12 text-center">

@@ -4,7 +4,7 @@ import {
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useUpdateLoadMoreQuery } from 'hooks/queryParams/useUpdateLoadMoreQuery';
 import { describe, expect, Mock, test, vi } from 'vitest';
 
 const CATEGORY_URL = '/category-url';
@@ -59,7 +59,7 @@ vi.mock('store/useSessionStore', () => ({
 
 describe('useQueryParams().loadMore tests', () => {
     test('loading 1 "load more" page while on the 1st page should only update the load more URL query', () => {
-        useQueryParams().loadMore();
+        useUpdateLoadMoreQuery()();
 
         expect(mockPush).toBeCalledWith(
             {
@@ -112,7 +112,7 @@ describe('useQueryParams().loadMore tests', () => {
     test('loading 1 "load more" page while on a page other than the 1st one should only update the load more URL query', () => {
         (mockPageQueryGetter as Mock).mockImplementation(() => '2');
 
-        useQueryParams().loadMore();
+        useUpdateLoadMoreQuery()();
 
         expect(mockPush).toBeCalledWith(
             {
@@ -167,7 +167,7 @@ describe('useQueryParams().loadMore tests', () => {
     test('loading 2 "load more" pages while on the 1st page should only update the load more URL query', () => {
         (mockLoadMoreQueryGetter as Mock).mockImplementation(() => '1');
 
-        useQueryParams().loadMore();
+        useUpdateLoadMoreQuery()();
 
         expect(mockPush).toBeCalledWith(
             {
@@ -221,7 +221,7 @@ describe('useQueryParams().loadMore tests', () => {
         (mockPageQueryGetter as Mock).mockImplementation(() => '2');
         (mockLoadMoreQueryGetter as Mock).mockImplementation(() => '1');
 
-        useQueryParams().loadMore();
+        useUpdateLoadMoreQuery()();
 
         expect(mockPush).toBeCalledWith(
             {

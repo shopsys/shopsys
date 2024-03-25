@@ -1,5 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
 import useTranslation from 'next-translate/useTranslation';
 
 export const useSeoTitleWithPagination = (
@@ -8,7 +9,8 @@ export const useSeoTitleWithPagination = (
     seoTitle?: string | null | undefined,
 ) => {
     const { t } = useTranslation();
-    const { currentPage, currentLoadMore } = useQueryParams();
+    const currentPage = useCurrentPageQuery();
+    const currentLoadMore = useCurrentLoadMoreQuery();
     const title = seoTitle || name;
 
     if (!totalCount || totalCount < DEFAULT_PAGE_SIZE) {

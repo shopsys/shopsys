@@ -5,7 +5,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
@@ -100,7 +100,7 @@ describe('useQueryParams().resetAllFilters tests', () => {
             },
         }));
 
-        useQueryParams().resetAllFilters();
+        useUpdateFilterQuery().resetAllFilterQueries();
 
         expect(mockPush).toBeCalledWith(
             {
@@ -150,7 +150,7 @@ describe('useQueryParams().resetAllFilters tests', () => {
             },
         }));
 
-        useQueryParams().resetAllFilters();
+        useUpdateFilterQuery().resetAllFilterQueries();
 
         expect(mockPush).toBeCalledWith(
             {

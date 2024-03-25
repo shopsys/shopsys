@@ -5,7 +5,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useUpdateSortQuery } from 'hooks/queryParams/useUpdateSortQuery';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
@@ -19,7 +19,7 @@ const GET_DEFAULT_SEO_CATEGORY_PARAMETERS = () =>
         ['default-parameter-2', new Set(['default-parameter-value-3', 'default-parameter-value-4'])],
     ]);
 const GET_DEFAULT_SEO_CATEGORY_FLAGS = () => new Set(['default-flag-1', 'default-flag-2']);
-const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brand-1', 'default-brand-2']);
+const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brands-1', 'default-brands-2']);
 
 const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
     SORT: true,
@@ -31,18 +31,22 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
         SLIDER: false,
     },
 }));
-
+const setWasRedirectedFromSeoCategoryMock = vi.fn();
+const mockDefaultSort = vi.fn(() => ProductOrderingModeEnum.Priority);
 vi.mock('config/constants', async (importOriginal) => {
     const actualConstantsModule = await importOriginal<any>();
 
     return {
         ...actualConstantsModule,
+        get DEFAULT_SORT() {
+            return mockDefaultSort();
+        },
         get SEO_SENSITIVE_FILTERS() {
             return mockSeoSensitiveFiltersGetter();
         },
     };
 });
-const setWasRedirectedFromSeoCategoryMock = vi.fn();
+
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
@@ -58,7 +62,7 @@ vi.mock('store/useSessionStore', () => ({
         return selector({
             defaultProductFiltersMap: {
                 flags: new Set(),
-                sort: ProductOrderingModeEnum.Priority,
+                sort: mockDefaultSort(),
                 parameters: new Map(),
             },
             originalCategorySlug: null,
@@ -66,65 +70,48 @@ vi.mock('store/useSessionStore', () => ({
     }),
 }));
 
-describe('useQueryParams().updateFilterInStock tests', () => {
-    test('onlyInStock should be set to true if updating with `true`', () => {
-        useQueryParams().updateFilterInStock(true);
+describe('useUpdateSort() tests', () => {
+    test('sort should not be updated if updating with the default sort', () => {
+        useUpdateSortQuery()(ProductOrderingModeEnum.Priority);
+
+        expect(mockPush).toBeCalledWith(
+            { pathname: CATEGORY_PATHNAME, query: { categorySlug: CATEGORY_URL } },
+            {
+                pathname: CATEGORY_URL,
+                query: {},
+            },
+            { shallow: true },
+        );
+    });
+
+    test('sort should be updated if updating with new sort', () => {
+        useUpdateSortQuery()(ProductOrderingModeEnum.PriceAsc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
-            {
-                shallow: true,
-            },
+            { shallow: true },
         );
     });
 
-    test('onlyInStock should be set to false if updating with `false`', () => {
-        (useRouter as Mock).mockImplementation(() => ({
-            pathname: CATEGORY_PATHNAME,
-            asPath: CATEGORY_URL,
-            push: mockPush,
-            query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }) },
-        }));
-
-        useQueryParams().updateFilterInStock(false);
-
-        expect(mockPush).toBeCalledWith(
-            {
-                pathname: CATEGORY_PATHNAME,
-                query: { categorySlug: CATEGORY_URL },
-            },
-            {
-                pathname: CATEGORY_URL,
-                query: {},
-            },
-            {
-                shallow: true,
-            },
-        );
-    });
-
-    test('onlyInStock should redirect from SEO category if it is SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ AVAILABILITY: true }));
+    test('sort should redirect from SEO category if it is SEO-sensitive', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
                     sort: ProductOrderingModeEnum.PriceAsc,
-                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
@@ -132,7 +119,7 @@ describe('useQueryParams().updateFilterInStock tests', () => {
             });
         });
 
-        useQueryParams().updateFilterInStock(true);
+        useUpdateSortQuery()(ProductOrderingModeEnum.PriceDesc);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -140,7 +127,6 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                 query: {
                     categorySlug: ORIGINAL_CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        onlyInStock: true,
                         brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
                         flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
@@ -154,14 +140,13 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        onlyInStock: true,
                         brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
                         flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
@@ -175,7 +160,7 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -186,25 +171,35 @@ describe('useQueryParams().updateFilterInStock tests', () => {
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
 
-    test('onlyInStock should not redirect from SEO category if it is not SEO-sensitive', () => {
-        useQueryParams().updateFilterInStock(true);
+    test('sort should not redirect from SEO category if it is not SEO-sensitive', () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ SORT: false }));
+        (useSessionStore as unknown as Mock).mockImplementation((selector) => {
+            return selector({
+                defaultProductFiltersMap: {
+                    sort: ProductOrderingModeEnum.PriceAsc,
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
+                },
+                originalCategorySlug: ORIGINAL_CATEGORY_URL,
+            });
+        });
+
+        useUpdateSortQuery()(ProductOrderingModeEnum.PriceDesc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        onlyInStock: true,
-                    }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        onlyInStock: true,
-                    }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -213,7 +208,7 @@ describe('useQueryParams().updateFilterInStock tests', () => {
         );
     });
 
-    test('changing onlyInStock resets page and load more', () => {
+    test('changing sort resets page and load more', () => {
         (useRouter as Mock).mockImplementation(() => ({
             pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
@@ -224,25 +219,23 @@ describe('useQueryParams().updateFilterInStock tests', () => {
             },
         }));
 
-        useQueryParams().updateFilterInStock(true);
+        useUpdateSortQuery()(ProductOrderingModeEnum.PriceAsc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
                 },
             },
-            {
-                shallow: true,
-            },
+            { shallow: true },
         );
     });
 });

@@ -12,7 +12,7 @@ import { getUrlQueriesWithoutFalsyValues } from 'helpers/parsing/getUrlQueriesWi
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { getEmptyDefaultProductFiltersMap } from 'helpers/seoCategories/getEmptyDefaultProductFiltersMap';
 import { getFilterWithoutSeoSensitiveFilters } from 'helpers/seoCategories/getFilterWithoutSeoSensitiveFilters';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentSortQuery } from 'hooks/queryParams/useCurrentSortQuery';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
@@ -24,7 +24,7 @@ export const useCategoryDetailData = (
 ): { categoryData: CategoryDetailFragment | null | undefined; isFetchingVisible: boolean } => {
     const router = useRouter();
     const urlSlug = getSlugFromUrl(router.asPath);
-    const { sort } = useQueryParams();
+    const currentSort = useCurrentSortQuery();
     const mappedProductFilter = mapParametersFilter(filter);
 
     const lastUsedUrlRef = useRef<string>();
@@ -40,7 +40,7 @@ export const useCategoryDetailData = (
     const [{ data: categoryDetailData, fetching }] = useCategoryDetailQuery({
         variables: {
             urlSlug,
-            orderingMode: sort,
+            orderingMode: currentSort,
             filter: mappedProductFilter,
         },
         pause: isInSeoRedirectedCategory,
@@ -65,7 +65,7 @@ export const useCategoryDetailData = (
             categoryDetailData?.category?.originalCategorySlug,
             categoryDetailData?.category?.slug,
             filter,
-            sort,
+            currentSort,
             setWasRedirectedToSeoCategory,
             setOriginalCategorySlug,
         );

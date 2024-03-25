@@ -5,7 +5,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
@@ -19,8 +19,30 @@ const GET_DEFAULT_SEO_CATEGORY_PARAMETERS = () =>
         ['default-parameter-2', new Set(['default-parameter-value-3', 'default-parameter-value-4'])],
     ]);
 const GET_DEFAULT_SEO_CATEGORY_FLAGS = () => new Set(['default-flag-1', 'default-flag-2']);
-const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brand-1', 'default-brand-2']);
+const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brands-1', 'default-brands-2']);
 
+const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
+    SORT: true,
+    AVAILABILITY: false,
+    PRICE: false,
+    FLAGS: true,
+    PARAMETERS: {
+        CHECKBOX: true,
+        SLIDER: false,
+    },
+}));
+
+vi.mock('config/constants', async (importOriginal) => {
+    const actualConstantsModule = await importOriginal<any>();
+
+    return {
+        ...actualConstantsModule,
+        get SEO_SENSITIVE_FILTERS() {
+            return mockSeoSensitiveFiltersGetter();
+        },
+    };
+});
+const setWasRedirectedFromSeoCategoryMock = vi.fn();
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
@@ -44,48 +66,29 @@ vi.mock('store/useSessionStore', () => ({
     }),
 }));
 
-const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
-    SORT: true,
-    AVAILABILITY: false,
-    PRICE: false,
-    FLAGS: true,
-    PARAMETERS: {
-        CHECKBOX: true,
-        SLIDER: false,
-    },
-}));
-const setWasRedirectedFromSeoCategoryMock = vi.fn();
-vi.mock('config/constants', async (importOriginal) => {
-    const actualConstantsModule = await importOriginal<any>();
+describe('useUpdateFilter().updateFilterPriceMinimum tests', () => {
+    test('minimalPrice should not be updated if it is the same as current minimal price', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
+        }));
 
-    return {
-        ...actualConstantsModule,
-        get SEO_SENSITIVE_FILTERS() {
-            return mockSeoSensitiveFiltersGetter();
-        },
-    };
-});
-
-describe('useQueryParams().updateFilterFlags tests', () => {
-    test('flag should be added to query if not present', () => {
-        useQueryParams().updateFilterFlags('test-flag');
+        useUpdateFilterQuery().updateFilterPriceMinimumQuery(1000);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['test-flag'],
-                    }),
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }),
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['test-flag'],
-                    }),
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }),
                 },
             },
             {
@@ -94,15 +97,45 @@ describe('useQueryParams().updateFilterFlags tests', () => {
         );
     });
 
-    test('flag should be removed from query if already present', () => {
+    test('minimalPrice should be updated if it differs from the current minimal price', () => {
         (useRouter as Mock).mockImplementation(() => ({
             pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
-            query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ flags: ['test-flag'] }) },
+            query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
         }));
 
-        useQueryParams().updateFilterFlags('test-flag');
+        useUpdateFilterQuery().updateFilterPriceMinimumQuery(1100);
+
+        expect(mockPush).toBeCalledWith(
+            {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1100 }),
+                },
+            },
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1100 }),
+                },
+            },
+            {
+                shallow: true,
+            },
+        );
+    });
+
+    test('minimalPrice should be reset if it is set to undefined', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
+        }));
+
+        useUpdateFilterQuery().updateFilterPriceMinimumQuery(undefined);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -119,60 +152,19 @@ describe('useQueryParams().updateFilterFlags tests', () => {
         );
     });
 
-    test('changing flags resets page and load more', () => {
-        (useRouter as Mock).mockImplementation(() => ({
-            pathname: CATEGORY_PATHNAME,
-            asPath: CATEGORY_URL,
-            push: mockPush,
-            query: {
-                [PAGE_QUERY_PARAMETER_NAME]: '2',
-                [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
-            },
-        }));
-
-        useQueryParams().updateFilterFlags('test-flag');
-
-        expect(mockPush).toBeCalledWith(
-            {
-                pathname: CATEGORY_PATHNAME,
-                query: {
-                    categorySlug: CATEGORY_URL,
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['test-flag'],
-                    }),
-                },
-            },
-            {
-                pathname: CATEGORY_URL,
-                query: {
-                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['test-flag'],
-                    }),
-                },
-            },
-            {
-                shallow: true,
-            },
-        );
-    });
-
-    test('changing flag should not redirect from SEO category if flags are not SEO-sensitive', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ FLAGS: false }));
+    test('changing minimalPrice should not redirect from SEO category if price is not SEO-sensitive', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
                     sort: ProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
-                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
             });
         });
 
-        useQueryParams().updateFilterFlags('test-flag');
+        useUpdateFilterQuery().updateFilterPriceMinimumQuery(100);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -180,7 +172,7 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                 query: {
                     categorySlug: CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['test-flag'],
+                        minimalPrice: 100,
                     }),
                 },
             },
@@ -188,7 +180,7 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['test-flag'],
+                        minimalPrice: 100,
                     }),
                 },
             },
@@ -198,13 +190,16 @@ describe('useQueryParams().updateFilterFlags tests', () => {
         );
     });
 
-    test('changing flag should redirect from SEO category if flags are SEO-sensitive', () => {
+    test('changing minimalPrice should redirect from SEO category if price is SEO-sensitive', () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        mockSeoSensitiveFiltersGetter.mockImplementation(() => ({ PRICE: true }));
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
                     sort: ProductOrderingModeEnum.PriceAsc,
-                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
@@ -212,7 +207,7 @@ describe('useQueryParams().updateFilterFlags tests', () => {
             });
         });
 
-        useQueryParams().updateFilterFlags('test-flag');
+        useUpdateFilterQuery().updateFilterPriceMinimumQuery(100);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -220,8 +215,9 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                 query: {
                     categorySlug: ORIGINAL_CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
                         brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
-                        flags: [...Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()), 'test-flag'],
+                        flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
@@ -240,8 +236,9 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
                         brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
-                        flags: [...Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()), 'test-flag'],
+                        flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
@@ -262,5 +259,42 @@ describe('useQueryParams().updateFilterFlags tests', () => {
         );
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
         expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
+    });
+
+    test('changing minimalPrice resets page and load more', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: {
+                [PAGE_QUERY_PARAMETER_NAME]: '2',
+                [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
+            },
+        }));
+
+        useUpdateFilterQuery().updateFilterPriceMinimumQuery(100);
+
+        expect(mockPush).toBeCalledWith(
+            {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
+                    }),
+                },
+            },
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
+                    }),
+                },
+            },
+            {
+                shallow: true,
+            },
+        );
     });
 });

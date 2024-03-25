@@ -1,6 +1,6 @@
 import { ProductOrderingModeEnum } from 'graphql/types';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useUpdatePaginationQuery } from 'hooks/queryParams/useUpdatePaginationQuery';
 import { describe, expect, test, vi } from 'vitest';
 
 const CATEGORY_URL = '/category-url';
@@ -29,9 +29,9 @@ vi.mock('store/useSessionStore', () => ({
     }),
 }));
 
-describe('useQueryParams().updatePagination tests', () => {
+describe('useUpdatePagination() tests', () => {
     test('page should not be updated if page number is 1', () => {
-        useQueryParams().updatePagination(1);
+        useUpdatePaginationQuery()(1);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -49,7 +49,7 @@ describe('useQueryParams().updatePagination tests', () => {
     });
 
     test('page should not be updated if page number is greater than 1', () => {
-        useQueryParams().updatePagination(2);
+        useUpdatePaginationQuery()(2);
 
         expect(mockPush).toBeCalledWith(
             {

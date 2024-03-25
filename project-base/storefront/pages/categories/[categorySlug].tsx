@@ -28,14 +28,14 @@ import {
 } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';
 
 const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
-    const { filter } = useQueryParams();
-    const { categoryData, isFetchingVisible } = useCategoryDetailData(filter);
+    const currentFilter = useCurrentFilterQuery();
+    const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
 
@@ -50,7 +50,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <>
-            {!!filter && <MetaRobots content="noindex, follow" />}
+            {!!currentFilter && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}

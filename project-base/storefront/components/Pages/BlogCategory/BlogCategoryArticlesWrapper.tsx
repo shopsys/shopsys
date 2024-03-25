@@ -7,7 +7,7 @@ import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/bl
 import { useBlogCategoryArticles } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
 import { RefObject, useMemo } from 'react';
 
 type BlogCategoryArticlesWrapperProps = {
@@ -19,7 +19,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     uuid,
     paginationScrollTargetRef,
 }) => {
-    const { currentPage } = useQueryParams();
+    const currentPage = useCurrentPageQuery();
 
     const [{ data, fetching }] = useBlogCategoryArticles({
         variables: { uuid, endCursor: getEndCursor(currentPage), pageSize: DEFAULT_PAGE_SIZE },

@@ -9,7 +9,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
 import { calculatePageSize } from 'helpers/loadMore/calculatePageSize';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
 
 type ProductsListProps = {
     products: ListedProductFragment[] | undefined;
@@ -30,7 +30,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     category,
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
-    const { currentLoadMore } = useQueryParams();
+    const currentLoadMore = useCurrentLoadMoreQuery();
 
     if (!products?.length && !fetching) {
         return <CategoryDetailContentMessage />;
