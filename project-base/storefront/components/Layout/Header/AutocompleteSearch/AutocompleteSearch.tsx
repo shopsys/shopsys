@@ -6,7 +6,7 @@ import {
     useAutocompleteSearchQuery,
 } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

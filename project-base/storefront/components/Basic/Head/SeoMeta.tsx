@@ -1,6 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { HreflangLink } from 'graphql/types';
-import logMessage from 'helpers/errors/logMessage';
+import { logMessage } from 'helpers/errors/logMessage';
 import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import useSeo from 'hooks/seo/useSeo';
 import Head from 'next/head';

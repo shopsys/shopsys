@@ -4,7 +4,8 @@ import {
     useLoginMutation,
 } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import { useLogoutMutation } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
-import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { removeTokensFromCookies } from 'helpers/auth/removeTokensFromCookies';
+import { setTokensToCookies } from 'helpers/auth/setTokensToCookies';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';

@@ -7,7 +7,7 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';

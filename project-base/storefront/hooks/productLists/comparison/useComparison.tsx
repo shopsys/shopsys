@@ -1,5 +1,6 @@
 import { ProductListTypeEnum } from 'graphql/types';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useProductList } from 'hooks/productLists/useProductList';
 import { useUpdateProductListUuid } from 'hooks/productLists/useUpdateProductListUuid';
 import useTranslation from 'next-translate/useTranslation';

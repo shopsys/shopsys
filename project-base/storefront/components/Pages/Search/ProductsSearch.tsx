@@ -5,7 +5,7 @@ import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';

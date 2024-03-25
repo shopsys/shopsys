@@ -3,7 +3,7 @@ import { isEnvironment } from 'helpers/isEnvironment';
 
 type SentryExtra = { key: string; data: string };
 
-const logMessage = (message: string, extras: Array<SentryExtra> = [], level: SeverityLevel = 'info'): void => {
+export const logMessage = (message: string, extras: Array<SentryExtra> = [], level: SeverityLevel = 'info'): void => {
     if (isEnvironment('development')) {
         /* eslint-disable no-console */
         console.warn(message, { extras });
@@ -16,5 +16,3 @@ const logMessage = (message: string, extras: Array<SentryExtra> = [], level: Sev
         captureMessage(message, level);
     });
 };
-
-export default logMessage;

@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';

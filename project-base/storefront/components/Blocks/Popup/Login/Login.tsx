@@ -11,7 +11,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { blurInput } from 'helpers/forms/blurInput';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { Translate } from 'next-translate';

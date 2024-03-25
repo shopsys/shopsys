@@ -5,7 +5,7 @@ import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/helpers/getCategoryOrSeoCategoryGtmProductListName';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
-import { useProductsData } from 'helpers/loadMore';
+import { useProductsData } from 'helpers/loadMore/useProductsData';
 import { getMappedProducts } from 'helpers/mappers/products';
 import { RefObject, useMemo } from 'react';
 import { useSessionStore } from 'store/useSessionStore';

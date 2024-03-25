@@ -13,7 +13,7 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { showSuccessMessage } from 'helpers/toasts';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';

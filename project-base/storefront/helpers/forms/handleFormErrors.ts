@@ -1,6 +1,6 @@
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { Translate } from 'next-translate';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { CombinedError } from 'urql';
