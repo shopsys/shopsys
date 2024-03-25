@@ -288,6 +288,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 #### refactored different levels of error debugging on SF ([#3033](https://github.com/shopsys/shopsys/pull/3033))
 
+#### fix seo pages urls ([#3079](https://github.com/shopsys/shopsys/pull/3079))
+
 -   we now have three levels (`console`, `toast-and-console`, `no-debug`) based on which verbose error messages are shown to developers
 -   in your projects, you should use constants `isWithConsoleErrorDebugging`, `isWithToastAndConsoleErrorDebugging`,`isWithErrorDebugging` to control different debugging in all places where you handle errors or exceptions
 -   docs were rewritten to match this new approach, so you can read them to get a better idea
