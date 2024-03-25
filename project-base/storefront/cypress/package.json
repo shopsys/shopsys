@@ -5,6 +5,8 @@
     "private": true,
     "scripts": {
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
+        "open-base": "cypress open --env type=base",
+        "open-actual": "cypress open --env type=actual",
         "base": "cypress run --env type=base",
         "actual": "cypress run --env type=actual"
     },
