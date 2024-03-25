@@ -2,7 +2,7 @@ import { useRegistrationMutation } from 'graphql/requests/registration/mutations
 import { RegistrationDataInput } from 'graphql/types';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
-import { setTokensToCookies } from 'helpers/auth/tokens';
+import { setTokensToCookies } from 'helpers/auth/setTokensToCookies';
 import { blurInput } from 'helpers/forms/blurInput';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';

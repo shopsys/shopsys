@@ -5,7 +5,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmChangeCartItemEventHandler } from 'gtm/handlers/onGtmChangeCartItemEventHandler';
 import { getGtmMappedCart } from 'gtm/helpers/getGtmMappedCart';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';

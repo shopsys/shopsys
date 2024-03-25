@@ -1,6 +1,6 @@
 import { useCurrentCart } from './useCurrentCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 

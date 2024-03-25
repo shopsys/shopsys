@@ -1,6 +1,8 @@
 import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
 import { RefreshTokensDocument } from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
-import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { getTokensFromCookies } from 'helpers/auth/getTokensFromCookies';
+import { removeTokensFromCookies } from 'helpers/auth/removeTokensFromCookies';
+import { setTokensToCookies } from 'helpers/auth/setTokensToCookies';
 import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { CombinedError, makeOperation, Operation } from 'urql';

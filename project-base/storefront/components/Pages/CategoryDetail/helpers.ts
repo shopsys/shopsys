@@ -4,13 +4,13 @@ import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getFilterWithoutSeoSensitiveFilters } from 'helpers/filterOptions/seoCategories';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import {
     getSlugFromUrl,
     getUrlQueriesWithoutFalsyValues,
     getUrlQueriesWithoutDynamicPageQueries,
 } from 'helpers/parsing/urlParsing';
+import { getFilterWithoutSeoSensitiveFilters } from 'helpers/seoCategories/getFilterWithoutSeoSensitiveFilters';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';

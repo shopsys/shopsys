@@ -1,7 +1,8 @@
 import { getCookies } from 'cookies-next';
 import { isClient } from 'helpers/isClient';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
-import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
+import { showInfoMessage } from 'helpers/toasts/showInfoMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';

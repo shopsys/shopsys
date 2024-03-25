@@ -11,8 +11,8 @@ import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandle
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import 'helpers/getInternationalizedStaticUrls';
-import { showSuccessMessage } from 'helpers/toasts';
+import 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

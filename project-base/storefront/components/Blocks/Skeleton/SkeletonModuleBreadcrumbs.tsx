@@ -1,5 +1,5 @@
 import { BreadcrumbsSpan, breadcrumbsTwClass } from 'components/Layout/Breadcrumbs/Breadcrumbs';
-import { createEmptyArray } from 'helpers/arrayUtils';
+import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
 import { twMergeCustom } from 'helpers/twMerge';
 import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';

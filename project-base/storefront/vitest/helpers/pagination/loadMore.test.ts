@@ -1,7 +1,9 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getOffsetPageAndLoadMore, getPreviousProductsFromCache, getRedirectWithOffsetPage } from 'helpers/loadMore';
+import { getOffsetPageAndLoadMore } from 'helpers/loadMore/getOffsetPageAndLoadMore';
+import { getPreviousProductsFromCache } from 'helpers/loadMore/getPreviousProductsFromCache';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,

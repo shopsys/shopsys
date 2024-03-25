@@ -1,7 +1,8 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';

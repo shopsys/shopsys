@@ -2,8 +2,8 @@ import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.gener
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCartInfoType } from 'gtm/types/objects';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 
 export const getGtmMappedCart = (
     cart: CartFragment,

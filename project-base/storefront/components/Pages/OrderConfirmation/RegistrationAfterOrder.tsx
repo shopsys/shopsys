@@ -9,7 +9,7 @@ import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/quer
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { blurInput } from 'helpers/forms/blurInput';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useRegistration } from 'hooks/auth/useRegistration';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';

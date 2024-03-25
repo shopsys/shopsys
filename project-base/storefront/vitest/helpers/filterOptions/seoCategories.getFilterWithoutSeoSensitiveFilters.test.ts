@@ -1,5 +1,5 @@
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getFilterWithoutSeoSensitiveFilters } from 'helpers/filterOptions/seoCategories';
+import { getFilterWithoutSeoSensitiveFilters } from 'helpers/seoCategories/getFilterWithoutSeoSensitiveFilters';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 import { describe, expect, test, vi } from 'vitest';
 

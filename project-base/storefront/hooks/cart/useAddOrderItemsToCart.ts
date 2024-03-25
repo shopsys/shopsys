@@ -1,8 +1,8 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
 import { AddOrderItemsToCartInput } from 'graphql/types';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { showErrorMessage } from 'helpers/toasts';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';

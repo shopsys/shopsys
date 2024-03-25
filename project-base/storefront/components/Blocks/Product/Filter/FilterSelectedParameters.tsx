@@ -2,7 +2,6 @@ import { SelectedParametersList, SelectedParametersListItem, SelectedParametersN
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
@@ -209,3 +208,6 @@ const getSelectedParameters = (
 
     return Array.from(parametersMap.values());
 };
+
+const getHasDefaultFilters = (defaultProductFiltersMap: DefaultProductFiltersMapType) =>
+    defaultProductFiltersMap.flags.size > 0 || defaultProductFiltersMap.parameters.size > 0;

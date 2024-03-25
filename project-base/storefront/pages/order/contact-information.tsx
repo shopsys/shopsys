@@ -4,9 +4,8 @@ import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { ContactInformationWrapper } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import { CountriesQueryDocument } from 'graphql/requests/countries/queries/CountriesQuery.generated';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useOrderPagesAccess } from 'hooks/cart/useOrderPagesAccess';
-import React from 'react';
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const canContentBeDisplayed = useOrderPagesAccess('contact-information');

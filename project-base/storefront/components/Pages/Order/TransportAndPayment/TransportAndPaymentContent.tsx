@@ -8,7 +8,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';

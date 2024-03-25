@@ -5,7 +5,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmTransportChangeEventHandler } from 'gtm/handlers/onGtmTransportChangeEventHandler';
 import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { useLatest } from 'hooks/ui/useLatest';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';

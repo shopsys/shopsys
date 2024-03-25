@@ -1,30 +1,10 @@
+import { getInternationalizedStaticUrl } from './getInternationalizedStaticUrl';
 import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
 import {
     getQueryWithoutSlugTypeParameterFromQueryString,
     getUrlWithoutGetParameters,
 } from 'helpers/parsing/urlParsing';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { SameLengthOutput } from 'types/SameLengthOutput';
-
-type Url = StaticRewritePathKeyType | { url: StaticRewritePathKeyType; param: string | undefined | null };
-
-const getInternationalizedStaticUrl = (url: Url, domainUrl: string) => {
-    const urlsOnDomain = STATIC_REWRITE_PATHS[domainUrl];
-
-    if (typeof url === 'string') {
-        const result = urlsOnDomain[url];
-        return typeof result !== 'undefined' ? result : '';
-    }
-
-    const staticUrlTemplate = urlsOnDomain[url.url];
-    const staticPart = staticUrlTemplate.split(':')[0];
-
-    return staticPart + (url.param ?? '');
-};
-
-export const getInternationalizedStaticUrls = <InputUrls extends Url[]>(urls: [...InputUrls], domainUrl: string) => {
-    return urls.map((url) => getInternationalizedStaticUrl(url, domainUrl)) as SameLengthOutput<InputUrls>;
-};
 
 export const getServerSideInternationalizedStaticUrl = (
     context: GetServerSidePropsContext | NextPageContext,
