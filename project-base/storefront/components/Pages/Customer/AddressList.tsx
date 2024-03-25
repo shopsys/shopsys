@@ -4,7 +4,7 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { useDeleteDeliveryAddressMutation } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
 import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

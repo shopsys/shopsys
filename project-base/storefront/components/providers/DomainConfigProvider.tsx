@@ -3,9 +3,9 @@ import { createContext, useContext } from 'react';
 
 export const DomainConfigContext = createContext<DomainConfigType | null>(null);
 
-export interface DomainConfigProviderProps {
+type DomainConfigProviderProps = {
     domainConfig: DomainConfigType;
-}
+};
 
 export const DomainConfigProvider: FC<DomainConfigProviderProps> = ({ domainConfig, children }) => {
     return <DomainConfigContext.Provider value={domainConfig}>{children}</DomainConfigContext.Provider>;

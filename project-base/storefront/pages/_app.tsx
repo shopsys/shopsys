@@ -38,7 +38,9 @@ const AppPageContent = dynamic(() =>
 const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => component.ErrorBoundary));
 
 const Error500ContentWithBoundary = dynamic(() =>
-    import('components/Pages/ErrorPage/Error500Content').then((component) => component.Error500ContentWithBoundary),
+    import('components/Pages/ErrorPage/Error500ContentWithBoundary').then(
+        (component) => component.Error500ContentWithBoundary,
+    ),
 );
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {

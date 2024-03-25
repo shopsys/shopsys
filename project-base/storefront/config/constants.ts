@@ -26,3 +26,5 @@ export const SEO_SENSITIVE_FILTERS = {
         SLIDER: false,
     },
 };
+
+export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };

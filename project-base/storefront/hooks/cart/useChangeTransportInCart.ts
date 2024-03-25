@@ -1,9 +1,9 @@
 import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { onGtmTransportChangeEventHandler } from 'gtm/helpers/eventHandlers';
-import { useGtmCartInfo } from 'gtm/helpers/gtm';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { onGtmTransportChangeEventHandler } from 'gtm/handlers/onGtmTransportChangeEventHandler';
+import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'helpers/toasts';
 import { useLatest } from 'hooks/ui/useLatest';

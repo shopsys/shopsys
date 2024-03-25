@@ -1,6 +1,6 @@
 import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useApplyPromoCodeToCartMutation } from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';

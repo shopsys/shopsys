@@ -11,9 +11,9 @@ import {
     OrdersQueryVariables,
     OrdersQueryDocument,
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';

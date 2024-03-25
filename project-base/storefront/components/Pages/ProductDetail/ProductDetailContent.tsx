@@ -1,8 +1,8 @@
-import { ProductDetailCode, ProductDetailHeading, ProductDetailPrefix } from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories';
 import { ProductDetailAddToCart } from './ProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
+import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';

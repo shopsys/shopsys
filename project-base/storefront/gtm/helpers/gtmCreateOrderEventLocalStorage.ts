@@ -1,37 +1,9 @@
-import { GtmDeviceTypes } from 'gtm/types/enums';
+import { compressObjectToString, decompressStringToObject } from './objectCompression';
 import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
 import { GtmUserInfoType } from 'gtm/types/objects';
 import { isClient } from 'helpers/isClient';
-import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
-import { v4 as uuidV4 } from 'uuid';
 
 const GTM_CREATE_ORDER_OBJECT_LOCAL_STORAGE_KEY = 'gtmCreateOrderEvent' as const;
-
-export const getGtmDeviceType = (): GtmDeviceTypes => {
-    if (!isClient) {
-        return GtmDeviceTypes.unknown;
-    }
-    if (window.innerWidth <= desktopFirstSizes.mobile) {
-        return GtmDeviceTypes.mobile;
-    }
-    return window.innerWidth >= mobileFirstSizes.vl ? GtmDeviceTypes.desktop : GtmDeviceTypes.tablet;
-};
-
-export const getRandomPageId = (): string => uuidV4();
-
-export const compressObjectToString = (object: Record<string, unknown>): string =>
-    compressToEncodedURIComponent(JSON.stringify(object));
-
-export const decompressStringToObject = <T>(string: string | undefined): T | undefined => {
-    if (!string) {
-        return undefined;
-    }
-
-    const decompressedString = decompressFromEncodedURIComponent(string);
-
-    return JSON.parse(decompressedString);
-};
 
 export const saveGtmCreateOrderEventInLocalStorage = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType,

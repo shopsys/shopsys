@@ -1,8 +1,8 @@
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 
 type PaymentSuccessProps = {

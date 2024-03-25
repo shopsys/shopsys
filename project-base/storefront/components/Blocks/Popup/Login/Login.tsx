@@ -8,7 +8,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { blurInput } from 'helpers/forms/blurInput';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
