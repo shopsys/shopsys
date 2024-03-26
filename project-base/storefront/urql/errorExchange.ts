@@ -1,5 +1,5 @@
 import { Kind } from 'graphql';
-import { CartQueryDocumentApi } from 'graphql/generated';
+import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
@@ -88,7 +88,7 @@ const handleErrorMessagesForMutation = (error: CombinedError) => {
 
 const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operation: Operation) => {
     const parsedErrors = getUserFriendlyErrors(error, t);
-    const isCartError = operation.query === CartQueryDocumentApi;
+    const isCartError = operation.query === CartQueryDocument;
 
     if (parsedErrors.userError) {
         logException({

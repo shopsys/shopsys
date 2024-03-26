@@ -1,11 +1,11 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    BreadcrumbFragmentApi,
-    CurrentCustomerUserQueryApi,
-    CurrentCustomerUserQueryDocumentApi,
-} from 'graphql/generated';
+    CurrentCustomerUserQuery,
+    CurrentCustomerUserQueryDocument,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -19,7 +19,7 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], url);
-    const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];
+    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
@@ -47,8 +47,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 ssrExchange,
             });
 
-            const customerQueryResult = client.readQuery<CurrentCustomerUserQueryApi>(
-                CurrentCustomerUserQueryDocumentApi,
+            const customerQueryResult = client.readQuery<CurrentCustomerUserQuery>(
+                CurrentCustomerUserQueryDocument,
                 {},
             );
             const isLogged =

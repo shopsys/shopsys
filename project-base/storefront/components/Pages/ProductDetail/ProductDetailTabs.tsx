@@ -2,14 +2,15 @@ import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { ListedProductFragmentApi, ParameterFragmentApi } from 'graphql/generated';
+import { ParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailTabsProps = {
     description: string | null;
-    parameters: ParameterFragmentApi[];
-    relatedProducts: ListedProductFragmentApi[];
+    parameters: ParameterFragment[];
+    relatedProducts: ListedProductFragment[];
 };
 
 export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters, relatedProducts }) => {

@@ -4,7 +4,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { usePasswordRecoveryMutationApi } from 'graphql/generated';
+import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 import { blurInput } from 'helpers/forms/blurInput';
@@ -23,7 +23,7 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 
 export const ResetPasswordContent: FC = () => {
     const { t } = useTranslation();
-    const [, resetPassword] = usePasswordRecoveryMutationApi();
+    const [, resetPassword] = usePasswordRecoveryMutation();
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);

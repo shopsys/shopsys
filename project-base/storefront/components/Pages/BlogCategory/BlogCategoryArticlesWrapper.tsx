@@ -3,7 +3,8 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';
+import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import { useBlogCategoryArticles } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -20,12 +21,12 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
 }) => {
     const { currentPage } = useQueryParams();
 
-    const [{ data, fetching }] = useBlogCategoryArticlesApi({
+    const [{ data, fetching }] = useBlogCategoryArticles({
         variables: { uuid, endCursor: getEndCursor(currentPage), pageSize: DEFAULT_PAGE_SIZE },
     });
 
     const mappedArticles = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(data?.blogCategory?.blogArticles.edges),
+        () => mapConnectionEdges<ListedBlogArticleFragment>(data?.blogCategory?.blogArticles.edges),
         [data?.blogCategory?.blogArticles.edges],
     );
 

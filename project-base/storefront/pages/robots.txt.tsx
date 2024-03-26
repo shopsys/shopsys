@@ -1,4 +1,8 @@
-import { RobotsTxtQueryApi, RobotsTxtQueryDocumentApi, RobotsTxtQueryVariablesApi } from 'graphql/generated';
+import {
+    RobotsTxtQuery,
+    RobotsTxtQueryVariables,
+    RobotsTxtQueryDocument,
+} from 'graphql/requests/robotsTxt/RobotsTxtQuery.generated';
 import { getDomainConfig } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { FILTER_QUERY_PARAMETER_NAME, LOAD_MORE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
@@ -22,7 +26,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, s
     });
 
     const robotsTxtResponse = await client
-        .query<RobotsTxtQueryApi, RobotsTxtQueryVariablesApi>(RobotsTxtQueryDocumentApi, {})
+        .query<RobotsTxtQuery, RobotsTxtQueryVariables>(RobotsTxtQueryDocument, {})
         .toPromise();
 
     const res = context.res;

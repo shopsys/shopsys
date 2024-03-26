@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSettingsQueryApi } from 'graphql/generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { formatDate, formatDateAndTime } from 'helpers/formaters/formatDate';
 
 export const useFormatDate = (): {
@@ -7,7 +7,7 @@ export const useFormatDate = (): {
     formatDateAndTime: typeof formatDateAndTime;
 } => {
     const { fallbackTimezone } = useDomainConfig();
-    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
+    const [{ data }] = useSettingsQuery({ requestPolicy: 'cache-only' });
 
     const timezone = data?.settings?.displayTimezone || fallbackTimezone;
 

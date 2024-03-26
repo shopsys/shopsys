@@ -6,11 +6,9 @@ import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import {
-    useIsCustomerUserRegisteredQueryApi,
-    usePrivacyPolicyArticleUrlQueryApi,
-    useTermsAndConditionsArticleUrlQueryApi,
-} from 'graphql/generated';
+import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useTermsAndConditionsArticleUrlQuery } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
+import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -33,14 +31,14 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
 
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQueryApi();
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
+    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQuery();
+    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
 
     const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
 
-    const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQueryApi({
+    const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQuery({
         variables: {
             email: emailValue,
         },

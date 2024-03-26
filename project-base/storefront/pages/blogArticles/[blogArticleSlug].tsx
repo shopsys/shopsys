@@ -2,12 +2,12 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
-    BlogArticleDetailQueryApi,
-    BlogArticleDetailQueryDocumentApi,
-    BlogArticleDetailQueryVariablesApi,
-    ProductsByCatnumsDocumentApi,
-    useBlogArticleDetailQueryApi,
-} from 'graphql/generated';
+    useBlogArticleDetailQuery,
+    BlogArticleDetailQuery,
+    BlogArticleDetailQueryVariables,
+    BlogArticleDetailQueryDocument,
+} from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
+import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -23,7 +23,7 @@ import { createClient } from 'urql/createClient';
 
 const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
-    const [{ data: blogArticleData, fetching }] = useBlogArticleDetailQueryApi({
+    const [{ data: blogArticleData, fetching }] = useBlogArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -58,19 +58,17 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const blogArticleResponse: OperationResult<
-                    BlogArticleDetailQueryApi,
-                    BlogArticleDetailQueryVariablesApi
-                > = await client!
-                    .query(BlogArticleDetailQueryDocumentApi, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                    })
-                    .toPromise();
+                const blogArticleResponse: OperationResult<BlogArticleDetailQuery, BlogArticleDetailQueryVariables> =
+                    await client!
+                        .query(BlogArticleDetailQueryDocument, {
+                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        })
+                        .toPromise();
 
                 const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
 
                 await client!
-                    .query(ProductsByCatnumsDocumentApi, {
+                    .query(ProductsByCatnumsDocument, {
                         catnums: parsedCatnums,
                     })
                     .toPromise();

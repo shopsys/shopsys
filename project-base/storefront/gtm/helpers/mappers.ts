@@ -1,18 +1,16 @@
-import {
-    CartItemFragmentApi,
-    LastOrderFragmentApi,
-    ListedProductFragmentApi,
-    ListedStoreFragmentApi,
-    MainVariantDetailFragmentApi,
-    ProductDetailFragmentApi,
-    SimpleProductFragmentApi,
-} from 'graphql/generated';
+import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { LastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { SimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'gtm/types/objects';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { ProductInterfaceType } from 'types/product';
 
 export const mapGtmCartItemType = (
-    cartItem: CartItemFragmentApi,
+    cartItem: CartItemFragment,
     domainUrl: string,
     listIndex?: number,
     quantity?: number,
@@ -30,7 +28,7 @@ export const mapGtmCartItemType = (
 };
 
 export const mapGtmListedProductType = (
-    product: ListedProductFragmentApi | SimpleProductFragmentApi,
+    product: ListedProductFragment | SimpleProductFragment,
     listIndex: number,
     domainUrl: string,
 ): GtmListedProductType => ({
@@ -39,7 +37,7 @@ export const mapGtmListedProductType = (
 });
 
 export const mapGtmProductDetailType = (
-    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
+    product: ProductDetailFragment | MainVariantDetailFragment,
     domainUrl: string,
 ): GtmProductInterface => mapGtmProductInterface(product, domainUrl);
 
@@ -80,7 +78,7 @@ const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType):
     return undefined;
 };
 
-export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragmentApi | null): GtmShippingInfoType => {
+export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragment | null): GtmShippingInfoType => {
     let transportDetail = '';
     const transportExtra = [];
 
@@ -96,7 +94,7 @@ export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragmentApi | null): 
     };
 };
 
-export const getGtmPickupPlaceFromStore = (store: ListedStoreFragmentApi): ListedStoreFragmentApi => ({
+export const getGtmPickupPlaceFromStore = (store: ListedStoreFragment): ListedStoreFragment => ({
     __typename: 'Store',
     locationLatitude: null,
     locationLongitude: null,
@@ -117,8 +115,8 @@ export const getGtmPickupPlaceFromStore = (store: ListedStoreFragmentApi): Liste
 
 export const getGtmPickupPlaceFromLastOrder = (
     pickupPlaceIdentifier: string,
-    lastOrder: LastOrderFragmentApi,
-): ListedStoreFragmentApi => ({
+    lastOrder: LastOrderFragment,
+): ListedStoreFragment => ({
     __typename: 'Store',
     locationLatitude: null,
     locationLongitude: null,

@@ -2,14 +2,15 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AvailabilityStatusEnumApi, ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { AvailabilityStatusEnum } from 'graphql/types';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { twJoin } from 'tailwind-merge';
 
 type CategoryBestsellersListItemProps = {
-    product: ListedProductFragmentApi;
+    product: ListedProductFragment;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
 };
@@ -47,8 +48,8 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             <div className="basis-4/6 lg:basis-3/12 lg:text-center">
                 <span
                     className={twJoin(
-                        product.availability.status === AvailabilityStatusEnumApi.InStockApi && 'text-inStock',
-                        product.availability.status === AvailabilityStatusEnumApi.OutOfStockApi && 'text-red ',
+                        product.availability.status === AvailabilityStatusEnum.InStock && 'text-inStock',
+                        product.availability.status === AvailabilityStatusEnum.OutOfStock && 'text-red ',
                     )}
                 >
                     {product.availability.name}

@@ -4,13 +4,13 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import {
-    BreadcrumbFragmentApi,
-    ListedOrderFragmentApi,
-    OrdersQueryDocumentApi,
-    OrdersQueryVariablesApi,
-    useOrdersQueryApi,
-} from 'graphql/generated';
+    useOrdersQuery,
+    OrdersQueryVariables,
+    OrdersQueryDocument,
+} from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -28,16 +28,16 @@ const OrdersPage: FC = () => {
     const { t } = useTranslation();
     const { currentPage } = useQueryParams();
     const { url } = useDomainConfig();
-    const [{ data: ordersData, fetching }] = useOrdersQueryApi({
+    const [{ data: ordersData, fetching }] = useOrdersQuery({
         variables: { after: getEndCursor(currentPage), first: DEFAULT_PAGE_SIZE },
         requestPolicy: 'cache-and-network',
     });
     const mappedOrders = useMemo(
-        () => mapConnectionEdges<ListedOrderFragmentApi>(ordersData?.orders?.edges),
+        () => mapConnectionEdges<ListedOrderFragment>(ordersData?.orders?.edges),
         [ordersData?.orders?.edges],
     );
     const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(['/customer', '/customer/orders'], url);
-    const breadcrumbs: BreadcrumbFragmentApi[] = [
+    const breadcrumbs: BreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];
@@ -57,12 +57,12 @@ const OrdersPage: FC = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
-    return initServerSideProps<OrdersQueryVariablesApi>({
+    return initServerSideProps<OrdersQueryVariables>({
         context,
         authenticationRequired: true,
         prefetchedQueries: [
             {
-                query: OrdersQueryDocumentApi,
+                query: OrdersQueryDocument,
                 variables: {
                     after: getEndCursor(page),
                     first: DEFAULT_PAGE_SIZE,

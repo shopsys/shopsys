@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AddOrderItemsToCartInputApi, useAddOrderItemsToCartMutationApi } from 'graphql/generated';
+import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
+import { AddOrderItemsToCartInput } from 'graphql/types';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'helpers/toasts';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
@@ -22,11 +23,11 @@ export const useAddOrderItemsToCart = (): {
     const router = useRouter();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const [, addOrderItemsToCart] = useAddOrderItemsToCartMutationApi();
+    const [, addOrderItemsToCart] = useAddOrderItemsToCartMutation();
     const { t } = useTranslation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
-    const handleAddingItemsToCart = async (input: AddOrderItemsToCartInputApi) => {
+    const handleAddingItemsToCart = async (input: AddOrderItemsToCartInput) => {
         const response = await addOrderItemsToCart({ input });
         setOrderForPrefillingUuid(undefined);
 

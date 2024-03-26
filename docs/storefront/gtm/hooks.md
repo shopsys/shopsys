@@ -9,7 +9,7 @@ It is triggered every time the page (and therefore products) change.
 
 ```ts
 export const useGtmPaginatedProductListViewEvent = (
-  paginatedProducts: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
+  paginatedProducts: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
   gtmProductListName: GtmProductListNameType // name of the viewed paginated list
 ): void => {
   // function body not included in this code block
@@ -23,7 +23,7 @@ It is triggered every time the page, therefore products change.
 
 ```ts
 export const useGtmSliderProductListViewEvent = (
-  products: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
+  products: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
   gtmProuctListName: GtmProductListNameType // name of the viewed paginated list
 ): void => {
   // function body not included in this code block
@@ -36,7 +36,7 @@ Hook used to handle the viewing of autocomplete search results. It is triggered 
 
 ```ts
 export const useGtmAutocompleteResultsViewEvent = (
-  searchResult: AutocompleteSearchQueryApi | undefined, // object containing all autocomplete search results, if loaded and available
+  searchResult: AutocompleteSearchQuery | undefined, // object containing all autocomplete search results, if loaded and available
   keyword: string, // search keyword for which the results were found
   fetching: boolean // boolean pointer saying if the results are still loading
 ): void => {
@@ -99,7 +99,7 @@ Hook used to handle the viewing of the product detail page.
 
 ```ts
 export const useGtmProductDetailViewEvent = (
-  productDetailData: ProductDetailFragmentApi | MainVariantDetailFragmentApi, // information about the displayed product
+  productDetailData: ProductDetailFragment | MainVariantDetailFragment, // information about the displayed product
   slug: string, // slug of the page
   fetching: boolean // boolean pointer saying if the results are still loading
 ): void => {

@@ -12,7 +12,7 @@ import {
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCreateOrderMutationApi } from 'graphql/generated';
+import { useCreateOrderMutation } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import {
     getGtmCreateOrderEventOrderPart,
     getGtmCreateOrderEventUserPart,
@@ -61,7 +61,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const currentCart = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();
     const { t } = useTranslation();
-    const [{ fetching }, createOrder] = useCreateOrderMutationApi();
+    const [{ fetching }, createOrder] = useCreateOrderMutation();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });

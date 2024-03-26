@@ -4,7 +4,7 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfileContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -21,7 +21,7 @@ const EditProfilePage: FC = () => {
         url,
     );
     const currentCustomerUserData = useCurrentCustomerData();
-    const breadcrumbs: BreadcrumbFragmentApi[] = [
+    const breadcrumbs: BreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('Edit profile'), slug: customerEditProfileUrl },
     ];

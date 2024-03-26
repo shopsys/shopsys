@@ -1,7 +1,7 @@
 import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/IconsSvg';
 import { DEFAULT_SORT } from 'config/constants';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -12,14 +12,14 @@ import { twJoin } from 'tailwind-merge';
 
 type SortingBarProps = {
     totalCount: number;
-    sorting: ProductOrderingModeEnumApi | null;
-    customSortOptions?: ProductOrderingModeEnumApi[];
+    sorting: ProductOrderingModeEnum | null;
+    customSortOptions?: ProductOrderingModeEnum[];
 };
 
 const DEFAULT_SORT_OPTIONS = [
-    ProductOrderingModeEnumApi.PriorityApi,
-    ProductOrderingModeEnumApi.PriceAscApi,
-    ProductOrderingModeEnumApi.PriceDescApi,
+    ProductOrderingModeEnum.Priority,
+    ProductOrderingModeEnum.PriceAsc,
+    ProductOrderingModeEnum.PriceDesc,
 ];
 
 export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSortOptions, className }) => {
@@ -31,12 +31,12 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
 
     const sortOptionsLabels = {
-        [ProductOrderingModeEnumApi.PriorityApi]: t('priority'),
-        [ProductOrderingModeEnumApi.PriceAscApi]: t('price ascending'),
-        [ProductOrderingModeEnumApi.PriceDescApi]: t('price descending'),
-        [ProductOrderingModeEnumApi.RelevanceApi]: t('relevance'),
-        [ProductOrderingModeEnumApi.NameAscApi]: t('name ascending'),
-        [ProductOrderingModeEnumApi.NameDescApi]: t('name descending'),
+        [ProductOrderingModeEnum.Priority]: t('priority'),
+        [ProductOrderingModeEnum.PriceAsc]: t('price ascending'),
+        [ProductOrderingModeEnum.PriceDesc]: t('price descending'),
+        [ProductOrderingModeEnum.Relevance]: t('relevance'),
+        [ProductOrderingModeEnum.NameAsc]: t('name ascending'),
+        [ProductOrderingModeEnum.NameDesc]: t('name descending'),
     };
 
     const sortOptions = customSortOptions || DEFAULT_SORT_OPTIONS;

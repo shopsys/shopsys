@@ -62,8 +62,8 @@ export const getGtmCreateOrderEvent = (
 
 ```ts
 export const getGtmCreateOrderEventOrderPart = (
-  cart: CartFragmentApi, // the cart of the current user in the shape of basic CartFragment object
-  payment: SimplePaymentFragmentApi, // the payment method chosen by the user that will be used to pay for the order
+  cart: CartFragment, // the cart of the current user in the shape of basic CartFragment object
+  payment: SimplePaymentFragment, // the payment method chosen by the user that will be used to pay for the order
   promoCode: string | null, // promo code used for the order, if applicable
   orderNumber: string, // identifying number of the order
   reviewConsents: GtmReviewConsentsType, // information about consents previously given by the user
@@ -98,7 +98,7 @@ export const getGtmSendFormEvent = (
 
 ```ts
 export const getGtmProductClickEvent = (
-  product: ListedProductFragmentApi | SimpleProductFragmentApi, // information about the product clicked by the user
+  product: ListedProductFragment | SimpleProductFragment, // information about the product clicked by the user
   gtmProductListName: GtmProductListNameType, // name of the list from which the product was clicked
   listIndex: number, // index of the product within the list
   domainUrl: string // URL of the current domain
@@ -111,7 +111,7 @@ export const getGtmProductClickEvent = (
 
 ```ts
 export const getGtmProductDetailViewEvent = (
-    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi, // information about the product displayed on on the product detail page
+    product: ProductDetailFragment | MainVariantDetailFragment, // information about the product displayed on on the product detail page
     currencyCode: string; // the code of the currency used on the domain
     domainUrl: string, // URL of the current domain
 ): GtmProductDetailViewEventType => {
@@ -123,7 +123,7 @@ export const getGtmProductDetailViewEvent = (
 
 ```ts
 export const getGtmAutocompleteResultsViewEvent = (
-  searchResult: AutocompleteSearchQueryApi, // object with all autocomplete search results
+  searchResult: AutocompleteSearchQuery, // object with all autocomplete search results
   keyword: string // keyword for which the results were returned
 ): GtmAutocompleteResultsViewEventType => {
   // function body not included in this code block
@@ -147,7 +147,7 @@ export const getGtmAutocompleteResultClickEvent = (
 ```ts
 export const useGtmStaticPageViewEvent = (
   pageType: GtmPageType, // type of the page viewed by the user
-  breadcrumbs?: BreadcrumbFragmentApi[] // breadcrumbs for the viewed page, if available
+  breadcrumbs?: BreadcrumbFragment[] // breadcrumbs for the viewed page, if available
 ): GtmPageViewEventType => {
   // function body not included in this code block
 };
@@ -183,7 +183,7 @@ export const getGtmPageViewEvent = (
 ```ts
 export const getGtmChangeCartItemEvent = (
     event: GtmEventType.add_to_cart | GtmEventType.remove_from_cart, // type of the event saying if we are removing or adding items to cart
-    cartItem: CartItemFragmentApi, // removed (or added) cart item
+    cartItem: CartItemFragment, // removed (or added) cart item
     listIndex: number | undefined, // list index from which the item was removed/added, it can be index within cart (for removing) or index within any other list (for adding)
     quantity: number, // how much was removed/added, absolute value of the delta of the previous and current quantity
     currencyCode: string; // the code of the currency used on the domain
@@ -202,7 +202,7 @@ export const getGtmChangeCartItemEvent = (
 ```ts
 export const getGtmPaymentChangeEvent = (
   gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information, if available
-  updatedPayment: SimplePaymentFragmentApi // payment method newly updated by the user
+  updatedPayment: SimplePaymentFragment // payment method newly updated by the user
 ): GtmPaymentChangeEventType => {
   // function body not included in this code block
 };
@@ -213,8 +213,8 @@ export const getGtmPaymentChangeEvent = (
 ```ts
 export const getGtmTransportChangeEvent = (
   gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information, if available
-  updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi, // transport method newly updated by the user
-  updatedPickupPlace: ListedStoreFragmentApi | null, // pickup place method newly updated by the user, if available
+  updatedTransport: TransportWithAvailablePaymentsAndStoresFragment, // transport method newly updated by the user
+  updatedPickupPlace: ListedStoreFragment | null, // pickup place method newly updated by the user, if available
   paymentName: string | undefined // name of the selected payment method
 ): GtmTransportChangeEventType => {
   // function body not included in this code block
@@ -225,7 +225,7 @@ export const getGtmTransportChangeEvent = (
 
 ```ts
 export const getGtmProductListViewEvent = (
-  products: ListedProductFragmentApi[], // products contained in the viewed list
+  products: ListedProductFragment[], // products contained in the viewed list
   gtmProductListName: GtmProductListNameType, // name of the viewed list
   currentPage: number, // current page of the viewed list
   pageSize: number, // page size of the viewed list

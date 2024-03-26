@@ -3,14 +3,16 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
-    BrandDetailQueryApi,
-    BrandDetailQueryDocumentApi,
-    BrandDetailQueryVariablesApi,
-    BrandProductsQueryApi,
-    BrandProductsQueryDocumentApi,
-    BrandProductsQueryVariablesApi,
-    useBrandDetailQueryApi,
-} from 'graphql/generated';
+    useBrandDetailQuery,
+    BrandDetailQuery,
+    BrandDetailQueryVariables,
+    BrandDetailQueryDocument,
+} from 'graphql/requests/brands/queries/BrandDetailQuery.generated';
+import {
+    BrandProductsQuery,
+    BrandProductsQueryVariables,
+    BrandProductsQueryDocument,
+} from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -41,7 +43,7 @@ import { createClient } from 'urql/createClient';
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();
     const { sort, filter } = useQueryParams();
-    const [{ data: brandDetailData, fetching }] = useBrandDetailQueryApi({
+    const [{ data: brandDetailData, fetching }] = useBrandDetailQuery({
         variables: {
             urlSlug: getSlugFromUrl(router.asPath),
             orderingMode: sort,
@@ -96,7 +98,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
                 const brandDetailResponsePromise = client!
-                    .query<BrandDetailQueryApi, BrandDetailQueryVariablesApi>(BrandDetailQueryDocumentApi, {
+                    .query<BrandDetailQuery, BrandDetailQueryVariables>(BrandDetailQueryDocument, {
                         urlSlug,
                         orderingMode,
                         filter,
@@ -104,7 +106,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     .toPromise();
 
                 const brandProductsResponsePromise = client!
-                    .query<BrandProductsQueryApi, BrandProductsQueryVariablesApi>(BrandProductsQueryDocumentApi, {
+                    .query<BrandProductsQuery, BrandProductsQueryVariables>(BrandProductsQueryDocument, {
                         endCursor: getEndCursor(page),
                         orderingMode,
                         filter,

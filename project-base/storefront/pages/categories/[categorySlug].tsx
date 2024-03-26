@@ -6,11 +6,11 @@ import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryD
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
-    CategoryDetailQueryApi,
-    CategoryDetailQueryVariablesApi,
-    CategoryDetailQueryDocumentApi,
-    CategoryProductsQueryDocumentApi,
-} from 'graphql/generated';
+    CategoryDetailQuery,
+    CategoryDetailQueryVariables,
+    CategoryDetailQueryDocument,
+} from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
+import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -94,7 +94,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
                 const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
                 const categoryDetailResponsePromise = client!
-                    .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
+                    .query<CategoryDetailQuery, CategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
                         urlSlug,
                         filter,
                         orderingMode,
@@ -102,7 +102,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     .toPromise();
 
                 const categoryProductsResponsePromise = client!
-                    .query(CategoryProductsQueryDocumentApi, {
+                    .query(CategoryProductsQueryDocument, {
                         endCursor: getEndCursor(page),
                         orderingMode,
                         filter,

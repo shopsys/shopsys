@@ -5,7 +5,7 @@ import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { CartItemFragmentApi } from 'graphql/generated';
+import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -16,7 +16,7 @@ const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((compon
 
 type AddToCartPopupProps = {
     onCloseCallback: () => void;
-    addedCartItem: CartItemFragmentApi;
+    addedCartItem: CartItemFragment;
 };
 
 export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, addedCartItem: { product, quantity } }) => {

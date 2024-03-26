@@ -9,7 +9,8 @@ module.exports = {
         '.next/*',
         'public/*',
         '!.prettierrc.js',
-        '**/generated/*',
+        'graphql/types.ts',
+        '*.generated.*',
         'config/*',
         '.eslintrc.js',
         'schema.graphql.json',
@@ -80,30 +81,31 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-unnecessary-condition': 'error',
         'no-restricted-imports': [
-            'error', {
-                "name": "tailwind-merge",
-                "importNames": ["twMerge"],
-                "message": "Please use twMergeCustom from utils/twMerge instead."
+            'error',
+            {
+                name: 'tailwind-merge',
+                importNames: ['twMerge'],
+                message: 'Please use twMergeCustom from utils/twMerge instead.',
             },
             {
-                "name": "react",
-                "importNames": ["FC"],
-                "message": "Please remove this import and use global FC interface"
+                name: 'react',
+                importNames: ['FC'],
+                message: 'Please remove this import and use global FC interface',
             },
             {
-                "name": "next/link",
-                "message": "Please use ExtendedNextLink instead"
+                name: 'next/link',
+                message: 'Please use ExtendedNextLink instead',
             },
             {
-                "name": "urql",
-                "importNames": ["createClient"],
-                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
+                name: 'urql',
+                importNames: ['createClient'],
+                message: 'Please use the custom createClient function from storefront/urql/fetcher.ts',
             },
             {
-                "name": "next-urql",
-                "importNames": ["initUrqlClient"],
-                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
-            }
+                name: 'next-urql',
+                importNames: ['initUrqlClient'],
+                message: 'Please use the custom createClient function from storefront/urql/fetcher.ts',
+            },
         ],
         'react-hooks/rules-of-hooks': 'error',
         'react/no-unknown-property': [
@@ -121,18 +123,18 @@ module.exports = {
             },
         ],
         'react/jsx-boolean-value': 'error',
-        'react/jsx-no-useless-fragment': ['error', { "allowExpressions": true }],
+        'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
         'react/self-closing-comp': 'error',
-        "react/jsx-sort-props": ['error', {
-            "callbacksLast": true,
-            "shorthandFirst": true,
-            "multiline": "last",
-            reservedFirst: ["key"],
-        }],
-        "no-relative-import-paths/no-relative-import-paths": [
-            "error",
-            { "allowSameFolder": true }
+        'react/jsx-sort-props': [
+            'error',
+            {
+                callbacksLast: true,
+                shorthandFirst: true,
+                multiline: 'last',
+                reservedFirst: ['key'],
+            },
         ],
+        'no-relative-import-paths/no-relative-import-paths': ['error', { allowSameFolder: true }],
     },
     settings: {
         react: {

@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
+import { AddToCartMutation, useAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmMappedCart } from 'gtm/helpers/gtm';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -16,13 +16,13 @@ export type AddToCartAction = (
     quantity: number,
     listIndex?: number,
     isAbsoluteQuantity?: boolean,
-) => Promise<AddToCartMutationApi['AddToCart'] | null>;
+) => Promise<AddToCartMutation['AddToCart'] | null>;
 
 export const useAddToCart = (
     gtmMessageOrigin: GtmMessageOriginType,
     gtmProductListName: GtmProductListNameType,
 ): [AddToCartAction, boolean] => {
-    const [{ fetching }, addToCart] = useAddToCartMutationApi();
+    const [{ fetching }, addToCart] = useAddToCartMutation();
     const { t } = useTranslation();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { cart } = useCurrentCart();

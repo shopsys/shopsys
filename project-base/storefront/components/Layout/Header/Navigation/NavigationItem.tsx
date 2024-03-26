@@ -1,12 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { NavigationItemColumn } from 'components/Layout/Header/Navigation/NavigationItemColumn';
-import { CategoriesByColumnFragmentApi } from 'graphql/generated';
+import { CategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type NavigationItemProps = {
-    navigationItem: CategoriesByColumnFragmentApi;
+    navigationItem: CategoriesByColumnFragment;
 };
 
 export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {

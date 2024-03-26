@@ -2,14 +2,15 @@ import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentListItem } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { SimplePaymentFragmentApi, useGoPaySwiftsQueryApi } from 'graphql/generated';
+import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { Dispatch, SetStateAction } from 'react';
 
 type PaymentsInOrderSelectItemProps = {
-    payment: SimplePaymentFragmentApi;
-    selectedPaymentForChange: SimplePaymentFragmentApi | undefined;
-    setSelectedPaymentForChange: Dispatch<SetStateAction<SimplePaymentFragmentApi | undefined>>;
+    payment: SimplePaymentFragment;
+    selectedPaymentForChange: SimplePaymentFragment | undefined;
+    setSelectedPaymentForChange: Dispatch<SetStateAction<SimplePaymentFragment | undefined>>;
     selectedPaymentSwiftForChange?: string | null;
     setSelectedPaymentSwiftForChange?: Dispatch<SetStateAction<string | undefined | null>>;
 };
@@ -22,7 +23,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
     setSelectedPaymentSwiftForChange,
 }) => {
     const { currencyCode } = useDomainConfig();
-    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
+    const [getGoPaySwiftsResult] = useGoPaySwiftsQuery({ variables: { currencyCode } });
     const { t } = useTranslation();
 
     const isBankSelectVisible =

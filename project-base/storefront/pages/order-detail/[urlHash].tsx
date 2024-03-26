@@ -3,12 +3,12 @@ import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    BreadcrumbFragmentApi,
-    OrderDetailByHashQueryDocumentApi,
-    OrderDetailByHashQueryVariablesApi,
-    useOrderDetailByHashQueryApi,
-} from 'graphql/generated';
+    OrderDetailByHashQueryDocument,
+    OrderDetailByHashQueryVariables,
+    useOrderDetailByHashQuery,
+} from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -24,14 +24,12 @@ const OrderDetailByHashPage: FC = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const orderHash = getStringFromUrlQuery(router.query.urlHash);
-    const [{ data: orderData, fetching: orderFetching }] = useOrderDetailByHashQueryApi({
+    const [{ data: orderData, fetching: orderFetching }] = useOrderDetailByHashQuery({
         variables: { urlHash: orderHash },
     });
 
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
-    const breadcrumbs: BreadcrumbFragmentApi[] = [
-        { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
-    ];
+    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -58,11 +56,9 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps<OrderDetailByHashQueryVariablesApi>({
+    return initServerSideProps<OrderDetailByHashQueryVariables>({
         context,
-        prefetchedQueries: [
-            { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
-        ],
+        prefetchedQueries: [{ query: OrderDetailByHashQueryDocument, variables: { urlHash: context.params.urlHash } }],
         redisClient,
         domainConfig,
         t,

@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useChangePaymentInOrderMutationApi } from 'graphql/generated';
+import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
@@ -16,7 +16,7 @@ export const useChangePaymentInOrder = () => {
         url,
     );
 
-    const [{ fetching: isChangePaymentInOrderFetching }, changePaymentInOrder] = useChangePaymentInOrderMutationApi();
+    const [{ fetching: isChangePaymentInOrderFetching }, changePaymentInOrder] = useChangePaymentInOrderMutation();
 
     const changePaymentInOrderHandler = async (
         orderUuid: string,

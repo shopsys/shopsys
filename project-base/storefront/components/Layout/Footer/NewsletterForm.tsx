@@ -5,7 +5,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
+import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -21,7 +21,7 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 
 export const NewsletterForm: FC = () => {
     const { t } = useTranslation();
-    const [, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
+    const [, subscribeToNewsletter] = useNewsletterSubscribeMutation();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);

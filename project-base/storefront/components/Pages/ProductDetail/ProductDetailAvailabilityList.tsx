@@ -1,12 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
-import { AvailabilityStatusEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
+import { StoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { AvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailAvailabilityListProps = {
-    storeAvailabilities: StoreAvailabilityFragmentApi[];
+    storeAvailabilities: StoreAvailabilityFragment[];
 };
 
 export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>(
@@ -27,10 +28,10 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     <span
                                         className={twJoin(
                                             'flex-1 pr-3 text-sm',
+                                            storeAvailability.availabilityStatus === AvailabilityStatusEnum.InStock &&
+                                                'text-inStock',
                                             storeAvailability.availabilityStatus ===
-                                                AvailabilityStatusEnumApi.InStockApi && 'text-inStock',
-                                            storeAvailability.availabilityStatus ===
-                                                AvailabilityStatusEnumApi.OutOfStockApi && 'text-red',
+                                                AvailabilityStatusEnum.OutOfStock && 'text-red',
                                         )}
                                     >
                                         {storeAvailability.availabilityInformation}

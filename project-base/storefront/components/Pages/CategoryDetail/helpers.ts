@@ -1,4 +1,6 @@
-import { ProductOrderingModeEnumApi, CategoryDetailFragmentApi, useCategoryDetailQueryApi } from 'graphql/generated';
+import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { useCategoryDetailQuery } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
@@ -17,7 +19,7 @@ import { FilterOptionsUrlQueryType } from 'types/productFilter';
 
 export const useCategoryDetailData = (
     filter: FilterOptionsUrlQueryType | null,
-): { categoryData: CategoryDetailFragmentApi | null | undefined; isFetchingVisible: boolean } => {
+): { categoryData: CategoryDetailFragment | null | undefined; isFetchingVisible: boolean } => {
     const router = useRouter();
     const urlSlug = getSlugFromUrl(router.asPath);
     const { sort } = useQueryParams();
@@ -33,7 +35,7 @@ export const useCategoryDetailData = (
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
     const isInSeoRedirectedCategory = lastSeoCategoryRedirectRef.current === urlSlug;
 
-    const [{ data: categoryDetailData, fetching }] = useCategoryDetailQueryApi({
+    const [{ data: categoryDetailData, fetching }] = useCategoryDetailQuery({
         variables: {
             urlSlug,
             orderingMode: sort,
@@ -76,7 +78,7 @@ const handleSeoCategorySlugUpdate = (
     originalCategorySlug: string | undefined | null,
     categorySlug: string | undefined,
     currentFilter: FilterOptionsUrlQueryType | null,
-    currentSort: ProductOrderingModeEnumApi | null,
+    currentSort: ProductOrderingModeEnum | null,
     setWasRedirectedToSeoCategory: (value: boolean) => void,
     setOriginalCategorySlug: (value: string | undefined) => void,
 ) => {

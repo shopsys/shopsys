@@ -3,13 +3,13 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import {
-    BlogCategoryArticlesDocumentApi,
-    BlogCategoryQueryApi,
-    BlogCategoryQueryDocumentApi,
-    BlogCategoryQueryVariablesApi,
-    useBlogCategoryQueryApi,
-} from 'graphql/generated';
+    useBlogCategoryQuery,
+    BlogCategoryQuery,
+    BlogCategoryQueryVariables,
+    BlogCategoryQueryDocument,
+} from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -26,7 +26,7 @@ import { createClient } from 'urql/createClient';
 
 const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
-    const [{ data: blogCategoryData, fetching }] = useBlogCategoryQueryApi({
+    const [{ data: blogCategoryData, fetching }] = useBlogCategoryQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -67,15 +67,15 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const blogCategoryResponse: OperationResult<BlogCategoryQueryApi, BlogCategoryQueryVariablesApi> =
+                const blogCategoryResponse: OperationResult<BlogCategoryQuery, BlogCategoryQueryVariables> =
                     await client!
-                        .query(BlogCategoryQueryDocumentApi, {
+                        .query(BlogCategoryQueryDocument, {
                             urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
                         })
                         .toPromise();
 
                 await client!
-                    .query(BlogCategoryArticlesDocumentApi, {
+                    .query(BlogCategoryArticlesDocument, {
                         uuid: blogCategoryResponse.data?.blogCategory?.uuid,
                         endCursor: getEndCursor(page),
                         pageSize: DEFAULT_PAGE_SIZE,

@@ -1,5 +1,5 @@
-import { SimpleBlogCategoryFragmentApi } from 'graphql/generated';
+import { SimpleBlogCategoryFragment } from 'graphql/requests/blogCategories/fragments/SimpleBlogCategoryFragment.generated';
 
-export type ListedBlogCategoryRecursiveType = SimpleBlogCategoryFragmentApi & {
+export type ListedBlogCategoryRecursiveType = SimpleBlogCategoryFragment & {
     children?: ListedBlogCategoryRecursiveType[];
 };

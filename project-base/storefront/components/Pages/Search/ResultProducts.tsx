@@ -1,11 +1,11 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 
 type ResultProductsProps = {
-    products: ListedProductFragmentApi[];
+    products: ListedProductFragment[];
     areProductsShowed: boolean;
     noProductsFound: boolean;
     fetching: boolean;

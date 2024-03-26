@@ -68,6 +68,7 @@
         "@graphql-codegen/cli": "~5.0.0",
         "@graphql-codegen/fragment-matcher": "~5.0.0",
         "@graphql-codegen/introspection": "~4.0.0",
+        "@graphql-codegen/near-operation-file-preset": "^3.0.0",
         "@graphql-codegen/typescript-operations": "~4.0.1",
         "@graphql-codegen/typescript-urql": "~4.0.0",
         "@mswjs/interceptors": "0.19.0",

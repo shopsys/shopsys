@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSettingsQueryApi } from 'graphql/generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { formatPrice } from 'helpers/formaters/formatPrice';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -7,7 +7,7 @@ type FormatPriceFunctionType = (price: string | number, options?: { explicitZero
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const { t } = useTranslation();
-    const [{ data }] = useSettingsQueryApi();
+    const [{ data }] = useSettingsQuery();
     const { defaultLocale = 'en' } = useDomainConfig();
 
     const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = data?.settings?.pricing ?? {};

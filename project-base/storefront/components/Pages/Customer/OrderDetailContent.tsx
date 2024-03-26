@@ -5,7 +5,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { TIDs } from 'cypress/tids';
-import { OrderDetailFragmentApi } from 'graphql/generated';
+import { OrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
@@ -20,7 +20,7 @@ const NotAddedProductsPopup = dynamic(() =>
 const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((component) => component.MergeCartsPopup));
 
 type OrderDetailContentProps = {
-    order: OrderDetailFragmentApi;
+    order: OrderDetailFragment;
 };
 
 export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {

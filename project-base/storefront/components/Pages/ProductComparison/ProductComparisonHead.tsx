@@ -1,10 +1,10 @@
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
-import { ProductInProductListFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 
 type ProductComparisonHeadProps = {
-    comparedProducts: ProductInProductListFragmentApi[];
+    comparedProducts: ProductInProductListFragment[];
 };
 
 export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({ comparedProducts }) => {

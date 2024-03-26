@@ -50,7 +50,7 @@ The function used to map the cart information to be suitable for GTM. It uses ot
 
 ```ts
 export const getGtmMappedCart = (
-  cart: CartFragmentApi,
+  cart: CartFragment,
   promoCode: string | null,
   isUserLoggedIn: boolean,
   domain: DomainConfigType,
@@ -131,21 +131,21 @@ Helper functions are used to generate specific properties for the friendly URL p
 ```ts
 const getPageInfoForCategoryDetailPage = (
   defaultPageInfo: GtmPageInfoInterface,
-  categoryDetailData: CategoryDetailFragmentApi
+  categoryDetailData: CategoryDetailFragment
 ): GtmCategoryDetailPageInfoType => ({
   // function body omitted for simplification
 });
 
 const getPageInfoForBlogArticleDetailPage = (
   defaultPageInfo: GtmPageInfoType,
-  blogArticleDetailData: BlogArticleDetailFragmentApi
+  blogArticleDetailData: BlogArticleDetailFragment
 ): GtmBlogArticleDetailPageInfoType => ({
   // function body omitted for simplification
 });
 
 const getPageInfoForBrandDetailPage = (
   defaultPageInfo: GtmPageInfoType,
-  brandDetailData: BrandDetailFragmentApi
+  brandDetailData: BrandDetailFragment
 ): GtmBrandDetailPageInfoType => ({
   // function body omitted for simplification
 });

@@ -1,5 +1,5 @@
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
-import { useOrderPaymentSuccessfulContentQueryApi } from 'graphql/generated';
+import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -14,7 +14,7 @@ export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_success);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: contentData, fetching }] = useOrderPaymentSuccessfulContentQueryApi({ variables: { orderUuid } });
+    const [{ data: contentData, fetching }] = useOrderPaymentSuccessfulContentQuery({ variables: { orderUuid } });
 
     return (
         <ConfirmationPageContent

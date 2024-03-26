@@ -6,10 +6,10 @@ import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateway
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import { TIDs } from 'cypress/tids';
 import {
-    OrderSentPageContentQueryDocumentApi,
-    OrderSentPageContentQueryVariablesApi,
-    useOrderSentPageContentQueryApi,
-} from 'graphql/generated';
+    useOrderSentPageContentQuery,
+    OrderSentPageContentQueryVariables,
+    OrderSentPageContentQueryDocument,
+} from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -38,7 +38,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData, fetching }] = useOrderSentPageContentQueryApi({
+    const [{ data: orderSentPageContentData, fetching }] = useOrderSentPageContentQuery({
         variables: { orderUuid: orderUuid! },
     });
 
@@ -83,11 +83,11 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps<OrderSentPageContentQueryVariablesApi>({
+    return initServerSideProps<OrderSentPageContentQueryVariables>({
         context,
         prefetchedQueries: [
             {
-                query: OrderSentPageContentQueryDocumentApi,
+                query: OrderSentPageContentQueryDocument,
                 variables: { orderUuid },
             },
         ],

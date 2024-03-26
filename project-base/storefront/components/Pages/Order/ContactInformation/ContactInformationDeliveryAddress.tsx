@@ -8,7 +8,7 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCountriesQueryApi } from 'graphql/generated';
+import { useCountriesQuery } from 'graphql/requests/countries/queries/CountriesQuery.generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
@@ -33,7 +33,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
     const showAddressSelection = !!user?.deliveryAddresses.length && !pickupPlace;
 
-    const [{ data: countriesData }] = useCountriesQueryApi();
+    const [{ data: countriesData }] = useCountriesQuery();
     const countriesAsSelectOptions = useMemo(
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],

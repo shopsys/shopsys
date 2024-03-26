@@ -1,5 +1,6 @@
 import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
-import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { mergeNullableArrays } from 'helpers/arrayUtils';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
@@ -13,8 +14,8 @@ export const getEmptyDefaultProductFiltersMap = (): DefaultProductFiltersMapType
 });
 
 export const getDefaultFilterFromFilterOptions = (
-    productFilterOptions: ProductFilterOptionsFragmentApi | undefined,
-    defaultOrderingMode: ProductOrderingModeEnumApi | null | undefined,
+    productFilterOptions: ProductFilterOptionsFragment | undefined,
+    defaultOrderingMode: ProductOrderingModeEnum | null | undefined,
 ): DefaultProductFiltersMapType => {
     const defaultProductFiltersMap = getEmptyDefaultProductFiltersMap();
 
@@ -173,7 +174,7 @@ export const getChangedDefaultFilters = (
 
 export const getFilterWithoutSeoSensitiveFilters = (
     currentFilter: FilterOptionsUrlQueryType | undefined | null,
-    currentSort: ProductOrderingModeEnumApi | null,
+    currentSort: ProductOrderingModeEnum | null,
 ) => {
     const filteredSort = SEO_SENSITIVE_FILTERS.SORT || !currentSort ? undefined : currentSort;
     if (!currentFilter) {

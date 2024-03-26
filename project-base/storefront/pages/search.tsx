@@ -5,12 +5,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import {
-    BreadcrumbFragmentApi,
-    SearchProductsQueryVariablesApi,
-    SearchQueryVariablesApi,
-    useSearchQueryApi,
-} from 'graphql/generated';
+import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { SearchProductsQueryVariables } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+import { useSearchQuery, SearchQueryVariables } from 'graphql/requests/search/queries/SearchQuery.generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -32,7 +29,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const { sort, filter, searchString, currentLoadMore } = useQueryParams();
     const userIdentifier = usePersistStore((state) => state.userId)!;
 
-    const [{ data: searchData, fetching }] = useSearchQueryApi({
+    const [{ data: searchData, fetching }] = useSearchQuery({
         variables: {
             search: searchString!,
             orderingMode: sort,
@@ -45,7 +42,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
-    const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
+    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.search_results, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -81,7 +78,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         return redirect;
     }
 
-    return initServerSideProps<SearchQueryVariablesApi | SearchProductsQueryVariablesApi>({
+    return initServerSideProps<SearchQueryVariables | SearchProductsQueryVariables>({
         context,
         redisClient,
         domainConfig,

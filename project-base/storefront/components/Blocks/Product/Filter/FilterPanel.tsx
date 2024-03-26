@@ -5,15 +5,16 @@ import { FilterGroupPrice } from './FilterGroupPrice';
 import { FilterSelectedParameters } from './FilterSelectedParameters';
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
-import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { memo } from 'react';
 import { ParametersType } from 'types/productFilter';
 
 type FilterPanelProps = {
-    productFilterOptions: ProductFilterOptionsFragmentApi;
-    defaultOrderingMode?: ProductOrderingModeEnumApi | null;
-    orderingMode: ProductOrderingModeEnumApi | null;
+    productFilterOptions: ProductFilterOptionsFragment;
+    defaultOrderingMode?: ProductOrderingModeEnum | null;
+    orderingMode: ProductOrderingModeEnum | null;
     originalSlug: string | null;
     slug: string;
     panelCloseHandler?: () => void;

@@ -1,10 +1,10 @@
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { ProductInProductListFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonBodyProps = {
-    comparedProducts: ProductInProductListFragmentApi[];
+    comparedProducts: ProductInProductListFragment[];
     parametersDataState: { name: string; values: string[] }[];
 };
 

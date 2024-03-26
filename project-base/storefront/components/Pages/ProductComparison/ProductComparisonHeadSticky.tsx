@@ -1,10 +1,10 @@
 import { Image } from 'components/Basic/Image/Image';
-import { ProductInProductListFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonHeadStickyProps = {
-    comparedProducts: ProductInProductListFragmentApi[];
+    comparedProducts: ProductInProductListFragment[];
     tableMarginLeft: number;
 };
 

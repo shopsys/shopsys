@@ -1,8 +1,8 @@
 import { NavigationItem } from './NavigationItem';
-import { useNavigationQueryApi } from 'graphql/generated';
+import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 
 export const Navigation: FC = () => {
-    const [{ data: navigationData }] = useNavigationQueryApi();
+    const [{ data: navigationData }] = useNavigationQuery();
 
     if (!navigationData?.navigation.length) {
         return null;

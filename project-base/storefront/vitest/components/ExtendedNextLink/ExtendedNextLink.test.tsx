@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnum } from 'graphql/types';
 import { describe, expect, test } from 'vitest';
 
 describe('ExtendedNextLink snapshot tests', () => {
@@ -44,7 +44,7 @@ describe('ExtendedNextLink snapshot tests', () => {
         const component = render(
             <ExtendedNextLink
                 href="/test-category"
-                queryParams={{ sort: ProductOrderingModeEnumApi.PriceAscApi }}
+                queryParams={{ sort: ProductOrderingModeEnum.PriceAsc }}
                 type="category"
             >
                 <div>

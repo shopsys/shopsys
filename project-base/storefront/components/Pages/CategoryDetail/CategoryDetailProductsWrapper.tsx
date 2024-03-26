@@ -1,6 +1,7 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { CategoryDetailFragmentApi, CategoryProductsQueryDocumentApi } from 'graphql/generated';
+import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/helpers/gtm';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
 import { GtmMessageOriginType } from 'gtm/types/enums';
@@ -10,7 +11,7 @@ import { RefObject, useMemo } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
 type CategoryDetailProps = {
-    category: CategoryDetailFragmentApi;
+    category: CategoryDetailFragment;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
@@ -18,7 +19,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
     const [categoryProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
-        CategoryProductsQueryDocumentApi,
+        CategoryProductsQueryDocument,
         category.products.totalCount,
         {
             shouldAbortFetchingProducts: wasRedirectedToSeoCategory,
