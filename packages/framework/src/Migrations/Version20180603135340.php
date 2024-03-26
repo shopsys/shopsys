@@ -17,7 +17,7 @@ class Version20180603135340 extends AbstractMigration
         $this->createGetDomainIdsByLocaleFunction();
         $this->createGetDomainLocaleFunction();
         $this->createImmutableUnaccentFunction();
-        $this->createNormalizeFunction();
+        $this->createNormalizedFunction();
         $this->createDefaultDbIndexes();
         $this->createProductCatnumTrigger();
         $this->createProductPartnoTrigger();
@@ -69,9 +69,9 @@ class Version20180603135340 extends AbstractMigration
             LANGUAGE SQL IMMUTABLE');
     }
 
-    private function createNormalizeFunction(): void
+    private function createNormalizedFunction(): void
     {
-        $this->sql('CREATE OR REPLACE FUNCTION normalize(text)
+        $this->sql('CREATE OR REPLACE FUNCTION normalized(text)
             RETURNS text AS
             $$
             SELECT pg_catalog.lower(public.immutable_unaccent($1))
@@ -82,19 +82,19 @@ class Version20180603135340 extends AbstractMigration
     private function createDefaultDbIndexes(): void
     {
         $this->sql('CREATE INDEX IF NOT EXISTS product_translations_name_normalize_idx
-            ON product_translations (NORMALIZE(name))');
+            ON product_translations (NORMALIZED(name))');
         $this->sql('CREATE INDEX IF NOT EXISTS product_catnum_normalize_idx
-            ON products (NORMALIZE(catnum))');
+            ON products (NORMALIZED(catnum))');
         $this->sql('CREATE INDEX IF NOT EXISTS product_partno_normalize_idx
-            ON products (NORMALIZE(partno))');
+            ON products (NORMALIZED(partno))');
         $this->sql('CREATE INDEX IF NOT EXISTS order_email_normalize_idx
-            ON orders (NORMALIZE(email))');
+            ON orders (NORMALIZED(email))');
         $this->sql('CREATE INDEX IF NOT EXISTS order_last_name_normalize_idx
-            ON orders (NORMALIZE(last_name))');
+            ON orders (NORMALIZED(last_name))');
         $this->sql('CREATE INDEX IF NOT EXISTS order_company_name_normalize_idx
-            ON orders (NORMALIZE(company_name))');
+            ON orders (NORMALIZED(company_name))');
         $this->sql('CREATE INDEX IF NOT EXISTS user_email_normalize_idx
-            ON users (NORMALIZE(email))');
+            ON users (NORMALIZED(email))');
     }
 
     private function createProductCatnumTrigger(): void
