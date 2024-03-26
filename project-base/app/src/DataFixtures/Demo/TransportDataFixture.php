@@ -9,6 +9,7 @@ use App\Model\Transport\Type\TransportTypeEnum;
 use App\Model\Transport\Type\TransportTypeFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -21,20 +22,12 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class TransportDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    private const string UUID_NAMESPACE = '5e4cf5fd-16f1-4f1e-8a1b-fe81286ce8ed';
+
     public const TRANSPORT_CZECH_POST = 'transport_cp';
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
     public const TRANSPORT_DRONE = 'transport_drone';
-
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '5e4cf5fd-16f1-4f1e-8a1b-fe81286ce8ed',
-        '45e4fe5a-db4a-49e8-80ec-5242a9858dce',
-        'ca676696-7fcf-43d8-a77e-9e9892cd464a',
-        'c5bf95f7-0093-4345-96d9-562e9371a273',
-    ];
 
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
@@ -125,9 +118,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string $referenceName
      * @param \App\Model\Transport\TransportData $transportData
      */
-    private function createTransport($referenceName, TransportData $transportData)
+    private function createTransport(string $referenceName, TransportData $transportData)
     {
-        $transportData->uuid = array_pop($this->uuidPool);
+        $transportData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
         $transport = $this->transportFacade->create($transportData);
         $this->addReference($referenceName, $transport);
     }

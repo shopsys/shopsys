@@ -40,6 +40,10 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
 
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
+            if (!str_starts_with($constant, 'category_')) {
+                continue;
+            }
+
             $category = $this->getReference($constant, Category::class);
             $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $firstDomainConfig);
             $parametersId = [];

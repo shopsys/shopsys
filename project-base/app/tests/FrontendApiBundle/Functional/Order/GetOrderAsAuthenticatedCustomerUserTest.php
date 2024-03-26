@@ -66,7 +66,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     public function testGetOrderByUuidReturnsError(): void
     {
         $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
-        $expectedErrorMessage = "Order with UUID 'e4002d79-0dba-4899-a51a-0a8feec3c2ce' not found.";
+        $expectedErrorMessage = "Order with UUID '84f95773-6d06-59d9-8680-fb35abfe99ac' not found.";
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
             'uuid' => $order->getUuid(),

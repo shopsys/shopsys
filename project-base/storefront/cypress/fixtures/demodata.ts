@@ -30,14 +30,14 @@ export const orderDetail = {
 
 export const payment = {
     creditCard: {
-        uuid: 'a22b0dde-77ab-448f-be5e-831c0b2b5a32',
+        uuid: '808f7a8a-6143-538e-a46d-3803519ecf00',
     },
     cash: {
-        uuid: '7adc774b-aa39-4727-b373-544345814929',
+        uuid: '6e48952e-0f71-503c-8b58-f0ae9fc350c0',
         name: 'Cash',
     },
     onDelivery: {
-        uuid: '1dd4fd71-3d82-48cb-b2b0-eecff0f297d3',
+        uuid: '2c3d2ede-bf1a-56bc-8c7d-44b7a672ef23',
         name: 'Cash on delivery',
     },
 };
@@ -57,14 +57,14 @@ export const placeholder = {
 
 export const products = {
     helloKitty: {
-        uuid: '8c44b857-527d-41e2-a128-fc042b41736f',
+        uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
         name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
         fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
         catnum: 9177759,
         url: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
     },
     philips32PFL4308: {
-        uuid: '5271462b-1d38-4a18-9d76-fbc06247c6f0',
+        uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
         url: '/philips-32pfl4308',
     },
     philips54CRT: {
@@ -77,19 +77,19 @@ export const quantityUnit = 'pc';
 
 export const transport = {
     personalCollection: {
-        uuid: '45e4fe5a-db4a-49e8-80ec-5242a9858dce',
+        uuid: 'b7461a55-b6e6-5b4f-a3c9-92f35366fe41',
         name: 'Personal collection',
         storeOstrava: {
-            uuid: '9be1392b-c39a-4130-a107-aedc56e7175e',
+            uuid: '67ac2c38-7bdd-59fa-b762-0704cee8323e',
             name: 'Ostrava',
         },
     },
     czechPost: {
-        uuid: 'c5bf95f7-0093-4345-96d9-562e9371a273',
+        uuid: 'f411f93c-6658-5bf6-ad68-cd69a83a88c0',
         name: 'Czech post',
     },
     ppl: {
-        uuid: 'ca676696-7fcf-43d8-a77e-9e9892cd464a',
+        uuid: '5d4619f7-a98f-5bff-b296-2a0887430a63',
         name: 'PPL',
     },
 };

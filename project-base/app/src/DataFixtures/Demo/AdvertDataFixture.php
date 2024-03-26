@@ -8,6 +8,7 @@ use App\Model\Advert\AdvertPositionRegistry;
 use App\Model\Category\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -17,12 +18,7 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 
 class AdvertDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @var string[]
-     */
-    private array $uuidPool = [
-        '17cf51a8-a14b-4caa-b4ba-a8523ed15bb4', 'a54cd097-9e2c-4f0e-9ee9-6dfcbf1825c1',
-    ];
+    private const string UUID_NAMESPACE = '17cf51a8-a14b-4caa-b4ba-a8523ed15bb4';
 
     /**
      * @param \App\Model\Advert\AdvertFacade $advertFacade
@@ -45,7 +41,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
             $domainId = $domainConfig->getId();
 
             $advertData = $this->advertDataFactory->create();
-            $advertData->uuid = array_pop($this->uuidPool);
+            $advertData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Demo advert' . $domainId)->toString();
             $advertData->domainId = $domainId;
             $advertData->name = t('Demo advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $advertData->type = Advert::TYPE_CODE;
@@ -55,7 +51,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
             $this->advertFacade->create($advertData);
 
             $advertData = $this->advertDataFactory->create();
-            $advertData->uuid = array_pop($this->uuidPool);
+            $advertData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Demo category advert' . $domainId)->toString();
             $advertData->domainId = $domainId;
             $advertData->name = t('Demo category advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $advertData->type = Advert::TYPE_CODE;
