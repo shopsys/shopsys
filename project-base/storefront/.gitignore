@@ -37,4 +37,5 @@ yarn-error.log*
 /.pnpm-store
 
 /schema.graphql
+schema.graphql.json
 *.tsbuildinfo
