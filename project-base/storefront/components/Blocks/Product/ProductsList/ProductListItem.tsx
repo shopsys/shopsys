@@ -1,9 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
-import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
@@ -14,7 +10,6 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { twMergeCustom } from 'helpers/twMerge';
-import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
 
@@ -23,10 +18,6 @@ type ProductItemProps = {
     listIndex: number;
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
-    isProductInComparison: boolean;
-    isProductInWishlist: boolean;
-    toggleProductInComparison: () => void;
-    toggleProductInWishlist: () => void;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -35,17 +26,11 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             product,
             listIndex,
             gtmProductListName,
-            gtmMessageOrigin,
-            isProductInComparison,
-            isProductInWishlist,
-            toggleProductInComparison,
-            toggleProductInWishlist,
             className,
         },
         ref,
     ) => {
         const { url } = useDomainConfig();
-        const { t } = useTranslation();
 
         return (
             <li
@@ -56,16 +41,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     className,
                 )}
             >
-                {gtmProductListName === GtmProductListNameType.wishlist && (
-                    <button
-                        className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-none transition hover:bg-blueLight"
-                        title={t('Remove from wishlist')}
-                        onClick={toggleProductInWishlist}
-                    >
-                        <RemoveBoldIcon className="mx-auto w-2 basis-2" />
-                    </button>
-                )}
-
                 <ExtendedNextLink
                     className="flex h-full select-none flex-col gap-3 no-underline hover:no-underline"
                     draggable={false}
@@ -103,23 +78,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     </div>
                 </ExtendedNextLink>
 
-                <div className="flex justify-end gap-2">
-                    <ProductCompareButton
-                        isProductInComparison={isProductInComparison}
-                        toggleProductInComparison={toggleProductInComparison}
-                    />
-                    <ProductWishlistButton
-                        isProductInWishlist={isProductInWishlist}
-                        toggleProductInWishlist={toggleProductInWishlist}
-                    />
-                </div>
-
-                <ProductAction
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    gtmProductListName={gtmProductListName}
-                    listIndex={listIndex}
-                    product={product}
-                />
+                <div className="flex justify-end gap-2" />
             </li>
         );
     },
