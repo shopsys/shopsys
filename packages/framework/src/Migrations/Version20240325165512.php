@@ -21,18 +21,21 @@ class Version20240325165512 extends AbstractMigration implements ContainerAwareI
     {
         foreach ($this->getAllDomainIds() as $domainId) {
             $locale = $this->getDomainLocale($domainId);
-            if ($locale === self::LOCALE_EN) {
-                $this->sql('UPDATE friendly_urls SET slug = :slug WHERE slug = :badSlug AND domain_id = :domainId', [
-                    'slug' => 'reset-password',
-                    'badSlug' => 'forgot-password',
-                    'domainId' => $domainId,
-                ]);
-                $this->sql('UPDATE friendly_urls SET slug = :slug WHERE slug = :badSlug AND domain_id = :domainId', [
-                    'slug' => 'brands-overview',
-                    'badSlug' => 'brands',
-                    'domainId' => $domainId,
-                ]);
+
+            if ($locale !== self::LOCALE_EN) {
+                continue;
             }
+
+            $this->sql('UPDATE friendly_urls SET slug = :slug WHERE slug = :badSlug AND domain_id = :domainId', [
+                'slug' => 'reset-password',
+                'badSlug' => 'forgot-password',
+                'domainId' => $domainId,
+            ]);
+            $this->sql('UPDATE friendly_urls SET slug = :slug WHERE slug = :badSlug AND domain_id = :domainId', [
+                'slug' => 'brands-overview',
+                'badSlug' => 'brands',
+                'domainId' => $domainId,
+            ]);
         }
     }
 
