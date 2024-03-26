@@ -70,7 +70,7 @@ class ProductPartnoFilter implements AdvancedSearchFilterInterface
 
                 $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
                 $parameterName = 'productPartno_' . $index;
-                $queryBuilder->andWhere('NORMALIZE(p.partno) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+                $queryBuilder->andWhere('NORMALIZED(p.partno) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
                 $queryBuilder->setParameter($parameterName, $searchValue);
             }
         }
