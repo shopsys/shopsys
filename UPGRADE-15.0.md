@@ -276,6 +276,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `create` method was renamed to `createIfAddressFilled` and return type was changed to `?DeliveryAddress`
 -   see #project-base-diff to update your project
 
+#### fix seo pages urls ([#3079](https://github.com/shopsys/shopsys/pull/3079))
+
+-   this change adds migration `Version20240325165512` that changes friendly urls. If you do not want to change friendly urls in your project, add it as skipped migration to `migrations-lock.yaml`
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
