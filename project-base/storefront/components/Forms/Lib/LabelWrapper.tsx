@@ -27,7 +27,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     children,
     className,
 }) => (
-    <div className="relative w-full">
+    <div className="relative w-full select-none">
         {children}
         {!!label && (
             <label
