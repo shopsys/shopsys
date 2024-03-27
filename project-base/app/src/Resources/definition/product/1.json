@@ -195,6 +195,12 @@
           "parameter_id": {
             "type": "integer"
           },
+          "ordering_priority": {
+            "type": "integer"
+          },
+          "parameter_type": {
+            "type": "text"
+          },
           "parameter_value_id": {
             "type": "integer"
           },

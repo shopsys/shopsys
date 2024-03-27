@@ -111,35 +111,6 @@
   },
   "mappings": {
     "properties": {
-      "searching_names": {
-        "type": "text",
-        "analyzer": "stemming",
-        "fields": {
-          "full_with_diacritic": {
-            "type": "text",
-            "analyzer": "full_with_diacritic"
-          },
-          "full_without_diacritic": {
-            "type": "text",
-            "analyzer": "full_without_diacritic"
-          },
-          "edge_ngram_with_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_with_diacritic",
-            "search_analyzer": "full_with_diacritic"
-          },
-          "edge_ngram_without_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_without_diacritic",
-            "search_analyzer": "full_without_diacritic"
-          },
-          "keyword": {
-            "type": "icu_collation_keyword",
-            "language": "en",
-            "index": false
-          }
-        }
-      },
       "name": {
         "type": "text",
         "analyzer": "edge_ngram_without_diacritic",
