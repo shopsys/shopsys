@@ -499,6 +499,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     ```
 -   see #project-base-diff to update your project
 
+#### apply new coding standards for alphabetical ordering of YAML files ([#2278](https://github.com/shopsys/shopsys/pull/2278))
+
+-   run `php phing yaml-standards-fix` to apply the new coding standards
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
