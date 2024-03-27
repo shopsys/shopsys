@@ -1,31 +1,31 @@
 {
-  "name": "@shopsys/framework",
-  "version": "15.0.0-dev.1",
-  "description": "Shopsys Platform assets files",
-  "repository": "https://github.com/shopsys/shopsys",
-  "author": "Shopsys",
-  "license": "proprietary",
-  "scripts": {
-    "tests": "npm run tests:unit",
-    "tests:unit": "jest js"
-  },
-  "dependencies": {
-    "@claviska/jquery-minicolors": "^2.3.4",
-    "bazinga-translator": "^2.6.6",
-    "chart.js": "^2.9.3",
-    "counterup2": "^1.0.4",
-    "jquery": "^3.4.1",
-    "jquery-hoverintent": "^1.10.1",
-    "jquery-ui": "1.12.1",
-    "jquery-ui-touch-punch": "^0.2.3",
-    "magnific-popup": "^1.1.0",
-    "select2": "^4.0.12",
-    "waypoints": "^4.0.1"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.14.4",
-    "babel-jest": "^27.0.1",
-    "core-js": "^3.13.1",
-    "jest": "^27.0.1"
-  }
+    "name": "@shopsys/framework",
+    "version": "15.0.0-dev.1",
+    "description": "Shopsys Platform assets files",
+    "repository": "https://github.com/shopsys/shopsys",
+    "author": "Shopsys",
+    "license": "proprietary",
+    "scripts": {
+        "tests": "npm run tests:unit",
+        "tests:unit": "jest js"
+    },
+    "dependencies": {
+        "@claviska/jquery-minicolors": "^2.3.4",
+        "bazinga-translator": "^2.6.6",
+        "chart.js": "^2.9.3",
+        "counterup2": "^1.0.4",
+        "jquery": "^3.4.1",
+        "jquery-hoverintent": "^1.10.1",
+        "jquery-ui": "1.12.1",
+        "jquery-ui-touch-punch": "^0.2.3",
+        "magnific-popup": "^1.1.0",
+        "select2": "^4.0.12",
+        "waypoints": "^4.0.1"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.14.4",
+        "babel-jest": "^27.0.1",
+        "core-js": "^3.13.1",
+        "jest": "^27.0.1"
+    }
 }

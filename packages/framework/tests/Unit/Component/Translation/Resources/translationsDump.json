@@ -1,29 +1,29 @@
 [
-  {
-    "id": "trans test",
-    "source": "translationsDump.json",
-    "line": 3
-  },
-  {
-	"id": "transChoice test",
-	"source": "translationsDump.json",
-	"line": 5
-  },
-  {
-	"id": "trans test with domain",
-	"domain": "testDomain",
-	"source": "translationsDump.json",
-	"line": 7
-  },
-  {
-	"id": "transChoice test with domain",
-	"domain": "testDomain",
-	"source": "translationsDump.json",
-	"line": 9
-  },
-  {
-	"id": "concatenated message",
-	"source": "translationsDump.json",
-	"line": 11
-  }
+    {
+        "id": "trans test",
+        "source": "translationsDump.json",
+        "line": 3
+    },
+    {
+        "id": "transChoice test",
+        "source": "translationsDump.json",
+        "line": 5
+    },
+    {
+        "id": "trans test with domain",
+        "domain": "testDomain",
+        "source": "translationsDump.json",
+        "line": 7
+    },
+    {
+        "id": "transChoice test with domain",
+        "domain": "testDomain",
+        "source": "translationsDump.json",
+        "line": 9
+    },
+    {
+        "id": "concatenated message",
+        "source": "translationsDump.json",
+        "line": 11
+    }
 ]
