@@ -4,7 +4,7 @@ ProductListTypeEnumDecorator:
     config:
         description: "One of possible types of the product list"
         values:
-            wishlist:
+            WISHLIST:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListTypeEnum::WISHLIST")'
-            comparison:
+            COMPARISON:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListTypeEnum::COMPARISON")'

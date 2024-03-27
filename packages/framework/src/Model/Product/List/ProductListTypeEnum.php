@@ -8,6 +8,6 @@ use Shopsys\FrameworkBundle\Component\Enum\AbstractEnumCasesProvider;
 
 class ProductListTypeEnum extends AbstractEnumCasesProvider
 {
-    public const string WISHLIST = 'wishlist';
-    public const string COMPARISON = 'comparison';
+    public const string WISHLIST = 'WISHLIST';
+    public const string COMPARISON = 'COMPARISON';
 }

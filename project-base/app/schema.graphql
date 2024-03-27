@@ -1627,8 +1627,8 @@ input ProductListInput {
 
 "One of possible types of the product list"
 enum ProductListTypeEnum {
-  comparison
-  wishlist
+  COMPARISON
+  WISHLIST
 }
 
 input ProductListUpdateInput {
