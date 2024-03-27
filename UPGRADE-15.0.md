@@ -458,6 +458,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   product variants cache in `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository`
 -   see #project-base-diff to update your project
 
+#### update Elasticsearch index files structure ([#2567](https://github.com/shopsys/shopsys/pull/2567))
+
+-   elastic index definition files where sorted by order of columns in `ExportRepository` classes. These are not mandatory changes, and you can decide to skip them.
+-   add missing properties and remove unnecessary properties from elastic structure
+-   changed indent count for json files. These are not mandatory changes, and you can decide to skip them.
+-   see #project-base-diff to update your project
+
 #### rename reserved database function `normalize` to non-reserved name `normalized` ([#3072](https://github.com/shopsys/shopsys/pull/3072))
 
 -   create migration to change `normalize()` function to `normalized()` if you had used it in some indexes, functions, or somewhere else
