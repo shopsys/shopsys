@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListType;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 
 class ProductListDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -49,10 +49,10 @@ class ProductListDataFixture extends AbstractReferenceFixture implements Depende
         /** @var \App\Model\Product\Product $productLgTv */
         $productLgTv = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3);
 
-        $this->createProductList(ProductListType::WISHLIST, $customerUser, self::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID, [$productHelloKitty]);
-        $this->createProductList(ProductListType::COMPARISON, $customerUser, self::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID, [$productIphone, $productXperia]);
-        $this->createProductList(ProductListType::WISHLIST, null, self::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID, [$productToiletPaper]);
-        $this->createProductList(ProductListType::COMPARISON, null, self::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID, [$productPhilipsTv, $productLgTv]);
+        $this->createProductList(ProductListTypeEnum::WISHLIST, $customerUser, self::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID, [$productHelloKitty]);
+        $this->createProductList(ProductListTypeEnum::COMPARISON, $customerUser, self::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID, [$productIphone, $productXperia]);
+        $this->createProductList(ProductListTypeEnum::WISHLIST, null, self::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID, [$productToiletPaper]);
+        $this->createProductList(ProductListTypeEnum::COMPARISON, null, self::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID, [$productPhilipsTv, $productLgTv]);
     }
 
     /**

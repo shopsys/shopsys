@@ -9,7 +9,7 @@ use App\DataFixtures\Demo\ProductListDataFixture;
 use Iterator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\UnknownProductListTypeException;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListType;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -66,8 +66,8 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         string $productListType,
     ): void {
         $uuidOfAnotherCustomerUser = match ($productListType) {
-            ProductListType::COMPARISON => ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
-            ProductListType::WISHLIST => ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListTypeEnum::COMPARISON => ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListTypeEnum::WISHLIST => ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
             default => throw new UnknownProductListTypeException($productListType),
         };
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListQuery.graphql', [
@@ -231,13 +231,13 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     public function productListDataProvider(): Iterator
     {
         yield [
-            'productListType' => ProductListType::COMPARISON,
+            'productListType' => ProductListTypeEnum::COMPARISON,
             'expectedUuid' => ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID,
             'expectedProductIds' => [49, 5],
         ];
 
         yield [
-            'productListType' => ProductListType::WISHLIST,
+            'productListType' => ProductListTypeEnum::WISHLIST,
             'expectedUuid' => ProductListDataFixture::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID,
             'expectedProductIds' => [1],
         ];

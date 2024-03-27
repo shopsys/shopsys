@@ -13,7 +13,7 @@ use Iterator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\UnknownProductListTypeException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListType;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
 use Tests\FrontendApiBundle\Functional\Customer\User\RegisterTest;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -53,8 +53,8 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         string $productListType,
     ): void {
         $uuidOfAnotherCustomerUser = match ($productListType) {
-            ProductListType::COMPARISON => ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID,
-            ProductListType::WISHLIST => ProductListDataFixture::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID,
+            ProductListTypeEnum::COMPARISON => ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID,
+            ProductListTypeEnum::WISHLIST => ProductListDataFixture::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID,
             default => throw new UnknownProductListTypeException($productListType),
         };
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListQuery.graphql', [
@@ -429,11 +429,11 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         string $expectedMergedComparisonUuid,
     ): void {
         $currentLoggedCustomerWishlist = $this->productListFacade->findProductListByTypeAndCustomerUser(
-            ProductListType::WISHLIST,
+            ProductListTypeEnum::WISHLIST,
             $customerUser,
         );
         $currentLoggedCustomerComparison = $this->productListFacade->findProductListByTypeAndCustomerUser(
-            ProductListType::COMPARISON,
+            ProductListTypeEnum::COMPARISON,
             $customerUser,
         );
         $currentLoggedCustomerWishlistProductIds = $this->productListFacade->getProductIdsByProductList($currentLoggedCustomerWishlist);
@@ -451,13 +451,13 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
     public function productListByTypeAndUuidProvider(): Iterator
     {
         yield [
-            'productListType' => ProductListType::COMPARISON,
+            'productListType' => ProductListTypeEnum::COMPARISON,
             'uuid' => ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
             'expectedProductIds' => [3, 2],
         ];
 
         yield [
-            'productListType' => ProductListType::WISHLIST,
+            'productListType' => ProductListTypeEnum::WISHLIST,
             'uuid' => ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
             'expectedProductIds' => [33],
         ];
@@ -465,8 +465,8 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
     private function assertOriginalAnonymousListsDoNotExist(): void
     {
-        $originalAnonymousWishlist = $this->productListFacade->findAnonymousProductList(ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID, ProductListType::WISHLIST);
-        $originalAnonymousComparison = $this->productListFacade->findAnonymousProductList(ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID, ProductListType::COMPARISON);
+        $originalAnonymousWishlist = $this->productListFacade->findAnonymousProductList(ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID, ProductListTypeEnum::WISHLIST);
+        $originalAnonymousComparison = $this->productListFacade->findAnonymousProductList(ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID, ProductListTypeEnum::COMPARISON);
 
         $this->assertTrue($originalAnonymousWishlist === null, 'Original anonymous wishlist should not exist anymore');
         $this->assertTrue($originalAnonymousComparison === null, 'Original anonymous comparison should not exist anymore');

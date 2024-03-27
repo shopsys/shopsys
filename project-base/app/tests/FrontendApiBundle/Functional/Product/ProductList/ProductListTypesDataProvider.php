@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 
 use Iterator;
 use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListType;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 
 class ProductListTypesDataProvider
 {
@@ -15,7 +15,7 @@ class ProductListTypesDataProvider
      */
     public static function getProductListTypes(): Iterator
     {
-        foreach (ReflectionHelper::getAllPublicClassConstants(ProductListType::class) as $productListType) {
+        foreach (ReflectionHelper::getAllPublicClassConstants(ProductListTypeEnum::class) as $productListType) {
             yield [$productListType];
         }
     }

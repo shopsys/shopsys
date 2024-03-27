@@ -5,6 +5,6 @@ ProductListTypeEnumDecorator:
         description: "One of possible types of the product list"
         values:
             wishlist:
-                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListType::WISHLIST")'
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListTypeEnum::WISHLIST")'
             comparison:
-                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListType::COMPARISON")'
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListTypeEnum::COMPARISON")'
