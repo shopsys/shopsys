@@ -262,9 +262,6 @@
       "in_stock": {
         "type": "boolean"
       },
-      "is_available": {
-        "type": "boolean"
-      },
       "parameters": {
         "type": "nested",
         "properties": {

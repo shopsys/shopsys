@@ -1054,3 +1054,5 @@ services:
     Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
         arguments:
             - '%gopay_config%'
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~

@@ -27,7 +27,7 @@ class DispatchAllProductsMessageHandler implements MessageHandlerInterface
         $productIds = $this->productFacade->iterateAllProductIds();
 
         foreach ($productIds as $productId) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId($productId['id']);
+            $this->productRecalculationDispatcher->dispatchSingleProductId($productId['id'], ProductRecalculationPriorityEnum::REGULAR, $message->exportScopes);
         }
     }
 }

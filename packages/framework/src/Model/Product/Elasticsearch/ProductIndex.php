@@ -30,25 +30,31 @@ class ProductIndex extends AbstractIndex
     /**
      * {@inheritdoc}
      */
-    public function getExportDataForIds(int $domainId, array $restrictToIds): array
+    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
         return $this->productExportRepository->getProductsDataForIds(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $restrictToIds,
+            $fields,
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
-    {
+    public function getExportDataForBatch(
+        int $domainId,
+        int $lastProcessedId,
+        int $batchSize,
+        array $fields = [],
+    ): array {
         return $this->productExportRepository->getProductsData(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $lastProcessedId,
             $batchSize,
+            $fields,
         );
     }
 

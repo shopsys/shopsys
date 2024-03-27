@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeatureException;
 
 class ArticleIndex extends AbstractIndex
 {
@@ -32,10 +33,18 @@ class ArticleIndex extends AbstractIndex
      * @param int $domainId
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param string[] $fields
      * @return array
      */
-    public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
-    {
+    public function getExportDataForBatch(
+        int $domainId,
+        int $lastProcessedId,
+        int $batchSize,
+        array $fields = [],
+    ): array {
+        if ($fields !== []) {
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for articles.');
+        }
         $results = [];
 
         foreach ($this->articleExportRepository->getAllVisibleArticleSitesByDomainId($domainId, $batchSize, $lastProcessedId) as $article) {
@@ -48,10 +57,14 @@ class ArticleIndex extends AbstractIndex
     /**
      * @param int $domainId
      * @param array $restrictToIds
+     * @param string[] $fields
      * @return array
      */
-    public function getExportDataForIds(int $domainId, array $restrictToIds): array
+    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
+        if ($fields !== []) {
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for articles.');
+        }
         $results = [];
 
         foreach ($this->articleExportRepository->getVisibleArticleSitesByDomainIdAndArticleIds($domainId, $restrictToIds) as $article) {

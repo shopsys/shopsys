@@ -49,9 +49,16 @@ class DispatchRecalculationMessageCommand extends Command
             ->addOption(
                 'priority',
                 'p',
-                InputOption::VALUE_OPTIONAL,
+                InputOption::VALUE_REQUIRED,
                 sprintf('Define the message priority. Possible values are: %s', ProductRecalculationPriorityEnum::getPipeSeparatedValues()),
                 ProductRecalculationPriorityEnum::REGULAR->value,
+            )
+            ->addOption(
+                'scope',
+                's',
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                'Define the message scopes. Run "shopsys:list:export-scopes" command for listing available scopes',
+                [],
             );
     }
 
@@ -63,6 +70,7 @@ class DispatchRecalculationMessageCommand extends Command
         $symfonyStyle = new SymfonyStyle($input, $output);
 
         $productIds = $input->getArgument('productIds');
+        $scopes = $input->getOption('scope');
         $shouldRecalculateAll = $input->getOption('all');
         $priority = ProductRecalculationPriorityEnum::tryFrom($input->getOption('priority'));
 
@@ -85,20 +93,26 @@ class DispatchRecalculationMessageCommand extends Command
         }
 
         if ($shouldRecalculateAll) {
-            return $this->executeAll($symfonyStyle);
+            return $this->executeAll($symfonyStyle, $scopes);
         }
 
-        return $this->executeIds($productIds, $symfonyStyle, $priority);
+        return $this->executeIds($productIds, $symfonyStyle, $priority, $scopes);
     }
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
+     * @param string[] $scopes
      * @return int
      */
-    protected function executeAll(SymfonyStyle $symfonyStyle): int
+    protected function executeAll(SymfonyStyle $symfonyStyle, array $scopes): int
     {
-        $this->productRecalculationDispatcher->dispatchAllProducts();
-        $symfonyStyle->success('Dispatched all products to recalculate');
+        $this->productRecalculationDispatcher->dispatchAllProducts($scopes);
+        $message = 'Dispatched all products to recalculate';
+
+        if (count($scopes) > 0) {
+            $message .= sprintf(' with scopes: %s', implode(', ', $scopes));
+        }
+        $symfonyStyle->success($message);
 
         return Command::SUCCESS;
     }
@@ -107,12 +121,14 @@ class DispatchRecalculationMessageCommand extends Command
      * @param int[] $productIds
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $priority
+     * @param string[] $scopes
      * @return int
      */
     protected function executeIds(
         array $productIds,
         SymfonyStyle $symfonyStyle,
         ProductRecalculationPriorityEnumInterface $priority,
+        array $scopes,
     ): int {
         try {
             Assert::allNumeric($productIds, 'All product IDs must be numeric');
@@ -123,8 +139,12 @@ class DispatchRecalculationMessageCommand extends Command
             return Command::FAILURE;
         }
 
-        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority);
-        $symfonyStyle->success(['Dispatched message for IDs', implode(', ', $dispatchedProductIds), sprintf('Priority: %s', $priority->value)]);
+        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, $scopes);
+        $symfonyStyle->success([
+            'Dispatched message for IDs', implode(', ', $dispatchedProductIds),
+            sprintf('Priority: %s', $priority->value),
+            sprintf('Scopes: %s', count($scopes) > 0 ? implode(', ', $scopes) : '-'),
+        ]);
 
         return Command::SUCCESS;
     }

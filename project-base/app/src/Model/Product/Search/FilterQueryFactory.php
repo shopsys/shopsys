@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery createSellableProductsByProductUuidsFilter(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery createListableWithProductFilter(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @method \App\Model\Product\Search\FilterQuery createOnlyExistingProductIdsFilterQuery(int[] $productIds, int $domainId)
  */
 class FilterQueryFactory extends BaseFilterQueryFactory
 {

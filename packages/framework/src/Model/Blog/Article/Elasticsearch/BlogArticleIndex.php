@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeatureException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface;
 
 class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
@@ -38,10 +39,18 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param int $domainId
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param string[] $fields
      * @return array
      */
-    public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
-    {
+    public function getExportDataForBatch(
+        int $domainId,
+        int $lastProcessedId,
+        int $batchSize,
+        array $fields = [],
+    ): array {
+        if ($fields !== []) {
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for blog articles.');
+        }
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         $results = [];
@@ -56,10 +65,14 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     /**
      * @param int $domainId
      * @param array $restrictToIds
+     * @param string[] $fields
      * @return array
      */
-    public function getExportDataForIds(int $domainId, array $restrictToIds): array
+    public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
+        if ($fields !== []) {
+            throw new UnsupportedFeatureException('Scoping export by fields is not supported for blog articles.');
+        }
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         $results = [];

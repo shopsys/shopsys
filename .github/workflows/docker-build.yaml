@@ -542,6 +542,8 @@ jobs:
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
                     docker compose exec -T php-fpm php bin/console shopsys:categories:recalculate
                     docker compose exec -T php-fpm php bin/console shopsys:cdn-domain-url:replace
+                    docker compose exec -T php-fpm php bin/console shopsys:list:export-scopes
+                    docker compose exec -T php-fpm php bin/console shopsys:dispatch:recalculations 1
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' && 
@@ -604,6 +606,8 @@ jobs:
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y frontend-api-enable cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
                     docker compose exec -T php-fpm php bin/console shopsys:categories:recalculate
                     docker compose exec -T php-fpm php bin/console shopsys:cdn-domain-url:replace
+                    docker compose exec -T php-fpm php bin/console shopsys:list:export-scopes
+                    docker compose exec -T php-fpm php bin/console shopsys:dispatch:recalculations 1
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
