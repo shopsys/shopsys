@@ -54,7 +54,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'prices',
             'parameters',
             'ordering_priority',
-            'breadcrumb',
             'calculated_selling_denied',
             'selling_denied',
             'availability',
@@ -77,7 +76,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'name_sufix',
             'is_sale_exclusion',
             'product_available_stores_count_information',
-            'product_videos',
             'store_availabilities_information',
             'usps',
             'searching_names',
@@ -89,6 +87,8 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'slug',
             'available_stores_count',
             'related_products',
+            'breadcrumb',
+            'product_videos',
             'hreflang_links',
         ];
     }
