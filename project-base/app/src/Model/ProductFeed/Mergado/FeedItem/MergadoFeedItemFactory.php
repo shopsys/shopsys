@@ -167,13 +167,13 @@ class MergadoFeedItemFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
+     * @param string $availabilityStatus
      * @return string
      */
-    private function mapStockStatusToAvailability(AvailabilityStatusEnum $availabilityStatus): string
+    private function mapStockStatusToAvailability(string $availabilityStatus): string
     {
         return match ($availabilityStatus) {
-            AvailabilityStatusEnum::InStock => 'in stock',
+            AvailabilityStatusEnum::IN_STOCK => 'in stock',
             default => 'out of stock'
         };
     }

@@ -10,13 +10,13 @@ class ProductStoreAvailabilityInformation
      * @param string $storeName
      * @param int $storeId
      * @param string $availabilityInformation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
+     * @param string $availabilityStatus
      */
     public function __construct(
         protected readonly string $storeName,
         protected readonly int $storeId,
         protected readonly string $availabilityInformation,
-        protected readonly AvailabilityStatusEnumInterface $availabilityStatus,
+        protected readonly string $availabilityStatus,
     ) {
     }
 
@@ -45,9 +45,9 @@ class ProductStoreAvailabilityInformation
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum
+     * @return string
      */
-    public function getAvailabilityStatus(): AvailabilityStatusEnumInterface
+    public function getAvailabilityStatus(): string
     {
         return $this->availabilityStatus;
     }

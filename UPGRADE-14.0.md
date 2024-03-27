@@ -836,7 +836,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         ```diff
             public function create(
                 ProductData $productData
-        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        +       string $priority = ProductRecalculationPriorityEnum::REGULAR,
         -   )
         +   ): Product
         ```
@@ -846,7 +846,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -       $productId,
         +       int $productId,
                 ProductData $productData,
-        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        +       string $priority = ProductRecalculationPriorityEnum::REGULAR,
         -   )
         +   ): Product
         ```
@@ -855,7 +855,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             public function delete(
         -       $productId
         +       int $productId,
-        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        +       string $priority = ProductRecalculationPriorityEnum::REGULAR,
         -   )
         +   ): void
         ```

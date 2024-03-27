@@ -204,7 +204,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'calculated_selling_denied' => $product->getCalculatedSaleExclusion($domainId),
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
-            'availability_status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId)->value,
+            'availability_status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
             'availability_dispatch_time' => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
             'is_main_variant' => $product->isMainVariant(),
             'is_variant' => $product->isVariant(),
@@ -571,7 +571,7 @@ class ProductExportRepository extends BaseProductExportRepository
                 'store_name' => $item->getStoreName(),
                 'store_id' => $item->getStoreId(),
                 'availability_information' => $item->getAvailabilityInformation(),
-                'availability_status' => $item->getAvailabilityStatus()->value,
+                'availability_status' => $item->getAvailabilityStatus(),
             ];
         }
 

@@ -40,13 +40,13 @@ class ProductListRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string|null $uuid
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
     public function findProductListByTypeAndCustomerUser(
-        ProductListTypeEnumInterface $productListType,
+        string $productListType,
         CustomerUser $customerUser,
         ?string $uuid = null,
     ): ?ProductList {
@@ -63,12 +63,12 @@ class ProductListRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
      */
     public function getProductListsByTypeAndCustomerUser(
-        ProductListTypeEnumInterface $productListType,
+        string $productListType,
         CustomerUser $customerUser,
     ): array {
         return $this->getRepository()->findBy([
@@ -79,12 +79,12 @@ class ProductListRepository
 
     /**
      * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum|null $productListType
+     * @param string|null $productListType
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
     public function findAnonymousProductList(
         string $uuid,
-        ?ProductListTypeEnumInterface $productListType = null,
+        ?string $productListType = null,
     ): ?ProductList {
         $criteria = [
             'uuid' => $uuid,

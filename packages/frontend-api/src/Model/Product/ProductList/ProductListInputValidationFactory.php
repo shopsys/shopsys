@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\ProductList;
 
+use Shopsys\FrameworkBundle\Model\Product\List\Exception\UnknownProductListTypeException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnumInterface;
 
 class ProductListInputValidationFactory
 {
@@ -20,15 +20,16 @@ class ProductListInputValidationFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      * @return \Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListInputValidatorInterface
      */
     public function createForProductListType(
-        ProductListTypeEnumInterface $productListType,
+        string $productListType,
     ): ProductListInputValidatorInterface {
         return match ($productListType) {
             ProductListTypeEnum::WISHLIST => $this->productListInputValidator,
             ProductListTypeEnum::COMPARISON => $this->comparisonInputValidator,
+            default => throw new UnknownProductListTypeException($productListType),
         };
     }
 }

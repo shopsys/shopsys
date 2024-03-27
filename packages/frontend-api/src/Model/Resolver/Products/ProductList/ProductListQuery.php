@@ -8,7 +8,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\CustomerUserNotLoggedUserError;
@@ -39,10 +38,10 @@ class ProductListQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListTypeEnum
+     * @param string $productListType
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
      */
-    public function productListsByTypeQuery(ProductListTypeEnum $productListTypeEnum): array
+    public function productListsByTypeQuery(string $productListType): array
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
@@ -50,6 +49,6 @@ class ProductListQuery extends AbstractQuery
             throw new CustomerUserNotLoggedUserError('You have to be logged in to get your product lists by type');
         }
 
-        return $this->productListFacade->getProductListsByTypeAndCustomerUser($productListTypeEnum, $customerUser);
+        return $this->productListFacade->getProductListsByTypeAndCustomerUser($productListType, $customerUser);
     }
 }

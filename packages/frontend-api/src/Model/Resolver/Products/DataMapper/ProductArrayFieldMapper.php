@@ -73,7 +73,7 @@ class ProductArrayFieldMapper
     {
         return [
             'name' => $data['availability'],
-            'status' => $data['availability_status'], // after update graphql bundle we can expose availability status as enum: AvailabilityStatusEnum::from($data['availability_status'])
+            'status' => $data['availability_status'],
         ];
     }
 

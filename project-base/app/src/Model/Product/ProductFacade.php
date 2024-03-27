@@ -27,7 +27,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnumInterface;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
@@ -45,7 +45,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
- * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData, \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority = null)
+ * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
  * @property \App\Model\Product\ProductFactory $productFactory
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
@@ -138,13 +138,13 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param int $productId
      * @param \App\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority
+     * @param string $priority
      * @return \App\Model\Product\Product
      */
     public function edit(
         int $productId,
         ProductData $productData,
-        ?ProductRecalculationPriorityEnumInterface $priority = null,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         /** @var \App\Model\Product\Product $product */
         $product = parent::edit($productId, $productData, $priority);

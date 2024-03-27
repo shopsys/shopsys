@@ -68,17 +68,17 @@ class ProductAvailabilityFacade implements ResetInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum
+     * @return string
      */
     public function getProductAvailabilityStatusByDomainId(
         Product $product,
         int $domainId,
-    ): AvailabilityStatusEnumInterface {
+    ): string {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return AvailabilityStatusEnum::InStock;
+            return AvailabilityStatusEnum::IN_STOCK;
         }
 
-        return AvailabilityStatusEnum::OutOfStock;
+        return AvailabilityStatusEnum::OUT_OF_STOCK;
     }
 
     /**
@@ -154,11 +154,11 @@ class ProductAvailabilityFacade implements ResetInterface
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         foreach ($stores as $store) {
-            $availabilityStatus = AvailabilityStatusEnum::InStock;
+            $availabilityStatus = AvailabilityStatusEnum::IN_STOCK;
             $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
 
             if (!$isAvailable) {
-                $availabilityStatus = AvailabilityStatusEnum::OutOfStock;
+                $availabilityStatus = AvailabilityStatusEnum::OUT_OF_STOCK;
                 $availabilityInformation = t('Unavailable', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
             } else {
                 $stock = $store->getStock();

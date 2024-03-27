@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\List;
 class ProductListData
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum
+     * @var string
      */
     public $type;
 
