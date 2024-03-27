@@ -33,7 +33,7 @@ class PhpParserNodeHelper
             );
         }
 
-        if ($node instanceof ClassConstFetch && $node->class->parts[0] === 'Translator') {
+        if ($node instanceof ClassConstFetch && $node->class->getLast() === 'Translator') {
             return constant(static::TRANSLATOR_CLASS_FQN . '::' . $node->name->name);
         }
 
