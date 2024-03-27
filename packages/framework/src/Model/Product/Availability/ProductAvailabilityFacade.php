@@ -75,10 +75,10 @@ class ProductAvailabilityFacade implements ResetInterface
         int $domainId,
     ): string {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return AvailabilityStatus::IN_STOCK;
+            return AvailabilityStatusEnum::IN_STOCK;
         }
 
-        return AvailabilityStatus::OUT_OF_STOCK;
+        return AvailabilityStatusEnum::OUT_OF_STOCK;
     }
 
     /**
@@ -154,11 +154,11 @@ class ProductAvailabilityFacade implements ResetInterface
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         foreach ($stores as $store) {
-            $availabilityStatus = AvailabilityStatus::IN_STOCK;
+            $availabilityStatus = AvailabilityStatusEnum::IN_STOCK;
             $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
 
             if (!$isAvailable) {
-                $availabilityStatus = AvailabilityStatus::OUT_OF_STOCK;
+                $availabilityStatus = AvailabilityStatusEnum::OUT_OF_STOCK;
                 $availabilityInformation = t('Unavailable', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
             } else {
                 $stock = $store->getStock();

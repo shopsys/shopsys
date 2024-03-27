@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatus;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
@@ -173,7 +173,7 @@ class MergadoFeedItemFactory
     private function mapStockStatusToAvailability(string $availabilityStatus): string
     {
         return match ($availabilityStatus) {
-            AvailabilityStatus::IN_STOCK => 'in stock',
+            AvailabilityStatusEnum::IN_STOCK => 'in stock',
             default => 'out of stock'
         };
     }
