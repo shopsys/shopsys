@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Enum;
 
-class EntityLogSource
+use Shopsys\FrameworkBundle\Component\Enum\AbstractEnumCasesProvider;
+
+class EntityLogSourceEnum extends AbstractEnumCasesProvider
 {
     public const string USER = 'user';
     public const string ADMIN = 'admin';
