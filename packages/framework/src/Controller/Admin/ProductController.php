@@ -28,7 +28,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriority;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,7 +88,7 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setSellingToUntilEndOfDay($productData);
-            $this->productFacade->edit($id, $productData, ProductRecalculationPriority::HIGH);
+            $this->productFacade->edit($id, $productData, ProductRecalculationPriorityEnum::HIGH);
 
             $this
                 ->addSuccessFlashTwig(
@@ -139,7 +139,7 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setSellingToUntilEndOfDay($productData);
-            $product = $this->productFacade->create($productData, ProductRecalculationPriority::HIGH);
+            $product = $this->productFacade->create($productData, ProductRecalculationPriorityEnum::HIGH);
 
             $this
                 ->addSuccessFlashTwig(
@@ -237,7 +237,7 @@ class ProductController extends AdminBaseController
         try {
             $product = $this->productFacade->getById($id);
 
-            $this->productFacade->delete($id, ProductRecalculationPriority::HIGH);
+            $this->productFacade->delete($id, ProductRecalculationPriorityEnum::HIGH);
 
             $this->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> deleted'),

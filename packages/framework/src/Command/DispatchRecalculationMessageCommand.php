@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriority;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,9 +21,11 @@ class DispatchRecalculationMessageCommand extends Command
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $productRecalculationPriorityEnum
      */
     public function __construct(
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly ProductRecalculationPriorityEnum $productRecalculationPriorityEnum,
     ) {
         parent::__construct();
     }
@@ -49,8 +51,8 @@ class DispatchRecalculationMessageCommand extends Command
                 'priority',
                 'p',
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Define the message priority. Possible values are: %s', ProductRecalculationPriority::getPipeSeparatedValues()),
-                ProductRecalculationPriority::REGULAR,
+                sprintf('Define the message priority. Possible values are: %s', $this->productRecalculationPriorityEnum->getPipeSeparatedValues()),
+                ProductRecalculationPriorityEnum::REGULAR,
             );
     }
 
@@ -66,7 +68,7 @@ class DispatchRecalculationMessageCommand extends Command
         $priority = $input->getOption('priority');
 
         if ($priority === null) {
-            $symfonyStyle->error(sprintf('Invalid priority value. Possible values are: %s', ProductRecalculationPriority::getPipeSeparatedValues()));
+            $symfonyStyle->error(sprintf('Invalid priority value. Possible values are: %s', $this->productRecalculationPriorityEnum->getPipeSeparatedValues()));
 
             return Command::FAILURE;
         }
@@ -77,7 +79,7 @@ class DispatchRecalculationMessageCommand extends Command
             return Command::FAILURE;
         }
 
-        if ($shouldRecalculateAll && $priority === ProductRecalculationPriority::HIGH) {
+        if ($shouldRecalculateAll && $priority === ProductRecalculationPriorityEnum::HIGH) {
             $symfonyStyle->error('Dispatching all products to the high priority queue is not supported');
 
             return Command::FAILURE;

@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriority;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -90,7 +90,7 @@ class ProductFacade
      */
     public function create(
         ProductData $productData,
-        string $priority = ProductRecalculationPriority::REGULAR,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         $product = $this->productFactory->create($productData);
 
@@ -141,7 +141,7 @@ class ProductFacade
     public function edit(
         int $productId,
         ProductData $productData,
-        string $priority = ProductRecalculationPriority::REGULAR,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         $product = $this->productRepository->getById($productId);
 
@@ -184,7 +184,7 @@ class ProductFacade
      */
     public function delete(
         int $productId,
-        string $priority = ProductRecalculationPriority::REGULAR,
+        string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): void {
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $product->getProductDeleteResult();

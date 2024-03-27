@@ -16,7 +16,7 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
      */
     public function dispatchProducts(
         array $products,
-        string $productRecalculationPriority = ProductRecalculationPriority::REGULAR,
+        string $productRecalculationPriority = ProductRecalculationPriorityEnum::REGULAR,
     ): array {
         return $this->dispatchProductIds(
             array_map(static fn (Product $product) => $product->getId(), $products),
@@ -31,14 +31,14 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
      */
     public function dispatchProductIds(
         array $productIds,
-        string $productRecalculationPriority = ProductRecalculationPriority::REGULAR,
+        string $productRecalculationPriority = ProductRecalculationPriorityEnum::REGULAR,
     ): array {
         $productIds = array_unique($productIds);
 
         foreach ($productIds as $productId) {
             $message = match ($productRecalculationPriority) {
-                ProductRecalculationPriority::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId),
-                ProductRecalculationPriority::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId),
+                ProductRecalculationPriorityEnum::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId),
+                ProductRecalculationPriorityEnum::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId),
                 default => throw new UnknownProductRecalculationPriorityException($productRecalculationPriority),
             };
             $this->messageBus->dispatch($message);
@@ -53,7 +53,7 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
      */
     public function dispatchSingleProductId(
         int $productId,
-        string $productRecalculationPriority = ProductRecalculationPriority::REGULAR,
+        string $productRecalculationPriority = ProductRecalculationPriorityEnum::REGULAR,
     ): void {
         $this->dispatchProductIds([$productId], $productRecalculationPriority);
     }
