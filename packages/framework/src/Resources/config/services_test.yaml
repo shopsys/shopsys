@@ -1,32 +1,32 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: true
 
-    Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
-        arguments:
-            $cronTimeZone: '%shopsys.cron_timezone%'
-
     Shopsys\FrameworkBundle\Component\Domain\Domain:
-        factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
         arguments:
             - '%shopsys.domain_config_filepath%'
             - '%shopsys.domain_urls_config_filepath%'
-
-    prezent_doctrine_translatable.listener:
-        class: Tests\FrameworkBundle\Test\TestTranslatableListener
-        tags:
-            - 'doctrine.event_subscriber'
-        arguments:
-            $factory: '@prezent_doctrine_translatable.metadata_factory'
-            $domain: '@Shopsys\FrameworkBundle\Component\Domain\Domain'
-            $administrationFacade: '@Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade'
-            $adminLocale: '%shopsys.admin_locale%'
+        factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
         arguments:
             $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
             $indexPrefix: 'test_%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
 
+    Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
+        arguments:
+            $cronTimeZone: '%shopsys.cron_timezone%'
+
     Tests\FrameworkBundle\Test\ProductIndexBackupFacade: ~
+
+    prezent_doctrine_translatable.listener:
+        arguments:
+            $factory: '@prezent_doctrine_translatable.metadata_factory'
+            $domain: '@Shopsys\FrameworkBundle\Component\Domain\Domain'
+            $administrationFacade: '@Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade'
+            $adminLocale: '%shopsys.admin_locale%'
+        class: Tests\FrameworkBundle\Test\TestTranslatableListener
+        tags:
+            - 'doctrine.event_subscriber'

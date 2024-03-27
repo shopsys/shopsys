@@ -1,13 +1,13 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: true
 
     Shopsys\FrameworkBundle\Component\Domain\DomainFactory:
-        class: Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl
         arguments:
             - '%env(OVERWRITE_DOMAIN_URL)%'
+        class: Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
         arguments:

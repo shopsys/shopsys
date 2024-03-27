@@ -1,12 +1,18 @@
 services:
 
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
-    shopsys.component.elasticsearch.tracer:
-        class: Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchTracer
+    Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
+        arguments:
+            - '%kernel.project_dir%'
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
+        arguments:
+            $frameworkRootDir: '%shopsys.framework.root_dir%'
+            $entityExtensionMap: '%shopsys.entity_extension.map%'
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector:
         tags:
@@ -14,11 +20,5 @@ services:
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection:
 
-    Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
-        arguments:
-            $frameworkRootDir: '%shopsys.framework.root_dir%'
-            $entityExtensionMap: '%shopsys.entity_extension.map%'
-
-    Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
-        arguments:
-            - '%kernel.project_dir%'
+    shopsys.component.elasticsearch.tracer:
+        class: Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchTracer

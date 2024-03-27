@@ -1,12 +1,12 @@
 domains:
     -   id: 1
-        name: shopsys
         locale: en
+        name: shopsys
         styles_directory: common
         timezone: Europe/Prague
 
     -   id: 2
-        name: 2.shopsys
         locale: cs
+        name: 2.shopsys
         styles_directory: domain2
         timezone: Europe/Prague

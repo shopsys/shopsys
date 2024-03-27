@@ -1,28 +1,13 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
-        public: true
+        autowire: true
         bind:
             Doctrine\Migrations\DependencyFactory $dependencyFactory: '@doctrine.migrations.dependency_factory'
+        public: true
 
     Shopsys\MigrationBundle\Command\:
         resource: '../../Command/'
-
-    Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade:
-        arguments:
-            - '@Doctrine\ORM\EntityManagerInterface'
-            - '@Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter'
-            - '@Doctrine\DBAL\Schema\Comparator'
-            - '@Doctrine\ORM\Tools\SchemaTool'
-
-    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock:
-        arguments:
-            $migrationsLockFilePath: '%kernel.project_dir%/migrations-lock.yml'
-
-    Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter: ~
-
-    Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator: ~
 
     Doctrine\DBAL\Schema\Comparator: ~
 
@@ -34,10 +19,25 @@ services:
         arguments:
             - '%shopsys.vendor_dir%'
 
-    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator: ~
+    Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade:
+        arguments:
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter'
+            - '@Doctrine\DBAL\Schema\Comparator'
+            - '@Doctrine\ORM\Tools\SchemaTool'
 
     Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator: ~
 
+    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor: ~
+
+    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock:
+        arguments:
+            $migrationsLockFilePath: '%kernel.project_dir%/migrations-lock.yml'
+
+    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator: ~
+
     Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository: ~
 
-    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor: ~
+    Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter: ~
+
+    Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator: ~

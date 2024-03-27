@@ -1,4 +1,16 @@
 services:
+
+    # Register nyholm/psr7 services for autowiring with HTTPlug factories
+    Http\Message\MessageFactory:
+        alias: nyholm.psr7.httplug_factory
+    Http\Message\RequestFactory:
+        alias: nyholm.psr7.httplug_factory
+    Http\Message\ResponseFactory:
+        alias: nyholm.psr7.httplug_factory
+    Http\Message\StreamFactory:
+        alias: nyholm.psr7.httplug_factory
+    Http\Message\UriFactory:
+        alias: nyholm.psr7.httplug_factory
     # Register nyholm/psr7 services for autowiring with PSR-17 (HTTP factories)
     Psr\Http\Message\RequestFactoryInterface:
         alias: nyholm.psr7.psr17_factory
@@ -13,20 +25,8 @@ services:
     Psr\Http\Message\UriFactoryInterface:
         alias: nyholm.psr7.psr17_factory
 
-    # Register nyholm/psr7 services for autowiring with HTTPlug factories
-    Http\Message\MessageFactory:
-        alias: nyholm.psr7.httplug_factory
-    Http\Message\RequestFactory:
-        alias: nyholm.psr7.httplug_factory
-    Http\Message\ResponseFactory:
-        alias: nyholm.psr7.httplug_factory
-    Http\Message\StreamFactory:
-        alias: nyholm.psr7.httplug_factory
-    Http\Message\UriFactory:
-        alias: nyholm.psr7.httplug_factory
+    nyholm.psr7.httplug_factory:
+        class: Nyholm\Psr7\Factory\HttplugFactory
 
     nyholm.psr7.psr17_factory:
         class: Nyholm\Psr7\Factory\Psr17Factory
-
-    nyholm.psr7.httplug_factory:
-        class: Nyholm\Psr7\Factory\HttplugFactory
