@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver;
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogAction;
+use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Symfony\Contracts\Service\ResetInterface;
 use Throwable;
@@ -68,7 +68,7 @@ class EntityLogEventListener implements ResetInterface
     public function postPersist(PostPersistEventArgs $args): void
     {
         $entity = $args->getObject();
-        $this->log(EntityLogAction::CREATE, $entity);
+        $this->log(EntityLogActionEnum::CREATE, $entity);
     }
 
     //update
@@ -78,7 +78,7 @@ class EntityLogEventListener implements ResetInterface
     public function postUpdate(PostUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
-        $this->log(EntityLogAction::UPDATE, $entity);
+        $this->log(EntityLogActionEnum::UPDATE, $entity);
     }
 
     //delete
@@ -88,7 +88,7 @@ class EntityLogEventListener implements ResetInterface
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $entity = $args->getObject();
-        $this->log(EntityLogAction::DELETE, $entity);
+        $this->log(EntityLogActionEnum::DELETE, $entity);
     }
 
     /**
@@ -122,7 +122,7 @@ class EntityLogEventListener implements ResetInterface
     ): void {
         $resolvedChangeSet = [];
 
-        if ($action === EntityLogAction::UPDATE) {
+        if ($action === EntityLogActionEnum::UPDATE) {
             $resolvedChangeSet = $this->resolveUpdateChangeSet($entity);
 
             if (count($resolvedChangeSet) === 0) {

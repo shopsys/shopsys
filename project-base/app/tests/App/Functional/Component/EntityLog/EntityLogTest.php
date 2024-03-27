@@ -12,7 +12,7 @@ use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogAction;
+use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
@@ -96,16 +96,16 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertCount(4, $logs);
 
         $logs = array_reverse($logs);
-        $this->assertSame(EntityLogAction::CREATE, $logs[0]->getAction()); //order
+        $this->assertSame(EntityLogActionEnum::CREATE, $logs[0]->getAction()); //order
         $this->assertSame($orderFromDb->getNumber(), $logs[0]->getEntityIdentifier());
 
-        $this->assertSame(EntityLogAction::CREATE, $logs[1]->getAction()); //product
+        $this->assertSame(EntityLogActionEnum::CREATE, $logs[1]->getAction()); //product
         $this->assertSame($orderFromDb->getProductItems()[0]->getName(), $logs[1]->getEntityIdentifier());
 
-        $this->assertSame(EntityLogAction::CREATE, $logs[2]->getAction()); //payment
+        $this->assertSame(EntityLogActionEnum::CREATE, $logs[2]->getAction()); //payment
         $this->assertSame($orderFromDb->getPaymentName(), $logs[2]->getEntityIdentifier());
 
-        $this->assertSame(EntityLogAction::CREATE, $logs[3]->getAction()); //transport
+        $this->assertSame(EntityLogActionEnum::CREATE, $logs[3]->getAction()); //transport
         $this->assertSame($orderFromDb->getTransportName(), $logs[3]->getEntityIdentifier());
     }
 
@@ -128,7 +128,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertCount(4, $logs);
 
         foreach ($logs as $log) {
-            $this->assertSame(EntityLogAction::DELETE, $log->getAction());
+            $this->assertSame(EntityLogActionEnum::DELETE, $log->getAction());
         }
     }
 
@@ -163,7 +163,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog $log */
         $log = reset($logs);
 
-        $this->assertSame(EntityLogAction::UPDATE, $log->getAction());
+        $this->assertSame(EntityLogActionEnum::UPDATE, $log->getAction());
         $this->assertSame($orderFromDb->getId(), $log->getEntityId());
         $this->assertSame($orderFromDb->getNumber(), $log->getEntityIdentifier());
         $this->assertArrayHasKey('city', $log->getChangeSet());
@@ -199,7 +199,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog $orderItemLog */
         $orderItemLog = reset($orderItemLogs);
 
-        $this->assertSame(EntityLogAction::CREATE, $orderItemLog->getAction());
+        $this->assertSame(EntityLogActionEnum::CREATE, $orderItemLog->getAction());
         $this->assertSame($productTicketName, $orderItemLog->getEntityIdentifier());
 
         $this->assertSame($orderLog->getEntityName(), $orderItemLog->getParentEntityName());
