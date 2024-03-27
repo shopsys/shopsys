@@ -337,3 +337,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 - typesSuffix: 'Api',
 +
 ```
+
+#### Add Developer Styleguide ([#3083](https://github.com/shopsys/shopsys/pull/3083))
+
+During new project implementation phase it is important for a developer who is adjusting new design to be able to see how those changes affect important/base components. This is why we have Styleguide where we have those base components so implementation is faster and developer has better overview of the changes.
