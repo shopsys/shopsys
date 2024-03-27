@@ -1,172 +1,172 @@
 {
-  "settings": {
-    "index": {
-      "number_of_shards": 1,
-      "number_of_replicas": 1
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 1
+        },
+        "analysis": {
+            "filter": {
+                "english_stop": {
+                    "type": "stop",
+                    "stopwords": "_english_"
+                },
+                "english_stemmer": {
+                    "type": "stemmer",
+                    "language": "english"
+                },
+                "edge_ngram": {
+                    "type": "edgeNGram",
+                    "min_gram": 2,
+                    "max_gram": 20
+                }
+            },
+            "tokenizer": {
+                "keep_special_chars": {
+                    "type": "pattern",
+                    "pattern": "[^\\p{L}\\d-/]+"
+                }
+            },
+            "analyzer": {
+                "full_with_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": [
+                        "lowercase"
+                    ]
+                },
+                "full_without_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                },
+                "stemming": {
+                    "tokenizer": "standard",
+                    "filter": [
+                        "lowercase",
+                        "english_stemmer",
+                        "english_stop",
+                        "asciifolding"
+                    ]
+                },
+                "edge_ngram_with_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": [
+                        "edge_ngram",
+                        "lowercase"
+                    ]
+                },
+                "edge_ngram_without_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": [
+                        "edge_ngram",
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                },
+                "full_without_diacritic_html": {
+                    "char_filter": "html_strip",
+                    "tokenizer": "keep_special_chars",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                },
+                "edge_ngram_without_diacritic_html": {
+                    "char_filter": "html_strip",
+                    "tokenizer": "keep_special_chars",
+                    "filter": [
+                        "edge_ngram",
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                },
+                "edge_ngram_unanalyzed": {
+                    "tokenizer": "keyword",
+                    "filter": [
+                        "edge_ngram"
+                    ]
+                },
+                "edge_ngram_unanalyzed_words": {
+                    "tokenizer": "whitespace",
+                    "filter": [
+                        "edge_ngram"
+                    ]
+                },
+                "whitespace_without_dots": {
+                    "tokenizer": "whitespace",
+                    "char_filter": [
+                        "dots_replace_filter"
+                    ]
+                }
+            },
+            "char_filter": {
+                "dots_replace_filter": {
+                    "type": "pattern_replace",
+                    "pattern": "\\.",
+                    "replacement": ""
+                }
+            }
+        }
     },
-    "analysis": {
-      "filter": {
-        "english_stop": {
-          "type": "stop",
-          "stopwords": "_english_"
-        },
-        "english_stemmer": {
-          "type": "stemmer",
-          "language": "english"
-        },
-        "edge_ngram": {
-          "type": "edgeNGram",
-          "min_gram": 2,
-          "max_gram": 20
-        }
-      },
-      "tokenizer": {
-        "keep_special_chars": {
-          "type": "pattern",
-          "pattern": "[^\\p{L}\\d-/]+"
-        }
-      },
-      "analyzer": {
-        "full_with_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "lowercase"
-          ]
-        },
-        "full_without_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "stemming": {
-          "tokenizer": "standard",
-          "filter": [
-            "lowercase",
-            "english_stemmer",
-            "english_stop",
-            "asciifolding"
-          ]
-        },
-        "edge_ngram_with_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "edge_ngram",
-            "lowercase"
-          ]
-        },
-        "edge_ngram_without_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "edge_ngram",
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "full_without_diacritic_html": {
-          "char_filter": "html_strip",
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "edge_ngram_without_diacritic_html": {
-          "char_filter": "html_strip",
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "edge_ngram",
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "edge_ngram_unanalyzed": {
-          "tokenizer": "keyword",
-          "filter": [
-            "edge_ngram"
-          ]
-        },
-        "edge_ngram_unanalyzed_words": {
-          "tokenizer": "whitespace",
-          "filter": [
-            "edge_ngram"
-          ]
-        },
-        "whitespace_without_dots": {
-          "tokenizer": "whitespace",
-          "char_filter": [
-            "dots_replace_filter"
-          ]
-        }
-      },
-      "char_filter": {
-        "dots_replace_filter": {
-          "type": "pattern_replace",
-          "pattern": "\\.",
-          "replacement": ""
-        }
-      }
-    }
-  },
-  "mappings": {
-    "properties": {
-      "name": {
-        "type": "text",
-        "analyzer": "edge_ngram_without_diacritic",
-        "search_analyzer": "full_without_diacritic"
-      },
-      "text": {
-        "type": "text",
-        "analyzer": "edge_ngram_without_diacritic_html",
-        "search_analyzer": "full_without_diacritic_html"
-      },
-      "url": {
-        "type": "text"
-      },
-      "uuid": {
-        "type": "keyword"
-      },
-      "placement": {
-        "type": "keyword"
-      },
-      "seoH1": {
-        "type": "text"
-      },
-      "seoTitle": {
-        "type": "text"
-      },
-      "seoMetaDescription": {
-        "type": "text"
-      },
-      "slug": {
-        "type": "keyword"
-      },
-      "mainSlug": {
-        "type": "text"
-      },
-      "position": {
-        "type": "keyword"
-      },
-      "breadcrumb": {
+    "mappings": {
         "properties": {
-          "name": {
-            "type": "text"
-          },
-          "slug":  {
-            "type": "keyword"
-          }
+            "name": {
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic",
+                "search_analyzer": "full_without_diacritic"
+            },
+            "text": {
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic_html",
+                "search_analyzer": "full_without_diacritic_html"
+            },
+            "url": {
+                "type": "text"
+            },
+            "uuid": {
+                "type": "keyword"
+            },
+            "placement": {
+                "type": "keyword"
+            },
+            "seoH1": {
+                "type": "text"
+            },
+            "seoTitle": {
+                "type": "text"
+            },
+            "seoMetaDescription": {
+                "type": "text"
+            },
+            "slug": {
+                "type": "keyword"
+            },
+            "mainSlug": {
+                "type": "text"
+            },
+            "position": {
+                "type": "keyword"
+            },
+            "breadcrumb": {
+                "properties": {
+                    "name": {
+                        "type": "text"
+                    },
+                    "slug": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "external": {
+                "type": "boolean"
+            },
+            "createdAt": {
+                "type": "text"
+            },
+            "type": {
+                "type": "text"
+            }
         }
-      },
-      "external": {
-        "type": "boolean"
-      },
-      "createdAt": {
-        "type": "text"
-      },
-      "type": {
-        "type": "text"
-      }
     }
-  }
 }
