@@ -114,34 +114,14 @@
       "id": {
         "type": "integer"
       },
-      "searching_names": {
-        "type": "text",
-        "analyzer": "stemming",
-        "fields": {
-          "full_with_diacritic": {
-            "type": "text",
-            "analyzer": "full_with_diacritic"
-          },
-          "full_without_diacritic": {
-            "type": "text",
-            "analyzer": "full_without_diacritic"
-          },
-          "edge_ngram_with_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_with_diacritic",
-            "search_analyzer": "full_with_diacritic"
-          },
-          "edge_ngram_without_diacritic": {
-            "type": "text",
-            "analyzer": "edge_ngram_without_diacritic",
-            "search_analyzer": "full_without_diacritic"
-          },
-          "keyword": {
-            "type": "icu_collation_keyword",
-            "language": "cs",
-            "index": false
-          }
-        }
+      "catnum": {
+        "type": "text"
+      },
+      "partno": {
+        "type": "text"
+      },
+      "ean": {
+        "type": "text"
       },
       "name": {
         "type": "text",
@@ -153,73 +133,11 @@
           }
         }
       },
-      "name_prefix": {
-        "type": "text"
-      },
-      "name_sufix": {
-        "type": "text"
-      },
-      "searching_catnums": {
-        "type": "text",
-        "analyzer": "whitespace",
-        "search_analyzer": "whitespace_without_dots",
-        "fields": {
-          "edge_ngram_unanalyzed_words": {
-            "type": "text",
-            "analyzer": "edge_ngram_unanalyzed_words",
-            "search_analyzer": "whitespace_without_dots"
-          }
-        }
-      },
-      "catnum": {
-        "type": "text"
-      },
-      "searching_partnos": {
-        "type": "text",
-        "analyzer": "whitespace",
-        "fields": {
-          "edge_ngram_unanalyzed_words": {
-            "type": "text",
-            "analyzer": "edge_ngram_unanalyzed_words",
-            "search_analyzer": "whitespace"
-          }
-        }
-      },
-      "partno": {
-        "type": "text"
-      },
-      "searching_eans": {
-        "type": "text",
-        "analyzer": "whitespace",
-        "fields": {
-          "edge_ngram_unanalyzed_words": {
-            "type": "text",
-            "analyzer": "edge_ngram_unanalyzed_words",
-            "search_analyzer": "whitespace"
-          }
-        }
-      },
-      "ean": {
-        "type": "text"
-      },
-      "searching_short_descriptions": {
-        "type": "text",
-        "analyzer": "edge_ngram_without_diacritic",
-        "search_analyzer": "full_without_diacritic"
-      },
-      "short_description": {
-        "type": "text"
-      },
-      "searching_descriptions": {
-        "type": "text",
-        "analyzer": "edge_ngram_without_diacritic_html",
-        "search_analyzer": "full_without_diacritic_html"
-      },
       "description": {
         "type": "text"
       },
-      "flags": {
-        "type": "integer"
+      "short_description": {
+        "type": "text"
       },
       "brand": {
         "type": "integer"
@@ -230,8 +148,20 @@
       "brand_url": {
         "type": "text"
       },
+      "flags": {
+        "type": "integer"
+      },
       "categories": {
         "type": "integer"
+      },
+      "main_category_id": {
+        "type": "integer"
+      },
+      "main_category_path": {
+        "type": "text"
+      },
+      "in_stock": {
+        "type": "boolean"
       },
       "prices": {
         "type": "nested",
@@ -259,13 +189,13 @@
           }
         }
       },
-      "in_stock": {
-        "type": "boolean"
-      },
       "parameters": {
         "type": "nested",
         "properties": {
           "parameter_id": {
+            "type": "integer"
+          },
+          "parameter_value_id": {
             "type": "integer"
           },
           "parameter_uuid": {
@@ -273,15 +203,6 @@
           },
           "parameter_name": {
             "type": "text"
-          },
-          "parameter_unit": {
-            "type": "text"
-          },
-          "parameter_group": {
-            "type": "text"
-          },
-          "parameter_value_id": {
-            "type": "integer"
           },
           "parameter_value_uuid": {
             "type": "keyword"
@@ -291,6 +212,12 @@
           },
           "parameter_is_dimensional": {
             "type": "boolean"
+          },
+          "parameter_group": {
+            "type": "text"
+          },
+          "parameter_unit": {
+            "type": "text"
           },
           "parameter_value_for_slider_filter": {
             "type": "float"
@@ -315,10 +242,10 @@
       "availability_dispatch_time": {
         "type": "integer"
       },
-      "is_variant": {
+      "is_main_variant": {
         "type": "boolean"
       },
-      "is_main_variant": {
+      "is_variant": {
         "type": "boolean"
       },
       "detail_url": {
@@ -359,6 +286,15 @@
       "seo_meta_description": {
         "type": "text"
       },
+      "accessories": {
+        "type": "integer"
+      },
+      "name_prefix": {
+        "type": "text"
+      },
+      "name_sufix": {
+        "type": "text"
+      },
       "is_sale_exclusion": {
         "type": "boolean"
       },
@@ -385,11 +321,78 @@
       "usps": {
         "type": "text"
       },
-      "main_category_id": {
-        "type": "integer"
+      "searching_names": {
+        "type": "text",
+        "analyzer": "stemming",
+        "fields": {
+          "full_with_diacritic": {
+            "type": "text",
+            "analyzer": "full_with_diacritic"
+          },
+          "full_without_diacritic": {
+            "type": "text",
+            "analyzer": "full_without_diacritic"
+          },
+          "edge_ngram_with_diacritic": {
+            "type": "text",
+            "analyzer": "edge_ngram_with_diacritic",
+            "search_analyzer": "full_with_diacritic"
+          },
+          "edge_ngram_without_diacritic": {
+            "type": "text",
+            "analyzer": "edge_ngram_without_diacritic",
+            "search_analyzer": "full_without_diacritic"
+          },
+          "keyword": {
+            "type": "icu_collation_keyword",
+            "language": "cs",
+            "index": false
+          }
+        }
       },
-      "main_category_path": {
-        "type": "text"
+      "searching_descriptions": {
+        "type": "text",
+        "analyzer": "edge_ngram_without_diacritic_html",
+        "search_analyzer": "full_without_diacritic_html"
+      },
+      "searching_catnums": {
+        "type": "text",
+        "analyzer": "whitespace",
+        "search_analyzer": "whitespace_without_dots",
+        "fields": {
+          "edge_ngram_unanalyzed_words": {
+            "type": "text",
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace_without_dots"
+          }
+        }
+      },
+      "searching_eans": {
+        "type": "text",
+        "analyzer": "whitespace",
+        "fields": {
+          "edge_ngram_unanalyzed_words": {
+            "type": "text",
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
+          }
+        }
+      },
+      "searching_partnos": {
+        "type": "text",
+        "analyzer": "whitespace",
+        "fields": {
+          "edge_ngram_unanalyzed_words": {
+            "type": "text",
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
+          }
+        }
+      },
+      "searching_short_descriptions": {
+        "type": "text",
+        "analyzer": "edge_ngram_without_diacritic",
+        "search_analyzer": "full_without_diacritic"
       },
       "slug": {
         "type": "text"
@@ -400,20 +403,6 @@
       "related_products": {
         "type": "integer"
       },
-      "accessories": {
-        "type": "integer"
-      },
-      "product_videos": {
-        "type": "nested",
-        "properties": {
-          "description": {
-            "type": "text"
-          },
-          "token": {
-            "type": "text"
-          }
-        }
-      },
       "breadcrumb": {
         "properties": {
           "name": {
@@ -421,6 +410,17 @@
           },
           "slug":  {
             "type": "keyword"
+          }
+        }
+      },
+      "product_videos": {
+        "type": "nested",
+        "properties": {
+          "token": {
+            "type": "text"
+          },
+          "description": {
+            "type": "text"
           }
         }
       },
