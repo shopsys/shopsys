@@ -2,7 +2,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import useTranslation from 'next-translate/useTranslation';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 
@@ -11,14 +11,6 @@ export const ContactInformationCompany: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const [companyNameValue, companyNumberValue, companyTaxNumberValue] = useWatch({
-        name: [
-            formMeta.fields.companyName.name,
-            formMeta.fields.companyNumber.name,
-            formMeta.fields.companyTaxNumber.name,
-        ],
-        control: formProviderMethods.control,
-    });
 
     return (
         <>
@@ -37,7 +29,7 @@ export const ContactInformationCompany: FC = () => {
                     required: true,
                     type: 'text',
                     autoComplete: 'organization',
-                    onChange: () => updateContactInformation({ companyName: companyNameValue }),
+                    onChange: (event) => updateContactInformation({ companyName: event.currentTarget.value }),
                 }}
             />
             <TextInputControlled
@@ -53,7 +45,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyNumber.label,
                     required: true,
                     type: 'text',
-                    onChange: () => updateContactInformation({ companyNumber: companyNumberValue }),
+                    onChange: (event) => updateContactInformation({ companyNumber: event.currentTarget.value }),
                 }}
             />
             <TextInputControlled
@@ -69,7 +61,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyTaxNumber.label,
                     required: false,
                     type: 'text',
-                    onChange: () => updateContactInformation({ companyTaxNumber: companyTaxNumberValue }),
+                    onChange: (event) => updateContactInformation({ companyTaxNumber: event.currentTarget.value }),
                 }}
             />
         </>

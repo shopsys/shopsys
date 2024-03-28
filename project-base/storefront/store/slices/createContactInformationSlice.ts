@@ -24,7 +24,7 @@ export type ContactInformation = {
     deliveryCity: string;
     deliveryPostcode: string;
     deliveryCountry: SelectOptionType;
-    deliveryAddressUuid: string | null;
+    deliveryAddressUuid: string;
     newsletterSubscription: boolean;
     note: string;
 };
@@ -51,7 +51,7 @@ const defaultContactInformation: ContactInformation = {
     deliveryCity: '',
     deliveryPostcode: '',
     deliveryCountry: { value: '', label: '' },
-    deliveryAddressUuid: null,
+    deliveryAddressUuid: '',
     newsletterSubscription: false,
     note: '',
 };

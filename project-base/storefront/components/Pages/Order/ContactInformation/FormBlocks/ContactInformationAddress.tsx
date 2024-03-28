@@ -4,47 +4,19 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCountriesQuery } from 'graphql/requests/countries/queries/CountriesQuery.generated';
-import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
+import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useMemo } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { SelectOptionType } from 'types/selectOptions';
 
 export const ContactInformationAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const [{ data: countriesData }] = useCountriesQuery();
-    const user = useCurrentCustomerData();
-    const countriesAsSelectOptions = useMemo(
-        () => mapCountriesToSelectOptions(countriesData?.countries),
-        [countriesData?.countries],
-    );
-    const [countryValue] = useWatch({
-        name: [formMeta.fields.country.name],
-        control: formProviderMethods.control,
-    });
-
-    useEffect(() => {
-        if (countriesAsSelectOptions.length && !countryValue.value) {
-            const selectedCountryOption = countriesAsSelectOptions.find(
-                (option) => option.value === user?.country.code,
-            );
-
-            setValue(formMeta.fields.country.name, selectedCountryOption || countriesAsSelectOptions[0], {
-                shouldValidate: true,
-            });
-        }
-    }, [countriesAsSelectOptions, countryValue, formMeta.fields.country.name]);
-
-    if (countriesAsSelectOptions.length === 0) {
-        return null;
-    }
+    const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     return (
         <>
@@ -60,7 +32,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'street-address',
-                        onBlur: (event) => updateContactInformation({ street: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ street: event.currentTarget.value }),
                     }}
                 />
             </FormLine>
@@ -75,7 +47,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'address-level2',
-                        onBlur: (event) => updateContactInformation({ city: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ city: event.currentTarget.value }),
                     }}
                 />
                 <TextInputControlled
@@ -92,7 +64,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
-                        onBlur: (event) => updateContactInformation({ postcode: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ postcode: event.currentTarget.value }),
                     }}
                 />
             </FormColumn>
@@ -106,7 +78,12 @@ export const ContactInformationAddress: FC = () => {
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
-                                onChange={field.onChange}
+                                onChange={(...data) => {
+                                    field.onChange(...data);
+                                    updateContactInformation({
+                                        country: data[0] as SelectOptionType,
+                                    });
+                                }}
                             />
                             <FormLineError error={error} inputType="select" />
                         </>

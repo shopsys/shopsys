@@ -5,8 +5,8 @@ import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefau
 
 type NativeProps = ExtractNativePropsFromDefault<
     TextareaHTMLAttributes<HTMLTextAreaElement>,
-    'rows' | 'onChange' | 'id',
-    'disabled' | 'required' | 'name' | 'onBlur'
+    'rows' | 'id',
+    'disabled' | 'required' | 'name' | 'onBlur' | 'onChange'
 >;
 
 export type TextareaProps = NativeProps & {

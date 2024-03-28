@@ -14,7 +14,7 @@ import { TIDs } from 'tids';
 
 describe('Create order tests', () => {
     beforeEach(() => {
-        cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
     });
 
     it('should create order as unlogged user with a registered email (transport to home, cash on delivery)', () => {
