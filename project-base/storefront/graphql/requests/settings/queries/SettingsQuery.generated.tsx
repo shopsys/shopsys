@@ -5,10 +5,10 @@ import { PricingSettingFragment } from '../fragments/PricingSettingFragment.gene
 import { SeoSettingFragment } from '../fragments/SeoSettingFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type SettingsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeSettingsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 
       export interface PossibleTypesResultData {
@@ -112,6 +112,6 @@ export const SettingsQueryDocument = gql`
     ${PricingSettingFragment}
 ${SeoSettingFragment}`;
 
-export function useSettingsQuery(options?: Omit<Urql.UseQueryArgs<SettingsQueryVariables>, 'query'>) {
-  return Urql.useQuery<SettingsQuery, SettingsQueryVariables>({ query: SettingsQueryDocument, ...options });
+export function useSettingsQuery(options?: Omit<Urql.UseQueryArgs<TypeSettingsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeSettingsQuery, TypeSettingsQueryVariables>({ query: SettingsQueryDocument, ...options });
 };

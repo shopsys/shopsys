@@ -1,14 +1,14 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 
 type BreadcrumbsProps = {
-    breadcrumbs: BreadcrumbFragment[];
+    breadcrumbs: TypeBreadcrumbFragment[];
     type?: FriendlyPagesTypesKey;
 };
 

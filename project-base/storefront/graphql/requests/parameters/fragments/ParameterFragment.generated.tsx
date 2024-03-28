@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type ParameterFragment = { __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> };
+export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> };
 
 
       export interface PossibleTypesResultData {

@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type NewsletterSubscribeMutationVariables = Types.Exact<{
+export type TypeNewsletterSubscribeMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
 }>;
 
 
-export type NewsletterSubscribeMutation = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
+export type TypeNewsletterSubscribeMutation = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
 
       export interface PossibleTypesResultData {
@@ -102,5 +102,5 @@ export const NewsletterSubscribeMutationDocument = gql`
     `;
 
 export function useNewsletterSubscribeMutation() {
-  return Urql.useMutation<NewsletterSubscribeMutation, NewsletterSubscribeMutationVariables>(NewsletterSubscribeMutationDocument);
+  return Urql.useMutation<TypeNewsletterSubscribeMutation, TypeNewsletterSubscribeMutationVariables>(NewsletterSubscribeMutationDocument);
 };

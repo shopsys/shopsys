@@ -3,8 +3,8 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { TIDs } from 'cypress/tids';
-import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 
 type ProductDetailAddToCartProps = {
-    product: ProductDetailFragment;
+    product: TypeProductDetailFragment;
 };
 
 const AddToCartPopup = dynamic(() =>
@@ -29,7 +29,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         GtmMessageOriginType.product_detail_page,
         GtmProductListNameType.product_detail,
     );
-    const [popupData, setPopupData] = useState<CartItemFragment | undefined>();
+    const [popupData, setPopupData] = useState<TypeCartItemFragment | undefined>();
 
     const onAddToCartHandler = async () => {
         if (!spinboxRef.current) {

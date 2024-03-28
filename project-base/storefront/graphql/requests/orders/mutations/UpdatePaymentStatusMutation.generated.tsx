@@ -3,13 +3,13 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type UpdatePaymentStatusMutationVariables = Types.Exact<{
+export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
   orderPaymentStatusPageValidityHash?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type UpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -112,5 +112,5 @@ export const UpdatePaymentStatusMutationDocument = gql`
     `;
 
 export function useUpdatePaymentStatusMutation() {
-  return Urql.useMutation<UpdatePaymentStatusMutation, UpdatePaymentStatusMutationVariables>(UpdatePaymentStatusMutationDocument);
+  return Urql.useMutation<TypeUpdatePaymentStatusMutation, TypeUpdatePaymentStatusMutationVariables>(UpdatePaymentStatusMutationDocument);
 };

@@ -1,7 +1,7 @@
 import * as Types from '../../../../types';
 
 import gql from 'graphql-tag';
-export type SimpleArticleSiteFragment = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
+export type TypeSimpleArticleSiteFragment = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
 
 
       export interface PossibleTypesResultData {

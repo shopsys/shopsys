@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type ProductFilterOptionsBrandsFragment = { __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } };
+export type TypeProductFilterOptionsBrandsFragment = { __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } };
 
 
       export interface PossibleTypesResultData {

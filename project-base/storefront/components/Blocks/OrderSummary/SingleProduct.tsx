@@ -1,10 +1,10 @@
 import { Image } from 'components/Basic/Image/Image';
-import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 
 type SingleProductProps = {
-    item: CartItemFragment;
+    item: TypeCartItemFragment;
 };
 
 export const SingleProduct: FC<SingleProductProps> = ({ item }) => {

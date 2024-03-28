@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     usePersonalDataPageTextQuery,
     PersonalDataPageTextQueryDocument,
@@ -20,7 +20,7 @@ const PersonalDataOverviewPage: FC = () => {
     const { url } = useDomainConfig();
     const [personalDataOverviewUrl] = getInternationalizedStaticUrls(['/personal-data-overview'], url);
     const [personalDataPageTextResult] = usePersonalDataPageTextQuery();
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Personal Data Overview'), slug: personalDataOverviewUrl },
     ];
 

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type SimpleBrandFragment = { __typename: 'Brand', name: string, slug: string };
+export type TypeSimpleBrandFragment = { __typename: 'Brand', name: string, slug: string };
 
 
       export interface PossibleTypesResultData {

@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 import { ListedBrandFragment } from '../fragments/ListedBrandFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type BrandsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeBrandsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type BrandsQuery = { __typename?: 'Query', brands: Array<{ __typename: 'Brand', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> };
+export type TypeBrandsQuery = { __typename?: 'Query', brands: Array<{ __typename: 'Brand', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }> };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +102,6 @@ export const BrandsQueryDocument = gql`
 }
     ${ListedBrandFragment}`;
 
-export function useBrandsQuery(options?: Omit<Urql.UseQueryArgs<BrandsQueryVariables>, 'query'>) {
-  return Urql.useQuery<BrandsQuery, BrandsQueryVariables>({ query: BrandsQueryDocument, ...options });
+export function useBrandsQuery(options?: Omit<Urql.UseQueryArgs<TypeBrandsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeBrandsQuery, TypeBrandsQueryVariables>({ query: BrandsQueryDocument, ...options });
 };

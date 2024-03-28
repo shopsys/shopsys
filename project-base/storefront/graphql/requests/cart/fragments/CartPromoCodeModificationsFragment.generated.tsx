@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type CartPromoCodeModificationsFragment = { __typename: 'CartPromoCodeModificationsResult', noLongerApplicablePromoCode: Array<string> };
+export type TypeCartPromoCodeModificationsFragment = { __typename: 'CartPromoCodeModificationsResult', noLongerApplicablePromoCode: Array<string> };
 
 
       export interface PossibleTypesResultData {

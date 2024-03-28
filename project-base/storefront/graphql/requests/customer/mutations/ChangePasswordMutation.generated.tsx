@@ -3,14 +3,14 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type ChangePasswordMutationVariables = Types.Exact<{
+export type TypeChangePasswordMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   oldPassword: Types.Scalars['Password']['input'];
   newPassword: Types.Scalars['Password']['input'];
 }>;
 
 
-export type ChangePasswordMutation = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
+export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
 
 
       export interface PossibleTypesResultData {
@@ -108,5 +108,5 @@ export const ChangePasswordMutationDocument = gql`
     `;
 
 export function useChangePasswordMutation() {
-  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordMutationDocument);
+  return Urql.useMutation<TypeChangePasswordMutation, TypeChangePasswordMutationVariables>(ChangePasswordMutationDocument);
 };

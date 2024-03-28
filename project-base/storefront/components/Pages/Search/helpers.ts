@@ -1,12 +1,12 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    SearchProductsQueryVariables,
-    SearchProductsQuery,
+    TypeSearchProductsQueryVariables,
+    TypeSearchProductsQuery,
     SearchProductsQueryDocument,
 } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
-import { ProductOrderingModeEnum, Maybe, ProductFilter } from 'graphql/types';
+import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { calculatePageSize } from 'helpers/loadMore/calculatePageSize';
 import { getPageSizeInfo } from 'helpers/loadMore/getPageSizeInfo';
@@ -23,7 +23,7 @@ import { useClient, Client } from 'urql';
 
 export const useSearchProductsData = (
     totalProductCount: number,
-): [ListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
+): [TypeListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
     const client = useClient();
     const currentPage = useCurrentPage();
     const currentFilter = useCurrentFilter();
@@ -54,11 +54,11 @@ export const useSearchProductsData = (
     const [loadMoreFetching, setLoadMoreFetching] = useState(false);
 
     const fetchProducts = async (
-        variables: SearchProductsQueryVariables,
-        previouslyQueriedProductsFromCache: ListedProductConnectionFragment['edges'] | undefined,
+        variables: TypeSearchProductsQueryVariables,
+        previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
     ) => {
         const response = await client
-            .query<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
+            .query<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
             .toPromise();
 
         if (!response.data) {
@@ -139,20 +139,20 @@ export const useSearchProductsData = (
 
 const readSearchProductsFromCache = (
     client: Client,
-    searchQuery: string,
-    orderingMode: ProductOrderingModeEnum | null,
-    filter: Maybe<ProductFilter>,
+    TypeSearchQuery: string,
+    orderingMode: TypeProductOrderingModeEnum | null,
+    filter: Maybe<TypeProductFilter>,
     endCursor: string,
     pageSize: number,
     userIdentifier: string,
 ): {
-    products: ListedProductConnectionFragment['edges'] | undefined;
+    products: TypeListedProductConnectionFragment['edges'] | undefined;
     hasNextPage: boolean;
 } => {
-    const dataFromCache = client.readQuery<SearchProductsQuery, SearchProductsQueryVariables>(
+    const dataFromCache = client.readQuery<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(
         SearchProductsQueryDocument,
         {
-            search: searchQuery,
+            search: TypeSearchQuery,
             orderingMode,
             filter,
             endCursor,
@@ -170,22 +170,22 @@ const readSearchProductsFromCache = (
 
 const getPreviousProductsFromCache = (
     client: Client,
-    searchQuery: string,
-    sort: ProductOrderingModeEnum | null,
-    filter: Maybe<ProductFilter>,
+    TypeSearchQuery: string,
+    sort: TypeProductOrderingModeEnum | null,
+    filter: Maybe<TypeProductFilter>,
     pageSize: number,
     currentPage: number,
     currentLoadMore: number,
     userIdentifier: string,
 ) => {
-    let cachedPartOfProducts: ListedProductConnectionFragment['edges'] | undefined;
+    let cachedPartOfProducts: TypeListedProductConnectionFragment['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
 
     while (iterationsCounter > 0) {
         const offsetEndCursor = getEndCursor(currentPage + currentLoadMore - iterationsCounter);
         const currentCacheSlice = readSearchProductsFromCache(
             client,
-            searchQuery,
+            TypeSearchQuery,
             sort,
             filter,
             offsetEndCursor,

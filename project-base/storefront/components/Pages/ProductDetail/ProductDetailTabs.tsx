@@ -2,15 +2,15 @@ import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { ParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailTabsProps = {
     description: string | null;
-    parameters: ParameterFragment[];
-    relatedProducts: ListedProductFragment[];
+    parameters: TypeParameterFragment[];
+    relatedProducts: TypeListedProductFragment[];
 };
 
 export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters, relatedProducts }) => {

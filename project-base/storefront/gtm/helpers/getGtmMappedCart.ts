@@ -1,4 +1,4 @@
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCartInfoType } from 'gtm/types/objects';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
@@ -6,7 +6,7 @@ import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash
 import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 
 export const getGtmMappedCart = (
-    cart: CartFragment,
+    cart: TypeCartFragment,
     promoCode: string | null,
     isUserLoggedIn: boolean,
     domain: DomainConfigType,

@@ -8,7 +8,7 @@ import { useSessionStore } from 'store/useSessionStore';
 type LogoutHandler = () => Promise<void>;
 
 export const useLogout = () => {
-    const [, logoutMutation] = useLogoutMutation();
+    const [, TypeLogoutMutation] = useLogoutMutation();
 
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -17,7 +17,7 @@ export const useLogout = () => {
     const router = useRouter();
 
     const logout: LogoutHandler = async () => {
-        const logoutResult = await logoutMutation({});
+        const logoutResult = await TypeLogoutMutation({});
 
         if (logoutResult.data?.Logout) {
             updateProductListUuids({});

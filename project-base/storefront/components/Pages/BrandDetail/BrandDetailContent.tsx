@@ -3,11 +3,11 @@ import { Image } from 'components/Basic/Image/Image';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
+import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
 
 type BrandDetailContentProps = {
-    brand: BrandDetailFragment;
+    brand: TypeBrandDetailFragment;
 };
 
 export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {

@@ -3,10 +3,10 @@ import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     OrderDetailByHashQueryDocument,
-    OrderDetailByHashQueryVariables,
+    TypeOrderDetailByHashQueryVariables,
     useOrderDetailByHashQuery,
 } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -29,7 +29,9 @@ const OrderDetailByHashPage: FC = () => {
     });
 
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl }];
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
+        { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
+    ];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -56,7 +58,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps<OrderDetailByHashQueryVariables>({
+    return initServerSideProps<TypeOrderDetailByHashQueryVariables>({
         context,
         prefetchedQueries: [{ query: OrderDetailByHashQueryDocument, variables: { urlHash: context.params.urlHash } }],
         redisClient,

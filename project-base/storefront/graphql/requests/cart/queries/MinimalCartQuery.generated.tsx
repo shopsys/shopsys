@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type MinimalCartQueryVariables = Types.Exact<{
+export type TypeMinimalCartQueryVariables = Types.Exact<{
   cartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
 }>;
 
 
-export type MinimalCartQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', items: Array<{ __typename?: 'CartItem', uuid: string }>, transport: { __typename?: 'Transport', uuid: string } | null, payment: { __typename?: 'Payment', uuid: string } | null } | null };
+export type TypeMinimalCartQuery = { __typename?: 'Query', cart: { __typename?: 'Cart', items: Array<{ __typename?: 'CartItem', uuid: string }>, transport: { __typename?: 'Transport', uuid: string } | null, payment: { __typename?: 'Payment', uuid: string } | null } | null };
 
 
       export interface PossibleTypesResultData {
@@ -111,6 +111,6 @@ export const MinimalCartQueryDocument = gql`
 }
     `;
 
-export function useMinimalCartQuery(options?: Omit<Urql.UseQueryArgs<MinimalCartQueryVariables>, 'query'>) {
-  return Urql.useQuery<MinimalCartQuery, MinimalCartQueryVariables>({ query: MinimalCartQueryDocument, ...options });
+export function useMinimalCartQuery(options?: Omit<Urql.UseQueryArgs<TypeMinimalCartQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeMinimalCartQuery, TypeMinimalCartQueryVariables>({ query: MinimalCartQueryDocument, ...options });
 };

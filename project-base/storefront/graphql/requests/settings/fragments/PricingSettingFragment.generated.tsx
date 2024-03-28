@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type PricingSettingFragment = { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number };
+export type TypePricingSettingFragment = { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number };
 
 
       export interface PossibleTypesResultData {

@@ -1,6 +1,6 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/helpers/getCategoryOrSeoCategoryGtmProductListName';
@@ -11,7 +11,7 @@ import { RefObject, useMemo } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
 type CategoryDetailProps = {
-    category: CategoryDetailFragment;
+    category: TypeCategoryDetailFragment;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 

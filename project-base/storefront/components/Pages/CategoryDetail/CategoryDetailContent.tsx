@@ -7,7 +7,7 @@ import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useCurrentPage } from 'hooks/queryParams/useCurrentPage';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,7 +18,7 @@ import { twJoin } from 'tailwind-merge';
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type CategoryDetailContentProps = {
-    category: CategoryDetailFragment;
+    category: TypeCategoryDetailFragment;
 };
 
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {

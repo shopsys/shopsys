@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type RemoveProductListMutationVariables = Types.Exact<{
-  input: Types.ProductListInput;
+export type TypeRemoveProductListMutationVariables = Types.Exact<{
+  input: Types.TypeProductListInput;
 }>;
 
 
-export type RemoveProductListMutation = { __typename?: 'Mutation', RemoveProductList: { __typename?: 'ProductList', uuid: string } | null };
+export type TypeRemoveProductListMutation = { __typename?: 'Mutation', RemoveProductList: { __typename?: 'ProductList', uuid: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -104,5 +104,5 @@ export const RemoveProductListMutationDocument = gql`
     `;
 
 export function useRemoveProductListMutation() {
-  return Urql.useMutation<RemoveProductListMutation, RemoveProductListMutationVariables>(RemoveProductListMutationDocument);
+  return Urql.useMutation<TypeRemoveProductListMutation, TypeRemoveProductListMutationVariables>(RemoveProductListMutationDocument);
 };

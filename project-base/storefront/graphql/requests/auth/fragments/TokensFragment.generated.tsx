@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TokenFragments = { __typename?: 'Token', accessToken: string, refreshToken: string };
+export type TypeTokenFragments = { __typename?: 'Token', accessToken: string, refreshToken: string };
 
 
       export interface PossibleTypesResultData {

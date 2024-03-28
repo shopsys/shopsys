@@ -7,18 +7,18 @@ import { readProductsFromCache } from './readProductsFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { DocumentNode } from 'graphql';
-import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    BrandProductsQueryVariables,
-    BrandProductsQuery,
+    TypeBrandProductsQueryVariables,
+    TypeBrandProductsQuery,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import {
-    CategoryProductsQueryVariables,
-    CategoryProductsQuery,
+    TypeCategoryProductsQueryVariables,
+    TypeCategoryProductsQuery,
 } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import {
-    FlagProductsQueryVariables,
-    FlagProductsQuery,
+    TypeFlagProductsQueryVariables,
+    TypeFlagProductsQuery,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
@@ -37,7 +37,7 @@ export const useProductsData = (
         shouldAbortFetchingProducts: boolean;
         abortedFetchCallback: () => void;
     },
-): [ListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
+): [TypeListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
     const client = useClient();
     const { asPath } = useRouter();
     const currentPage = useCurrentPage();
@@ -67,12 +67,15 @@ export const useProductsData = (
     const [loadMoreFetching, setLoadMoreFetching] = useState(false);
 
     const fetchProducts = async (
-        variables: CategoryProductsQueryVariables | FlagProductsQueryVariables | BrandProductsQueryVariables,
-        previouslyQueriedProductsFromCache: ListedProductConnectionFragment['edges'] | undefined,
+        variables:
+            | TypeCategoryProductsQueryVariables
+            | TypeFlagProductsQueryVariables
+            | TypeBrandProductsQueryVariables,
+        previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
     ) => {
         const response = await client
             .query<
-                CategoryProductsQuery | BrandProductsQuery | FlagProductsQuery,
+                TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery,
                 typeof variables
             >(queryDocument, variables)
             .toPromise();

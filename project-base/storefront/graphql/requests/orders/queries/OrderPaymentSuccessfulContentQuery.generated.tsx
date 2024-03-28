@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type OrderPaymentSuccessfulContentQueryVariables = Types.Exact<{
+export type TypeOrderPaymentSuccessfulContentQueryVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type OrderPaymentSuccessfulContentQuery = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
+export type TypeOrderPaymentSuccessfulContentQuery = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const OrderPaymentSuccessfulContentQueryDocument = gql`
 }
     `;
 
-export function useOrderPaymentSuccessfulContentQuery(options: Omit<Urql.UseQueryArgs<OrderPaymentSuccessfulContentQueryVariables>, 'query'>) {
-  return Urql.useQuery<OrderPaymentSuccessfulContentQuery, OrderPaymentSuccessfulContentQueryVariables>({ query: OrderPaymentSuccessfulContentQueryDocument, ...options });
+export function useOrderPaymentSuccessfulContentQuery(options: Omit<Urql.UseQueryArgs<TypeOrderPaymentSuccessfulContentQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrderPaymentSuccessfulContentQuery, TypeOrderPaymentSuccessfulContentQueryVariables>({ query: OrderPaymentSuccessfulContentQueryDocument, ...options });
 };

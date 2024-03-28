@@ -1,4 +1,4 @@
-import { ProductListTypeEnum } from 'graphql/types';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useProductList } from 'hooks/productLists/useProductList';
@@ -7,10 +7,10 @@ import useTranslation from 'next-translate/useTranslation';
 
 export const useWishlist = () => {
     const { t } = useTranslation();
-    const updateWishlistUuid = useUpdateProductListUuid(ProductListTypeEnum.Wishlist);
+    const updateWishlistUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Wishlist);
 
     const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
-        ProductListTypeEnum.Wishlist,
+        TypeProductListTypeEnum.Wishlist,
 
         {
             addProductError: () => showErrorMessage(t('Unable to add product to wishlist.')),

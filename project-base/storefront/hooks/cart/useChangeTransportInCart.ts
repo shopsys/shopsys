@@ -1,6 +1,6 @@
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
@@ -12,8 +12,8 @@ import { usePersistStore } from 'store/usePersistStore';
 
 export type ChangeTransportHandler = (
     newTransportUuid: string | null,
-    newPickupPlace: ListedStoreFragment | null,
-) => Promise<CartFragment | undefined | null>;
+    newPickupPlace: TypeListedStoreFragment | null,
+) => Promise<TypeCartFragment | undefined | null>;
 
 export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] => {
     const [{ fetching }, changeTransportInCart] = useChangeTransportInCartMutation();

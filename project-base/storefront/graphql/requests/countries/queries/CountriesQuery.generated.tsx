@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 import { CountryFragment } from '../fragments/CountryFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type CountriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeCountriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type CountriesQuery = { __typename?: 'Query', countries: Array<{ __typename: 'Country', name: string, code: string }> };
+export type TypeCountriesQuery = { __typename?: 'Query', countries: Array<{ __typename: 'Country', name: string, code: string }> };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +102,6 @@ export const CountriesQueryDocument = gql`
 }
     ${CountryFragment}`;
 
-export function useCountriesQuery(options?: Omit<Urql.UseQueryArgs<CountriesQueryVariables>, 'query'>) {
-  return Urql.useQuery<CountriesQuery, CountriesQueryVariables>({ query: CountriesQueryDocument, ...options });
+export function useCountriesQuery(options?: Omit<Urql.UseQueryArgs<TypeCountriesQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeCountriesQuery, TypeCountriesQueryVariables>({ query: CountriesQueryDocument, ...options });
 };

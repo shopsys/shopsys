@@ -1,6 +1,6 @@
 import {
     useCurrentCustomerUserQuery,
-    CurrentCustomerUserQuery,
+    TypeCurrentCustomerUserQuery,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
@@ -16,7 +16,7 @@ export function useCurrentCustomerContactInformationQuery(): ContactInformation 
 }
 
 const mapCurrentCustomerContactInformationApiData = (
-    apiCurrentCustomerUserData: CurrentCustomerUserQuery['currentCustomerUser'],
+    apiCurrentCustomerUserData: TypeCurrentCustomerUserQuery['currentCustomerUser'],
 ): ContactInformation | null => {
     if (apiCurrentCustomerUserData === null) {
         return null;

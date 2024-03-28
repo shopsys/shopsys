@@ -4,13 +4,13 @@ import gql from 'graphql-tag';
 import { SimpleNotBlogArticleFragment } from '../fragments/SimpleNotBlogArticleFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type ArticlesQueryVariables = Types.Exact<{
-  placement: Types.InputMaybe<Array<Types.ArticlePlacementTypeEnum> | Types.ArticlePlacementTypeEnum>;
+export type TypeArticlesQueryVariables = Types.Exact<{
+  placement: Types.InputMaybe<Array<Types.TypeArticlePlacementTypeEnum> | Types.TypeArticlePlacementTypeEnum>;
   first: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleConnection', edges: Array<{ __typename: 'ArticleEdge', node: { __typename: 'ArticleLink', uuid: string, name: string, url: string, placement: string, external: boolean } | { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean } | null } | null> | null } };
+export type TypeArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleConnection', edges: Array<{ __typename: 'ArticleEdge', node: { __typename: 'ArticleLink', uuid: string, name: string, url: string, placement: string, external: boolean } | { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean } | null } | null> | null } };
 
 
       export interface PossibleTypesResultData {
@@ -110,6 +110,6 @@ export const ArticlesQueryDocument = gql`
 }
     ${SimpleNotBlogArticleFragment}`;
 
-export function useArticlesQuery(options?: Omit<Urql.UseQueryArgs<ArticlesQueryVariables>, 'query'>) {
-  return Urql.useQuery<ArticlesQuery, ArticlesQueryVariables>({ query: ArticlesQueryDocument, ...options });
+export function useArticlesQuery(options?: Omit<Urql.UseQueryArgs<TypeArticlesQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeArticlesQuery, TypeArticlesQueryVariables>({ query: ArticlesQueryDocument, ...options });
 };

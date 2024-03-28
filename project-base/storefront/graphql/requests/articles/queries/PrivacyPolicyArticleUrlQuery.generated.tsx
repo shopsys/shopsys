@@ -3,10 +3,10 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type PrivacyPolicyArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypePrivacyPolicyArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type PrivacyPolicyArticleUrlQuery = { __typename?: 'Query', privacyPolicyArticle: { __typename?: 'ArticleSite', slug: string } | null };
+export type TypePrivacyPolicyArticleUrlQuery = { __typename?: 'Query', privacyPolicyArticle: { __typename?: 'ArticleSite', slug: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const PrivacyPolicyArticleUrlQueryDocument = gql`
 }
     `;
 
-export function usePrivacyPolicyArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<PrivacyPolicyArticleUrlQueryVariables>, 'query'>) {
-  return Urql.useQuery<PrivacyPolicyArticleUrlQuery, PrivacyPolicyArticleUrlQueryVariables>({ query: PrivacyPolicyArticleUrlQueryDocument, ...options });
+export function usePrivacyPolicyArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<TypePrivacyPolicyArticleUrlQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypePrivacyPolicyArticleUrlQuery, TypePrivacyPolicyArticleUrlQueryVariables>({ query: PrivacyPolicyArticleUrlQueryDocument, ...options });
 };

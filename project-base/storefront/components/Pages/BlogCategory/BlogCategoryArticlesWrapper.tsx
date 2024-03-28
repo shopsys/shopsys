@@ -3,7 +3,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogCategoryArticles } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
@@ -26,7 +26,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     });
 
     const mappedArticles = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragment>(data?.blogCategory?.blogArticles.edges),
+        () => mapConnectionEdges<TypeListedBlogArticleFragment>(data?.blogCategory?.blogArticles.edges),
         [data?.blogCategory?.blogArticles.edges],
     );
 
