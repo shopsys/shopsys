@@ -6,8 +6,8 @@ import {
     ShowAllButton,
 } from './FilterElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
+import { useUpdateFilter } from 'hooks/queryParams/useUpdateFilter';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
@@ -31,10 +31,11 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 }) => {
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
-    const { filter, updateFilterFlags, updateFilterBrands } = useQueryParams();
+    const currentFilter = useCurrentFilter();
+    const { updateFilterFlags, updateFilterBrands } = useUpdateFilter();
     const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);
 
-    const selectedItems = filter && filter[filterField];
+    const selectedItems = currentFilter && currentFilter[filterField];
 
     const { defaultOptions, isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,
@@ -92,4 +93,25 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
             )}
         </FilterGroupWrapper>
     );
+};
+
+const useFilterShowLess = (
+    options: MappedFilterOption[] | undefined,
+    defaultNumberOfItems: number,
+    selectedItems: string[] | null | undefined,
+) => {
+    const hiddenOptions = options?.slice(defaultNumberOfItems, options.length);
+    const isWithHiddenCheckedItem = hiddenOptions?.some((o) => !!selectedItems?.includes(o.uuid));
+
+    const [isWithAllItemsShown, setAreAllItemsShown] = useState(isWithHiddenCheckedItem);
+
+    const shownOptions = options?.slice(0, defaultNumberOfItems);
+    const defaultOptions = isWithAllItemsShown ? options : shownOptions;
+
+    return {
+        isShowLessMoreShown: !!hiddenOptions?.length,
+        defaultOptions,
+        isWithAllItemsShown,
+        setAreAllItemsShown,
+    };
 };

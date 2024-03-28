@@ -1,8 +1,8 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ContactContent } from 'components/Pages/Contact/ContactContent';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import React from 'react';

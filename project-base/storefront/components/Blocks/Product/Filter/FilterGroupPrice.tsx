@@ -1,7 +1,8 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { getPriceRounded } from 'helpers/mappers/price';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
+import { useUpdateFilter } from 'hooks/queryParams/useUpdateFilter';
 import { useState } from 'react';
 
 type FilterGroupPriceProps = {
@@ -12,9 +13,10 @@ type FilterGroupPriceProps = {
 
 export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinPrice, initialMaxPrice }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(true);
-    const { filter, updateFilterPriceMinimum, updateFilterPriceMaximum } = useQueryParams();
+    const currentFilter = useCurrentFilter();
+    const { updateFilterPriceMinimum, updateFilterPriceMaximum } = useUpdateFilter();
 
-    const { minimalPrice, maximalPrice } = filter || {};
+    const { minimalPrice, maximalPrice } = currentFilter || {};
 
     const minPriceOption = getPriceRounded(initialMinPrice);
     const maxPriceOption = getPriceRounded(initialMaxPrice);

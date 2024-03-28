@@ -1,7 +1,9 @@
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
-import { CompareIcon, HeartIcon, MarkerIcon } from 'components/Basic/Icon/IconsSvg';
+import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
+import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
+import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';

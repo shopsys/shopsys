@@ -9,13 +9,13 @@ import {
     OrderDetailQueryVariables,
     OrderDetailQueryDocument,
 } from 'graphql/requests/orders/queries/OrderDetailQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 

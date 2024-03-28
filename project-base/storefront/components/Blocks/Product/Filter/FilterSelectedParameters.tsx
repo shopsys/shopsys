@@ -1,9 +1,10 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
-import { RemoveIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
+import { useUpdateFilter } from 'hooks/queryParams/useUpdateFilter';
 import useTranslation from 'next-translate/useTranslation';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
@@ -18,24 +19,24 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     const formatPrice = useFormatPrice();
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
 
+    const currentFilter = useCurrentFilter();
     const {
-        filter,
         updateFilterInStock,
         updateFilterPrices,
         updateFilterBrands,
         updateFilterFlags,
         updateFilterParameters,
         resetAllFilters,
-    } = useQueryParams();
+    } = useUpdateFilter();
 
-    if (!filter && !getHasDefaultFilters(defaultProductFiltersMap)) {
+    if (!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap)) {
         return null;
     }
 
-    const checkedBrands = filter?.brands?.map((checkedBrandUuid) =>
+    const checkedBrands = currentFilter?.brands?.map((checkedBrandUuid) =>
         filterOptions.brands?.find((brandOption) => brandOption.brand.uuid === checkedBrandUuid),
     );
-    const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, filter?.flags);
+    const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags);
 
     return (
         <div className="z-aboveOverlay rounded py-4 vl:z-[0]">
@@ -71,7 +72,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     </SelectedParametersList>
                 )}
 
-                {getSelectedParameters(defaultProductFiltersMap, filter?.parameters).map((selectedParameter) => {
+                {getSelectedParameters(defaultProductFiltersMap, currentFilter?.parameters).map((selectedParameter) => {
                     const selectedParameterOptions = filterOptions.parameters?.find(
                         (parameterOption) => parameterOption.uuid === selectedParameter.parameter,
                     );
@@ -134,7 +135,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     );
                 })}
 
-                {!!filter?.onlyInStock && (
+                {!!currentFilter?.onlyInStock && (
                     <SelectedParametersList>
                         <SelectedParametersName>{t('Availability')}:</SelectedParametersName>
                         <SelectedParametersListItem>
@@ -144,21 +145,21 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     </SelectedParametersList>
                 )}
 
-                {(filter?.minimalPrice !== undefined || filter?.maximalPrice !== undefined) && (
+                {(currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined) && (
                     <SelectedParametersList>
                         <SelectedParametersName>{t('Price')}:</SelectedParametersName>
                         <SelectedParametersListItem>
-                            {filter.minimalPrice !== undefined && (
+                            {currentFilter.minimalPrice !== undefined && (
                                 <>
                                     <span>{t('from')}&nbsp;</span>
-                                    {formatPrice(filter.minimalPrice)}
-                                    {filter.maximalPrice !== undefined ? ' ' : ''}
+                                    {formatPrice(currentFilter.minimalPrice)}
+                                    {currentFilter.maximalPrice !== undefined ? ' ' : ''}
                                 </>
                             )}
-                            {filter.maximalPrice !== undefined && (
+                            {currentFilter.maximalPrice !== undefined && (
                                 <>
                                     <span>{t('to')}&nbsp;</span>
-                                    {formatPrice(filter.maximalPrice)}
+                                    {formatPrice(currentFilter.maximalPrice)}
                                 </>
                             )}
                             <SelectedParametersIcon
@@ -208,3 +209,6 @@ const getSelectedParameters = (
 
     return Array.from(parametersMap.values());
 };
+
+const getHasDefaultFilters = (defaultProductFiltersMap: DefaultProductFiltersMapType) =>
+    defaultProductFiltersMap.flags.size > 0 || defaultProductFiltersMap.parameters.size > 0;

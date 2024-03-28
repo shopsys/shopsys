@@ -15,7 +15,8 @@ import {
 } from 'graphql/requests/stores/queries/StoreQuery.generated';
 import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { Maybe } from 'graphql/types';
-import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
+import { getGtmPickupPlaceFromLastOrder } from 'gtm/mappers/getGtmPickupPlaceFromLastOrder';
+import { getGtmPickupPlaceFromStore } from 'gtm/mappers/getGtmPickupPlaceFromStore';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
@@ -154,7 +155,7 @@ export const useTransportChangeInSelect = (
     };
 };
 
-export const getLastOrderPickupPlace = (
+const getLastOrderPickupPlace = (
     lastOrder: LastOrderFragment,
     lastOrderPickupPlaceIdentifier: string,
     lastOrderPickupPlaceFromApi: ListedStoreFragment | undefined | null,

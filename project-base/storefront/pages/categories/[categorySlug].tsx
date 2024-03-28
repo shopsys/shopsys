@@ -3,7 +3,7 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCur
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
-import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
+import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/helpers';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     CategoryDetailQuery,
@@ -11,17 +11,15 @@ import {
     CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-} from 'helpers/parsing/urlParsing';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'helpers/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
@@ -30,15 +28,14 @@ import {
 } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useHandleDefaultFiltersUpdate } from 'hooks/seoCategories/useHandleDefaultFiltersUpdate';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';
 
 const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
-    const { filter } = useQueryParams();
-    const { categoryData, isFetchingVisible } = useCategoryDetailData(filter);
+    const currentFilter = useCurrentFilter();
+    const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
 
@@ -53,7 +50,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <>
-            {!!filter && <MetaRobots content="noindex, follow" />}
+            {!!currentFilter && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}

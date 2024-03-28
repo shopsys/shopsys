@@ -11,22 +11,22 @@ import {
     OrdersQueryVariables,
     OrdersQueryDocument,
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { useCurrentPage } from 'hooks/queryParams/useCurrentPage';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 
 const OrdersPage: FC = () => {
     const { t } = useTranslation();
-    const { currentPage } = useQueryParams();
+    const currentPage = useCurrentPage();
     const { url } = useDomainConfig();
     const [{ data: ordersData, fetching }] = useOrdersQuery({
         variables: { after: getEndCursor(currentPage), first: DEFAULT_PAGE_SIZE },

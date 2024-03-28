@@ -1,4 +1,4 @@
-import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
+import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
@@ -6,7 +6,7 @@ import {
     useAutocompleteSearchQuery,
 } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -20,8 +20,6 @@ const AutocompleteSearchPopup = dynamic(() =>
 );
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
-
-export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 
 export const AutocompleteSearch: FC = () => {
     const { t } = useTranslation();

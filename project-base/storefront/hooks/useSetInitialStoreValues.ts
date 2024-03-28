@@ -1,6 +1,7 @@
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useRef } from 'react';
-import { CookiesStoreState, useCookiesStore } from 'store/useCookiesStore';
+import { CookiesStoreState } from 'store/createCookieStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { usePersistStore } from 'store/usePersistStore';
 import { v4 as uuidV4 } from 'uuid';
 

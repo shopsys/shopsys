@@ -1,4 +1,4 @@
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { AvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';

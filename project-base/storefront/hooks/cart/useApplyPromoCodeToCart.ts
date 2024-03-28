@@ -1,8 +1,9 @@
 import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useApplyPromoCodeToCartMutation } from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';

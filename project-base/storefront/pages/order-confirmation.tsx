@@ -10,12 +10,12 @@ import {
     OrderSentPageContentQueryVariables,
     OrderSentPageContentQueryDocument,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';

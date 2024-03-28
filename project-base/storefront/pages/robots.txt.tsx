@@ -4,9 +4,9 @@ import {
     RobotsTxtQueryDocument,
 } from 'graphql/requests/robotsTxt/RobotsTxtQuery.generated';
 import { getDomainConfig } from 'helpers/domain/domainConfig';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { FILTER_QUERY_PARAMETER_NAME, LOAD_MORE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import { createClient } from 'urql/createClient';
 
 // mandatory for Next although it's not used

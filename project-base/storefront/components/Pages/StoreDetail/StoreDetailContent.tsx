@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ChatIcon } from 'components/Basic/Icon/IconsSvg';
+import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
@@ -8,7 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { StoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 import { createMapMarker } from 'helpers/createMapMarker';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';

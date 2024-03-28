@@ -7,11 +7,11 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
 import { PersonalDataAccessRequestTypeEnum } from 'graphql/types';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { showSuccessMessage } from 'helpers/toasts';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';

@@ -1,8 +1,8 @@
 import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 import { Button } from 'components/Forms/Button/Button';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
-import { GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 

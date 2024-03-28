@@ -29,5 +29,3 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy }) => {
         </div>
     );
 };
-
-export default CopyTextBlock;

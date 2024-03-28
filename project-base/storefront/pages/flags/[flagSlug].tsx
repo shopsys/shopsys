@@ -13,18 +13,16 @@ import {
     FlagProductsQueryVariables,
     FlagProductsQueryDocument,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getSlugFromUrl,
-} from 'helpers/parsing/urlParsing';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'helpers/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,

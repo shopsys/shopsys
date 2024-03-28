@@ -1,11 +1,10 @@
 import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { onGtmTransportChangeEventHandler } from 'gtm/helpers/eventHandlers';
-import { useGtmCartInfo } from 'gtm/helpers/gtm';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { useLatest } from 'hooks/ui/useLatest';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
@@ -57,12 +56,14 @@ export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] =>
                 return null;
             }
 
-            onGtmTransportChangeEventHandler(
-                gtmCart.current,
-                changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
-                newPickupPlace,
-                changeTransportResult.data?.ChangeTransportInCart.payment?.name,
-            );
+            import('gtm/handlers/onGtmTransportChangeEventHandler').then(({ onGtmTransportChangeEventHandler }) => {
+                onGtmTransportChangeEventHandler(
+                    gtmCart.current,
+                    changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
+                    newPickupPlace,
+                    changeTransportResult.data?.ChangeTransportInCart.payment?.name,
+                );
+            });
 
             return changeTransportResult.data?.ChangeTransportInCart;
         },

@@ -13,19 +13,17 @@ import {
     BrandProductsQueryVariables,
     BrandProductsQueryDocument,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getSlugFromUrl,
-} from 'helpers/parsing/urlParsing';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'helpers/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -34,20 +32,23 @@ import {
 } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
+import { useCurrentSort } from 'hooks/queryParams/useCurrentSort';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { createClient } from 'urql/createClient';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();
-    const { sort, filter } = useQueryParams();
+    const currentFilter = useCurrentFilter();
+    const currentSort = useCurrentSort();
+
     const [{ data: brandDetailData, fetching }] = useBrandDetailQuery({
         variables: {
             urlSlug: getSlugFromUrl(router.asPath),
-            orderingMode: sort,
-            filter: mapParametersFilter(filter),
+            orderingMode: currentSort,
+            filter: mapParametersFilter(currentFilter),
         },
     });
 
@@ -65,7 +66,7 @@ const BrandDetailPage: NextPage = () => {
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
             description={brandDetailData?.brand?.seoMetaDescription}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
-            isFetchingData={!filter && fetching && !brandDetailData}
+            isFetchingData={!currentFilter && fetching && !brandDetailData}
             title={seoTitle}
         >
             {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}

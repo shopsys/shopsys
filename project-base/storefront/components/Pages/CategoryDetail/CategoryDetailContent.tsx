@@ -1,15 +1,15 @@
 import { AdvancedSeoCategories } from './AdvancedSeoCategories';
 import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
+import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { useCurrentPage } from 'hooks/queryParams/useCurrentPage';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
@@ -25,7 +25,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     const { t } = useTranslation();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
-    const { currentPage } = useQueryParams();
+    const currentPage = useCurrentPage();
 
     const title = useSeoTitleWithPagination(category.products.totalCount, category.name, category.seoH1);
 

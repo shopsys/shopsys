@@ -8,37 +8,44 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { SearchProductsQueryVariables } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
 import { useSearchQuery, SearchQueryVariables } from 'graphql/requests/search/queries/SearchQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import { getNumberFromUrlQuery, getSlugFromServerSideUrl } from 'helpers/parsing/urlParsing';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromServerSideUrl';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { useCurrentFilter } from 'hooks/queryParams/useCurrentFilter';
+import { useCurrentLoadMore } from 'hooks/queryParams/useCurrentLoadMore';
+import { useCurrentSearchString } from 'hooks/queryParams/useCurrentSearchString';
+import { useCurrentSort } from 'hooks/queryParams/useCurrentSort';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const { sort, filter, searchString, currentLoadMore } = useQueryParams();
+    const currentFilter = useCurrentFilter();
+    const sort = useCurrentSort();
+    const currentSearchString = useCurrentSearchString();
+    const currentLoadMore = useCurrentLoadMore();
     const userIdentifier = usePersistStore((state) => state.userId)!;
 
     const [{ data: searchData, fetching }] = useSearchQuery({
         variables: {
-            search: searchString!,
+            search: currentSearchString!,
             orderingMode: sort,
-            filter: mapParametersFilter(filter),
+            filter: mapParametersFilter(currentFilter),
             pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
             isAutocomplete: false,
             userIdentifier,
         },
-        pause: !searchString,
+        pause: !currentSearchString,
     });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -54,7 +61,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout breadcrumbs={breadcrumbs} title={title}>
                 <Webline>
-                    {searchString ? (
+                    {currentSearchString ? (
                         <SearchContent fetching={fetching} searchResults={searchData} />
                     ) : (
                         <div className="mb-5 p-12 text-center">

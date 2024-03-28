@@ -1,9 +1,12 @@
-import { ArrowIcon, PhoneIcon, RemoveIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { useDeleteDeliveryAddressMutation } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
 import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';

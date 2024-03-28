@@ -1,4 +1,4 @@
-import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';

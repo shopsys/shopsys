@@ -7,11 +7,12 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import { useAuth } from 'hooks/auth/useAuth';
+import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
+import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
+import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
+import { useLogin } from 'hooks/auth/useLogin';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -36,7 +37,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const { login } = useAuth();
+    const login = useLogin();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
         fieldState: { invalid: isNewPasswordInvalid },

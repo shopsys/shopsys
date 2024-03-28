@@ -1,11 +1,12 @@
-import { CartIcon } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { TIDs } from 'cypress/tids';
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';

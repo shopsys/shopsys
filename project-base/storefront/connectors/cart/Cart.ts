@@ -3,8 +3,8 @@ import { CartModificationsFragment } from 'graphql/requests/cart/fragments/CartM
 import { CartPaymentModificationsFragment } from 'graphql/requests/cart/fragments/CartPaymentModificationsFragment.generated';
 import { CartPromoCodeModificationsFragment } from 'graphql/requests/cart/fragments/CartPromoCodeModificationsFragment.generated';
 import { CartTransportModificationsFragment } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { showInfoMessage } from 'helpers/toasts';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { showInfoMessage } from 'helpers/toasts/showInfoMessage';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { Translate } from 'next-translate';
 

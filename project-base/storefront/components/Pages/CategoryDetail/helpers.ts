@@ -1,19 +1,21 @@
 import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useCategoryDetailQuery } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
+import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { ListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
 import { ProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getFilterWithoutSeoSensitiveFilters } from 'helpers/filterOptions/seoCategories';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { getUrlQueriesWithoutFalsyValues } from 'helpers/parsing/getUrlQueriesWithoutFalsyValues';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import {
-    getSlugFromUrl,
-    getUrlQueriesWithoutFalsyValues,
-    getUrlQueriesWithoutDynamicPageQueries,
-} from 'helpers/parsing/urlParsing';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { getEmptyDefaultProductFiltersMap } from 'helpers/seoCategories/getEmptyDefaultProductFiltersMap';
+import { getFilterWithoutSeoSensitiveFilters } from 'helpers/seoCategories/getFilterWithoutSeoSensitiveFilters';
+import { useCurrentSort } from 'hooks/queryParams/useCurrentSort';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
+import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 
@@ -22,7 +24,7 @@ export const useCategoryDetailData = (
 ): { categoryData: CategoryDetailFragment | null | undefined; isFetchingVisible: boolean } => {
     const router = useRouter();
     const urlSlug = getSlugFromUrl(router.asPath);
-    const { sort } = useQueryParams();
+    const currentSort = useCurrentSort();
     const mappedProductFilter = mapParametersFilter(filter);
 
     const lastUsedUrlRef = useRef<string>();
@@ -38,7 +40,7 @@ export const useCategoryDetailData = (
     const [{ data: categoryDetailData, fetching }] = useCategoryDetailQuery({
         variables: {
             urlSlug,
-            orderingMode: sort,
+            orderingMode: currentSort,
             filter: mappedProductFilter,
         },
         pause: isInSeoRedirectedCategory,
@@ -63,7 +65,7 @@ export const useCategoryDetailData = (
             categoryDetailData?.category?.originalCategorySlug,
             categoryDetailData?.category?.slug,
             filter,
-            sort,
+            currentSort,
             setWasRedirectedToSeoCategory,
             setOriginalCategorySlug,
         );
@@ -99,4 +101,50 @@ const handleSeoCategorySlugUpdate = (
     }
 
     setOriginalCategorySlug(originalCategorySlug ?? undefined);
+};
+
+export const useHandleDefaultFiltersUpdate = (productsPreview: ListedProductConnectionPreviewFragment | undefined) => {
+    const setDefaultProductFiltersMap = useSessionStore((s) => s.setDefaultProductFiltersMap);
+
+    useEffect(() => {
+        setDefaultProductFiltersMap(
+            getDefaultFilterFromFilterOptions(
+                productsPreview?.productFilterOptions,
+                productsPreview?.defaultOrderingMode,
+            ),
+        );
+    }, [productsPreview?.productFilterOptions, productsPreview?.defaultOrderingMode]);
+};
+
+const getDefaultFilterFromFilterOptions = (
+    productFilterOptions: ProductFilterOptionsFragment | undefined,
+    defaultOrderingMode: ProductOrderingModeEnum | null | undefined,
+): DefaultProductFiltersMapType => {
+    const defaultProductFiltersMap = getEmptyDefaultProductFiltersMap();
+
+    for (const flagOption of productFilterOptions?.flags || []) {
+        if (flagOption.isSelected) {
+            defaultProductFiltersMap.flags.add(flagOption.flag.uuid);
+        }
+    }
+
+    if (defaultOrderingMode) {
+        defaultProductFiltersMap.sort = defaultOrderingMode;
+    }
+
+    for (const filterOptionParameter of productFilterOptions?.parameters || []) {
+        if (!('values' in filterOptionParameter)) {
+            continue;
+        }
+
+        for (const filterOptionParameterValue of filterOptionParameter.values) {
+            if (filterOptionParameterValue.isSelected) {
+                const mapValue = defaultProductFiltersMap.parameters.get(filterOptionParameter.uuid) || new Set();
+                mapValue.add(filterOptionParameterValue.uuid);
+                defaultProductFiltersMap.parameters.set(filterOptionParameter.uuid, mapValue);
+            }
+        }
+    }
+
+    return defaultProductFiltersMap;
 };

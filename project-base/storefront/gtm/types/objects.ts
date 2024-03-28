@@ -1,5 +1,8 @@
-import { GtmConsent, GtmPageType, GtmUserStatus, GtmUserType } from './enums';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { GtmConsent } from 'gtm/enums/GtmConsent';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { GtmUserStatus } from 'gtm/enums/GtmUserStatus';
+import { GtmUserType } from 'gtm/enums/GtmUserType';
 
 export type GtmReviewConsentsType = {
     seznam: boolean;
