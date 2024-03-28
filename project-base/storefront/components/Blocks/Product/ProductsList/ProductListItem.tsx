@@ -21,15 +21,7 @@ type ProductItemProps = {
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
-    (
-        {
-            product,
-            listIndex,
-            gtmProductListName,
-            className,
-        },
-        ref,
-    ) => {
+    ({ product, listIndex, gtmProductListName, className }, ref) => {
         const { url } = useDomainConfig();
 
         return (

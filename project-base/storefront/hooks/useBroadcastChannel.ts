@@ -1,5 +1,5 @@
 import { isClient } from 'helpers/isClient';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 type BroadcastChannelsType = 'reloadPage' | 'refetchCart';
@@ -18,21 +18,30 @@ export const dispatchBroadcastChannel = (name: BroadcastChannelsType, data?: any
 };
 
 export const useBroadcastChannel = (name: BroadcastChannelsType, callBack: (data: any) => void) => {
+    const [isFirstRender, setIsFirstRender] = useState(true);
+
+    // eslint-disable-next-line consistent-return
     useEffect(() => {
-        const channel = isClient ? new BroadcastChannel(name) : null;
+        if (!isFirstRender) {
+            const channel = isClient ? new BroadcastChannel(name) : null;
 
-        if (!channel) {
-            return void null;
-        }
-
-        channel.onmessage = (event) => {
-            if (event.data.tabId !== tabId || broadcastChannelSameTabConfig[name]) {
-                callBack(event.data);
+            if (!channel) {
+                return void null;
             }
-        };
 
-        return () => {
-            channel.close();
-        };
+            channel.onmessage = (event) => {
+                if (event.data.tabId !== tabId || broadcastChannelSameTabConfig[name]) {
+                    callBack(event.data);
+                }
+            };
+
+            return () => {
+                channel.close();
+            };
+        }
+    }, []);
+
+    useEffect(() => {
+        setIsFirstRender(false);
     }, []);
 };

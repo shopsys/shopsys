@@ -1,4 +1,6 @@
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
+import { MenuIconicItemUserAuthenticated } from './MenuIconicItemUserAuthenticated';
+import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthenticated';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
@@ -8,19 +10,6 @@ import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
-
-const MenuIconicItemUserAuthenticated = dynamic(() =>
-    import('components/Layout/Header/MenuIconic/MenuIconicItemUserAuthenticated').then(
-        (component) => component.MenuIconicItemUserAuthenticated,
-    ),
-);
-
-const MenuIconicItemUserUnauthenticated = dynamic(() =>
-    import('components/Layout/Header/MenuIconic/MenuIconicItemUserUnauthenticated').then(
-        (component) => component.MenuIconicItemUserUnauthenticated,
-    ),
-);
 
 export const MenuIconic: FC = () => {
     const { t } = useTranslation();

@@ -1,12 +1,12 @@
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 import { Footer } from './Footer/Footer';
-import { NewsletterForm } from './Footer/NewsletterForm';
+// import { NewsletterForm } from './Footer/NewsletterForm';
 import { Header } from './Header/Header';
 import { Navigation } from './Header/Navigation/Navigation';
-import { NotificationBars } from './NotificationBars/NotificationBars';
+// import { NotificationBars } from './NotificationBars/NotificationBars';
 import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
-import { Adverts } from 'components/Blocks/Adverts/Adverts';
+// import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
@@ -45,14 +45,14 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 defaultTitle={title}
             />
 
-            <NotificationBars />
+            {/* <NotificationBars /> */}
 
             <Webline className="relative mb-8" type="colored">
                 <Header />
                 <Navigation />
             </Webline>
 
-            <Adverts withGapBottom withWebline positionName="header" />
+            {/* <Adverts withGapBottom withWebline positionName="header" /> */}
 
             {!!breadcrumbs && !isPageLoading && !isFetchingData && (
                 <Webline className="mb-8">
@@ -64,11 +64,11 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 {children}
             </SkeletonManager>
 
-            <Adverts withGapBottom withGapTop withWebline positionName="footer" />
+            {/* <Adverts withGapBottom withGapTop withWebline positionName="footer" /> */}
 
-            <Webline type="light">
+            {/* <Webline type="light">
                 <NewsletterForm />
-            </Webline>
+            </Webline> */}
 
             <Webline type="dark">
                 <Footer />
