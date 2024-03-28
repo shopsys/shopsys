@@ -6,7 +6,6 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -21,8 +20,6 @@ export const ContactInformationFormContent: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
-
-    useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     return (
         <div className="overflow-hidden transition-all" ref={cssTransitionRef}>
@@ -60,7 +57,7 @@ export const ContactInformationFormContent: FC = () => {
                     textareaProps={{
                         label: formMeta.fields.note.label,
                         rows: 3,
-                        onBlur: (event) => updateContactInformation({ note: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ note: event.currentTarget.value }),
                     }}
                 />
             </div>

@@ -7,10 +7,12 @@ import { useTermsAndConditionsArticleUrlQuery } from 'graphql/requests/articles/
 import Trans from 'next-translate/Trans';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
 export const ContactInformationSendOrderButton: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
 
     const { formState } = formProviderMethods;
 
@@ -56,6 +58,9 @@ export const ContactInformationSendOrderButton: FC = () => {
                 checkboxProps={{
                     label: formMeta.fields.newsletterSubscription.label,
                 }}
+                onChange={(event) =>
+                    updateContactInformation({ newsletterSubscription: Boolean(event.currentTarget.value) })
+                }
             />
         </div>
     );

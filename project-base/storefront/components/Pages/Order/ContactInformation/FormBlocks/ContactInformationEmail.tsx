@@ -54,7 +54,7 @@ export const ContactInformationEmail: FC<ContactInformationEmailProps> = ({ setI
                     required: true,
                     type: 'email',
                     autoComplete: 'email',
-                    onChange: (event) => updateContactInformation({ email: event.target.value }),
+                    onChange: (event) => updateContactInformation({ email: event.currentTarget.value }),
                 }}
             />
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
