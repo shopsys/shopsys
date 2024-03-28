@@ -51,7 +51,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
                         price={payment.price}
                     />
                 }
-                onChangeCallback={() => {
+                onChange={() => {
                     setSelectedPaymentForChange(payment);
                     setSelectedPaymentSwiftForChange?.(undefined);
                 }}
@@ -67,7 +67,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
                             label={goPaySwift.name}
                             name="goPaySwift"
                             value={goPaySwift.swift}
-                            onChangeCallback={(value) => setSelectedPaymentSwiftForChange(value)}
+                            onChange={(event) => setSelectedPaymentSwiftForChange(event.target.value)}
                         />
                     ))}
                 </div>

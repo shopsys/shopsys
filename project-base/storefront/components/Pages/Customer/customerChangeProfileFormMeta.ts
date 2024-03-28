@@ -156,7 +156,7 @@ export const useCustomerChangeProfileFormMeta = (
                 },
                 street: {
                     name: 'street' as const,
-                    label: t('Street and house number'),
+                    label: t('Street and house no.'),
                     errorMessage: errors.street?.message,
                 },
                 city: {

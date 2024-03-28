@@ -8,11 +8,9 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCountriesQuery } from 'graphql/requests/countries/queries/CountriesQuery.generated';
-import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
+import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
@@ -24,82 +22,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const { pickupPlace } = useCurrentCart();
     const user = useCurrentCustomerData();
     const formProviderMethods = useFormContext<ContactInformation>();
-    const { setValue, getValues } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isDifferentDeliveryAddress, deliveryAddressUuid] = useWatch({
         name: [formMeta.fields.differentDeliveryAddress.name, formMeta.fields.deliveryAddressUuid.name],
         control: formProviderMethods.control,
     });
-
     const showAddressSelection = !!user?.deliveryAddresses.length && !pickupPlace;
-
-    const [{ data: countriesData }] = useCountriesQuery();
-    const countriesAsSelectOptions = useMemo(
-        () => mapCountriesToSelectOptions(countriesData?.countries),
-        [countriesData?.countries],
-    );
-
-    useEffect(() => {
-        if (isDifferentDeliveryAddress && pickupPlace) {
-            const selectedCountryOption = countriesAsSelectOptions.find(
-                (option) => option.value === pickupPlace.country.code,
-            );
-
-            if (selectedCountryOption) {
-                const formValues = getValues();
-
-                setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryLastName.name, formValues.lastName, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryCity.name, pickupPlace.city, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption, { shouldValidate: true });
-
-                updateContactInformation({ ...pickupPlace, country: selectedCountryOption });
-            }
-        }
-    }, [countriesAsSelectOptions, isDifferentDeliveryAddress]);
-
-    useEffect(() => {
-        if (user && deliveryAddressUuid) {
-            const deliveryAddress = user.deliveryAddresses.find((address) => address.uuid === deliveryAddressUuid)!;
-            const selectedCountryOption = countriesAsSelectOptions.find(
-                (option) => option.label === deliveryAddress.country,
-            )!;
-
-            if (countriesAsSelectOptions.length) {
-                setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress.firstName, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryLastName.name, deliveryAddress.lastName, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryCompanyName.name, deliveryAddress.companyName, {
-                    shouldValidate: true,
-                });
-                setValue(formMeta.fields.deliveryTelephone.name, deliveryAddress.telephone, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption, { shouldValidate: true });
-
-                if (!pickupPlace) {
-                    setValue(formMeta.fields.deliveryStreet.name, deliveryAddress.street, { shouldValidate: true });
-                    setValue(formMeta.fields.deliveryCity.name, deliveryAddress.city, { shouldValidate: true });
-                    setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress.postcode, { shouldValidate: true });
-                }
-            }
-        } else {
-            const selectedCountryOption = countriesAsSelectOptions.find(
-                (option) => option.value === user?.country.code,
-            );
-
-            setValue(formMeta.fields.deliveryFirstName.name, '');
-            setValue(formMeta.fields.deliveryLastName.name, '');
-            setValue(formMeta.fields.deliveryCompanyName.name, '');
-            setValue(formMeta.fields.deliveryTelephone.name, '');
-            setValue(formMeta.fields.deliveryStreet.name, '');
-            setValue(formMeta.fields.deliveryCity.name, '');
-            setValue(formMeta.fields.deliveryPostcode.name, '');
-            setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption || countriesAsSelectOptions[0], {
-                shouldValidate: true,
-            });
-        }
-    }, [deliveryAddressUuid, countriesAsSelectOptions]);
+    const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     if (!countriesAsSelectOptions.length) {
         return null;
@@ -121,6 +50,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
                         <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                     </FormLine>
                 )}
+                onChange={(event) =>
+                    updateContactInformation({ differentDeliveryAddress: Boolean(event.currentTarget.value) })
+                }
             />
 
             <div className="pb-10">
@@ -155,6 +87,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     </p>
                                                 ),
                                                 value: '',
+                                                id: '-new-delivery-address',
                                             },
                                         ]}
                                         render={(radiobutton, key) => (
@@ -165,14 +98,15 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 {radiobutton}
                                             </div>
                                         )}
+                                        onChange={(event) =>
+                                            updateContactInformation({ deliveryAddressUuid: event.currentTarget.value })
+                                        }
                                     />
                                 </div>
                             </FormLine>
                         )}
 
-                        {(user?.deliveryAddresses.length
-                            ? deliveryAddressUuid || deliveryAddressUuid === ''
-                            : true) && (
+                        {(!user?.deliveryAddresses.length || deliveryAddressUuid === '') && (
                             <>
                                 <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                     <TextInputControlled
@@ -189,7 +123,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             required: true,
                                             type: 'text',
                                             autoComplete: 'given-name',
-                                            onBlur: (event) => {
+                                            onChange: (event) => {
                                                 updateContactInformation({
                                                     deliveryFirstName: event.currentTarget.value,
                                                 });
@@ -211,7 +145,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             required: true,
                                             type: 'text',
                                             autoComplete: 'family-name',
-                                            onBlur: (event) =>
+                                            onChange: (event) =>
                                                 updateContactInformation({
                                                     deliveryLastName: event.currentTarget.value,
                                                 }),
@@ -233,7 +167,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             label: formMeta.fields.deliveryCompanyName.label,
                                             type: 'text',
                                             autoComplete: 'organization',
-                                            onBlur: (event) =>
+                                            onChange: (event) =>
                                                 updateContactInformation({
                                                     deliveryCompanyName: event.currentTarget.value,
                                                 }),
@@ -255,7 +189,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         required: true,
                                         type: 'tel',
                                         autoComplete: 'tel',
-                                        onBlur: (event) =>
+                                        onChange: (event) =>
                                             updateContactInformation({
                                                 deliveryTelephone: event.currentTarget.value,
                                             }),
@@ -278,7 +212,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 required: true,
                                                 type: 'text',
                                                 autoComplete: 'street-address',
-                                                onBlur: (event) =>
+                                                onChange: (event) =>
                                                     updateContactInformation({
                                                         deliveryStreet: event.currentTarget.value,
                                                     }),
@@ -296,7 +230,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     required: true,
                                                     type: 'text',
                                                     autoComplete: 'address-level2',
-                                                    onBlur: (event) =>
+                                                    onChange: (event) =>
                                                         updateContactInformation({
                                                             deliveryCity: event.currentTarget.value,
                                                         }),
@@ -317,7 +251,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     required: true,
                                                     type: 'text',
                                                     autoComplete: 'postal-code',
-                                                    onBlur: (event) =>
+                                                    onChange: (event) =>
                                                         updateContactInformation({
                                                             deliveryPostcode: event.currentTarget.value,
                                                         }),
@@ -332,8 +266,12 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     <>
                                                         <Select
                                                             hasError={invalid}
+                                                            id={formMeta.fields.deliveryCountry.name + '-select'}
                                                             label={formMeta.fields.deliveryCountry.label}
-                                                            options={countriesAsSelectOptions}
+                                                            options={countriesAsSelectOptions.map((option) => ({
+                                                                ...option,
+                                                                id: option.value + '-my-id',
+                                                            }))}
                                                             value={countriesAsSelectOptions.find(
                                                                 (option) => option.value === field.value.value,
                                                             )}

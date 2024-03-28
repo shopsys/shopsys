@@ -37,7 +37,7 @@ export const ContactInformationCompany: FC = () => {
                     required: true,
                     type: 'text',
                     autoComplete: 'organization',
-                    onChange: () => updateContactInformation({ companyName: companyNameValue }),
+                    onChange: (event) => updateContactInformation({ companyName: event.currentTarget.value }),
                 }}
             />
             <TextInputControlled
@@ -53,7 +53,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyNumber.label,
                     required: true,
                     type: 'text',
-                    onChange: () => updateContactInformation({ companyNumber: companyNumberValue }),
+                    onChange: (event) => updateContactInformation({ companyNumber: event.currentTarget.value }),
                 }}
             />
             <TextInputControlled
@@ -69,7 +69,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyTaxNumber.label,
                     required: false,
                     type: 'text',
-                    onChange: () => updateContactInformation({ companyTaxNumber: companyTaxNumberValue }),
+                    onChange: (event) => updateContactInformation({ companyTaxNumber: event.currentTarget.value }),
                 }}
             />
         </>

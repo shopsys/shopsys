@@ -27,6 +27,7 @@ export const useAuth = () => {
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
+    const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
 
     const router = useRouter();
 
@@ -66,6 +67,7 @@ export const useAuth = () => {
             removeTokensFromCookies();
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');
+            resetContactInformation();
 
             router.reload();
         }

@@ -4,10 +4,9 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import { useCountriesQuery } from 'graphql/requests/countries/queries/CountriesQuery.generated';
-import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
+import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 
@@ -16,11 +15,7 @@ export const RegistrationAddress: FC = () => {
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const { setValue } = formProviderMethods;
     const formMeta = useRegistrationFormMeta(formProviderMethods);
-    const [{ data: countriesData }] = useCountriesQuery();
-    const countriesAsSelectOptions = useMemo(
-        () => mapCountriesToSelectOptions(countriesData?.countries),
-        [countriesData?.countries],
-    );
+    const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0) {

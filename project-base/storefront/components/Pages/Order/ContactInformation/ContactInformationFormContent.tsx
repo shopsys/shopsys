@@ -1,26 +1,25 @@
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
-import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
-import { ContactInformationCompany } from 'components/Pages/Order/ContactInformation/ContactInformationCompany';
-import { ContactInformationCustomer } from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
-import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
-import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser';
+import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationAddress';
+import { ContactInformationCompany } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationCompany';
+import { ContactInformationCustomer } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationCustomer';
+import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
+import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 
-export const ContactInformationFormWrapper: FC = () => {
+export const ContactInformationFormContent: FC = () => {
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const { t } = useTranslation();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
-
-    useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     return (
         <div className="overflow-hidden transition-all" ref={cssTransitionRef}>
@@ -58,6 +57,7 @@ export const ContactInformationFormWrapper: FC = () => {
                     textareaProps={{
                         label: formMeta.fields.note.label,
                         rows: 3,
+                        onChange: (event) => updateContactInformation({ note: event.currentTarget.value }),
                     }}
                 />
             </div>

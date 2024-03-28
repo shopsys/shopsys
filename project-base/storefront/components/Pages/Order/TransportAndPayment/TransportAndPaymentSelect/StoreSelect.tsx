@@ -36,7 +36,7 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport
                                 pickupPlaceDetail={pickupPlace}
                             />
                         }
-                        onChangeCallback={onSelectStoreCallback}
+                        onChange={(event) => onSelectStoreCallback(event.target.value)}
                     />
                 </TransportAndPaymentListItem>
             ))}

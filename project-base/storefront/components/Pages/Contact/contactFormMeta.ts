@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useOnFinishHydrationDefaultValuesPrefill } from 'hooks/forms/useOnFinishHydrationDefaultValuesPrefill';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -23,8 +24,11 @@ export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormTy
         name: user?.firstName ?? '',
         message: '',
     };
+    const formProviderMethods = useShopsysForm(resolver, defaultValues);
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    useOnFinishHydrationDefaultValuesPrefill(defaultValues, formProviderMethods);
+
+    return [formProviderMethods, defaultValues];
 };
 
 type ContactFormMetaType = {

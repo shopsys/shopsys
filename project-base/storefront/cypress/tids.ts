@@ -38,4 +38,6 @@ export enum TIDs {
     pages_order_payment = 'pages_order_payment',
     order_detail_number = 'order_detail_number',
     order_detail_creation_date = 'order_detail_creation_date',
+    layout_header_menuiconic_login = 'layout_header_menuiconic_login',
+    order_content_wrapper_skeleton = 'order_content_wrapper_skeleton',
 }

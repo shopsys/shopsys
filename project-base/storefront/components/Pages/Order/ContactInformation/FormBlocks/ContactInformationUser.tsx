@@ -30,7 +30,7 @@ export const ContactInformationUser: FC = () => {
                     required: true,
                     type: 'tel',
                     autoComplete: 'tel',
-                    onBlur: (event) => updateContactInformation({ telephone: event.currentTarget.value }),
+                    onChange: (event) => updateContactInformation({ telephone: event.currentTarget.value }),
                 }}
             />
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
@@ -48,7 +48,7 @@ export const ContactInformationUser: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'given-name',
-                        onBlur: (event) => updateContactInformation({ firstName: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ firstName: event.currentTarget.value }),
                     }}
                 />
                 <TextInputControlled
@@ -65,7 +65,7 @@ export const ContactInformationUser: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'family-name',
-                        onBlur: (event) => updateContactInformation({ lastName: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ lastName: event.currentTarget.value }),
                     }}
                 />
             </FormColumn>

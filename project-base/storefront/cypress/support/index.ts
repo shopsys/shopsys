@@ -1,9 +1,10 @@
 /// <reference types="cypress-wait-for-stable-dom" />
+import './api';
 import 'cypress-real-events';
 import 'cypress-set-device-pixel-ratio';
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
-import { DEFAULT_APP_STORE, products } from 'fixtures/demodata';
+import { DEFAULT_APP_STORE } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
 registerCommand();
@@ -35,133 +36,6 @@ Cypress.Commands.add('storeCartUuidInLocalStorage', (cartUuid: string) => {
     });
 });
 
-Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?: number) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
-    let cartUuid = null;
-    if (currentAppStoreAsString) {
-        cartUuid = JSON.parse(currentAppStoreAsString).state.cartUuid;
-    }
-
-    return cy
-        .request({
-            method: 'POST',
-            url: 'graphql/',
-            body: JSON.stringify({
-                operationName: 'AddToCartMutation',
-                query: `mutation AddToCartMutation($input: AddToCartInput!) { 
-                    AddToCart(input: $input) { 
-                        cart { 
-                            uuid 
-                        } 
-                    } 
-                }`,
-                variables: {
-                    input: {
-                        cartUuid,
-                        productUuid: productUuid ?? products.helloKitty.uuid,
-                        quantity: quantity ?? 1,
-                    },
-                },
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .its('body.data.AddToCart.cart.uuid');
-});
-
-Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickupPlaceIdentifier?: string) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
-    if (!currentAppStoreAsString) {
-        throw new Error(
-            'Could not load app store from local storage. This is an issue with tests, not with the application.',
-        );
-    }
-    const currentAppStore = JSON.parse(currentAppStoreAsString);
-
-    return cy
-        .request({
-            method: 'POST',
-            url: 'graphql/',
-            body: JSON.stringify({
-                operationName: 'ChangeTransportInCartMutation',
-                query: `mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) { 
-                    ChangeTransportInCart(input: $input) { 
-                        uuid, 
-                        transport { 
-                            uuid 
-                        }, 
-                        selectedPickupPlaceIdentifier 
-                    } 
-                }`,
-                variables: {
-                    input: {
-                        cartUuid: currentAppStore.state.cartUuid,
-                        transportUuid,
-                        pickupPlaceIdentifier,
-                    },
-                },
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .its('body.data.ChangeTransportInCart')
-        .then((cart) => {
-            expect(cart.uuid).equal(currentAppStore.state.cartUuid);
-            expect(cart.transport.uuid).equal(transportUuid);
-            if (pickupPlaceIdentifier) {
-                expect(cart.selectedPickupPlaceIdentifier).equal(pickupPlaceIdentifier);
-            }
-        });
-});
-
-Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
-    if (!currentAppStoreAsString) {
-        throw new Error(
-            'Could not load app store from local storage. This is an issue with tests, not with the application.',
-        );
-    }
-    const currentAppStore = JSON.parse(currentAppStoreAsString);
-
-    return cy
-        .request({
-            method: 'POST',
-            url: 'graphql/',
-            body: JSON.stringify({
-                operationName: 'ChangePaymentInCartMutation',
-                query: `mutation ChangePaymentInCartMutation($input: ChangePaymentInCartInput!) { 
-                    ChangePaymentInCart(input: $input) { 
-                        uuid, 
-                        payment { 
-                            uuid 
-                        } 
-                    } 
-                }`,
-                variables: {
-                    input: {
-                        cartUuid: currentAppStore.state.cartUuid,
-                        paymentUuid,
-                    },
-                },
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .its('body.data.ChangePaymentInCart')
-        .then((cart) => {
-            expect(cart.uuid).equal(currentAppStore.state.cartUuid);
-            expect(cart.payment.uuid).equal(paymentUuid);
-        });
-});
-
-Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
-    cy.visit(url);
-    return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
-});
-
 compareSnapshotCommand({
     capture: 'fullPage',
 });
@@ -176,6 +50,10 @@ export const checkUrl = (url: string) => {
 
 export const checkLoaderOverlayIsNotVisible = (timeout?: number) => {
     cy.getByTID([TIDs.loader_overlay]).should('be.visible', { timeout });
+};
+
+export const clickOnLabel = (parentElementId: string) => {
+    cy.get(`[for="${parentElementId}"]`).click();
 };
 
 export const takeSnapshotAndCompare = (snapshotName: string) => {

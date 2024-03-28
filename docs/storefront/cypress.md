@@ -22,7 +22,9 @@ Here you can put any static values and demodata you would need. This could be st
 
 ### support folder
 
-Here you can put various global helpers, such as custom cypress commands, or similar.
+Here you can put various global helpers, such as custom cypress commands, or similar. Because cypress only allows one support file, if you use multiple, you will have to import them as a whole into `/cypress/index.ts`.
+
+You can put all commands or support functions related to API (such as manual mutations or queries) in `/support/api.ts`.
 
 ### TIDs.ts
 

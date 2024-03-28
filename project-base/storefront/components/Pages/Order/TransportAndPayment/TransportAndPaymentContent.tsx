@@ -1,8 +1,9 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import { getTransportAndPaymentValidationMessages, useLoadTransportAndPaymentFromLastOrder } from './helpers';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
+import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
-import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
@@ -11,10 +12,11 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
+import { useOrderPagesAccess } from 'hooks/cart/useOrderPagesAccess';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
@@ -24,7 +26,7 @@ export const TransportAndPaymentContent: FC = () => {
     const { url } = useDomainConfig();
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift, cart } = useCurrentCart();
+    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
@@ -63,19 +65,15 @@ export const TransportAndPaymentContent: FC = () => {
         router.push(contactInformationUrl);
     };
 
-    useEffect(() => {
-        if (cart !== undefined && !cart?.items.length) {
-            router.replace(cartUrl);
-        }
-    }, [cart?.items]);
+    const canContentBeDisplayed = useOrderPagesAccess('transport-and-payment');
 
     return (
-        <OrderLayout
-            activeStep={2}
-            isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
-        >
-            {!isLoading ? (
-                <>
+        <OrderLayout>
+            {!isLoading && canContentBeDisplayed ? (
+                <OrderContentWrapper
+                    activeStep={2}
+                    isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
+                >
                     {!!transportsData?.transports.length && (
                         <TransportAndPaymentSelect
                             changePaymentInCart={changePaymentInCart}
@@ -110,9 +108,9 @@ export const TransportAndPaymentContent: FC = () => {
                             onCloseCallback={() => setErrorPopupVisibility(false)}
                         />
                     )}
-                </>
+                </OrderContentWrapper>
             ) : (
-                <CartLoading />
+                <SkeletonOrderContent />
             )}
         </OrderLayout>
     );

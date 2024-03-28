@@ -11,7 +11,7 @@ import { TIDs } from 'tids';
 
 describe('Cart page tests', () => {
     beforeEach(() => {
-        cy.addProductToCartForTest(undefined, 2).then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
+        cy.addProductToCartForTest(undefined, 2).then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.addProductToCartForTest(products.philips32PFL4308.uuid);
         cy.visitAndWaitForStableDOM(url.cart);
     });

@@ -1,5 +1,4 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { LastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
 import {
     LastOrderQuery,
@@ -18,6 +17,7 @@ import { Maybe } from 'graphql/types';
 import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
@@ -248,8 +248,8 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     changePaymentInCart: ChangePaymentHandler,
 ): [boolean, ListedStoreFragment | null] => {
     const client = useClient();
-    const isUserLoggedIn = !!useCurrentCustomerData();
-    const { transport: currentTransport, payment: currentPayment } = useCurrentCart();
+    const isUserLoggedIn = useIsUserLoggedIn();
+    const { transport: currentTransport, payment: currentPayment, cart } = useCurrentCart();
 
     const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<ListedStoreFragment | null>(null);
     const [isLoadingTransportAndPaymentFromLastOrder, setIsLoadingTransportAndPaymentFromLastOrder] = useState(false);
@@ -319,12 +319,12 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     };
 
     useEffect(() => {
-        if (!isUserLoggedIn) {
+        if (!isUserLoggedIn || !cart) {
             return;
         }
 
         loadTransportAndPaymentFromLastOrder();
-    }, []);
+    }, [!cart]);
 
     return [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace];
 };
