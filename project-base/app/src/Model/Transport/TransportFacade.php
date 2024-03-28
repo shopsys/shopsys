@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
@@ -90,20 +89,5 @@ class TransportFacade extends BaseTransportFacade
         $filteredTransports = $this->transportVisibilityCalculation->filterVisible($transports, $visiblePayments, $domainId);
 
         return $filteredTransports;
-    }
-
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     * @return bool
-     */
-    public function isTransportVisibleAndEnabledOnCurrentDomain(Transport $transport): bool
-    {
-        try {
-            $this->getEnabledOnDomainByUuid($transport->getUuid(), $this->domain->getId());
-        } catch (TransportNotFoundException $exception) {
-            return false;
-        }
-
-        return true;
     }
 }

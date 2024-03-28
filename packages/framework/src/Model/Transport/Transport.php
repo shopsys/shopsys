@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 
 /**
  * @ORM\Table(name="transports")
@@ -93,6 +94,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $daysUntilDelivery;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Type\TransportType")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $transportType;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
     public function __construct(TransportData $transportData)
@@ -124,6 +132,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+        $this->transportType = $transportData->transportType;
         $this->setTranslations($transportData);
     }
 
@@ -402,5 +411,29 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getDaysUntilDelivery()
     {
         return $this->daysUntilDelivery;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
+     */
+    public function getTransportType()
+    {
+        return $this->transportType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPersonalPickup(): bool
+    {
+        return $this->transportType->getCode() === TransportType::TYPE_PERSONAL_PICKUP;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPacketery(): bool
+    {
+        return $this->transportType->getCode() === TransportType::TYPE_PACKETERY;
     }
 }

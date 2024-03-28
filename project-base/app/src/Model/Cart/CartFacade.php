@@ -34,6 +34,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method \App\Model\Cart\Cart|null findCartByCartIdentifier(string $cartIdentifier)
+ * @method deleteCart(\App\Model\Cart\Cart $cart)
  */
 class CartFacade extends BaseCartFacade
 {
@@ -48,7 +49,6 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
-     * @param \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
@@ -62,7 +62,6 @@ class CartFacade extends BaseCartFacade
         ProductPriceCalculationForCustomerUser $productPriceCalculation,
         CartItemFactory $cartItemFactory,
         CartRepository $cartRepository,
-        CartWatcherFacade $cartWatcherFacade,
         private readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
@@ -76,7 +75,6 @@ class CartFacade extends BaseCartFacade
             $productPriceCalculation,
             $cartItemFactory,
             $cartRepository,
-            $cartWatcherFacade,
         );
     }
 
@@ -179,18 +177,6 @@ class CartFacade extends BaseCartFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \App\Model\Cart\Cart|null
-     */
-    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?BaseCart
-    {
-        /** @var \App\Model\Cart\Cart $cart */
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-
-        return $cart;
-    }
-
-    /**
      * @param int $cartItemId
      * @param \App\Model\Cart\Cart|null $cart
      */
@@ -212,20 +198,6 @@ class CartFacade extends BaseCartFacade
         if ($cart->isEmpty()) {
             $this->deleteCart($cart);
         }
-    }
-
-    /**
-     * @param \App\Model\Cart\Cart $cart
-     */
-    public function deleteCart(BaseCart $cart)
-    {
-        foreach ($cart->getItems() as $item) {
-            $this->em->remove($item);
-        }
-
-        $cart->clean();
-        $this->em->remove($cart);
-        $this->em->flush();
     }
 
     /**

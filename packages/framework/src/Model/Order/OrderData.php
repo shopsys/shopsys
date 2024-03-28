@@ -193,11 +193,32 @@ class OrderData
      */
     public $paymentTransactionRefunds;
 
+    /**
+     * @var bool|null
+     */
+    public $isCompanyCustomer;
+
+    /**
+     * @var bool|null
+     */
+    public $newsletterSubscription;
+
+    /**
+     * @var string|null
+     */
+    public $pickupPlaceIdentifier;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Store\Store|null
+     */
+    public $personalPickupStore;
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
         $this->paymentTransactionRefunds = [];
+        $this->isCompanyCustomer = false;
     }
 
     /**

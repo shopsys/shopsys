@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use App\Model\Transport\Transport;
-use App\Model\Transport\Type\TransportType;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 
 /**
  * @method \App\Model\Order\Order[] getOrdersByCustomerUserId(int $customerUserId)
@@ -31,7 +31,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
 class OrderRepository extends BaseOrderRepository
 {
     /**
-     * @param \App\Model\Transport\Type\TransportType $transportType
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType
      * @return \App\Model\Order\Order[]
      */
     public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array

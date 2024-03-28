@@ -167,4 +167,12 @@ class CartItem
     {
         $this->addedAt = $addedAt;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasProduct(): bool
+    {
+        return $this->product !== null;
+    }
 }

@@ -61,6 +61,11 @@ class TransportData
      */
     public $daysUntilDelivery;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType|null
+     */
+    public $transportType;
+
     public function __construct()
     {
         $this->name = [];

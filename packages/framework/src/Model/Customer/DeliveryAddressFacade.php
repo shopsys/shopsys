@@ -72,4 +72,14 @@ class DeliveryAddressFacade
     {
         return $this->deliveryAddressRepository->getById($deliveryAddressId);
     }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
+    {
+        return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
+    }
 }

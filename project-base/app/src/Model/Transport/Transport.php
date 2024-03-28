@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
-use App\Model\Transport\Type\TransportType;
-use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
@@ -25,13 +23,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  */
 class Transport extends BaseTransport
 {
-    /**
-     * @var \App\Model\Transport\Type\TransportType
-     * @ORM\ManyToOne(targetEntity="App\Model\Transport\Type\TransportType")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private TransportType $transportType;
-
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -68,7 +59,6 @@ class Transport extends BaseTransport
         parent::setData($transportData);
 
         $this->trackingUrl = $transportData->trackingUrl;
-        $this->transportType = $transportData->transportType;
         $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
     }
 
@@ -110,34 +100,10 @@ class Transport extends BaseTransport
     }
 
     /**
-     * @return \App\Model\Transport\Type\TransportType
-     */
-    public function getTransportType(): TransportType
-    {
-        return $this->transportType;
-    }
-
-    /**
      * @return int|null
      */
     public function getMaxWeight(): ?int
     {
         return $this->maxWeight;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPersonalPickup(): bool
-    {
-        return $this->transportType->getCode() === TransportTypeEnum::TYPE_PERSONAL_PICKUP;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPacketery(): bool
-    {
-        return $this->transportType->getCode() === TransportTypeEnum::TYPE_PACKETERY;
     }
 }

@@ -6,15 +6,15 @@ namespace Tests\App\Functional\Model\Order\PromoCode;
 
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\Model\Order\PromoCode\ProductPromoCodeFiller;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
-use App\Model\Order\PromoCode\PromoCodeLimitFactory;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
@@ -159,7 +159,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $promoCodeFlags
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $promoCodeFlags
      * @return \App\Model\Order\PromoCode\PromoCode
      */
     private function createPromoCodeWithFlags(array $promoCodeFlags): PromoCode

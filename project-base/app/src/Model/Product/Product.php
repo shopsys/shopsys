@@ -219,21 +219,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param int $domainId
-     * @return int[]
-     */
-    public function getFlagsIdsForDomain(int $domainId): array
-    {
-        $flagIds = [];
-
-        foreach ($this->getFlags($domainId) as $flag) {
-            $flagIds[] = $flag->getId();
-        }
-
-        return $flagIds;
-    }
-
-    /**
      * @param string|null $locale
      * @return string|null
      */

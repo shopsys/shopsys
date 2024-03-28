@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -33,7 +32,6 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -46,7 +44,6 @@ class CartFacade
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculation,
         protected readonly CartItemFactoryInterface $cartItemFactory,
         protected readonly CartRepository $cartRepository,
-        protected readonly CartWatcherFacade $cartWatcherFacade,
     ) {
     }
 
@@ -144,10 +141,13 @@ class CartFacade
      */
     public function deleteCart(Cart $cart)
     {
+        foreach ($cart->getItems() as $item) {
+            $this->em->remove($item);
+        }
+
+        $cart->clean();
         $this->em->remove($cart);
         $this->em->flush();
-
-        $this->cleanAdditionalData();
     }
 
     /**
@@ -167,33 +167,13 @@ class CartFacade
         return $cart->getItemById($cartItemId)->getProduct();
     }
 
-    public function cleanAdditionalData()
-    {
-        $this->currentPromoCodeFacade->removeEnteredPromoCode();
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
     public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-
-        if ($cart !== null) {
-            $this->cartWatcherFacade->checkCartModifications($cart);
-
-            if ($cart->isEmpty()) {
-                $this->deleteCart($cart);
-
-                return null;
-            }
-
-            $cart->setModifiedNow();
-            $this->em->flush();
-        }
-
-        return $cart;
+        return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
     }
 
     /**

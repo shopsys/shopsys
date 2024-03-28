@@ -6,7 +6,6 @@ namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Security\LoginAsUserFacade;
-use App\Model\Transport\Type\TransportType;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -44,6 +43,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFact
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 /**
@@ -379,7 +379,7 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @param \App\Model\Transport\Type\TransportType $transportType
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType
      * @return \App\Model\Order\Order[]
      */
     public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array

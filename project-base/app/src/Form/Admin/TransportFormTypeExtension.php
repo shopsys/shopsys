@@ -6,59 +6,25 @@ namespace App\Form\Admin;
 
 use App\Form\DisplayVariablesType;
 use App\Model\Order\Mail\OrderMail;
-use App\Model\Transport\Type\TransportTypeFacade;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TransportFormTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
-     */
-    public function __construct(protected TransportTypeFacade $transportTypeFacade)
-    {
-    }
-
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->get('basicInformation')
-            ->add('transportType', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->transportTypeFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'label' => t('Transport type'),
-            ])
-            ->add('daysUntilDelivery', TextType::class, [
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                    new Constraints\GreaterThanOrEqual([
-                        'value' => 0,
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => '/^\d+$/',
-                    ]),
-                ],
-                'label' => t('Days until delivery'),
-            ])
             ->add('maxWeight', IntegerType::class, [
                 'label' => t('Maximum weight (g)'),
                 'required' => false,

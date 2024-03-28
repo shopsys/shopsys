@@ -86,12 +86,6 @@ class Order extends BaseOrder
     protected ?string $trackingNumber;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private ?string $pickupPlaceIdentifier;
-
-    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -119,7 +113,6 @@ class Order extends BaseOrder
         $this->lastName = $orderData->lastName;
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->trackingNumber = $orderData->trackingNumber;
-        $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
     }
 
     /**
@@ -172,14 +165,6 @@ class Order extends BaseOrder
         return strtr($trackingUrl, [
             OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
         ]);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPickupPlaceIdentifier(): ?string
-    {
-        return $this->pickupPlaceIdentifier;
     }
 
     /**

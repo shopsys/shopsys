@@ -317,6 +317,12 @@ class Order
     protected $goPayBankSwift;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $pickupPlaceIdentifier;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -356,6 +362,7 @@ class Order
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
+        $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
     }
 
     /**
@@ -1053,5 +1060,13 @@ class Order
     public function getTotalProductsPrice(): Price
     {
         return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPickupPlaceIdentifier()
+    {
+        return $this->pickupPlaceIdentifier;
     }
 }

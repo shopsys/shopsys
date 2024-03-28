@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
-use App\Model\Transport\Type\TransportTypeEnum;
-use App\Model\Transport\Type\TransportTypeFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory as BaseTransportDataFactory;
@@ -18,25 +13,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory as BaseTranspor
  */
 class TransportDataFactory extends BaseTransportDataFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
-     */
-    public function __construct(
-        VatFacade $vatFacade,
-        Domain $domain,
-        ImageUploadDataFactory $imageUploadDataFactory,
-        private readonly TransportTypeFacade $transportTypeFacade,
-    ) {
-        parent::__construct(
-            $vatFacade,
-            $domain,
-            $imageUploadDataFactory,
-        );
-    }
-
     /**
      * @return \App\Model\Transport\TransportData
      */
@@ -66,7 +42,6 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         parent::fillNew($transportData);
 
-        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportTypeEnum::TYPE_COMMON);
         $transportData->trackingUrl = null;
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -82,7 +57,6 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         $transportData = $this->createInstance();
         $this->fillFromTransport($transportData, $transport);
-        $transportData->transportType = $transport->getTransportType();
         $transportData->trackingUrl = $transport->getTrackingUrl();
         $transportData->maxWeight = $transport->getMaxWeight();
 

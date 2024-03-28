@@ -84,22 +84,7 @@ class CartFacade
      */
     public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
     {
-        if ($customerUser === null && $cartUuid !== null) {
-            /** @var \App\Model\Cart\Cart $cart */
-            $cart = $this->cartApiFacade->getCartByUuid($cartUuid);
-
-            if ($cart->getCustomerUser() === null) {
-                return $cart;
-            }
-        }
-
-        if ($customerUser !== null) {
-            $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
-        } else {
-            $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartUuid);
-        }
-
-        return $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+        return $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
     }
 
     /**

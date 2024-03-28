@@ -183,10 +183,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
         alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
 
-    App\Model\Order\PromoCode\ProductPromoCodeFiller: ~
-
-    App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
-
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory:
         alias: App\Model\Customer\BillingAddressDataFactory
 

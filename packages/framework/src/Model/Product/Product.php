@@ -471,6 +471,21 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getFlagsIdsForDomain(int $domainId): array
+    {
+        $flagIds = [];
+
+        foreach ($this->getFlags($domainId) as $flag) {
+            $flagIds[] = $flag->getId();
+        }
+
+        return $flagIds;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public function getCategoriesIndexedByDomainId()

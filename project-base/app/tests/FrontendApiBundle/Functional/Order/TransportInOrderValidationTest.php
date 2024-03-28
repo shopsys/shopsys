@@ -9,7 +9,6 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\TransportInOrder;
-use App\Model\Cart\Transport\CartTransportFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
+use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportInOrderValidationTest extends GraphQlTestCase

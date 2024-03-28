@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Transport\TransportDataFactory;
-use App\Model\Transport\Type\TransportTypeEnum;
-use App\Model\Transport\Type\TransportTypeFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -18,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade;
 
 class TransportDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -41,7 +41,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
@@ -103,7 +103,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             );
         }
 
-        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportTypeEnum::TYPE_PERSONAL_PICKUP);
+        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportType::TYPE_PERSONAL_PICKUP);
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);

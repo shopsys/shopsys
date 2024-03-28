@@ -69,4 +69,36 @@ class CartApiFacade
 
         return $cart;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     * @param string|null $cartUuid
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
+     */
+    public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
+    {
+        if ($customerUser === null && $cartUuid !== null) {
+            $cart = $this->getCartByUuid($cartUuid);
+
+            if ($cart->getCustomerUser() === null) {
+                return $cart;
+            }
+        }
+
+        if ($customerUser !== null) {
+            $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
+        } else {
+            $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartUuid);
+        }
+
+        return $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    public function deleteCart(Cart $cart): void
+    {
+        $this->cartFacade->deleteCart($cart);
+    }
 }

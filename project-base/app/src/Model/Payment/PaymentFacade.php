@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
-use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
 
 /**
@@ -42,20 +41,5 @@ class PaymentFacade extends BasePaymentFacade
         $visiblePayments = $this->paymentVisibilityCalculation->filterVisible($allPayments, $this->domain->getId());
 
         return $visiblePayments;
-    }
-
-    /**
-     * @param \App\Model\Payment\Payment $payment
-     * @return bool
-     */
-    public function isPaymentVisibleAndEnabledOnCurrentDomain(Payment $payment): bool
-    {
-        try {
-            $this->getEnabledOnDomainByUuid($payment->getUuid(), $this->domain->getId());
-        } catch (PaymentNotFoundException $exception) {
-            return false;
-        }
-
-        return true;
     }
 }

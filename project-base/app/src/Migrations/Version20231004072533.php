@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Migrations;
 
-use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
@@ -20,7 +20,7 @@ class Version20231004072533 extends AbstractMigration implements ContainerAwareI
      */
     public function up(Schema $schema): void
     {
-        $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_PERSONAL_PICKUP . '\')');
+        $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportType::TYPE_PERSONAL_PICKUP . '\')');
         $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
 
         foreach ($this->getAllLocales() as $locale) {

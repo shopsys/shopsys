@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Product\Flag;
 
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
 

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
 {
@@ -255,5 +256,20 @@ class TransportFacade
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Transport
     {
         return $this->transportRepository->getEnabledOnDomainByUuid($uuid, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return bool
+     */
+    public function isTransportVisibleAndEnabledOnCurrentDomain(Transport $transport): bool
+    {
+        try {
+            $this->getEnabledOnDomainByUuid($transport->getUuid(), $this->domain->getId());
+        } catch (TransportNotFoundException $exception) {
+            return false;
+        }
+
+        return true;
     }
 }

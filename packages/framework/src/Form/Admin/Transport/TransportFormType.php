@@ -16,23 +16,28 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TransportFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
+        private readonly TransportTypeFacade $transportTypeFacade,
     ) {
     }
 
@@ -86,6 +91,29 @@ class TransportFormType extends AbstractType
                 'expanded' => true,
                 'empty_message' => t('You have to create some payment first.'),
                 'label' => t('Available payment methods'),
+            ])
+            ->add('transportType', ChoiceType::class, [
+                'required' => true,
+                'choices' => $this->transportTypeFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'label' => t('Transport type'),
+            ])
+            ->add('daysUntilDelivery', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new Constraints\GreaterThanOrEqual([
+                        'value' => 0,
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => '/^\d+$/',
+                    ]),
+                ],
+                'label' => t('Days until delivery'),
             ]);
 
         $builderPricesGroup = $builder->create('prices', GroupType::class, [

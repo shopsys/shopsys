@@ -35,11 +35,15 @@ class PromoCodeRepository
 
     /**
      * @param string $code
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function findByCode($code)
+    public function findByCodeAndDomainId(string $code, int $domainId): ?PromoCode
     {
-        return $this->getPromoCodeRepository()->findOneBy(['code' => $code]);
+        return $this->getPromoCodeRepository()->findOneBy([
+            'code' => $code,
+            'domainId' => $domainId,
+        ]);
     }
 
     /**

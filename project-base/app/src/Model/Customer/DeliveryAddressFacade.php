@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade as BaseDelivery
  * @method \App\Model\Customer\DeliveryAddress delete(int $deliveryAddressId)
  * @method \App\Model\Customer\DeliveryAddress getById(int $deliveryAddressId)
  * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory, \App\Model\Customer\DeliveryAddressRepository $deliveryAddressRepository, \Doctrine\ORM\EntityManagerInterface $em)
+ * @method \App\Model\Customer\DeliveryAddress|null findByUuidAndCustomer(string $uuid, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  */
 class DeliveryAddressFacade extends BaseDeliveryAddressFacade
 {
@@ -57,15 +58,5 @@ class DeliveryAddressFacade extends BaseDeliveryAddressFacade
     public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress
     {
         return $this->deliveryAddressRepository->getByUuidAndCustomer($uuid, $customer);
-    }
-
-    /**
-     * @param string $uuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     * @return \App\Model\Customer\DeliveryAddress|null
-     */
-    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
-    {
-        return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
     }
 }
