@@ -5,12 +5,14 @@ import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInf
 import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
 
 export const ContactInformationCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
 
     return (
         <>
@@ -35,6 +37,14 @@ export const ContactInformationCustomer: FC = () => {
                             {radiobutton}
                         </FormLine>
                     )}
+                    onChange={(event) =>
+                        updateContactInformation({
+                            customer:
+                                event.currentTarget.value === CustomerTypeEnum.CommonCustomer
+                                    ? CustomerTypeEnum.CommonCustomer
+                                    : CustomerTypeEnum.CompanyCustomer,
+                        })
+                    }
                 />
             </FormColumn>
         </>

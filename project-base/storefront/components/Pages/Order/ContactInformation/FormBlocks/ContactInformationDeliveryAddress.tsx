@@ -50,6 +50,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
                         <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                     </FormLine>
                 )}
+                onChange={(event) =>
+                    updateContactInformation({ differentDeliveryAddress: Boolean(event.currentTarget.value) })
+                }
             />
 
             <div className="pb-10">
@@ -96,7 +99,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             </div>
                                         )}
                                         onChange={(event) =>
-                                            updateContactInformation({ deliveryAddressUuid: event.target.value })
+                                            updateContactInformation({ deliveryAddressUuid: event.currentTarget.value })
                                         }
                                     />
                                 </div>
@@ -120,7 +123,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             required: true,
                                             type: 'text',
                                             autoComplete: 'given-name',
-                                            onBlur: (event) => {
+                                            onChange: (event) => {
                                                 updateContactInformation({
                                                     deliveryFirstName: event.currentTarget.value,
                                                 });
@@ -142,7 +145,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             required: true,
                                             type: 'text',
                                             autoComplete: 'family-name',
-                                            onBlur: (event) =>
+                                            onChange: (event) =>
                                                 updateContactInformation({
                                                     deliveryLastName: event.currentTarget.value,
                                                 }),
@@ -164,7 +167,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             label: formMeta.fields.deliveryCompanyName.label,
                                             type: 'text',
                                             autoComplete: 'organization',
-                                            onBlur: (event) =>
+                                            onChange: (event) =>
                                                 updateContactInformation({
                                                     deliveryCompanyName: event.currentTarget.value,
                                                 }),
@@ -186,7 +189,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         required: true,
                                         type: 'tel',
                                         autoComplete: 'tel',
-                                        onBlur: (event) =>
+                                        onChange: (event) =>
                                             updateContactInformation({
                                                 deliveryTelephone: event.currentTarget.value,
                                             }),
@@ -209,7 +212,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 required: true,
                                                 type: 'text',
                                                 autoComplete: 'street-address',
-                                                onBlur: (event) =>
+                                                onChange: (event) =>
                                                     updateContactInformation({
                                                         deliveryStreet: event.currentTarget.value,
                                                     }),
@@ -227,7 +230,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     required: true,
                                                     type: 'text',
                                                     autoComplete: 'address-level2',
-                                                    onBlur: (event) =>
+                                                    onChange: (event) =>
                                                         updateContactInformation({
                                                             deliveryCity: event.currentTarget.value,
                                                         }),
@@ -248,7 +251,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     required: true,
                                                     type: 'text',
                                                     autoComplete: 'postal-code',
-                                                    onBlur: (event) =>
+                                                    onChange: (event) =>
                                                         updateContactInformation({
                                                             deliveryPostcode: event.currentTarget.value,
                                                         }),

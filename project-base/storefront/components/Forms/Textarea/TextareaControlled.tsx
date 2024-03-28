@@ -1,12 +1,12 @@
 import { Textarea, TextareaProps } from './Textarea';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { FocusEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextareaControlledProps = {
     name: string;
     render: (input: JSX.Element) => ReactElement<any, any> | null;
-    textareaProps: Pick<TextareaProps, 'disabled' | 'label' | 'required' | 'rows' | 'onBlur'>;
+    textareaProps: Pick<TextareaProps, 'disabled' | 'label' | 'required' | 'rows' | 'onBlur' | 'onChange'>;
     control: Control<any>;
     formName: string;
 };
@@ -26,9 +26,24 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
         }
     };
 
+    const onChangeHandler: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+        field.onChange(event);
+
+        if (textareaProps.onChange) {
+            textareaProps.onChange(event);
+        }
+    };
+
     return render(
         <>
-            <Textarea {...textareaProps} {...field} hasError={invalid} id={textareaId} onBlur={onBlurHandler} />
+            <Textarea
+                {...textareaProps}
+                {...field}
+                hasError={invalid}
+                id={textareaId}
+                onBlur={onBlurHandler}
+                onChange={onChangeHandler}
+            />
             <FormLineError error={error} inputType="textarea" />
         </>,
     );

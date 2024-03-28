@@ -9,6 +9,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { SelectOptionType } from 'types/selectOptions';
 
 export const ContactInformationAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
@@ -31,7 +32,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'street-address',
-                        onBlur: (event) => updateContactInformation({ street: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ street: event.currentTarget.value }),
                     }}
                 />
             </FormLine>
@@ -46,7 +47,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'address-level2',
-                        onBlur: (event) => updateContactInformation({ city: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ city: event.currentTarget.value }),
                     }}
                 />
                 <TextInputControlled
@@ -63,7 +64,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
-                        onBlur: (event) => updateContactInformation({ postcode: event.currentTarget.value }),
+                        onChange: (event) => updateContactInformation({ postcode: event.currentTarget.value }),
                     }}
                 />
             </FormColumn>
@@ -77,7 +78,12 @@ export const ContactInformationAddress: FC = () => {
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
-                                onChange={field.onChange}
+                                onChange={(...data) => {
+                                    field.onChange(...data);
+                                    updateContactInformation({
+                                        country: data[0] as SelectOptionType,
+                                    });
+                                }}
                             />
                             <FormLineError error={error} inputType="select" />
                         </>
