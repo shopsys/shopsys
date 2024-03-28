@@ -1,4 +1,4 @@
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmConsent } from 'gtm/enums/GtmConsent';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { GtmUserStatus } from 'gtm/enums/GtmUserStatus';
@@ -13,7 +13,7 @@ export type GtmReviewConsentsType = {
 export type GtmPageInfoInterface<PageType = GtmPageType, ExtendedPageProperties = object> = ExtendedPageProperties & {
     type: PageType;
     pageId: string;
-    breadcrumbs: BreadcrumbFragment[];
+    breadcrumbs: TypeBreadcrumbFragment[];
 };
 
 export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<

@@ -1,4 +1,4 @@
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useApplyPromoCodeToCartMutation } from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
@@ -11,7 +11,7 @@ import { usePersistStore } from 'store/usePersistStore';
 type ApplyPromoCodeHandler = (
     newPromoCode: string,
     messages: { success: string; error: string },
-) => Promise<CartFragment | undefined | null>;
+) => Promise<TypeCartFragment | undefined | null>;
 
 export const useApplyPromoCodeToCart = (): [ApplyPromoCodeHandler, boolean] => {
     const [{ fetching }, applyPromoCodeToCart] = useApplyPromoCodeToCartMutation();

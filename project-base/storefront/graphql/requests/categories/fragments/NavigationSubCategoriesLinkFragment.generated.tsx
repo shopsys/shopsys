@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type NavigationSubCategoriesLinkFragment = { __typename: 'Category', uuid: string, children: Array<{ __typename: 'Category', name: string, slug: string }> };
+export type TypeNavigationSubCategoriesLinkFragment = { __typename: 'Category', uuid: string, children: Array<{ __typename: 'Category', name: string, slug: string }> };
 
 
       export interface PossibleTypesResultData {

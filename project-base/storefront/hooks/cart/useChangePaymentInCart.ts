@@ -1,4 +1,4 @@
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangePaymentInCartMutation } from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
@@ -12,7 +12,7 @@ import { usePersistStore } from 'store/usePersistStore';
 export type ChangePaymentHandler = (
     newPaymentUuid: string | null,
     newGoPayBankSwift: string | null,
-) => Promise<CartFragment | undefined | null>;
+) => Promise<TypeCartFragment | undefined | null>;
 
 export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
     const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutation();

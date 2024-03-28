@@ -3,10 +3,10 @@ import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     useOrderDetailQuery,
-    OrderDetailQueryVariables,
+    TypeOrderDetailQueryVariables,
     OrderDetailQueryDocument,
 } from 'graphql/requests/orders/queries/OrderDetailQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -28,7 +28,7 @@ const OrderDetailPage: FC = () => {
     const [{ data: orderData, fetching, error }] = useOrderDetailQuery({
         variables: { orderNumber },
     });
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
         { __typename: 'Link', name: orderNumber, slug: '' },
@@ -62,7 +62,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps<OrderDetailQueryVariables>({
+    return initServerSideProps<TypeOrderDetailQueryVariables>({
         context,
         authenticationRequired: true,
         prefetchedQueries: [{ query: OrderDetailQueryDocument, variables: { orderNumber: context.query.orderNumber } }],

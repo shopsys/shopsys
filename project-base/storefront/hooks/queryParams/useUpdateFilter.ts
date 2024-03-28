@@ -1,7 +1,7 @@
 import { pushQueries } from './pushQueries';
 import { useCurrentFilter } from './useCurrentFilter';
 import { SEO_SENSITIVE_FILTERS } from 'config/constants';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import { getQueryWithoutSlugTypeParameterFromParsedUrlQuery } from 'helpers/parsing/getQueryWithoutSlugTypeParameterFromParsedUrlQuery';
@@ -270,7 +270,7 @@ export const useUpdateFilter = () => {
     const pushQueryFilter = (
         newFilter?: FilterQueries,
         pathnameOverride?: string,
-        sortOverride?: ProductOrderingModeEnum,
+        sortOverride?: TypeProductOrderingModeEnum,
     ) => {
         const newQuery = buildNewQueryAfterFilterChange(query, getFilterWithoutEmpty(newFilter), sortOverride);
 

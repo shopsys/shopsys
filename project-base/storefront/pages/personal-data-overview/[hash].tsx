@@ -4,7 +4,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
 import {
     usePersonalDataDetailQuery,
-    PersonalDataDetailQueryVariables,
+    TypePersonalDataDetailQueryVariables,
 } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -34,7 +34,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps<PersonalDataDetailQueryVariables>({
+            initServerSideProps<TypePersonalDataDetailQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,

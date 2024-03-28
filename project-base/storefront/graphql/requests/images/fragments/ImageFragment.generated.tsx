@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type ImageFragment = { __typename: 'Image', name: string | null, url: string };
+export type TypeImageFragment = { __typename: 'Image', name: string | null, url: string };
 
 
       export interface PossibleTypesResultData {

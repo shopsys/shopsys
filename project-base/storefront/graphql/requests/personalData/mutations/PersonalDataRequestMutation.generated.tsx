@@ -3,13 +3,13 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type PersonalDataRequestMutationVariables = Types.Exact<{
+export type TypePersonalDataRequestMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
-  type: Types.InputMaybe<Types.PersonalDataAccessRequestTypeEnum>;
+  type: Types.InputMaybe<Types.TypePersonalDataAccessRequestTypeEnum>;
 }>;
 
 
-export type PersonalDataRequestMutation = { __typename?: 'Mutation', RequestPersonalDataAccess: { __typename?: 'PersonalDataPage', displaySiteSlug: string, exportSiteSlug: string } };
+export type TypePersonalDataRequestMutation = { __typename?: 'Mutation', RequestPersonalDataAccess: { __typename?: 'PersonalDataPage', displaySiteSlug: string, exportSiteSlug: string } };
 
 
       export interface PossibleTypesResultData {
@@ -106,5 +106,5 @@ export const PersonalDataRequestMutationDocument = gql`
     `;
 
 export function usePersonalDataRequestMutation() {
-  return Urql.useMutation<PersonalDataRequestMutation, PersonalDataRequestMutationVariables>(PersonalDataRequestMutationDocument);
+  return Urql.useMutation<TypePersonalDataRequestMutation, TypePersonalDataRequestMutationVariables>(PersonalDataRequestMutationDocument);
 };

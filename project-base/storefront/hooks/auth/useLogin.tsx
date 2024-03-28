@@ -1,6 +1,6 @@
 import {
-    LoginMutationVariables,
-    LoginMutation,
+    TypeLoginMutationVariables,
+    TypeLoginMutation,
     useLoginMutation,
 } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import { setTokensToCookies } from 'helpers/auth/setTokensToCookies';
@@ -10,12 +10,12 @@ import { usePersistStore } from 'store/usePersistStore';
 import { OperationResult } from 'urql';
 
 type LoginHandler = (
-    variables: Omit<LoginMutationVariables, 'productListsUuids'>,
+    variables: Omit<TypeLoginMutationVariables, 'productListsUuids'>,
     rewriteUrl?: string,
-) => Promise<OperationResult<LoginMutation, LoginMutationVariables>>;
+) => Promise<OperationResult<TypeLoginMutation, TypeLoginMutationVariables>>;
 
 export const useLogin = () => {
-    const [, loginMutation] = useLoginMutation();
+    const [, TypeLoginMutation] = useLoginMutation();
 
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -25,7 +25,10 @@ export const useLogin = () => {
     const router = useRouter();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
-        const loginResult = await loginMutation({ ...variables, productListsUuids: Object.values(productListUuids) });
+        const loginResult = await TypeLoginMutation({
+            ...variables,
+            productListsUuids: Object.values(productListUuids),
+        });
 
         if (loginResult.data) {
             const accessToken = loginResult.data.Login.tokens.accessToken;

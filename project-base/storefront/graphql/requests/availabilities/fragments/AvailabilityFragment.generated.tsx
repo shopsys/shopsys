@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type AvailabilityFragment = { __typename: 'Availability', name: string, status: Types.AvailabilityStatusEnum };
+export type TypeAvailabilityFragment = { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum };
 
 
       export interface PossibleTypesResultData {

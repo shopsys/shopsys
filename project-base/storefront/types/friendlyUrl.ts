@@ -1,23 +1,23 @@
-import { ArticleDetailFragment } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
-import { BlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
-import { BlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
-import { BrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { FlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
-import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { StoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
+import { TypeArticleDetailFragment } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
+import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
+import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
+import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 
 export type FriendlyUrlPageType =
-    | ProductDetailFragment
-    | MainVariantDetailFragment
-    | CategoryDetailFragment
-    | StoreDetailFragment
-    | ArticleDetailFragment
-    | BlogArticleDetailFragment
-    | BlogCategoryDetailFragment
-    | BrandDetailFragment
-    | FlagDetailFragment;
+    | TypeProductDetailFragment
+    | TypeMainVariantDetailFragment
+    | TypeCategoryDetailFragment
+    | TypeStoreDetailFragment
+    | TypeArticleDetailFragment
+    | TypeBlogArticleDetailFragment
+    | TypeBlogCategoryDetailFragment
+    | TypeBrandDetailFragment
+    | TypeFlagDetailFragment;
 
 export const FriendlyPagesTypes = {
     article: 'front_article_detail',

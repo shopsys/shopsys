@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { getOffsetPageAndLoadMore } from 'helpers/loadMore/getOffsetPageAndLoadMore';
 import { getPreviousProductsFromCache } from 'helpers/loadMore/getPreviousProductsFromCache';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore/getRedirectWithOffsetPage';
@@ -24,7 +24,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -42,7 +42,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -71,7 +71,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -90,7 +90,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,

@@ -1,10 +1,10 @@
-import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
-import { OrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
+import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
+import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { PaymentTypeEnum } from 'types/payment';
 
 type OrderStatusProps = {
-    order: ListedOrderFragment | OrderDetailFragment;
+    order: TypeListedOrderFragment | TypeOrderDetailFragment;
 };
 
 export const OrderStatus: FC<OrderStatusProps> = ({ order }) => {

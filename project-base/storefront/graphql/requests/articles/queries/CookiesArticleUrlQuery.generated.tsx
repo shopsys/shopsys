@@ -3,10 +3,10 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type CookiesArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeCookiesArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type CookiesArticleUrlQuery = { __typename?: 'Query', cookiesArticle: { __typename?: 'ArticleSite', slug: string } | null };
+export type TypeCookiesArticleUrlQuery = { __typename?: 'Query', cookiesArticle: { __typename?: 'ArticleSite', slug: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const CookiesArticleUrlQueryDocument = gql`
 }
     `;
 
-export function useCookiesArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<CookiesArticleUrlQueryVariables>, 'query'>) {
-  return Urql.useQuery<CookiesArticleUrlQuery, CookiesArticleUrlQueryVariables>({ query: CookiesArticleUrlQueryDocument, ...options });
+export function useCookiesArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<TypeCookiesArticleUrlQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeCookiesArticleUrlQuery, TypeCookiesArticleUrlQueryVariables>({ query: CookiesArticleUrlQueryDocument, ...options });
 };

@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     usePersonalDataPageTextQuery,
     PersonalDataPageTextQueryDocument,
@@ -19,7 +19,7 @@ const PersonalDataExportPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [personalDataExportUrl] = getInternationalizedStaticUrls(['/personal-data-export'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Personal Data Export'), slug: personalDataExportUrl },
     ];
     const [personalDataPageTextResult] = usePersonalDataPageTextQuery();

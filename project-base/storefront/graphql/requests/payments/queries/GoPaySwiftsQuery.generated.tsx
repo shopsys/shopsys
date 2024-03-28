@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type GoPaySwiftsQueryVariables = Types.Exact<{
+export type TypeGoPaySwiftsQueryVariables = Types.Exact<{
   currencyCode: Types.Scalars['String']['input'];
 }>;
 
 
-export type GoPaySwiftsQuery = { __typename?: 'Query', GoPaySwifts: Array<{ __typename?: 'GoPayBankSwift', name: string, imageNormalUrl: string, swift: string }> };
+export type TypeGoPaySwiftsQuery = { __typename?: 'Query', GoPaySwifts: Array<{ __typename?: 'GoPayBankSwift', name: string, imageNormalUrl: string, swift: string }> };
 
 
       export interface PossibleTypesResultData {
@@ -105,6 +105,6 @@ export const GoPaySwiftsQueryDocument = gql`
 }
     `;
 
-export function useGoPaySwiftsQuery(options: Omit<Urql.UseQueryArgs<GoPaySwiftsQueryVariables>, 'query'>) {
-  return Urql.useQuery<GoPaySwiftsQuery, GoPaySwiftsQueryVariables>({ query: GoPaySwiftsQueryDocument, ...options });
+export function useGoPaySwiftsQuery(options: Omit<Urql.UseQueryArgs<TypeGoPaySwiftsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeGoPaySwiftsQuery, TypeGoPaySwiftsQueryVariables>({ query: GoPaySwiftsQueryDocument, ...options });
 };

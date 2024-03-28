@@ -4,13 +4,13 @@ import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     useFlagDetailQuery,
-    FlagDetailQuery,
-    FlagDetailQueryVariables,
+    TypeFlagDetailQuery,
+    TypeFlagDetailQueryVariables,
     FlagDetailQueryDocument,
 } from 'graphql/requests/flags/queries/FlagDetailQuery.generated';
 import {
-    FlagProductsQuery,
-    FlagProductsQueryVariables,
+    TypeFlagProductsQuery,
+    TypeFlagProductsQueryVariables,
     FlagProductsQueryDocument,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -92,7 +92,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
                 const flagDetailResponsePromise = client!
-                    .query<FlagDetailQuery, FlagDetailQueryVariables>(FlagDetailQueryDocument, {
+                    .query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
                         urlSlug,
                         filter,
                         orderingMode,
@@ -100,7 +100,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     .toPromise();
 
                 const flagProductsResponsePromise = client!
-                    .query<FlagProductsQuery, FlagProductsQueryVariables>(FlagProductsQueryDocument, {
+                    .query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
                         endCursor: getEndCursor(page),
                         orderingMode,
                         filter,

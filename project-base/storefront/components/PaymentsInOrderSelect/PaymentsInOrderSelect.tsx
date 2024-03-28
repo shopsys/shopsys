@@ -5,7 +5,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { useChangePaymentInOrder } from 'components/PaymentsInOrderSelect/helpers';
 import { useOrderAvailablePaymentsQuery } from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
-import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useIsPaymentByCardAvailable } from 'hooks/cart/useIsPaymentByCardAvailable';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
 
     const { isChangePaymentInOrderFetching, changePaymentInOrderHandler } = useChangePaymentInOrder();
     const [selectedPaymentSwiftForChange, setSelectedPaymentSwiftForChange] = useState<string | undefined | null>();
-    const [selectedPaymentForChange, setSelectedPaymentForChange] = useState<SimplePaymentFragment>();
+    const [selectedPaymentForChange, setSelectedPaymentForChange] = useState<TypeSimplePaymentFragment>();
     const [isGoPayVisible, setIsGoPayVisible] = useState(false);
 
     const [{ data: orderAvailablePaymentsData, fetching: areOrderAvailablePaymentsFetching }] =

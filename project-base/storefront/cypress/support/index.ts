@@ -47,8 +47,8 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
             method: 'POST',
             url: 'graphql/',
             body: JSON.stringify({
-                operationName: 'AddToCartMutation',
-                query: `mutation AddToCartMutation($input: AddToCartInput!) { 
+                operationName: 'TypeAddToCartMutation',
+                query: `mutation TypeAddToCartMutation($input: AddToCartInput!) { 
                     AddToCart(input: $input) { 
                         cart { 
                             uuid 
@@ -84,8 +84,8 @@ Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickup
             method: 'POST',
             url: 'graphql/',
             body: JSON.stringify({
-                operationName: 'ChangeTransportInCartMutation',
-                query: `mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) { 
+                operationName: 'TypeChangeTransportInCartMutation',
+                query: `mutation TypeChangeTransportInCartMutation($input: TypeChangeTransportInCartInput!) { 
                     ChangeTransportInCart(input: $input) { 
                         uuid, 
                         transport { 
@@ -130,8 +130,8 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
             method: 'POST',
             url: 'graphql/',
             body: JSON.stringify({
-                operationName: 'ChangePaymentInCartMutation',
-                query: `mutation ChangePaymentInCartMutation($input: ChangePaymentInCartInput!) { 
+                operationName: 'TypeChangePaymentInCartMutation',
+                query: `mutation TypeChangePaymentInCartMutation($input: TypeChangePaymentInCartInput!) { 
                     ChangePaymentInCart(input: $input) { 
                         uuid, 
                         payment { 

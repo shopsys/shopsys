@@ -1,7 +1,7 @@
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 
 export const DEFAULT_PAGE_SIZE = 9;
-export const DEFAULT_SORT = ProductOrderingModeEnum.Priority as const;
+export const DEFAULT_SORT = TypeProductOrderingModeEnum.Priority as const;
 /**
  * For those that are set to "true", we optimistically navigate out from a SEO category when a value of that type is changed
  * This setting needs to mirror the API functionality in the following way

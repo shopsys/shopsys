@@ -1,6 +1,6 @@
 import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem';
-import { SliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
+import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { desktopFirstSizes } from 'helpers/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 type BannersSliderProps = {
-    sliderItems: SliderItemFragment[];
+    sliderItems: TypeSliderItemFragment[];
 };
 
 export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {

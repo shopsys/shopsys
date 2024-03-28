@@ -1,11 +1,11 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailAccessoriesProps = {
-    accessories: ListedProductFragment[];
+    accessories: TypeListedProductFragment[];
 };
 
 export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {

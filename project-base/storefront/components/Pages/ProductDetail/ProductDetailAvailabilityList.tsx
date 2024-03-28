@@ -1,13 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
-import { StoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
-import { AvailabilityStatusEnum } from 'graphql/types';
+import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailAvailabilityListProps = {
-    storeAvailabilities: StoreAvailabilityFragment[];
+    storeAvailabilities: TypeStoreAvailabilityFragment[];
 };
 
 export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>(
@@ -28,10 +28,10 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     <span
                                         className={twJoin(
                                             'flex-1 pr-3 text-sm',
-                                            storeAvailability.availabilityStatus === AvailabilityStatusEnum.InStock &&
-                                                'text-inStock',
                                             storeAvailability.availabilityStatus ===
-                                                AvailabilityStatusEnum.OutOfStock && 'text-red',
+                                                TypeAvailabilityStatusEnum.InStock && 'text-inStock',
+                                            storeAvailability.availabilityStatus ===
+                                                TypeAvailabilityStatusEnum.OutOfStock && 'text-red',
                                         )}
                                     >
                                         {storeAvailability.availabilityInformation}

@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 import { ListedCategoryFragment } from '../fragments/ListedCategoryFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type PromotedCategoriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypePromotedCategoriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type PromotedCategoriesQuery = { __typename?: 'Query', promotedCategories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } }> };
+export type TypePromotedCategoriesQuery = { __typename?: 'Query', promotedCategories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } }> };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +102,6 @@ export const PromotedCategoriesQueryDocument = gql`
 }
     ${ListedCategoryFragment}`;
 
-export function usePromotedCategoriesQuery(options?: Omit<Urql.UseQueryArgs<PromotedCategoriesQueryVariables>, 'query'>) {
-  return Urql.useQuery<PromotedCategoriesQuery, PromotedCategoriesQueryVariables>({ query: PromotedCategoriesQueryDocument, ...options });
+export function usePromotedCategoriesQuery(options?: Omit<Urql.UseQueryArgs<TypePromotedCategoriesQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypePromotedCategoriesQuery, TypePromotedCategoriesQueryVariables>({ query: PromotedCategoriesQueryDocument, ...options });
 };

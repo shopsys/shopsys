@@ -1,6 +1,13 @@
-import { ParameterCheckboxFilterOption, ParameterColorFilterOption, ParameterSliderFilterOption } from 'graphql/types';
+import {
+    TypeParameterCheckboxFilterOption,
+    TypeParameterColorFilterOption,
+    TypeParameterSliderFilterOption,
+} from 'graphql/types';
 
-export type ParametersType = ParameterCheckboxFilterOption | ParameterColorFilterOption | ParameterSliderFilterOption;
+export type ParametersType =
+    | TypeParameterCheckboxFilterOption
+    | TypeParameterColorFilterOption
+    | TypeParameterSliderFilterOption;
 
 export type FilterOptionsParameterUrlQueryType = {
     parameter: string;

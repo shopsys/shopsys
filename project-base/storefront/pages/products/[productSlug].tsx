@@ -4,8 +4,8 @@ import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDeta
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import {
     useProductDetailQuery,
-    ProductDetailQuery,
-    ProductDetailQueryVariables,
+    TypeProductDetailQuery,
+    TypeProductDetailQueryVariables,
     ProductDetailQueryDocument,
 } from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -68,11 +68,12 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const productResponse: OperationResult<ProductDetailQuery, ProductDetailQueryVariables> = await client!
-                    .query(ProductDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                    })
-                    .toPromise();
+                const productResponse: OperationResult<TypeProductDetailQuery, TypeProductDetailQueryVariables> =
+                    await client!
+                        .query(ProductDetailQueryDocument, {
+                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        })
+                        .toPromise();
 
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     productResponse.error?.graphQLErrors,
