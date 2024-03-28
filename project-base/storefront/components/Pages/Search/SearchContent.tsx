@@ -2,8 +2,8 @@ import { ProductsSearch } from './ProductsSearch';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SkeletonPageProductsList } from 'components/Blocks/Skeleton/SkeletonPageProductsList';
 import { TIDs } from 'cypress/tids';
-import { SimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
-import { SearchQuery } from 'graphql/requests/search/queries/SearchQuery.generated';
+import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
+import { TypeSearchQuery } from 'graphql/requests/search/queries/SearchQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -12,7 +12,7 @@ import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 type SearchContentProps = {
-    searchResults: SearchQuery | undefined;
+    searchResults: TypeSearchQuery | undefined;
     fetching: boolean;
 };
 
@@ -23,7 +23,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
     const title = useSeoTitleWithPagination(searchResults?.productsSearch.totalCount, t('Found products'));
 
     const mappedCategoriesSearchResults = useMemo(
-        () => mapConnectionEdges<SimpleCategoryFragment>(searchResults?.categoriesSearch.edges),
+        () => mapConnectionEdges<TypeSimpleCategoryFragment>(searchResults?.categoriesSearch.edges),
         [searchResults?.categoriesSearch.edges],
     );
 

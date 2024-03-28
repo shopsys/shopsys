@@ -1,5 +1,5 @@
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmShippingInfo } from 'gtm/mappers/mapGtmShippingInfo';
 import { GtmTransportChangeEventType } from 'gtm/types/events';
@@ -7,8 +7,8 @@ import { GtmCartInfoType } from 'gtm/types/objects';
 
 export const getGtmTransportChangeEvent = (
     gtmCartInfo: GtmCartInfoType,
-    updatedTransport: TransportWithAvailablePaymentsAndStoresFragment,
-    updatedPickupPlace: ListedStoreFragment | null,
+    updatedTransport: TypeTransportWithAvailablePaymentsAndStoresFragment,
+    updatedPickupPlace: TypeListedStoreFragment | null,
     paymentName: string | undefined,
 ): GtmTransportChangeEventType => {
     const { transportDetail, transportExtra } = mapGtmShippingInfo(updatedPickupPlace);

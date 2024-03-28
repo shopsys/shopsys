@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type SimpleCategoryFragment = { __typename: 'Category', uuid: string, name: string, slug: string };
+export type TypeSimpleCategoryFragment = { __typename: 'Category', uuid: string, name: string, slug: string };
 
 
       export interface PossibleTypesResultData {

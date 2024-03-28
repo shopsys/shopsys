@@ -2,7 +2,7 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductComparison } from 'components/Pages/ProductComparison/ProductComparison';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -16,7 +16,7 @@ const ProductComparisonPage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Product comparison'), slug: productComparisonUrl },
     ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.product_comparison, breadcrumbs);

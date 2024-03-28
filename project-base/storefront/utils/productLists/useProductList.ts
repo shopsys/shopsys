@@ -1,22 +1,22 @@
 import { useUpdateProductListUuid } from './useUpdateProductListUuid';
-import { ProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
 import { useAddProductToListMutation } from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
 import { useRemoveProductFromListMutation } from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
 import { useRemoveProductListMutation } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
 import { useProductListQuery } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
-import { ProductListTypeEnum } from 'graphql/types';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 
 export const useProductList = (
-    productListType: ProductListTypeEnum,
+    productListType: TypeProductListTypeEnum,
     callbacks: {
         removeSuccess: () => void;
         removeError: () => void;
-        addProductSuccess: (result: ProductListFragment | null | undefined) => void;
+        addProductSuccess: (result: TypeProductListFragment | null | undefined) => void;
         addProductError: () => void;
-        removeProductSuccess: (result: ProductListFragment | null | undefined) => void;
+        removeProductSuccess: (result: TypeProductListFragment | null | undefined) => void;
         removeProductError: () => void;
     },
 ) => {
@@ -25,8 +25,8 @@ export const useProductList = (
     const productListUuid = productListUuids[productListType] ?? null;
     const isUserLoggedIn = useIsUserLoggedIn();
 
-    const [, addProductToListMutation] = useAddProductToListMutation();
-    const [, removeProductFromListMutation] = useRemoveProductFromListMutation();
+    const [, TypeAddProductToListMutation] = useAddProductToListMutation();
+    const [, TypeRemoveProductFromListMutation] = useRemoveProductFromListMutation();
     const [, removeListMutation] = useRemoveProductListMutation();
 
     const [{ data: productListData, fetching }] = useProductListQuery({
@@ -61,7 +61,7 @@ export const useProductList = (
     };
 
     const addToList = async (productUuid: string) => {
-        const addProductToListResult = await addProductToListMutation({
+        const addProductToListResult = await TypeAddProductToListMutation({
             input: {
                 productUuid,
                 productListInput: {
@@ -79,7 +79,7 @@ export const useProductList = (
     };
 
     const removeFromList = async (productUuid: string) => {
-        const removeProductFromListResult = await removeProductFromListMutation({
+        const removeProductFromListResult = await TypeRemoveProductFromListMutation({
             input: {
                 productUuid,
                 productListInput: {

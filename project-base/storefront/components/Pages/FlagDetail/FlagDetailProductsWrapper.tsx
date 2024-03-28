@@ -1,6 +1,6 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { FlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
+import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { FlagProductsQueryDocument } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -10,7 +10,7 @@ import { useProductsData } from 'utils/loadMore/useProductsData';
 import { getMappedProducts } from 'utils/mappers/products';
 
 type FlagDetailProductsWrapperProps = {
-    flag: FlagDetailFragment;
+    flag: TypeFlagDetailFragment;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 

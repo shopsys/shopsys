@@ -2,18 +2,21 @@ import { Variables } from '@urql/exchange-graphcache';
 import { DocumentNode } from 'graphql';
 import { AdvertsQueryDocument } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import {
-    ArticlesQueryVariables,
+    TypeArticlesQueryVariables,
     ArticlesQueryDocument,
 } from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
 import { CurrentCustomerUserQueryDocument } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { NavigationQueryDocument } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { NotificationBarsDocument } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
-import { SeoPageQueryVariables, SeoPageQueryDocument } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
 import {
-    SettingsQueryVariables,
+    TypeSeoPageQueryVariables,
+    SeoPageQueryDocument,
+} from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import {
+    TypeSettingsQueryVariables,
     SettingsQueryDocument,
 } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { ArticlePlacementTypeEnum } from 'graphql/types';
+import { TypeArticlePlacementTypeEnum } from 'graphql/types';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
@@ -81,7 +84,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 
     const prefetchQueries: QueriesArray<
-        ArticlesQueryVariables | SettingsQueryVariables | SeoPageQueryVariables | VariablesType
+        TypeArticlesQueryVariables | TypeSettingsQueryVariables | TypeSeoPageQueryVariables | VariablesType
     > = [
         { query: NotificationBarsDocument },
         { query: NavigationQueryDocument },
@@ -89,10 +92,10 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             query: ArticlesQueryDocument,
             variables: {
                 placement: [
-                    ArticlePlacementTypeEnum.Footer1,
-                    ArticlePlacementTypeEnum.Footer2,
-                    ArticlePlacementTypeEnum.Footer3,
-                    ArticlePlacementTypeEnum.Footer4,
+                    TypeArticlePlacementTypeEnum.Footer1,
+                    TypeArticlePlacementTypeEnum.Footer2,
+                    TypeArticlePlacementTypeEnum.Footer3,
+                    TypeArticlePlacementTypeEnum.Footer4,
                 ],
                 first: 100,
             },

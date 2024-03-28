@@ -1,7 +1,7 @@
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { GtmShippingInfoType } from 'gtm/types/objects';
 
-export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragment | null): GtmShippingInfoType => {
+export const mapGtmShippingInfo = (pickupPlace: TypeListedStoreFragment | null): GtmShippingInfoType => {
     let transportDetail = '';
     const transportExtra = [];
 

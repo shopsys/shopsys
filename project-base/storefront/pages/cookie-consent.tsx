@@ -1,7 +1,7 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CookieConsentContent } from 'components/Pages/CookieConsent/CookieConsentContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -14,7 +14,7 @@ const CookieConsentPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Cookie consent'), slug: cookieConsentUrl },
     ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.cookie_consent, breadcrumbs);

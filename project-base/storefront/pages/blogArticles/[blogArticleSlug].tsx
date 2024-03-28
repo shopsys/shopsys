@@ -3,8 +3,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
     useBlogArticleDetailQuery,
-    BlogArticleDetailQuery,
-    BlogArticleDetailQueryVariables,
+    TypeBlogArticleDetailQuery,
+    TypeBlogArticleDetailQueryVariables,
     BlogArticleDetailQueryDocument,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
@@ -59,12 +59,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const blogArticleResponse: OperationResult<BlogArticleDetailQuery, BlogArticleDetailQueryVariables> =
-                    await client!
-                        .query(BlogArticleDetailQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
+                const blogArticleResponse: OperationResult<
+                    TypeBlogArticleDetailQuery,
+                    TypeBlogArticleDetailQueryVariables
+                > = await client!
+                    .query(BlogArticleDetailQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
                 const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
 

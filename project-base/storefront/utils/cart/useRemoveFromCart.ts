@@ -1,6 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
-import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { usePersistStore } from 'store/usePersistStore';
@@ -8,9 +8,9 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export type RemoveFromCartHandler = (
-    cartItem: CartItemFragment,
+    cartItem: TypeCartItemFragment,
     listIndex: number,
-) => Promise<CartFragment | undefined | null>;
+) => Promise<TypeCartFragment | undefined | null>;
 
 export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [RemoveFromCartHandler, boolean] => {
     const [{ fetching }, removeItemFromCart] = useRemoveFromCartMutation();
@@ -20,7 +20,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [
 
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
-    const removeItemFromCartAction = async (cartItem: CartItemFragment, listIndex: number) => {
+    const removeItemFromCartAction = async (cartItem: TypeCartItemFragment, listIndex: number) => {
         const removeItemFromCartActionResult = await removeItemFromCart({
             input: { cartUuid, cartItemUuid: cartItem.uuid },
         });

@@ -1,12 +1,12 @@
 import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
+import { TypeBlogCategoryDetailFragment } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 type BlogCategoryContentProps = {
-    blogCategory: BlogCategoryDetailFragment;
+    blogCategory: TypeBlogCategoryDetailFragment;
 };
 
 export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory }) => {

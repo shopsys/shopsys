@@ -2,6 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 import { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-preset';
 
 const codegenTypescriptConfig = {
+    typesPrefix: 'Type',
     withHooks: true,
     withHOC: false,
     withComponent: false,

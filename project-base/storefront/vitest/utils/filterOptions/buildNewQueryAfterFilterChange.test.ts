@@ -1,5 +1,5 @@
 import { DEFAULT_SORT } from 'config/constants';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { buildNewQueryAfterFilterChange } from 'utils/filterOptions/buildNewQueryAfterFilterChange';
 import { describe, expect, test } from 'vitest';
 
@@ -8,7 +8,7 @@ describe('buildNewQueryAfterFilterChange tests', () => {
         const newQuery = buildNewQueryAfterFilterChange(
             { filter: 'foobar', lm: '2', page: '3' },
             { brands: ['foo'], flags: ['bar'] },
-            ProductOrderingModeEnum.NameAsc,
+            TypeProductOrderingModeEnum.NameAsc,
         );
 
         expect(newQuery).toStrictEqual({
@@ -30,7 +30,7 @@ describe('buildNewQueryAfterFilterChange tests', () => {
                 flags: [],
                 parameters: [],
             },
-            ProductOrderingModeEnum.NameAsc,
+            TypeProductOrderingModeEnum.NameAsc,
         );
 
         expect(newQuery).toStrictEqual({
@@ -43,7 +43,7 @@ describe('buildNewQueryAfterFilterChange tests', () => {
 
     test('building new query with undefined new sort should keep the old sort', () => {
         const newQuery = buildNewQueryAfterFilterChange(
-            { filter: 'foobar', lm: '2', page: '3', sort: ProductOrderingModeEnum.PriceAsc },
+            { filter: 'foobar', lm: '2', page: '3', sort: TypeProductOrderingModeEnum.PriceAsc },
             { brands: ['foo'], flags: ['bar'] },
             undefined,
         );
@@ -58,7 +58,7 @@ describe('buildNewQueryAfterFilterChange tests', () => {
 
     test('building new query with new sort equal to the default sort should keep the old sort', () => {
         const newQuery = buildNewQueryAfterFilterChange(
-            { filter: 'foobar', lm: '2', page: '3', sort: ProductOrderingModeEnum.PriceAsc },
+            { filter: 'foobar', lm: '2', page: '3', sort: TypeProductOrderingModeEnum.PriceAsc },
             { brands: ['foo'], flags: ['bar'] },
             DEFAULT_SORT,
         );

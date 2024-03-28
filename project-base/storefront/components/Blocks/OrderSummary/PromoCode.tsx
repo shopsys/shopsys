@@ -5,13 +5,13 @@ import {
     OrderSummaryRowWrapper,
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
-import { PriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
+import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type PromoCodeProps = {
     promoCode: string;
-    discount: PriceFragment;
+    discount: TypePriceFragment;
 };
 
 export const PromoCode: FC<PromoCodeProps> = ({ discount, promoCode }) => {

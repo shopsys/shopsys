@@ -4,8 +4,8 @@ import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { TIDs } from 'cypress/tids';
-import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { StoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
@@ -13,14 +13,14 @@ import { useState } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type ProductVariantsTableProps = {
-    variants: MainVariantDetailFragment['variants'];
+    variants: TypeMainVariantDetailFragment['variants'];
     isSellingDenied: boolean;
 };
 
 export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingDenied, variants }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const [popupStoreAvailabilities, setPopupStoreAvailabilities] = useState<StoreAvailabilityFragment[]>();
+    const [popupStoreAvailabilities, setPopupStoreAvailabilities] = useState<TypeStoreAvailabilityFragment[]>();
 
     return (
         <>

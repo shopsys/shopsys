@@ -1,5 +1,5 @@
-import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { AddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeCartItemEvent } from 'gtm/factories/getGtmChangeCartItemEvent';
@@ -11,8 +11,8 @@ import { mapPriceForCalculations } from 'utils/mappers/price';
 export const onGtmChangeCartItemEventHandler = (
     initialQuantity: number,
     isAbsoluteQuantity: boolean,
-    addToCartResult: AddToCartMutation['AddToCart'],
-    addedCartItem: CartItemFragment,
+    addToCartResult: TypeAddToCartMutation['AddToCart'],
+    addedCartItem: TypeCartItemFragment,
     domainConfig: DomainConfigType,
     listIndex: number | undefined,
     gtmProductListName: GtmProductListNameType,

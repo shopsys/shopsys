@@ -1,9 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { AdvertsFragment } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
+import { TypeAdvertsFragment } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -20,7 +20,7 @@ type AdvertsProps = {
     withGapBottom?: boolean;
     withGapTop?: boolean;
     withWebline?: boolean;
-    currentCategory?: CategoryDetailFragment;
+    currentCategory?: TypeCategoryDetailFragment;
     isSingle?: boolean;
 };
 
@@ -95,9 +95,9 @@ export const Adverts: FC<AdvertsProps> = ({
 };
 
 const shouldBeShown = (
-    advert: AdvertsFragment | undefined,
+    advert: TypeAdvertsFragment | undefined,
     positionName: PositionNameType,
-    currentCategory?: CategoryDetailFragment,
+    currentCategory?: TypeCategoryDetailFragment,
 ): boolean => {
     if (!advert || advert.positionName !== positionName) {
         return false;

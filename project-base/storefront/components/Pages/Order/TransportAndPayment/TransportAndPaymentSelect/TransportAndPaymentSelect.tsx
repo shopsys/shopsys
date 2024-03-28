@@ -12,18 +12,18 @@ import {
 } from 'components/Pages/Order/TransportAndPayment/utils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 type TransportAndPaymentSelectProps = {
-    transports: TransportWithAvailablePaymentsAndStoresFragment[];
-    lastOrderPickupPlace: ListedStoreFragment | null;
+    transports: TypeTransportWithAvailablePaymentsAndStoresFragment[];
+    lastOrderPickupPlace: TypeListedStoreFragment | null;
     changeTransportInCart: ChangeTransportHandler;
     changePaymentInCart: ChangePaymentHandler;
     isTransportSelectionLoading: boolean;
@@ -51,7 +51,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     } = useTransportChangeInSelect(transports, lastOrderPickupPlace, changeTransportInCart, changePaymentInCart);
 
     const renderTransportListItem = (
-        transportItem: TransportWithAvailablePaymentsAndStoresFragment,
+        transportItem: TypeTransportWithAvailablePaymentsAndStoresFragment,
         isActive: boolean,
     ) => (
         <TransportAndPaymentListItem key={transportItem.uuid} isActive={isActive}>
@@ -75,7 +75,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         </TransportAndPaymentListItem>
     );
 
-    const renderPaymentListItem = (paymentItem: SimplePaymentFragment, isActive: boolean) => {
+    const renderPaymentListItem = (paymentItem: TypeSimplePaymentFragment, isActive: boolean) => {
         const isGoPaySwiftPayment =
             paymentItem.uuid === payment?.uuid &&
             payment.type === 'goPay' &&

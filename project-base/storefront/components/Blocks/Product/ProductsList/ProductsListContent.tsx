@@ -1,6 +1,6 @@
 import { ProductListItem } from './ProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
@@ -15,7 +15,7 @@ const ProductComparePopup = dynamic(() =>
 );
 
 type ProductsListProps = {
-    products: ListedProductFragment[];
+    products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     ref?: RefObject<HTMLUListElement>;

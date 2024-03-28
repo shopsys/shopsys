@@ -1,7 +1,7 @@
 import { mapParametersFilter } from './mapParametersFilter';
-import { ProductFilter } from 'graphql/types';
+import { TypeProductFilter } from 'graphql/types';
 
-export const getMappedProductFilter = (filterUrlQuery: string | string[] | undefined): ProductFilter | null => {
+export const getMappedProductFilter = (filterUrlQuery: string | string[] | undefined): TypeProductFilter | null => {
     if (Array.isArray(filterUrlQuery) || !filterUrlQuery) {
         return null;
     }

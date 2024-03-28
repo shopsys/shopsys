@@ -1,5 +1,8 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { AddToCartMutation, useAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+import {
+    TypeAddToCartMutation,
+    useAddToCartMutation,
+} from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
@@ -14,7 +17,7 @@ export type AddToCartAction = (
     quantity: number,
     listIndex?: number,
     isAbsoluteQuantity?: boolean,
-) => Promise<AddToCartMutation['AddToCart'] | null>;
+) => Promise<TypeAddToCartMutation['AddToCart'] | null>;
 
 export const useAddToCart = (
     gtmMessageOrigin: GtmMessageOriginType,

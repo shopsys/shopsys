@@ -1,9 +1,9 @@
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 
 type AdvancedSeoCategoriesProps = {
-    readyCategorySeoMixLinks: CategoryDetailFragment['readyCategorySeoMixLinks'];
+    readyCategorySeoMixLinks: TypeCategoryDetailFragment['readyCategorySeoMixLinks'];
 };
 
 const simpleNavigationItemTwClass = 'lg:justify-center text-center';

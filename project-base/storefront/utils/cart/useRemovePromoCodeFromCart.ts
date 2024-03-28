@@ -1,4 +1,4 @@
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useRemovePromoCodeFromCartMutation } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
@@ -11,7 +11,7 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 type RemovePromoCodeHandler = (
     promoCodeToBeRemoved: string,
     messages: { success: string; error: string },
-) => Promise<CartFragment | undefined | null>;
+) => Promise<TypeCartFragment | undefined | null>;
 
 export const useRemovePromoCodeFromCart = (): [RemovePromoCodeHandler, boolean] => {
     const [{ fetching }, removePromoCode] = useRemovePromoCodeFromCartMutation();

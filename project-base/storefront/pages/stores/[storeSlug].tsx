@@ -2,8 +2,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import {
     useStoreDetailQuery,
-    StoreDetailQuery,
-    StoreDetailQueryVariables,
+    TypeStoreDetailQuery,
+    TypeStoreDetailQueryVariables,
     StoreDetailQueryDocument,
 } from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -52,11 +52,12 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const storeResponse: OperationResult<StoreDetailQuery, StoreDetailQueryVariables> = await client!
-                    .query(StoreDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                    })
-                    .toPromise();
+                const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> =
+                    await client!
+                        .query(StoreDetailQueryDocument, {
+                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        })
+                        .toPromise();
 
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     storeResponse.error?.graphQLErrors,

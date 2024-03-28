@@ -6,8 +6,8 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import {
     useBlogCategoryQuery,
-    BlogCategoryQuery,
-    BlogCategoryQueryVariables,
+    TypeBlogCategoryQuery,
+    TypeBlogCategoryQueryVariables,
     BlogCategoryQueryDocument,
 } from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -69,7 +69,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const blogCategoryResponse: OperationResult<BlogCategoryQuery, BlogCategoryQueryVariables> =
+                const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
                     await client!
                         .query(BlogCategoryQueryDocument, {
                             urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),

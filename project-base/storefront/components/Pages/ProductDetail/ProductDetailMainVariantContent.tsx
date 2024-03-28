@@ -5,8 +5,8 @@ import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -14,7 +14,7 @@ import { useMemo } from 'react';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailMainVariantContentProps = {
-    product: MainVariantDetailFragment;
+    product: TypeMainVariantDetailFragment;
     fetching: boolean;
 };
 
@@ -28,7 +28,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             }
 
             return mappedVariantImages;
-        }, [] as ImageFragment[]);
+        }, [] as TypeImageFragment[]);
 
         return [...product.images, ...variantImages];
     }, [product]);

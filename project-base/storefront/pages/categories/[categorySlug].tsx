@@ -6,8 +6,8 @@ import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryD
 import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/utils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
-    CategoryDetailQuery,
-    CategoryDetailQueryVariables,
+    TypeCategoryDetailQuery,
+    TypeCategoryDetailQueryVariables,
     CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
@@ -91,7 +91,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
                 const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
                 const categoryDetailResponsePromise = client!
-                    .query<CategoryDetailQuery, CategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
+                    .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
                         urlSlug,
                         filter,
                         orderingMode,

@@ -4,11 +4,11 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import {
     useOrdersQuery,
-    OrdersQueryVariables,
+    TypeOrdersQueryVariables,
     OrdersQueryDocument,
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -33,11 +33,11 @@ const OrdersPage: FC = () => {
         requestPolicy: 'cache-and-network',
     });
     const mappedOrders = useMemo(
-        () => mapConnectionEdges<ListedOrderFragment>(ordersData?.orders?.edges),
+        () => mapConnectionEdges<TypeListedOrderFragment>(ordersData?.orders?.edges),
         [ordersData?.orders?.edges],
     );
     const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(['/customer', '/customer/orders'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];
@@ -57,7 +57,7 @@ const OrdersPage: FC = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
-    return initServerSideProps<OrdersQueryVariables>({
+    return initServerSideProps<TypeOrdersQueryVariables>({
         context,
         authenticationRequired: true,
         prefetchedQueries: [

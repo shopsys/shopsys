@@ -4,12 +4,12 @@ import gql from 'graphql-tag';
 import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type OrderAvailablePaymentsQueryVariables = Types.Exact<{
+export type TypeOrderAvailablePaymentsQueryVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type OrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayments: { __typename?: 'OrderPaymentsConfig', availablePayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, currentPayment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
+export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayments: { __typename?: 'OrderPaymentsConfig', availablePayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, currentPayment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
 
 
       export interface PossibleTypesResultData {
@@ -109,6 +109,6 @@ export const OrderAvailablePaymentsQueryDocument = gql`
 }
     ${SimplePaymentFragment}`;
 
-export function useOrderAvailablePaymentsQuery(options: Omit<Urql.UseQueryArgs<OrderAvailablePaymentsQueryVariables>, 'query'>) {
-  return Urql.useQuery<OrderAvailablePaymentsQuery, OrderAvailablePaymentsQueryVariables>({ query: OrderAvailablePaymentsQueryDocument, ...options });
+export function useOrderAvailablePaymentsQuery(options: Omit<Urql.UseQueryArgs<TypeOrderAvailablePaymentsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrderAvailablePaymentsQuery, TypeOrderAvailablePaymentsQueryVariables>({ query: OrderAvailablePaymentsQueryDocument, ...options });
 };

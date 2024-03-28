@@ -1,6 +1,6 @@
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
-export const getGtmPickupPlaceFromStore = (store: ListedStoreFragment): ListedStoreFragment => ({
+export const getGtmPickupPlaceFromStore = (store: TypeListedStoreFragment): TypeListedStoreFragment => ({
     __typename: 'Store',
     locationLatitude: null,
     locationLongitude: null,

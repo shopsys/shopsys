@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { stringify } from 'querystring';
 import { getOffsetPageAndLoadMore } from 'utils/loadMore/getOffsetPageAndLoadMore';
 import { getPreviousProductsFromCache } from 'utils/loadMore/getPreviousProductsFromCache';
@@ -24,7 +24,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -42,7 +42,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -71,7 +71,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,
@@ -90,7 +90,7 @@ describe('getPreviouslyQueriedProductsFromCache tests', () => {
                 CategoryProductsQueryDocument,
                 client,
                 SLUG,
-                ProductOrderingModeEnum.Priority,
+                TypeProductOrderingModeEnum.Priority,
                 null,
                 DEFAULT_PAGE_SIZE,
                 DEFAULT_PAGE_SIZE,

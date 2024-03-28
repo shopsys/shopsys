@@ -1,13 +1,13 @@
 import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { PersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
+import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type PersonalDataDetailContentProps = {
-    data: PersonalDataDetailQuery;
+    data: TypePersonalDataDetailQuery;
 };
 
 export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ data }) => {

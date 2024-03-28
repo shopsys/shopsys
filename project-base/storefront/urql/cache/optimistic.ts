@@ -1,31 +1,35 @@
 import { OptimisticMutationConfig } from '@urql/exchange-graphcache';
 import {
-    ChangePaymentInCartMutationVariables,
-    ChangePaymentInCartMutation,
+    TypeChangePaymentInCartMutationVariables,
+    TypeChangePaymentInCartMutation,
 } from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
 import {
-    ChangeTransportInCartMutationVariables,
-    ChangeTransportInCartMutation,
+    TypeChangeTransportInCartMutationVariables,
+    TypeChangeTransportInCartMutation,
 } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
-import { CartQuery, CartQueryVariables, CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
-import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import {
-    TransportsQuery,
-    TransportsQueryVariables,
+    TypeCartQuery,
+    TypeCartQueryVariables,
+    CartQueryDocument,
+} from 'graphql/requests/cart/queries/CartQuery.generated';
+import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import {
+    TypeTransportsQuery,
+    TypeTransportsQueryVariables,
     TransportsQueryDocument,
 } from 'graphql/requests/transports/queries/TransportsQuery.generated';
-import { ChangeTransportInCartInput, ChangePaymentInCartInput } from 'graphql/types';
+import { TypeChangeTransportInCartInput, TypeChangePaymentInCartInput } from 'graphql/types';
 
 export const optimisticUpdates: OptimisticMutationConfig = {
-    ChangeTransportInCart: ({ input }: ChangeTransportInCartMutationVariables, cache) => {
-        const cartQueryResult: CartQuery | null = cache.readQuery<CartQuery, CartQueryVariables>({
+    ChangeTransportInCart: ({ input }: TypeChangeTransportInCartMutationVariables, cache) => {
+        const cartQueryResult: TypeCartQuery | null = cache.readQuery<TypeCartQuery, TypeCartQueryVariables>({
             query: CartQueryDocument,
             variables: {
                 cartUuid: input.cartUuid ?? null,
             },
         });
 
-        const transportsQueryResult = cache.readQuery<TransportsQuery, TransportsQueryVariables>({
+        const transportsQueryResult = cache.readQuery<TypeTransportsQuery, TypeTransportsQueryVariables>({
             query: TransportsQueryDocument,
             variables: {
                 cartUuid: input.cartUuid ?? null,
@@ -38,8 +42,8 @@ export const optimisticUpdates: OptimisticMutationConfig = {
 
         return getOptimisticChangeTransportInCartResult(cartQueryResult, transportsQueryResult, input);
     },
-    ChangePaymentInCart: ({ input }: ChangePaymentInCartMutationVariables, cache) => {
-        const cartQueryResult: CartQuery | null = cache.readQuery<CartQuery, CartQueryVariables>({
+    ChangePaymentInCart: ({ input }: TypeChangePaymentInCartMutationVariables, cache) => {
+        const cartQueryResult: TypeCartQuery | null = cache.readQuery<TypeCartQuery, TypeCartQueryVariables>({
             query: CartQueryDocument,
             variables: {
                 cartUuid: input.cartUuid ?? null,
@@ -61,9 +65,9 @@ export const optimisticUpdates: OptimisticMutationConfig = {
 };
 
 const getOptimisticChangeTransportInCartResult = (
-    cartQueryResult: CartQuery,
-    transportsQueryResult: TransportsQuery | null,
-    input: ChangeTransportInCartInput,
+    cartQueryResult: TypeCartQuery,
+    transportsQueryResult: TypeTransportsQuery | null,
+    input: TypeChangeTransportInCartInput,
 ) =>
     ({
         __typename: 'Cart',
@@ -80,9 +84,12 @@ const getOptimisticChangeTransportInCartResult = (
         uuid: cartQueryResult.cart?.uuid ?? null,
         transport:
             transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
-    }) as ChangeTransportInCartMutation['ChangeTransportInCart'];
+    }) as TypeChangeTransportInCartMutation['ChangeTransportInCart'];
 
-const getOptimisticChangePaymentInCartResult = (cartQueryResult: CartQuery, input: ChangePaymentInCartInput) => {
+const getOptimisticChangePaymentInCartResult = (
+    cartQueryResult: TypeCartQuery,
+    input: TypeChangePaymentInCartInput,
+) => {
     const optimisticPayment = getPaymentFromTransport(cartQueryResult.cart?.transport, input.paymentUuid);
 
     return {
@@ -99,11 +106,11 @@ const getOptimisticChangePaymentInCartResult = (cartQueryResult: CartQuery, inpu
         totalPrice: cartQueryResult.cart?.totalPrice ?? null,
         uuid: cartQueryResult.cart?.uuid ?? null,
         transport: cartQueryResult.cart?.transport,
-    } as ChangePaymentInCartMutation['ChangePaymentInCart'];
+    } as TypeChangePaymentInCartMutation['ChangePaymentInCart'];
 };
 
 const getPaymentFromTransport = (
-    transport: TransportWithAvailablePaymentsAndStoresFragment | null | undefined,
+    transport: TypeTransportWithAvailablePaymentsAndStoresFragment | null | undefined,
     paymentUuid: string | null,
 ) => {
     if (!transport || paymentUuid === null) {

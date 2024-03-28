@@ -2,8 +2,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
     useArticleDetailQuery,
-    ArticleDetailQuery,
-    ArticleDetailQueryVariables,
+    TypeArticleDetailQuery,
+    TypeArticleDetailQueryVariables,
     ArticleDetailQueryDocument,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
@@ -51,11 +51,12 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const articleResponse: OperationResult<ArticleDetailQuery, ArticleDetailQueryVariables> = await client!
-                    .query(ArticleDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                    })
-                    .toPromise();
+                const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
+                    await client!
+                        .query(ArticleDetailQueryDocument, {
+                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        })
+                        .toPromise();
 
                 const article =
                     articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;

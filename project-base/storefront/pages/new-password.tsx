@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -16,7 +16,7 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [newPasswordUrl] = getInternationalizedStaticUrls(['/new-password'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl },
     ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);

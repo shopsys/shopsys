@@ -4,13 +4,13 @@ import gql from 'graphql-tag';
 import { OrderListFragment } from '../fragments/OrderListFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type OrdersQueryVariables = Types.Exact<{
+export type TypeOrdersQueryVariables = Types.Exact<{
   after: Types.InputMaybe<Types.Scalars['String']['input']>;
   first: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
-export type OrdersQuery = { __typename?: 'Query', orders: { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, status: string, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string, type: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null } | null };
+export type TypeOrdersQuery = { __typename?: 'Query', orders: { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, status: string, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string, type: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null } | null };
 
 
       export interface PossibleTypesResultData {
@@ -105,6 +105,6 @@ export const OrdersQueryDocument = gql`
 }
     ${OrderListFragment}`;
 
-export function useOrdersQuery(options?: Omit<Urql.UseQueryArgs<OrdersQueryVariables>, 'query'>) {
-  return Urql.useQuery<OrdersQuery, OrdersQueryVariables>({ query: OrdersQueryDocument, ...options });
+export function useOrdersQuery(options?: Omit<Urql.UseQueryArgs<TypeOrdersQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrdersQuery, TypeOrdersQueryVariables>({ query: OrdersQueryDocument, ...options });
 };

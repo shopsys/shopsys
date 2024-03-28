@@ -4,7 +4,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
-import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { useBlogUrlQuery } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -20,11 +20,11 @@ export const BlogPreview: FC = () => {
     const blogUrl = blogUrlData?.blogCategories[0].link;
 
     const blogMainItems = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
+        () => mapConnectionEdges<TypeListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
         [blogPreviewData?.blogArticles.edges],
     );
     const blogSideItems = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(2)),
+        () => mapConnectionEdges<TypeListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(2)),
         [blogPreviewData?.blogArticles.edges],
     );
 

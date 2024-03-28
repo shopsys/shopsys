@@ -1,9 +1,9 @@
 import { MenuItem } from './MobileMenuContent';
-import { NavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 
-type NavigationColumnCategories = NavigationQuery['navigation'][number]['categoriesByColumns'];
+type NavigationColumnCategories = TypeNavigationQuery['navigation'][number]['categoriesByColumns'];
 
-export const mapNavigationMenuItems = (navigationItems: NavigationQuery['navigation']) =>
+export const mapNavigationMenuItems = (navigationItems: TypeNavigationQuery['navigation']) =>
     navigationItems.map(({ name: baseItemName, link, categoriesByColumns }) => ({
         link,
         name: baseItemName,

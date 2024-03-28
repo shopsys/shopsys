@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -15,7 +15,7 @@ const CustomerPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerUrl] = getInternationalizedStaticUrls(['/customer'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Customer'), slug: customerUrl }];
+    const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Customer'), slug: customerUrl }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);

@@ -1,11 +1,11 @@
-import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmPaymentChangeEventType } from 'gtm/types/events';
 import { GtmCartInfoType } from 'gtm/types/objects';
 
 export const getGtmPaymentChangeEvent = (
     gtmCartInfo: GtmCartInfoType,
-    updatedPayment: SimplePaymentFragment,
+    updatedPayment: TypeSimplePaymentFragment,
 ): GtmPaymentChangeEventType => ({
     event: GtmEventType.payment_change,
     ecommerce: {

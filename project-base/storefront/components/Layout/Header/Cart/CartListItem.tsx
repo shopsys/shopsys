@@ -1,13 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
-import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type ListItemProps = {
-    cartItem: CartItemFragment;
+    cartItem: TypeCartItemFragment;
     onItemRemove: MouseEventHandler<HTMLButtonElement>;
 };
 

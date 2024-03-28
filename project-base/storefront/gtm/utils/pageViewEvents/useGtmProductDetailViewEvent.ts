@@ -1,13 +1,13 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductDetailViewEvent } from 'gtm/factories/getGtmProductDetailViewEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { useEffect, useRef } from 'react';
 
 export const useGtmProductDetailViewEvent = (
-    productDetailData: ProductDetailFragment | MainVariantDetailFragment,
+    productDetailData: TypeProductDetailFragment | TypeMainVariantDetailFragment,
     slug: string,
     fetching: boolean,
 ): void => {

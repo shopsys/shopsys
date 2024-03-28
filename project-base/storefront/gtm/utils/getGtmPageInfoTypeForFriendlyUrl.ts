@@ -1,8 +1,8 @@
 import { getCategoryOrSeoCategoryGtmPageType } from './getCategoryOrSeoCategoryGtmPageType';
 import { getGtmPageInfoType } from './getGtmPageInfoType';
-import { BlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
-import { BrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
+import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import {
     GtmPageInfoType,
@@ -57,7 +57,7 @@ export const getGtmPageInfoTypeForFriendlyUrl = (
 
 const getPageInfoForCategoryDetailPage = (
     defaultPageInfo: GtmPageInfoInterface,
-    categoryDetailData: CategoryDetailFragment,
+    categoryDetailData: TypeCategoryDetailFragment,
 ): GtmCategoryDetailPageInfoType => ({
     ...defaultPageInfo,
     type: getCategoryOrSeoCategoryGtmPageType(categoryDetailData.originalCategorySlug),
@@ -67,7 +67,7 @@ const getPageInfoForCategoryDetailPage = (
 
 const getPageInfoForBlogArticleDetailPage = (
     defaultPageInfo: GtmPageInfoType,
-    blogArticleDetailData: BlogArticleDetailFragment,
+    blogArticleDetailData: TypeBlogArticleDetailFragment,
 ): GtmBlogArticleDetailPageInfoType => ({
     ...defaultPageInfo,
     type: GtmPageType.blog_article_detail,
@@ -76,7 +76,7 @@ const getPageInfoForBlogArticleDetailPage = (
 
 const getPageInfoForBrandDetailPage = (
     defaultPageInfo: GtmPageInfoType,
-    brandDetailData: BrandDetailFragment,
+    brandDetailData: TypeBrandDetailFragment,
 ): GtmBrandDetailPageInfoType => ({
     ...defaultPageInfo,
     type: GtmPageType.brand_detail,

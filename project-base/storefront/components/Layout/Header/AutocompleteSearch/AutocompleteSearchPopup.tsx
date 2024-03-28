@@ -10,10 +10,10 @@ import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { SimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { SimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
-import { AutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeSimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
@@ -27,7 +27,7 @@ import { mapConnectionEdges } from 'utils/mappers/connection';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type AutocompleteProps = {
-    autocompleteSearchResults: AutocompleteSearchQuery;
+    autocompleteSearchResults: TypeAutocompleteSearchQuery;
     autocompleteSearchQueryValue: string;
     onClickLink: () => void;
 };
@@ -44,11 +44,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     const mappedProductSearchResults = useMemo(
-        () => mapConnectionEdges<ListedProductFragment>(productsSearch.edges),
+        () => mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges),
         [productsSearch.edges],
     );
     const mappedCategoriesSearchResults = useMemo(
-        () => mapConnectionEdges<SimpleCategoryFragment>(categoriesSearch.edges),
+        () => mapConnectionEdges<TypeSimpleCategoryFragment>(categoriesSearch.edges),
         [categoriesSearch.edges],
     );
 
@@ -57,7 +57,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
     const onProductDetailRedirectHandler =
         (
-            product: SimpleProductFragment | ListedProductFragment,
+            product: TypeSimpleProductFragment | TypeListedProductFragment,
             gtmProductListName: GtmProductListNameType,
             index: number,
         ) =>

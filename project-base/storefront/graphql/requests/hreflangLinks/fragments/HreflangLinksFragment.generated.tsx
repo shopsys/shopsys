@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type HreflangLinksFragment = { __typename?: 'HreflangLink', hreflang: string, href: string };
+export type TypeHreflangLinksFragment = { __typename?: 'HreflangLink', hreflang: string, href: string };
 
 
       export interface PossibleTypesResultData {

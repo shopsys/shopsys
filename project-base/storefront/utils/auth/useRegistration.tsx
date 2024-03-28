@@ -1,5 +1,5 @@
 import { useRegistrationMutation } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
-import { RegistrationDataInput } from 'graphql/types';
+import { TypeRegistrationDataInput } from 'graphql/types';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import { useRouter } from 'next/router';
@@ -17,7 +17,7 @@ export const useRegistration = () => {
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
-    const register = async (registrationInput: Omit<RegistrationDataInput, 'productListsUuids'>) => {
+    const register = async (registrationInput: Omit<TypeRegistrationDataInput, 'productListsUuids'>) => {
         blurInput();
         const registerResult = await registerMutation({
             input: {

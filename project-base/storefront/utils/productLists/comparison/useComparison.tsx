@@ -1,4 +1,4 @@
-import { ProductListTypeEnum } from 'graphql/types';
+import { TypeProductListTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useProductList } from 'utils/productLists/useProductList';
@@ -8,12 +8,11 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export const useComparison = () => {
     const { t } = useTranslation();
-    const updateComparisonUuid = useUpdateProductListUuid(ProductListTypeEnum.Comparison);
+    const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
 
     const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
-        ProductListTypeEnum.Comparison,
-
+        TypeProductListTypeEnum.Comparison,
         {
             addProductError: () => showErrorMessage(t('Unable to add product to comparison.')),
             addProductSuccess: (result) => {

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type CountryFragment = { __typename: 'Country', name: string, code: string };
+export type TypeCountryFragment = { __typename: 'Country', name: string, code: string };
 
 
       export interface PossibleTypesResultData {

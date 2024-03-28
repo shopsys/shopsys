@@ -7,7 +7,7 @@ import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/Regis
 import { TIDs } from 'cypress/tids';
 import {
     useOrderSentPageContentQuery,
-    OrderSentPageContentQueryVariables,
+    TypeOrderSentPageContentQueryVariables,
     OrderSentPageContentQueryDocument,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -83,7 +83,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps<OrderSentPageContentQueryVariables>({
+    return initServerSideProps<TypeOrderSentPageContentQueryVariables>({
         context,
         prefetchedQueries: [
             {

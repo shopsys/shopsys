@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 import { CategoriesByColumnFragment } from '../fragments/CategoriesByColumnsFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type NavigationQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeNavigationQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQuery = { __typename?: 'Query', navigation: Array<{ __typename: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> }> };
+export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __typename: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> }> };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +102,6 @@ export const NavigationQueryDocument = gql`
 }
     ${CategoriesByColumnFragment}`;
 
-export function useNavigationQuery(options?: Omit<Urql.UseQueryArgs<NavigationQueryVariables>, 'query'>) {
-  return Urql.useQuery<NavigationQuery, NavigationQueryVariables>({ query: NavigationQueryDocument, ...options });
+export function useNavigationQuery(options?: Omit<Urql.UseQueryArgs<TypeNavigationQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeNavigationQuery, TypeNavigationQueryVariables>({ query: NavigationQueryDocument, ...options });
 };

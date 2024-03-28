@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 import { ListedStoreConnectionFragment } from '../fragments/ListedStoreConnectionFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type StoresQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeStoresQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type StoresQuery = { __typename?: 'Query', stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, identifier: string, openingHours: { __typename?: 'OpeningHours', isOpen: boolean, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string } } | null } | null> | null } };
+export type TypeStoresQuery = { __typename?: 'Query', stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, identifier: string, openingHours: { __typename?: 'OpeningHours', isOpen: boolean, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string } } | null } | null> | null } };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +102,6 @@ export const StoresQueryDocument = gql`
 }
     ${ListedStoreConnectionFragment}`;
 
-export function useStoresQuery(options?: Omit<Urql.UseQueryArgs<StoresQueryVariables>, 'query'>) {
-  return Urql.useQuery<StoresQuery, StoresQueryVariables>({ query: StoresQueryDocument, ...options });
+export function useStoresQuery(options?: Omit<Urql.UseQueryArgs<TypeStoresQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeStoresQuery, TypeStoresQueryVariables>({ query: StoresQueryDocument, ...options });
 };

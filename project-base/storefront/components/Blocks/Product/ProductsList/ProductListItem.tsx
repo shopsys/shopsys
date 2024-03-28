@@ -9,7 +9,7 @@ import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
@@ -19,7 +19,7 @@ import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductItemProps = {
-    product: ListedProductFragment;
+    product: TypeListedProductFragment;
     listIndex: number;
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;

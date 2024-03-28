@@ -3,10 +3,10 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type BlogUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeBlogUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type BlogUrlQuery = { __typename?: 'Query', blogCategories: Array<{ __typename?: 'BlogCategory', link: string }> };
+export type TypeBlogUrlQuery = { __typename?: 'Query', blogCategories: Array<{ __typename?: 'BlogCategory', link: string }> };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const BlogUrlQueryDocument = gql`
 }
     `;
 
-export function useBlogUrlQuery(options?: Omit<Urql.UseQueryArgs<BlogUrlQueryVariables>, 'query'>) {
-  return Urql.useQuery<BlogUrlQuery, BlogUrlQueryVariables>({ query: BlogUrlQueryDocument, ...options });
+export function useBlogUrlQuery(options?: Omit<Urql.UseQueryArgs<TypeBlogUrlQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeBlogUrlQuery, TypeBlogUrlQueryVariables>({ query: BlogUrlQueryDocument, ...options });
 };

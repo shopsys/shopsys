@@ -1,8 +1,8 @@
 import { ModalGalleryCarousel } from './ModalGalleryCarousel';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
@@ -11,7 +11,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import { useKeypress } from 'utils/useKeyPress';
 
 type ModalGalleryProps = {
-    items: (VideoTokenFragment | ImageFragment)[];
+    items: (TypeVideoTokenFragment | TypeImageFragment)[];
     initialIndex: number;
     galleryName: string;
     onCloseModal: () => void;

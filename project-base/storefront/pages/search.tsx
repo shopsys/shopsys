@@ -5,9 +5,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { SearchProductsQueryVariables } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
-import { useSearchQuery, SearchQueryVariables } from 'graphql/requests/search/queries/SearchQuery.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeSearchProductsQueryVariables } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+import { useSearchQuery, TypeSearchQueryVariables } from 'graphql/requests/search/queries/SearchQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -49,7 +49,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
+    const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.search_results, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -85,7 +85,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         return redirect;
     }
 
-    return initServerSideProps<SearchQueryVariables | SearchProductsQueryVariables>({
+    return initServerSideProps<TypeSearchQueryVariables | TypeSearchProductsQueryVariables>({
         context,
         redisClient,
         domainConfig,

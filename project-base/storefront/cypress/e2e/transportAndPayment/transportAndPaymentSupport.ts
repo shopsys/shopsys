@@ -1,4 +1,4 @@
-import { TransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { OpeningHoursOfDay } from '../../../graphql/types';
 import { transport } from 'fixtures/demodata';
 import { TIDs } from 'tids';
@@ -23,15 +23,17 @@ export const changeSelectionOfPaymentByName = (paymentName: string) => {
 export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {
     cy.intercept('POST', '/graphql/TransportsQuery', (req) => {
         req.reply((response) => {
-            response?.body?.data?.transports?.forEach((transport: TransportWithAvailablePaymentsAndStoresFragment) => {
-                transport?.stores?.edges?.forEach((edge) => {
-                    if (edge?.node?.openingHours) {
-                        edge.node.openingHours.isOpen = true;
-                        edge.node.openingHours.dayOfWeek = dayOfWeek;
-                        edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
-                    }
-                });
-            });
+            response?.body?.data?.transports?.forEach(
+                (transport: TypeTransportWithAvailablePaymentsAndStoresFragment) => {
+                    transport?.stores?.edges?.forEach((edge) => {
+                        if (edge?.node?.openingHours) {
+                            edge.node.openingHours.isOpen = true;
+                            edge.node.openingHours.dayOfWeek = dayOfWeek;
+                            edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
+                        }
+                    });
+                },
+            );
         });
     });
 };
@@ -41,7 +43,7 @@ export const changeDayOfWeekInChangeTransportMutationResponse = (dayOfWeek: numb
         req.reply((response) => {
             (
                 response?.body?.data?.ChangeTransportInCart
-                    ?.transport as TransportWithAvailablePaymentsAndStoresFragment
+                    ?.transport as TypeTransportWithAvailablePaymentsAndStoresFragment
             )?.stores?.edges?.forEach((edge) => {
                 if (edge?.node?.openingHours) {
                     edge.node.openingHours.isOpen = true;

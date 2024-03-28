@@ -1,5 +1,5 @@
-import { CreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { RegistrationDataInput } from '../../graphql/types';
+import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
+import { TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
 import 'cypress-set-device-pixel-ratio';
 import { products } from 'fixtures/demodata';
@@ -150,7 +150,7 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
     });
 });
 
-Cypress.Commands.add('registerAsNewUser', (registrationInput: RegistrationDataInput) => {
+Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDataInput) => {
     return cy
         .request({
             method: 'POST',
@@ -225,7 +225,7 @@ Cypress.Commands.add('logout', () => {
     });
 });
 
-Cypress.Commands.add('createOrder', (createOrderVariables: CreateOrderMutationVariables) => {
+Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutationVariables) => {
     const currentAppStoreAsString = window.localStorage.getItem('app-store');
     if (!currentAppStoreAsString) {
         throw new Error(

@@ -1,9 +1,9 @@
-import { AutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmAutocompleteResultsViewEventType } from 'gtm/types/events';
 
 export const getGtmAutocompleteResultsViewEvent = (
-    searchResult: AutocompleteSearchQuery,
+    searchResult: TypeAutocompleteSearchQuery,
     keyword: string,
 ): GtmAutocompleteResultsViewEventType => {
     const resultsCount =

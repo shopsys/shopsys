@@ -1,7 +1,7 @@
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { usePayOrderMutation } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
-import { GoPayCreatePaymentSetup } from 'graphql/types';
+import { TypeGoPayCreatePaymentSetup } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
@@ -22,7 +22,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
     isDisabled,
 }) => {
     const [initiatedPaymentGate, setInitiatedPaymentGate] = useState(!requiresAction);
-    const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<GoPayCreatePaymentSetup | undefined>(undefined);
+    const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<TypeGoPayCreatePaymentSetup | undefined>(undefined);
     const [, payOrder] = usePayOrderMutation();
     const { t } = useTranslation();
     const wasPaidRef = useRef(false);

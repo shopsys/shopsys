@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type IsCustomerUserRegisteredQueryVariables = Types.Exact<{
+export type TypeIsCustomerUserRegisteredQueryVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
 }>;
 
 
-export type IsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustomerUserRegistered: boolean };
+export type TypeIsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustomerUserRegistered: boolean };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const IsCustomerUserRegisteredQueryDocument = gql`
 }
     `;
 
-export function useIsCustomerUserRegisteredQuery(options: Omit<Urql.UseQueryArgs<IsCustomerUserRegisteredQueryVariables>, 'query'>) {
-  return Urql.useQuery<IsCustomerUserRegisteredQuery, IsCustomerUserRegisteredQueryVariables>({ query: IsCustomerUserRegisteredQueryDocument, ...options });
+export function useIsCustomerUserRegisteredQuery(options: Omit<Urql.UseQueryArgs<TypeIsCustomerUserRegisteredQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeIsCustomerUserRegisteredQuery, TypeIsCustomerUserRegisteredQueryVariables>({ query: IsCustomerUserRegisteredQueryDocument, ...options });
 };

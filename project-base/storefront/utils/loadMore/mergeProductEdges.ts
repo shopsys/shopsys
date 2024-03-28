@@ -1,6 +1,6 @@
-import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 
 export const mergeProductEdges = (
-    previousProductEdges?: ListedProductConnectionFragment['edges'],
-    newProductEdges?: ListedProductConnectionFragment['edges'],
+    previousProductEdges?: TypeListedProductConnectionFragment['edges'],
+    newProductEdges?: TypeListedProductConnectionFragment['edges'],
 ) => [...(previousProductEdges || []), ...(newProductEdges || [])];

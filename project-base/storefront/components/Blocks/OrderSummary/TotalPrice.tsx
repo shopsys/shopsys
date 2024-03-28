@@ -1,10 +1,10 @@
 import { OrderSummaryContent } from './OrderSummaryElements';
-import { PriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
+import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TotalPriceProps = {
-    totalPrice: PriceFragment;
+    totalPrice: TypePriceFragment;
 };
 
 export const TotalPrice: FC<TotalPriceProps> = ({ totalPrice }) => {

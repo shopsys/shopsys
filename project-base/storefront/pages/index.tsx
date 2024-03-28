@@ -9,7 +9,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import {
     BlogArticlesQueryDocument,
-    BlogArticlesQueryVariables,
+    TypeBlogArticlesQueryVariables,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { BlogUrlQueryDocument } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import { PromotedCategoriesQueryDocument } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
@@ -60,7 +60,7 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps<BlogArticlesQueryVariables>({
+            initServerSideProps<TypeBlogArticlesQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,

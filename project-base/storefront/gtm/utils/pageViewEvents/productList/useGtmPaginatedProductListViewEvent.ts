@@ -1,6 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/useGtmContext';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmProductListViewEvent } from 'gtm/factories/getGtmProductListViewEvent';
@@ -10,7 +10,7 @@ import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQue
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
 export const useGtmPaginatedProductListViewEvent = (
-    paginatedProducts: ListedProductFragment[] | undefined,
+    paginatedProducts: TypeListedProductFragment[] | undefined,
     gtmProductListName: GtmProductListNameType,
 ): void => {
     const lastViewedStringifiedProducts = useRef<string>();

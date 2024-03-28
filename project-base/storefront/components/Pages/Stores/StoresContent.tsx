@@ -5,8 +5,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { ListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -15,14 +15,14 @@ import { createMapMarker } from 'utils/createMapMarker';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type StoresContentProps = {
-    stores: ListedStoreConnectionFragment;
+    stores: TypeListedStoreConnectionFragment;
 };
 
 export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
     const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
     const [activeStoreIndex, setActiveStoreIndex] = useState<number>();
-    const mappedStores = useMemo(() => mapConnectionEdges<ListedStoreFragment>(stores.edges), [stores.edges]);
+    const mappedStores = useMemo(() => mapConnectionEdges<TypeListedStoreFragment>(stores.edges), [stores.edges]);
 
     const markers = useMemo(() => {
         const validMarkers: Array<MapMarker> = [];

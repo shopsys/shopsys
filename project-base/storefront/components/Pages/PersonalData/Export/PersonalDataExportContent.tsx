@@ -6,7 +6,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
-import { PersonalDataAccessRequestTypeEnum } from 'graphql/types';
+import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -37,7 +37,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
             blurInput();
             const personalDataExportResult = await personalDataExport({
                 email: data.email,
-                type: PersonalDataAccessRequestTypeEnum.Export,
+                type: TypePersonalDataAccessRequestTypeEnum.Export,
             });
 
             if (personalDataExportResult.data?.RequestPersonalDataAccess) {

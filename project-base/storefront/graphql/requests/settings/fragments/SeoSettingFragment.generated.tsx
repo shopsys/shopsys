@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type SeoSettingFragment = { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string };
+export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string };
 
 
       export interface PossibleTypesResultData {

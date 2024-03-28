@@ -1,6 +1,6 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useStoresQuery, StoresQueryDocument } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
@@ -12,7 +12,7 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const [{ data: storesData, fetching }] = useStoresQuery();
-    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
+    const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.stores, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);

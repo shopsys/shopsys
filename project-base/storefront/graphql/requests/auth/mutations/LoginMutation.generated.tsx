@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { TokenFragments } from '../fragments/TokensFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type LoginMutationVariables = Types.Exact<{
+export type TypeLoginMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   password: Types.Scalars['Password']['input'];
   previousCartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
@@ -13,7 +13,7 @@ export type LoginMutationVariables = Types.Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -114,5 +114,5 @@ export const LoginMutationDocument = gql`
     ${TokenFragments}`;
 
 export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginMutationDocument);
+  return Urql.useMutation<TypeLoginMutation, TypeLoginMutationVariables>(LoginMutationDocument);
 };
