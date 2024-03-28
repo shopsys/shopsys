@@ -33,7 +33,7 @@ export type ServerSidePropsType = {
     isMaintenance: boolean;
     domainConfig: DomainConfigType;
     cookiesStore: string | null;
-};
+} & Record<string, any>;
 
 type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
 
@@ -42,6 +42,7 @@ type InitServerSidePropsParameters<VariablesType> = {
     context: GetServerSidePropsContext;
     authenticationRequired?: boolean;
     prefetchedQueries?: QueriesArray<VariablesType>;
+    additionalProps?: Record<string, any>;
 } & (
     | {
           client: Client;
@@ -66,6 +67,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     prefetchedQueries: additionalPrefetchQueries = [],
     client,
     ssrExchange: ssrExchangeOverride,
+    additionalProps = {},
 }: InitServerSidePropsParameters<VariablesType>): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
     const currentSsrCache = ssrExchangeOverride ?? ssrExchange({ isClient: false });
     const currentClient =
@@ -159,6 +161,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
             cookiesStore: getCookiesStore(context),
+            ...additionalProps,
         },
     };
 };

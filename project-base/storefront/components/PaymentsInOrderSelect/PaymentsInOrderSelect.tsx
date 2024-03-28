@@ -1,5 +1,6 @@
 import { PaymentsInOrderSelectItem } from './PaymentsInOrderSelectItem';
-import { InfoIcon, SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { useChangePaymentInOrder } from 'components/PaymentsInOrderSelect/helpers';

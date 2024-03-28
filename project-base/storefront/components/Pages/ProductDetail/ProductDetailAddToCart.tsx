@@ -1,4 +1,4 @@
-import { CartIcon } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';

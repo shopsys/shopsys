@@ -31,6 +31,7 @@ export const STATIC_REWRITE_PATHS = {
         '/grapesjs-template': '/grapesjs-template',
         '/product-comparison': '/product-comparison',
         '/wishlist': '/wishlist',
+        '/styleguide': '/styleguide',
     },
     [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: {
         '/search': '/hledani',
@@ -60,6 +61,7 @@ export const STATIC_REWRITE_PATHS = {
         '/grapesjs-template': '/grapesjs-template',
         '/product-comparison': '/porovnani-produktu',
         '/wishlist': '/oblibene-produkty',
+        '/styleguide': '/styleguide',
     },
 } as const;
 

@@ -1,6 +1,6 @@
 import { MenuItem } from './MobileMenuContent';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 
 type DropdownMenuListProps = {
     navigationItem: MenuItem;

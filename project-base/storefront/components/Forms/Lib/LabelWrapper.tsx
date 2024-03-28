@@ -1,4 +1,4 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { twMergeCustom } from 'helpers/twMerge';
 import { LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -27,7 +27,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     children,
     className,
 }) => (
-    <div className="relative w-full">
+    <div className="relative w-full select-none">
         {children}
         {!!label && (
             <label
