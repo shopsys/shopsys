@@ -557,3 +557,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   `useCountriesAsSelectOptions` was added to get mapped countries as select options, which uses `mapCountriesToSelectOptions` internally and thus the function is not exported anymore
     `useCountriesAsSelectOptions` should be used to get countries as select options now
 -   removed `useHandleContactInformationNonTextChanges` and instead use `onChange` handlers
+
+#### SF large files split ([#3081](https://github.com/shopsys/shopsys/pull/3081))
+
+-   icons are now in separate files, so update your imports and do the same with any further icons you might have
+-   large GTM files were split, so update your imports and do the same to any other GTM files you might have
+-   large helper files were split, so update your imports and do the same to any other helper files you might have
+-   large hook files were split, so update your imports and do the same to any other hook files you might have
+-   `useQueryParams` hook was split into separate files, so update your code and imports
+-   `hooks` and `helpers` folders were unified under a new `utils` name, so update your imports and move your files there
