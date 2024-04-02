@@ -3,10 +3,10 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductsSliderProps = {
     products: ListedProductFragment[];

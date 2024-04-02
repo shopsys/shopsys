@@ -6,8 +6,8 @@ import { ListedProductFragment } from 'graphql/requests/products/fragments/Liste
 import { AvailabilityStatusEnum } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { twJoin } from 'tailwind-merge';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type CategoryBestsellersListItemProps = {
     product: ListedProductFragment;

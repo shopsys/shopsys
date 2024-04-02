@@ -7,15 +7,15 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const Cart: FC = ({ className }) => {
     const router = useRouter();

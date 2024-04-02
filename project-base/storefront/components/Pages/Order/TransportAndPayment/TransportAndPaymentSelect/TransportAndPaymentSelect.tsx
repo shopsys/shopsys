@@ -9,17 +9,17 @@ import {
     getPickupPlaceDetail,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
-} from 'components/Pages/Order/TransportAndPayment/helpers';
+} from 'components/Pages/Order/TransportAndPayment/utils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
-import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
-import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
+import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
+import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 type TransportAndPaymentSelectProps = {
     transports: TransportWithAvailablePaymentsAndStoresFragment[];

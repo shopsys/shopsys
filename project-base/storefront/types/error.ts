@@ -1,4 +1,4 @@
-import { ApplicationErrorsType } from 'helpers/errors/applicationErrors';
+import { ApplicationErrorsType } from 'utils/errors/applicationErrors';
 
 export type ValidationErrors = {
     [fieldName: string]: {

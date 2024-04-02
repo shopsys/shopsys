@@ -2,7 +2,7 @@ import imageLogo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { Image } from 'components/Basic/Image/Image';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const Logo: FC = () => (
     <>

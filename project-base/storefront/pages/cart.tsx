@@ -10,13 +10,13 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
+import { useGtmCartViewEvent } from 'gtm/utils/pageViewEvents/useGtmCartViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const CartPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();

@@ -1,7 +1,7 @@
 import { TIDs } from 'cypress/tids';
-import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 
 type SpinboxProps = {
     min: number;

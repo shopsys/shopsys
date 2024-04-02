@@ -4,8 +4,8 @@ import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsLis
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();

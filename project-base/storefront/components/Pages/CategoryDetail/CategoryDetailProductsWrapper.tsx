@@ -3,12 +3,12 @@ import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsLis
 import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/helpers/getCategoryOrSeoCategoryGtmProductListName';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
-import { useProductsData } from 'helpers/loadMore/useProductsData';
-import { getMappedProducts } from 'helpers/mappers/products';
+import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject, useMemo } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { useProductsData } from 'utils/loadMore/useProductsData';
+import { getMappedProducts } from 'utils/mappers/products';
 
 type CategoryDetailProps = {
     category: CategoryDetailFragment;

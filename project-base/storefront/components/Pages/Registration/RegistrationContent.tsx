@@ -9,16 +9,16 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { blurInput } from 'helpers/forms/blurInput';
-import { clearForm } from 'helpers/forms/clearForm';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { useRegistration } from 'hooks/auth/useRegistration';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { FormProvider, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
+import { useRegistration } from 'utils/auth/useRegistration';
+import { blurInput } from 'utils/forms/blurInput';
+import { clearForm } from 'utils/forms/clearForm';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

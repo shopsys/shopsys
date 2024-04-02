@@ -9,17 +9,17 @@ import { ProductDetailUsps } from './ProductDetailUsps';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedHelpers';
+import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { useComparison } from 'hooks/productLists/comparison/useComparison';
-import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
+import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
+import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 const ProductComparePopup = dynamic(() =>
     import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(

@@ -3,8 +3,8 @@ import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useMemo } from 'react';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type StoreSelectProps = {
     selectedStoreUuid: string;

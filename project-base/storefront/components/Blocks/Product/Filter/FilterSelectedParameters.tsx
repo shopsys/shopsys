@@ -2,13 +2,13 @@ import { SelectedParametersList, SelectedParametersListItem, SelectedParametersN
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import useTranslation from 'next-translate/useTranslation';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterSelectedParametersProps = {
     filterOptions: ProductFilterOptionsFragment;

@@ -1,7 +1,7 @@
 import { getGtmCreateOrderEvent } from 'gtm/factories/getGtmCreateOrderEvent';
-import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
 import { GtmUserInfoType } from 'gtm/types/objects';
+import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 
 export const onGtmCreateOrderEventHandler = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType | undefined,

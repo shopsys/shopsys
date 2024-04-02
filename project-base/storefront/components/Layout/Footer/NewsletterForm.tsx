@@ -6,16 +6,16 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useNewsletterSubscribeMutation } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
-import { blurInput } from 'helpers/forms/blurInput';
-import { clearForm } from 'helpers/forms/clearForm';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
+import { blurInput } from 'utils/forms/blurInput';
+import { clearForm } from 'utils/forms/clearForm';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

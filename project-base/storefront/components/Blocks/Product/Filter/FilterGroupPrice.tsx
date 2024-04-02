@@ -1,9 +1,9 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
-import { getPriceRounded } from 'helpers/mappers/price';
-import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import { useState } from 'react';
+import { getPriceRounded } from 'utils/mappers/price';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupPriceProps = {
     title: string;

@@ -8,12 +8,12 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 

@@ -8,17 +8,17 @@ import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/m
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
-import { blurInput } from 'helpers/forms/blurInput';
-import { clearForm } from 'helpers/forms/clearForm';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
+import { blurInput } from 'utils/forms/blurInput';
+import { clearForm } from 'utils/forms/clearForm';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import 'utils/staticUrls/getInternationalizedStaticUrls';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

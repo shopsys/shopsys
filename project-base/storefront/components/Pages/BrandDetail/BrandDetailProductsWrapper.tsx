@@ -4,10 +4,10 @@ import { BrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDeta
 import { BrandProductsQueryDocument } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
-import { useProductsData } from 'helpers/loadMore/useProductsData';
-import { getMappedProducts } from 'helpers/mappers/products';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject } from 'react';
+import { useProductsData } from 'utils/loadMore/useProductsData';
+import { getMappedProducts } from 'utils/mappers/products';
 
 type BrandDetailProductsWrapperProps = {
     brand: BrandDetailFragment;

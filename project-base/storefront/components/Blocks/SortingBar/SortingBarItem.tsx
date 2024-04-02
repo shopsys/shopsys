@@ -1,5 +1,5 @@
-import { twMergeCustom } from 'helpers/twMerge';
 import { MouseEventHandler } from 'react';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SortingBarItemProps = { isActive: boolean; href?: string; onClick?: () => void };
 

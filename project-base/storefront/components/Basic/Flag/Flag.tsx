@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'utils/twMerge';
 
 type FlagProps = { href?: string };
 

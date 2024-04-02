@@ -1,5 +1,5 @@
-import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const OpeningStatus: FC<{ isOpen: boolean }> = ({ isOpen, className }) => {
     const { t } = useTranslation();

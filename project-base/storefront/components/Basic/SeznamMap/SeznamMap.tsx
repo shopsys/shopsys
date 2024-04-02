@@ -4,11 +4,11 @@ import { SeznamMapMarkerLayer } from './SeznamMapMarkerLayer';
 import { SeznamMapMounter } from './SeznamMapMounter';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { LatLngLiteral, MapMarker } from 'types/map';
 import { SeznamMapLoaderLang } from 'types/seznamMap';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 type SeznamMapProps = {
     markers: Array<MapMarker>;

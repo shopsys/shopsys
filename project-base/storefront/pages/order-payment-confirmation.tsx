@@ -4,12 +4,12 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentFail } from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import { PaymentSuccess } from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
-import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/helpers';
-import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/utils';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();

@@ -11,16 +11,16 @@ import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queri
 import { useContactMutation } from 'graphql/requests/contact/mutations/ContactMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { clearForm } from 'helpers/forms/clearForm';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
+import { clearForm } from 'utils/forms/clearForm';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

@@ -3,9 +3,9 @@ import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { TIDs } from 'cypress/tids';
 import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;

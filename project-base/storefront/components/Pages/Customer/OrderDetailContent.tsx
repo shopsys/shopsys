@@ -6,13 +6,13 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { TIDs } from 'cypress/tids';
 import { OrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
-import { useFormatDate } from 'hooks/formatting/useFormatDate';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { PaymentTypeEnum } from 'types/payment';
+import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { twMergeCustom } from 'utils/twMerge';
 
 const NotAddedProductsPopup = dynamic(() =>
     import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),

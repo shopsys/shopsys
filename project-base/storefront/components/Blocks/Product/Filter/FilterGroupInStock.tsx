@@ -1,9 +1,9 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupInStockProps = {
     title: string;

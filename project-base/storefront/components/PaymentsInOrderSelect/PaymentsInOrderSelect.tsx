@@ -3,13 +3,13 @@ import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
-import { useChangePaymentInOrder } from 'components/PaymentsInOrderSelect/helpers';
+import { useChangePaymentInOrder } from 'components/PaymentsInOrderSelect/utils';
 import { useOrderAvailablePaymentsQuery } from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
 import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
-import { useIsPaymentByCardAvailable } from 'hooks/cart/useIsPaymentByCardAvailable';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 import { PaymentTypeEnum } from 'types/payment';
+import { useIsPaymentByCardAvailable } from 'utils/cart/useIsPaymentByCardAvailable';
 
 type PaymentsInOrderSelectProps = {
     orderUuid: string;

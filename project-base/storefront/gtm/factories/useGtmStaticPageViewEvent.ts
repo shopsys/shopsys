@@ -3,12 +3,12 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
-import { getGtmPageInfoType } from 'gtm/helpers/getGtmPageInfoType';
-import { useGtmCartInfo } from 'gtm/helpers/useGtmCartInfo';
 import { GtmPageViewEventType } from 'gtm/types/events';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { getGtmPageInfoType } from 'gtm/utils/getGtmPageInfoType';
+import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import { useMemo } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType,

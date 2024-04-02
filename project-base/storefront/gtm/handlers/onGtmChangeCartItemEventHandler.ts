@@ -3,10 +3,10 @@ import { AddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMuta
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeCartItemEvent } from 'gtm/factories/getGtmChangeCartItemEvent';
-import { getGtmMappedCart } from 'gtm/helpers/getGtmMappedCart';
-import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
-import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { getGtmMappedCart } from 'gtm/utils/getGtmMappedCart';
+import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
+import { DomainConfigType } from 'utils/domain/domainConfig';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 export const onGtmChangeCartItemEventHandler = (
     initialQuantity: number,

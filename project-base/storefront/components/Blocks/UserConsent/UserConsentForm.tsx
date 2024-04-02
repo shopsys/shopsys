@@ -3,7 +3,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { useCookiesArticleUrlQuery } from 'graphql/requests/articles/queries/CookiesArticleUrlQuery.generated';
 import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
-import { getGtmConsentInfo } from 'gtm/helpers/getGtmConsentInfo';
+import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider } from 'react-hook-form';

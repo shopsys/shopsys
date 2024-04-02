@@ -2,14 +2,14 @@ import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useCurrentSortQuery } from 'hooks/queryParams/useCurrentSortQuery';
-import { useUpdateSortQuery } from 'hooks/queryParams/useUpdateSortQuery';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SortingBarProps = {
     totalCount: number;

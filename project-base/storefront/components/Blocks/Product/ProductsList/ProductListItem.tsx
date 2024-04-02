@@ -13,10 +13,10 @@ import { ListedProductFragment } from 'graphql/requests/products/fragments/Liste
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductItemProps = {
     product: ListedProductFragment;

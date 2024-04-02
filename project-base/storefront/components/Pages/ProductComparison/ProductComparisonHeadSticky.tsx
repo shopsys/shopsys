@@ -1,7 +1,7 @@
 import { Image } from 'components/Basic/Image/Image';
 import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
-import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
+import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 
 type ProductComparisonHeadStickyProps = {
     comparedProducts: ProductInProductListFragment[];

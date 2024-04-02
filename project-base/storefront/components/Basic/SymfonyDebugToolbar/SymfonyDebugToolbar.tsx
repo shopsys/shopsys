@@ -1,4 +1,4 @@
-import { useRequests } from './helpers';
+import { useRequests } from './utils';
 import symfonyImage from '/public/images/symfony.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';

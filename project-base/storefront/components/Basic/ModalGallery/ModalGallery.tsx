@@ -3,12 +3,12 @@ import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { VideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useKeypress } from 'hooks/useKeyPress';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
+import { useKeypress } from 'utils/useKeyPress';
 
 type ModalGalleryProps = {
     items: (VideoTokenFragment | ImageFragment)[];

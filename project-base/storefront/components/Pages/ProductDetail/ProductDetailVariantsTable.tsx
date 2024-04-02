@@ -8,9 +8,9 @@ import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/M
 import { StoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type ProductVariantsTableProps = {
     variants: MainVariantDetailFragment['variants'];

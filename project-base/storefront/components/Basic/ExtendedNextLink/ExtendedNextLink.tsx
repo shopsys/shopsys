@@ -1,4 +1,3 @@
-import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
@@ -10,6 +9,7 @@ import {
     FriendlyPagesTypesKey,
     FriendlyPagesTypesKeys,
 } from 'types/friendlyUrl';
+import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 
 type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
     Omit<LinkProps, 'prefetch'> & {

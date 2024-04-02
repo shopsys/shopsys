@@ -1,6 +1,6 @@
 import { DropdownMenuListItem } from './MobileMenuListItem';
 import { SubMenu } from './MobileMenuSubItems';
-import { mapNavigationMenuItems } from './helpers';
+import { mapNavigationMenuItems } from './utils';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { NavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';

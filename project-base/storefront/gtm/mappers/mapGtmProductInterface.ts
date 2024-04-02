@@ -1,6 +1,6 @@
 import { GtmProductInterface } from 'gtm/types/objects';
-import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { ProductInterfaceType } from 'types/product';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 
 export const mapGtmProductInterface = (
     productInterface: ProductInterfaceType,

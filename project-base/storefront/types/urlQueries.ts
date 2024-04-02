@@ -6,7 +6,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
+} from 'utils/queryParamNames';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 

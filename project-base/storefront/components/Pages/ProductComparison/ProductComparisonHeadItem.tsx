@@ -9,9 +9,9 @@ import { ListedProductFragment } from 'graphql/requests/products/fragments/Liste
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
+import { useComparisonTable } from 'utils/productLists/comparison/useComparisonTable';
 
 type ProductComparisonItemProps = {
     product: ProductInProductListFragment;

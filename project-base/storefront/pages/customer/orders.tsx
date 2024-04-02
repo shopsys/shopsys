@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -13,16 +13,16 @@ import {
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getNumberFromUrlQuery } from 'helpers/parsing/getNumberFromUrlQuery';
-import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
+import { mapConnectionEdges } from 'utils/mappers/connection';
+import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
+import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const OrdersPage: FC = () => {
     const { t } = useTranslation();

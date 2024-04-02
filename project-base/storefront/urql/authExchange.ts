@@ -1,11 +1,11 @@
 import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
 import { RefreshTokensDocument } from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
-import { getTokensFromCookies } from 'helpers/auth/getTokensFromCookies';
-import { removeTokensFromCookies } from 'helpers/auth/removeTokensFromCookies';
-import { setTokensToCookies } from 'helpers/auth/setTokensToCookies';
 import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { CombinedError, makeOperation, Operation } from 'urql';
+import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
+import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { setTokensToCookies } from 'utils/auth/setTokensToCookies';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (

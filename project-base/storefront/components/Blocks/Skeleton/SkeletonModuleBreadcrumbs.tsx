@@ -1,9 +1,9 @@
 import { BreadcrumbsSpan, breadcrumbsTwClass } from 'components/Layout/Breadcrumbs/Breadcrumbs';
-import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
-import { twMergeCustom } from 'helpers/twMerge';
 import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { twJoin } from 'tailwind-merge';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SkeletonModuleBreadcrumbsProps = {
     count: number;

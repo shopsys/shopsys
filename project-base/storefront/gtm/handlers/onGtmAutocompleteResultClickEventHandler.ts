@@ -1,6 +1,6 @@
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { getGtmAutocompleteResultClickEvent } from 'gtm/factories/getGtmAutocompleteResultClickEvent';
-import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
+import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 
 export const onGtmAutocompleteResultClickEventHandler = (
     keyword: string,

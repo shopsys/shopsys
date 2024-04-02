@@ -5,13 +5,13 @@ import {
     FilterGroupWrapper,
     ShowAllButton,
 } from './FilterElements';
-import { useFilterShowLess } from './helpers/useFilterShowLess';
+import { useFilterShowLess } from './utils/useFilterShowLess';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useCurrentFilterQuery } from 'hooks/queryParams/useCurrentFilterQuery';
-import { useUpdateFilterQuery } from 'hooks/queryParams/useUpdateFilterQuery';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterFieldType = 'flags' | 'brands';
 

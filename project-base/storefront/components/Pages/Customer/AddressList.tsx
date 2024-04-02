@@ -5,13 +5,13 @@ import { Button } from 'components/Forms/Button/Button';
 import { useDeleteDeliveryAddressMutation } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
 import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
-import { showSuccessMessage } from 'helpers/toasts/showSuccessMessage';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

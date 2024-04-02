@@ -2,7 +2,7 @@ import { ListedProductFragment } from 'graphql/requests/products/fragments/Liste
 import { SimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmProductClickEvent } from 'gtm/factories/getGtmProductClickEvent';
-import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
+import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 
 export const onGtmProductClickEventHandler = (
     product: ListedProductFragment | SimpleProductFragment,

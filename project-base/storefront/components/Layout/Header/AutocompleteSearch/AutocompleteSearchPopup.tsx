@@ -18,13 +18,13 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { GtmSectionType } from 'gtm/enums/GtmSectionType';
 import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { forwardRef, useMemo } from 'react';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapConnectionEdges } from 'utils/mappers/connection';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type AutocompleteProps = {
     autocompleteSearchResults: AutocompleteSearchQuery;

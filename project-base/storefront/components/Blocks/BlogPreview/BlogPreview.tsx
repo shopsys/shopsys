@@ -7,9 +7,9 @@ import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { useBlogUrlQuery } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 
 export const BlogPreview: FC = () => {
     const { t } = useTranslation();

@@ -1,18 +1,18 @@
 import { Kind } from 'graphql';
 import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { removeTokensFromCookies } from 'helpers/auth/removeTokensFromCookies';
-import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
-import { logException } from 'helpers/errors/logException';
-import { mapGraphqlErrorForDevelopment } from 'helpers/errors/mapGraphqlErrorForDevelopment';
-import { isClient } from 'helpers/isClient';
-import { showErrorMessage } from 'helpers/toasts/showErrorMessage';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
+import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
+import { isFlashMessageError, isNoLogError } from 'utils/errors/applicationErrors';
+import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
+import { logException } from 'utils/errors/logException';
+import { mapGraphqlErrorForDevelopment } from 'utils/errors/mapGraphqlErrorForDevelopment';
+import { isClient } from 'utils/isClient';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { pipe, tap } from 'wonka';
 
 export const getErrorExchange =

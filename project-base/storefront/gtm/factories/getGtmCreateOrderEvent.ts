@@ -1,14 +1,14 @@
 import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { getGtmUserInfo } from 'gtm/helpers/getGtmUserInfo';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCreateOrderEventOrderPartType, GtmCreateOrderEventType } from 'gtm/types/events';
 import { GtmUserInfoType, GtmReviewConsentsType } from 'gtm/types/objects';
-import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
+import { DomainConfigType } from 'utils/domain/domainConfig';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 export const getGtmCreateOrderEvent = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType,

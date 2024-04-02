@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import Head from 'next/head';
+import { getStringWithoutLeadingSlash } from 'utils/parsing/stringWIthoutSlash';
 
 type BreadcrumbsMetadataProps = {
     breadcrumbs: BreadcrumbFragment[];

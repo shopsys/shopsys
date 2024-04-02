@@ -1,9 +1,9 @@
 import { TIDs } from 'cypress/tids';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 export const CartPreview: FC = () => {
     const { t } = useTranslation();

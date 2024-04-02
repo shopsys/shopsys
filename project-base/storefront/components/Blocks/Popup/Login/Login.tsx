@@ -9,15 +9,15 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { blurInput } from 'helpers/forms/blurInput';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useLogin } from 'hooks/auth/useLogin';
-import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
+import { useLogin } from 'utils/auth/useLogin';
+import { blurInput } from 'utils/forms/blurInput';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import * as Yup from 'yup';
 
 type LoginProps = {

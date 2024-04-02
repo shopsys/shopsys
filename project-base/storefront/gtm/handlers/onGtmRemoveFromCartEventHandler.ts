@@ -2,9 +2,9 @@ import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragme
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeCartItemEvent } from 'gtm/factories/getGtmChangeCartItemEvent';
-import { gtmSafePushEvent } from 'gtm/helpers/gtmSafePushEvent';
 import { GtmCartInfoType } from 'gtm/types/objects';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 export const onGtmRemoveFromCartEventHandler = (
     removedCartItem: CartItemFragment,

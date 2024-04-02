@@ -4,9 +4,9 @@ import { CartPaymentModificationsFragment } from 'graphql/requests/cart/fragment
 import { CartPromoCodeModificationsFragment } from 'graphql/requests/cart/fragments/CartPromoCodeModificationsFragment.generated';
 import { CartTransportModificationsFragment } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { showInfoMessage } from 'helpers/toasts/showInfoMessage';
-import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { Translate } from 'next-translate';
+import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
+import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 
 export const handleCartModifications = (
     cartModifications: CartModificationsFragment,

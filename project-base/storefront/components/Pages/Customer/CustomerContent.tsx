@@ -2,9 +2,9 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useLogout } from 'hooks/auth/useLogout';
 import useTranslation from 'next-translate/useTranslation';
+import { useLogout } from 'utils/auth/useLogout';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const CustomerContent: FC = () => {
     const { t } = useTranslation();

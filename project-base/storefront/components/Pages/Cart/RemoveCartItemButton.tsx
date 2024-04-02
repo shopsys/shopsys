@@ -1,8 +1,8 @@
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { TIDs } from 'cypress/tids';
-import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
+import { twMergeCustom } from 'utils/twMerge';
 
 type RemoveCartItemButtonProps = {
     onItemRemove: MouseEventHandler<HTMLButtonElement>;

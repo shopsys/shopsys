@@ -3,8 +3,8 @@ import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/Skelet
 import { ProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { parseCatnums } from 'utils/parsing/grapesJsParser';
 
 type GrapesJsProps = {
     rawProductPart: string;

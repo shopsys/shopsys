@@ -1,8 +1,8 @@
 import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain, ErrorPageButtonLink } from './ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
 import useTranslation from 'next-translate/useTranslation';
+import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 
 type Error500ContentProps = {
     err?: string;

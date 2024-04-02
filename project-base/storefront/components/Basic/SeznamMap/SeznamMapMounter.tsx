@@ -1,7 +1,7 @@
-import { useSeznamMapLoader } from 'hooks/seznamMap/useSeznamMapLoader';
 import { useEffect, useRef, useState } from 'react';
 import { LatLngLiteral } from 'types/map';
 import { SeznamMapAPILoaderConfig, SeznamMapLoaderConfig, SeznamMapMapOptions } from 'types/seznamMap';
+import { useSeznamMapLoader } from 'utils/seznamMap/useSeznamMapLoader';
 
 type SeznamMapMounterProps = {
     center: LatLngLiteral;

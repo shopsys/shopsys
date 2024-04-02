@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
-import { isClient } from 'helpers/isClient';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { isClient } from 'utils/isClient';
 
 const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;

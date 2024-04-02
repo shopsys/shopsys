@@ -1,7 +1,7 @@
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 import { ProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
-import { useComparison } from 'hooks/productLists/comparison/useComparison';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
 
 type ProductComparisonHeadProps = {
     comparedProducts: ProductInProductListFragment[];

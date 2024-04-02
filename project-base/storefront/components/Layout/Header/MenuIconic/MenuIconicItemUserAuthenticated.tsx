@@ -3,9 +3,9 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { getInternationalizedStaticUrls } from 'helpers/staticUrls/getInternationalizedStaticUrls';
-import { useLogout } from 'hooks/auth/useLogout';
 import useTranslation from 'next-translate/useTranslation';
+import { useLogout } from 'utils/auth/useLogout';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();

@@ -1,13 +1,13 @@
 import { GtmEventType } from 'gtm/enums/GtmEventType';
-import { getGtmConsentInfo } from 'gtm/helpers/getGtmConsentInfo';
-import { getGtmDeviceType } from 'gtm/helpers/getGtmDeviceType';
-import { getGtmUserInfo } from 'gtm/helpers/getGtmUserInfo';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { GtmPageInfoType, GtmCartInfoType } from 'gtm/types/objects';
-import { DomainConfigType } from 'helpers/domain/domainConfig';
+import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
+import { getGtmDeviceType } from 'gtm/utils/getGtmDeviceType';
+import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
 import { UserConsentFormType } from 'types/form';
+import { DomainConfigType } from 'utils/domain/domainConfig';
 
 export const getGtmPageViewEvent = (
     pageInfo: GtmPageInfoType,

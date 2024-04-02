@@ -7,9 +7,9 @@ import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/Ca
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { createEmptyArray } from 'helpers/arrays/createEmptyArray';
-import { calculatePageSize } from 'helpers/loadMore/calculatePageSize';
-import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
+import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 
 type ProductsListProps = {
     products: ListedProductFragment[] | undefined;

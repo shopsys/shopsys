@@ -1,16 +1,16 @@
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/getUrlQueriesWithoutDynamicPageQueries';
-import { useCurrentLoadMoreQuery } from 'hooks/queryParams/useCurrentLoadMoreQuery';
-import { useCurrentPageQuery } from 'hooks/queryParams/useCurrentPageQuery';
-import { useUpdateLoadMoreQuery } from 'hooks/queryParams/useUpdateLoadMoreQuery';
-import { useUpdatePaginationQuery } from 'hooks/queryParams/useUpdatePaginationQuery';
-import { useMediaMin } from 'hooks/ui/useMediaMin';
-import { usePagination } from 'hooks/ui/usePagination';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
+import { useUpdateLoadMoreQuery } from 'utils/queryParams/useUpdateLoadMoreQuery';
+import { useUpdatePaginationQuery } from 'utils/queryParams/useUpdatePaginationQuery';
+import { useMediaMin } from 'utils/ui/useMediaMin';
+import { usePagination } from 'utils/ui/usePagination';
 
 type PaginationProps = {
     totalCount: number;

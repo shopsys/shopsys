@@ -1,6 +1,6 @@
 import { Webline } from 'components/Layout/Webline/Webline';
-import { twMergeCustom } from 'helpers/twMerge';
 import Skeleton from 'react-loading-skeleton';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const SkeletonPageBrandsOverview: FC = ({ className }) => (
     <Webline>

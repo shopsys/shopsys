@@ -1,8 +1,8 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { TIDs } from 'cypress/tids';
-import { twMergeCustom } from 'helpers/twMerge';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
