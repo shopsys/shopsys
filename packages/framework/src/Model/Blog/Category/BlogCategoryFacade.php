@@ -301,4 +301,12 @@ class BlogCategoryFacade
             $this->blogArticleExportQueueFacade->addIdsBatch($allIds, $domainId);
         }
     }
+
+    /**
+     * @return int|null
+     */
+    public function findVisibleMainBlogCategoryIdOnCurrentDomain(): ?int
+    {
+        return $this->blogCategoryRepository->findVisibleMainBlogCategoryIdOnDomain($this->domain->getId());
+    }
 }

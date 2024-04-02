@@ -2009,6 +2009,8 @@ type Settings {
   contactFormMainText: String!
   "Timezone that is used for displaying time"
   displayTimezone: String!
+  "Absolute URL of the blog main category"
+  mainBlogCategoryUrl: String
   "Max allowed payment transactions (how many times is user allowed to try the same payment)"
   maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
