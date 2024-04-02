@@ -188,6 +188,11 @@ class ProductData
      */
     public $productStockData;
 
+    /**
+     * @var int|null
+     */
+    public $weight;
+
     public function __construct()
     {
         $this->name = [];

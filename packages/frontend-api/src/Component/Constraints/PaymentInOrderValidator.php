@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
-use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
-use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
-use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
-use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -20,114 +14,43 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class PaymentInOrderValidator extends ConstraintValidator
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      */
     public function __construct(
-        protected readonly OrderFacade $orderFacade,
         protected readonly PaymentFacade $paymentFacade,
-        protected readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CartApiFacade $cartApiFacade,
     ) {
     }
 
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder $constraint
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof PaymentInOrder) {
             throw new UnexpectedTypeException($constraint, PaymentInOrder::class);
         }
+        $cartUuid = $value->cartUuid;
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+        $paymentInCart = $cart->getPayment();
 
-        try {
-            $order = $this->orderFacade->getByUuid($value->orderUuid);
-            $payment = $this->paymentFacade->getByUuid($value->paymentUuid);
-        } catch (OrderNotFoundException) {
-            throw new OrderNotFoundUserError('Order with UUID \'' . $value->orderUuid . '\' not found.');
-        } catch (PaymentNotFoundException) {
-            throw new PaymentNotFoundUserError('Payment with UUID \'' . $value->paymentUuid . '\' not found.');
-        }
-        $paymentGoPayBankSwift = $value->paymentGoPayBankSwift;
+        if ($paymentInCart === null) {
+            $this->context->buildViolation($constraint->paymentNotSetMessage)
+                ->setCode($constraint::PAYMENT_NOT_SET_ERROR)
+                ->addViolation();
 
-        $this->validatePaymentCanBeChanged($order, $constraint);
-        $this->validatePaymentIsAvailable($order, $payment, $constraint);
-        $this->validateSwift($order, $payment, $paymentGoPayBankSwift, $constraint);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string|null $paymentGoPayBankSwift
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder $constraint
-     */
-    protected function validateSwift(
-        Order $order,
-        Payment $payment,
-        ?string $paymentGoPayBankSwift,
-        PaymentInOrder $constraint,
-    ): void {
-        $goPayPaymentMethod = $payment->getGoPayPaymentMethod();
-
-        if ($paymentGoPayBankSwift === null || $goPayPaymentMethod === null) {
             return;
         }
 
-        $goPayBankSwift = $this->goPayBankSwiftFacade->findBySwiftAndPaymentMethodAndCurrency(
-            $paymentGoPayBankSwift,
-            $goPayPaymentMethod,
-            $order->getCurrency(),
-        );
-
-        if ($goPayBankSwift !== null) {
-            return;
+        if ($this->paymentFacade->isPaymentVisibleAndEnabledOnCurrentDomain($paymentInCart) === false) {
+            $this->context->buildViolation($constraint->unavailablePaymentMessage)
+                ->setCode($constraint::UNAVAILABLE_PAYMENT_ERROR)
+                ->addViolation();
         }
-
-        $this->context
-            ->buildViolation($constraint->invalidPaymentSwiftMessage, [
-                'paymentUuid' => $payment->getUuid(),
-                'swift' => $paymentGoPayBankSwift,
-            ])
-            ->setCode(PaymentInOrder::INVALID_PAYMENT_SWIFT_ERROR)
-            ->addViolation();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder $constraint
-     */
-    protected function validatePaymentCanBeChanged(Order $order, PaymentInOrder $constraint): void
-    {
-        if ($order->isPaid() === false && $order->getPayment()->isGoPay()) {
-            return;
-        }
-
-        $this->context
-            ->buildViolation($constraint->unchangeablePaymentMessage)
-            ->setCode(PaymentInOrder::UNCHANGEABLE_PAYMENT_ERROR)
-            ->addViolation();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder $constraint
-     */
-    protected function validatePaymentIsAvailable(Order $order, Payment $payment, PaymentInOrder $constraint): void
-    {
-        $availablePayments = $this->paymentFacade->getVisibleForOrder($order);
-
-        if (in_array($payment, $availablePayments, true)) {
-            return;
-        }
-
-        $this->context
-            ->buildViolation($constraint->unavailablePaymentMessage, [
-                'paymentUuid' => $payment->getUuid(),
-                'orderUuid' => $order->getUuid(),
-            ])
-            ->setCode(PaymentInOrder::UNAVAILABLE_PAYMENT_ERROR)
-            ->addViolation();
     }
 }

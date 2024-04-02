@@ -33,6 +33,5 @@ class OrderDataFactory extends BaseOrderDataFactory
         parent::fillFromOrder($orderData, $order);
 
         $orderData->gtmCoupon = $order->getGtmCoupon();
-        $orderData->trackingNumber = $order->getTrackingNumber();
     }
 }

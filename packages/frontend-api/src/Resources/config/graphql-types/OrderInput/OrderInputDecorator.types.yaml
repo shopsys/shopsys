@@ -4,8 +4,15 @@ OrderInputDecorator:
     config:
         description: "Represents the main input object to create orders"
         validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\ProductInOrder: ~
+            -   Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder: ~
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder: ~
             -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
         fields:
+            cartUuid:
+                type: "Uuid"
+                description: "Cart identifier used for getting carts of not logged customers"
+                defaultValue: null
             firstName:
                 type: "String!"
                 description: "The customer's first name"
@@ -70,6 +77,10 @@ OrderInputDecorator:
                             max: 50
                             maxMessage: "Identification number cannot be longer than {{ limit }} characters"
                             groups: "onCompanyBehalf"
+                    -   Regex:
+                            pattern: '/^[0-9]+$/'
+                            message: "Please fill in numbers only"
+                            groups: "onCompanyBehalf"
             companyTaxNumber:
                 type: "String"
                 description: "The customer’s company tax number (required when onCompanyBehalf is true)"
@@ -78,7 +89,10 @@ OrderInputDecorator:
                             max: 50
                             maxMessage: "Tax number cannot be longer than {{ limit }} characters"
                             groups: "onCompanyBehalf"
-
+                    -   Regex:
+                            pattern: '/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/'
+                            message: "Please check Tax number format"
+                            groups: "onCompanyBehalf"
             street:
                 type: "String!"
                 description: "Billing address street name (will be on the tax invoice)"
@@ -119,6 +133,10 @@ OrderInputDecorator:
             differentDeliveryAddress:
                 type: "Boolean!"
                 description: "Determines whether to deliver products to a different address than the billing one"
+            deliveryAddressUuid:
+                type: "Uuid"
+                description: "Delivery address identifier"
+                defaultValue: null
             deliveryFirstName:
                 type: "String"
                 description: "First name of the contact person for delivery (required when differentDeliveryAddress is true)"
@@ -203,27 +221,11 @@ OrderInputDecorator:
             note:
                 type: "String"
                 description: "Other information related to the order"
-
-            payment:
-                type: "PaymentInput!"
-                description: "Payment method applied to the order"
-                validation:
-                    -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentCanBeUsed: ~
-            transport:
-                type: "TransportInput!"
-                description: "Transport method applied to the order"
-                validation:
-                    -   Shopsys\FrontendApiBundle\Component\Constraints\TransportCanBeUsed: ~
-
-            products:
-                type: "[OrderProductInput!]!"
-                description: "A list of products to order to"
-                validation:
-                    -   NotBlank:
-                            message: "Please enter at least one product"
-                    -   All:
-                            -   Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrdered: ~
             heurekaAgreement:
                 type: "Boolean!"
                 defaultValue: false
                 description: "Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program"
+            newsletterSubscription:
+                type: Boolean
+                description: "Allows user to subscribe/unsubscribe newsletter."
+                defaultValue: false

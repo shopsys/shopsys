@@ -33,6 +33,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\Length;
 
 class OrderFormType extends AbstractType
 {
@@ -209,6 +210,15 @@ class OrderFormType extends AbstractType
             ->add('transport', DisplayOnlyType::class, [
                 'label' => t('Transport type'),
                 'data' => $order->getTransport()->getName(),
+            ])
+            ->add('trackingNumber', TextType::class, [
+                'label' => t('Tracking number'),
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 100,
+                    ]),
+                ],
             ]);
 
         return $builderBasicInformationGroup;

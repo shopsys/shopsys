@@ -7,9 +7,6 @@ Transport:
             daysUntilDelivery:
                 type: "Int!"
                 description: "Number of days until goods are delivered"
-            transportType:
-                type: "TransportType!"
-                description: "Type of transport"
             stores:
                 type: "StoreConnection"
                 description: "Stores available for personal pickup"

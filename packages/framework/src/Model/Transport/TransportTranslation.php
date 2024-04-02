@@ -41,6 +41,12 @@ class TransportTranslation extends AbstractTranslation
     protected $instructions;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $trackingInstruction;
+
+    /**
      * @return string|null
      */
     public function getName()
@@ -86,5 +92,21 @@ class TransportTranslation extends AbstractTranslation
     public function setInstructions($instructions)
     {
         $this->instructions = TransformString::getTrimmedStringOrNullOnEmpty($instructions);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrackingInstruction()
+    {
+        return $this->trackingInstruction;
+    }
+
+    /**
+     * @param string|null $trackingInstruction
+     */
+    public function setTrackingInstruction($trackingInstruction)
+    {
+        $this->trackingInstruction = $trackingInstruction;
     }
 }

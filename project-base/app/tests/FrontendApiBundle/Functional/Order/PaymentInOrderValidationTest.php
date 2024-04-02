@@ -6,11 +6,11 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
-use App\FrontendApi\Model\Component\Constraints\PaymentInOrder;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentInOrderValidationTest extends GraphQlTestCase

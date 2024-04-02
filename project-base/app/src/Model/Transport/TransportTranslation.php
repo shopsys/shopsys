@@ -14,25 +14,4 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportTranslation as BaseTranspor
  */
 class TransportTranslation extends BaseTransportTranslation
 {
-    /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $trackingInstruction;
-
-    /**
-     * @return string|null
-     */
-    public function getTrackingInstruction(): ?string
-    {
-        return $this->trackingInstruction;
-    }
-
-    /**
-     * @param string|null $trackingInstruction
-     */
-    public function setTrackingInstruction(?string $trackingInstruction)
-    {
-        $this->trackingInstruction = $trackingInstruction;
-    }
 }

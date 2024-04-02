@@ -366,6 +366,14 @@ services:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
+    Shopsys\FrameworkBundle\Component\Packetery\PacketeryClient: ~
+
+    Shopsys\FrameworkBundle\Component\Packetery\PacketeryConfig:
+        arguments:
+            $packeteryConfig: "%packetery_config%"
+
+    Shopsys\FrameworkBundle\Component\Packetery\PacketeryRenderer: ~
+
     Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
         arguments:
             $storefrontGraphqlQueryClient: '@snc_redis.storefront_graphql_query'
@@ -734,6 +742,10 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
 
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller: ~
+
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
+
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory
 
@@ -937,6 +949,10 @@ services:
         alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory
 
     Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter: ~
+
+    Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory:
+        arguments:
+            - '@monolog.logger.cron'
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory

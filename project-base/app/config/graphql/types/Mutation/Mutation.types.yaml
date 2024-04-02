@@ -2,14 +2,9 @@ Mutation:
     type: object
     inherits:
         - 'MutationDecorator'
-        - 'CartMutation'
-        - 'PromoCodeMutation'
         - 'CustomerUserMutation'
         - 'PersonalDataMutation'
         - 'CustomerMutation'
         - 'ContactFormMutation'
-        - 'PaymentInCartMutation'
-        - 'TransportMutation'
         - 'RegisterMutation'
         - 'LoginMutation'
-        - 'OrderMutation'

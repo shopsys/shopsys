@@ -61,6 +61,11 @@ class CustomerUserData
      */
     public $uuid;
 
+    /**
+     * @var bool
+     */
+    public $newsletterSubscription = false;
+
     public function __construct()
     {
     }

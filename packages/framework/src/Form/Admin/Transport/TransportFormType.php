@@ -7,32 +7,42 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
+use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
+use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TransportFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
+        private readonly TransportTypeFacade $transportTypeFacade,
     ) {
     }
 
@@ -86,6 +96,33 @@ class TransportFormType extends AbstractType
                 'expanded' => true,
                 'empty_message' => t('You have to create some payment first.'),
                 'label' => t('Available payment methods'),
+            ])
+            ->add('transportType', ChoiceType::class, [
+                'required' => true,
+                'choices' => $this->transportTypeFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'label' => t('Transport type'),
+            ])
+            ->add('daysUntilDelivery', TextType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new Constraints\GreaterThanOrEqual([
+                        'value' => 0,
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => '/^\d+$/',
+                    ]),
+                ],
+                'label' => t('Days until delivery'),
+            ])
+            ->add('maxWeight', IntegerType::class, [
+                'label' => t('Maximum weight (g)'),
+                'required' => false,
             ]);
 
         $builderPricesGroup = $builder->create('prices', GroupType::class, [
@@ -136,11 +173,57 @@ class TransportFormType extends AbstractType
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
 
+        $builderPackageTrackingGroup = $builder->create('packageTracking', GroupType::class, [
+            'label' => t('Package tracking'),
+        ]);
+
+        $builderPackageTrackingGroup
+            ->add('trackingUrl', TextType::class, [
+                'label' => t('Tracking URL'),
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                    ]),
+                ],
+            ])
+            ->add('trackingUrlVariables', DisplayVariablesType::class, [
+                'label' => t('Tracking URL variables'),
+                'required' => false,
+                'variables' => [
+                    OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => [
+                        'text' => t('Tracking number'),
+                        'required' => false,
+                    ],
+                ],
+            ])
+            ->add('trackingInstructions', LocalizedType::class, [
+                'entry_type' => CKEditorType::class,
+                'label' => t('Tracking instructions'),
+                'required' => false,
+                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+            ])
+            ->add('trackingInstructionsVariables', DisplayVariablesType::class, [
+                'label' => t('Tracking instructions variables'),
+                'required' => false,
+                'variables' => [
+                    OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => [
+                        'text' => t('Tracking number'),
+                        'required' => false,
+                    ],
+                    OrderMail::TRANSPORT_VARIABLE_TRACKING_URL => [
+                        'text' => t('Tracking URL'),
+                        'required' => false,
+                    ],
+                ],
+            ]);
+
         $builder
             ->add($builderBasicInformationGroup)
             ->add($builderPricesGroup)
             ->add($builderAdditionalInformationGroup)
             ->add($builderImageGroup)
+            ->add($builderPackageTrackingGroup)
             ->add('save', SubmitType::class);
     }
 

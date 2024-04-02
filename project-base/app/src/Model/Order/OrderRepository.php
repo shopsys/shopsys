@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Transport\Transport;
-use App\Model\Transport\Type\TransportType;
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
 
 /**
@@ -27,21 +24,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method bool isOrderStatusUsed(\App\Model\Order\Status\OrderStatus $orderStatus)
  * @method \App\Model\Order\Order getByUuid(string $uuid)
+ * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType(\Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType)
  */
 class OrderRepository extends BaseOrderRepository
 {
-    /**
-     * @param \App\Model\Transport\Type\TransportType $transportType
-     * @return \App\Model\Order\Order[]
-     */
-    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
-    {
-        $queryBuilder = $this->createOrderQueryBuilder()
-            ->join(Transport::class, 't', Join::WITH, 'o.transport = t.id')
-            ->andWhere('o.trackingNumber IS NULL')
-            ->andWhere('t.transportType = :transportType')
-            ->setParameter('transportType', $transportType);
-
-        return $queryBuilder->getQuery()->execute();
-    }
 }

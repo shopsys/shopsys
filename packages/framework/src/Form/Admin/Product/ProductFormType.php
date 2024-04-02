@@ -40,6 +40,7 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -224,6 +225,10 @@ class ProductFormType extends AbstractType
                 'choice_value' => 'id',
                 'placeholder' => t('-- Choose brand --'),
                 'label' => t('Brand'),
+            ])
+            ->add('weight', IntegerType::class, [
+                'label' => t('Weight (g)'),
+                'required' => false,
             ]);
 
         return $builderBasicInformationGroup;

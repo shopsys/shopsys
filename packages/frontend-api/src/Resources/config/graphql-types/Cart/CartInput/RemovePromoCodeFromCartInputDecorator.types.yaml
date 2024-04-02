@@ -1,0 +1,12 @@
+RemovePromoCodeFromCartInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier or null if customer is logged in"
+            promoCode:
+                type: "String!"
+                description: "Promo code to be removed"

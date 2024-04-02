@@ -11,8 +11,4 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  */
 class CustomerUserData extends BaseUserData
 {
-    /**
-     * @var bool|null
-     */
-    public $newsletterSubscription = false;
 }

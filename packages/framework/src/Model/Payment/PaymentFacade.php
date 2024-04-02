@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -328,5 +329,20 @@ class PaymentFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @return bool
+     */
+    public function isPaymentVisibleAndEnabledOnCurrentDomain(Payment $payment): bool
+    {
+        try {
+            $this->getEnabledOnDomainByUuid($payment->getUuid(), $this->domain->getId());
+        } catch (PaymentNotFoundException $exception) {
+            return false;
+        }
+
+        return true;
     }
 }

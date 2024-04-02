@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportRepository
@@ -148,5 +149,33 @@ class TransportRepository
         }
 
         return $transport;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param int|null $totalWeight
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getAllWithEagerLoadedDomainsAndTranslations(
+        DomainConfig $domainConfig,
+        ?int $totalWeight = null,
+    ): array {
+        $queryBuilder = $this->getQueryBuilderForAll()
+            ->addSelect('td')
+            ->addSelect('tt')
+            ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
+            ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
+            ->setParameter('domainId', $domainConfig->getId())
+            ->setParameter('locale', $domainConfig->getLocale());
+
+        if ($totalWeight !== null) {
+            $queryBuilder
+                ->andWhere('t.maxWeight IS NULL OR t.maxWeight >= :maxWeight')
+                ->setParameter('maxWeight', $totalWeight);
+        }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
     }
 }

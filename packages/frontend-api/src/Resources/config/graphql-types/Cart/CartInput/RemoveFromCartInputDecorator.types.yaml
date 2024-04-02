@@ -1,0 +1,10 @@
+RemoveFromCartInputDecorator:
+    type: input-object
+    decorator: true
+    inherits:
+        - CartInputDecorator
+    config:
+        fields:
+            cartItemUuid:
+                type: "Uuid!"
+                description: "Cart item UUID"

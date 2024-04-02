@@ -6,7 +6,6 @@ namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Security\LoginAsUserFacade;
-use App\Model\Transport\Type\TransportType;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -54,7 +53,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Component\Setting\Setting $setting
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\CartFacade $cartFacade
- * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
@@ -82,6 +80,8 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
  * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  * @method fillOrderRounding(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
+ * @method updateTrackingNumber(\App\Model\Order\Order $order, string $trackingNumber)
+ * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType(\Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -100,7 +100,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
@@ -200,7 +200,7 @@ class OrderFacade extends BaseOrderFacade
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Order\Order
      */
@@ -250,7 +250,7 @@ class OrderFacade extends BaseOrderFacade
 
     /**
      * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     #[Override]
@@ -341,7 +341,7 @@ class OrderFacade extends BaseOrderFacade
 
     /**
      * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
     #[Override]
@@ -376,24 +376,5 @@ class OrderFacade extends BaseOrderFacade
         );
 
         $this->em->persist($orderTransport);
-    }
-
-    /**
-     * @param \App\Model\Transport\Type\TransportType $transportType
-     * @return \App\Model\Order\Order[]
-     */
-    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
-    {
-        return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $trackingNumber
-     */
-    public function updateTrackingNumber(Order $order, string $trackingNumber): void
-    {
-        $order->setTrackingNumber($trackingNumber);
-        $this->em->flush();
     }
 }

@@ -44,5 +44,6 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
         $administratorData->realName = $administrator->getRealName();
         $administratorData->username = $administrator->getUsername();
         $administratorData->roles = $administrator->getRoles();
+        $administratorData->transferIssuesLastSeenDateTime = $administrator->getTransferIssuesLastSeenDateTime();
     }
 }

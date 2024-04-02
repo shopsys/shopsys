@@ -4,16 +4,40 @@
 {% block h1 %}{{ 'Promo codes'|trans }}{% endblock %}
 
 {% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    <div class="in-tab">
+        <div class="in-tab__heading">
+            <a href="#" class="in-tab__heading__item js-tabs-button active" data-tab-id="quick">
+                {{ 'Quick search'|trans }}
+            </a>
+        </div>
+        <div class="in-tab__content">
+            <div class="in-tab__content__in active" data-tab-id="quick">
+
+                {{ form_start(quickSearchForm) }}
+                <div class="box-quick-search">
+                    <div class="box-quick-search__input">
+                        {{ form_widget(quickSearchForm.text, { attr: { placeholder: 'Search by code...'|trans }}) }}
+                    </div>
+                    {{ form_widget(quickSearchForm.submit, { attr: { class : 'box-quick-search__btn' }, label: 'Search [verb]'|trans, full_name: ''}) }}
+                </div>
+                {{ form_end(quickSearchForm) }}
+            </div>
+        </div>
+    </div>
     {{ gridView.render() }}
 {% endblock %}
 
 {% block btn %}
-    <div class="wrap-bar__buttons">
-        <div class="wrap-bar">
-            <a href="{{ url('admin_promocode_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-                <i class="btn__icon">+</i>
-                {{ 'Create promo code'|trans }}
-            </a>
-        </div>
+    <div class="wrap-bar">
+        <a href="{{ url('admin_promocode_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create promo code'|trans }}
+        </a>
+        <a href="{{ url('admin_promocode_newmassgenerate') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create bulk promo codes'|trans }}
+        </a>
     </div>
 {% endblock %}

@@ -6,11 +6,11 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\FrontendApi\Model\Cart\CartFacade;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -21,7 +21,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     /**
      * @inject
      */
-    private CartFacade $cartFacade;
+    private CartApiFacade $cartApiFacade;
 
     /**
      * @dataProvider notExistingCartDataProvider
@@ -33,7 +33,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '9', Order::class);
 
         if ($cartUuid !== null) {
-            $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+            $this->cartApiFacade->getCartCreateIfNotExists(null, $cartUuid);
         }
 
         $locale = $this->getLocaleForFirstDomain();
@@ -89,13 +89,13 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '9', Order::class);
         $cartUuid = Uuid::uuid4()->toString();
-        $cart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists(null, $cartUuid);
 
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
 
-        $this->cartFacade->addProductByUuidToCart($product1->getUuid(), 4, true, $cart);
-        $this->cartFacade->addProductByUuidToCart($product2->getUuid(), 5, true, $cart);
+        $this->cartApiFacade->addProductByUuidToCart($product1->getUuid(), 4, true, $cart);
+        $this->cartApiFacade->addProductByUuidToCart($product2->getUuid(), 5, true, $cart);
 
         $locale = $this->getLocaleForFirstDomain();
         $expectedItems = [
@@ -144,13 +144,13 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '9', Order::class);
         $cartUuid = Uuid::uuid4()->toString();
-        $cart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists(null, $cartUuid);
 
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
 
-        $this->cartFacade->addProductByUuidToCart($product1->getUuid(), 4, true, $cart);
-        $this->cartFacade->addProductByUuidToCart($product2->getUuid(), 5, true, $cart);
+        $this->cartApiFacade->addProductByUuidToCart($product1->getUuid(), 4, true, $cart);
+        $this->cartApiFacade->addProductByUuidToCart($product2->getUuid(), 5, true, $cart);
 
         $locale = $this->getLocaleForFirstDomain();
         $expectedItems = [
@@ -269,12 +269,12 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '9', Order::class);
         $cartUuid = Uuid::uuid4()->toString();
-        $cart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists(null, $cartUuid);
 
         $productDefenderSpk480 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '13', Product::class);
 
 
-        $this->cartFacade->addProductByUuidToCart($productDefenderSpk480->getUuid(), 4, true, $cart);
+        $this->cartApiFacade->addProductByUuidToCart($productDefenderSpk480->getUuid(), 4, true, $cart);
 
         $locale = $this->getLocaleForFirstDomain();
         $expectedItems = [

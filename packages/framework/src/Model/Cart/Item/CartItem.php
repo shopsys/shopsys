@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
@@ -60,6 +61,12 @@ class CartItem
     protected $addedAt;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
@@ -76,6 +83,7 @@ class CartItem
         $this->setWatchedPrice($watchedPrice);
         $this->changeQuantity($quantity);
         $this->addedAt = new DateTime();
+        $this->uuid = Uuid::uuid4()->toString();
     }
 
     /**
@@ -166,5 +174,21 @@ class CartItem
     public function changeAddedAt(DateTime $addedAt): void
     {
         $this->addedAt = $addedAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasProduct(): bool
+    {
+        return $this->product !== null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }

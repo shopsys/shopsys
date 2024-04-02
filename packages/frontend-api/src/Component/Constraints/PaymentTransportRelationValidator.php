@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
-use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -15,12 +13,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class PaymentTransportRelationValidator extends ConstraintValidator
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      */
     public function __construct(
-        protected readonly PaymentFacade $paymentFacade,
-        protected readonly TransportFacade $transportFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CartApiFacade $cartApiFacade,
     ) {
     }
 
@@ -33,20 +31,22 @@ class PaymentTransportRelationValidator extends ConstraintValidator
         if (!$constraint instanceof PaymentTransportRelation) {
             throw new UnexpectedTypeException($constraint, PaymentTransportRelation::class);
         }
+        $cartUuid = $value->cartUuid;
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+        $transportInCart = $cart->getTransport();
+        $paymentInCart = $cart->getPayment();
 
-        try {
-            $payment = $this->paymentFacade->getByUuid($value->payment['uuid']);
-            $transport = $this->transportFacade->getByUuid($value->transport['uuid']);
-
-            $relationExists = in_array($transport, $payment->getTransports(), true);
-
-            if (!$relationExists) {
-                $this->context->buildViolation($constraint->invalidCombinationMessage)
-                    ->setCode(PaymentTransportRelation::INVALID_COMBINATION_ERROR)
-                    ->addViolation();
-            }
-        } catch (PaymentNotFoundException | TransportNotFoundException $exception) {
+        if ($transportInCart === null || $paymentInCart === null) {
             return;
+        }
+
+        $relationExists = in_array($transportInCart, $paymentInCart->getTransports(), true);
+
+        if (!$relationExists) {
+            $this->context->buildViolation($constraint->invalidCombinationMessage)
+                ->setCode(PaymentTransportRelation::INVALID_COMBINATION_ERROR)
+                ->addViolation();
         }
     }
 }

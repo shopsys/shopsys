@@ -1,0 +1,7 @@
+CartPromoCodeModificationsResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            noLongerApplicablePromoCode:
+                type: "[String!]!"

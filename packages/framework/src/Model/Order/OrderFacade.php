@@ -36,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFact
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Webmozart\Assert\Assert;
 
@@ -636,5 +637,24 @@ class OrderFacade
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->orderPayment = $orderPaymentData;
         $this->edit($order->getId(), $orderData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param string $trackingNumber
+     */
+    public function updateTrackingNumber(Order $order, string $trackingNumber): void
+    {
+        $order->setTrackingNumber($trackingNumber);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
+    {
+        return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
     }
 }

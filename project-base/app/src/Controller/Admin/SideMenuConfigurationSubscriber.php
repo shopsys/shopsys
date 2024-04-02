@@ -29,7 +29,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_CUSTOMERS => 'configureCustomersMenu',
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
-            ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
             ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS => 'configureAdministratorMenu',
@@ -44,19 +43,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $rootMenu = $event->getMenu();
         $rootMenu->addChild($this->createIntegrationsMenu($event));
         $this->removeNotGrantedItemsFromMenu($rootMenu);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
-    public function configureDashboardMenu(ConfigureMenuEvent $event)
-    {
-        $dashboardMenu = $event->getMenu();
-        $dashboardMenu->addChild('transferList', [
-            'route' => 'admin_transfer_list',
-            'display' => false,
-            'label' => t('Transfer issues overview'),
-        ]);
     }
 
     /**

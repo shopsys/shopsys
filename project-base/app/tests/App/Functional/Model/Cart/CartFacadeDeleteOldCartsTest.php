@@ -6,7 +6,6 @@ namespace Tests\App\Functional\Model\Cart;
 
 use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
-use App\Model\Cart\Watcher\CartWatcherFacade;
 use App\Model\Customer\User\CurrentCustomerUser;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\ProductRepository;
@@ -59,11 +58,6 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @inject
      */
     private CartRepository $cartRepository;
-
-    /**
-     * @inject
-     */
-    private CartWatcherFacade $cartWatcherFacade;
 
     /**
      * @inject
@@ -185,7 +179,6 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->productPriceCalculationForCustomerUser,
             $this->cartItemFactory,
             $this->cartRepository,
-            $this->cartWatcherFacade,
             $this->productAvailabilityFacade,
         );
     }

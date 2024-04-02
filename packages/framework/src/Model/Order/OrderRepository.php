@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 
 class OrderRepository
 {
@@ -293,5 +294,20 @@ class OrderRepository
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
             ->leftJoin('o.customerUser', 'cu');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
+    {
+        $queryBuilder = $this->createOrderQueryBuilder()
+            ->join('o.transport', 't')
+            ->andWhere('o.trackingNumber IS NULL')
+            ->andWhere('t.transportType = :transportType')
+            ->setParameter('transportType', $transportType);
+
+        return $queryBuilder->getQuery()->execute();
     }
 }

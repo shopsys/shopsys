@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
@@ -170,6 +171,15 @@ class AdministratorFacade
     public function setRolesChangedNow(Administrator $administrator): void
     {
         $administrator->setRolesChangedNow();
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
+     */
+    public function setAdministratorTransferIssuesLastSeenDateTime(Administrator $administrator): void
+    {
+        $administrator->setTransferIssuesLastSeenDateTime(new DateTime());
         $this->em->flush();
     }
 }

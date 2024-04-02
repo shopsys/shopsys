@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Order\Mail\OrderMail;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -80,18 +79,6 @@ class Order extends BaseOrder
     protected $gtmCoupon;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected ?string $trackingNumber;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private ?string $pickupPlaceIdentifier;
-
-    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -118,8 +105,6 @@ class Order extends BaseOrder
         $this->firstName = $orderData->firstName;
         $this->lastName = $orderData->lastName;
         $this->gtmCoupon = $orderData->gtmCoupon;
-        $this->trackingNumber = $orderData->trackingNumber;
-        $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
     }
 
     /**
@@ -130,7 +115,6 @@ class Order extends BaseOrder
         parent::editData($orderData);
 
         $this->gtmCoupon = $orderData->gtmCoupon;
-        $this->trackingNumber = $orderData->trackingNumber;
     }
 
     /**
@@ -139,47 +123,6 @@ class Order extends BaseOrder
     public function getGtmCoupon(): ?string
     {
         return $this->gtmCoupon;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTrackingNumber(): ?string
-    {
-        return $this->trackingNumber;
-    }
-
-    /**
-     * @param string $trackingNumber
-     */
-    public function setTrackingNumber(string $trackingNumber): void
-    {
-        $this->trackingNumber = $trackingNumber;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTrackingUrl(): ?string
-    {
-        $trackingUrl = $this->transport->getTrackingUrl();
-        $trackingNumber = $this->getTrackingNumber();
-
-        if ($trackingUrl === null || $trackingNumber === null) {
-            return null;
-        }
-
-        return strtr($trackingUrl, [
-            OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
-        ]);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPickupPlaceIdentifier(): ?string
-    {
-        return $this->pickupPlaceIdentifier;
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Administrator;
 
-use DateTime;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade as BaseAdministratorFacade;
 
 /**
@@ -18,18 +17,10 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade as BaseAdmin
  * @property \App\Model\Administrator\AdministratorRepository $administratorRepository
  * @property \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Administrator\AdministratorRepository $administratorRepository, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory, \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage)
+ * @method setAdministratorTransferIssuesLastSeenDateTime(\App\Model\Administrator\Administrator $administrator)
  */
 class AdministratorFacade extends BaseAdministratorFacade
 {
-    /**
-     * @param \App\Model\Administrator\Administrator $administrator
-     */
-    public function setAdministratorTransferIssuesLastSeenDateTime(Administrator $administrator): void
-    {
-        $administrator->setTransferIssuesLastSeenDateTime(new DateTime());
-        $this->em->flush();
-    }
-
     /**
      * @param int $roleGroupId
      * @return string[]

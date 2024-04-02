@@ -131,7 +131,3 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsQuery:
         alias: App\FrontendApi\Resolver\Products\PromotedProductsQuery
         public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsQuery:
-        alias: App\FrontendApi\Resolver\Transport\TransportsQuery
-        public: true

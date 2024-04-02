@@ -50,12 +50,6 @@ class Product extends BaseProduct
     protected $catnum;
 
     /**
-     * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected ?int $weight;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Product>
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Product")
      * @ORM\JoinTable(name="related_products",
@@ -124,7 +118,6 @@ class Product extends BaseProduct
     {
         parent::setData($productData);
 
-        $this->weight = $productData->weight;
         $this->relatedProducts = new ArrayCollection($productData->relatedProducts);
     }
 
@@ -216,21 +209,6 @@ class Product extends BaseProduct
                 return $value !== null && $value !== '';
             },
         ));
-    }
-
-    /**
-     * @param int $domainId
-     * @return int[]
-     */
-    public function getFlagsIdsForDomain(int $domainId): array
-    {
-        $flagIds = [];
-
-        foreach ($this->getFlags($domainId) as $flag) {
-            $flagIds[] = $flag->getId();
-        }
-
-        return $flagIds;
     }
 
     /**
@@ -377,14 +355,6 @@ class Product extends BaseProduct
         }
 
         return false;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getWeight(): ?int
-    {
-        return $this->weight;
     }
 
     /**

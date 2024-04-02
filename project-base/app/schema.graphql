@@ -329,7 +329,7 @@ interface Breadcrumb {
   breadcrumb: [Link!]!
 }
 
-type Cart implements CartInterface {
+type Cart {
   "All items in the cart"
   items: [CartItem!]!
   modifications: CartModificationsResult!
@@ -361,25 +361,6 @@ type Cart implements CartInterface {
 input CartInput {
   "Cart identifier, new cart will be created if not provided and customer is not logged in"
   cartUuid: Uuid = null
-}
-
-interface CartInterface {
-  items: [CartItem!]!
-  modifications: CartModificationsResult!
-  payment: Payment
-  paymentGoPayBankSwift: String
-  promoCode: String
-  remainingAmountWithVatForFreeTransport: Money
-  "Rounding amount if payment has rounding allowed"
-  roundingPrice: Price
-  selectedPickupPlaceIdentifier: String
-  totalDiscountPrice: Price!
-  "Total items price (excluding transport and payment)"
-  totalItemsPrice: Price!
-  "Total price including transport and payment"
-  totalPrice: Price!
-  transport: Transport
-  uuid: Uuid
 }
 
 "Represent one item in the cart"
@@ -1181,18 +1162,12 @@ input OrderInput {
   note: String
   "Determines whether the order is made on the company behalf."
   onCompanyBehalf: Boolean!
-  "Deprecated, this field is not used, the payment is taken from the server cart instead."
-  payment: PaymentInput
   "Billing address zip code (will be on the tax invoice)"
   postcode: String!
-  "Deprecated, this field is not used, the products are taken from the server cart instead."
-  products: [OrderProductInput!]
   "Billing address street name (will be on the tax invoice)"
   street: String!
   "The customer's phone number"
   telephone: String!
-  "Deprecated, this field is not used, the transport is taken from the server cart instead."
-  transport: TransportInput
 }
 
 "Represent one item in the order"
@@ -1216,16 +1191,6 @@ type OrderPaymentsConfig {
   availablePayments: [Payment!]!
   "Current payment method used in the order"
   currentPayment: Payment!
-}
-
-"Represents a product in order"
-input OrderProductInput {
-  "Quantity of products"
-  quantity: Int!
-  "Product price per unit"
-  unitPrice: PriceInput!
-  "UUID"
-  uuid: Uuid!
 }
 
 "Information about pagination in a connection."
@@ -1393,14 +1358,6 @@ type Payment {
   uuid: Uuid!
 }
 
-"Represents a payment in order"
-input PaymentInput {
-  "Price for payment"
-  price: PriceInput!
-  "UUID"
-  uuid: Uuid!
-}
-
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
@@ -1445,16 +1402,6 @@ type PersonalDataPage {
 
 "Represents the price"
 type Price implements PriceInterface {
-  "Price without VAT"
-  priceWithoutVat: Money!
-  "Price with VAT"
-  priceWithVat: Money!
-  "Total value of VAT"
-  vatAmount: Money!
-}
-
-"Represents the price"
-input PriceInput {
   "Price without VAT"
   priceWithoutVat: Money!
   "Price with VAT"
@@ -2148,14 +2095,6 @@ type Transport {
   stores: StoreConnection
   "Type of transport"
   transportType: TransportType!
-  "UUID"
-  uuid: Uuid!
-}
-
-"Represents a transport in order"
-input TransportInput {
-  "Price for transport"
-  price: PriceInput!
   "UUID"
   uuid: Uuid!
 }

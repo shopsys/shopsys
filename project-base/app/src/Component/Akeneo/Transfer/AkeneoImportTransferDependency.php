@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Transfer;
 
 use App\Component\Akeneo\AkeneoConfig;
-use App\Model\Transfer\TransferLoggerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AkeneoImportTransferDependency
@@ -17,7 +17,7 @@ class AkeneoImportTransferDependency
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \App\Component\Akeneo\AkeneoConfig $akeneoConfig
-     * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
      */
     public function __construct(
         protected SqlLoggerFacade $sqlLoggerFacade,
@@ -61,7 +61,7 @@ class AkeneoImportTransferDependency
     }
 
     /**
-     * @return \App\Model\Transfer\TransferLoggerFactory
+     * @return \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory
      */
     public function getTransferLoggerFactory(): TransferLoggerFactory
     {

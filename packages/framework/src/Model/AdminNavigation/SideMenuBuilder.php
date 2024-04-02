@@ -67,6 +67,11 @@ class SideMenuBuilder
             'label' => t('Cron detail'),
             'display' => false,
         ]);
+        $menu->addChild('transferIssueList', [
+            'route' => 'admin_transferissue_list',
+            'display' => false,
+            'label' => t('Transfer issues overview'),
+        ]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_DASHBOARD, $menu);
 

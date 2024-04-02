@@ -1,4 +1,4 @@
-fragment CartFragment on CartInterface {
+fragment CartFragment on Cart {
     __typename
     uuid
     items {

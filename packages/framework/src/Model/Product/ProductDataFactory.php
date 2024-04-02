@@ -200,6 +200,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
+        $productData->weight = $product->getWeight();
     }
 
     /**

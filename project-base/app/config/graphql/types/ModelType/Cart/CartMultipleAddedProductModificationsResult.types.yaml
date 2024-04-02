@@ -1,6 +1,4 @@
 CartMultipleAddedProductModificationsResult:
     type: object
-    config:
-        fields:
-            notAddedProducts:
-                type: "[Product!]!"
+    inherits:
+        - 'CartMultipleAddedProductModificationsResultDecorator'

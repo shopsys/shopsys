@@ -6,14 +6,19 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as FrameworkOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
+use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrontendApiBundle\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
+use Shopsys\FrontendApiBundle\Model\Store\Exception\StoreNotFoundUserError;
 
 class OrderDataFactory
 {
@@ -27,6 +32,7 @@ class OrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
         protected readonly FrameworkOrderDataFactory $orderDataFactory,
@@ -36,6 +42,7 @@ class OrderDataFactory
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CountryFacade $countryFacade,
         protected readonly ProductFacade $productFacade,
+        protected readonly StoreFacade $storeFacade,
     ) {
     }
 
@@ -52,27 +59,11 @@ class OrderDataFactory
         $orderData->domainId = $this->domain->getId();
         $orderData->origin = static::ORDER_ORIGIN_GRAPHQL;
         $orderData->deliveryAddressSameAsBillingAddress = !$input['differentDeliveryAddress'];
+        $orderData->isCompanyCustomer = $input['onCompanyBehalf'];
 
         $orderData = $this->withResolvedFields($input, $orderData);
 
         return $orderData;
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
-     */
-    public function createQuantifiedProductsFromArgument(Argument $argument): array
-    {
-        $productsInput = $argument['input']['products'];
-        $quantifiedProducts = [];
-
-        foreach ($productsInput as $productInput) {
-            $product = $this->productFacade->getByUuid($productInput['uuid']);
-            $quantifiedProducts[] = new QuantifiedProduct($product, $productInput['quantity']);
-        }
-
-        return $quantifiedProducts;
     }
 
     /**
@@ -84,16 +75,6 @@ class OrderDataFactory
     {
         $cloneOrderData = clone $orderData;
 
-        $cloneOrderData->payment = $this->paymentFacade->getEnabledOnDomainByUuid(
-            $input['payment']['uuid'],
-            $this->domain->getId(),
-        );
-
-        $cloneOrderData->transport = $this->transportFacade->getEnabledOnDomainByUuid(
-            $input['transport']['uuid'],
-            $this->domain->getId(),
-        );
-
         $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
         $cloneOrderData->country = $this->countryFacade->findByCode($input['country']);
@@ -102,7 +83,7 @@ class OrderDataFactory
             $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
         }
 
-        unset($input['payment'], $input['transport'], $input['currency'], $input['country'], $input['deliveryCountry']);
+        unset($input['currency'], $input['country'], $input['deliveryCountry']);
 
         foreach ($input as $key => $value) {
             if (property_exists(get_class($orderData), $key)) {
@@ -111,5 +92,71 @@ class OrderDataFactory
         }
 
         return $cloneOrderData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    public function updateOrderDataFromCart(OrderData $orderData, Cart $cart): void
+    {
+        $orderData->payment = $cart->getPayment();
+        $orderData->transport = $cart->getTransport();
+        $orderData->goPayBankSwift = $cart->getPaymentGoPayBankSwift();
+        $pickupPlaceIdentifier = $cart->getPickupPlaceIdentifier();
+
+        if ($cart->getPickupPlaceIdentifier() === null) {
+            return;
+        }
+
+        if ($orderData->transport->isPersonalPickup()) {
+            try {
+                $store = $this->storeFacade->getByUuidAndDomainId(
+                    $pickupPlaceIdentifier,
+                    $this->domain->getId(),
+                );
+                $this->setOrderDataByStore($orderData, $store);
+            } catch (StoreByUuidNotFoundException $exception) {
+                throw new StoreNotFoundUserError($exception->getMessage());
+            }
+        }
+
+        if (
+            $orderData->transport->isPacketery() &&
+            $this->isPickupPlaceIdentifierIntegerInString($pickupPlaceIdentifier)
+        ) {
+            throw new InvalidPacketeryAddressIdUserError('Wrong packetery address ID');
+        }
+
+        $orderData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     */
+    protected function setOrderDataByStore(OrderData $orderData, Store $store): void
+    {
+        $orderData->personalPickupStore = $store;
+        $orderData->deliveryAddressSameAsBillingAddress = false;
+
+        $orderData->deliveryFirstName = $orderData->deliveryFirstName ?? $orderData->firstName;
+        $orderData->deliveryLastName = $orderData->deliveryLastName ?? $orderData->lastName;
+        $orderData->deliveryCompanyName = $orderData->deliveryCompanyName ?? $orderData->companyName;
+        $orderData->deliveryTelephone = $orderData->deliveryTelephone ?? $orderData->telephone;
+
+        $orderData->deliveryStreet = $store->getStreet();
+        $orderData->deliveryCity = $store->getCity();
+        $orderData->deliveryPostcode = $store->getPostcode();
+        $orderData->deliveryCountry = $store->getCountry();
+    }
+
+    /**
+     * @param string $pickupPlaceIdentifier
+     * @return bool
+     */
+    protected function isPickupPlaceIdentifierIntegerInString(string $pickupPlaceIdentifier): bool
+    {
+        return (string)(int)$pickupPlaceIdentifier !== $pickupPlaceIdentifier;
     }
 }

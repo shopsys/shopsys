@@ -1,0 +1,17 @@
+CartModificationsResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            itemModifications:
+                type: "CartItemModificationsResult!"
+            transportModifications:
+                type: "CartTransportModificationsResult!"
+            paymentModifications:
+                type: "CartPaymentModificationsResult!"
+            promoCodeModifications:
+                type: "CartPromoCodeModificationsResult!"
+            multipleAddedProductModifications:
+                type: "CartMultipleAddedProductModificationsResult!"
+            someProductWasRemovedFromEshop:
+                type: "Boolean!"

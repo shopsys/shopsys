@@ -4,7 +4,7 @@ MutationDecorator:
     config:
         fields:
             CreateOrder:
-                type: Order!
+                type: CreateOrderResult!
                 description: "Creates complete order with products and addresses"
                 args:
                     input:
@@ -106,3 +106,59 @@ MutationDecorator:
                         type: ChangePaymentInOrderInput!
                         validation: cascade
                 resolve: "@=mutation('changePaymentInOrderMutation', args)"
+            AddToCart:
+                type: AddToCartResult!
+                description: "Add product to cart for future checkout"
+                args:
+                    input:
+                        type: AddToCartInput!
+                        validation: cascade
+                resolve: "@=mutation('addToCartMutation', args, validator)"
+            RemoveFromCart:
+                type: Cart!
+                description: "Remove product from cart"
+                args:
+                    input:
+                        type: RemoveFromCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removeFromCartMutation', args, validator)"
+            AddOrderItemsToCart:
+                type: Cart!
+                description: "Fills cart based on a given order, possibly merging it with the current cart"
+                args:
+                    input:
+                        type: AddOrderItemsToCartInput!
+                        validation: cascade
+                resolve: "@=mutation('addOrderItemsToCartMutation', args, validator)"
+            ChangePaymentInCart:
+                type: Cart!
+                description: "Add a payment to the cart, or remove a payment from the cart"
+                args:
+                    input:
+                        type: ChangePaymentInCartInput!
+                        validation: cascade
+                resolve: "@=mutation('changePaymentInCartMutation', args)"
+            ChangeTransportInCart:
+                type: Cart!
+                description: "Add a transport to the cart, or remove a transport from the cart"
+                args:
+                    input:
+                        type: ChangeTransportInCartInput!
+                        validation: cascade
+                resolve: "@=mutation('changeTransportInCartMutation', args)"
+            ApplyPromoCodeToCart:
+                type: Cart!
+                description: "Apply new promo code for the future checkout"
+                args:
+                    input:
+                        type: ApplyPromoCodeToCartInput!
+                        validation: cascade
+                resolve: "@=mutation('applyPromoCodeToCartMutation', args, validator)"
+            RemovePromoCodeFromCart:
+                type: Cart!
+                description: "Remove already used promo code from cart"
+                args:
+                    input:
+                        type: RemovePromoCodeFromCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removePromoCodeFromCartMutation', args, validator)"

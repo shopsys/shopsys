@@ -1,0 +1,16 @@
+AddOrderItemsToCartInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            orderUuid:
+                type: "Uuid!"
+                description: "UUID of the order based on which the cart should be prefilled"
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier or null if customer is logged in"
+            shouldMerge:
+                type: "Boolean"
+                defaultValue: false
+                description: "Information if the prefilled cart should be merged with the current cart"

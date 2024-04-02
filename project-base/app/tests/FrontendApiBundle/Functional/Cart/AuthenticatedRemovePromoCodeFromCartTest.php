@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
@@ -34,7 +35,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
         $response = $this->getResponseContentForQuery($removeFromCartMutation);
         $data = $this->getResponseDataForGraphQlType($response, 'RemovePromoCodeFromCart');
 
-        self::assertNotNull($this->promoCodeFacade->findPromoCodeByCode($promoCode->getCode()));
+        self::assertNotNull($this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCode->getCode(), Domain::FIRST_DOMAIN_ID));
 
         self::assertNull($data['promoCode']);
     }

@@ -1,0 +1,13 @@
+CartTransportModificationsResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            transportPriceChanged:
+                type: "Boolean!"
+            transportUnavailable:
+                type: "Boolean!"
+            transportWeightLimitExceeded:
+                type: "Boolean!"
+            personalPickupStoreUnavailable:
+                type: "Boolean!"

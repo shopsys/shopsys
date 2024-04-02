@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Migrations;
 
-use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
@@ -45,7 +45,7 @@ class Version20210429125507 extends AbstractMigration implements ContainerAwareI
                 CONSTRAINT FK_11E2A9472C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES transport_types (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE UNIQUE INDEX UNIQ_C43F2EC877153098 ON transport_types (code)');
 
-        $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_COMMON . '\')');
+        $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportType::TYPE_COMMON . '\')');
 
         foreach ($this->getAllLocales() as $locale) {
             $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'' . t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');

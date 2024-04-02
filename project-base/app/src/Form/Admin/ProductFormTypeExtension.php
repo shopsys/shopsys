@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -89,7 +88,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'position' => ['before' => 'partno'],
         ]);
 
-        $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
         $this->setStocksGroup($builder);
         $this->setDisplayAvailabilityGroup($builder);
@@ -98,20 +96,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setVideoGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function setBasicInformationGroup(FormBuilderInterface $builder): void
-    {
-        $groupBuilder = $builder->get('basicInformationGroup');
-
-        $groupBuilder
-            ->add('weight', IntegerType::class, [
-                'label' => t('Weight (g)'),
-                'required' => false,
-            ]);
     }
 
     /**

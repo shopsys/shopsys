@@ -61,11 +61,32 @@ class TransportData
      */
     public $daysUntilDelivery;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType|null
+     */
+    public $transportType;
+
+    /**
+     * @var int|null
+     */
+    public $maxWeight;
+
+    /**
+     * @var string|null
+     */
+    public $trackingUrl;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $trackingInstructions;
+
     public function __construct()
     {
         $this->name = [];
         $this->description = [];
         $this->instructions = [];
+        $this->trackingInstructions = [];
         $this->hidden = false;
         $this->enabled = [];
         $this->payments = [];

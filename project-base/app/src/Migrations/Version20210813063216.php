@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Migrations;
 
-use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20210813063216 extends AbstractMigration
@@ -15,7 +15,7 @@ class Version20210813063216 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_PACKETERY . '\')');
+        $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportType::TYPE_PACKETERY . '\')');
         $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
         $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Zásilkovna\', \'cs\')');
         $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Packetery\', \'en\')');

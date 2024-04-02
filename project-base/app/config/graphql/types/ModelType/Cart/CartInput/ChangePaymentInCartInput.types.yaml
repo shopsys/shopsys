@@ -1,17 +1,4 @@
 ChangePaymentInCartInput:
     type: input-object
-    config:
-        validation:
-            -   App\FrontendApi\Model\Component\Constraints\PaymentInCart: ~
-        fields:
-            cartUuid:
-                type: "Uuid"
-                defaultValue: null
-                description: "Cart identifier or null if customer is logged in"
-            paymentUuid:
-                type: "Uuid"
-                description: "UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart"
-            paymentGoPayBankSwift:
-                type: "String"
-                description: "Selected bank swift code of goPay payment bank transfer"
-                defaultValue: null
+    inherits:
+        - 'ChangePaymentInCartInputDecorator'

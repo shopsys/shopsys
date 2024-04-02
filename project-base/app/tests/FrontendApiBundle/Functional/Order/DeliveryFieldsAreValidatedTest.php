@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
-use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
-use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -73,7 +71,6 @@ class DeliveryFieldsAreValidatedTest extends GraphQlTestCase
         $domainId = $this->domain->getId();
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
 
         return 'mutation {
@@ -94,13 +91,6 @@ class DeliveryFieldsAreValidatedTest extends GraphQlTestCase
                             country: "CZ"
                             note:"Thank You"
                             differentDeliveryAddress: true
-                            products: [
-                                {
-                                    uuid: "' . $product1->getUuid() . '",
-                                    unitPrice: ' . $product1UnitPrice . ',
-                                    quantity: 10
-                                },
-                            ]
                         }
                     ) {
                         order {

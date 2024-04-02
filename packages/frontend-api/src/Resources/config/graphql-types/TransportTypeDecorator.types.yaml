@@ -1,0 +1,12 @@
+TransportTypeDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a transport type"
+        fields:
+            name:
+                type: "String!"
+                description: "Name of transport type"
+            code:
+                type: "String!"
+                description: "Code of transport"

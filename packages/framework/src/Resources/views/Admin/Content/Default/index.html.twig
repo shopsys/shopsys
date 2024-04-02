@@ -13,6 +13,12 @@
 {% endmacro %}
 
 {% block main_content %}
+    <div class="transfers">
+        <h2 class="margin-top-15">{{ 'Transfers'|trans }}</h2>
+
+        <a href="{{ url('admin_transferissue_list') }}" class="btn">{{ 'Transfer issues overview'|trans }} ({{ transferIssuesCount }})</a>
+    </div>
+
     <div class="clearfix">
         <div class="float-left">
             <h2>{{ 'Quick product search'|trans }}</h2>

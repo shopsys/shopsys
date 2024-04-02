@@ -6,10 +6,6 @@ import './validation';
 import './advert/advert';
 import './../common/validation/customizeFpValidator';
 
-import './promocode/promocode';
-import './promocode/promoCodeGroup';
-import './promocode/promoCodeFlags';
-
 import './category/categoryDeleteConfirm';
 
 import './grapesjs/initGrapesJs';

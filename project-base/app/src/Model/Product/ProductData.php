@@ -27,11 +27,6 @@ class ProductData extends BaseProductData
     public $nameSufix;
 
     /**
-     * @var int|null
-     */
-    public ?int $weight;
-
-    /**
      * @var \App\Model\Product\Product[]
      */
     public array $relatedProducts;
@@ -47,7 +42,6 @@ class ProductData extends BaseProductData
 
         $this->namePrefix = [];
         $this->nameSufix = [];
-        $this->weight = null;
         $this->relatedProducts = [];
         $this->productVideosData = [];
     }

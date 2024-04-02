@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\FrontendApi\Model\Component\Constraints\ProductInOrder;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Component\Constraints\ProductInOrder;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductInOrderValidationTest extends GraphQlTestCase

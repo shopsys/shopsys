@@ -7,8 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\FrontendApi\Model\Component\Constraints\PromoCode;
-use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\PromoCode as AppPromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
@@ -16,8 +14,10 @@ use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrontendApiBundle\Component\Constraints\PromoCode;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ApplyPromoCodeToCartTest extends GraphQlTestCase
@@ -376,7 +376,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     /**
      * @param string $email
-     * @return \App\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
     private function findCartOfCustomerByEmail(string $email): ?Cart
     {

@@ -1,0 +1,13 @@
+AddProductResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            cartItem:
+                type: CartItem!
+            notOnStockQuantity:
+                type: Int!
+            isNew:
+                type: Boolean!
+            addedQuantity:
+                type: Int!
