@@ -10,7 +10,7 @@ import {
     useCallback,
     useEffect,
     useRef,
-    useState,
+    useState as useStateTest,
 } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -52,11 +52,11 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const { t } = useTranslation();
     const step = getStep(min, max);
 
-    const [minValueInput, setMinValueInput] = useState(min);
-    const [minValueThumb, setMinValueThumb] = useState(min);
+    const [minValueInput, setMinValueInput] = useStateTest(min);
+    const [minValueThumb, setMinValueThumb] = useStateTest(min);
 
-    const [maxValueInput, setMaxValueInput] = useState(max);
-    const [maxValueThumb, setMaxValueThumb] = useState(max);
+    const [maxValueInput, setMaxValueInput] = useStateTest(max);
+    const [maxValueThumb, setMaxValueThumb] = useStateTest(max);
 
     const range = useRef<HTMLDivElement>(null);
 
