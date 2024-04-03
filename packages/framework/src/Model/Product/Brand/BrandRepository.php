@@ -103,7 +103,7 @@ class BrandRepository
         $queryBuilder = $this->getBrandRepository()
             ->createQueryBuilder('b')
             ->andWhere(
-                'NORMALIZE(b.name) LIKE NORMALIZE(:searchText)',
+                'NORMALIZED(b.name) LIKE NORMALIZED(:searchText)',
             );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
         $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()));

@@ -148,13 +148,13 @@ class OrderRepository
                     (
                         o.number LIKE :text
                         OR
-                        NORMALIZE(o.email) LIKE NORMALIZE(:text)
+                        NORMALIZED(o.email) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZE(o.lastName) LIKE NORMALIZE(:text)
+                        NORMALIZED(o.lastName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZE(o.companyName) LIKE NORMALIZE(:text)
+                        NORMALIZED(o.companyName) LIKE NORMALIZED(:text)
                         OR
-                        NORMALIZE(u.email) LIKE NORMALIZE(:text)
+                        NORMALIZED(u.email) LIKE NORMALIZED(:text)
                     )');
             $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);

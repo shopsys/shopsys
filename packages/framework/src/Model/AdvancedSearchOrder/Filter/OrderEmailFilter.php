@@ -59,7 +59,7 @@ class OrderEmailFilter implements AdvancedSearchFilterInterface
             }
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'email_' . $index;
-            $queryBuilder->andWhere('NORMALIZE(o.email) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+            $queryBuilder->andWhere('NORMALIZED(o.email) ' . $dqlOperator . ' NORMALIZED(:' . $parameterName . ')');
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }
