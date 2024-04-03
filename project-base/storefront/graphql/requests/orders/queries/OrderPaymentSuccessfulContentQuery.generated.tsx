@@ -38,9 +38,6 @@ export type TypeOrderPaymentSuccessfulContentQuery = { __typename?: 'Query', ord
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -32,9 +32,6 @@ export type TypeListedCategoryFragment = { __typename: 'Category', uuid: string,
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

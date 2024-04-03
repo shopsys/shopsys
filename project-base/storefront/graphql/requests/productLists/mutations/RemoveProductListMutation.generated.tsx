@@ -38,9 +38,6 @@ export type TypeRemoveProductListMutation = { __typename?: 'Mutation', RemovePro
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

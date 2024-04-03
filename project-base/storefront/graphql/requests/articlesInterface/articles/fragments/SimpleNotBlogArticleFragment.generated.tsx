@@ -37,9 +37,6 @@ export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

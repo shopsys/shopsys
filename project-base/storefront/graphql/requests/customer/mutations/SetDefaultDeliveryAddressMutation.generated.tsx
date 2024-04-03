@@ -39,9 +39,6 @@ export type TypeSetDefaultDeliveryAddressMutation = { __typename?: 'Mutation', S
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

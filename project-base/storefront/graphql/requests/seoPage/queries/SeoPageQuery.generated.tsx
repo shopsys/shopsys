@@ -39,9 +39,6 @@ export type TypeSeoPageQuery = { __typename?: 'Query', seoPage: { __typename: 'S
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

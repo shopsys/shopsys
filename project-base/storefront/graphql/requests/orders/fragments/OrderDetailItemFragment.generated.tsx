@@ -32,9 +32,6 @@ export type TypeOrderDetailItemFragment = { __typename: 'OrderItem', name: strin
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

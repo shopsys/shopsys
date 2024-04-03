@@ -31,9 +31,6 @@ export type TypeBreadcrumbFragment = { __typename: 'Link', name: string, slug: s
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

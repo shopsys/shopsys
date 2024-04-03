@@ -47,9 +47,6 @@ export type TypeProductDetailInterfaceFragment = TypeProductDetailInterfaceFragm
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

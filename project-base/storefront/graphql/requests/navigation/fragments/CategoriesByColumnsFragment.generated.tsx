@@ -32,9 +32,6 @@ export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', nam
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

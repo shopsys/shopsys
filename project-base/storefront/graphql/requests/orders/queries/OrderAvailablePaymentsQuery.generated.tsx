@@ -39,9 +39,6 @@ export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayme
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

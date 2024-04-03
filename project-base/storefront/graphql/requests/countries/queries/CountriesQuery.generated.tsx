@@ -37,9 +37,6 @@ export type TypeCountriesQuery = { __typename?: 'Query', countries: Array<{ __ty
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -39,9 +39,6 @@ export type TypeChangeTransportInCartMutation = { __typename?: 'Mutation', Chang
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

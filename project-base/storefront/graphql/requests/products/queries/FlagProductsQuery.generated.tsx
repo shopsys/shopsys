@@ -43,9 +43,6 @@ export type TypeFlagProductsQuery = { __typename?: 'Query', products: { __typena
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

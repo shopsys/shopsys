@@ -38,9 +38,6 @@ export type TypeGoPaySwiftsQuery = { __typename?: 'Query', GoPaySwifts: Array<{ 
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

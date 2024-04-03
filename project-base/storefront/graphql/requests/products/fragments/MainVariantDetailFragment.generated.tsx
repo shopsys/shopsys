@@ -34,9 +34,6 @@ export type TypeMainVariantDetailFragment = { __typename: 'MainVariant', id: num
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

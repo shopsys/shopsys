@@ -33,9 +33,6 @@ export type TypeListedOrderFragment = { __typename: 'Order', uuid: string, numbe
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

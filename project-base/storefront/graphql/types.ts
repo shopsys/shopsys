@@ -424,7 +424,7 @@ export type TypeBreadcrumb = {
   breadcrumb: Array<TypeLink>;
 };
 
-export type TypeCart = TypeCartInterface & {
+export type TypeCart = {
   __typename?: 'Cart';
   /** All items in the cart */
   items: Array<TypeCartItem>;
@@ -457,25 +457,6 @@ export type TypeCart = TypeCartInterface & {
 export type TypeCartInput = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-export type TypeCartInterface = {
-  items: Array<TypeCartItem>;
-  modifications: TypeCartModificationsResult;
-  payment: Maybe<TypePayment>;
-  paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
-  promoCode: Maybe<Scalars['String']['output']>;
-  remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']['output']>;
-  /** Rounding amount if payment has rounding allowed */
-  roundingPrice: Maybe<TypePrice>;
-  selectedPickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
-  totalDiscountPrice: TypePrice;
-  /** Total items price (excluding transport and payment) */
-  totalItemsPrice: TypePrice;
-  /** Total price including transport and payment */
-  totalPrice: TypePrice;
-  transport: Maybe<TypeTransport>;
-  uuid: Maybe<Scalars['Uuid']['output']>;
 };
 
 /** Represent one item in the cart */
@@ -1511,18 +1492,12 @@ export type TypeOrderInput = {
   note: InputMaybe<Scalars['String']['input']>;
   /** Determines whether the order is made on the company behalf. */
   onCompanyBehalf: Scalars['Boolean']['input'];
-  /** Deprecated, this field is not used, the payment is taken from the server cart instead. */
-  payment: InputMaybe<TypePaymentInput>;
   /** Billing address zip code (will be on the tax invoice) */
   postcode: Scalars['String']['input'];
-  /** Deprecated, this field is not used, the products are taken from the server cart instead. */
-  products: InputMaybe<Array<TypeOrderProductInput>>;
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String']['input'];
   /** The customer's phone number */
   telephone: Scalars['String']['input'];
-  /** Deprecated, this field is not used, the transport is taken from the server cart instead. */
-  transport: InputMaybe<TypeTransportInput>;
 };
 
 /** Represent one item in the order */
@@ -1548,16 +1523,6 @@ export type TypeOrderPaymentsConfig = {
   availablePayments: Array<TypePayment>;
   /** Current payment method used in the order */
   currentPayment: TypePayment;
-};
-
-/** Represents a product in order */
-export type TypeOrderProductInput = {
-  /** Quantity of products */
-  quantity: Scalars['Int']['input'];
-  /** Product price per unit */
-  unitPrice: TypePriceInput;
-  /** UUID */
-  uuid: Scalars['Uuid']['input'];
 };
 
 /** Information about pagination in a connection. */
@@ -1749,14 +1714,6 @@ export type TypePaymentPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-/** Represents a payment in order */
-export type TypePaymentInput = {
-  /** Price for payment */
-  price: TypePriceInput;
-  /** UUID */
-  uuid: Scalars['Uuid']['input'];
-};
-
 export type TypePaymentSetupCreationData = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
@@ -1811,16 +1768,6 @@ export type TypePrice = TypePriceInterface & {
   priceWithoutVat: Scalars['Money']['output'];
   /** Total value of VAT */
   vatAmount: Scalars['Money']['output'];
-};
-
-/** Represents the price */
-export type TypePriceInput = {
-  /** Price with VAT */
-  priceWithVat: Scalars['Money']['input'];
-  /** Price without VAT */
-  priceWithoutVat: Scalars['Money']['input'];
-  /** Total value of VAT */
-  vatAmount: Scalars['Money']['input'];
 };
 
 /** Represents the price */
@@ -2806,14 +2753,6 @@ export type TypeTransportMainImageArgs = {
 /** Represents a transport */
 export type TypeTransportPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-/** Represents a transport in order */
-export type TypeTransportInput = {
-  /** Price for transport */
-  price: TypePriceInput;
-  /** UUID */
-  uuid: Scalars['Uuid']['input'];
 };
 
 /** Represents a transport type */

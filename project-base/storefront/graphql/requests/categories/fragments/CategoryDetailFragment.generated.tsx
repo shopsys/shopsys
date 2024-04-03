@@ -36,9 +36,6 @@ export type TypeCategoryDetailFragment = { __typename: 'Category', id: number, u
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -36,9 +36,6 @@ export type TypeBlogUrlQuery = { __typename?: 'Query', blogCategories: Array<{ _
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -32,9 +32,6 @@ export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, n
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

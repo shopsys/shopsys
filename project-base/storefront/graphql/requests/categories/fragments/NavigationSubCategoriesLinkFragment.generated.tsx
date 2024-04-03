@@ -31,9 +31,6 @@ export type TypeNavigationSubCategoriesLinkFragment = { __typename: 'Category', 
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -39,9 +39,6 @@ export type TypePersonalDataRequestMutation = { __typename?: 'Mutation', Request
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

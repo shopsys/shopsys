@@ -39,9 +39,6 @@ export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typena
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

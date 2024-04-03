@@ -31,9 +31,6 @@ export type TypePricingSettingFragment = { __typename: 'PricingSetting', default
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

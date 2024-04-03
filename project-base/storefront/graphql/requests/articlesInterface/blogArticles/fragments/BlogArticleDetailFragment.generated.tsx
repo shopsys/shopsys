@@ -34,9 +34,6 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

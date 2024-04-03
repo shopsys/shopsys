@@ -38,9 +38,6 @@ export type TypeNewsletterSubscribeMutation = { __typename?: 'Mutation', Newslet
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

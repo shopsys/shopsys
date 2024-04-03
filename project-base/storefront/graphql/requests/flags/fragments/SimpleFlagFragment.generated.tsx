@@ -31,9 +31,6 @@ export type TypeSimpleFlagFragment = { __typename: 'Flag', uuid: string, name: s
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"
