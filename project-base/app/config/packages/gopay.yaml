@@ -1,15 +1,15 @@
 parameters:
     gopay_config:
-        en:
-            goid: '%env(GOPAY_EN_GOID)%'
-            clientId: '%env(GOPAY_EN_CLIENTID)%'
-            clientSecret: '%env(GOPAY_EN_CLIENTSECRET)%'
-            language: EN
         cs:
             goid: '%env(GOPAY_CS_GOID)%'
             clientId: '%env(GOPAY_CS_CLIENTID)%'
             clientSecret: '%env(GOPAY_CS_CLIENTSECRET)%'
             language: CS
+        en:
+            goid: '%env(GOPAY_EN_GOID)%'
+            clientId: '%env(GOPAY_EN_CLIENTID)%'
+            clientSecret: '%env(GOPAY_EN_CLIENTSECRET)%'
+            language: EN
         isProductionMode: '%env(bool:GOPAY_IS_PRODUCTION_MODE)%'
         scope: payment-all
         timeout: 30

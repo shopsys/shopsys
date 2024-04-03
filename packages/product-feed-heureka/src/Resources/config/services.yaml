@@ -1,7 +1,7 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     Shopsys\ProductFeed\HeurekaBundle\:
@@ -12,24 +12,24 @@ services:
         tags:
             - { name: shopsys.data_fixture }
 
-    Shopsys\ProductFeed\HeurekaBundle\HeurekaFeed:
+    Shopsys\ProductFeed\HeurekaBundle\Form\CategoryCrudExtension:
         tags:
-            - { name: shopsys.feed, hours: '2', minutes: '0' }
+            - { name: shopsys.crud_extension, type: category }
 
     Shopsys\ProductFeed\HeurekaBundle\Form\HeurekaProductCrudExtension:
         tags:
             - { name: shopsys.crud_extension, type: product }
 
-    Shopsys\ProductFeed\HeurekaBundle\Form\CategoryCrudExtension:
+    Shopsys\ProductFeed\HeurekaBundle\HeurekaFeed:
         tags:
-            - { name: shopsys.crud_extension, type: category }
+            - { name: shopsys.feed, hours: '2', minutes: '0' }
+
+    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface:
+        alias: Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory
 
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader:
         arguments:
             - '%shopsys.product_feed.heureka_bundle.heureka_category_feed_url%'
-
-    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface:
-        alias: Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory
 
     Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface:
         alias: Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory

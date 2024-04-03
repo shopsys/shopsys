@@ -6,6 +6,13 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:bestselling_products:'
+        blog_article_export_queue:
+            type: 'phpredis'
+            alias: 'blog_article_export_queue'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            options:
+                serialization: 'json'
+                prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'
         doctrine_query:
             type: 'phpredis'
             alias: 'doctrine_query'
@@ -19,6 +26,12 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:'
+        image:
+            type: 'phpredis'
+            alias: 'image'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:image:'
         main_friendly_url_slugs:
             type: 'phpredis'
             alias: 'main_friendly_url_slugs'
@@ -31,16 +44,3 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:fe:'
-        image:
-            type: 'phpredis'
-            alias: 'image'
-            dsn: 'redis://%env(REDIS_HOST)%'
-            options:
-                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:image:'
-        blog_article_export_queue:
-            type: 'phpredis'
-            alias: 'blog_article_export_queue'
-            dsn: 'redis://%env(REDIS_HOST)%'
-            options:
-                serialization: 'json'
-                prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'

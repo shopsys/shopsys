@@ -1,4 +1,4 @@
 shopsys_shop_tests:
-    resource: ../../../src/Controller/Test/
     prefix: /codeception-acceptance-test
+    resource: ../../../src/Controller/Test/
     type: annotation

@@ -11,108 +11,74 @@ parameters:
 
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     Shopsys\FrameworkBundle\:
-        resource: '../../**/*{Calculation,Dispatcher,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
-        resource: '../../Model/AdvancedSearch/Filter/*Filter.php'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\:
-        resource: '../../Model/AdvancedSearchOrder/Filter/*Filter.php'
+        resource: '../../**/*{Calculation,Dispatcher,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
 
-    doctrine.orm.default_entity_manager:
-        class: Doctrine\ORM\EntityManager
-        factory: [Doctrine\ORM\EntityManager, create]
-        public: true
-        arguments:
-            - '@doctrine.dbal.default_connection'
-            - '@doctrine.orm.default_configuration'
+    CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
+        class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
-    doctrine.orm.entity_manager.abstract:
-        synthetic: true
-        public: true
-
-    Faker\Generator:
-        factory: [Faker\Factory, create]
-        calls:
-            - [seed, ['%faker.seed%']]
-
-    Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
-
-    FM\ElfinderBundle\Controller\ElFinderController:
-        class: Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController
-        tags: ['controller.service_arguments']
-        arguments:
-            $params: '%fm_elfinder%'
-            $loader: '@fm_elfinder.loader'
-
-    fragment.handler:
-        class: Shopsys\FrameworkBundle\Component\HttpFoundation\FragmentHandler
-        arguments:
-            - '@service_container'
-            - '@request_stack'
-            - '%kernel.debug%'
-
-    # Use Shopsys routing extension for knplabs/knp-menu-bundle that ignores missing parameters in routes
-    knp_menu.factory_extension.routing:
-        class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
-        tags:
-            - knp_menu.factory_extension
-
-    Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector:
-        tags:
-            - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
+    Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:
+        alias: doctrine.fixtures.loader
 
     Doctrine\Common\Annotations\DocParser:
         alias: jms_translation.doc_parser
 
+    Doctrine\Common\EventManager:
+        alias: doctrine.dbal.default_connection.event_manager
+
+    Elasticsearch\Client:
+        class: Elasticsearch\Client
+        factory: ['@Elasticsearch\ClientBuilder', build]
+
+    Elasticsearch\ClientBuilder:
+        arguments: ['%env(ELASTICSEARCH_HOST)%']
+        calls:
+            -   method: setTracer
+                arguments:
+                    - '@shopsys.component.elasticsearch.tracer'
+        class: Elasticsearch\ClientBuilder
+        factory: [Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchClientFactory, create]
+
+    FM\ElfinderBundle\Configuration\ElFinderConfigurationReader:
+        alias: fm_elfinder.configurator.default
+
+    FM\ElfinderBundle\Controller\ElFinderController:
+        arguments:
+            $params: '%fm_elfinder%'
+            $loader: '@fm_elfinder.loader'
+        class: Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController
+        tags: ['controller.service_arguments']
+
+    Faker\Generator:
+        calls:
+            - [seed, ['%faker.seed%']]
+        factory: [Faker\Factory, create]
+
+    Intervention\Image\ImageManager:
+        arguments:
+            - [driver: 'gd']
+
     Ivory\OrderedForm\Orderer\FormOrderer: ~
 
-    form.resolved_type_factory:
-        class: Ivory\OrderedForm\OrderedResolvedFormTypeFactory
-        arguments:
-            - '@Ivory\OrderedForm\Orderer\FormOrderer'
-
-    # disable original DefaultPhpFileExtractor
-    jms_translation.extractor.file.default_php_extractor:
-        alias: Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor
-
-    # normalize translation messages during extraction
-    jms_translation.extractor_manager:
-        alias: Shopsys\FrameworkBundle\Component\Translation\NormalizingExtractorManager
-
-    main_filesystem:
-        class: League\Flysystem\FilesystemOperator
-        factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
-        # public service is necessary for ElFinderBundle
-        public: true
-
-    Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-
-    local_filesystem:
-        class: League\Flysystem\FilesystemOperator
-        factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\LocalFilesystemFactory', create]
+    Metadata\MetadataFactory:
+        alias: prezent_doctrine_translatable.metadata_factory
 
     NinjaMutex\Lock\LockInterface:
-        class: NinjaMutex\Lock\FlockLock
         arguments:
             - '%kernel.project_dir%/var/lock'
+        class: NinjaMutex\Lock\FlockLock
 
-    routing.loader.annotation:
-        class: Shopsys\FrameworkBundle\Component\AnnotatedRouteControllerLoader
-        arguments:
-            - '@annotation_reader'
+    Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface:
+        alias: Shopsys\FrameworkBundle\Component\Domain\Domain
 
     Shopsys\FrameworkBundle\Command\EntitiesDumpCommand:
         arguments:
@@ -126,74 +92,88 @@ services:
         arguments:
             $routerMatchCommand: '@console.command.router_match'
 
-    Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
-
-    Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
-        public: true
-        arguments:
-            $menuFactory: '@knp_menu.factory'
-        tags:
-            - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig: ~
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
-
-    Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
+    Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
 
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
         arguments: [!tagged shopsys.breadcrumb_generator]
 
-    Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+    Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator:
+        arguments: [ '@Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator.inner' ]
+        decorates: fos_ck_editor.renderer
 
     Shopsys\FrameworkBundle\Component\Cdn\CdnFacade:
         arguments:
             $cdnDomain: '%env(CDN_DOMAIN)%'
 
-    Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig: ~
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
 
-    Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
-        arguments:
-            $logger: '@monolog.logger.cron'
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap:
+        arguments: ["@=service('Shopsys\\\\FrameworkBundle\\\\Component\\\\ClassExtension\\\\ClassExtensionRegistry').getClassExtensionMap()"]
 
-    Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
-        arguments:
-            $environmentFileDirectory: '%kernel.project_dir%'
+    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer: ~
 
-    Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
+    Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
+
+    Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector:
         tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
+            - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
+
+    Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig: ~
 
     Shopsys\FrameworkBundle\Component\Cron\CronFacade:
         arguments:
             - '@monolog.logger.cron'
 
+    Shopsys\FrameworkBundle\Component\Cron\CronFilter: ~
+
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
+        arguments:
+            $logger: '@monolog.logger.cron'
+
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory
+
     Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade:
         public: true
+
+    Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory
+
+    Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper: ~
+
+    Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider:
+        arguments:
+            - '%env(DATABASE_HOST)%'
+            - '%env(DATABASE_PORT)%'
+            - '%env(DATABASE_NAME)%'
+            - '%env(DATABASE_USER)%'
+            - '%env(DATABASE_PASSWORD)%'
 
     Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade:
         arguments:
             - '%shopsys.default_db_schema_filepath%'
 
+    Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder: ~
+
+    Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: ~
+
+    Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter: ~
+
+    Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder: ~
+
     Shopsys\FrameworkBundle\Component\Domain\Domain:
-        factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
         arguments:
             - '%shopsys.domain_config_filepath%'
             - '%shopsys.domain_urls_config_filepath%'
+        factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
         lazy: true
         public: true
-
-    Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
-        alias: Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider
 
     Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface:
-        alias: Shopsys\FrameworkBundle\Component\Domain\Domain
+    Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator: ~
 
     Shopsys\FrameworkBundle\Component\Domain\DomainFacade:
         arguments:
@@ -203,13 +183,69 @@ services:
         arguments:
             - '@monolog.logger'
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator: ~
-
-    Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator: ~
+    Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer: ~
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinder: ~
 
-    Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting: ~
+    Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
+        alias: Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider
+
+    Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator: ~
+
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
+        arguments:
+            $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
+            $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
+
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier:
+        arguments:
+            $environment: '%kernel.environment%'
+            $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
+
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry:
+        arguments:
+            $indexes: !tagged elasticsearch.index
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventSubscriber:
+        class: Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, priority: 10 }
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
+        arguments:
+            $entityExtensionMap: '%shopsys.entity_extension.map%'
+        tags:
+            - { name: doctrine.event_subscriber, priority: -10 }
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator:
+        arguments:
+            - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator.inner'
+            - '@doctrine.orm.default_configuration'
+        decorates: 'doctrine.orm.default_entity_manager'
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
+        arguments:
+            - '%shopsys.entity_extension.map%'
+
+    Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver:
+        arguments: [!tagged shopsys.data_type_resolver]
+
+    Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, priority: 1 }
+            - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
+            - { name: doctrine.event_listener, event: preRemove, priority: 1 }
+            - { name: doctrine.event_listener, event: postFlush, priority: 1 }
+
+    Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
+        arguments:
+            $environmentFileDirectory: '%kernel.project_dir%'
+
+    Shopsys\FrameworkBundle\Component\Error\ErrorController:
+        arguments:
+            $debug: '%kernel.debug%'
+            $environment: '%kernel.environment%'
+            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
 
     Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
         arguments:
@@ -219,10 +255,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
-    Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention: ~
-
-    Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
-        arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
+    Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener:
+        alias: exception_listener
 
     Shopsys\FrameworkBundle\Component\FileUpload\DoctrineListener:
         tags:
@@ -231,41 +265,39 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
 
+    Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention: ~
+
+    Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
+        arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
+
+    Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator: ~
+
+    Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor: ~
+
+    Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting: ~
+
+    Shopsys\FrameworkBundle\Component\Form\ResizeFormListener:
+        public: true
+        synthetic: true
+
     Shopsys\FrameworkBundle\Component\Form\TimedSpamValidationListener:
         $options: []
 
     Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry:
         arguments: [!tagged shopsys.grid_inline_edit]
 
-    Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator:
-        arguments:
-            - '%shopsys.image_dir%'
-            - '%shopsys.domain_images_dir%'
-
-    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
-        factory: ['@Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader', loadFromYaml]
-        arguments:
-            - '%shopsys.image_config_filepath%'
-
-    Shopsys\FrameworkBundle\Component\Image\ImageDeleteDoctrineListener:
+    Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener:
         tags:
-            - { name: doctrine.event_listener, event: preRemove }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
-        arguments: ['%shopsys.image_url_prefix%']
-
-    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
-        arguments: ['%shopsys.image_dir%']
-
-    Intervention\Image\ImageManager:
-        arguments:
-            - [driver: 'gd']
-
-    Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber:
-        arguments:
-            - '@monolog.logger.slow'
+    Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener:
         tags:
-            - { name: kernel.event_subscriber }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
         tags:
@@ -279,41 +311,113 @@ services:
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse: ~
 
-    Shopsys\FrameworkBundle\Component\Setting\Setting: ~
+    Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage:
+        arguments:
+            $dsn: 'file:%kernel.project_dir%/var/cache/profiler'
 
-    Shopsys\FrameworkBundle\Component\Setting\ClearSettingsCacheDoctrineSubscriber:
-        tags: ['doctrine.event_subscriber']
+    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
+        arguments:
+            - '%shopsys.image_config_filepath%'
+        factory: ['@Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader', loadFromYaml]
+
+    Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator:
+        arguments:
+            - '%shopsys.image_dir%'
+            - '%shopsys.domain_images_dir%'
+
+    Shopsys\FrameworkBundle\Component\Image\ImageDeleteDoctrineListener:
+        tags:
+            - { name: doctrine.event_listener, event: preRemove }
+
+    Shopsys\FrameworkBundle\Component\Image\ImageFacade:
+        arguments: ['%shopsys.image_url_prefix%']
+
+    Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Image\ImageFactory
+
+    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
+        arguments: ['%shopsys.image_dir%']
+
+    Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor: ~
+
+    Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
+        class: 'Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter'
+
+    Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface:
+        arguments:
+            $adminDisplayTimeZone: '%shopsys.admin_display_timezone%'
+        class: Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider
+
+    Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber:
+        arguments:
+            - '@monolog.logger.slow'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
+
+    Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
+        arguments:
+            $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
     Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
         arguments:
             $storefrontGraphqlQueryClient: '@snc_redis.storefront_graphql_query'
 
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
+    Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade:
         arguments:
-            - '@event_dispatcher'
+            - '@snc_redis.global'
 
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade:
+    Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
         arguments:
-            - '%shopsys.sitemaps_dir%'
-            - '%shopsys.sitemaps_url_prefix%'
+            $allClients: !tagged snc_redis.client
+            $persistentClients:
+                - '@snc_redis.global'
 
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener:
+    Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
+        arguments:
+            $globalClient: '@snc_redis.global'
+            $currentVersion: '%build-version%'
+
+    Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
         tags:
-            - { name: 'kernel.event_subscriber', priority: 100 }
+            - { name: router, priority: 70 }
 
-    Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator: ~
-
-    Shopsys\FrameworkBundle\Component\Translation\NormalizingExtractorManager:
+    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
         arguments:
-            - '@jms_translation.extractor.file_extractor'
-            - '@logger'
+            $routerConfiguration: '%router.resource%'
+            $cacheDir: '%shopsys.router.domain.cache_dir%'
 
-    Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor:
-        tags:
-            - { name: jms_translation.file_visitor }
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
 
-    Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor:
-        factory: ['@Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory', create]
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry:
+        arguments: [!tagged shopsys.friendly_url_provider]
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
+        arguments: ['%shopsys.router.friendly_url_router_filepath%']
+
+    Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory:
+        arguments:
+            $localeRoutersResourcesFilepathMask: '%shopsys.router.locale_router_filepath_mask%'
+            $cacheDir: '%shopsys.router.localized.cache_dir%'
+
+    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector:
+        arguments:
+            - '@annotations.reader'
+
+    Shopsys\FrameworkBundle\Component\Setting\ClearSettingsCacheDoctrineSubscriber:
+        tags: ['doctrine.event_subscriber']
+
+    Shopsys\FrameworkBundle\Component\Setting\Setting: ~
+
+    Shopsys\FrameworkBundle\Component\Setting\SettingValueFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\Setting\SettingValueFactory
+
+    Shopsys\FrameworkBundle\Component\Translation\ConfigConstraintMessageExtractor:
         tags:
             - { name: jms_translation.file_visitor }
 
@@ -329,7 +433,19 @@ services:
         tags:
             - { name: jms_translation.file_visitor }
 
-    Shopsys\FrameworkBundle\Component\Translation\ConfigConstraintMessageExtractor:
+    Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor:
+        tags:
+            - { name: jms_translation.file_visitor }
+
+    Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer: ~
+
+    Shopsys\FrameworkBundle\Component\Translation\NormalizingExtractorManager:
+        arguments:
+            - '@jms_translation.extractor.file_extractor'
+            - '@logger'
+
+    Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor:
+        factory: ['@Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory', create]
         tags:
             - { name: jms_translation.file_visitor }
 
@@ -337,60 +453,207 @@ services:
         tags:
             - { name: jms_translation.dumper, format: po }
 
-    Shopsys\FrameworkBundle\Component\Form\ResizeFormListener:
-        synthetic: true
-        public: true
-
-    Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer: ~
-
-    Symfony\Component\Translation\IdentityTranslator: ~
+    Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator: ~
 
     Shopsys\FrameworkBundle\Component\Translation\Translator:
-        decorates: translator
         arguments:
             - '@Shopsys\FrameworkBundle\Component\Translation\Translator.inner'
             - '@Shopsys\FrameworkBundle\Component\Translation\Translator.inner'
             - '@Symfony\Component\Translation\IdentityTranslator'
+        decorates: translator
 
     Shopsys\FrameworkBundle\Component\Translation\TwigFileExtractor:
-        decorates: 'jms_translation.extractor.file.twig_extractor'
         arguments:
             - '@Shopsys\FrameworkBundle\Component\Translation\TwigFileExtractor.inner'
+        decorates: 'jms_translation.extractor.file.twig_extractor'
 
     Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig:
-        factory: ['@Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigLoader', loadFromYaml]
         arguments:
             - '%shopsys.uploaded_file_config_filepath%'
+        factory: ['@Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigLoader', loadFromYaml]
+
+    Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator: ~
+
+    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory
 
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDeleteDoctrineListener:
         tags:
             - { name: doctrine.event_listener, event: preRemove }
 
-    Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator: ~
+    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory
 
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator:
         arguments:
             - '%shopsys.uploaded_file_dir%'
 
+    Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
+
+    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
+        arguments:
+            $resettableServices: !tagged kernel.reset
+
+    Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator:
+        tags:
+            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator }
+
     Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator }
+
+    Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator:
+        tags:
+            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator }
 
     Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
 
+    Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
+
+    Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
+        arguments:
+            $menuFactory: '@knp_menu.factory'
+        public: true
+        tags:
+            - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
+
+    Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade:
+        arguments:
+            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\:
+        resource: '../../Model/AdvancedSearchOrder/Filter/*Filter.php'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade:
+        arguments:
+            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
+        resource: '../../Model/AdvancedSearch/Filter/*Filter.php'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig: ~
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
+
+    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
+
+    Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Advert\AdvertFactory
+
+    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory
+
+    Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Article\ArticleFactory
+
+    Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
+
+    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
+        arguments: [ '@snc_redis.blog_article_export_queue' ]
+
+    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex: ~
+
+    Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory
+
+    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher: ~
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Category\CategoryFactory
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
+
+    Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactory
+
+    Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory
+
     Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade:
         arguments:
             - '%kernel.environment%'
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
+    Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
+
+    Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Country\CountryFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail: ~
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~
 
-    Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
+    Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
-    Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory
 
     Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider:
         arguments:
@@ -402,585 +665,13 @@ services:
         arguments:
             $cronTimeZone: '%shopsys.cron_timezone%'
 
-    Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
-    Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
-    Shopsys\FrameworkBundle\Model\Localization\Localization:
+    Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
         arguments:
-            $adminLocale: '%shopsys.admin_locale%'
-
-    Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface:
-        class: 'Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter'
-
-    Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface:
-        class: Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider
-        arguments:
-            $adminDisplayTimeZone: '%shopsys.admin_display_timezone%'
-
-    CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
-        class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
-
-    Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
+            - '%gopay_config%'
 
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting: ~
 
-    Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting: ~
-
-    Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
-    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
-        arguments:
-            - '@bestselling_product_cache'
-
-    Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
-
-    Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
-
-    # Define RedirectController explicitly to prevent creating it on-the-fly
-    # when redirecting (it causes unnecessary container rebuild).
-    # ContainerControllerResolver fetch RedirectController from container, therefore it must be a public service
-    Symfony\Bundle\FrameworkBundle\Controller\RedirectController:
-        public: true
-
-    Symfony\Component\Config\Loader\LoaderInterface:
-        alias: routing.loader
-
-    Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter: ~
-
-    Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter:
-        tags:
-            - { name: router, priority: 70 }
-
-    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
-        arguments:
-            $routerConfiguration: '%router.resource%'
-            $cacheDir: '%shopsys.router.domain.cache_dir%'
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry:
-        arguments: [!tagged shopsys.friendly_url_provider]
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
-        arguments: ['%shopsys.router.friendly_url_router_filepath%']
-
-    Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory:
-        arguments:
-            $localeRoutersResourcesFilepathMask: '%shopsys.router.locale_router_filepath_mask%'
-            $cacheDir: '%shopsys.router.localized.cache_dir%'
-
-    Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector:
-        arguments:
-            - '@annotations.reader'
-
-    Shopsys\FrameworkBundle\Model\Script\ScriptFacade:
-        public: true
-
-    Shopsys\FrameworkBundle\Model\Security\Authenticator:
-        arguments:
-            - '@security.token_storage'
-
-    Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator: ~
-
-    Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess:
-        public: true
-        arguments:
-            - '%shopsys.filemanager_upload_dir%'
-
-    Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
-        arguments:
-            - '@security.token_storage'
-            - '@event_dispatcher'
-
-    Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
-        arguments:
-            - '%kernel.environment%'
-            - '%env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%'
-
-    Shopsys\FrameworkBundle\Model\Security\LoginListener:
-        tags:
-            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
-
-    translation.loader.po:
-        class: Shopsys\FrameworkBundle\Component\Translation\PoFileLoader
-        tags:
-            - { name: 'translation.loader', alias: 'po' }
-
-    Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener:
-        alias: exception_listener
-
-    exception_listener:
-        class: Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener
-        tags:
-            - { name: 'kernel.event_subscriber' }
-            - { name: 'monolog.logger', channel: 'request' }
-        arguments:
-            - '%kernel.error_controller%'
-            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
-            - '@?logger'
-            - '%kernel.debug%'
-
-    twig.stringloader:
-        class: Twig\Loader\ArrayLoader
-
-    Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator:
-        tags:
-            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator }
-
-    Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator:
-        tags:
-            - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\DeliveryAddressOfCurrentCustomerValidator }
-
-    monolog.activation_strategy.not_found:
-        abstract: true
-
-    monolog.handler.fingers_crossed.error_level_activation_strategy:
-        abstract: true
-
-    Doctrine\Common\EventManager:
-        alias: doctrine.dbal.default_connection.event_manager
-
-    Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:
-        alias: doctrine.fixtures.loader
-
-    Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder: ~
-
-    Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder: ~
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventSubscriber:
-        class: Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionParentMetadataCleanerEventSubscriber
-        tags:
-            - { name: doctrine.event_subscriber, priority: 10 }
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
-        arguments:
-            $entityExtensionMap: '%shopsys.entity_extension.map%'
-        tags:
-            - { name: doctrine.event_subscriber, priority: -10 }
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator:
-        decorates: 'doctrine.orm.default_entity_manager'
-        arguments:
-            - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator.inner'
-            - '@doctrine.orm.default_configuration'
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
-        arguments:
-            - '%shopsys.entity_extension.map%'
-
-    Metadata\MetadataFactory:
-        alias: prezent_doctrine_translatable.metadata_factory
-
-    FM\ElfinderBundle\Configuration\ElFinderConfigurationReader:
-        alias: fm_elfinder.configurator.default
-
-    Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Advert\AdvertFactory
-
-    Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Article\ArticleFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory
-
-    Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory
-
-    Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory
-
-    Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Category\CategoryFactory
-
-    Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Country\CountryFactory
-
-    Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
-
-    Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
-    Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Image\ImageFactory
-
-    Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory
-
-    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactory
-
-    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory
-
-    Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\OrderFactory
-
-    Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
-
-    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory
-
-    Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentFactory
-
-    Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory
-
-    Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory
-
-    Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Script\ScriptFactory
-
-    Shopsys\FrameworkBundle\Component\Setting\SettingValueFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Setting\SettingValueFactory
-
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory
-
-    Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactory
-
-    Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactory
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Transport\TransportFactory
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory
-
-    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
-
-    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory
-
-    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory
-
-    Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory
-
-    Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory
-
-    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
-
-    Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
-
-    Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Script\ScriptDataFactory
-
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
-
-    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
-
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer: ~
-
-    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
-
-    Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher: ~
-
-    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher: ~
-
-    Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter: ~
-
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper: ~
-
-    Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: ~
-
-    Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer: ~
-
-    Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor: ~
-
-    Shopsys\FrameworkBundle\Component\Cron\CronFilter: ~
-
-    Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor: ~
-
-    Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration: ~
-
-    Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail: ~
-
-    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
-
-    Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter: ~
-
-    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product:
-        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
-        arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade:
-        arguments:
-            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product'
-
-    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order:
-        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
-        arguments:
-            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig'
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade:
-        arguments:
-            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order'
-
-    Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
-        arguments:
-            $allClients: !tagged snc_redis.client
-            $persistentClients:
-                - '@snc_redis.global'
-
-    Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
-        arguments:
-            $globalClient: '@snc_redis.global'
-            $currentVersion: '%build-version%'
-
-    shopsys.component.elasticsearch.tracer:
-        class: Psr\Log\NullLogger
-
-    Elasticsearch\ClientBuilder:
-        class: Elasticsearch\ClientBuilder
-        factory: [Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchClientFactory, create]
-        arguments: ['%env(ELASTICSEARCH_HOST)%']
-        calls:
-            -   method: setTracer
-                arguments:
-                    - '@shopsys.component.elasticsearch.tracer'
-
-    Elasticsearch\Client:
-        class: Elasticsearch\Client
-        factory: ['@Elasticsearch\ClientBuilder', build]
-
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex: ~
-
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry:
-        arguments:
-            $indexes: !tagged elasticsearch.index
-
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
-        arguments:
-            $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
-            $indexPrefix: '%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
-
-    Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
-
-    Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
-
-    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap:
-        arguments: ["@=service('Shopsys\\\\FrameworkBundle\\\\Component\\\\ClassExtension\\\\ClassExtensionRegistry').getClassExtensionMap()"]
-
-    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer: ~
-
-    Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder: ~
-
-    Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer: ~
-
-    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory
-
-    Symfony\Component\Validator\Constraints\ImageValidator:
-        class: Shopsys\FrameworkBundle\Form\Constraints\ImageAbstractFilesystemValidator
-
-    Symfony\Component\Validator\Constraints\FileValidator:
-        class: Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator
-
-    Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator:
-        decorates: fos_ck_editor.renderer
-        arguments: [ '@Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator.inner' ]
-
-    Shopsys\FrameworkBundle\Twig\CKEditorExtension:
-        arguments:
-            - '@fos_ck_editor.configuration'
-            - '@fos_ck_editor.twig_extension'
-
-    Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider:
-        arguments:
-            - '%env(DATABASE_HOST)%'
-            - '%env(DATABASE_PORT)%'
-            - '%env(DATABASE_NAME)%'
-            - '%env(DATABASE_USER)%'
-            - '%env(DATABASE_PASSWORD)%'
-
-    Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider:
-        arguments:
-            - '%env(MAILER_DSN)%'
-            - '%env(bool:MAILER_FORCE_WHITELIST)%'
-
-    Shopsys\FrameworkBundle\Component\Error\ErrorController:
-        arguments:
-            $debug: '%kernel.debug%'
-            $environment: '%kernel.environment%'
-            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
-
-    Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage:
-        arguments:
-            $dsn: 'file:%kernel.project_dir%/var/cache/profiler'
-
-    profiler.storage:
-        alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage
 
 
     Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapDumperFactory:
@@ -992,67 +683,376 @@ services:
             - '%shopsys.sitemaps_dir%'
             - '%shopsys.sitemaps_url_prefix%'
 
+    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
+
     Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapListener:
         tags:
             - { name: 'kernel.event_subscriber', priority: 100 }
 
-    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
-
-    Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade:
+    Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:
-            - '@snc_redis.global'
+            $adminLocale: '%shopsys.admin_locale%'
 
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier:
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration: ~
+
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
+
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory
+
+    Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
+
+    Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider:
         arguments:
-            $environment: '%kernel.environment%'
-            $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
+            - '%env(MAILER_DSN)%'
+            - '%env(bool:MAILER_FORCE_WHITELIST)%'
 
-    Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
+    Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory
 
-    Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
-        arguments:
-            $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+    Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
 
-    Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory
+    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory
 
-    Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper: ~
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
 
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
 
+    Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\OrderFactory
+
+    Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
+
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory
+
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory
+
+    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory
+
+    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory
+
+    Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher: ~
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentFactory
+
+    Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory
+
+    Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
+
+    Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
+
+    Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory
+
+    Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory
+
+    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory
+
+    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory
+
+    Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory
+
+    Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactory
+
+    Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
+
+    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory
+
+    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactory
+
+    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
+
+    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
+        arguments:
+            - '@bestselling_product_cache'
+
+    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
+
+    Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory
+
+    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\ProductFactory
+
+    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory
+
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
 
-    Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+    Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
 
-    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex: ~
+    Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactory
 
-    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
-        arguments: [ '@snc_redis.blog_article_export_queue' ]
+    Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory
 
-    Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
+    Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory
 
-    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
+    Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Script\ScriptDataFactory
+
+    Shopsys\FrameworkBundle\Model\Script\ScriptFacade:
+        public: true
+
+    Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Script\ScriptFactory
+
+    Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
-            $resettableServices: !tagged kernel.reset
+            - '%kernel.environment%'
+            - '%env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%'
 
-    Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
-        tags:
-            - { name: doctrine.event_listener, event: postPersist, priority: 1 }
-            - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
-            - { name: doctrine.event_listener, event: preRemove, priority: 1 }
-            - { name: doctrine.event_listener, event: postFlush, priority: 1 }
-
-    Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver:
-        arguments: [!tagged shopsys.data_type_resolver]
-
-    Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
+    Shopsys\FrameworkBundle\Model\Security\Authenticator:
         arguments:
-            - '%gopay_config%'
+            - '@security.token_storage'
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~
+    Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess:
+        arguments:
+            - '%shopsys.filemanager_upload_dir%'
+        public: true
+
+    Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
+        arguments:
+            - '@security.token_storage'
+            - '@event_dispatcher'
+
+    Shopsys\FrameworkBundle\Model\Security\LoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
+        arguments:
+            - '@event_dispatcher'
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade:
+        arguments:
+            - '%shopsys.sitemaps_dir%'
+            - '%shopsys.sitemaps_url_prefix%'
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer: ~
+
+    Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener:
+        tags:
+            - { name: 'kernel.event_subscriber', priority: 100 }
+
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory
+
+    Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory
+
+    Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter: ~
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Transport\TransportFactory
+
+    Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory
+
+    Shopsys\FrameworkBundle\Twig\CKEditorExtension:
+        arguments:
+            - '@fos_ck_editor.configuration'
+            - '@fos_ck_editor.twig_extension'
+
+    # Define RedirectController explicitly to prevent creating it on-the-fly
+    # when redirecting (it causes unnecessary container rebuild).
+    # ContainerControllerResolver fetch RedirectController from container, therefore it must be a public service
+    Symfony\Bundle\FrameworkBundle\Controller\RedirectController:
+        public: true
+
+    Symfony\Component\Config\Loader\LoaderInterface:
+        alias: routing.loader
+
+    Symfony\Component\Translation\IdentityTranslator: ~
+
+    Symfony\Component\Validator\Constraints\FileValidator:
+        class: Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator
+
+    Symfony\Component\Validator\Constraints\ImageValidator:
+        class: Shopsys\FrameworkBundle\Form\Constraints\ImageAbstractFilesystemValidator
+
+    doctrine.orm.default_entity_manager:
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@doctrine.orm.default_configuration'
+        class: Doctrine\ORM\EntityManager
+        factory: [Doctrine\ORM\EntityManager, create]
+        public: true
+
+    doctrine.orm.entity_manager.abstract:
+        public: true
+        synthetic: true
+
+    exception_listener:
+        arguments:
+            - '%kernel.error_controller%'
+            - '@Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider'
+            - '@?logger'
+            - '%kernel.debug%'
+        class: Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener
+        tags:
+            - { name: 'kernel.event_subscriber' }
+            - { name: 'monolog.logger', channel: 'request' }
+
+    form.resolved_type_factory:
+        arguments:
+            - '@Ivory\OrderedForm\Orderer\FormOrderer'
+        class: Ivory\OrderedForm\OrderedResolvedFormTypeFactory
+
+    fragment.handler:
+        arguments:
+            - '@service_container'
+            - '@request_stack'
+            - '%kernel.debug%'
+        class: Shopsys\FrameworkBundle\Component\HttpFoundation\FragmentHandler
+
+    # disable original DefaultPhpFileExtractor
+    jms_translation.extractor.file.default_php_extractor:
+        alias: Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor
+
+    # normalize translation messages during extraction
+    jms_translation.extractor_manager:
+        alias: Shopsys\FrameworkBundle\Component\Translation\NormalizingExtractorManager
+
+    # Use Shopsys routing extension for knplabs/knp-menu-bundle that ignores missing parameters in routes
+    knp_menu.factory_extension.routing:
+        class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
+        tags:
+            - knp_menu.factory_extension
+
+    local_filesystem:
+        class: League\Flysystem\FilesystemOperator
+        factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\LocalFilesystemFactory', create]
+
+    main_filesystem:
+        class: League\Flysystem\FilesystemOperator
+        factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
+        # public service is necessary for ElFinderBundle
+        public: true
+
+    monolog.activation_strategy.not_found:
+        abstract: true
+
+    monolog.handler.fingers_crossed.error_level_activation_strategy:
+        abstract: true
+
+    profiler.storage:
+        alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage
+
+    routing.loader.annotation:
+        arguments:
+            - '@annotation_reader'
+        class: Shopsys\FrameworkBundle\Component\AnnotatedRouteControllerLoader
+
+    shopsys.component.elasticsearch.tracer:
+        class: Psr\Log\NullLogger
+
+    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order:
+        arguments:
+            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig'
+        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
+
+    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.product:
+        arguments:
+            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig'
+        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
+
+    translation.loader.po:
+        class: Shopsys\FrameworkBundle\Component\Translation\PoFileLoader
+        tags:
+            - { name: 'translation.loader', alias: 'po' }
+
+    twig.stringloader:
+        class: Twig\Loader\ArrayLoader

@@ -1,13 +1,3 @@
-site_name: Shopsys Platform Docs
-
-theme:
-    name: readthedocs
-    custom_dir: "docs/_theme"
-    hljs_languages:
-        - dockerfile
-        - twig
-        - yaml
-        - less
 
 extra_css:
     - _theme/main.css
@@ -19,6 +9,17 @@ markdown_extensions:
     - admonition
 
 plugins:
-    - search
     -   awesome-pages:
             filename: navigation.yml
+    - search
+
+site_name: Shopsys Platform Docs
+
+theme:
+    custom_dir: "docs/_theme"
+    hljs_languages:
+        - dockerfile
+        - less
+        - twig
+        - yaml
+    name: readthedocs

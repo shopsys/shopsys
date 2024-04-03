@@ -1,11 +1,11 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
-        public: false
+        autowire: true
         bind:
             Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader: '@first_image_batch_loader'
+        public: false
 
     Shopsys\FrontendApiBundle\:
         resource: '../../**/*{Facade,Factory,Mapper,Mutation,Query,Repository,Subscriber,Validator,Provider,Loader}.php'
@@ -16,75 +16,75 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
-    Shopsys\FrontendApiBundle\Controller\FrontendApiController:
-        tags: ['controller.service_arguments']
+    Lcobucci\JWT\Configuration:
+        factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
 
     Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker:
         arguments:
             $enabledDomainIds: '%shopsys.frontend_api.domains%'
 
+    Shopsys\FrontendApiBundle\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
+        tags: [ 'overblog_graphql.expression_function' ]
+
+    Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
+
+    Shopsys\FrontendApiBundle\Controller\FrontendApiController:
+        tags: ['controller.service_arguments']
+
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}
 
-    Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
-        arguments:
-            $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
-
-    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
-
-    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
-
-    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
-
-    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface:
-        alias: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory
-
     Shopsys\FrontendApiBundle\Model\GraphqlConfigurator: ~
-
-    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
-
-    Lcobucci\JWT\Configuration:
-        factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
 
     Shopsys\FrontendApiBundle\Model\Logger\FrontendApiLogger:
         arguments:
             $logger: '@monolog.logger'
             $isValidationLoggedAsError: '%shopsys.frontend_api.validation_logged_as_error%'
 
-    Shopsys\FrontendApiBundle\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
-        tags: [ 'overblog_graphql.expression_function' ]
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderResolver:
+    Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         arguments:
-            $productSearchResultsProviders: !tagged 'shopsys.frontend_api.products_search_results_provider'
+            $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProvider:
-        tags:
-            - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 1 }
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver:
-        arguments:
-            $categoriesSearchResultsProviders: !tagged 'shopsys.frontend_api.categories_search_results_provider'
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProvider:
-        tags:
-            - { name: 'shopsys.frontend_api.categories_search_results_provider', priority: 1 }
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver:
-        arguments:
-            $articlesSearchResultsProviders: !tagged 'shopsys.frontend_api.articles_search_results_provider'
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
 
     Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.articles_search_results_provider', priority: 1 }
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver:
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderResolver:
         arguments:
-            $brandSearchResultsProviders: !tagged 'shopsys.frontend_api.brands_search_results_provider'
+            $articlesSearchResultsProviders: !tagged 'shopsys.frontend_api.articles_search_results_provider'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.brands_search_results_provider', priority: 1 }
 
-    Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
+    Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderResolver:
+        arguments:
+            $brandSearchResultsProviders: !tagged 'shopsys.frontend_api.brands_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProvider:
+        tags:
+            - { name: 'shopsys.frontend_api.categories_search_results_provider', priority: 1 }
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderResolver:
+        arguments:
+            $categoriesSearchResultsProviders: !tagged 'shopsys.frontend_api.categories_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProvider:
+        tags:
+            - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 1 }
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderResolver:
+        arguments:
+            $productSearchResultsProviders: !tagged 'shopsys.frontend_api.products_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface:
+        alias: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
