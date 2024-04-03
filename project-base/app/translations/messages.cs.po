@@ -10,9 +10,6 @@ msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 msgid "-- Select a role --"
 msgstr "-- Vyber roli --"
 
-msgid "-- Select name of the transfer --"
-msgstr "-- Vyber název převodu --"
-
 msgid "301 (Permanent redirect)"
 msgstr "301 (Trvalé přesměrování)"
 
@@ -85,9 +82,6 @@ msgstr "Přehled administrátorů"
 msgid "Advanced SEO categories"
 msgstr "Extended SEO categories"
 
-msgid "Advanced search"
-msgstr "Pokročilé vyhledávání"
-
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
 msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> byla upravena"
 
@@ -112,27 +106,6 @@ msgstr "Došlo k výjimce během přihlášení."
 msgid "An email with 6 digit code was sent to your email address."
 msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu."
 
-msgid "Apply according to customer"
-msgstr "Aplikovat podle zákazníka"
-
-msgid "Apply according to date and time limit"
-msgstr "Aplikovat podle časového omezení"
-
-msgid "Apply according to product flags"
-msgstr "Aplikovat podle příznaků zboží"
-
-msgid "Apply according to the total price of the order"
-msgstr "Aplikovat podle celkové ceny objednávky"
-
-msgid "Apply to selected brands"
-msgstr "Aplikovat pro vybrané značky"
-
-msgid "Apply to selected categories"
-msgstr "Aplikovat na vybrané kategorie"
-
-msgid "Apply to selected products"
-msgstr "Aplikovat na vybrané produkty"
-
 msgid "Article"
 msgstr "Článek"
 
@@ -153,9 +126,6 @@ msgstr "Ověřovací klíč"
 
 msgid "Back to category selection"
 msgstr "Zpět na volbu kategorie"
-
-msgid "Back to dashboard"
-msgstr "Zpět na nástěnku"
 
 msgid "Back to overview"
 msgstr "Zpět na přehled"
@@ -214,9 +184,6 @@ msgstr "Značka"
 msgid "Brand overview"
 msgstr "Přehled značek"
 
-msgid "Brands"
-msgstr "Značky"
-
 msgid "Brands - full"
 msgstr "Značky - vše"
 
@@ -249,9 +216,6 @@ msgstr "Katalogové číslo"
 
 msgid "Catalog numbers"
 msgstr "Katalogová čísla"
-
-msgid "Categories"
-msgstr "Kategorie"
 
 msgid "Categories - full"
 msgstr "Kategorie - vše"
@@ -321,12 +285,6 @@ msgstr "Hodnota parametru typu barva - zobrazení"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
-
-msgid "Company"
-msgstr "Firma"
-
-msgid "Company number"
-msgstr "IČO"
 
 msgid "Confirm authentication code"
 msgstr "Potvrzení ověřovacího kódu"
@@ -403,9 +361,6 @@ msgstr "Vytvořit notifikační lištu"
 msgid "Create promo code"
 msgstr "Vytvořit slevový kupón"
 
-msgid "Cron overview"
-msgstr "Přehled cronů"
-
 msgid "Custom"
 msgstr "Vlastní"
 
@@ -421,14 +376,8 @@ msgstr "Zákazníci - zobrazení"
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
 
-msgid "Date and time"
-msgstr "Datum a čas"
-
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
-
-msgid "Days until delivery"
-msgstr "Dní do doručení"
 
 msgid "Delete"
 msgstr "Smazat"
@@ -448,9 +397,6 @@ msgstr "Vypnout dvoufaktorové ověřování"
 msgid "Discount"
 msgstr "Sleva"
 
-msgid "Discount type"
-msgstr "Typ slevy"
-
 msgid "Display"
 msgstr "Zobrazit"
 
@@ -459,9 +405,6 @@ msgstr "Datum zobrazení OD"
 
 msgid "Display date TO"
 msgstr "Datum zobrazení DO"
-
-msgid "Do you really want to mark this issue as resolved?"
-msgstr "Opravdu chcete tento problém označit jako vyřešený?"
 
 msgid "Do you really want to remove this administrator role group?"
 msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
@@ -586,12 +529,6 @@ msgstr "Editace slevového kupónu"
 msgid "Editing script"
 msgstr "Upravit script"
 
-msgid "Editing transport type"
-msgstr "Editace typu dopravy"
-
-msgid "Editing transport type - %code%"
-msgstr "Editace typu dopravy - %code%"
-
 msgid "Email"
 msgstr "E-mail"
 
@@ -615,12 +552,6 @@ msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte z
 
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
-msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
-msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
 
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
@@ -694,9 +625,6 @@ msgstr "Parametry filtru"
 msgid "Filter parameters closed by default"
 msgstr "Defaultně zavřené parametry ve filtru"
 
-msgid "First name"
-msgstr "Jméno"
-
 msgid "Flag"
 msgstr "Příznak"
 
@@ -709,9 +637,6 @@ msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upra
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr "Příznak <strong>{{ name }}</strong> byl smazán"
 
-msgid "Flags"
-msgstr "Příznaky"
-
 msgid "Flags - full"
 msgstr "Příznaky - vše"
 
@@ -723,9 +648,6 @@ msgstr "Patička"
 
 msgid "Footer Text"
 msgstr "Text v patičce"
-
-msgid "For registered customers only"
-msgstr "Pouze pro registrované zákazníky"
 
 msgid "Forgotten password"
 msgstr "Zapomenuté heslo"
@@ -844,9 +766,6 @@ msgstr "Jazykové konstanty - zobrazení"
 msgid "Last modification"
 msgstr "Poslední modifikace"
 
-msgid "Last name"
-msgstr "Příjmení"
-
 msgid "Last order"
 msgstr "Poslední objednávka"
 
@@ -864,9 +783,6 @@ msgstr "Obchodní podmínky - zobrazení"
 
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upraveno."
-
-msgid "Limits"
-msgstr "Limity"
 
 msgid "Link Block"
 msgstr "Blok odkazu"
@@ -928,17 +844,11 @@ msgstr "Hlavní URL"
 msgid "Main image"
 msgstr "Hlavní obrázek"
 
-msgid "Maximum weight (g)"
-msgstr "Maximální hmotnost (g)"
-
 msgid "Measurement units"
 msgstr "Měrné jednotky"
 
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
-
-msgid "Message text"
-msgstr "Text zprávy"
 
 msgid "Meta description"
 msgstr "Meta popis"
@@ -1003,17 +913,11 @@ msgstr "Nová položka navigace"
 msgid "New notification bar"
 msgstr "Nová notifikační lišta"
 
-msgid "New orders"
-msgstr "Nové objednávky"
-
 msgid "New page"
 msgstr "Nová stránka"
 
 msgid "New promo code"
 msgstr "Nový slevový kupón"
-
-msgid "New registered customers"
-msgstr "Noví registrovaní zákazníci"
 
 msgid "New script"
 msgstr "Nový script"
@@ -1050,12 +954,6 @@ msgstr "Nebyla nalezena žádná stránka."
 
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
-
-msgid "No transport types found."
-msgstr "Nebyly nalezeny žádné typy doprav."
-
-msgid "Nominal"
-msgstr "Nominální"
 
 msgid "Note"
 msgstr "Poznámka"
@@ -1144,9 +1042,6 @@ msgstr "Původní překlad"
 msgid "Outside layout"
 msgstr "Rozložení vně"
 
-msgid "Package tracking"
-msgstr "Sledování zásilky"
-
 msgid "Page not found"
 msgstr "Stránka nenalazena"
 
@@ -1195,9 +1090,6 @@ msgstr "Cesta k souboru"
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 
-msgid "Percents"
-msgstr "Procenta"
-
 msgid "Personal data access"
 msgstr "Přístup k osobním údajům"
 
@@ -1239,9 +1131,6 @@ msgstr "Cenový hit"
 
 msgid "Pricing group"
 msgstr "Cenová skupina"
-
-msgid "Pricing groups"
-msgstr "Cenové skupiny"
 
 msgid "Pricing groups - full"
 msgstr "Cenové skupiny - vše"
@@ -1291,20 +1180,11 @@ msgstr "Přenos parametrů produktů"
 msgid "Products transfer"
 msgstr "Přenos produktů"
 
-msgid "Products with this flag"
-msgstr "Produkty s tímto příznakem"
-
-msgid "Products without this flag"
-msgstr "Produkty bez tohoto příznaku"
-
 msgid "Promo code"
 msgstr "Slevový kupón"
 
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
 msgstr "Slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a></strong> byl vytvořen"
-
-msgid "Promo code identifier in IS"
-msgstr "Identifikátor kupónu pro IS"
 
 msgid "Promo code prefix"
 msgstr "Prefix slevového kupónu"
@@ -1327,9 +1207,6 @@ msgstr "Promované kategorie"
 msgid "Promoted products"
 msgstr "Promované produkty"
 
-msgid "Quick product search"
-msgstr "Rychlé hledání v produktech"
-
 msgid "Quick search"
 msgstr "Rychlé hledání"
 
@@ -1350,9 +1227,6 @@ msgstr "Dokončení registrace"
 
 msgid "Related products"
 msgstr "Související produkty"
-
-msgid "Remaining number of uses"
-msgstr "Zbývající počet použití"
 
 msgid "Return back"
 msgstr "Vrátit zpět"
@@ -1399,9 +1273,6 @@ msgstr "SEO stránka"
 msgid "Sale"
 msgstr "Výprodej"
 
-msgid "Sales overview (last 7 days)"
-msgstr "Přehled prodejů (posledních 7 dní)"
-
 msgid "Save"
 msgstr "Uložit"
 
@@ -1432,9 +1303,6 @@ msgstr "Vyhledat podle kódu..."
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
 
-msgid "Search in transfers"
-msgstr "Hledání v přenosech"
-
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
@@ -1449,9 +1317,6 @@ msgstr "Zvolená položka navigace neexistuje."
 
 msgid "Selected notification bar does not exist"
 msgstr "Vybraná notifikační lišta neexistuje"
-
-msgid "Selected transfer issue was not found"
-msgstr "Vybraný problém v přenosu nebyl nalezen"
 
 msgid "Send me authentication code"
 msgstr "Pošlete mi ověřovací kód"
@@ -1510,9 +1375,6 @@ msgstr "Ulice"
 msgid "TOP"
 msgstr "TOP"
 
-msgid "Tax number"
-msgstr "DIČ"
-
 msgid "Telephone"
 msgstr "Telefon"
 
@@ -1570,44 +1432,11 @@ msgstr "Promované produkty - zobrazení"
 msgid "Total order price (including VAT)"
 msgstr "Celková cena za objednávku (s DPH)"
 
-msgid "Tracking URL"
-msgstr "URL pro sledování zásilky"
-
-msgid "Tracking URL variables"
-msgstr "Proměnné sledovací URL"
-
 msgid "Tracking instructions"
 msgstr "Instrukce pro sledování zásilky"
 
-msgid "Tracking instructions variables"
-msgstr "Proměnné pro instrukce pro sledování zásilky"
-
-msgid "Tracking number"
-msgstr "Číslo zásilky"
-
-msgid "Transfer"
-msgstr "Přenos"
-
-msgid "Transfer issues overview"
-msgstr "Přehled problémů v přenosech"
-
-msgid "Transfer problem has been marked as resolved"
-msgstr "Problém v přenosu byl označen jako vyřešený"
-
-msgid "Transfer type"
-msgstr "Typ přenosu"
-
-msgid "Transfers"
-msgstr "Přenosy"
-
 msgid "Transfers - view"
 msgstr "Přehled chyb v přenosech - zobrazení"
-
-msgid "Transport type"
-msgstr "Typ dopravy"
-
-msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
-msgstr "Byl upraven typ dopravy <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
 
 msgid "Transport types"
 msgstr "Typy doprav"
@@ -1741,9 +1570,6 @@ msgstr "Sklady - zobrazení"
 msgid "We have nothing to show you at this url."
 msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
 
-msgid "Weight (g)"
-msgstr "Hmotnost (g)"
-
 msgid "XML Feeds"
 msgstr "XML Feedy"
 
@@ -1786,14 +1612,8 @@ msgstr "od nejdražšího"
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
 
-msgid "new customers"
-msgstr "noví zákazníci"
-
 msgid "order statuses"
 msgstr "stavy objednávek"
-
-msgid "orders sold"
-msgstr "prodané objednávky"
 
 msgid "parameter values"
 msgstr "hodnot parametrů"
@@ -1803,9 +1623,6 @@ msgstr "SEO kombinace kategorií"
 
 msgid "relevance"
 msgstr "relevance"
-
-msgid "turnover in"
-msgstr "obrat v"
 
 msgid "unknown catalog number (product will not be displayed)"
 msgstr "neznámé katalogové číslo (produkt se nezobrazí)"

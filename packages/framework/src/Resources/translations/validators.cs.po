@@ -79,6 +79,9 @@ msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 msgid "First name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Jméno kontaktní osoby nesmí být delší než {{ limit }} znaků"
 
+msgid "Flag \"{{ flagName }}\" is selected multiple times."
+msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
+
 msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
 msgstr "Barva příznaku se zadává v hexa kódu, například #3333ff. Nesmí být tedy delší než {{ limit }} znaků"
 
@@ -163,11 +166,17 @@ msgstr "Prosím vyberte stát"
 msgid "Please choose default unit"
 msgstr "Prosím vyberte výchozí jednotku"
 
+msgid "Please choose flag"
+msgstr "Prosím vyberte příznak"
+
 msgid "Please choose image"
 msgstr "Prosím vyberte obrázek"
 
 msgid "Please choose parameter"
 msgstr "Prosím vyberte parametr"
+
+msgid "Please choose type of limitation"
+msgstr "Prosím vyberte typ omezení"
 
 msgid "Please choose unit"
 msgstr "Prosím vyberte jednotku"
@@ -196,11 +205,11 @@ msgstr "Vyplňte prosím text článku"
 msgid "Please enter article name"
 msgstr "Vyplňte prosím název článku"
 
+msgid "Please enter at least one discount limit"
+msgstr "Vložte, prosím, alespoň jeden limit se slevou"
+
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
-
-msgid "Please enter code"
-msgstr "Vyplňte prosím kód."
 
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název firmy"
@@ -271,6 +280,9 @@ msgstr "Vyplňte prosím příjmení"
 msgid "Please enter last name of contact person"
 msgstr "Vyplňte prosím příjmení kontaktní osoby"
 
+msgid "Please enter limit from"
+msgstr "Prosím vložte limit od"
+
 msgid "Please enter link"
 msgstr "Prosím vyplňte odkaz"
 
@@ -309,6 +321,9 @@ msgstr "Prosím zadejte cenu v platném formátu (kladné číslo s desetinnou �
 
 msgid "Please enter pricing group name"
 msgstr "Vyplňte prosím název cenové skupiny"
+
+msgid "Please enter promo code"
+msgstr "Vyplňte prosím promo kód"
 
 msgid "Please enter quantity"
 msgstr "Vyplňte prosím množství"
@@ -382,8 +397,26 @@ msgstr "Název produktu nesmí být delší než {{ limit }} znaků"
 msgid "Product parameters are duplicate."
 msgstr "Parametry produktů jsou duplicitní."
 
-msgid "Promo code with this code already exists"
-msgstr "Slevový kupón s tímto kódem již existuje"
+msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
+msgstr "Slevový kupón \"%invalidPromoCode%\" není dostupný pro Vaši cenovou skupinu."
+
+msgid "Promo code \"%promoCode%\" is already applied."
+msgstr "Slevový kupón \"%promoCode%\" už byl uplatněn."
+
+msgid "Promo code \"%promoCode%\" is available for registered customer user only."
+msgstr "Slevový kupón \"%promoCode%\" je dostupný jen pro registrované uživatele."
+
+msgid "Promo code \"%promoCode%\" is no longer valid."
+msgstr "Slevový kupón \"%promoCode%\" už není platný."
+
+msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
+msgstr "Slevový kupón \"%promoCode%\" není možné uplatnit pro výši nákupu Vašeho košíku."
+
+msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
+msgstr "Slevový kupón \"%promoCode%\" není platný pro žádný produkt v košíku."
+
+msgid "Promo code \"%promoCode%\" is not yet valid."
+msgstr "Slevový kupón \"%promoCode%\" není ještě možné uplatnit."
 
 msgid "Quantity must be greater than {{ compared_value }}"
 msgstr "Množství musí být větší než {{ compared_value }}"
@@ -424,11 +457,17 @@ msgstr "Tato částka musí být {{ limit }} nebo více."
 msgid "The email is already registered on given domain."
 msgstr "Tento email je na dané doméně již registrován."
 
+msgid "The identifier must contain two characters"
+msgstr "Identifikátor musí obsahovat dva znaky"
+
 msgid "This field must be empty"
 msgstr "Toto pole musí zůstat prázdné"
 
 msgid "This value is not a valid email address."
 msgstr "Tato hodnota není platnou e-mailovou adresou."
+
+msgid "Transport type name cannot be longer than {{ limit }} characters"
+msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"
 
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr "Název jednotky nesmí být delší než {{ limit }} znaků"

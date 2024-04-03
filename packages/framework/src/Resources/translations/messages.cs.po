@@ -31,6 +31,9 @@ msgstr "-- Vyberte značku --"
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
 
+msgid "-- Select name of the transfer --"
+msgstr "-- Vyber název převodu --"
+
 msgid "0"
 msgstr ""
 
@@ -196,6 +199,27 @@ msgstr "Použitelné proměnné pro obsah"
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
 
+msgid "Apply according to customer"
+msgstr "Aplikovat podle zákazníka"
+
+msgid "Apply according to date and time limit"
+msgstr "Aplikovat podle časového omezení"
+
+msgid "Apply according to product flags"
+msgstr "Aplikovat podle příznaků zboží"
+
+msgid "Apply according to the total price of the order"
+msgstr "Aplikovat podle celkové ceny objednávky"
+
+msgid "Apply to selected brands"
+msgstr "Aplikovat pro vybrané značky"
+
+msgid "Apply to selected categories"
+msgstr "Aplikovat na vybrané kategorie"
+
+msgid "Apply to selected products"
+msgstr "Aplikovat na vybrané produkty"
+
 msgid "Area"
 msgstr "Plocha"
 
@@ -249,6 +273,9 @@ msgstr "Průměrné trvání všech cronů za posledních sedm dní"
 
 msgid "Avg duration (mm:ss)"
 msgstr "Prům. trvání (mm:ss)"
+
+msgid "Back to dashboard"
+msgstr "Zpět na nástěnku"
 
 msgid "Back to overview"
 msgstr "Zpět na přehled"
@@ -339,6 +366,12 @@ msgstr "Značky"
 
 msgid "Browse files"
 msgstr "Procházet soubory"
+
+msgid "Bulk coupons with prefix"
+msgstr "Hromadné kupóny s prefixem"
+
+msgid "Bulk creation of promo codes"
+msgstr "Hromadné vytvoření slevových kupónů"
 
 msgid "Bulk edit"
 msgstr "Hromadné úpravy"
@@ -703,6 +736,9 @@ msgstr "Nástěnka"
 msgid "Date"
 msgstr "Datum"
 
+msgid "Date and time"
+msgstr "Datum a čas"
+
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
 
@@ -723,6 +759,9 @@ msgstr "Den"
 
 msgid "Days for transfer between warehouses"
 msgstr "Dny pro přesun mezi sklady"
+
+msgid "Days until delivery"
+msgstr "Dní do doručení"
 
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
@@ -793,6 +832,9 @@ msgstr "Sleva"
 msgid "Discount (%)"
 msgstr "Sleva (%)"
 
+msgid "Discount type"
+msgstr "Typ slevy"
+
 msgid "Display"
 msgstr "Zobrazit"
 
@@ -816,6 +858,9 @@ msgstr "Opravdu chcete smazat tuto kategorii?"
 
 msgid "Do you really want to discard all changes?"
 msgstr "Opravdu chcete zahodit všechny změny?"
+
+msgid "Do you really want to mark this issue as resolved?"
+msgstr "Opravdu chcete tento problém označit jako vyřešený?"
 
 msgid "Do you really want to remove currency \"%name%\" permanently?"
 msgstr "Opravdu si přejete trvale odstranit měnu \"%name%\"?"
@@ -1075,6 +1120,12 @@ msgstr "Editace stránky slideru"
 msgid "Editing slider page - %name%"
 msgstr "Editace stránky slideru - %name%"
 
+msgid "Editing transport type"
+msgstr "Editace typu dopravy"
+
+msgid "Editing transport type - %code%"
+msgstr "Editace typu dopravy - %code%"
+
 msgid "Editing warehouse"
 msgstr "Editace skladu"
 
@@ -1122,6 +1173,12 @@ msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
 
 msgid "Enter in the store local time"
 msgstr "Zadejte v lokálním čase prodejny"
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
 
 msgid "Entered customer not found, please check entered data."
 msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje"
@@ -1278,6 +1335,9 @@ msgstr "Pro odstranění jednotky \"%name% musíte zvolit, která se má všude,
 
 msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
 msgstr "Další informace o hreflang naleznete v <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">dokumentaci Google</a>."
+
+msgid "For registered customers only"
+msgstr "Pouze pro registrované zákazníky"
 
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr "Pro odstranění cenové skupiny \"%name%\" musíte zvolit, která se má všude, kde je aktuálně používaná, nastavit. Jakou cenovou skupinu místo ní chcete nastavit?"
@@ -1507,6 +1567,9 @@ msgstr "Nastavení právních podmínek"
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upravené"
 
+msgid "Limits"
+msgstr "Limity"
+
 msgid "Link"
 msgstr "Odkaz"
 
@@ -1600,11 +1663,17 @@ msgstr "Max. trvání (mm:ss)"
 msgid "Maximal duration from all runs in last seven days"
 msgstr "Maximální trvání všech cronů za posledních sedm dní"
 
+msgid "Maximum weight (g)"
+msgstr "Maximální hmotnost (g)"
+
 msgid "Menu"
 msgstr "Menu"
 
 msgid "Message"
 msgstr "Vzkaz"
+
+msgid "Message text"
+msgstr "Text zprávy"
 
 msgid "Meta description"
 msgstr "Meta description"
@@ -1813,11 +1882,17 @@ msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvoři
 msgid "No subscribers found."
 msgstr "Doposud se nikdo nepřihlásil k odběru newsletteru."
 
+msgid "No transport types found."
+msgstr "Nebyly nalezeny žádné typy doprav."
+
 msgid "No units found. You have to create some first."
 msgstr "Nebyly nalezeny žádné jednotky. Nejprve musíte nějaké vytvořit."
 
 msgid "No warehouse associated"
 msgstr "Žádný sklad není přiřazen"
+
+msgid "Nominal"
+msgstr "Nominální"
 
 msgid "Not possible to assign product to itself"
 msgstr "Nelze přiřadit produkt sám sobě"
@@ -1945,6 +2020,9 @@ msgstr "Původ"
 msgid "Out of stock"
 msgstr "Vyprodáno"
 
+msgid "Package tracking"
+msgstr "Sledování zásilky"
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
 
@@ -2046,6 +2124,9 @@ msgstr "Platby"
 
 msgid "Percent"
 msgstr "Procent"
+
+msgid "Percents"
+msgstr "Procenta"
 
 msgid "Perex"
 msgstr "Perex"
@@ -2188,6 +2269,12 @@ msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhle
 msgid "Products overview"
 msgstr "Přehled zboží"
 
+msgid "Products with this flag"
+msgstr "Produkty s tímto příznakem"
+
+msgid "Products without this flag"
+msgstr "Produkty bez tohoto příznaku"
+
 msgid "Promo code"
 msgstr "Slevový kupón"
 
@@ -2199,6 +2286,9 @@ msgstr "Byl upraven slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a>
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr "Slevový kupón <strong>{{ code }}</strong> byl smazán"
+
+msgid "Promo code identifier in IS"
+msgstr "Identifikátor kupónu pro IS"
 
 msgid "Promo codes"
 msgstr "Slevové kupóny"
@@ -2229,6 +2319,9 @@ msgstr "Registrovaní zák."
 
 msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
+
+msgid "Remaining number of uses"
+msgstr "Zbývající počet použití"
 
 msgid "Remove"
 msgstr "Odebrat"
@@ -2341,6 +2434,9 @@ msgstr "Vyhledat"
 msgid "Search by name, catalog number, or product part number..."
 msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
 
+msgid "Search in transfers"
+msgstr "Hledání v přenosech"
+
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
 
@@ -2433,6 +2529,9 @@ msgstr "Zvolená doprava neexistuje."
 
 msgid "Selected subscriber doesn't exist."
 msgstr "Zvolený odběratel newsletteru neexistuje"
+
+msgid "Selected transfer issue was not found"
+msgstr "Vybraný problém v přenosu nebyl nalezen"
 
 msgid "Selected unit doesn't exist"
 msgstr "Zvolená jednotka neexistuje"
@@ -2713,8 +2812,44 @@ msgstr "Celková cena s DPH"
 msgid "Tracking ID"
 msgstr "Číslo pro měření"
 
+msgid "Tracking URL"
+msgstr "URL pro sledování zásilky"
+
+msgid "Tracking URL variables"
+msgstr "Proměnné sledovací URL"
+
+msgid "Tracking instructions"
+msgstr "Instrukce pro sledování zásilky"
+
+msgid "Tracking instructions variables"
+msgstr "Proměnné pro instrukce pro sledování zásilky"
+
+msgid "Tracking number"
+msgstr "Číslo zásilky"
+
+msgid "Transfer"
+msgstr "Přenos"
+
+msgid "Transfer issues overview"
+msgstr "Přehled problémů v přenosech"
+
+msgid "Transfer problem has been marked as resolved"
+msgstr "Problém v přenosu byl označen jako vyřešený"
+
+msgid "Transfer type"
+msgstr "Typ přenosu"
+
+msgid "Transfers"
+msgstr "Přenosy"
+
 msgid "Transport type"
 msgstr "Typ dopravy"
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr "Byl upraven typ dopravy <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
+
+msgid "Transport types"
+msgstr "Typy doprav"
 
 msgid "Tuesday"
 msgstr "Úterý"
@@ -2830,6 +2965,12 @@ msgstr "sazby DPH"
 msgid "VAT settings modified"
 msgstr "Nastavení DPH bylo upraveno"
 
+msgid "Valid from"
+msgstr "Platnost od"
+
+msgid "Valid to"
+msgstr ""
+
 msgid "Value"
 msgstr "Hodnota"
 
@@ -2886,6 +3027,9 @@ msgstr "Nastavení skladů"
 
 msgid "Wednesday"
 msgstr "Středa"
+
+msgid "Weight (g)"
+msgstr "Hmotnost (g)"
 
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"

@@ -10,9 +10,6 @@ msgstr ""
 msgid "-- Select a role --"
 msgstr ""
 
-msgid "-- Select name of the transfer --"
-msgstr ""
-
 msgid "301 (Permanent redirect)"
 msgstr ""
 
@@ -85,9 +82,6 @@ msgstr ""
 msgid "Advanced SEO categories"
 msgstr ""
 
-msgid "Advanced search"
-msgstr ""
-
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
 msgstr ""
 
@@ -112,27 +106,6 @@ msgstr ""
 msgid "An email with 6 digit code was sent to your email address."
 msgstr ""
 
-msgid "Apply according to customer"
-msgstr ""
-
-msgid "Apply according to date and time limit"
-msgstr ""
-
-msgid "Apply according to product flags"
-msgstr ""
-
-msgid "Apply according to the total price of the order"
-msgstr ""
-
-msgid "Apply to selected brands"
-msgstr ""
-
-msgid "Apply to selected categories"
-msgstr ""
-
-msgid "Apply to selected products"
-msgstr ""
-
 msgid "Article"
 msgstr ""
 
@@ -152,9 +125,6 @@ msgid "Authenticator key"
 msgstr ""
 
 msgid "Back to category selection"
-msgstr ""
-
-msgid "Back to dashboard"
 msgstr ""
 
 msgid "Back to overview"
@@ -214,9 +184,6 @@ msgstr ""
 msgid "Brand overview"
 msgstr ""
 
-msgid "Brands"
-msgstr ""
-
 msgid "Brands - full"
 msgstr ""
 
@@ -248,9 +215,6 @@ msgid "Catalog number"
 msgstr ""
 
 msgid "Catalog numbers"
-msgstr ""
-
-msgid "Categories"
 msgstr ""
 
 msgid "Categories - full"
@@ -320,12 +284,6 @@ msgid "Color parameter values - view"
 msgstr ""
 
 msgid "Combination of parameters and their values"
-msgstr ""
-
-msgid "Company"
-msgstr ""
-
-msgid "Company number"
 msgstr ""
 
 msgid "Confirm authentication code"
@@ -403,9 +361,6 @@ msgstr ""
 msgid "Create promo code"
 msgstr ""
 
-msgid "Cron overview"
-msgstr ""
-
 msgid "Custom"
 msgstr ""
 
@@ -421,13 +376,7 @@ msgstr ""
 msgid "Customers overview"
 msgstr ""
 
-msgid "Date and time"
-msgstr ""
-
 msgid "Date and time of order creation"
-msgstr ""
-
-msgid "Days until delivery"
 msgstr ""
 
 msgid "Delete"
@@ -448,9 +397,6 @@ msgstr ""
 msgid "Discount"
 msgstr ""
 
-msgid "Discount type"
-msgstr ""
-
 msgid "Display"
 msgstr ""
 
@@ -458,9 +404,6 @@ msgid "Display date FROM"
 msgstr ""
 
 msgid "Display date TO"
-msgstr ""
-
-msgid "Do you really want to mark this issue as resolved?"
 msgstr ""
 
 msgid "Do you really want to remove this administrator role group?"
@@ -586,12 +529,6 @@ msgstr ""
 msgid "Editing script"
 msgstr ""
 
-msgid "Editing transport type"
-msgstr ""
-
-msgid "Editing transport type - %code%"
-msgstr ""
-
 msgid "Email"
 msgstr ""
 
@@ -614,12 +551,6 @@ msgid "Enter a 6 digit authentication from your email. You need to request it by
 msgstr ""
 
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
-msgstr ""
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
-msgstr ""
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
 msgstr ""
 
 msgid "Entered code is not valid"
@@ -694,9 +625,6 @@ msgstr ""
 msgid "Filter parameters closed by default"
 msgstr ""
 
-msgid "First name"
-msgstr ""
-
 msgid "Flag"
 msgstr ""
 
@@ -709,9 +637,6 @@ msgstr ""
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr ""
 
-msgid "Flags"
-msgstr ""
-
 msgid "Flags - full"
 msgstr ""
 
@@ -722,9 +647,6 @@ msgid "Footer"
 msgstr ""
 
 msgid "Footer Text"
-msgstr ""
-
-msgid "For registered customers only"
 msgstr ""
 
 msgid "Forgotten password"
@@ -844,9 +766,6 @@ msgstr ""
 msgid "Last modification"
 msgstr ""
 
-msgid "Last name"
-msgstr ""
-
 msgid "Last order"
 msgstr ""
 
@@ -863,9 +782,6 @@ msgid "Legal conditions article setting - view"
 msgstr ""
 
 msgid "Legal conditions settings modified."
-msgstr ""
-
-msgid "Limits"
 msgstr ""
 
 msgid "Link Block"
@@ -928,16 +844,10 @@ msgstr ""
 msgid "Main image"
 msgstr ""
 
-msgid "Maximum weight (g)"
-msgstr ""
-
 msgid "Measurement units"
 msgstr ""
 
 msgid "Measurement units overview"
-msgstr ""
-
-msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
@@ -1003,16 +913,10 @@ msgstr ""
 msgid "New notification bar"
 msgstr ""
 
-msgid "New orders"
-msgstr ""
-
 msgid "New page"
 msgstr ""
 
 msgid "New promo code"
-msgstr ""
-
-msgid "New registered customers"
 msgstr ""
 
 msgid "New script"
@@ -1049,12 +953,6 @@ msgid "No page found."
 msgstr ""
 
 msgid "No products are set. Please add some in the component settings."
-msgstr ""
-
-msgid "No transport types found."
-msgstr ""
-
-msgid "Nominal"
 msgstr ""
 
 msgid "Note"
@@ -1144,9 +1042,6 @@ msgstr ""
 msgid "Outside layout"
 msgstr ""
 
-msgid "Package tracking"
-msgstr ""
-
 msgid "Page not found"
 msgstr ""
 
@@ -1195,9 +1090,6 @@ msgstr ""
 msgid "Payment instructions"
 msgstr ""
 
-msgid "Percents"
-msgstr ""
-
 msgid "Personal data access"
 msgstr ""
 
@@ -1238,9 +1130,6 @@ msgid "Price hit"
 msgstr ""
 
 msgid "Pricing group"
-msgstr ""
-
-msgid "Pricing groups"
 msgstr ""
 
 msgid "Pricing groups - full"
@@ -1291,19 +1180,10 @@ msgstr ""
 msgid "Products transfer"
 msgstr ""
 
-msgid "Products with this flag"
-msgstr ""
-
-msgid "Products without this flag"
-msgstr ""
-
 msgid "Promo code"
 msgstr ""
 
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
-msgstr ""
-
-msgid "Promo code identifier in IS"
 msgstr ""
 
 msgid "Promo code prefix"
@@ -1327,9 +1207,6 @@ msgstr ""
 msgid "Promoted products"
 msgstr ""
 
-msgid "Quick product search"
-msgstr ""
-
 msgid "Quick search"
 msgstr ""
 
@@ -1349,9 +1226,6 @@ msgid "Registration completion"
 msgstr ""
 
 msgid "Related products"
-msgstr ""
-
-msgid "Remaining number of uses"
 msgstr ""
 
 msgid "Return back"
@@ -1399,9 +1273,6 @@ msgstr ""
 msgid "Sale"
 msgstr ""
 
-msgid "Sales overview (last 7 days)"
-msgstr ""
-
 msgid "Save"
 msgstr ""
 
@@ -1432,9 +1303,6 @@ msgstr ""
 msgid "Search by slug..."
 msgstr ""
 
-msgid "Search in transfers"
-msgstr ""
-
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
@@ -1448,9 +1316,6 @@ msgid "Selected navigation item does not exist."
 msgstr ""
 
 msgid "Selected notification bar does not exist"
-msgstr ""
-
-msgid "Selected transfer issue was not found"
 msgstr ""
 
 msgid "Send me authentication code"
@@ -1510,9 +1375,6 @@ msgstr ""
 msgid "TOP"
 msgstr ""
 
-msgid "Tax number"
-msgstr ""
-
 msgid "Telephone"
 msgstr ""
 
@@ -1570,43 +1432,10 @@ msgstr ""
 msgid "Total order price (including VAT)"
 msgstr ""
 
-msgid "Tracking URL"
-msgstr ""
-
-msgid "Tracking URL variables"
-msgstr ""
-
 msgid "Tracking instructions"
 msgstr ""
 
-msgid "Tracking instructions variables"
-msgstr ""
-
-msgid "Tracking number"
-msgstr ""
-
-msgid "Transfer"
-msgstr ""
-
-msgid "Transfer issues overview"
-msgstr ""
-
-msgid "Transfer problem has been marked as resolved"
-msgstr ""
-
-msgid "Transfer type"
-msgstr ""
-
-msgid "Transfers"
-msgstr ""
-
 msgid "Transfers - view"
-msgstr ""
-
-msgid "Transport type"
-msgstr ""
-
-msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
 msgstr ""
 
 msgid "Transport types"
@@ -1741,9 +1570,6 @@ msgstr ""
 msgid "We have nothing to show you at this url."
 msgstr ""
 
-msgid "Weight (g)"
-msgstr ""
-
 msgid "XML Feeds"
 msgstr ""
 
@@ -1786,13 +1612,7 @@ msgstr ""
 msgid "from the cheapest"
 msgstr ""
 
-msgid "new customers"
-msgstr ""
-
 msgid "order statuses"
-msgstr ""
-
-msgid "orders sold"
 msgstr ""
 
 msgid "parameter values"
@@ -1802,9 +1622,6 @@ msgid "ready category seo mixes"
 msgstr ""
 
 msgid "relevance"
-msgstr ""
-
-msgid "turnover in"
 msgstr ""
 
 msgid "unknown catalog number (product will not be displayed)"

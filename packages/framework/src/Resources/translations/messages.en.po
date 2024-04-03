@@ -31,6 +31,9 @@ msgstr ""
 msgid "-- Choose unit --"
 msgstr ""
 
+msgid "-- Select name of the transfer --"
+msgstr ""
+
 msgid "0"
 msgstr ""
 
@@ -196,6 +199,27 @@ msgstr ""
 msgid "Applicable variables for Subject"
 msgstr ""
 
+msgid "Apply according to customer"
+msgstr ""
+
+msgid "Apply according to date and time limit"
+msgstr ""
+
+msgid "Apply according to product flags"
+msgstr ""
+
+msgid "Apply according to the total price of the order"
+msgstr ""
+
+msgid "Apply to selected brands"
+msgstr ""
+
+msgid "Apply to selected categories"
+msgstr ""
+
+msgid "Apply to selected products"
+msgstr ""
+
 msgid "Area"
 msgstr ""
 
@@ -248,6 +272,9 @@ msgid "Average duration from all runs in last seven days"
 msgstr ""
 
 msgid "Avg duration (mm:ss)"
+msgstr ""
+
+msgid "Back to dashboard"
 msgstr ""
 
 msgid "Back to overview"
@@ -703,6 +730,9 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
+msgid "Date and time"
+msgstr ""
+
 msgid "Date and time of order creation"
 msgstr ""
 
@@ -722,6 +752,9 @@ msgid "Day"
 msgstr ""
 
 msgid "Days for transfer between warehouses"
+msgstr ""
+
+msgid "Days until delivery"
 msgstr ""
 
 msgid "Default VAT rate"
@@ -793,6 +826,9 @@ msgstr ""
 msgid "Discount (%)"
 msgstr ""
 
+msgid "Discount type"
+msgstr ""
+
 msgid "Display"
 msgstr ""
 
@@ -815,6 +851,9 @@ msgid "Do you really want to delete this category?"
 msgstr ""
 
 msgid "Do you really want to discard all changes?"
+msgstr ""
+
+msgid "Do you really want to mark this issue as resolved?"
 msgstr ""
 
 msgid "Do you really want to remove currency \"%name%\" permanently?"
@@ -1075,6 +1114,12 @@ msgstr ""
 msgid "Editing slider page - %name%"
 msgstr ""
 
+msgid "Editing transport type"
+msgstr ""
+
+msgid "Editing transport type - %code%"
+msgstr ""
+
 msgid "Editing warehouse"
 msgstr ""
 
@@ -1121,6 +1166,12 @@ msgid "Enter 32-digit code which will be sent to server"
 msgstr ""
 
 msgid "Enter in the store local time"
+msgstr ""
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr ""
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
 msgstr ""
 
 msgid "Entered customer not found, please check entered data."
@@ -1277,6 +1328,9 @@ msgid "For deleting unit \"%name%\" you have to choose other one to be set every
 msgstr ""
 
 msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
+msgstr ""
+
+msgid "For registered customers only"
 msgstr ""
 
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
@@ -1507,6 +1561,9 @@ msgstr ""
 msgid "Legal conditions settings modified."
 msgstr ""
 
+msgid "Limits"
+msgstr ""
+
 msgid "Link"
 msgstr ""
 
@@ -1600,10 +1657,16 @@ msgstr ""
 msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
+msgid "Maximum weight (g)"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
 msgid "Message"
+msgstr ""
+
+msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
@@ -1813,10 +1876,16 @@ msgstr ""
 msgid "No subscribers found."
 msgstr ""
 
+msgid "No transport types found."
+msgstr ""
+
 msgid "No units found. You have to create some first."
 msgstr ""
 
 msgid "No warehouse associated"
+msgstr ""
+
+msgid "Nominal"
 msgstr ""
 
 msgid "Not possible to assign product to itself"
@@ -1945,6 +2014,9 @@ msgstr ""
 msgid "Out of stock"
 msgstr ""
 
+msgid "Package tracking"
+msgstr ""
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -2045,6 +2117,9 @@ msgid "Payments"
 msgstr ""
 
 msgid "Percent"
+msgstr ""
+
+msgid "Percents"
 msgstr ""
 
 msgid "Perex"
@@ -2188,6 +2263,12 @@ msgstr ""
 msgid "Products overview"
 msgstr ""
 
+msgid "Products with this flag"
+msgstr ""
+
+msgid "Products without this flag"
+msgstr ""
+
 msgid "Promo code"
 msgstr ""
 
@@ -2198,6 +2279,9 @@ msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> was modi
 msgstr ""
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
+msgstr ""
+
+msgid "Promo code identifier in IS"
 msgstr ""
 
 msgid "Promo codes"
@@ -2228,6 +2312,9 @@ msgid "Registered cust."
 msgstr ""
 
 msgid "Registration confirmation"
+msgstr ""
+
+msgid "Remaining number of uses"
 msgstr ""
 
 msgid "Remove"
@@ -2341,6 +2428,9 @@ msgstr "Search"
 msgid "Search by name, catalog number, or product part number..."
 msgstr ""
 
+msgid "Search in transfers"
+msgstr ""
+
 msgid "Searching in all currencies"
 msgstr ""
 
@@ -2432,6 +2522,9 @@ msgid "Selected shipping doesn't exist."
 msgstr ""
 
 msgid "Selected subscriber doesn't exist."
+msgstr ""
+
+msgid "Selected transfer issue was not found"
 msgstr ""
 
 msgid "Selected unit doesn't exist"
@@ -2713,7 +2806,43 @@ msgstr ""
 msgid "Tracking ID"
 msgstr ""
 
+msgid "Tracking URL"
+msgstr ""
+
+msgid "Tracking URL variables"
+msgstr ""
+
+msgid "Tracking instructions"
+msgstr ""
+
+msgid "Tracking instructions variables"
+msgstr ""
+
+msgid "Tracking number"
+msgstr ""
+
+msgid "Transfer"
+msgstr ""
+
+msgid "Transfer issues overview"
+msgstr ""
+
+msgid "Transfer problem has been marked as resolved"
+msgstr ""
+
+msgid "Transfer type"
+msgstr ""
+
+msgid "Transfers"
+msgstr ""
+
 msgid "Transport type"
+msgstr ""
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr ""
+
+msgid "Transport types"
 msgstr ""
 
 msgid "Tuesday"
@@ -2830,6 +2959,12 @@ msgstr ""
 msgid "VAT settings modified"
 msgstr ""
 
+msgid "Valid from"
+msgstr ""
+
+msgid "Valid to"
+msgstr ""
+
 msgid "Value"
 msgstr ""
 
@@ -2885,6 +3020,9 @@ msgid "Warehouse settings"
 msgstr ""
 
 msgid "Wednesday"
+msgstr ""
+
+msgid "Weight (g)"
 msgstr ""
 
 msgid "When changing the default currency there is no recalculation of prices"
