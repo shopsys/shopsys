@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Transfer;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="tranfers")
+ * @ORM\Table(name="transfers")
  * @ORM\Entity
  */
 class Transfer
