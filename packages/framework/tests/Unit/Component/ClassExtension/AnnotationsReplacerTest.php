@@ -22,7 +22,7 @@ class AnnotationsReplacerTest extends TestCase
     {
         $replacementMap = new AnnotationsReplacementsMap([
             'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'App\Model\Category\CategoryFacade',
-            'Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface' => 'App\Model\MyProduct\ProductDataFactory',
+            'Shopsys\FrameworkBundle\Model\Product\ProductDataFactory' => 'App\Model\MyProduct\ProductDataFactory',
             'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'App\Model\Article\ArticleData',
         ]);
 
@@ -40,7 +40,7 @@ class AnnotationsReplacerTest extends TestCase
                 'output' => '@var \App\Model\Category\CategoryFacade',
             ],
             [
-                'input' => '@var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface',
+                'input' => '@var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory',
                 'output' => '@var \App\Model\MyProduct\ProductDataFactory',
             ],
             [

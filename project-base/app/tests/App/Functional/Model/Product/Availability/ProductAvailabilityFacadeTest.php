@@ -9,7 +9,7 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockSettingsData;
@@ -28,7 +28,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductDataFactoryInterface $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @inject

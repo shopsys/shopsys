@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
-class ProductDataFactory implements ProductDataFactoryInterface
+class ProductDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

@@ -120,9 +120,6 @@ for `Product` and `ProductData` instantiation to make them take our new attribut
 
 Edit `App\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
 
-_Alternatively, you can create an independent class by implementing
-[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductDataFactoryInterface.php)._
-
 ```php
 namespace App\Model\Product;
 
@@ -168,10 +165,11 @@ class ProductDataFactory extends BaseProductDataFactory
 ```
 
 Your `ProductDataFactory` is already registered in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml)
-as an alias for the original interface.
+as an alias for the original class.
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
+Shopsys\FrameworkBundle\Model\Product\ProductDataFactory:
+    alias: App\Model\Product\ProductDataFactory
 ```
 
 ## Enable an administrator to edit the `extId` field

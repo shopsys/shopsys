@@ -23,12 +23,12 @@ This article describes a quick way to extend your entity and the internals of th
     -   use the parent entity name as a key and the extended entity name as a value
     -   e.g., `MyVendor\MyLibrary\Model\Entity: App\Model\ExtendedEntity`
 -   Create a new data object in your `src/Model` directory that extends already existing framework entity data
--   Create a factory for this entity data that extends the existing framework factory or implements the factory interface from the framework
-    -   Rewrite Symfony configuration for the interface to alias your factory
+-   Create a factory for this entity data that extends the existing framework factory
+    -   Rewrite Symfony configuration for the class to alias your factory
         -   e.g.
 
 ```yaml
-Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
+Shopsys\FrameworkBundle\Model\Product\ProductDataFactory:
     alias: App\Model\Product\ProductDataFactory
 ```
 
