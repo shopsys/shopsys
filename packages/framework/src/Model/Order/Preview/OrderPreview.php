@@ -161,14 +161,6 @@ class OrderPreview
     }
 
     /**
-     * @return string|null
-     */
-    public function getPromoCodeIdentifier(): ?string
-    {
-        return $this->promoCode?->getIdentifier();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
     public function getPromoCode(): ?PromoCode

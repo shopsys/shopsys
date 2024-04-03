@@ -60,7 +60,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
 
         /** @var \App\Model\Product\Product $product */
@@ -81,7 +80,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-product2';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
@@ -92,7 +90,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-not-yet-valid';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         $promoCodeData->datetimeValidFrom = new DateTime('+1 year');
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
@@ -101,7 +98,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-no-longer-valid';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         $promoCodeData->datetimeValidTo = new DateTime('-1 year');
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
@@ -110,7 +106,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-for-registered-only';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         $promoCodeData->registeredCustomerUserOnly = true;
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
@@ -119,7 +114,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-for-vip-pricing-group';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         $vipPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_VIP, Domain::FIRST_DOMAIN_ID, PricingGroup::class);
         $promoCodeData->limitedPricingGroups = [$vipPricingGroup];
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
@@ -129,7 +123,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test-for-new-product';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
-        $promoCodeData->identifier = 'GG';
         /** @var \App\Model\Product\Flag\Flag $flag */
         $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $promoCodeData->flags = [$this->promoCodeFlagFactory->create($flag, PromoCodeFlag::TYPE_INCLUSIVE)];
@@ -149,7 +142,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
             $promoCodeData = $this->promoCodeDataFactory->create();
             $promoCodeData->code = 'test';
             $promoCodeData->domainId = $domainId;
-            $promoCodeData->identifier = 'test' . $domainId;
             $promoCode = $this->promoCodeFacade->create($promoCodeData);
             $this->setDefaultLimit($promoCode);
         }

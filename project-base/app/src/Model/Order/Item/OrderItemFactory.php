@@ -35,7 +35,6 @@ class OrderItemFactory extends BaseOrderItemFactory
         /** @var \App\Model\Order\Item\OrderItem $orderProduct */
         $orderProduct = parent::createProduct($orderItemData, $order, $product);
 
-        $orderProduct->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
         $orderProduct->setRelatedOrderItem($orderItemData->relatedOrderItem);
 
         return $orderProduct;

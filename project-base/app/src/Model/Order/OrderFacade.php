@@ -293,7 +293,6 @@ class OrderFacade extends BaseOrderFacade
                 $quantifiedItemDiscount,
                 $locale,
                 (float)$orderPreview->getPromoCodeDiscountPercent(),
-                $orderPreview->getPromoCodeIdentifier(),
             );
             $orderItem->setRelatedOrderItem($coupon);
 
@@ -306,7 +305,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount
      * @param string $locale
      * @param float $discountPercent
-     * @param string|null $promoCodeIdentifier
      * @return \App\Model\Order\Item\OrderItem
      */
     private function addOrderItemDiscountAndReturnIt(
@@ -314,7 +312,6 @@ class OrderFacade extends BaseOrderFacade
         Price $quantifiedItemDiscount,
         string $locale,
         float $discountPercent,
-        ?string $promoCodeIdentifier = null,
     ): Item\OrderItem {
         $name = sprintf(
             '%s %s - %s',
@@ -330,7 +327,6 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->priceWithVat = $discountPrice->getPriceWithVat();
         $orderItemData->vatPercent = $orderItem->getVatPercent();
         $orderItemData->quantity = 1;
-        $orderItemData->promoCodeIdentifier = $promoCodeIdentifier;
         $orderItemData->relatedOrderItem = $orderItem;
 
         return $this->orderItemFactory->createDiscount(

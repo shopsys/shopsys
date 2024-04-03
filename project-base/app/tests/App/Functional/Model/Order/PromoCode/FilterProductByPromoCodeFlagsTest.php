@@ -172,7 +172,6 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         $promoCodeData->code = 'present';
         $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
         $promoCodeData->limits = [$promoCodeLimit];
-        $promoCodeData->identifier = 'id';
 
         return $this->promoCodeFacade->create($promoCodeData);
     }

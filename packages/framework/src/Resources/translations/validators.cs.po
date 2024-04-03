@@ -457,9 +457,6 @@ msgstr "Tato částka musí být {{ limit }} nebo více."
 msgid "The email is already registered on given domain."
 msgstr "Tento email je na dané doméně již registrován."
 
-msgid "The identifier must contain two characters"
-msgstr "Identifikátor musí obsahovat dva znaky"
-
 msgid "This field must be empty"
 msgstr "Toto pole musí zůstat prázdné"
 

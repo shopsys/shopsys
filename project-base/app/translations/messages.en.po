@@ -1099,9 +1099,6 @@ msgstr ""
 msgid "Personal data access pages setting - view"
 msgstr ""
 
-msgid "Personal pickup"
-msgstr ""
-
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
@@ -1346,9 +1343,6 @@ msgid "Slider items - view"
 msgstr ""
 
 msgid "Slug"
-msgstr ""
-
-msgid "Standard"
 msgstr ""
 
 msgid "Stocking"

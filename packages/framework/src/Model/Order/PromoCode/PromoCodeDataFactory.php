@@ -77,7 +77,6 @@ class PromoCodeDataFactory implements PromoCodeDataFactoryInterface
         $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
         $promoCodeData->limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($promoCode->getId());
         $promoCodeData->remainingUses = $promoCode->getRemainingUses();
-        $promoCodeData->identifier = $promoCode->getIdentifier();
         $promoCodeData->discountType = $promoCode->getDiscountType();
         $promoCodeData->registeredCustomerUserOnly = $promoCode->isRegisteredCustomerUserOnly();
         $promoCodeData->limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId());

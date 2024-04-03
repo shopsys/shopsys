@@ -106,20 +106,6 @@ class PromoCodeFormType extends AbstractType
                 'label' => t('Domain'),
                 'disabled' => true,
             ])
-            ->add('identifier', TextType::class, [
-                'label' => t('Promo code identifier in IS'),
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotNull([
-                        'message' => 'The identifier must contain two characters',
-                    ]),
-                    new Constraints\Length([
-                        'min' => 2,
-                        'max' => 2,
-                        'exactMessage' => 'The identifier must contain two characters',
-                    ]),
-                ],
-            ])
             ->add('discountType', ChoiceType::class, [
                 'expanded' => true,
                 'multiple' => false,

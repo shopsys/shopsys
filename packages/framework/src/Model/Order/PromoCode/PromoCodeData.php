@@ -12,11 +12,6 @@ class PromoCodeData
     public $code;
 
     /**
-     * @var string|null
-     */
-    public $identifier;
-
-    /**
      * @var int
      */
     public $discountType = PromoCode::DISCOUNT_TYPE_PERCENT;

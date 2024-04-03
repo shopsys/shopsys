@@ -2146,6 +2146,9 @@ msgstr "Export osobních údajů"
 msgid "Personal information overview"
 msgstr "Přehled osobních údajů"
 
+msgid "Personal pickup"
+msgstr ""
+
 msgid "Phone"
 msgstr "Telefon"
 
@@ -2286,9 +2289,6 @@ msgstr "Byl upraven slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a>
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr "Slevový kupón <strong>{{ code }}</strong> byl smazán"
-
-msgid "Promo code identifier in IS"
-msgstr "Identifikátor kupónu pro IS"
 
 msgid "Promo codes"
 msgstr "Slevové kupóny"
@@ -2637,6 +2637,9 @@ msgstr "Některé údaje nemusí být lokalizovány nebo slouží technickým sp
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
+
+msgid "Standard"
+msgstr ""
 
 msgid "Started at"
 msgstr "Začátek"

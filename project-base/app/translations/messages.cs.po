@@ -1099,9 +1099,6 @@ msgstr "Nastavení zobrazení osobních údajů - vše"
 msgid "Personal data access pages setting - view"
 msgstr "Nastavení zobrazení osobních údajů - zobrazení"
 
-msgid "Personal pickup"
-msgstr "Osobní odběr"
-
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
@@ -1347,9 +1344,6 @@ msgstr "Bannery - zobrazení"
 
 msgid "Slug"
 msgstr "Slug"
-
-msgid "Standard"
-msgstr "Standardní"
 
 msgid "Stocking"
 msgstr "Skladovost"

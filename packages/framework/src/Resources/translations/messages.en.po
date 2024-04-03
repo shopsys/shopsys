@@ -2140,6 +2140,9 @@ msgstr ""
 msgid "Personal information overview"
 msgstr ""
 
+msgid "Personal pickup"
+msgstr ""
+
 msgid "Phone"
 msgstr ""
 
@@ -2279,9 +2282,6 @@ msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> was modi
 msgstr ""
 
 msgid "Promo code <strong>{{ code }}</strong> deleted."
-msgstr ""
-
-msgid "Promo code identifier in IS"
 msgstr ""
 
 msgid "Promo codes"
@@ -2630,6 +2630,9 @@ msgid "Some data may not be localized or serve the technical administrators of t
 msgstr ""
 
 msgid "Sorting priority"
+msgstr ""
+
+msgid "Standard"
 msgstr ""
 
 msgid "Started at"

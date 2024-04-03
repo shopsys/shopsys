@@ -457,9 +457,6 @@ msgstr ""
 msgid "The email is already registered on given domain."
 msgstr ""
 
-msgid "The identifier must contain two characters"
-msgstr ""
-
 msgid "This field must be empty"
 msgstr ""
 
