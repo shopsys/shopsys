@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult;
+use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class LuigisBoxBatchLoader
@@ -123,7 +124,7 @@ class LuigisBoxBatchLoader
                 $mappedDataOfCurrentType = $this->mapBrandData($luigisBoxResults[$type]);
             }
 
-            if ($endpoint === LuigisBoxClient::ACTION_SEARCH && $type === $this->getMainType()) {
+            if ($endpoint === LuigisBoxEndpointEnum::SEARCH && $type === $this->getMainType()) {
                 static::$facets = $luigisBoxResults[$type]->getFacets();
                 static::$totalsByType[$type] = $luigisBoxResults[$type]->getItemsCount();
             } else {
