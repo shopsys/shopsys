@@ -662,6 +662,7 @@ jobs:
                     docker compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+                    echo "Run Cypress"
             -   name: Run Cypress tests
                 run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts
