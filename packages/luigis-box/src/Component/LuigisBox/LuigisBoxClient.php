@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
@@ -134,25 +135,36 @@ class LuigisBoxClient
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
     ): string {
-        $url = $this->luigisBoxApiUrl .
+        $url = $this->getUrlWithBasicParameters($luigisBoxBatchLoadData);
+
+        if ($luigisBoxBatchLoadData instanceof LuigisBoxSearchBatchLoadData) {
+            $url = $this->addSearchSpecificParametersToUrl($url, $luigisBoxBatchLoadData, $limitsByType);
+            $url = $this->addAutocompleteSpecificParametersToUrl($url, $luigisBoxBatchLoadData, $limitsByType);
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @return string
+     */
+    protected function getUrlWithBasicParameters(LuigisBoxBatchLoadData $luigisBoxBatchLoadData): string
+    {
+        return $this->luigisBoxApiUrl .
             $luigisBoxBatchLoadData->getEndpoint() . '/' .
             '?tracker_id=' . $this->getTrackerId() .
-            '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
             '&hit_fields=url' .
             '&user_id=' . $luigisBoxBatchLoadData->getUserIdentifier();
-
-        $url = $this->addSearchSpecificParameters($url, $luigisBoxBatchLoadData, $limitsByType);
-
-        return $this->addAutocompleteSpecificParameters($url, $luigisBoxBatchLoadData, $limitsByType);
     }
 
     /**
      * @param string $url
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
      * @return string
      */
-    protected function addSearchSpecificParameters(
+    protected function addSearchSpecificParametersToUrl(
         string $url,
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
@@ -161,6 +173,7 @@ class LuigisBoxClient
             $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);
 
             $url .=
+                '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
                 '&from=' . $luigisBoxBatchLoadData->getPage();
@@ -188,17 +201,39 @@ class LuigisBoxClient
 
     /**
      * @param string $url
-     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
      * @return string
      */
-    protected function addAutocompleteSpecificParameters(
+    protected function addAutocompleteSpecificParametersToUrl(
         string $url,
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
     ): string {
-        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::AUTOCOMPLETE && count($limitsByType) > 0) {
-            $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
+        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::AUTOCOMPLETE) {
+            $url .= '&q=' . urlencode($luigisBoxBatchLoadData->getQuery());
+
+            if (count($limitsByType) > 0) {
+                $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param string $url
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @param array<string, int> $limitsByType
+     * @return string
+     */
+    protected function addRecommendationsParameters(
+        string $url,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+        array $limitsByType,
+    ): string {
+        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
+            $url .= '&recommendation_type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
 
         return $url;

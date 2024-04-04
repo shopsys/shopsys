@@ -40,7 +40,7 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         $paginator = new Paginator(
             function ($offset, $limit) use ($argument) {
                 return $this->luigisBoxBatchLoader->load(
-                    $this->luigisBoxBatchLoadDataFactory->create(
+                    $this->luigisBoxBatchLoadDataFactory->createForSearch(
                         TypeInLuigisBoxEnum::CATEGORY,
                         $limit,
                         $offset,

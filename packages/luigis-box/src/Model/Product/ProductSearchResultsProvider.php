@@ -55,7 +55,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         return $this->productConnectionFactory->createConnectionPromiseForSearch(
             function ($offset, $limit) use ($argument, $luigisBoxFilter) {
                 return $this->luigisBoxBatchLoader->load(
-                    $this->luigisBoxBatchLoadDataFactory->create(
+                    $this->luigisBoxBatchLoadDataFactory->createForSearch(
                         TypeInLuigisBoxEnum::PRODUCT,
                         $limit,
                         $offset,
