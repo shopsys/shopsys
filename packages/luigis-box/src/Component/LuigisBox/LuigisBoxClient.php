@@ -9,9 +9,9 @@ use Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItem;
 use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxActionNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Symfony\Bridge\Monolog\Logger;
@@ -19,20 +19,19 @@ use Throwable;
 
 class LuigisBoxClient
 {
-    public const string ACTION_SEARCH = 'search';
-    public const string ACTION_AUTOCOMPLETE = 'autocomplete/v2';
-
     /**
      * @param string $luigisBoxApiUrl
      * @param array $trackerIdsByDomainIds
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Bridge\Monolog\Logger $logger
+     * @param \Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum $luigisBoxEndpointEnum
      */
     public function __construct(
         protected readonly string $luigisBoxApiUrl,
         protected readonly array $trackerIdsByDomainIds,
         protected readonly Domain $domain,
         protected readonly Logger $logger,
+        protected readonly LuigisBoxEndpointEnum $luigisBoxEndpointEnum,
     ) {
     }
 
@@ -62,9 +61,9 @@ class LuigisBoxClient
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
     ): array {
-        $action = $luigisBoxBatchLoadData->getEndpoint();
+        $endpoint = $luigisBoxBatchLoadData->getEndpoint();
         $this->checkNecessaryConfigurationIsSet();
-        $this->validateActionIsValid($action);
+        $this->luigisBoxEndpointEnum->validateCase($endpoint);
 
         try {
             $data = json_decode(
@@ -90,11 +89,11 @@ class LuigisBoxClient
             return $this->getEmptyResults(array_keys($limitsByType));
         }
 
-        if ($action === static::ACTION_SEARCH) {
+        if ($endpoint === LuigisBoxEndpointEnum::SEARCH) {
             $data = $data['results'];
         }
 
-        return $this->getResultsIndexedByItemType($data, $action, array_keys($limitsByType));
+        return $this->getResultsIndexedByItemType($data, $endpoint, array_keys($limitsByType));
     }
 
     /**
@@ -114,12 +113,12 @@ class LuigisBoxClient
 
     /**
      * @param array $data
-     * @param string $action
+     * @param string $endpoint
      * @return int
      */
-    protected function getTotalHitsFromData(array $data, string $action): int
+    protected function getTotalHitsFromData(array $data, string $endpoint): int
     {
-        if ($action === static::ACTION_AUTOCOMPLETE) {
+        if ($endpoint === LuigisBoxEndpointEnum::AUTOCOMPLETE) {
             return (int)$data['exact_match_hits_count'] + (int)$data['partial_match_hits_count'];
         }
 
@@ -158,7 +157,7 @@ class LuigisBoxClient
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
     ): string {
-        if ($luigisBoxBatchLoadData->getEndpoint() === static::ACTION_SEARCH) {
+        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::SEARCH) {
             $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);
 
             $url .=
@@ -198,7 +197,7 @@ class LuigisBoxClient
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
     ): string {
-        if ($luigisBoxBatchLoadData->getEndpoint() === static::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
+        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::AUTOCOMPLETE && count($limitsByType) > 0) {
             $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
 
@@ -281,11 +280,11 @@ class LuigisBoxClient
 
     /**
      * @param array $data
-     * @param string $action
+     * @param string $endpoint
      * @param array $types
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
-    protected function getResultsIndexedByItemType(array $data, string $action, array $types): array
+    protected function getResultsIndexedByItemType(array $data, string $endpoint, array $types): array
     {
         $idsByType = [];
         $idsWithPrefixByType = [];
@@ -301,7 +300,7 @@ class LuigisBoxClient
             $resultsByType[$type] = new LuigisBoxResult(
                 $idsByType[$type] ?? [],
                 $idsWithPrefixByType[$type] ?? [],
-                $this->getTotalHitsFromData($data, $action),
+                $this->getTotalHitsFromData($data, $endpoint),
                 $data['facets'] ?? [],
             );
         }
@@ -341,15 +340,5 @@ class LuigisBoxClient
         }
 
         return implode(',', $luigisBoxLimits);
-    }
-
-    /**
-     * @param string $action
-     */
-    protected function validateActionIsValid(string $action): void
-    {
-        if (!in_array($action, [static::ACTION_SEARCH, static::ACTION_AUTOCOMPLETE], true)) {
-            throw new LuigisBoxActionNotRecognizedException($action);
-        }
     }
 }

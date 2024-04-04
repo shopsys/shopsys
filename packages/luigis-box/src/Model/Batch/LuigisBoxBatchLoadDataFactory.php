@@ -6,7 +6,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
+use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
@@ -45,7 +45,7 @@ class LuigisBoxBatchLoadDataFactory
 
         $search = $argument['searchInput']['search'] ?? '';
         $orderingMode = $argument['orderingMode'];
-        $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxClient::ACTION_AUTOCOMPLETE : LuigisBoxClient::ACTION_SEARCH;
+        $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxEndpointEnum::AUTOCOMPLETE : LuigisBoxEndpointEnum::SEARCH;
         $userIdentifier = $argument['searchInput']['userIdentifier'];
 
         return new LuigisBoxBatchLoadData(
