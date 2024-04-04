@@ -1,11 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useOnFinishHydrationDefaultValuesPrefill } from 'hooks/forms/useOnFinishHydrationDefaultValuesPrefill';
-import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
+import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
+import { useShopsysForm } from 'utils/forms/useShopsysForm';
 import * as Yup from 'yup';
 
 export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormType] => {

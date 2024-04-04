@@ -1,20 +1,21 @@
 import { ListItem } from './CartListItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { EmptyCartIcon, CartIcon } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
+import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { GtmProductListNameType } from 'gtm/types/enums';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const Cart: FC = ({ className }) => {
     const router = useRouter();

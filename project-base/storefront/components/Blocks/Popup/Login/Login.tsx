@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { WarningIcon } from 'components/Basic/Icon/IconsSvg';
+import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { Link } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
@@ -8,16 +8,16 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { blurInput } from 'helpers/forms/blurInput';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
-import { useShopsysForm } from 'hooks/forms/useShopsysForm';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
+import { useLogin } from 'utils/auth/useLogin';
+import { blurInput } from 'utils/forms/blurInput';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import * as Yup from 'yup';
 
 type LoginProps = {
@@ -34,7 +34,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUse
         url,
     );
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: defaultEmail ?? '', password: '' });
-    const { login } = useAuth();
+    const login = useLogin();
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data) => {
         blurInput();

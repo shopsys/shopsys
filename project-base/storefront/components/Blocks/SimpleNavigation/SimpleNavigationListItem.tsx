@@ -1,11 +1,11 @@
-import { getLinkType } from './helpers';
+import { getLinkType } from './utils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import { twMergeCustom } from 'helpers/twMerge';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { ListedItemPropType } from 'types/simpleNavigation';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SimpleNavigationListItemProps = {
     listedItem: ListedItemPropType;

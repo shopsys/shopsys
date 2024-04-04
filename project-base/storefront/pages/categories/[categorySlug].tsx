@@ -1,9 +1,9 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
-import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
+import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/utils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     CategoryDetailQuery,
@@ -11,34 +11,31 @@ import {
     CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-} from 'helpers/parsing/urlParsing';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { NextPage } from 'next';
+import { createClient } from 'urql/createClient';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
+import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
+import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useHandleDefaultFiltersUpdate } from 'hooks/seoCategories/useHandleDefaultFiltersUpdate';
-import { useQueryParams } from 'hooks/useQueryParams';
-import { NextPage } from 'next';
-import { createClient } from 'urql/createClient';
+} from 'utils/queryParamNames';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
-    const { filter } = useQueryParams();
-    const { categoryData, isFetchingVisible } = useCategoryDetailData(filter);
+    const currentFilter = useCurrentFilterQuery();
+    const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
 
@@ -53,7 +50,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <>
-            {!!filter && <MetaRobots content="noindex, follow" />}
+            {!!currentFilter && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}

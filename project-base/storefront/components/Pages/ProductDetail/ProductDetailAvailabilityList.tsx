@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
+import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { StoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { AvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';

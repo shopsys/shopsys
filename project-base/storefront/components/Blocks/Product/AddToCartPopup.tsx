@@ -1,16 +1,16 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

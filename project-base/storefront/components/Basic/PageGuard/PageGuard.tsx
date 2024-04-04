@@ -1,5 +1,5 @@
-import { isClient } from 'helpers/isClient';
 import { useRouter } from 'next/router';
+import { isClient } from 'utils/isClient';
 
 type PageGuardProps = {
     isWithAccess: boolean;

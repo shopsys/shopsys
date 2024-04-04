@@ -1,7 +1,7 @@
-import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
-import { useComparison } from 'hooks/productLists/comparison/useComparison';
+import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
 
 type ProductComparisonButtonRemoveAllProps = {
     displayMobile?: boolean;

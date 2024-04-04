@@ -1,8 +1,9 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
-import { getPriceRounded } from 'helpers/mappers/price';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
+import { getPriceRounded } from 'utils/mappers/price';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupPriceProps = {
     title: string;
@@ -12,22 +13,23 @@ type FilterGroupPriceProps = {
 
 export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinPrice, initialMaxPrice }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(true);
-    const { filter, updateFilterPriceMinimum, updateFilterPriceMaximum } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const { updateFilterPriceMinimumQuery, updateFilterPriceMaximumQuery } = useUpdateFilterQuery();
 
-    const { minimalPrice, maximalPrice } = filter || {};
+    const { minimalPrice, maximalPrice } = currentFilter || {};
 
     const minPriceOption = getPriceRounded(initialMinPrice);
     const maxPriceOption = getPriceRounded(initialMaxPrice);
 
     const setMinimalPrice = (value: number) => {
         if (minimalPrice !== value) {
-            updateFilterPriceMinimum(minPriceOption === value ? undefined : value);
+            updateFilterPriceMinimumQuery(minPriceOption === value ? undefined : value);
         }
     };
 
     const setMaximalPrice = (value: number) => {
         if (maximalPrice !== value) {
-            updateFilterPriceMaximum(maxPriceOption === value ? undefined : value);
+            updateFilterPriceMaximumQuery(maxPriceOption === value ? undefined : value);
         }
     };
 

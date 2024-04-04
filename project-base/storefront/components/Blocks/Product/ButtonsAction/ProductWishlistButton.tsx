@@ -1,8 +1,8 @@
-import { HeartIcon } from 'components/Basic/Icon/IconsSvg';
-import { twMergeCustom } from 'helpers/twMerge';
+import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
 

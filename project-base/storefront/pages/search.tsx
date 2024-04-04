@@ -8,37 +8,44 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { SearchProductsQueryVariables } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
 import { useSearchQuery, SearchQueryVariables } from 'graphql/requests/search/queries/SearchQuery.generated';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType } from 'gtm/types/enums';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import { getNumberFromUrlQuery, getSlugFromServerSideUrl } from 'helpers/parsing/urlParsing';
-import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
+import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
+import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
+import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
+import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchStringQuery';
+import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const { sort, filter, searchString, currentLoadMore } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const sort = useCurrentSortQuery();
+    const currentSearchString = useCurrentSearchStringQuery();
+    const currentLoadMore = useCurrentLoadMoreQuery();
     const userIdentifier = usePersistStore((state) => state.userId)!;
 
     const [{ data: searchData, fetching }] = useSearchQuery({
         variables: {
-            search: searchString!,
+            search: currentSearchString!,
             orderingMode: sort,
-            filter: mapParametersFilter(filter),
+            filter: mapParametersFilter(currentFilter),
             pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
             isAutocomplete: false,
             userIdentifier,
         },
-        pause: !searchString,
+        pause: !currentSearchString,
     });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -54,7 +61,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout breadcrumbs={breadcrumbs} title={title}>
                 <Webline>
-                    {searchString ? (
+                    {currentSearchString ? (
                         <SearchContent fetching={fetching} searchResults={searchData} />
                     ) : (
                         <div className="mb-5 p-12 text-center">

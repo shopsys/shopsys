@@ -1,4 +1,4 @@
-import { PhoneIcon } from 'components/Basic/Icon/IconsSvg';
+import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 
 // TODO PRG
 const dummyData = {

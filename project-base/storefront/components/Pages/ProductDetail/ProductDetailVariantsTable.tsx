@@ -6,10 +6,11 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { TIDs } from 'cypress/tids';
 import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { StoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type ProductVariantsTableProps = {
     variants: MainVariantDetailFragment['variants'];

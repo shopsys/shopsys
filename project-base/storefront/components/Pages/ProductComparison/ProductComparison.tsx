@@ -1,11 +1,11 @@
 import { ProductComparisonContent } from './ProductComparisonContent';
-import { InfoIcon } from 'components/Basic/Icon/IconsSvg';
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonModuleComparison';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
-import { GtmProductListNameType } from 'gtm/types/enums';
-import { useComparison } from 'hooks/productLists/comparison/useComparison';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import useTranslation from 'next-translate/useTranslation';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();

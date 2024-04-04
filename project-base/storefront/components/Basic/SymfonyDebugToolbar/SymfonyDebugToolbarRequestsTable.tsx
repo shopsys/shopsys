@@ -1,4 +1,4 @@
-import { ResponseInfo } from './helpers';
+import { ResponseInfo } from './utils';
 import { RefObject, createRef, useEffect } from 'react';
 
 type RequestsTableProps = {

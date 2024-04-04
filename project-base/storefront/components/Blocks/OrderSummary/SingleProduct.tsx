@@ -1,7 +1,7 @@
 import { Image } from 'components/Basic/Image/Image';
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type SingleProductProps = {
     item: CartItemFragment;

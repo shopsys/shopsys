@@ -1,9 +1,9 @@
-import { useOnFinishHydrationDefaultValuesPrefill } from 'hooks/forms/useOnFinishHydrationDefaultValuesPrefill';
-import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
+import { useOnFinishHydrationDefaultValuesPrefill } from 'utils/forms/useOnFinishHydrationDefaultValuesPrefill';
+import { useShopsysForm } from 'utils/forms/useShopsysForm';
 
 export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserConsentFormType] => {
     const userConsent = usePersistStore((store) => store.userConsent);

@@ -8,12 +8,13 @@ import {
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupParametersProps = {
     title: string;
@@ -30,10 +31,11 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 }) => {
     const { t } = useTranslation();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
-    const { filter, updateFilterParameters } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const { updateFilterParametersQuery } = useUpdateFilterQuery();
     const defaultSelectedParameters = useSessionStore((s) => s.defaultProductFiltersMap.parameters);
 
-    const selectedParameter = filter?.parameters?.find((p) => p.parameter === parameter.uuid);
+    const selectedParameter = currentFilter?.parameters?.find((p) => p.parameter === parameter.uuid);
 
     const isCheckboxType = parameter.__typename === 'ParameterCheckboxFilterOption';
 
@@ -84,7 +86,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                             name={id}
                                             value={isChecked}
                                             onChange={() =>
-                                                updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
+                                                updateFilterParametersQuery(parameter.uuid, parameterValueOption.uuid)
                                             }
                                         />
                                     </FilterGroupContentItem>
@@ -119,7 +121,9 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                         label={parameterValue.text}
                                         name={id}
                                         value={isChecked}
-                                        onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
+                                        onChange={() =>
+                                            updateFilterParametersQuery(parameter.uuid, parameterValue.uuid)
+                                        }
                                     />
                                 );
                             })}
@@ -133,7 +137,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                             min={parameter.minimalValue}
                             minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
                             setMaxValueCallback={(value) =>
-                                updateFilterParameters(
+                                updateFilterParametersQuery(
                                     parameter.uuid,
                                     undefined,
                                     selectedParameter?.minimalValue,
@@ -141,7 +145,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 )
                             }
                             setMinValueCallback={(value) =>
-                                updateFilterParameters(
+                                updateFilterParametersQuery(
                                     parameter.uuid,
                                     undefined,
                                     parameter.minimalValue === value ? undefined : value,

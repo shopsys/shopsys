@@ -5,8 +5,8 @@ import { TransportAndPayment } from './TransportAndPayment';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 type OrderSummaryProps = {
     isTransportOrPaymentLoading?: boolean;

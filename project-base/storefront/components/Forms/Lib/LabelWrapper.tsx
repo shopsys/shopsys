@@ -1,7 +1,7 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
-import { twMergeCustom } from 'helpers/twMerge';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 

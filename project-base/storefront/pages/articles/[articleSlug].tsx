@@ -7,18 +7,19 @@ import {
     ArticleDetailQueryDocument,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
+import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
+import { parseCatnums } from 'utils/parsing/grapesJsParser';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();

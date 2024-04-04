@@ -1,5 +1,5 @@
-import { twMergeCustom } from 'helpers/twMerge';
 import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 
 type WeblineProps = {
     type?: WeblineType;

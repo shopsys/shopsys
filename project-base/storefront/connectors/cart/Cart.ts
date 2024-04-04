@@ -3,10 +3,10 @@ import { CartModificationsFragment } from 'graphql/requests/cart/fragments/CartM
 import { CartPaymentModificationsFragment } from 'graphql/requests/cart/fragments/CartPaymentModificationsFragment.generated';
 import { CartPromoCodeModificationsFragment } from 'graphql/requests/cart/fragments/CartPromoCodeModificationsFragment.generated';
 import { CartTransportModificationsFragment } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { showInfoMessage } from 'helpers/toasts';
-import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
+import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
+import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 
 export const handleCartModifications = (
     cartModifications: CartModificationsFragment,

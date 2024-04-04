@@ -8,8 +8,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { PriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TransportAndPaymentProps = {
     transport: TransportWithAvailablePaymentsAndStoresFragment | null;

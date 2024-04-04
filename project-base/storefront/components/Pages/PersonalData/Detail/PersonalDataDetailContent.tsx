@@ -2,9 +2,9 @@ import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
-import { useFormatDate } from 'hooks/formatting/useFormatDate';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type PersonalDataDetailContentProps = {
     data: PersonalDataDetailQuery;

@@ -1,8 +1,8 @@
 import { GrapesJsProducts } from './GrapesJsProducts';
 import { UserText } from './UserText';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
-import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { memo } from 'react';
+import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'utils/parsing/grapesJsParser';
 
 type GrapesJsParserProps = {
     text: string;

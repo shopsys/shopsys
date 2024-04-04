@@ -1,7 +1,7 @@
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 export const FreeTransport: FC = () => {
     const { cart } = useCurrentCart();

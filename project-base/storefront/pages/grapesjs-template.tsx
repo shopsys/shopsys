@@ -2,8 +2,8 @@ import { GrapesJs } from 'components/Basic/UserText/GrapesJs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const Index: FC = () => (
     <CommonLayout title="Customer">

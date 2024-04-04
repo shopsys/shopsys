@@ -8,13 +8,13 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
-import { useFormatDate } from 'hooks/formatting/useFormatDate';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
+import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const NotAddedProductsPopup = dynamic(() =>
     import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),

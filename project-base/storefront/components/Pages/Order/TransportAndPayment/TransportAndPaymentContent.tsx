@@ -1,23 +1,23 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
-import { getTransportAndPaymentValidationMessages, useLoadTransportAndPaymentFromLastOrder } from './helpers';
+import { getTransportAndPaymentValidationMessages, useLoadTransportAndPaymentFromLastOrder } from './utils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
-import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useOrderPagesAccess } from 'hooks/cart/useOrderPagesAccess';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
+import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
+import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

@@ -1,11 +1,11 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { HreflangLink } from 'graphql/types';
-import logMessage from 'helpers/errors/logMessage';
-import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
-import useSeo from 'hooks/seo/useSeo';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { logMessage } from 'utils/errors/logMessage';
+import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
+import { useSeo } from 'utils/seo/useSeo';
 
 type SeoMetaProps = {
     defaultTitle?: string | null;

@@ -1,4 +1,4 @@
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'utils/twMerge';
 
 type GrapesJsProps = {
     content?: string;

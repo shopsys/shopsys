@@ -3,7 +3,7 @@ import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { BlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
-import { useFormatDate } from 'hooks/formatting/useFormatDate';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type BlogArticleDetailContentProps = {
     blogArticle: BlogArticleDetailFragment;

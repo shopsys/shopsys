@@ -6,12 +6,12 @@ import {
     usePersonalDataDetailQuery,
     PersonalDataDetailQueryVariables,
 } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
-import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const PersonalDataOverviewByHashPage: NextPage = () => {
     const { t } = useTranslation();

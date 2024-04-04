@@ -1,9 +1,11 @@
-import { InfoIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
+import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
@@ -50,5 +52,3 @@ export const Wishlist: FC = () => {
         </>
     );
 };
-
-export default Wishlist;

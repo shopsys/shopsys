@@ -1,20 +1,20 @@
 import { PromoCodeInfo } from './PromoCodeInfo';
-import { PlusIcon } from 'components/Basic/Icon/IconsSvg';
+import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { TIDs } from 'cypress/tids';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
-import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
-import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
+import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
+import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
+import { useCalcElementHeight } from 'utils/ui/useCalcElementHeight';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

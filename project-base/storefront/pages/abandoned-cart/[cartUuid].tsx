@@ -1,9 +1,9 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type AbandonedCartPageProps = { cartUuid?: string };
 

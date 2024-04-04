@@ -4,7 +4,7 @@ import { UserText } from 'components/Basic/UserText/UserText';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { ParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmProductListNameType } from 'gtm/types/enums';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailTabsProps = {

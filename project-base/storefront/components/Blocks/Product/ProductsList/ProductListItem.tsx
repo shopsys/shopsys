@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { RemoveBoldIcon } from 'components/Basic/Icon/IconsSvg';
+import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -10,12 +10,13 @@ import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { twMergeCustom } from 'helpers/twMerge';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductItemProps = {
     product: ListedProductFragment;

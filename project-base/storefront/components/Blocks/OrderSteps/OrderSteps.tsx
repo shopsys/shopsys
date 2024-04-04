@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type OrderStepsProps = {
     activeStep: number;

@@ -1,15 +1,16 @@
-import { CartIcon } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { TIDs } from 'cypress/tids';
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useAddToCart } from 'hooks/cart/useAddToCart';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
+import { useAddToCart } from 'utils/cart/useAddToCart';
+import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>
     import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),

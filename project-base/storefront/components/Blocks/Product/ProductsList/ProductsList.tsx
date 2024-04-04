@@ -5,10 +5,11 @@ import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/Ca
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { createEmptyArray } from 'helpers/arrayUtils';
-import { calculatePageSize } from 'helpers/loadMore';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
+import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 
 type ProductsListProps = {
     products: ListedProductFragment[] | undefined;
@@ -29,7 +30,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     category,
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
-    const { currentLoadMore } = useQueryParams();
+    const currentLoadMore = useCurrentLoadMoreQuery();
 
     if (!products?.length && !fetching) {
         return <CategoryDetailContentMessage />;

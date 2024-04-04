@@ -1,6 +1,6 @@
 import { OperationDefinitionNode } from 'graphql';
-import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { Exchange } from 'urql';
+import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { pipe, tap } from 'wonka';
 
 export const operationNameExchange: Exchange =

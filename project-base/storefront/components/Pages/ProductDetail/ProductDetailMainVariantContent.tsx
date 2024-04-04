@@ -1,5 +1,5 @@
-import { ProductDetailCode, ProductDetailHeading, ProductDetailPrefix } from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories';
+import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
@@ -7,11 +7,11 @@ import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailMainVariantContentProps = {
     product: MainVariantDetailFragment;

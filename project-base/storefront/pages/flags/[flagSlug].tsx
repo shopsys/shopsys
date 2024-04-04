@@ -1,4 +1,4 @@
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -13,30 +13,28 @@ import {
     FlagProductsQueryVariables,
     FlagProductsQueryDocument,
 } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getSlugFromUrl,
-} from 'helpers/parsing/urlParsing';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { createClient } from 'urql/createClient';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
+import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
+import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { createClient } from 'urql/createClient';
+} from 'utils/queryParamNames';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();

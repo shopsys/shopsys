@@ -1,4 +1,4 @@
-import { invalidateFields } from './helpers';
+import { invalidateFields } from './utils';
 import { Cache, UpdatesConfig } from '@urql/exchange-graphcache';
 import { LoginMutation, LoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.generated';
 import { LogoutMutation, LogoutMutationVariables } from 'graphql/requests/auth/mutations/LogoutMutation.generated';

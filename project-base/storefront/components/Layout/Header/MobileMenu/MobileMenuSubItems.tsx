@@ -1,12 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useComparison } from 'hooks/productLists/comparison/useComparison';
-import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { useLogout } from 'utils/auth/useLogout';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type SubMenuProps = {
     onNavigate: () => void;
@@ -20,7 +20,7 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
         ['/stores', '/login', '/product-comparison', '/wishlist'],
         url,
     );
-    const { logout } = useAuth();
+    const logout = useLogout();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
 

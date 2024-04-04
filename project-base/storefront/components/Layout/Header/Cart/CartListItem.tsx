@@ -2,9 +2,9 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { MouseEventHandler } from 'react';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type ListItemProps = {
     cartItem: CartItemFragment;

@@ -1,5 +1,5 @@
-import { twMergeCustom } from 'helpers/twMerge';
 import { MouseEventHandler } from 'react';
+import { twMergeCustom } from 'utils/twMerge';
 
 type OverlayProps = {
     isActive: boolean;

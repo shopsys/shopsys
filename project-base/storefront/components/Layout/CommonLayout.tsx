@@ -10,9 +10,9 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { HreflangLink } from 'graphql/types';
-import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 
 type CommonLayoutProps = {
     title?: string | null;

@@ -4,11 +4,11 @@ import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { AddToCartAction } from 'hooks/cart/useAddToCart';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useRef } from 'react';
+import { AddToCartAction } from 'utils/cart/useAddToCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type CartListItemProps = {
     item: CartItemFragment;

@@ -1,13 +1,14 @@
 import { ProductListItem } from './ProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useComparison } from 'hooks/productLists/comparison/useComparison';
-import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
 import React, { RefObject } from 'react';
 import { SwipeableHandlers } from 'react-swipeable';
+import { useComparison } from 'utils/productLists/comparison/useComparison';
+import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
 const ProductComparePopup = dynamic(() =>
     import('../ButtonsAction/ProductComparePopup').then((component) => component.ProductComparePopup),
@@ -35,7 +36,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     children,
     swipeHandlers,
 }) => {
-    const { currentPage } = useQueryParams();
+    const currentPage = useCurrentPageQuery();
     const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
         useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();

@@ -1,7 +1,5 @@
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
-import { logException } from 'helpers/errors/logException';
-import { initDayjsLocale } from 'helpers/formaters/formatDate';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
 import { AppProps as NextAppProps } from 'next/app';
@@ -12,6 +10,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import 'styles/user-text.css';
+import { logException } from 'utils/errors/logException';
+import { initDayjsLocale } from 'utils/formaters/formatDate';
 
 type AppProps = {
     pageProps: any;
@@ -38,7 +38,9 @@ const AppPageContent = dynamic(() =>
 const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => component.ErrorBoundary));
 
 const Error500ContentWithBoundary = dynamic(() =>
-    import('components/Pages/ErrorPage/Error500Content').then((component) => component.Error500ContentWithBoundary),
+    import('components/Pages/ErrorPage/Error500ContentWithBoundary').then(
+        (component) => component.Error500ContentWithBoundary,
+    ),
 );
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {

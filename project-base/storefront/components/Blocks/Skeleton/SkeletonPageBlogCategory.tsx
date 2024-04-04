@@ -2,8 +2,8 @@ import { SkeletonModuleArticleBlog } from './SkeletonModuleArticleBlog';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageBlogCategory: FC = () => (
     <Webline>

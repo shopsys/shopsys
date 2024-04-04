@@ -1,4 +1,4 @@
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -13,41 +13,42 @@ import {
     BrandProductsQueryVariables,
     BrandProductsQueryDocument,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getSlugFromUrl,
-} from 'helpers/parsing/urlParsing';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { createClient } from 'urql/createClient';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
+import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
+import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
+import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
+import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
+import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { createClient } from 'urql/createClient';
+} from 'utils/queryParamNames';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();
-    const { sort, filter } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const currentSort = useCurrentSortQuery();
+
     const [{ data: brandDetailData, fetching }] = useBrandDetailQuery({
         variables: {
             urlSlug: getSlugFromUrl(router.asPath),
-            orderingMode: sort,
-            filter: mapParametersFilter(filter),
+            orderingMode: currentSort,
+            filter: mapParametersFilter(currentFilter),
         },
     });
 
@@ -65,7 +66,7 @@ const BrandDetailPage: NextPage = () => {
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
             description={brandDetailData?.brand?.seoMetaDescription}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
-            isFetchingData={!filter && fetching && !brandDetailData}
+            isFetchingData={!currentFilter && fetching && !brandDetailData}
             title={seoTitle}
         >
             {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}

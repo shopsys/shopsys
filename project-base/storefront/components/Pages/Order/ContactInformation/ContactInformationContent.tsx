@@ -11,25 +11,15 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateOrderMutation } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import {
-    useGtmStaticPageViewEvent,
-    getGtmCreateOrderEventOrderPart,
-    getGtmCreateOrderEventUserPart,
-} from 'gtm/helpers/eventFactories';
-import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
-import { getGtmReviewConsents } from 'gtm/helpers/gtm';
-import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/helpers';
-import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { GtmPageType, GtmMessageOriginType } from 'gtm/types/enums';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
-import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
+import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
+import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
+import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
+import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -37,6 +27,14 @@ import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import { useState } from 'react';
 import { useWatch, SubmitHandler, FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
+import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));

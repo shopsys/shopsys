@@ -1,18 +1,18 @@
 import { StoreInfoBox } from './StoreInfoBox';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
+import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { ListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { createMapMarker } from 'helpers/createMapMarker';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
+import { createMapMarker } from 'utils/createMapMarker';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type StoresContentProps = {
     stores: ListedStoreConnectionFragment;

@@ -2,13 +2,13 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
 import useTranslation from 'next-translate/useTranslation';
+import { useLogout } from 'utils/auth/useLogout';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const CustomerContent: FC = () => {
     const { t } = useTranslation();
-    const { logout } = useAuth();
+    const logout = useLogout();
     const { url } = useDomainConfig();
     const [customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/customer/orders', '/customer/edit-profile'],

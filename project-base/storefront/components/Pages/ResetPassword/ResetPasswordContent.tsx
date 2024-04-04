@@ -5,19 +5,20 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
-import { blurInput } from 'helpers/forms/blurInput';
-import { clearForm } from 'helpers/forms/clearForm';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import 'helpers/getInternationalizedStaticUrls';
-import { showSuccessMessage } from 'helpers/toasts';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { GtmFormType } from 'gtm/enums/GtmFormType';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
+import { blurInput } from 'utils/forms/blurInput';
+import { clearForm } from 'utils/forms/clearForm';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import 'utils/staticUrls/getInternationalizedStaticUrls';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

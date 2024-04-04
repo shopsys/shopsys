@@ -1,5 +1,5 @@
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getEmptyDefaultProductFiltersMap } from 'helpers/filterOptions/seoCategories';
+import { getEmptyDefaultProductFiltersMap } from 'utils/seoCategories/getEmptyDefaultProductFiltersMap';
 import { StateCreator } from 'zustand';
 
 export type DefaultProductFiltersMapType = {

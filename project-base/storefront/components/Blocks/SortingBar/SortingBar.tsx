@@ -1,14 +1,15 @@
 import { SortingBarItem } from './SortingBarItem';
-import { SortIcon } from 'components/Basic/Icon/IconsSvg';
+import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnum } from 'graphql/types';
-import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'utils/parsing/getUrlQueriesWithoutDynamicPageQueries';
+import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SortingBarProps = {
     totalCount: number;
@@ -25,7 +26,8 @@ const DEFAULT_SORT_OPTIONS = [
 export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSortOptions, className }) => {
     const { t } = useTranslation();
     const router = useRouter();
-    const { sort: sortSelected, updateSort } = useQueryParams();
+    const currentSort = useCurrentSortQuery();
+    const updateSort = useUpdateSortQuery();
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
@@ -40,7 +42,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     };
 
     const sortOptions = customSortOptions || DEFAULT_SORT_OPTIONS;
-    const selectedSortOption = sortSelected || sorting || DEFAULT_SORT;
+    const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
 
     return (
         <div

@@ -8,13 +8,13 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
 import useTranslation from 'next-translate/useTranslation';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
+import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const ContactInformationDeliveryAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);

@@ -1,4 +1,4 @@
-import { PlayIcon } from 'components/Basic/Icon/IconsSvg';
+import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { SimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';

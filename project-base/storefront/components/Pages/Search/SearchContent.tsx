@@ -4,12 +4,12 @@ import { SkeletonPageProductsList } from 'components/Blocks/Skeleton/SkeletonPag
 import { TIDs } from 'cypress/tids';
 import { SimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
 import { SearchQuery } from 'graphql/requests/search/queries/SearchQuery.generated';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import { mapConnectionEdges } from 'utils/mappers/connection';
+import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 type SearchContentProps = {
     searchResults: SearchQuery | undefined;

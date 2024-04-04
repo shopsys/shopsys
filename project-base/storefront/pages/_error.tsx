@@ -1,12 +1,12 @@
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
-import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
-import { logException } from 'helpers/errors/logException';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { showErrorMessage } from 'helpers/toasts';
 import { NextPage } from 'next';
 import { ReactElement } from 'react';
+import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
+import { logException } from 'utils/errors/logException';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
 const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';

@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, title }) => (
     <li className={className} title={title}>

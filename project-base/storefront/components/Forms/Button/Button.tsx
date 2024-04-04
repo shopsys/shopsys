@@ -1,5 +1,5 @@
-import { twMergeCustom } from 'helpers/twMerge';
 import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>;
 

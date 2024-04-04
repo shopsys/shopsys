@@ -6,13 +6,7 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { blurInput } from 'helpers/forms/blurInput';
-import { showErrorMessage } from 'helpers/toasts';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useRegistration } from 'hooks/auth/useRegistration';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -22,6 +16,12 @@ import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { RegistrationAfterOrderFormType } from 'types/form';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { useRegistration } from 'utils/auth/useRegistration';
+import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { blurInput } from 'utils/forms/blurInput';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

@@ -1,6 +1,6 @@
-import { CompareIcon } from 'components/Basic/Icon/IconsSvg';
-import { twMergeCustom } from 'helpers/twMerge';
+import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import useTranslation from 'next-translate/useTranslation';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductCompareButtonProps = {
     isWithText?: boolean;

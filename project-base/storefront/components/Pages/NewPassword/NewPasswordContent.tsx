@@ -7,12 +7,7 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import { useAuth } from 'hooks/auth/useAuth';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -20,6 +15,12 @@ import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
+import { useLogin } from 'utils/auth/useLogin';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -36,7 +37,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const { login } = useAuth();
+    const login = useLogin();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
         fieldState: { invalid: isNewPasswordInvalid },

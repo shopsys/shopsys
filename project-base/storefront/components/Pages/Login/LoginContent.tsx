@@ -7,14 +7,14 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { useAuth } from 'hooks/auth/useAuth';
-import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
+import { useLogin } from 'utils/auth/useLogin';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useShopsysForm } from 'utils/forms/useShopsysForm';
 import * as Yup from 'yup';
 
 export const LoginContent: FC = () => {
@@ -23,7 +23,7 @@ export const LoginContent: FC = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
-    const { login } = useAuth();
+    const login = useLogin();
 
     const onLoginHandler = async (data: { email: string; password: string }) => {
         let redirectUrl = url;

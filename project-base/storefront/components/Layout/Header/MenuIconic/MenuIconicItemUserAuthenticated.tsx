@@ -1,15 +1,15 @@
 import { MenuIconicItemLink, MenuIconicSubItemLink } from './MenuIconicElements';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { UserIcon } from 'components/Basic/Icon/IconsSvg';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/useAuth';
 import useTranslation from 'next-translate/useTranslation';
+import { useLogout } from 'utils/auth/useLogout';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
-    const { logout } = useAuth();
+    const logout = useLogout();
     const { url } = useDomainConfig();
     const [customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/customer', '/customer/orders', '/customer/edit-profile'],

@@ -1,5 +1,4 @@
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
-import { getDomainIdFromHostname } from 'helpers/domain/getDomainIdFromHostname';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
 import {
     FriendlyPageTypesValue,
@@ -7,6 +6,7 @@ import {
     FriendlyPagesTypes,
     FriendlyPagesTypesKey,
 } from 'types/friendlyUrl';
+import { getDomainIdFromHostname } from 'utils/domain/getDomainIdFromHostname';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ERROR_PAGE_ROUTE = '/404';

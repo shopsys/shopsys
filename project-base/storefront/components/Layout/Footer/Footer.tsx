@@ -3,8 +3,8 @@ import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type FooterProps = {
     simpleFooter?: boolean;

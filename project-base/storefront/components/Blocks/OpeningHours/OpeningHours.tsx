@@ -1,8 +1,8 @@
 import { OpeningHours as OpeningHoursType } from 'graphql/types';
-import { twMergeCustom } from 'helpers/twMerge';
-import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
+import { twMergeCustom } from 'utils/twMerge';
 
 export const OpeningHours: FC<{ openingHours: OpeningHoursType }> = ({ openingHours, className }) => {
     const { t } = useTranslation();

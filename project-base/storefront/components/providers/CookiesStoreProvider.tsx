@@ -1,5 +1,5 @@
 import { createContext, useRef } from 'react';
-import { CookiesStore, createCookiesStore } from 'store/useCookiesStore';
+import { CookiesStore, createCookiesStore } from 'store/createCookieStore';
 import { type StoreApi } from 'zustand';
 
 export const CookiesStoreContext = createContext<StoreApi<CookiesStore> | null>(null);

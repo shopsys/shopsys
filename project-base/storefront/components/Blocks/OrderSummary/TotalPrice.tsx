@@ -1,7 +1,7 @@
 import { OrderSummaryContent } from './OrderSummaryElements';
 import { PriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TotalPriceProps = {
     totalPrice: PriceFragment;

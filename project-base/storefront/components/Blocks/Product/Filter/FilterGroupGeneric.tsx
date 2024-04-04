@@ -5,12 +5,13 @@ import {
     FilterGroupWrapper,
     ShowAllButton,
 } from './FilterElements';
+import { useFilterShowLess } from './utils/useFilterShowLess';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterFieldType = 'flags' | 'brands';
 
@@ -31,10 +32,11 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 }) => {
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
-    const { filter, updateFilterFlags, updateFilterBrands } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const { updateFilterFlagsQuery, updateFilterBrandsQuery } = useUpdateFilterQuery();
     const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);
 
-    const selectedItems = filter && filter[filterField];
+    const selectedItems = currentFilter && currentFilter[filterField];
 
     const { defaultOptions, isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,
@@ -45,10 +47,10 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const handleCheck = (uuid: string) => {
         switch (filterField) {
             case 'brands':
-                updateFilterBrands(uuid);
+                updateFilterBrandsQuery(uuid);
                 break;
             case 'flags':
-                updateFilterFlags(uuid);
+                updateFilterFlagsQuery(uuid);
                 break;
         }
     };

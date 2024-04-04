@@ -15,17 +15,18 @@ import {
 } from 'components/Pages/Customer/customerChangeProfileFormMeta';
 import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import { useCountriesAsSelectOptions } from 'hooks/countries/useCountriesAsSelectOptions';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { CombinedError } from 'urql';
+import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
+import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

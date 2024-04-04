@@ -1,4 +1,4 @@
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
@@ -10,19 +10,21 @@ import {
     BlogCategoryQueryVariables,
     BlogCategoryQueryDocument,
 } from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
-import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
+import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
+import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
+import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
+import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
+import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
+import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();

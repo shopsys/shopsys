@@ -1,14 +1,14 @@
 import { BlogArticlesList } from './BlogArticlesList';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useBlogCategoryArticles } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
-import { createEmptyArray } from 'helpers/arrayUtils';
-import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { RefObject, useMemo } from 'react';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
+import { mapConnectionEdges } from 'utils/mappers/connection';
+import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
 type BlogCategoryArticlesWrapperProps = {
     uuid: string;
@@ -19,7 +19,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     uuid,
     paginationScrollTargetRef,
 }) => {
-    const { currentPage } = useQueryParams();
+    const currentPage = useCurrentPageQuery();
 
     const [{ data, fetching }] = useBlogCategoryArticles({
         variables: { uuid, endCursor: getEndCursor(currentPage), pageSize: DEFAULT_PAGE_SIZE },

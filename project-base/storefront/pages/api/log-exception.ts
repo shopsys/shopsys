@@ -1,5 +1,5 @@
-import { logException } from 'helpers/errors/logException';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { logException } from 'utils/errors/logException';
 
 export default (req: NextApiRequest, res: NextApiResponse): void => {
     if (req.method === 'POST' && typeof req.body === 'object' && 'exception' in req.body) {

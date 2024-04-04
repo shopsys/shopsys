@@ -1,8 +1,9 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterGroupInStockProps = {
     title: string;
@@ -13,7 +14,8 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
 
-    const { filter, updateFilterInStock } = useQueryParams();
+    const currentFilter = useCurrentFilterQuery();
+    const { updateFilterInStockQuery } = useUpdateFilterQuery();
 
     return (
         <FilterGroupWrapper>
@@ -25,8 +27,8 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
                         id="onlyInStock"
                         label={t('In stock')}
                         name="onlyInStock"
-                        value={!!filter?.onlyInStock}
-                        onChange={() => updateFilterInStock(!filter?.onlyInStock)}
+                        value={!!currentFilter?.onlyInStock}
+                        onChange={() => updateFilterInStockQuery(!currentFilter?.onlyInStock)}
                     />
                 </FilterGroupContent>
             )}
