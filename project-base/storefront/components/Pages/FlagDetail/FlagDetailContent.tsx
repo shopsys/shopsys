@@ -1,11 +1,11 @@
 import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { FlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
+import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
 
 type FlagDetailContentProps = {
-    flag: FlagDetailFragment;
+    flag: TypeFlagDetailFragment;
 };
 
 export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {

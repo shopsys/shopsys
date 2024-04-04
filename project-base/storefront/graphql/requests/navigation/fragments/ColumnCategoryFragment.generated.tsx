@@ -3,7 +3,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { NavigationSubCategoriesLinkFragment } from '../../categories/fragments/NavigationSubCategoriesLinkFragment.generated';
-export type ColumnCategoryFragment = { __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> };
+export type TypeColumnCategoryFragment = { __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> };
 
 
       export interface PossibleTypesResultData {

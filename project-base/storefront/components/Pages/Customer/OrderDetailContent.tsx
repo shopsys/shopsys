@@ -5,7 +5,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { TIDs } from 'cypress/tids';
-import { OrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
+import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { PaymentTypeEnum } from 'types/payment';
@@ -20,7 +20,7 @@ const NotAddedProductsPopup = dynamic(() =>
 const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((component) => component.MergeCartsPopup));
 
 type OrderDetailContentProps = {
-    order: OrderDetailFragment;
+    order: TypeOrderDetailFragment;
 };
 
 export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {

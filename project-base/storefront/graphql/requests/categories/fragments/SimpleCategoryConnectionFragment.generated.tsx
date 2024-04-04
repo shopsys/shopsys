@@ -2,7 +2,7 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleCategoryFragment } from './SimpleCategoryFragment.generated';
-export type SimpleCategoryConnectionFragment = { __typename: 'CategoryConnection', totalCount: number, edges: Array<{ __typename: 'CategoryEdge', node: { __typename: 'Category', uuid: string, name: string, slug: string } | null } | null> | null };
+export type TypeSimpleCategoryConnectionFragment = { __typename: 'CategoryConnection', totalCount: number, edges: Array<{ __typename: 'CategoryEdge', node: { __typename: 'Category', uuid: string, name: string, slug: string } | null } | null> | null };
 
 
       export interface PossibleTypesResultData {

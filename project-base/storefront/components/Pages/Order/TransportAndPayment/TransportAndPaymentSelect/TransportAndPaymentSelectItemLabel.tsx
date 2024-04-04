@@ -1,8 +1,8 @@
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { TIDs } from 'cypress/tids';
-import { ImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -12,8 +12,8 @@ type TransportAndPaymentSelectItemLabelProps = {
     price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
     daysUntilDelivery?: number;
     description?: string | null;
-    image?: ImageFragment | null;
-    pickupPlaceDetail?: ListedStoreFragment;
+    image?: TypeImageFragment | null;
+    pickupPlaceDetail?: TypeListedStoreFragment;
 };
 
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({

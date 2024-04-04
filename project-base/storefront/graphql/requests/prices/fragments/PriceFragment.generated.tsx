@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type PriceFragment = { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string };
+export type TypePriceFragment = { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string };
 
 
       export interface PossibleTypesResultData {

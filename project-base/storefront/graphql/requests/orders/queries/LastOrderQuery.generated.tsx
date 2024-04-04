@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 import { LastOrderFragment } from '../fragments/LastOrderFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type LastOrderQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeLastOrderQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type LastOrderQuery = { __typename?: 'Query', lastOrder: { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportType: { __typename?: 'TransportType', code: string } }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null } | null };
+export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportType: { __typename?: 'TransportType', code: string } }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null } | null };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +102,6 @@ export const LastOrderQueryDocument = gql`
 }
     ${LastOrderFragment}`;
 
-export function useLastOrderQuery(options?: Omit<Urql.UseQueryArgs<LastOrderQueryVariables>, 'query'>) {
-  return Urql.useQuery<LastOrderQuery, LastOrderQueryVariables>({ query: LastOrderQueryDocument, ...options });
+export function useLastOrderQuery(options?: Omit<Urql.UseQueryArgs<TypeLastOrderQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeLastOrderQuery, TypeLastOrderQueryVariables>({ query: LastOrderQueryDocument, ...options });
 };

@@ -22,7 +22,7 @@ export type Scalars = {
   Uuid: { input: string; output: string; }
 };
 
-export type AddOrderItemsToCartInput = {
+export type TypeAddOrderItemsToCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** UUID of the order based on which the cart should be prefilled */
@@ -31,15 +31,15 @@ export type AddOrderItemsToCartInput = {
   shouldMerge: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type AddProductResult = {
+export type TypeAddProductResult = {
   __typename?: 'AddProductResult';
   addedQuantity: Scalars['Int']['output'];
-  cartItem: CartItem;
+  cartItem: TypeCartItem;
   isNew: Scalars['Boolean']['output'];
   notOnStockQuantity: Scalars['Int']['output'];
 };
 
-export type AddToCartInput = {
+export type TypeAddToCartInput = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** True if quantity should be set no matter the current state of the cart. False if quantity should be added to the already existing same item in the cart */
@@ -50,15 +50,15 @@ export type AddToCartInput = {
   quantity: Scalars['Int']['input'];
 };
 
-export type AddToCartResult = {
+export type TypeAddToCartResult = {
   __typename?: 'AddToCartResult';
-  addProductResult: AddProductResult;
-  cart: Cart;
+  addProductResult: TypeAddProductResult;
+  cart: TypeCart;
 };
 
-export type Advert = {
+export type TypeAdvert = {
   /** Restricted categories of the advert (the advert is shown in these categories only) */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   /** Name of advert */
   name: Scalars['String']['output'];
   /** Position of advert */
@@ -69,10 +69,10 @@ export type Advert = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type AdvertCode = Advert & {
+export type TypeAdvertCode = TypeAdvert & {
   __typename?: 'AdvertCode';
   /** Restricted categories of the advert (the advert is shown in these categories only) */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   /** Advert code */
   code: Scalars['String']['output'];
   /** Name of advert */
@@ -85,16 +85,16 @@ export type AdvertCode = Advert & {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type AdvertImage = Advert & {
+export type TypeAdvertImage = TypeAdvert & {
   __typename?: 'AdvertImage';
   /** Restricted categories of the advert (the advert is shown in these categories only) */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   /** Advert images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Advert link */
   link: Maybe<Scalars['String']['output']>;
   /** Adverts first image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Name of advert */
   name: Scalars['String']['output'];
   /** Position of advert */
@@ -106,16 +106,16 @@ export type AdvertImage = Advert & {
 };
 
 
-export type AdvertImageImagesArgs = {
+export type TypeAdvertImageImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type AdvertImageMainImageArgs = {
+export type TypeAdvertImageMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type AdvertPosition = {
+export type TypeAdvertPosition = {
   __typename?: 'AdvertPosition';
   /** Desription of advert position */
   description: Scalars['String']['output'];
@@ -123,7 +123,7 @@ export type AdvertPosition = {
   positionName: Scalars['String']['output'];
 };
 
-export type ApplyPromoCodeToCartInput = {
+export type TypeApplyPromoCodeToCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Promo code to be used after checkout */
@@ -131,28 +131,28 @@ export type ApplyPromoCodeToCartInput = {
 };
 
 /** A connection to a list of items. */
-export type ArticleConnection = {
+export type TypeArticleConnection = {
   __typename?: 'ArticleConnection';
   /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<ArticleEdge>>>;
+  edges: Maybe<Array<Maybe<TypeArticleEdge>>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: TypePageInfo;
   /** Total number of articles */
   totalCount: Scalars['Int']['output'];
 };
 
 /** An edge in a connection. */
-export type ArticleEdge = {
+export type TypeArticleEdge = {
   __typename?: 'ArticleEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: Maybe<NotBlogArticleInterface>;
+  node: Maybe<TypeNotBlogArticleInterface>;
 };
 
 /** Represents entity that is considered to be an article on the eshop */
-export type ArticleInterface = {
-  breadcrumb: Array<Link>;
+export type TypeArticleInterface = {
+  breadcrumb: Array<TypeLink>;
   name: Scalars['String']['output'];
   seoH1: Maybe<Scalars['String']['output']>;
   seoMetaDescription: Maybe<Scalars['String']['output']>;
@@ -162,7 +162,7 @@ export type ArticleInterface = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type ArticleLink = NotBlogArticleInterface & {
+export type TypeArticleLink = TypeNotBlogArticleInterface & {
   __typename?: 'ArticleLink';
   /** Creation date time of the article link */
   createdAt: Scalars['DateTime']['output'];
@@ -179,7 +179,7 @@ export type ArticleLink = NotBlogArticleInterface & {
 };
 
 /** Possible placements of an article (used as an input for 'articles' query) */
-export enum ArticlePlacementTypeEnum {
+export enum TypeArticlePlacementTypeEnum {
   /** Articles in 1st footer column */
   Footer1 = 'footer1',
   /** Articles in 2nd footer column */
@@ -192,10 +192,10 @@ export enum ArticlePlacementTypeEnum {
   None = 'none'
 }
 
-export type ArticleSite = ArticleInterface & Breadcrumb & NotBlogArticleInterface & Slug & {
+export type TypeArticleSite = TypeArticleInterface & TypeBreadcrumb & TypeNotBlogArticleInterface & TypeSlug & {
   __typename?: 'ArticleSite';
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Date and time of the article creation */
   createdAt: Scalars['DateTime']['output'];
   /** If the the article should be open in a new tab */
@@ -219,40 +219,40 @@ export type ArticleSite = ArticleInterface & Breadcrumb & NotBlogArticleInterfac
 };
 
 /** Represents an availability */
-export type Availability = {
+export type TypeAvailability = {
   __typename?: 'Availability';
   /** Localized availability name (domain dependent) */
   name: Scalars['String']['output'];
   /** Availability status in a format suitable for usage in the code */
-  status: AvailabilityStatusEnum;
+  status: TypeAvailabilityStatusEnum;
 };
 
 /** Product Availability statuses */
-export enum AvailabilityStatusEnum {
+export enum TypeAvailabilityStatusEnum {
   /** Product availability status in stock */
   InStock = 'InStock',
   /** Product availability status out of stock */
   OutOfStock = 'OutOfStock'
 }
 
-export type BlogArticle = ArticleInterface & Breadcrumb & Hreflang & Slug & {
+export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHreflang & TypeSlug & {
   __typename?: 'BlogArticle';
   /** The list of the blog article blog categories */
-  blogCategories: Array<BlogCategory>;
+  blogCategories: Array<TypeBlogCategory>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Date and time of the blog article creation */
   createdAt: Scalars['DateTime']['output'];
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** ID of category */
   id: Scalars['Int']['output'];
   /** Blog article images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** The blog article absolute URL */
   link: Scalars['String']['output'];
   /** Blog article image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** The blog article title */
   name: Scalars['String']['output'];
   /** The blog article perex */
@@ -276,57 +276,57 @@ export type BlogArticle = ArticleInterface & Breadcrumb & Hreflang & Slug & {
 };
 
 
-export type BlogArticleImagesArgs = {
+export type TypeBlogArticleImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type BlogArticleMainImageArgs = {
+export type TypeBlogArticleMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A connection to a list of items. */
-export type BlogArticleConnection = {
+export type TypeBlogArticleConnection = {
   __typename?: 'BlogArticleConnection';
   /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<BlogArticleEdge>>>;
+  edges: Maybe<Array<Maybe<TypeBlogArticleEdge>>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: TypePageInfo;
   /** Total number of the blog articles */
   totalCount: Scalars['Int']['output'];
 };
 
 /** An edge in a connection. */
-export type BlogArticleEdge = {
+export type TypeBlogArticleEdge = {
   __typename?: 'BlogArticleEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: Maybe<BlogArticle>;
+  node: Maybe<TypeBlogArticle>;
 };
 
-export type BlogCategory = Breadcrumb & Hreflang & Slug & {
+export type TypeBlogCategory = TypeBreadcrumb & TypeHreflang & TypeSlug & {
   __typename?: 'BlogCategory';
   /** Total count of blog articles in this category */
   articlesTotalCount: Scalars['Int']['output'];
   /** Paginated blog articles of the given blog category */
-  blogArticles: BlogArticleConnection;
+  blogArticles: TypeBlogArticleConnection;
   /** Tho whole blog categories tree (used for blog navigation rendering) */
-  blogCategoriesTree: Array<BlogCategory>;
+  blogCategoriesTree: Array<TypeBlogCategory>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** The blog category children */
-  children: Array<BlogCategory>;
+  children: Array<TypeBlogCategory>;
   /** The blog category description */
   description: Maybe<Scalars['String']['output']>;
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** The blog category absolute URL */
   link: Scalars['String']['output'];
   /** The blog category name */
   name: Scalars['String']['output'];
   /** The blog category parent */
-  parent: Maybe<BlogCategory>;
+  parent: Maybe<TypeBlogCategory>;
   /** The blog category SEO H1 heading */
   seoH1: Maybe<Scalars['String']['output']>;
   /** The blog category SEO meta description */
@@ -340,7 +340,7 @@ export type BlogCategory = Breadcrumb & Hreflang & Slug & {
 };
 
 
-export type BlogCategoryBlogArticlesArgs = {
+export type TypeBlogCategoryBlogArticlesArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
@@ -349,26 +349,26 @@ export type BlogCategoryBlogArticlesArgs = {
 };
 
 /** Represents a brand */
-export type Brand = Breadcrumb & Hreflang & ProductListable & Slug & {
+export type TypeBrand = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSlug & {
   __typename?: 'Brand';
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Brand description */
   description: Maybe<Scalars['String']['output']>;
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** ID of category */
   id: Scalars['Int']['output'];
   /** Brand images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Brand main URL */
   link: Scalars['String']['output'];
   /** Brand image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Brand name */
   name: Scalars['String']['output'];
   /** Paginated and ordered products of brand */
-  products: ProductConnection;
+  products: TypeProductConnection;
   /** Brand SEO H1 */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Brand SEO meta description */
@@ -383,35 +383,35 @@ export type Brand = Breadcrumb & Hreflang & ProductListable & Slug & {
 
 
 /** Represents a brand */
-export type BrandImagesArgs = {
+export type TypeBrandImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a brand */
-export type BrandMainImageArgs = {
+export type TypeBrandMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a brand */
-export type BrandProductsArgs = {
+export type TypeBrandProductsArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   brandSlug: InputMaybe<Scalars['String']['input']>;
   categorySlug: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<ProductFilter>;
+  filter: InputMaybe<TypeProductFilter>;
   first: InputMaybe<Scalars['Int']['input']>;
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
 };
 
 /** Brand filter option */
-export type BrandFilterOption = {
+export type TypeBrandFilterOption = {
   __typename?: 'BrandFilterOption';
   /** Brand */
-  brand: Brand;
+  brand: TypeBrand;
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
   /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
@@ -419,18 +419,18 @@ export type BrandFilterOption = {
 };
 
 /** Represents entity able to return breadcrumb */
-export type Breadcrumb = {
+export type TypeBreadcrumb = {
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
 };
 
-export type Cart = CartInterface & {
+export type TypeCart = TypeCartInterface & {
   __typename?: 'Cart';
   /** All items in the cart */
-  items: Array<CartItem>;
-  modifications: CartModificationsResult;
+  items: Array<TypeCartItem>;
+  modifications: TypeCartModificationsResult;
   /** Selected payment if payment provided */
-  payment: Maybe<Payment>;
+  payment: Maybe<TypePayment>;
   /** Selected bank swift code of goPay payment bank transfer */
   paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
   /** Applied promo code if provided */
@@ -438,92 +438,92 @@ export type Cart = CartInterface & {
   /** Remaining amount for free transport and payment; null = transport cannot be free */
   remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Rounding amount if payment has rounding allowed */
-  roundingPrice: Maybe<Price>;
+  roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
   selectedPickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
-  totalDiscountPrice: Price;
+  totalDiscountPrice: TypePrice;
   /** Total items price (excluding transport and payment) */
-  totalItemsPrice: Price;
+  totalItemsPrice: TypePrice;
   /** Total price including transport and payment */
-  totalPrice: Price;
+  totalPrice: TypePrice;
   /** Total price (exluding discount, transport and payment) */
-  totalPriceWithoutDiscountTransportAndPayment: Price;
+  totalPriceWithoutDiscountTransportAndPayment: TypePrice;
   /** Selected transport if transport provided */
-  transport: Maybe<Transport>;
+  transport: Maybe<TypeTransport>;
   /** UUID of the cart, null for authenticated user */
   uuid: Maybe<Scalars['Uuid']['output']>;
 };
 
-export type CartInput = {
+export type TypeCartInput = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-export type CartInterface = {
-  items: Array<CartItem>;
-  modifications: CartModificationsResult;
-  payment: Maybe<Payment>;
+export type TypeCartInterface = {
+  items: Array<TypeCartItem>;
+  modifications: TypeCartModificationsResult;
+  payment: Maybe<TypePayment>;
   paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
   promoCode: Maybe<Scalars['String']['output']>;
   remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Rounding amount if payment has rounding allowed */
-  roundingPrice: Maybe<Price>;
+  roundingPrice: Maybe<TypePrice>;
   selectedPickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
-  totalDiscountPrice: Price;
+  totalDiscountPrice: TypePrice;
   /** Total items price (excluding transport and payment) */
-  totalItemsPrice: Price;
+  totalItemsPrice: TypePrice;
   /** Total price including transport and payment */
-  totalPrice: Price;
-  transport: Maybe<Transport>;
+  totalPrice: TypePrice;
+  transport: Maybe<TypeTransport>;
   uuid: Maybe<Scalars['Uuid']['output']>;
 };
 
 /** Represent one item in the cart */
-export type CartItem = {
+export type TypeCartItem = {
   __typename?: 'CartItem';
   /** Product in the cart */
-  product: Product;
+  product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
   /** Cart item UUID */
   uuid: Scalars['Uuid']['output'];
 };
 
-export type CartItemModificationsResult = {
+export type TypeCartItemModificationsResult = {
   __typename?: 'CartItemModificationsResult';
-  cartItemsWithChangedQuantity: Array<CartItem>;
-  cartItemsWithModifiedPrice: Array<CartItem>;
-  noLongerAvailableCartItemsDueToQuantity: Array<CartItem>;
-  noLongerListableCartItems: Array<CartItem>;
+  cartItemsWithChangedQuantity: Array<TypeCartItem>;
+  cartItemsWithModifiedPrice: Array<TypeCartItem>;
+  noLongerAvailableCartItemsDueToQuantity: Array<TypeCartItem>;
+  noLongerListableCartItems: Array<TypeCartItem>;
 };
 
-export type CartModificationsResult = {
+export type TypeCartModificationsResult = {
   __typename?: 'CartModificationsResult';
-  itemModifications: CartItemModificationsResult;
-  multipleAddedProductModifications: CartMultipleAddedProductModificationsResult;
-  paymentModifications: CartPaymentModificationsResult;
-  promoCodeModifications: CartPromoCodeModificationsResult;
+  itemModifications: TypeCartItemModificationsResult;
+  multipleAddedProductModifications: TypeCartMultipleAddedProductModificationsResult;
+  paymentModifications: TypeCartPaymentModificationsResult;
+  promoCodeModifications: TypeCartPromoCodeModificationsResult;
   someProductWasRemovedFromEshop: Scalars['Boolean']['output'];
-  transportModifications: CartTransportModificationsResult;
+  transportModifications: TypeCartTransportModificationsResult;
 };
 
-export type CartMultipleAddedProductModificationsResult = {
+export type TypeCartMultipleAddedProductModificationsResult = {
   __typename?: 'CartMultipleAddedProductModificationsResult';
-  notAddedProducts: Array<Product>;
+  notAddedProducts: Array<TypeProduct>;
 };
 
-export type CartPaymentModificationsResult = {
+export type TypeCartPaymentModificationsResult = {
   __typename?: 'CartPaymentModificationsResult';
   paymentPriceChanged: Scalars['Boolean']['output'];
   paymentUnavailable: Scalars['Boolean']['output'];
 };
 
-export type CartPromoCodeModificationsResult = {
+export type TypeCartPromoCodeModificationsResult = {
   __typename?: 'CartPromoCodeModificationsResult';
   noLongerApplicablePromoCode: Array<Scalars['String']['output']>;
 };
 
-export type CartTransportModificationsResult = {
+export type TypeCartTransportModificationsResult = {
   __typename?: 'CartTransportModificationsResult';
   personalPickupStoreUnavailable: Scalars['Boolean']['output'];
   transportPriceChanged: Scalars['Boolean']['output'];
@@ -532,38 +532,38 @@ export type CartTransportModificationsResult = {
 };
 
 /** Represents a category */
-export type Category = Breadcrumb & ProductListable & Slug & {
+export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
   __typename?: 'Category';
   /** Best selling products */
-  bestsellers: Array<Product>;
+  bestsellers: Array<TypeProduct>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** All parent category names with their IDs and UUIDs */
-  categoryHierarchy: Array<CategoryHierarchyItem>;
+  categoryHierarchy: Array<TypeCategoryHierarchyItem>;
   /** Descendant categories */
-  children: Array<Category>;
+  children: Array<TypeCategory>;
   /** Localized category description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** ID of category */
   id: Scalars['Int']['output'];
   /** Category images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** A list of categories linked to the given category */
-  linkedCategories: Array<Category>;
+  linkedCategories: Array<TypeCategory>;
   /** Category image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Localized category name (domain dependent) */
   name: Scalars['String']['output'];
   /** Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category) */
   originalCategorySlug: Maybe<Scalars['String']['output']>;
   /** Ancestor category */
-  parent: Maybe<Category>;
+  parent: Maybe<TypeCategory>;
   /** Paginated and ordered products of category */
-  products: ProductConnection;
+  products: TypeProductConnection;
   /** An array of links of prepared category SEO mixes of a given category */
-  readyCategorySeoMixLinks: Array<Link>;
+  readyCategorySeoMixLinks: Array<TypeLink>;
   /** Seo first level heading of category */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of category */
@@ -578,51 +578,51 @@ export type Category = Breadcrumb & ProductListable & Slug & {
 
 
 /** Represents a category */
-export type CategoryImagesArgs = {
+export type TypeCategoryImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a category */
-export type CategoryMainImageArgs = {
+export type TypeCategoryMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a category */
-export type CategoryProductsArgs = {
+export type TypeCategoryProductsArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   brandSlug: InputMaybe<Scalars['String']['input']>;
   categorySlug: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<ProductFilter>;
+  filter: InputMaybe<TypeProductFilter>;
   first: InputMaybe<Scalars['Int']['input']>;
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
 };
 
 /** A connection to a list of items. */
-export type CategoryConnection = {
+export type TypeCategoryConnection = {
   __typename?: 'CategoryConnection';
   /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<CategoryEdge>>>;
+  edges: Maybe<Array<Maybe<TypeCategoryEdge>>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: TypePageInfo;
   /** Total number of categories */
   totalCount: Scalars['Int']['output'];
 };
 
 /** An edge in a connection. */
-export type CategoryEdge = {
+export type TypeCategoryEdge = {
   __typename?: 'CategoryEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: Maybe<Category>;
+  node: Maybe<TypeCategory>;
 };
 
-export type CategoryHierarchyItem = {
+export type TypeCategoryHierarchyItem = {
   __typename?: 'CategoryHierarchyItem';
   /** ID of the category */
   id: Scalars['Int']['output'];
@@ -632,7 +632,7 @@ export type CategoryHierarchyItem = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type ChangePasswordInput = {
+export type TypeChangePasswordInput = {
   /** Customer user email. */
   email: Scalars['String']['input'];
   /** New customer user password. */
@@ -641,7 +641,7 @@ export type ChangePasswordInput = {
   oldPassword: Scalars['Password']['input'];
 };
 
-export type ChangePaymentInCartInput = {
+export type TypeChangePaymentInCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Selected bank swift code of goPay payment bank transfer */
@@ -650,7 +650,7 @@ export type ChangePaymentInCartInput = {
   paymentUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-export type ChangePaymentInOrderInput = {
+export type TypeChangePaymentInOrderInput = {
   /** Order identifier */
   orderUuid: Scalars['Uuid']['input'];
   /** Selected bank swift code of goPay payment bank transfer */
@@ -659,7 +659,7 @@ export type ChangePaymentInOrderInput = {
   paymentUuid: Scalars['Uuid']['input'];
 };
 
-export type ChangePersonalDataInput = {
+export type TypeChangePersonalDataInput = {
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String']['input'];
   /** Determines whether the customer is a company or not. */
@@ -686,7 +686,7 @@ export type ChangePersonalDataInput = {
   telephone: Scalars['String']['input'];
 };
 
-export type ChangeTransportInCartInput = {
+export type TypeChangeTransportInCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** The identifier of selected personal pickup place */
@@ -696,7 +696,7 @@ export type ChangeTransportInCartInput = {
 };
 
 /** Represents an currently logged customer user */
-export type CompanyCustomerUser = CustomerUser & {
+export type TypeCompanyCustomerUser = TypeCustomerUser & {
   __typename?: 'CompanyCustomerUser';
   /** Billing address city name */
   city: Scalars['String']['output'];
@@ -707,11 +707,11 @@ export type CompanyCustomerUser = CustomerUser & {
   /** The customer’s company tax number (only when customer is a company) */
   companyTaxNumber: Maybe<Scalars['String']['output']>;
   /** Billing address country */
-  country: Country;
+  country: TypeCountry;
   /** Default customer delivery addresses */
-  defaultDeliveryAddress: Maybe<DeliveryAddress>;
+  defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
   /** List of delivery addresses */
-  deliveryAddresses: Array<DeliveryAddress>;
+  deliveryAddresses: Array<TypeDeliveryAddress>;
   /** Email address */
   email: Scalars['String']['output'];
   /** First name */
@@ -732,7 +732,7 @@ export type CompanyCustomerUser = CustomerUser & {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type ContactInput = {
+export type TypeContactInput = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
   /** Message sent to recipient */
@@ -742,7 +742,7 @@ export type ContactInput = {
 };
 
 /** Represents country */
-export type Country = {
+export type TypeCountry = {
   __typename?: 'Country';
   /** Country code in ISO 3166-1 alpha-2 */
   code: Scalars['String']['output'];
@@ -750,23 +750,23 @@ export type Country = {
   name: Scalars['String']['output'];
 };
 
-export type CreateOrderResult = {
+export type TypeCreateOrderResult = {
   __typename?: 'CreateOrderResult';
-  cart: Maybe<Cart>;
-  order: Maybe<Order>;
+  cart: Maybe<TypeCart>;
+  order: Maybe<TypeOrder>;
   orderCreated: Scalars['Boolean']['output'];
 };
 
 /** Represents an currently logged customer user */
-export type CustomerUser = {
+export type TypeCustomerUser = {
   /** Billing address city name */
   city: Scalars['String']['output'];
   /** Billing address country */
-  country: Country;
+  country: TypeCountry;
   /** Default customer delivery addresses */
-  defaultDeliveryAddress: Maybe<DeliveryAddress>;
+  defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
   /** List of delivery addresses */
-  deliveryAddresses: Array<DeliveryAddress>;
+  deliveryAddresses: Array<TypeDeliveryAddress>;
   /** Email address */
   email: Scalars['String']['output'];
   /** First name */
@@ -787,14 +787,14 @@ export type CustomerUser = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type DeliveryAddress = {
+export type TypeDeliveryAddress = {
   __typename?: 'DeliveryAddress';
   /** Delivery address city name */
   city: Maybe<Scalars['String']['output']>;
   /** Delivery address company name */
   companyName: Maybe<Scalars['String']['output']>;
   /** Delivery address country */
-  country: Maybe<Country>;
+  country: Maybe<TypeCountry>;
   /** Delivery address firstname */
   firstName: Maybe<Scalars['String']['output']>;
   /** Delivery address lastname */
@@ -809,7 +809,7 @@ export type DeliveryAddress = {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type DeliveryAddressInput = {
+export type TypeDeliveryAddressInput = {
   /** Delivery address city name */
   city: Scalars['String']['input'];
   /** Delivery address company name */
@@ -831,18 +831,18 @@ export type DeliveryAddressInput = {
 };
 
 /** Represents a flag */
-export type Flag = Breadcrumb & Hreflang & ProductListable & Slug & {
+export type TypeFlag = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSlug & {
   __typename?: 'Flag';
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Categories containing at least one product with flag */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Localized flag name (domain dependent) */
   name: Scalars['String']['output'];
   /** Paginated and ordered products of flag */
-  products: ProductConnection;
+  products: TypeProductConnection;
   /** Flag color in rgb format */
   rgbColor: Scalars['String']['output'];
   /** URL slug of flag */
@@ -853,38 +853,38 @@ export type Flag = Breadcrumb & Hreflang & ProductListable & Slug & {
 
 
 /** Represents a flag */
-export type FlagCategoriesArgs = {
-  productFilter: InputMaybe<ProductFilter>;
+export type TypeFlagCategoriesArgs = {
+  productFilter: InputMaybe<TypeProductFilter>;
 };
 
 
 /** Represents a flag */
-export type FlagProductsArgs = {
+export type TypeFlagProductsArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   brandSlug: InputMaybe<Scalars['String']['input']>;
   categorySlug: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<ProductFilter>;
+  filter: InputMaybe<TypeProductFilter>;
   first: InputMaybe<Scalars['Int']['input']>;
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
 };
 
 /** Flag filter option */
-export type FlagFilterOption = {
+export type TypeFlagFilterOption = {
   __typename?: 'FlagFilterOption';
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
   /** Flag */
-  flag: Flag;
+  flag: TypeFlag;
   /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
   isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
 };
 
-export type GoPayBankSwift = {
+export type TypeGoPayBankSwift = {
   __typename?: 'GoPayBankSwift';
   /** large image url */
   imageLargeUrl: Scalars['String']['output'];
@@ -897,7 +897,7 @@ export type GoPayBankSwift = {
   swift: Scalars['String']['output'];
 };
 
-export type GoPayCreatePaymentSetup = {
+export type TypeGoPayCreatePaymentSetup = {
   __typename?: 'GoPayCreatePaymentSetup';
   /** url of gopay embedJs file */
   embedJs: Scalars['String']['output'];
@@ -907,7 +907,7 @@ export type GoPayCreatePaymentSetup = {
   goPayId: Scalars['String']['output'];
 };
 
-export type GoPayPaymentMethod = {
+export type TypeGoPayPaymentMethod = {
   __typename?: 'GoPayPaymentMethod';
   /** Identifier of payment method */
   identifier: Scalars['String']['output'];
@@ -922,12 +922,12 @@ export type GoPayPaymentMethod = {
 };
 
 /** Represents entity able to return alternate links for hreflang meta tags */
-export type Hreflang = {
+export type TypeHreflang = {
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
 };
 
-export type HreflangLink = {
+export type TypeHreflangLink = {
   __typename?: 'HreflangLink';
   /** URL for hreflang meta tag */
   href: Scalars['String']['output'];
@@ -936,7 +936,7 @@ export type HreflangLink = {
 };
 
 /** Represents an image */
-export type Image = {
+export type TypeImage = {
   __typename?: 'Image';
   /** Name of the image usable as an alternative text */
   name: Maybe<Scalars['String']['output']>;
@@ -945,7 +945,7 @@ export type Image = {
 };
 
 /** Represents a single user translation of language constant */
-export type LanguageConstant = {
+export type TypeLanguageConstant = {
   __typename?: 'LanguageConstant';
   /** Translation key */
   key: Scalars['String']['output'];
@@ -954,7 +954,7 @@ export type LanguageConstant = {
 };
 
 /** Represents an internal link */
-export type Link = {
+export type TypeLink = {
   __typename?: 'Link';
   /** Clickable text for a hyperlink */
   name: Scalars['String']['output'];
@@ -962,7 +962,7 @@ export type Link = {
   slug: Scalars['String']['output'];
 };
 
-export type LoginInput = {
+export type TypeLoginInput = {
   /** Uuid of the cart that should be merged to the cart of the user */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** The user email. */
@@ -975,46 +975,46 @@ export type LoginInput = {
   shouldOverwriteCustomerUserCart: Scalars['Boolean']['input'];
 };
 
-export type LoginResult = {
+export type TypeLoginResult = {
   __typename?: 'LoginResult';
   showCartMergeInfo: Scalars['Boolean']['output'];
-  tokens: Token;
+  tokens: TypeToken;
 };
 
 /** Represents a product */
-export type MainVariant = Breadcrumb & Hreflang & Product & Slug & {
+export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'MainVariant';
-  accessories: Array<Product>;
-  availability: Availability;
+  accessories: Array<TypeProduct>;
+  availability: TypeAvailability;
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int']['output'];
   /** Brand of product */
-  brand: Maybe<Brand>;
+  brand: Maybe<TypeBrand>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Product catalog number */
   catalogNumber: Scalars['String']['output'];
   /** List of categories */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
   /** List of flags */
-  flags: Array<Flag>;
+  flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
   name: Scalars['String']['output'];
   /** Name prefix */
@@ -1022,14 +1022,14 @@ export type MainVariant = Breadcrumb & Hreflang & Product & Slug & {
   /** Name suffix */
   nameSuffix: Maybe<Scalars['String']['output']>;
   orderingPriority: Scalars['Int']['output'];
-  parameters: Array<Parameter>;
+  parameters: Array<TypeParameter>;
   /** Product part number */
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
-  price: ProductPrice;
-  productVideos: Array<VideoToken>;
+  price: TypeProductPrice;
+  productVideos: Array<TypeVideoToken>;
   /** List of related products */
-  relatedProducts: Array<Product>;
+  relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -1043,228 +1043,228 @@ export type MainVariant = Breadcrumb & Hreflang & Product & Slug & {
   /** Count of quantity on stock */
   stockQuantity: Scalars['Int']['output'];
   /** List of availabilities in individual stores */
-  storeAvailabilities: Array<StoreAvailability>;
-  unit: Unit;
+  storeAvailabilities: Array<TypeStoreAvailability>;
+  unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
-  variants: Array<Variant>;
+  variants: Array<TypeVariant>;
 };
 
 
 /** Represents a product */
-export type MainVariantImagesArgs = {
+export type TypeMainVariantImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a product */
-export type MainVariantMainImageArgs = {
+export type TypeMainVariantMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Mutation = {
+export type TypeMutation = {
   __typename?: 'Mutation';
   /** Fills cart based on a given order, possibly merging it with the current cart */
-  AddOrderItemsToCart: Cart;
+  AddOrderItemsToCart: TypeCart;
   /** Adds a product to a product list */
-  AddProductToList: ProductList;
+  AddProductToList: TypeProductList;
   /** Add product to cart for future checkout */
-  AddToCart: AddToCartResult;
+  AddToCart: TypeAddToCartResult;
   /** Apply new promo code for the future checkout */
-  ApplyPromoCodeToCart: Cart;
+  ApplyPromoCodeToCart: TypeCart;
   /** Changes customer user password */
-  ChangePassword: CustomerUser;
+  ChangePassword: TypeCustomerUser;
   /** Add a payment to the cart, or remove a payment from the cart */
-  ChangePaymentInCart: Cart;
+  ChangePaymentInCart: TypeCart;
   /** change payment in an order after the order creation (available for unpaid GoPay orders only) */
-  ChangePaymentInOrder: Order;
+  ChangePaymentInOrder: TypeOrder;
   /** Changes customer user personal data */
-  ChangePersonalData: CustomerUser;
+  ChangePersonalData: TypeCustomerUser;
   /** Add a transport to the cart, or remove a transport from the cart */
-  ChangeTransportInCart: Cart;
+  ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
   Contact: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
-  CreateOrder: CreateOrderResult;
+  CreateOrder: TypeCreateOrderResult;
   /** Delete delivery address by Uuid */
-  DeleteDeliveryAddress: Array<DeliveryAddress>;
+  DeleteDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Edit delivery address by Uuid */
-  EditDeliveryAddress: Array<DeliveryAddress>;
+  EditDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Login customer user */
-  Login: LoginResult;
+  Login: TypeLoginResult;
   /** Logout user */
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean']['output'];
   /** Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer */
-  PayOrder: PaymentSetupCreationData;
+  PayOrder: TypePaymentSetupCreationData;
   /** Recover password using hash required from RequestPasswordRecovery */
-  RecoverPassword: LoginResult;
+  RecoverPassword: TypeLoginResult;
   /** Refreshes access and refresh tokens */
-  RefreshTokens: Token;
+  RefreshTokens: TypeToken;
   /** Register new customer user */
-  Register: LoginResult;
+  Register: TypeLoginResult;
   /** Remove product from cart */
-  RemoveFromCart: Cart;
+  RemoveFromCart: TypeCart;
   /** Removes a product from a product list */
-  RemoveProductFromList: Maybe<ProductList>;
+  RemoveProductFromList: Maybe<TypeProductList>;
   /** Removes the product list */
-  RemoveProductList: Maybe<ProductList>;
+  RemoveProductList: Maybe<TypeProductList>;
   /** Remove already used promo code from cart */
-  RemovePromoCodeFromCart: Cart;
+  RemovePromoCodeFromCart: TypeCart;
   /** Request password recovery - email with hash will be sent */
   RequestPasswordRecovery: Scalars['String']['output'];
   /** Request access to personal data */
-  RequestPersonalDataAccess: PersonalDataPage;
+  RequestPersonalDataAccess: TypePersonalDataPage;
   /** Set default delivery address by Uuid */
-  SetDefaultDeliveryAddress: CustomerUser;
+  SetDefaultDeliveryAddress: TypeCustomerUser;
   /** check payment status of order after callback from payment service */
-  UpdatePaymentStatus: Order;
+  UpdatePaymentStatus: TypeOrder;
 };
 
 
-export type MutationAddOrderItemsToCartArgs = {
-  input: AddOrderItemsToCartInput;
+export type TypeMutationAddOrderItemsToCartArgs = {
+  input: TypeAddOrderItemsToCartInput;
 };
 
 
-export type MutationAddProductToListArgs = {
-  input: ProductListUpdateInput;
+export type TypeMutationAddProductToListArgs = {
+  input: TypeProductListUpdateInput;
 };
 
 
-export type MutationAddToCartArgs = {
-  input: AddToCartInput;
+export type TypeMutationAddToCartArgs = {
+  input: TypeAddToCartInput;
 };
 
 
-export type MutationApplyPromoCodeToCartArgs = {
-  input: ApplyPromoCodeToCartInput;
+export type TypeMutationApplyPromoCodeToCartArgs = {
+  input: TypeApplyPromoCodeToCartInput;
 };
 
 
-export type MutationChangePasswordArgs = {
-  input: ChangePasswordInput;
+export type TypeMutationChangePasswordArgs = {
+  input: TypeChangePasswordInput;
 };
 
 
-export type MutationChangePaymentInCartArgs = {
-  input: ChangePaymentInCartInput;
+export type TypeMutationChangePaymentInCartArgs = {
+  input: TypeChangePaymentInCartInput;
 };
 
 
-export type MutationChangePaymentInOrderArgs = {
-  input: ChangePaymentInOrderInput;
+export type TypeMutationChangePaymentInOrderArgs = {
+  input: TypeChangePaymentInOrderInput;
 };
 
 
-export type MutationChangePersonalDataArgs = {
-  input: ChangePersonalDataInput;
+export type TypeMutationChangePersonalDataArgs = {
+  input: TypeChangePersonalDataInput;
 };
 
 
-export type MutationChangeTransportInCartArgs = {
-  input: ChangeTransportInCartInput;
+export type TypeMutationChangeTransportInCartArgs = {
+  input: TypeChangeTransportInCartInput;
 };
 
 
-export type MutationContactArgs = {
-  input: ContactInput;
+export type TypeMutationContactArgs = {
+  input: TypeContactInput;
 };
 
 
-export type MutationCreateOrderArgs = {
-  input: OrderInput;
+export type TypeMutationCreateOrderArgs = {
+  input: TypeOrderInput;
 };
 
 
-export type MutationDeleteDeliveryAddressArgs = {
+export type TypeMutationDeleteDeliveryAddressArgs = {
   deliveryAddressUuid: Scalars['Uuid']['input'];
 };
 
 
-export type MutationEditDeliveryAddressArgs = {
-  input: DeliveryAddressInput;
+export type TypeMutationEditDeliveryAddressArgs = {
+  input: TypeDeliveryAddressInput;
 };
 
 
-export type MutationLoginArgs = {
-  input: LoginInput;
+export type TypeMutationLoginArgs = {
+  input: TypeLoginInput;
 };
 
 
-export type MutationNewsletterSubscribeArgs = {
-  input: NewsletterSubscriptionDataInput;
+export type TypeMutationNewsletterSubscribeArgs = {
+  input: TypeNewsletterSubscriptionDataInput;
 };
 
 
-export type MutationPayOrderArgs = {
+export type TypeMutationPayOrderArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
 
-export type MutationRecoverPasswordArgs = {
-  input: RecoverPasswordInput;
+export type TypeMutationRecoverPasswordArgs = {
+  input: TypeRecoverPasswordInput;
 };
 
 
-export type MutationRefreshTokensArgs = {
-  input: RefreshTokenInput;
+export type TypeMutationRefreshTokensArgs = {
+  input: TypeRefreshTokenInput;
 };
 
 
-export type MutationRegisterArgs = {
-  input: RegistrationDataInput;
+export type TypeMutationRegisterArgs = {
+  input: TypeRegistrationDataInput;
 };
 
 
-export type MutationRemoveFromCartArgs = {
-  input: RemoveFromCartInput;
+export type TypeMutationRemoveFromCartArgs = {
+  input: TypeRemoveFromCartInput;
 };
 
 
-export type MutationRemoveProductFromListArgs = {
-  input: ProductListUpdateInput;
+export type TypeMutationRemoveProductFromListArgs = {
+  input: TypeProductListUpdateInput;
 };
 
 
-export type MutationRemoveProductListArgs = {
-  input: ProductListInput;
+export type TypeMutationRemoveProductListArgs = {
+  input: TypeProductListInput;
 };
 
 
-export type MutationRemovePromoCodeFromCartArgs = {
-  input: RemovePromoCodeFromCartInput;
+export type TypeMutationRemovePromoCodeFromCartArgs = {
+  input: TypeRemovePromoCodeFromCartInput;
 };
 
 
-export type MutationRequestPasswordRecoveryArgs = {
+export type TypeMutationRequestPasswordRecoveryArgs = {
   email: Scalars['String']['input'];
 };
 
 
-export type MutationRequestPersonalDataAccessArgs = {
-  input: PersonalDataAccessRequestInput;
+export type TypeMutationRequestPersonalDataAccessArgs = {
+  input: TypePersonalDataAccessRequestInput;
 };
 
 
-export type MutationSetDefaultDeliveryAddressArgs = {
+export type TypeMutationSetDefaultDeliveryAddressArgs = {
   deliveryAddressUuid: Scalars['Uuid']['input'];
 };
 
 
-export type MutationUpdatePaymentStatusArgs = {
+export type TypeMutationUpdatePaymentStatusArgs = {
   orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
 };
 
 /** Represents a navigation structure item */
-export type NavigationItem = {
+export type TypeNavigationItem = {
   __typename?: 'NavigationItem';
   /** Categories separated into columns */
-  categoriesByColumns: Array<NavigationItemCategoriesByColumns>;
+  categoriesByColumns: Array<TypeNavigationItemCategoriesByColumns>;
   /** Target URL */
   link: Scalars['String']['output'];
   /** Navigation item name */
@@ -1272,15 +1272,15 @@ export type NavigationItem = {
 };
 
 /** Represents a single column inside the navigation item */
-export type NavigationItemCategoriesByColumns = {
+export type TypeNavigationItemCategoriesByColumns = {
   __typename?: 'NavigationItemCategoriesByColumns';
   /** Categories */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   /** Column number */
   columnNumber: Scalars['Int']['output'];
 };
 
-export type NewsletterSubscriber = {
+export type TypeNewsletterSubscriber = {
   __typename?: 'NewsletterSubscriber';
   /** Date and time of subscription */
   createdAt: Scalars['DateTime']['output'];
@@ -1289,12 +1289,12 @@ export type NewsletterSubscriber = {
 };
 
 /** Represents the main input object to subscribe for e-mail newsletter */
-export type NewsletterSubscriptionDataInput = {
+export type TypeNewsletterSubscriptionDataInput = {
   email: Scalars['String']['input'];
 };
 
 /** Represents an article that is not a blog article */
-export type NotBlogArticleInterface = {
+export type TypeNotBlogArticleInterface = {
   /** creation date time of the article */
   createdAt: Scalars['DateTime']['output'];
   /** If the the article should be open in a new tab */
@@ -1308,12 +1308,12 @@ export type NotBlogArticleInterface = {
 };
 
 /** Represents a notification supposed to be displayed on all pages */
-export type NotificationBar = {
+export type TypeNotificationBar = {
   __typename?: 'NotificationBar';
   /** Notification bar images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Notification bar image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Color of the notification */
   rgbColor: Scalars['String']['output'];
   /** Message of the notification */
@@ -1322,40 +1322,40 @@ export type NotificationBar = {
 
 
 /** Represents a notification supposed to be displayed on all pages */
-export type NotificationBarImagesArgs = {
+export type TypeNotificationBarImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a notification supposed to be displayed on all pages */
-export type NotificationBarMainImageArgs = {
+export type TypeNotificationBarMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents store opening hours */
-export type OpeningHours = {
+export type TypeOpeningHours = {
   __typename?: 'OpeningHours';
   /** Current day of the week */
   dayOfWeek: Scalars['Int']['output'];
   /** Is store currently open? */
   isOpen: Scalars['Boolean']['output'];
   /** Opening hours for every day of the week (1 for Monday 7 for Sunday) */
-  openingHoursOfDays: Array<OpeningHoursOfDay>;
+  openingHoursOfDays: Array<TypeOpeningHoursOfDay>;
 };
 
 /** Represents store opening hours for a specific day */
-export type OpeningHoursOfDay = {
+export type TypeOpeningHoursOfDay = {
   __typename?: 'OpeningHoursOfDay';
   /** Date of day with display timezone for domain */
   date: Scalars['DateTime']['output'];
   /** Day of the week */
   dayOfWeek: Scalars['Int']['output'];
   /** An array of opening hours ranges (each range contains opening and closing time) */
-  openingHoursRanges: Array<OpeningHoursRange>;
+  openingHoursRanges: Array<TypeOpeningHoursRange>;
 };
 
 /** Represents a time period when a store is open */
-export type OpeningHoursRange = {
+export type TypeOpeningHoursRange = {
   __typename?: 'OpeningHoursRange';
   /** Closing time */
   closingTime: Scalars['String']['output'];
@@ -1363,7 +1363,7 @@ export type OpeningHoursRange = {
   openingTime: Scalars['String']['output'];
 };
 
-export type Order = {
+export type TypeOrder = {
   __typename?: 'Order';
   /** Billing address city name */
   city: Scalars['String']['output'];
@@ -1374,7 +1374,7 @@ export type Order = {
   /** The customer’s company tax number (only when ordered on the company behalf) */
   companyTaxNumber: Maybe<Scalars['String']['output']>;
   /** Billing address country */
-  country: Country;
+  country: TypeCountry;
   /** Date and time when the order was created */
   creationDate: Scalars['DateTime']['output'];
   /** City name for delivery */
@@ -1382,7 +1382,7 @@ export type Order = {
   /** Company name for delivery */
   deliveryCompanyName: Maybe<Scalars['String']['output']>;
   /** Country for delivery */
-  deliveryCountry: Maybe<Country>;
+  deliveryCountry: Maybe<TypeCountry>;
   /** First name of the contact person for delivery */
   deliveryFirstName: Maybe<Scalars['String']['output']>;
   /** Last name of the contact person for delivery */
@@ -1402,7 +1402,7 @@ export type Order = {
   /** Indicates whether the order is paid successfully with GoPay payment type */
   isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
-  items: Array<OrderItem>;
+  items: Array<TypeOrderItem>;
   /** The customer's last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Other information related to the order */
@@ -1410,7 +1410,7 @@ export type Order = {
   /** Unique order number */
   number: Scalars['String']['output'];
   /** Payment method applied to the order */
-  payment: Payment;
+  payment: TypePayment;
   /** Count of the payment transactions related to the order */
   paymentTransactionsCount: Scalars['Int']['output'];
   /** Selected pickup place identifier */
@@ -1418,7 +1418,7 @@ export type Order = {
   /** Billing address zip code */
   postcode: Scalars['String']['output'];
   /** All product items in the order */
-  productItems: Array<OrderItem>;
+  productItems: Array<TypeOrderItem>;
   /** Promo code (coupon) used in the order */
   promoCode: Maybe<Scalars['String']['output']>;
   /** Current status of the order */
@@ -1428,13 +1428,13 @@ export type Order = {
   /** The customer's telephone number */
   telephone: Scalars['String']['output'];
   /** Total price of the order including transport and payment prices */
-  totalPrice: Price;
+  totalPrice: TypePrice;
   /** The order tracking number */
   trackingNumber: Maybe<Scalars['String']['output']>;
   /** The order tracking link */
   trackingUrl: Maybe<Scalars['String']['output']>;
   /** Transport method applied to the order */
-  transport: Transport;
+  transport: TypeTransport;
   /** Unique url hash that can be used to  */
   urlHash: Scalars['String']['output'];
   /** UUID */
@@ -1442,27 +1442,27 @@ export type Order = {
 };
 
 /** A connection to a list of items. */
-export type OrderConnection = {
+export type TypeOrderConnection = {
   __typename?: 'OrderConnection';
   /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<OrderEdge>>>;
+  edges: Maybe<Array<Maybe<TypeOrderEdge>>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: TypePageInfo;
   /** Total number of orders */
   totalCount: Scalars['Int']['output'];
 };
 
 /** An edge in a connection. */
-export type OrderEdge = {
+export type TypeOrderEdge = {
   __typename?: 'OrderEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: Maybe<Order>;
+  node: Maybe<TypeOrder>;
 };
 
 /** Represents the main input object to create orders */
-export type OrderInput = {
+export type TypeOrderInput = {
   /** Cart identifier used for getting carts of not logged customers */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Billing address city name (will be on the tax invoice) */
@@ -1508,56 +1508,56 @@ export type OrderInput = {
   /** Determines whether the order is made on the company behalf. */
   onCompanyBehalf: Scalars['Boolean']['input'];
   /** Deprecated, this field is not used, the payment is taken from the server cart instead. */
-  payment: InputMaybe<PaymentInput>;
+  payment: InputMaybe<TypePaymentInput>;
   /** Billing address zip code (will be on the tax invoice) */
   postcode: Scalars['String']['input'];
   /** Deprecated, this field is not used, the products are taken from the server cart instead. */
-  products: InputMaybe<Array<OrderProductInput>>;
+  products: InputMaybe<Array<TypeOrderProductInput>>;
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String']['input'];
   /** The customer's phone number */
   telephone: Scalars['String']['input'];
   /** Deprecated, this field is not used, the transport is taken from the server cart instead. */
-  transport: InputMaybe<TransportInput>;
+  transport: InputMaybe<TypeTransportInput>;
 };
 
 /** Represent one item in the order */
-export type OrderItem = {
+export type TypeOrderItem = {
   __typename?: 'OrderItem';
   /** Name of the order item */
   name: Scalars['String']['output'];
   /** Quantity of order items in the order */
   quantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
-  totalPrice: Price;
+  totalPrice: TypePrice;
   /** Unit of measurement used for the order item */
   unit: Maybe<Scalars['String']['output']>;
   /** Order item price per unit */
-  unitPrice: Price;
+  unitPrice: TypePrice;
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
 };
 
-export type OrderPaymentsConfig = {
+export type TypeOrderPaymentsConfig = {
   __typename?: 'OrderPaymentsConfig';
   /** All available payment methods for the order (excluding the current one) */
-  availablePayments: Array<Payment>;
+  availablePayments: Array<TypePayment>;
   /** Current payment method used in the order */
-  currentPayment: Payment;
+  currentPayment: TypePayment;
 };
 
 /** Represents a product in order */
-export type OrderProductInput = {
+export type TypeOrderProductInput = {
   /** Quantity of products */
   quantity: Scalars['Int']['input'];
   /** Product price per unit */
-  unitPrice: PriceInput;
+  unitPrice: TypePriceInput;
   /** UUID */
   uuid: Scalars['Uuid']['input'];
 };
 
 /** Information about pagination in a connection. */
-export type PageInfo = {
+export type TypePageInfo = {
   __typename?: 'PageInfo';
   /** When paginating forwards, the cursor to continue. */
   endCursor: Maybe<Scalars['String']['output']>;
@@ -1570,52 +1570,52 @@ export type PageInfo = {
 };
 
 /** Represents a parameter */
-export type Parameter = {
+export type TypeParameter = {
   __typename?: 'Parameter';
   /** Parameter group to which the parameter is assigned */
   group: Maybe<Scalars['String']['output']>;
   /** Parameter name */
   name: Scalars['String']['output'];
   /** Unit of the parameter */
-  unit: Maybe<Unit>;
+  unit: Maybe<TypeUnit>;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
-  values: Array<ParameterValue>;
+  values: Array<TypeParameterValue>;
   visible: Scalars['Boolean']['output'];
 };
 
 /** Parameter filter option */
-export type ParameterCheckboxFilterOption = ParameterFilterOptionInterface & {
+export type TypeParameterCheckboxFilterOption = TypeParameterFilterOptionInterface & {
   __typename?: 'ParameterCheckboxFilterOption';
   /** Indicator whether the parameter should be collapsed based on the current category setting */
   isCollapsed: Scalars['Boolean']['output'];
   /** The parameter name */
   name: Scalars['String']['output'];
   /** The parameter unit */
-  unit: Maybe<Unit>;
+  unit: Maybe<TypeUnit>;
   /** The parameter UUID */
   uuid: Scalars['Uuid']['output'];
   /** Filter options of parameter values */
-  values: Array<ParameterValueFilterOption>;
+  values: Array<TypeParameterValueFilterOption>;
 };
 
 /** Parameter filter option */
-export type ParameterColorFilterOption = ParameterFilterOptionInterface & {
+export type TypeParameterColorFilterOption = TypeParameterFilterOptionInterface & {
   __typename?: 'ParameterColorFilterOption';
   /** Indicator whether the parameter should be collapsed based on the current category setting */
   isCollapsed: Scalars['Boolean']['output'];
   /** The parameter name */
   name: Scalars['String']['output'];
   /** The parameter unit */
-  unit: Maybe<Unit>;
+  unit: Maybe<TypeUnit>;
   /** The parameter UUID */
   uuid: Scalars['Uuid']['output'];
   /** Filter options of parameter values */
-  values: Array<ParameterValueColorFilterOption>;
+  values: Array<TypeParameterValueColorFilterOption>;
 };
 
 /** Represents a parameter filter */
-export type ParameterFilter = {
+export type TypeParameterFilter = {
   /** The parameter maximal value (for parameters with "slider" type) */
   maximalValue: InputMaybe<Scalars['Float']['input']>;
   /** The parameter minimal value (for parameters with "slider" type) */
@@ -1627,19 +1627,19 @@ export type ParameterFilter = {
 };
 
 /** Represents parameter filter option */
-export type ParameterFilterOptionInterface = {
+export type TypeParameterFilterOptionInterface = {
   /** Indicator whether the parameter should be collapsed based on the current category setting */
   isCollapsed: Scalars['Boolean']['output'];
   /** The parameter name */
   name: Scalars['String']['output'];
   /** The parameter unit */
-  unit: Maybe<Unit>;
+  unit: Maybe<TypeUnit>;
   /** The parameter UUID */
   uuid: Scalars['Uuid']['output'];
 };
 
 /** Parameter filter option */
-export type ParameterSliderFilterOption = ParameterFilterOptionInterface & {
+export type TypeParameterSliderFilterOption = TypeParameterFilterOptionInterface & {
   __typename?: 'ParameterSliderFilterOption';
   /** Indicator whether the parameter should be collapsed based on the current category setting */
   isCollapsed: Scalars['Boolean']['output'];
@@ -1654,13 +1654,13 @@ export type ParameterSliderFilterOption = ParameterFilterOptionInterface & {
   /** The pre-selected value (used for "ready category seo mixes") */
   selectedValue: Maybe<Scalars['Float']['output']>;
   /** The parameter unit */
-  unit: Maybe<Unit>;
+  unit: Maybe<TypeUnit>;
   /** The parameter UUID */
   uuid: Scalars['Uuid']['output'];
 };
 
 /** Represents a parameter value */
-export type ParameterValue = {
+export type TypeParameterValue = {
   __typename?: 'ParameterValue';
   /** Parameter value */
   text: Scalars['String']['output'];
@@ -1669,7 +1669,7 @@ export type ParameterValue = {
 };
 
 /** Parameter value filter option */
-export type ParameterValueColorFilterOption = {
+export type TypeParameterValueColorFilterOption = {
   __typename?: 'ParameterValueColorFilterOption';
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
@@ -1686,7 +1686,7 @@ export type ParameterValueColorFilterOption = {
 };
 
 /** Parameter value filter option */
-export type ParameterValueFilterOption = {
+export type TypeParameterValueFilterOption = {
   __typename?: 'ParameterValueFilterOption';
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
@@ -1701,26 +1701,26 @@ export type ParameterValueFilterOption = {
 };
 
 /** Represents a payment */
-export type Payment = {
+export type TypePayment = {
   __typename?: 'Payment';
   /** Localized payment description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
   /** Additional data for GoPay payment */
-  goPayPaymentMethod: Maybe<GoPayPaymentMethod>;
+  goPayPaymentMethod: Maybe<TypeGoPayPaymentMethod>;
   /** Payment images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Localized payment instruction (domain dependent) */
   instruction: Maybe<Scalars['String']['output']>;
   /** Payment image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Payment name */
   name: Scalars['String']['output'];
   /** Payment position */
   position: Scalars['Int']['output'];
   /** Payment price */
-  price: Price;
+  price: TypePrice;
   /** List of assigned transports */
-  transports: Array<Transport>;
+  transports: Array<TypeTransport>;
   /** Type of payment */
   type: Scalars['String']['output'];
   /** UUID */
@@ -1729,64 +1729,64 @@ export type Payment = {
 
 
 /** Represents a payment */
-export type PaymentImagesArgs = {
+export type TypePaymentImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a payment */
-export type PaymentMainImageArgs = {
+export type TypePaymentMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a payment */
-export type PaymentPriceArgs = {
+export type TypePaymentPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represents a payment in order */
-export type PaymentInput = {
+export type TypePaymentInput = {
   /** Price for payment */
-  price: PriceInput;
+  price: TypePriceInput;
   /** UUID */
   uuid: Scalars['Uuid']['input'];
 };
 
-export type PaymentSetupCreationData = {
+export type TypePaymentSetupCreationData = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
-  goPayCreatePaymentSetup: Maybe<GoPayCreatePaymentSetup>;
+  goPayCreatePaymentSetup: Maybe<TypeGoPayCreatePaymentSetup>;
 };
 
-export type PersonalData = {
+export type TypePersonalData = {
   __typename?: 'PersonalData';
   /** Customer user data */
-  customerUser: Maybe<CustomerUser>;
+  customerUser: Maybe<TypeCustomerUser>;
   /** A link for downloading the personal data in an XML file */
   exportLink: Scalars['String']['output'];
   /** Newsletter subscription */
-  newsletterSubscriber: Maybe<NewsletterSubscriber>;
+  newsletterSubscriber: Maybe<TypeNewsletterSubscriber>;
   /** Customer orders */
-  orders: Array<Order>;
+  orders: Array<TypeOrder>;
 };
 
-export type PersonalDataAccessRequestInput = {
+export type TypePersonalDataAccessRequestInput = {
   /** The customer's email address */
   email: Scalars['String']['input'];
   /** One of two possible types for personal data access request - display or export */
-  type: InputMaybe<PersonalDataAccessRequestTypeEnum>;
+  type: InputMaybe<TypePersonalDataAccessRequestTypeEnum>;
 };
 
 /** One of two possible types for personal data access request */
-export enum PersonalDataAccessRequestTypeEnum {
+export enum TypePersonalDataAccessRequestTypeEnum {
   /** Display data */
   Display = 'display',
   /** Export data */
   Export = 'export'
 }
 
-export type PersonalDataPage = {
+export type TypePersonalDataPage = {
   __typename?: 'PersonalDataPage';
   /** The HTML content of the site where a customer can request displaying his personal data */
   displaySiteContent: Scalars['String']['output'];
@@ -1799,7 +1799,7 @@ export type PersonalDataPage = {
 };
 
 /** Represents the price */
-export type Price = PriceInterface & {
+export type TypePrice = TypePriceInterface & {
   __typename?: 'Price';
   /** Price with VAT */
   priceWithVat: Scalars['Money']['output'];
@@ -1810,7 +1810,7 @@ export type Price = PriceInterface & {
 };
 
 /** Represents the price */
-export type PriceInput = {
+export type TypePriceInput = {
   /** Price with VAT */
   priceWithVat: Scalars['Money']['input'];
   /** Price without VAT */
@@ -1820,7 +1820,7 @@ export type PriceInput = {
 };
 
 /** Represents the price */
-export type PriceInterface = {
+export type TypePriceInterface = {
   /** Price with VAT */
   priceWithVat: Scalars['Money']['output'];
   /** Price without VAT */
@@ -1830,7 +1830,7 @@ export type PriceInterface = {
 };
 
 /** Represents setting of pricing */
-export type PricingSetting = {
+export type TypePricingSetting = {
   __typename?: 'PricingSetting';
   /** Code of the default currency used on the current domain */
   defaultCurrencyCode: Scalars['String']['output'];
@@ -1839,38 +1839,38 @@ export type PricingSetting = {
 };
 
 /** Represents a product */
-export type Product = {
-  accessories: Array<Product>;
-  availability: Availability;
+export type TypeProduct = {
+  accessories: Array<TypeProduct>;
+  availability: TypeAvailability;
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int']['output'];
   /** Brand of product */
-  brand: Maybe<Brand>;
+  brand: Maybe<TypeBrand>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Product catalog number */
   catalogNumber: Scalars['String']['output'];
   /** List of categories */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
   /** List of flags */
-  flags: Array<Flag>;
+  flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
   name: Scalars['String']['output'];
   /** Name prefix */
@@ -1878,14 +1878,14 @@ export type Product = {
   /** Name suffix */
   nameSuffix: Maybe<Scalars['String']['output']>;
   orderingPriority: Scalars['Int']['output'];
-  parameters: Array<Parameter>;
+  parameters: Array<TypeParameter>;
   /** Product part number */
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
-  price: ProductPrice;
-  productVideos: Array<VideoToken>;
+  price: TypeProductPrice;
+  productVideos: Array<TypeVideoToken>;
   /** List of related products */
-  relatedProducts: Array<Product>;
+  relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -1899,8 +1899,8 @@ export type Product = {
   /** Count of quantity on stock */
   stockQuantity: Scalars['Int']['output'];
   /** List of availabilities in individual stores */
-  storeAvailabilities: Array<StoreAvailability>;
-  unit: Unit;
+  storeAvailabilities: Array<TypeStoreAvailability>;
+  unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
   /** UUID */
@@ -1909,43 +1909,43 @@ export type Product = {
 
 
 /** Represents a product */
-export type ProductImagesArgs = {
+export type TypeProductImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a product */
-export type ProductMainImageArgs = {
+export type TypeProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A connection to a list of items. */
-export type ProductConnection = {
+export type TypeProductConnection = {
   __typename?: 'ProductConnection';
   /** The default ordering mode that is set for the given connection (e.g. in a category, search page, or ready category SEO mix) */
-  defaultOrderingMode: Maybe<ProductOrderingModeEnum>;
+  defaultOrderingMode: Maybe<TypeProductOrderingModeEnum>;
   /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<ProductEdge>>>;
+  edges: Maybe<Array<Maybe<TypeProductEdge>>>;
   /** The current ordering mode */
-  orderingMode: ProductOrderingModeEnum;
+  orderingMode: TypeProductOrderingModeEnum;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  productFilterOptions: ProductFilterOptions;
+  pageInfo: TypePageInfo;
+  productFilterOptions: TypeProductFilterOptions;
   /** Total number of products */
   totalCount: Scalars['Int']['output'];
 };
 
 /** An edge in a connection. */
-export type ProductEdge = {
+export type TypeProductEdge = {
   __typename?: 'ProductEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: Maybe<Product>;
+  node: Maybe<TypeProduct>;
 };
 
 /** Represents a product filter */
-export type ProductFilter = {
+export type TypeProductFilter = {
   /** Array of uuids of brands filter */
   brands: InputMaybe<Array<Scalars['Uuid']['input']>>;
   /** Array of uuids of flags filter */
@@ -1957,16 +1957,16 @@ export type ProductFilter = {
   /** Only in stock filter */
   onlyInStock: InputMaybe<Scalars['Boolean']['input']>;
   /** Parameter filter */
-  parameters: InputMaybe<Array<ParameterFilter>>;
+  parameters: InputMaybe<Array<TypeParameterFilter>>;
 };
 
 /** Represents a product filter options */
-export type ProductFilterOptions = {
+export type TypeProductFilterOptions = {
   __typename?: 'ProductFilterOptions';
   /** Brands filter options */
-  brands: Maybe<Array<BrandFilterOption>>;
+  brands: Maybe<Array<TypeBrandFilterOption>>;
   /** Flags filter options */
-  flags: Maybe<Array<FlagFilterOption>>;
+  flags: Maybe<Array<TypeFlagFilterOption>>;
   /** Number of products in stock that will be filtered */
   inStock: Scalars['Int']['output'];
   /** Maximal price of products for filtering */
@@ -1974,60 +1974,60 @@ export type ProductFilterOptions = {
   /** Minimal price of products for filtering */
   minimalPrice: Scalars['Money']['output'];
   /** Parameter filter options */
-  parameters: Maybe<Array<ParameterFilterOptionInterface>>;
+  parameters: Maybe<Array<TypeParameterFilterOptionInterface>>;
 };
 
-export type ProductList = {
+export type TypeProductList = {
   __typename?: 'ProductList';
   /** An array of the products in the list */
-  products: Array<Product>;
+  products: Array<TypeProduct>;
   /** Product list type */
-  type: ProductListTypeEnum;
+  type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid: Scalars['Uuid']['output'];
 };
 
-export type ProductListInput = {
+export type TypeProductListInput = {
   /** Product list type */
-  type: ProductListTypeEnum;
+  type: TypeProductListTypeEnum;
   /** Product list identifier */
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** One of possible types of the product list */
-export enum ProductListTypeEnum {
+export enum TypeProductListTypeEnum {
   Comparison = 'COMPARISON',
   Wishlist = 'WISHLIST'
 }
 
-export type ProductListUpdateInput = {
-  productListInput: ProductListInput;
+export type TypeProductListUpdateInput = {
+  productListInput: TypeProductListInput;
   /** Product identifier */
   productUuid: Scalars['Uuid']['input'];
 };
 
 /** Paginated and ordered products */
-export type ProductListable = {
+export type TypeProductListable = {
   /** Paginated and ordered products */
-  products: ProductConnection;
+  products: TypeProductConnection;
 };
 
 
 /** Paginated and ordered products */
-export type ProductListableProductsArgs = {
+export type TypeProductListableProductsArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   brandSlug: InputMaybe<Scalars['String']['input']>;
   categorySlug: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<ProductFilter>;
+  filter: InputMaybe<TypeProductFilter>;
   first: InputMaybe<Scalars['Int']['input']>;
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
 };
 
 /** One of possible ordering modes for product */
-export enum ProductOrderingModeEnum {
+export enum TypeProductOrderingModeEnum {
   /** Order by name ascending */
   NameAsc = 'NAME_ASC',
   /** Order by name descending */
@@ -2043,7 +2043,7 @@ export enum ProductOrderingModeEnum {
 }
 
 /** Represents the price of the product */
-export type ProductPrice = PriceInterface & {
+export type TypeProductPrice = TypePriceInterface & {
   __typename?: 'ProductPrice';
   /** Determines whether it's a final price or starting price */
   isPriceFrom: Scalars['Boolean']['output'];
@@ -2055,175 +2055,175 @@ export type ProductPrice = PriceInterface & {
   vatAmount: Scalars['Money']['output'];
 };
 
-export type Query = {
+export type TypeQuery = {
   __typename?: 'Query';
-  AdvertCode: Maybe<AdvertCode>;
-  AdvertImage: Maybe<AdvertImage>;
-  ArticleLink: Maybe<ArticleLink>;
-  ArticleSite: Maybe<ArticleSite>;
-  CompanyCustomerUser: Maybe<CompanyCustomerUser>;
+  AdvertCode: Maybe<TypeAdvertCode>;
+  AdvertImage: Maybe<TypeAdvertImage>;
+  ArticleLink: Maybe<TypeArticleLink>;
+  ArticleSite: Maybe<TypeArticleSite>;
+  CompanyCustomerUser: Maybe<TypeCompanyCustomerUser>;
   /** List of available banks for GoPay bank transfer payment */
-  GoPaySwifts: Array<GoPayBankSwift>;
-  MainVariant: Maybe<MainVariant>;
-  ParameterCheckboxFilterOption: Maybe<ParameterCheckboxFilterOption>;
-  ParameterColorFilterOption: Maybe<ParameterColorFilterOption>;
-  ParameterSliderFilterOption: Maybe<ParameterSliderFilterOption>;
-  RegularCustomerUser: Maybe<RegularCustomerUser>;
-  RegularProduct: Maybe<RegularProduct>;
-  Variant: Maybe<Variant>;
+  GoPaySwifts: Array<TypeGoPayBankSwift>;
+  MainVariant: Maybe<TypeMainVariant>;
+  ParameterCheckboxFilterOption: Maybe<TypeParameterCheckboxFilterOption>;
+  ParameterColorFilterOption: Maybe<TypeParameterColorFilterOption>;
+  ParameterSliderFilterOption: Maybe<TypeParameterSliderFilterOption>;
+  RegularCustomerUser: Maybe<TypeRegularCustomerUser>;
+  RegularProduct: Maybe<TypeRegularProduct>;
+  Variant: Maybe<TypeVariant>;
   /** Access personal data using hash received in email from personal data access request */
-  accessPersonalData: PersonalData;
+  accessPersonalData: TypePersonalData;
   /** Returns list of advert positions. */
-  advertPositions: Array<AdvertPosition>;
+  advertPositions: Array<TypeAdvertPosition>;
   /** Returns list of adverts, optionally filtered by `positionName` */
-  adverts: Array<Advert>;
+  adverts: Array<TypeAdvert>;
   /** Returns article filtered using UUID or URL slug */
-  article: Maybe<NotBlogArticleInterface>;
+  article: Maybe<TypeNotBlogArticleInterface>;
   /** Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement` */
-  articles: ArticleConnection;
+  articles: TypeArticleConnection;
   /** Returns list of searched articles and blog articles */
-  articlesSearch: Array<ArticleInterface>;
+  articlesSearch: Array<TypeArticleInterface>;
   /** Returns blog article filtered using UUID or URL slug */
-  blogArticle: Maybe<BlogArticle>;
+  blogArticle: Maybe<TypeBlogArticle>;
   /** Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords */
-  blogArticles: BlogArticleConnection;
+  blogArticles: TypeBlogArticleConnection;
   /** Returns a complete list of the blog categories */
-  blogCategories: Array<BlogCategory>;
+  blogCategories: Array<TypeBlogCategory>;
   /** Returns blog category filtered using UUID or URL slug */
-  blogCategory: Maybe<BlogCategory>;
+  blogCategory: Maybe<TypeBlogCategory>;
   /** Returns brand filtered using UUID or URL slug */
-  brand: Maybe<Brand>;
+  brand: Maybe<TypeBrand>;
   /** Returns list of searched brands */
-  brandSearch: Array<Brand>;
+  brandSearch: Array<TypeBrand>;
   /** Returns complete list of brands */
-  brands: Array<Brand>;
+  brands: Array<TypeBrand>;
   /** Return cart of logged customer or cart by UUID for anonymous user */
-  cart: Maybe<Cart>;
+  cart: Maybe<TypeCart>;
   /** Returns complete list of categories */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   /** Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords */
-  categoriesSearch: CategoryConnection;
+  categoriesSearch: TypeCategoryConnection;
   /** Returns category filtered using UUID or URL slug */
-  category: Maybe<Category>;
+  category: Maybe<TypeCategory>;
   /** Returns information about cookies article */
-  cookiesArticle: Maybe<ArticleSite>;
+  cookiesArticle: Maybe<TypeArticleSite>;
   /** Returns available countries */
-  countries: Array<Country>;
+  countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
-  currentCustomerUser: Maybe<CustomerUser>;
+  currentCustomerUser: Maybe<TypeCustomerUser>;
   /** Returns a flag by uuid or url slug */
-  flag: Maybe<Flag>;
+  flag: Maybe<TypeFlag>;
   /** Returns a complete list of the flags */
-  flags: Maybe<Array<Flag>>;
+  flags: Maybe<Array<TypeFlag>>;
   /** Check if email is registered */
   isCustomerUserRegistered: Scalars['Boolean']['output'];
   /** Return user translated language constants for current domain locale */
-  languageConstants: Array<LanguageConstant>;
+  languageConstants: Array<TypeLanguageConstant>;
   /** Returns last order of the user or null if no order was placed yet */
-  lastOrder: Maybe<Order>;
+  lastOrder: Maybe<TypeOrder>;
   /** Returns complete navigation menu */
-  navigation: Array<NavigationItem>;
+  navigation: Array<TypeNavigationItem>;
   /** Returns a list of notifications supposed to be displayed on all pages */
-  notificationBars: Maybe<Array<NotificationBar>>;
+  notificationBars: Maybe<Array<TypeNotificationBar>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
-  order: Maybe<Order>;
+  order: Maybe<TypeOrder>;
   /** Returns HTML content for order with failed payment. */
   orderPaymentFailedContent: Scalars['String']['output'];
   /** Returns HTML content for order with successful payment. */
   orderPaymentSuccessfulContent: Scalars['String']['output'];
   /** Returns payments available for the given order */
-  orderPayments: OrderPaymentsConfig;
+  orderPayments: TypeOrderPaymentsConfig;
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
-  orders: Maybe<OrderConnection>;
+  orders: Maybe<TypeOrderConnection>;
   /** Returns payment filtered using UUID */
-  payment: Maybe<Payment>;
+  payment: Maybe<TypePayment>;
   /** Returns complete list of payment methods */
-  payments: Array<Payment>;
+  payments: Array<TypePayment>;
   /** Return personal data page content and URL */
-  personalDataPage: Maybe<PersonalDataPage>;
+  personalDataPage: Maybe<TypePersonalDataPage>;
   /** Returns privacy policy article */
-  privacyPolicyArticle: Maybe<ArticleSite>;
+  privacyPolicyArticle: Maybe<TypeArticleSite>;
   /** Returns product filtered using UUID or URL slug */
-  product: Maybe<Product>;
+  product: Maybe<TypeProduct>;
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
-  productList: Maybe<ProductList>;
-  productListsByType: Array<ProductList>;
+  productList: Maybe<TypeProductList>;
+  productListsByType: Array<TypeProductList>;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
-  products: ProductConnection;
+  products: TypeProductConnection;
   /** Returns list of products by catalog numbers */
-  productsByCatnums: Array<Product>;
+  productsByCatnums: Array<TypeProduct>;
   /** Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords */
-  productsSearch: ProductConnection;
+  productsSearch: TypeProductConnection;
   /** Returns promoted categories */
-  promotedCategories: Array<Category>;
+  promotedCategories: Array<TypeCategory>;
   /** Returns promoted products */
-  promotedProducts: Array<Product>;
+  promotedProducts: Array<TypeProduct>;
   /** Returns SEO settings for a specific page based on the url slug of that page */
-  seoPage: Maybe<SeoPage>;
+  seoPage: Maybe<TypeSeoPage>;
   /** Returns current settings */
-  settings: Maybe<Settings>;
+  settings: Maybe<TypeSettings>;
   /** Returns a complete list of the slider items */
-  sliderItems: Array<SliderItem>;
+  sliderItems: Array<TypeSliderItem>;
   /** Returns entity by slug */
-  slug: Maybe<Slug>;
+  slug: Maybe<TypeSlug>;
   /** Returns store filtered using UUID or URL slug */
-  store: Maybe<Store>;
+  store: Maybe<TypeStore>;
   /** Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords */
-  stores: StoreConnection;
+  stores: TypeStoreConnection;
   /** Returns Terms and Conditions article */
-  termsAndConditionsArticle: Maybe<ArticleSite>;
+  termsAndConditionsArticle: Maybe<TypeArticleSite>;
   /** Returns complete list of transport methods */
-  transport: Maybe<Transport>;
+  transport: Maybe<TypeTransport>;
   /** Returns available transport methods based on the current cart state */
-  transports: Array<Transport>;
+  transports: Array<TypeTransport>;
 };
 
 
-export type QueryGoPaySwiftsArgs = {
+export type TypeQueryGoPaySwiftsArgs = {
   currencyCode: Scalars['String']['input'];
 };
 
 
-export type QueryAccessPersonalDataArgs = {
+export type TypeQueryAccessPersonalDataArgs = {
   hash: Scalars['String']['input'];
 };
 
 
-export type QueryAdvertsArgs = {
+export type TypeQueryAdvertsArgs = {
   categoryUuid: InputMaybe<Scalars['Uuid']['input']>;
   positionName: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryArticleArgs = {
+export type TypeQueryArticleArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryArticlesArgs = {
+export type TypeQueryArticlesArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  placement?: InputMaybe<Array<ArticlePlacementTypeEnum>>;
+  placement?: InputMaybe<Array<TypeArticlePlacementTypeEnum>>;
 };
 
 
-export type QueryArticlesSearchArgs = {
-  searchInput: SearchInput;
+export type TypeQueryArticlesSearchArgs = {
+  searchInput: TypeSearchInput;
 };
 
 
-export type QueryBlogArticleArgs = {
+export type TypeQueryBlogArticleArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryBlogArticlesArgs = {
+export type TypeQueryBlogArticlesArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
@@ -2232,84 +2232,84 @@ export type QueryBlogArticlesArgs = {
 };
 
 
-export type QueryBlogCategoryArgs = {
+export type TypeQueryBlogCategoryArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryBrandArgs = {
+export type TypeQueryBrandArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryBrandSearchArgs = {
-  searchInput: SearchInput;
+export type TypeQueryBrandSearchArgs = {
+  searchInput: TypeSearchInput;
 };
 
 
-export type QueryCartArgs = {
-  cartInput: InputMaybe<CartInput>;
+export type TypeQueryCartArgs = {
+  cartInput: InputMaybe<TypeCartInput>;
 };
 
 
-export type QueryCategoriesSearchArgs = {
+export type TypeQueryCategoriesSearchArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  searchInput: SearchInput;
+  searchInput: TypeSearchInput;
 };
 
 
-export type QueryCategoryArgs = {
-  filter: InputMaybe<ProductFilter>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+export type TypeQueryCategoryArgs = {
+  filter: InputMaybe<TypeProductFilter>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryFlagArgs = {
+export type TypeQueryFlagArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryIsCustomerUserRegisteredArgs = {
+export type TypeQueryIsCustomerUserRegisteredArgs = {
   email: Scalars['String']['input'];
 };
 
 
-export type QueryOrderArgs = {
+export type TypeQueryOrderArgs = {
   orderNumber: InputMaybe<Scalars['String']['input']>;
   urlHash: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryOrderPaymentFailedContentArgs = {
+export type TypeQueryOrderPaymentFailedContentArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
 
-export type QueryOrderPaymentSuccessfulContentArgs = {
+export type TypeQueryOrderPaymentSuccessfulContentArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
 
-export type QueryOrderPaymentsArgs = {
+export type TypeQueryOrderPaymentsArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
 
-export type QueryOrderSentPageContentArgs = {
+export type TypeQueryOrderSentPageContentArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
 
-export type QueryOrdersArgs = {
+export type TypeQueryOrdersArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
@@ -2317,74 +2317,74 @@ export type QueryOrdersArgs = {
 };
 
 
-export type QueryPaymentArgs = {
+export type TypeQueryPaymentArgs = {
   uuid: Scalars['Uuid']['input'];
 };
 
 
-export type QueryProductArgs = {
+export type TypeQueryProductArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryProductListArgs = {
-  input: ProductListInput;
+export type TypeQueryProductListArgs = {
+  input: TypeProductListInput;
 };
 
 
-export type QueryProductListsByTypeArgs = {
-  productListType: ProductListTypeEnum;
+export type TypeQueryProductListsByTypeArgs = {
+  productListType: TypeProductListTypeEnum;
 };
 
 
-export type QueryProductsArgs = {
+export type TypeQueryProductsArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   brandSlug: InputMaybe<Scalars['String']['input']>;
   categorySlug: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<ProductFilter>;
+  filter: InputMaybe<TypeProductFilter>;
   first: InputMaybe<Scalars['Int']['input']>;
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
 };
 
 
-export type QueryProductsByCatnumsArgs = {
+export type TypeQueryProductsByCatnumsArgs = {
   catnums: Array<Scalars['String']['input']>;
 };
 
 
-export type QueryProductsSearchArgs = {
+export type TypeQueryProductsSearchArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<ProductFilter>;
+  filter: InputMaybe<TypeProductFilter>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  orderingMode: InputMaybe<ProductOrderingModeEnum>;
+  orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
   search: InputMaybe<Scalars['String']['input']>;
-  searchInput: SearchInput;
+  searchInput: TypeSearchInput;
 };
 
 
-export type QuerySeoPageArgs = {
+export type TypeQuerySeoPageArgs = {
   pageSlug: Scalars['String']['input'];
 };
 
 
-export type QuerySlugArgs = {
+export type TypeQuerySlugArgs = {
   slug: Scalars['String']['input'];
 };
 
 
-export type QueryStoreArgs = {
+export type TypeQueryStoreArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 
-export type QueryStoresArgs = {
+export type TypeQueryStoresArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
@@ -2392,16 +2392,16 @@ export type QueryStoresArgs = {
 };
 
 
-export type QueryTransportArgs = {
+export type TypeQueryTransportArgs = {
   uuid: Scalars['Uuid']['input'];
 };
 
 
-export type QueryTransportsArgs = {
+export type TypeQueryTransportsArgs = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-export type RecoverPasswordInput = {
+export type TypeRecoverPasswordInput = {
   /** Customer user email. */
   email: Scalars['String']['input'];
   /** Hash */
@@ -2410,13 +2410,13 @@ export type RecoverPasswordInput = {
   newPassword: Scalars['Password']['input'];
 };
 
-export type RefreshTokenInput = {
+export type TypeRefreshTokenInput = {
   /** The refresh token. */
   refreshToken: Scalars['String']['input'];
 };
 
 /** Represents the main input object to register customer user */
-export type RegistrationDataInput = {
+export type TypeRegistrationDataInput = {
   /** Uuid of the cart that should be merged to the cart of the newly registered user */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Billing address city name (will be on the tax invoice) */
@@ -2454,16 +2454,16 @@ export type RegistrationDataInput = {
 };
 
 /** Represents an currently logged customer user */
-export type RegularCustomerUser = CustomerUser & {
+export type TypeRegularCustomerUser = TypeCustomerUser & {
   __typename?: 'RegularCustomerUser';
   /** Billing address city name */
   city: Scalars['String']['output'];
   /** Billing address country */
-  country: Country;
+  country: TypeCountry;
   /** Default customer delivery addresses */
-  defaultDeliveryAddress: Maybe<DeliveryAddress>;
+  defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
   /** List of delivery addresses */
-  deliveryAddresses: Array<DeliveryAddress>;
+  deliveryAddresses: Array<TypeDeliveryAddress>;
   /** Email address */
   email: Scalars['String']['output'];
   /** First name */
@@ -2485,39 +2485,39 @@ export type RegularCustomerUser = CustomerUser & {
 };
 
 /** Represents a product */
-export type RegularProduct = Breadcrumb & Hreflang & Product & Slug & {
+export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'RegularProduct';
-  accessories: Array<Product>;
-  availability: Availability;
+  accessories: Array<TypeProduct>;
+  availability: TypeAvailability;
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int']['output'];
   /** Brand of product */
-  brand: Maybe<Brand>;
+  brand: Maybe<TypeBrand>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Product catalog number */
   catalogNumber: Scalars['String']['output'];
   /** List of categories */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
   /** List of flags */
-  flags: Array<Flag>;
+  flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Localized product name (domain dependent) */
   name: Scalars['String']['output'];
   /** Name prefix */
@@ -2525,14 +2525,14 @@ export type RegularProduct = Breadcrumb & Hreflang & Product & Slug & {
   /** Name suffix */
   nameSuffix: Maybe<Scalars['String']['output']>;
   orderingPriority: Scalars['Int']['output'];
-  parameters: Array<Parameter>;
+  parameters: Array<TypeParameter>;
   /** Product part number */
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
-  price: ProductPrice;
-  productVideos: Array<VideoToken>;
+  price: TypeProductPrice;
+  productVideos: Array<TypeVideoToken>;
   /** List of related products */
-  relatedProducts: Array<Product>;
+  relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -2546,8 +2546,8 @@ export type RegularProduct = Breadcrumb & Hreflang & Product & Slug & {
   /** Count of quantity on stock */
   stockQuantity: Scalars['Int']['output'];
   /** List of availabilities in individual stores */
-  storeAvailabilities: Array<StoreAvailability>;
-  unit: Unit;
+  storeAvailabilities: Array<TypeStoreAvailability>;
+  unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
   /** UUID */
@@ -2556,24 +2556,24 @@ export type RegularProduct = Breadcrumb & Hreflang & Product & Slug & {
 
 
 /** Represents a product */
-export type RegularProductImagesArgs = {
+export type TypeRegularProductImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a product */
-export type RegularProductMainImageArgs = {
+export type TypeRegularProductMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type RemoveFromCartInput = {
+export type TypeRemoveFromCartInput = {
   /** Cart item UUID */
   cartItemUuid: Scalars['Uuid']['input'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-export type RemovePromoCodeFromCartInput = {
+export type TypeRemovePromoCodeFromCartInput = {
   /** Cart identifier or null if customer is logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Promo code to be removed */
@@ -2581,7 +2581,7 @@ export type RemovePromoCodeFromCartInput = {
 };
 
 /** Represents search input object */
-export type SearchInput = {
+export type TypeSearchInput = {
   isAutocomplete: Scalars['Boolean']['input'];
   search: Scalars['String']['input'];
   /** Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/) */
@@ -2589,18 +2589,18 @@ export type SearchInput = {
 };
 
 /** Represents SEO settings for specific page */
-export type SeoPage = Hreflang & {
+export type TypeSeoPage = TypeHreflang & {
   __typename?: 'SeoPage';
   /** Page's canonical link */
   canonicalUrl: Maybe<Scalars['String']['output']>;
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Description for meta tag */
   metaDescription: Maybe<Scalars['String']['output']>;
   /** Description for og:description meta tag */
   ogDescription: Maybe<Scalars['String']['output']>;
   /** Image for og image meta tag by params */
-  ogImage: Maybe<Image>;
+  ogImage: Maybe<TypeImage>;
   /** Title for og:title meta tag */
   ogTitle: Maybe<Scalars['String']['output']>;
   /** Document's title that is shown in a browser's title */
@@ -2608,7 +2608,7 @@ export type SeoPage = Hreflang & {
 };
 
 /** Represents setting of SEO */
-export type SeoSetting = {
+export type TypeSeoSetting = {
   __typename?: 'SeoSetting';
   /** Description of the content of a web page */
   metaDescription: Scalars['String']['output'];
@@ -2621,7 +2621,7 @@ export type SeoSetting = {
 };
 
 /** Represents settings of the current domain */
-export type Settings = {
+export type TypeSettings = {
   __typename?: 'Settings';
   /** Main text for contact form */
   contactFormMainText: Scalars['String']['output'];
@@ -2630,12 +2630,12 @@ export type Settings = {
   /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
   maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
-  pricing: PricingSetting;
+  pricing: TypePricingSetting;
   /** Settings related to SEO */
-  seo: SeoSetting;
+  seo: TypeSeoSetting;
 };
 
-export type SliderItem = {
+export type TypeSliderItem = {
   __typename?: 'SliderItem';
   /** Text below slider */
   extendedText: Maybe<Scalars['String']['output']>;
@@ -2646,11 +2646,11 @@ export type SliderItem = {
   /** GTM ID */
   gtmId: Scalars['String']['output'];
   /** Slider item images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Target link */
   link: Scalars['String']['output'];
   /** Slider item image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Slider name */
   name: Scalars['String']['output'];
   /** UUID */
@@ -2658,36 +2658,36 @@ export type SliderItem = {
 };
 
 
-export type SliderItemImagesArgs = {
+export type TypeSliderItemImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type SliderItemMainImageArgs = {
+export type TypeSliderItemMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents entity retrievable by slug */
-export type Slug = {
+export type TypeSlug = {
   name: Maybe<Scalars['String']['output']>;
   slug: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
 
-export type Store = Breadcrumb & Slug & {
+export type TypeStore = TypeBreadcrumb & TypeSlug & {
   __typename?: 'Store';
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Store address city */
   city: Scalars['String']['output'];
   contactInfo: Maybe<Scalars['String']['output']>;
   /** Store address country */
-  country: Country;
+  country: TypeCountry;
   /** Store description */
   description: Maybe<Scalars['String']['output']>;
   /** Store images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Is set as default store */
   isDefault: Scalars['Boolean']['output'];
   /** Store location latitude */
@@ -2697,7 +2697,7 @@ export type Store = Breadcrumb & Slug & {
   /** Store name */
   name: Scalars['String']['output'];
   /** Store opening hours */
-  openingHours: OpeningHours;
+  openingHours: TypeOpeningHours;
   /** Store address postcode */
   postcode: Scalars['String']['output'];
   /** Store URL slug */
@@ -2710,106 +2710,106 @@ export type Store = Breadcrumb & Slug & {
 };
 
 
-export type StoreImagesArgs = {
+export type TypeStoreImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents an availability in an individual store */
-export type StoreAvailability = {
+export type TypeStoreAvailability = {
   __typename?: 'StoreAvailability';
   /** Detailed information about availability */
   availabilityInformation: Scalars['String']['output'];
   /** Availability status in a format suitable for usage in the code */
-  availabilityStatus: AvailabilityStatusEnum;
+  availabilityStatus: TypeAvailabilityStatusEnum;
   /** Store */
-  store: Maybe<Store>;
+  store: Maybe<TypeStore>;
 };
 
 /** A connection to a list of items. */
-export type StoreConnection = {
+export type TypeStoreConnection = {
   __typename?: 'StoreConnection';
   /** Information to aid in pagination. */
-  edges: Maybe<Array<Maybe<StoreEdge>>>;
+  edges: Maybe<Array<Maybe<TypeStoreEdge>>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
+  pageInfo: TypePageInfo;
   /** Total number of stores */
   totalCount: Scalars['Int']['output'];
 };
 
 /** An edge in a connection. */
-export type StoreEdge = {
+export type TypeStoreEdge = {
   __typename?: 'StoreEdge';
   /** A cursor for use in pagination. */
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
-  node: Maybe<Store>;
+  node: Maybe<TypeStore>;
 };
 
-export type Token = {
+export type TypeToken = {
   __typename?: 'Token';
   accessToken: Scalars['String']['output'];
   refreshToken: Scalars['String']['output'];
 };
 
 /** Represents a transport */
-export type Transport = {
+export type TypeTransport = {
   __typename?: 'Transport';
   /** Number of days until goods are delivered */
   daysUntilDelivery: Scalars['Int']['output'];
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
   /** Transport images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   /** Localized transport instruction (domain dependent) */
   instruction: Maybe<Scalars['String']['output']>;
   /** Pointer telling if the transport is of type personal pickup */
   isPersonalPickup: Scalars['Boolean']['output'];
   /** Transport image by params */
-  mainImage: Maybe<Image>;
+  mainImage: Maybe<TypeImage>;
   /** Transport name */
   name: Scalars['String']['output'];
   /** List of assigned payments */
-  payments: Array<Payment>;
+  payments: Array<TypePayment>;
   /** Transport position */
   position: Scalars['Int']['output'];
   /** Transport price */
-  price: Price;
+  price: TypePrice;
   /** Stores available for personal pickup */
-  stores: Maybe<StoreConnection>;
+  stores: Maybe<TypeStoreConnection>;
   /** Type of transport */
-  transportType: TransportType;
+  transportType: TypeTransportType;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
 
 
 /** Represents a transport */
-export type TransportImagesArgs = {
+export type TypeTransportImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a transport */
-export type TransportMainImageArgs = {
+export type TypeTransportMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a transport */
-export type TransportPriceArgs = {
+export type TypeTransportPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represents a transport in order */
-export type TransportInput = {
+export type TypeTransportInput = {
   /** Price for transport */
-  price: PriceInput;
+  price: TypePriceInput;
   /** UUID */
   uuid: Scalars['Uuid']['input'];
 };
 
 /** Represents a transport type */
-export type TransportType = {
+export type TypeTransportType = {
   __typename?: 'TransportType';
   /** Code of transport */
   code: Scalars['String']['output'];
@@ -2818,47 +2818,47 @@ export type TransportType = {
 };
 
 /** Represents a unit */
-export type Unit = {
+export type TypeUnit = {
   __typename?: 'Unit';
   /** Localized unit name (domain dependent) */
   name: Scalars['String']['output'];
 };
 
 /** Represents a product */
-export type Variant = Breadcrumb & Hreflang & Product & Slug & {
+export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'Variant';
-  accessories: Array<Product>;
-  availability: Availability;
+  accessories: Array<TypeProduct>;
+  availability: TypeAvailability;
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int']['output'];
   /** Brand of product */
-  brand: Maybe<Brand>;
+  brand: Maybe<TypeBrand>;
   /** Hierarchy of the current element in relation to the structure */
-  breadcrumb: Array<Link>;
+  breadcrumb: Array<TypeLink>;
   /** Product catalog number */
   catalogNumber: Scalars['String']['output'];
   /** List of categories */
-  categories: Array<Category>;
+  categories: Array<TypeCategory>;
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
   /** List of flags */
-  flags: Array<Flag>;
+  flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
   /** Alternate links for hreflang meta tags */
-  hreflangLinks: Array<HreflangLink>;
+  hreflangLinks: Array<TypeHreflangLink>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
-  images: Array<Image>;
+  images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
-  mainImage: Maybe<Image>;
-  mainVariant: Maybe<MainVariant>;
+  mainImage: Maybe<TypeImage>;
+  mainVariant: Maybe<TypeMainVariant>;
   /** Localized product name (domain dependent) */
   name: Scalars['String']['output'];
   /** Name prefix */
@@ -2866,14 +2866,14 @@ export type Variant = Breadcrumb & Hreflang & Product & Slug & {
   /** Name suffix */
   nameSuffix: Maybe<Scalars['String']['output']>;
   orderingPriority: Scalars['Int']['output'];
-  parameters: Array<Parameter>;
+  parameters: Array<TypeParameter>;
   /** Product part number */
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
-  price: ProductPrice;
-  productVideos: Array<VideoToken>;
+  price: TypeProductPrice;
+  productVideos: Array<TypeVideoToken>;
   /** List of related products */
-  relatedProducts: Array<Product>;
+  relatedProducts: Array<TypeProduct>;
   /** Seo first level heading of product */
   seoH1: Maybe<Scalars['String']['output']>;
   /** Seo meta description of product */
@@ -2887,8 +2887,8 @@ export type Variant = Breadcrumb & Hreflang & Product & Slug & {
   /** Count of quantity on stock */
   stockQuantity: Scalars['Int']['output'];
   /** List of availabilities in individual stores */
-  storeAvailabilities: Array<StoreAvailability>;
-  unit: Unit;
+  storeAvailabilities: Array<TypeStoreAvailability>;
+  unit: TypeUnit;
   /** List of product's unique selling propositions */
   usps: Array<Scalars['String']['output']>;
   /** UUID */
@@ -2897,17 +2897,17 @@ export type Variant = Breadcrumb & Hreflang & Product & Slug & {
 
 
 /** Represents a product */
-export type VariantImagesArgs = {
+export type TypeVariantImagesArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** Represents a product */
-export type VariantMainImageArgs = {
+export type TypeVariantMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type VideoToken = {
+export type TypeVideoToken = {
   __typename?: 'VideoToken';
   description: Scalars['String']['output'];
   token: Scalars['String']['output'];

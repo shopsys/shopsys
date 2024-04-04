@@ -1,6 +1,6 @@
 import {
-    RobotsTxtQuery,
-    RobotsTxtQueryVariables,
+    TypeRobotsTxtQuery,
+    TypeRobotsTxtQueryVariables,
     RobotsTxtQueryDocument,
 } from 'graphql/requests/robotsTxt/RobotsTxtQuery.generated';
 import { createClient } from 'urql/createClient';
@@ -26,7 +26,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, t, s
     });
 
     const robotsTxtResponse = await client
-        .query<RobotsTxtQuery, RobotsTxtQueryVariables>(RobotsTxtQueryDocument, {})
+        .query<TypeRobotsTxtQuery, TypeRobotsTxtQueryVariables>(RobotsTxtQueryDocument, {})
         .toPromise();
 
     const res = context.res;

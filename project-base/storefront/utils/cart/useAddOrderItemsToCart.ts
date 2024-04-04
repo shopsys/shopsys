@@ -1,6 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useAddOrderItemsToCartMutation } from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
-import { AddOrderItemsToCartInput } from 'graphql/types';
+import { TypeAddOrderItemsToCartInput } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -27,7 +27,7 @@ export const useAddOrderItemsToCart = (): {
     const { t } = useTranslation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
-    const handleAddingItemsToCart = async (input: AddOrderItemsToCartInput) => {
+    const handleAddingItemsToCart = async (input: TypeAddOrderItemsToCartInput) => {
         const response = await addOrderItemsToCart({ input });
         setOrderForPrefillingUuid(undefined);
 

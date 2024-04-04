@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type OrderSentPageContentQueryVariables = Types.Exact<{
+export type TypeOrderSentPageContentQueryVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type OrderSentPageContentQuery = { __typename?: 'Query', orderSentPageContent: string };
+export type TypeOrderSentPageContentQuery = { __typename?: 'Query', orderSentPageContent: string };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const OrderSentPageContentQueryDocument = gql`
 }
     `;
 
-export function useOrderSentPageContentQuery(options: Omit<Urql.UseQueryArgs<OrderSentPageContentQueryVariables>, 'query'>) {
-  return Urql.useQuery<OrderSentPageContentQuery, OrderSentPageContentQueryVariables>({ query: OrderSentPageContentQueryDocument, ...options });
+export function useOrderSentPageContentQuery(options: Omit<Urql.UseQueryArgs<TypeOrderSentPageContentQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrderSentPageContentQuery, TypeOrderSentPageContentQueryVariables>({ query: OrderSentPageContentQueryDocument, ...options });
 };

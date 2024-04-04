@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import {
@@ -36,7 +36,7 @@ vi.mock('store/useSessionStore', () => ({
         return selector({
             defaultProductFiltersMap: {
                 flags: new Set(),
-                sort: ProductOrderingModeEnum.Priority,
+                sort: TypeProductOrderingModeEnum.Priority,
                 parameters: new Map(),
             },
             originalCategorySlug: null,
@@ -160,7 +160,7 @@ describe('useUpdateFilter().updateFilterBrands tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnum.PriceAsc,
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
@@ -202,7 +202,7 @@ describe('useUpdateFilter().updateFilterBrands tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnum.PriceAsc,
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
@@ -233,7 +233,7 @@ describe('useUpdateFilter().updateFilterBrands tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
@@ -253,7 +253,7 @@ describe('useUpdateFilter().updateFilterBrands tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             {

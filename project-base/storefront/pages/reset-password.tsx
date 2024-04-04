@@ -1,7 +1,7 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ResetPasswordContent } from 'components/Pages/ResetPassword/ResetPasswordContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -14,7 +14,7 @@ const ResetPasswordPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Forgotten password'), slug: resetPasswordUrl },
     ];
 

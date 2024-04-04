@@ -2,7 +2,7 @@ import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
-    AutocompleteSearchQuery,
+    TypeAutocompleteSearchQuery,
     useAutocompleteSearchQuery,
 } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/utils/pageViewEvents/useGtmAutocompleteResultsViewEvent';
@@ -28,7 +28,7 @@ export const AutocompleteSearch: FC = () => {
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
     const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
-    const [searchData, setSearchData] = useState<AutocompleteSearchQuery>();
+    const [searchData, setSearchData] = useState<TypeAutocompleteSearchQuery>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
     const userIdentifier = usePersistStore((store) => store.userId)!;

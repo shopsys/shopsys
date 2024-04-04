@@ -566,3 +566,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   large hook files were split, so update your imports and do the same to any other hook files you might have
 -   `useQueryParams` hook was split into separate files, so update your code and imports
 -   `hooks` and `helpers` folders were unified under a new `utils` name, so update your imports and move your files there
+
+#### codegen types and values differentiation ([#3085](https://github.com/shopsys/shopsys/pull/3085))
+
+-   all codegen-generated GQL types now have a `Type` prefix (suffix did not work as expected)
+-   you should update all your imports and make sure to apply the new config
+-   you should also regenerate your codegen-generated files to make sure your own files apply the new config

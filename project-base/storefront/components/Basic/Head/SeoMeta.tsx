@@ -1,5 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { HreflangLink } from 'graphql/types';
+import { TypeHreflangLink } from 'graphql/types';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ type SeoMetaProps = {
     defaultTitle?: string | null;
     defaultDescription?: string | null;
     canonicalQueryParams?: CanonicalQueryParameters;
-    defaultHreflangLinks?: HreflangLink[];
+    defaultHreflangLinks?: TypeHreflangLink[];
 };
 
 export const SeoMeta: FC<SeoMetaProps> = ({

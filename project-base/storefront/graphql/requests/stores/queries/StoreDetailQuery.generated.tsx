@@ -4,12 +4,12 @@ import gql from 'graphql-tag';
 import { StoreDetailFragment } from '../fragments/StoreDetailFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type StoreDetailQueryVariables = Types.Exact<{
+export type TypeStoreDetailQueryVariables = Types.Exact<{
   urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type StoreDetailQuery = { __typename?: 'Query', store: { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { __typename?: 'OpeningHours', isOpen: boolean, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> } | null };
+export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { __typename?: 'OpeningHours', isOpen: boolean, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> } | null };
 
 
       export interface PossibleTypesResultData {
@@ -104,6 +104,6 @@ export const StoreDetailQueryDocument = gql`
 }
     ${StoreDetailFragment}`;
 
-export function useStoreDetailQuery(options?: Omit<Urql.UseQueryArgs<StoreDetailQueryVariables>, 'query'>) {
-  return Urql.useQuery<StoreDetailQuery, StoreDetailQueryVariables>({ query: StoreDetailQueryDocument, ...options });
+export function useStoreDetailQuery(options?: Omit<Urql.UseQueryArgs<TypeStoreDetailQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeStoreDetailQuery, TypeStoreDetailQueryVariables>({ query: StoreDetailQueryDocument, ...options });
 };

@@ -4,12 +4,12 @@ import gql from 'graphql-tag';
 import { ArticleDetailFragment } from '../../articlesInterface/articles/fragments/ArticleDetailFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type ArticleDetailQueryVariables = Types.Exact<{
+export type TypeArticleDetailQueryVariables = Types.Exact<{
   urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type ArticleDetailQuery = { __typename?: 'Query', article: { __typename?: 'ArticleLink' } | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: any, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> } | null };
+export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typename?: 'ArticleLink' } | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: any, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> } | null };
 
 
       export interface PossibleTypesResultData {
@@ -104,6 +104,6 @@ export const ArticleDetailQueryDocument = gql`
 }
     ${ArticleDetailFragment}`;
 
-export function useArticleDetailQuery(options?: Omit<Urql.UseQueryArgs<ArticleDetailQueryVariables>, 'query'>) {
-  return Urql.useQuery<ArticleDetailQuery, ArticleDetailQueryVariables>({ query: ArticleDetailQueryDocument, ...options });
+export function useArticleDetailQuery(options?: Omit<Urql.UseQueryArgs<TypeArticleDetailQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeArticleDetailQuery, TypeArticleDetailQueryVariables>({ query: ArticleDetailQueryDocument, ...options });
 };

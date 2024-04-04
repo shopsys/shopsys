@@ -1,5 +1,5 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
@@ -19,7 +19,7 @@ export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inE
     window.Packeta.Widget.pick(apiKey, callback, opts, inElement);
 };
 
-export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): ListedStoreFragment => ({
+export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): TypeListedStoreFragment => ({
     __typename: 'Store',
     slug: '',
     locationLatitude: null,

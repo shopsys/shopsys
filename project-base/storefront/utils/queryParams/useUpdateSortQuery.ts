@@ -1,7 +1,7 @@
 import { pushQueries } from './pushQueries';
 import { useCurrentFilterQuery } from './useCurrentFilterQuery';
 import { SEO_SENSITIVE_FILTERS, DEFAULT_SORT } from 'config/constants';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { UrlQueries } from 'types/urlQueries';
@@ -23,7 +23,7 @@ export const useUpdateSortQuery = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
     const redirectFromSeoCategory = useRedirectFromSeoCategory();
 
-    const updateSortQuery = (sorting: ProductOrderingModeEnum) => {
+    const updateSortQuery = (sorting: TypeProductOrderingModeEnum) => {
         if (SEO_SENSITIVE_FILTERS.SORT && originalCategorySlug) {
             redirectFromSeoCategory(() => {
                 const newQuery = buildNewQueryAfterFilterChange(
@@ -41,7 +41,7 @@ export const useUpdateSortQuery = () => {
         pushQuerySort(sorting);
     };
 
-    const pushQuerySort = (sorting: ProductOrderingModeEnum) => {
+    const pushQuerySort = (sorting: TypeProductOrderingModeEnum) => {
         const newQuery: UrlQueries = {
             ...query,
             [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,

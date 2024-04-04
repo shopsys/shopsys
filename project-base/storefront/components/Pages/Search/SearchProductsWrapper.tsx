@@ -1,7 +1,7 @@
 import { ResultProducts } from './ResultProducts';
 import { useSearchProductsData } from './utils';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { ListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
+import { TypeListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject } from 'react';
@@ -9,7 +9,7 @@ import { getMappedProducts } from 'utils/mappers/products';
 
 type SearchProductsWrapperProps = {
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
-    productsSearch: ListedProductConnectionPreviewFragment;
+    productsSearch: TypeListedProductConnectionPreviewFragment;
 };
 
 export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({

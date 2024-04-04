@@ -1,8 +1,8 @@
-import { SimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
 
-type ProductFlagsProps = { flags: SimpleFlagFragment[] };
+type ProductFlagsProps = { flags: TypeSimpleFlagFragment[] };
 
 export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
     if (!flags.length) {

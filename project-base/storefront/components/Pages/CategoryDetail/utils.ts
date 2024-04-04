@@ -1,8 +1,8 @@
-import { CategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useCategoryDetailQuery } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
-import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { ListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { TypeListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
@@ -21,7 +21,7 @@ import { getFilterWithoutSeoSensitiveFilters } from 'utils/seoCategories/getFilt
 
 export const useCategoryDetailData = (
     filter: FilterOptionsUrlQueryType | null,
-): { categoryData: CategoryDetailFragment | null | undefined; isFetchingVisible: boolean } => {
+): { categoryData: TypeCategoryDetailFragment | null | undefined; isFetchingVisible: boolean } => {
     const router = useRouter();
     const urlSlug = getSlugFromUrl(router.asPath);
     const currentSort = useCurrentSortQuery();
@@ -80,7 +80,7 @@ const handleSeoCategorySlugUpdate = (
     originalCategorySlug: string | undefined | null,
     categorySlug: string | undefined,
     currentFilter: FilterOptionsUrlQueryType | null,
-    currentSort: ProductOrderingModeEnum | null,
+    currentSort: TypeProductOrderingModeEnum | null,
     setWasRedirectedToSeoCategory: (value: boolean) => void,
     setOriginalCategorySlug: (value: string | undefined) => void,
 ) => {
@@ -103,7 +103,9 @@ const handleSeoCategorySlugUpdate = (
     setOriginalCategorySlug(originalCategorySlug ?? undefined);
 };
 
-export const useHandleDefaultFiltersUpdate = (productsPreview: ListedProductConnectionPreviewFragment | undefined) => {
+export const useHandleDefaultFiltersUpdate = (
+    productsPreview: TypeListedProductConnectionPreviewFragment | undefined,
+) => {
     const setDefaultProductFiltersMap = useSessionStore((s) => s.setDefaultProductFiltersMap);
 
     useEffect(() => {
@@ -117,8 +119,8 @@ export const useHandleDefaultFiltersUpdate = (productsPreview: ListedProductConn
 };
 
 const getDefaultFilterFromFilterOptions = (
-    productFilterOptions: ProductFilterOptionsFragment | undefined,
-    defaultOrderingMode: ProductOrderingModeEnum | null | undefined,
+    productFilterOptions: TypeProductFilterOptionsFragment | undefined,
+    defaultOrderingMode: TypeProductOrderingModeEnum | null | undefined,
 ): DefaultProductFiltersMapType => {
     const defaultProductFiltersMap = getEmptyDefaultProductFiltersMap();
 

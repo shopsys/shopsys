@@ -2,7 +2,7 @@ import * as Types from '../../../../types';
 
 import gql from 'graphql-tag';
 import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.generated';
-export type ArticleDetailFragment = { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: any, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> };
+export type TypeArticleDetailFragment = { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: any, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> };
 
 
       export interface PossibleTypesResultData {

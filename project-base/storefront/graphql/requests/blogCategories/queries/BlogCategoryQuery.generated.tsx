@@ -4,12 +4,12 @@ import gql from 'graphql-tag';
 import { BlogCategoryDetailFragment } from '../fragments/BlogCategoryDetailFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type BlogCategoryQueryVariables = Types.Exact<{
+export type TypeBlogCategoryQueryVariables = Types.Exact<{
   urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type BlogCategoryQuery = { __typename?: 'Query', blogCategory: { __typename: 'BlogCategory', uuid: string, name: string, seoTitle: string | null, seoMetaDescription: string | null, articlesTotalCount: number, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }>, blogCategoriesTree: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }> } | null };
+export type TypeBlogCategoryQuery = { __typename?: 'Query', blogCategory: { __typename: 'BlogCategory', uuid: string, name: string, seoTitle: string | null, seoMetaDescription: string | null, articlesTotalCount: number, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }>, blogCategoriesTree: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }> } | null };
 
 
       export interface PossibleTypesResultData {
@@ -104,6 +104,6 @@ export const BlogCategoryQueryDocument = gql`
 }
     ${BlogCategoryDetailFragment}`;
 
-export function useBlogCategoryQuery(options?: Omit<Urql.UseQueryArgs<BlogCategoryQueryVariables>, 'query'>) {
-  return Urql.useQuery<BlogCategoryQuery, BlogCategoryQueryVariables>({ query: BlogCategoryQueryDocument, ...options });
+export function useBlogCategoryQuery(options?: Omit<Urql.UseQueryArgs<TypeBlogCategoryQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables>({ query: BlogCategoryQueryDocument, ...options });
 };

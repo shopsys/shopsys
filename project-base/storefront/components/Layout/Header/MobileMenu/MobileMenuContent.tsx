@@ -3,7 +3,7 @@ import { SubMenu } from './MobileMenuSubItems';
 import { mapNavigationMenuItems } from './utils';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
-import { NavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
@@ -15,7 +15,7 @@ export type MenuItem = {
 };
 
 type MobileMenuContentProps = {
-    navigationItems: NavigationQuery['navigation'];
+    navigationItems: TypeNavigationQuery['navigation'];
     onMenuToggleHandler: () => void;
 };
 

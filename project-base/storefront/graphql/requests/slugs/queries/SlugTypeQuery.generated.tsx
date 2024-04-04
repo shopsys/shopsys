@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type SlugTypeQueryVariables = Types.Exact<{
+export type TypeSlugTypeQueryVariables = Types.Exact<{
   slug: Types.Scalars['String']['input'];
 }>;
 
 
-export type SlugTypeQuery = { __typename?: 'Query', slug: { __typename: 'ArticleSite' } | { __typename: 'BlogArticle' } | { __typename: 'BlogCategory' } | { __typename: 'Brand' } | { __typename: 'Category' } | { __typename: 'Flag' } | { __typename: 'MainVariant' } | { __typename: 'RegularProduct' } | { __typename: 'Store' } | { __typename: 'Variant' } | null };
+export type TypeSlugTypeQuery = { __typename?: 'Query', slug: { __typename: 'ArticleSite' } | { __typename: 'BlogArticle' } | { __typename: 'BlogCategory' } | { __typename: 'Brand' } | { __typename: 'Category' } | { __typename: 'Flag' } | { __typename: 'MainVariant' } | { __typename: 'RegularProduct' } | { __typename: 'Store' } | { __typename: 'Variant' } | null };
 
 
       export interface PossibleTypesResultData {
@@ -103,6 +103,6 @@ export const SlugTypeQueryDocument = gql`
 }
     `;
 
-export function useSlugTypeQuery(options: Omit<Urql.UseQueryArgs<SlugTypeQueryVariables>, 'query'>) {
-  return Urql.useQuery<SlugTypeQuery, SlugTypeQueryVariables>({ query: SlugTypeQueryDocument, ...options });
+export function useSlugTypeQuery(options: Omit<Urql.UseQueryArgs<TypeSlugTypeQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeSlugTypeQuery, TypeSlugTypeQueryVariables>({ query: SlugTypeQueryDocument, ...options });
 };

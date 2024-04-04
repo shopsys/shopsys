@@ -2,11 +2,11 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { ListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
 
 type BlogArticlesListProps = {
-    blogArticles: ListedBlogArticleFragment[];
+    blogArticles: TypeListedBlogArticleFragment[];
 };
 
 export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) => {

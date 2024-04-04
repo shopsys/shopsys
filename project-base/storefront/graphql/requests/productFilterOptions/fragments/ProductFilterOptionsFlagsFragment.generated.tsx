@@ -2,7 +2,7 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.generated';
-export type ProductFilterOptionsFlagsFragment = { __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } };
+export type TypeProductFilterOptionsFlagsFragment = { __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } };
 
 
       export interface PossibleTypesResultData {

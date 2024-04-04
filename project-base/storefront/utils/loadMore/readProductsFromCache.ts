@@ -1,24 +1,24 @@
 import { DocumentNode } from 'graphql';
-import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
-import { BrandProductsQuery } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
-import { CategoryProductsQuery } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { FlagProductsQuery } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
-import { ProductOrderingModeEnum, Maybe, ProductFilter } from 'graphql/types';
+import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import { TypeBrandProductsQuery } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
+import { TypeCategoryProductsQuery } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
+import { TypeFlagProductsQuery } from 'graphql/requests/products/queries/FlagProductsQuery.generated';
+import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
 import { Client } from 'urql';
 
 export const readProductsFromCache = (
     queryDocument: DocumentNode,
     client: Client,
     urlSlug: string,
-    orderingMode: ProductOrderingModeEnum | null,
-    filter: Maybe<ProductFilter>,
+    orderingMode: TypeProductOrderingModeEnum | null,
+    filter: Maybe<TypeProductFilter>,
     endCursor: string,
     pageSize: number,
 ): {
-    products: ListedProductConnectionFragment['edges'] | undefined;
+    products: TypeListedProductConnectionFragment['edges'] | undefined;
     hasNextPage: boolean;
 } => {
-    const dataFromCache = client.readQuery<CategoryProductsQuery | BrandProductsQuery | FlagProductsQuery>(
+    const dataFromCache = client.readQuery<TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery>(
         queryDocument,
         {
             urlSlug,

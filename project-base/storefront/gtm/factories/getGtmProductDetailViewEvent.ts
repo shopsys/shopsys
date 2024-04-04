@@ -1,11 +1,11 @@
-import { MainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { ProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmProductDetailType } from 'gtm/mappers/mapGtmProductDetailType';
 import { GtmProductDetailViewEventType } from 'gtm/types/events';
 
 export const getGtmProductDetailViewEvent = (
-    product: ProductDetailFragment | MainVariantDetailFragment,
+    product: TypeProductDetailFragment | TypeMainVariantDetailFragment,
     currencyCodeCode: string,
     domainUrl: string,
 ): GtmProductDetailViewEventType => ({

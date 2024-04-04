@@ -1,7 +1,7 @@
-import { ProductFilter } from 'graphql/types';
+import { TypeProductFilter } from 'graphql/types';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 
-export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType | null): ProductFilter | null => {
+export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType | null): TypeProductFilter | null => {
     if (!parametersFilter || Object.keys(parametersFilter).length === 0) {
         return null;
     }

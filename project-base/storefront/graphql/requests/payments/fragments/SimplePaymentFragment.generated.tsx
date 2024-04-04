@@ -3,7 +3,7 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type SimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };
+export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };
 
 
       export interface PossibleTypesResultData {

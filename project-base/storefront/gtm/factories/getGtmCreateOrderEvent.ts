@@ -1,5 +1,5 @@
-import { CartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
-import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCreateOrderEventOrderPartType, GtmCreateOrderEventType } from 'gtm/types/events';
@@ -25,8 +25,8 @@ export const getGtmCreateOrderEvent = (
 });
 
 export const getGtmCreateOrderEventOrderPart = (
-    cart: CartFragment,
-    payment: SimplePaymentFragment,
+    cart: TypeCartFragment,
+    payment: TypeSimplePaymentFragment,
     promoCode: string | null,
     orderNumber: string,
     reviewConsents: GtmReviewConsentsType,

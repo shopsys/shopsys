@@ -4,14 +4,14 @@ import gql from 'graphql-tag';
 import { TokenFragments } from '../../auth/fragments/TokensFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type RecoverPasswordMutationVariables = Types.Exact<{
+export type TypeRecoverPasswordMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   hash: Types.Scalars['String']['input'];
   newPassword: Types.Scalars['Password']['input'];
 }>;
 
 
-export type RecoverPasswordMutation = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -109,5 +109,5 @@ export const RecoverPasswordMutationDocument = gql`
     ${TokenFragments}`;
 
 export function useRecoverPasswordMutation() {
-  return Urql.useMutation<RecoverPasswordMutation, RecoverPasswordMutationVariables>(RecoverPasswordMutationDocument);
+  return Urql.useMutation<TypeRecoverPasswordMutation, TypeRecoverPasswordMutationVariables>(RecoverPasswordMutationDocument);
 };

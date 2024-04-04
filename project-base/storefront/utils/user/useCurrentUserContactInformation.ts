@@ -1,5 +1,5 @@
 import {
-    CurrentCustomerUserQuery,
+    TypeCurrentCustomerUserQuery,
     useCurrentCustomerUserQuery,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -72,7 +72,7 @@ const assertCountries = (contactInformation: ContactInformation, countriesAsSele
 };
 
 const mapCurrentCustomerContactInformationApiData = (
-    apiCurrentCustomerUserData: CurrentCustomerUserQuery['currentCustomerUser'] | undefined,
+    apiCurrentCustomerUserData: TypeCurrentCustomerUserQuery['currentCustomerUser'] | undefined,
 ): Partial<ContactInformation> | null => {
     if (!apiCurrentCustomerUserData) {
         return null;

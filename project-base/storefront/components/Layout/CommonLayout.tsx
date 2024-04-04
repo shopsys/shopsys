@@ -8,8 +8,8 @@ import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { HreflangLink } from 'graphql/types';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeHreflangLink } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
@@ -17,10 +17,10 @@ import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 type CommonLayoutProps = {
     title?: string | null;
     description?: string | null;
-    breadcrumbs?: BreadcrumbFragment[];
+    breadcrumbs?: TypeBreadcrumbFragment[];
     breadcrumbsType?: FriendlyPagesTypesKey;
     canonicalQueryParams?: CanonicalQueryParameters;
-    hreflangLinks?: HreflangLink[];
+    hreflangLinks?: TypeHreflangLink[];
     isFetchingData?: boolean;
 };
 

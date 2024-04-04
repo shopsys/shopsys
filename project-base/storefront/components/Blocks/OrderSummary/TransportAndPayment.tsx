@@ -5,16 +5,16 @@ import {
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
-import { SimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
-import { PriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import { TransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
+import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TransportAndPaymentProps = {
-    transport: TransportWithAvailablePaymentsAndStoresFragment | null;
-    payment: SimplePaymentFragment | null;
-    roundingPrice: PriceFragment | null;
+    transport: TypeTransportWithAvailablePaymentsAndStoresFragment | null;
+    payment: TypeSimplePaymentFragment | null;
+    roundingPrice: TypePriceFragment | null;
 };
 
 export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, transport, roundingPrice }) => {

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type SimpleFlagFragment = { __typename: 'Flag', uuid: string, name: string, rgbColor: string };
+export type TypeSimpleFlagFragment = { __typename: 'Flag', uuid: string, name: string, rgbColor: string };
 
 
       export interface PossibleTypesResultData {

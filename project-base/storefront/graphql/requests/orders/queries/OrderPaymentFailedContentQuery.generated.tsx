@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type OrderPaymentFailedContentQueryVariables = Types.Exact<{
+export type TypeOrderPaymentFailedContentQueryVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type OrderPaymentFailedContentQuery = { __typename?: 'Query', orderPaymentFailedContent: string };
+export type TypeOrderPaymentFailedContentQuery = { __typename?: 'Query', orderPaymentFailedContent: string };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const OrderPaymentFailedContentQueryDocument = gql`
 }
     `;
 
-export function useOrderPaymentFailedContentQuery(options: Omit<Urql.UseQueryArgs<OrderPaymentFailedContentQueryVariables>, 'query'>) {
-  return Urql.useQuery<OrderPaymentFailedContentQuery, OrderPaymentFailedContentQueryVariables>({ query: OrderPaymentFailedContentQueryDocument, ...options });
+export function useOrderPaymentFailedContentQuery(options: Omit<Urql.UseQueryArgs<TypeOrderPaymentFailedContentQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrderPaymentFailedContentQuery, TypeOrderPaymentFailedContentQueryVariables>({ query: OrderPaymentFailedContentQueryDocument, ...options });
 };

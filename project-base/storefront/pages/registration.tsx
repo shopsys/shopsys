@@ -1,7 +1,7 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { RegistrationContent } from 'components/Pages/Registration/RegistrationContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -14,7 +14,9 @@ const RegistrationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Registration'), slug: registrationUrl }];
+    const breadcrumbs: TypeBreadcrumbFragment[] = [
+        { __typename: 'Link', name: t('Registration'), slug: registrationUrl },
+    ];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);

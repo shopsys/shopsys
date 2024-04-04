@@ -1,12 +1,12 @@
 import { getStringFromUrlQuery } from './getStringFromUrlQuery';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 
 export const getProductListSortFromUrlQuery = (
     sortQuery: string | string[] | undefined,
-): ProductOrderingModeEnum | null => {
+): TypeProductOrderingModeEnum | null => {
     const sortQueryAsString = getStringFromUrlQuery(sortQuery);
 
-    return Object.values(ProductOrderingModeEnum).some((sort) => sort === sortQueryAsString)
-        ? (sortQueryAsString as ProductOrderingModeEnum)
+    return Object.values(TypeProductOrderingModeEnum).some((sort) => sort === sortQueryAsString)
+        ? (sortQueryAsString as TypeProductOrderingModeEnum)
         : null;
 };

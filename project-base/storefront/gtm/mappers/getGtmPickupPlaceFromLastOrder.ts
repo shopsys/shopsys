@@ -1,10 +1,10 @@
-import { LastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
-import { ListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TypeLastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 export const getGtmPickupPlaceFromLastOrder = (
     pickupPlaceIdentifier: string,
-    lastOrder: LastOrderFragment,
-): ListedStoreFragment => ({
+    lastOrder: TypeLastOrderFragment,
+): TypeListedStoreFragment => ({
     __typename: 'Store',
     locationLatitude: null,
     locationLongitude: null,

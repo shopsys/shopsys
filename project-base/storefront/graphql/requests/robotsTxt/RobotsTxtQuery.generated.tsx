@@ -3,10 +3,10 @@ import * as Types from '../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type RobotsTxtQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeRobotsTxtQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type RobotsTxtQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', seo: { __typename?: 'SeoSetting', robotsTxtContent: string | null } } | null };
+export type TypeRobotsTxtQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', seo: { __typename?: 'SeoSetting', robotsTxtContent: string | null } } | null };
 
 
       export interface PossibleTypesResultData {
@@ -103,6 +103,6 @@ export const RobotsTxtQueryDocument = gql`
 }
     `;
 
-export function useRobotsTxtQuery(options?: Omit<Urql.UseQueryArgs<RobotsTxtQueryVariables>, 'query'>) {
-  return Urql.useQuery<RobotsTxtQuery, RobotsTxtQueryVariables>({ query: RobotsTxtQueryDocument, ...options });
+export function useRobotsTxtQuery(options?: Omit<Urql.UseQueryArgs<TypeRobotsTxtQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeRobotsTxtQuery, TypeRobotsTxtQueryVariables>({ query: RobotsTxtQueryDocument, ...options });
 };

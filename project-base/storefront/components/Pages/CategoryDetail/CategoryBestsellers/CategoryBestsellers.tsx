@@ -1,6 +1,6 @@
 import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 import { Button } from 'components/Forms/Button/Button';
-import { ListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import useTranslation from 'next-translate/useTranslation';
@@ -9,7 +9,7 @@ import { useState } from 'react';
 const NUMBER_OF_VISIBLE_ITEMS = 3;
 
 type CategoryBestsellersProps = {
-    products: ListedProductFragment[];
+    products: TypeListedProductFragment[];
 };
 
 export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) => {

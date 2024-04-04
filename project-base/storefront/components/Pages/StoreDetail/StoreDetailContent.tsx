@@ -6,7 +6,7 @@ import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { StoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
+import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ const ModalGallery = dynamic(() =>
 );
 
 type StoreDetailContentProps = {
-    store: StoreDetailFragment;
+    store: TypeStoreDetailFragment;
 };
 
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {

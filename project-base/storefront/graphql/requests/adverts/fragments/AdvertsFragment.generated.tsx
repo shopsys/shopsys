@@ -3,11 +3,11 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { SimpleCategoryFragment } from '../../categories/fragments/SimpleCategoryFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type AdvertsFragment_AdvertCode_ = { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };
+export type TypeAdvertsFragment_AdvertCode_ = { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };
 
-export type AdvertsFragment_AdvertImage_ = { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, mainImageMobile: { __typename: 'Image', name: string | null, url: string } | null, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };
+export type TypeAdvertsFragment_AdvertImage_ = { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, mainImageMobile: { __typename: 'Image', name: string | null, url: string } | null, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };
 
-export type AdvertsFragment = AdvertsFragment_AdvertCode_ | AdvertsFragment_AdvertImage_;
+export type TypeAdvertsFragment = TypeAdvertsFragment_AdvertCode_ | TypeAdvertsFragment_AdvertImage_;
 
 
       export interface PossibleTypesResultData {

@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import {
@@ -32,7 +32,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
     },
 }));
 const setWasRedirectedFromSeoCategoryMock = vi.fn();
-const mockDefaultSort = vi.fn(() => ProductOrderingModeEnum.Priority);
+const mockDefaultSort = vi.fn(() => TypeProductOrderingModeEnum.Priority);
 vi.mock('config/constants', async (importOriginal) => {
     const actualConstantsModule = await importOriginal<any>();
 
@@ -72,7 +72,7 @@ vi.mock('store/useSessionStore', () => ({
 
 describe('useUpdateSort() tests', () => {
     test('sort should not be updated if updating with the default sort', () => {
-        useUpdateSortQuery()(ProductOrderingModeEnum.Priority);
+        useUpdateSortQuery()(TypeProductOrderingModeEnum.Priority);
 
         expect(mockPush).toBeCalledWith(
             { pathname: CATEGORY_PATHNAME, query: { categorySlug: CATEGORY_URL } },
@@ -85,20 +85,20 @@ describe('useUpdateSort() tests', () => {
     });
 
     test('sort should be updated if updating with new sort', () => {
-        useUpdateSortQuery()(ProductOrderingModeEnum.PriceAsc);
+        useUpdateSortQuery()(TypeProductOrderingModeEnum.PriceAsc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             { shallow: true },
@@ -109,7 +109,7 @@ describe('useUpdateSort() tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnum.PriceAsc,
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
@@ -119,7 +119,7 @@ describe('useUpdateSort() tests', () => {
             });
         });
 
-        useUpdateSortQuery()(ProductOrderingModeEnum.PriceDesc);
+        useUpdateSortQuery()(TypeProductOrderingModeEnum.PriceDesc);
 
         expect(mockPush).toBeCalledWith(
             {
@@ -140,7 +140,7 @@ describe('useUpdateSort() tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -160,7 +160,7 @@ describe('useUpdateSort() tests', () => {
                             },
                         ],
                     }),
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -178,7 +178,7 @@ describe('useUpdateSort() tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnum.PriceAsc,
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
@@ -186,20 +186,20 @@ describe('useUpdateSort() tests', () => {
             });
         });
 
-        useUpdateSortQuery()(ProductOrderingModeEnum.PriceDesc);
+        useUpdateSortQuery()(TypeProductOrderingModeEnum.PriceDesc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -219,20 +219,20 @@ describe('useUpdateSort() tests', () => {
             },
         }));
 
-        useUpdateSortQuery()(ProductOrderingModeEnum.PriceAsc);
+        useUpdateSortQuery()(TypeProductOrderingModeEnum.PriceAsc);
 
         expect(mockPush).toBeCalledWith(
             {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             { shallow: true },

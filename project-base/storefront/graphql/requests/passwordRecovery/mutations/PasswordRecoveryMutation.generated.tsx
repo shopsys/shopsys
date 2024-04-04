@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type PasswordRecoveryMutationVariables = Types.Exact<{
+export type TypePasswordRecoveryMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
 }>;
 
 
-export type PasswordRecoveryMutation = { __typename?: 'Mutation', RequestPasswordRecovery: string };
+export type TypePasswordRecoveryMutation = { __typename?: 'Mutation', RequestPasswordRecovery: string };
 
 
       export interface PossibleTypesResultData {
@@ -102,5 +102,5 @@ export const PasswordRecoveryMutationDocument = gql`
     `;
 
 export function usePasswordRecoveryMutation() {
-  return Urql.useMutation<PasswordRecoveryMutation, PasswordRecoveryMutationVariables>(PasswordRecoveryMutationDocument);
+  return Urql.useMutation<TypePasswordRecoveryMutation, TypePasswordRecoveryMutationVariables>(PasswordRecoveryMutationDocument);
 };

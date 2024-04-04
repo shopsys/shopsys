@@ -1,4 +1,4 @@
-import { CartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
@@ -7,7 +7,7 @@ import { GtmCartInfoType } from 'gtm/types/objects';
 
 export const getGtmChangeCartItemEvent = (
     event: GtmEventType.add_to_cart | GtmEventType.remove_from_cart,
-    cartItem: CartItemFragment,
+    cartItem: TypeCartItemFragment,
     listIndex: number | undefined,
     quantity: number,
     currencyCodeCode: string,

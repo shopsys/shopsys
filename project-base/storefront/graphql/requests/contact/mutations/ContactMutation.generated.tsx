@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type ContactMutationVariables = Types.Exact<{
-  input: Types.ContactInput;
+export type TypeContactMutationVariables = Types.Exact<{
+  input: Types.TypeContactInput;
 }>;
 
 
-export type ContactMutation = { __typename?: 'Mutation', Contact: boolean };
+export type TypeContactMutation = { __typename?: 'Mutation', Contact: boolean };
 
 
       export interface PossibleTypesResultData {
@@ -102,5 +102,5 @@ export const ContactMutationDocument = gql`
     `;
 
 export function useContactMutation() {
-  return Urql.useMutation<ContactMutation, ContactMutationVariables>(ContactMutationDocument);
+  return Urql.useMutation<TypeContactMutation, TypeContactMutationVariables>(ContactMutationDocument);
 };

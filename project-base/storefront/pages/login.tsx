@@ -1,9 +1,9 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { BreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
-    CurrentCustomerUserQuery,
+    TypeCurrentCustomerUserQuery,
     CurrentCustomerUserQueryDocument,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -19,7 +19,7 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], url);
-    const breadcrumbs: BreadcrumbFragment[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];
+    const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
@@ -47,7 +47,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 ssrExchange,
             });
 
-            const customerQueryResult = client.readQuery<CurrentCustomerUserQuery>(
+            const customerQueryResult = client.readQuery<TypeCurrentCustomerUserQuery>(
                 CurrentCustomerUserQueryDocument,
                 {},
             );

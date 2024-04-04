@@ -4,13 +4,13 @@ import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailCont
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     useBrandDetailQuery,
-    BrandDetailQuery,
-    BrandDetailQueryVariables,
+    TypeBrandDetailQuery,
+    TypeBrandDetailQueryVariables,
     BrandDetailQueryDocument,
 } from 'graphql/requests/brands/queries/BrandDetailQuery.generated';
 import {
-    BrandProductsQuery,
-    BrandProductsQueryVariables,
+    TypeBrandProductsQuery,
+    TypeBrandProductsQueryVariables,
     BrandProductsQueryDocument,
 } from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
@@ -99,7 +99,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
                 const brandDetailResponsePromise = client!
-                    .query<BrandDetailQuery, BrandDetailQueryVariables>(BrandDetailQueryDocument, {
+                    .query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
                         urlSlug,
                         orderingMode,
                         filter,
@@ -107,7 +107,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     .toPromise();
 
                 const brandProductsResponsePromise = client!
-                    .query<BrandProductsQuery, BrandProductsQueryVariables>(BrandProductsQueryDocument, {
+                    .query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
                         endCursor: getEndCursor(page),
                         orderingMode,
                         filter,

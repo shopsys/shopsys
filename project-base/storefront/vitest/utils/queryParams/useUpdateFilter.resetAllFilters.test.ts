@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import {
@@ -21,7 +21,7 @@ const GET_DEFAULT_SEO_CATEGORY_PARAMETERS = () =>
 const GET_DEFAULT_SEO_CATEGORY_FLAGS = () => new Set(['default-flag-1', 'default-flag-2']);
 const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brand-1', 'default-brand-2']);
 
-const mockDefaultSort = vi.fn(() => ProductOrderingModeEnum.Priority);
+const mockDefaultSort = vi.fn(() => TypeProductOrderingModeEnum.Priority);
 const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
     SORT: true,
     AVAILABILITY: false,
@@ -94,7 +94,7 @@ describe('useQueryParams().resetAllFilters tests', () => {
                         },
                     ],
                 }),
-                [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 [PAGE_QUERY_PARAMETER_NAME]: '2',
                 [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
             },
@@ -107,13 +107,13 @@ describe('useQueryParams().resetAllFilters tests', () => {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
                 pathname: CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceDesc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceDesc,
                 },
             },
             {
@@ -126,7 +126,7 @@ describe('useQueryParams().resetAllFilters tests', () => {
         (useSessionStore as unknown as Mock).mockImplementation((selector) => {
             return selector({
                 defaultProductFiltersMap: {
-                    sort: ProductOrderingModeEnum.PriceAsc,
+                    sort: TypeProductOrderingModeEnum.PriceAsc,
                     flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
@@ -157,13 +157,13 @@ describe('useQueryParams().resetAllFilters tests', () => {
                 pathname: CATEGORY_PATHNAME,
                 query: {
                     categorySlug: ORIGINAL_CATEGORY_URL,
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
-                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnum.PriceAsc,
+                    [SORT_QUERY_PARAMETER_NAME]: TypeProductOrderingModeEnum.PriceAsc,
                 },
             },
             {

@@ -3,10 +3,10 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TermsAndConditionsArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeTermsAndConditionsArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TermsAndConditionsArticleUrlQuery = { __typename?: 'Query', termsAndConditionsArticle: { __typename?: 'ArticleSite', slug: string } | null };
+export type TypeTermsAndConditionsArticleUrlQuery = { __typename?: 'Query', termsAndConditionsArticle: { __typename?: 'ArticleSite', slug: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -101,6 +101,6 @@ export const TermsAndConditionsArticleUrlQueryDocument = gql`
 }
     `;
 
-export function useTermsAndConditionsArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<TermsAndConditionsArticleUrlQueryVariables>, 'query'>) {
-  return Urql.useQuery<TermsAndConditionsArticleUrlQuery, TermsAndConditionsArticleUrlQueryVariables>({ query: TermsAndConditionsArticleUrlQueryDocument, ...options });
+export function useTermsAndConditionsArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<TypeTermsAndConditionsArticleUrlQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeTermsAndConditionsArticleUrlQuery, TypeTermsAndConditionsArticleUrlQueryVariables>({ query: TermsAndConditionsArticleUrlQueryDocument, ...options });
 };

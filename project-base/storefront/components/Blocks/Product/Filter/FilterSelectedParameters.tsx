@@ -1,7 +1,7 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
-import { ProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';
@@ -11,7 +11,7 @@ import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterSelectedParametersProps = {
-    filterOptions: ProductFilterOptionsFragment;
+    filterOptions: TypeProductFilterOptionsFragment;
 };
 
 export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ filterOptions }) => {
@@ -190,7 +190,7 @@ const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick }) => (
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,
-    flagFilterOptions: ProductFilterOptionsFragment['flags'],
+    flagFilterOptions: TypeProductFilterOptionsFragment['flags'],
     flagsCheckedByUser: string[] = [],
 ) => {
     const checkedFlagsSet = new Set([...flagsCheckedByUser, ...Array.from(defaultProductFiltersMap.flags)]);

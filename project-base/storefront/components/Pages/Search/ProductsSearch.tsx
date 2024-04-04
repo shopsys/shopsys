@@ -3,8 +3,8 @@ import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { ListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
-import { ProductOrderingModeEnum } from 'graphql/types';
+import { TypeListedProductConnectionPreviewFragment } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
+import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
@@ -14,7 +14,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type ProductsSearchProps = {
-    productsSearch: ListedProductConnectionPreviewFragment;
+    productsSearch: TypeListedProductConnectionPreviewFragment;
 };
 
 export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
@@ -69,9 +69,9 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                     sorting={productsSearch.orderingMode}
                     totalCount={productsSearch.totalCount}
                     customSortOptions={[
-                        ProductOrderingModeEnum.Relevance,
-                        ProductOrderingModeEnum.PriceAsc,
-                        ProductOrderingModeEnum.PriceDesc,
+                        TypeProductOrderingModeEnum.Relevance,
+                        TypeProductOrderingModeEnum.PriceAsc,
+                        TypeProductOrderingModeEnum.PriceDesc,
                     ]}
                 />
 

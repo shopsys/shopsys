@@ -3,11 +3,11 @@ import * as Types from '../../../../types';
 import gql from 'graphql-tag';
 import { SimpleArticleSiteFragment } from './SimpleArticleSiteFragment.generated';
 import { SimpleArticleLinkFragment } from './SimpleArticleLinkFragment.generated';
-export type SimpleNotBlogArticleFragment_ArticleLink_ = { __typename: 'ArticleLink', uuid: string, name: string, url: string, placement: string, external: boolean };
+export type TypeSimpleNotBlogArticleFragment_ArticleLink_ = { __typename: 'ArticleLink', uuid: string, name: string, url: string, placement: string, external: boolean };
 
-export type SimpleNotBlogArticleFragment_ArticleSite_ = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
+export type TypeSimpleNotBlogArticleFragment_ArticleSite_ = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
 
-export type SimpleNotBlogArticleFragment = SimpleNotBlogArticleFragment_ArticleLink_ | SimpleNotBlogArticleFragment_ArticleSite_;
+export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_ArticleLink_ | TypeSimpleNotBlogArticleFragment_ArticleSite_;
 
 
       export interface PossibleTypesResultData {

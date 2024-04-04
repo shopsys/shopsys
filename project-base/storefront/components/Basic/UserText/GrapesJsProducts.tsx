@@ -1,6 +1,6 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
-import { ProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
+import { TypeProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
@@ -8,7 +8,7 @@ import { parseCatnums } from 'utils/parsing/grapesJsParser';
 
 type GrapesJsProps = {
     rawProductPart: string;
-    allFetchedProducts?: ProductsByCatnums | undefined;
+    allFetchedProducts?: TypeProductsByCatnums | undefined;
     fetching: boolean;
 };
 

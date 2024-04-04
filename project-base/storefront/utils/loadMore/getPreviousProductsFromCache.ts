@@ -2,23 +2,23 @@ import { mergeProductEdges } from './mergeProductEdges';
 import { readProductsFromCache } from './readProductsFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DocumentNode } from 'graphql';
-import { ListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
-import { ProductOrderingModeEnum, Maybe, ProductFilter } from 'graphql/types';
+import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
 import { Client } from 'urql';
 
 export const getPreviousProductsFromCache = (
     queryDocument: DocumentNode,
     client: Client,
     urlSlug: string,
-    sort: ProductOrderingModeEnum | null,
-    filter: Maybe<ProductFilter>,
+    sort: TypeProductOrderingModeEnum | null,
+    filter: Maybe<TypeProductFilter>,
     pageSize: number,
     initialPageSize: number,
     currentPage: number,
     currentLoadMore: number,
     readProducts: typeof readProductsFromCache,
-): ListedProductConnectionFragment['edges'] | undefined => {
-    let cachedPartOfProducts: ListedProductConnectionFragment['edges'] | undefined;
+): TypeListedProductConnectionFragment['edges'] | undefined => {
+    let cachedPartOfProducts: TypeListedProductConnectionFragment['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
 
     if (initialPageSize !== pageSize) {
