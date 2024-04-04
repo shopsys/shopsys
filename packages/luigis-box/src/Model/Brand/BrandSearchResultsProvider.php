@@ -37,7 +37,7 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
         Argument $argument,
     ): Promise|array {
         return $this->luigisBoxBatchLoader->load(
-            $this->luigisBoxBatchLoadDataFactory->create(
+            $this->luigisBoxBatchLoadDataFactory->createForSearch(
                 TypeInLuigisBoxEnum::BRAND,
                 static::SEARCH_LIMIT,
                 0,

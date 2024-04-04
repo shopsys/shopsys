@@ -30,7 +30,7 @@ class LuigisBoxBatchLoadDataFactory
      * @param array $luigisBoxFilter
      * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
-    public function create(
+    public function createForSearch(
         string $type,
         int $limit,
         int $page,
@@ -48,14 +48,14 @@ class LuigisBoxBatchLoadDataFactory
         $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxEndpointEnum::AUTOCOMPLETE : LuigisBoxEndpointEnum::SEARCH;
         $userIdentifier = $argument['searchInput']['userIdentifier'];
 
-        return new LuigisBoxBatchLoadData(
+        return new LuigisBoxSearchBatchLoadData(
             $type,
+            $endpoint,
+            $userIdentifier,
             $limit,
             $search,
-            $endpoint,
             $page,
             $luigisBoxFilter,
-            $userIdentifier,
             $orderingMode,
             $this->getFacetNamesByType($type),
         );

@@ -4,38 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\LuigisBoxBundle\Model\Batch;
 
-class LuigisBoxBatchLoadData
+abstract class LuigisBoxBatchLoadData
 {
     /**
      * @param string $type
-     * @param int $limit
-     * @param string $query
      * @param string $endpoint
-     * @param int $page
-     * @param array $filter
      * @param string $userIdentifier
-     * @param string|null $orderingMode
-     * @param string[] $facetNames
+     * @param int|null $limit
      */
     public function __construct(
         protected readonly string $type,
-        protected readonly int $limit,
-        protected readonly string $query,
         protected readonly string $endpoint,
-        protected readonly int $page,
-        protected readonly array $filter,
         protected readonly string $userIdentifier,
-        protected readonly ?string $orderingMode = null,
-        protected readonly array $facetNames = [],
+        protected readonly ?int $limit,
     ) {
-    }
-
-    /**
-     * @return string
-     */
-    public function getQuery(): string
-    {
-        return $this->query;
     }
 
     /**
@@ -57,33 +39,9 @@ class LuigisBoxBatchLoadData
     /**
      * @return int
      */
-    public function getPage(): int
-    {
-        return $this->page;
-    }
-
-    /**
-     * @return int
-     */
     public function getLimit(): int
     {
         return $this->limit;
-    }
-
-    /**
-     * @return array
-     */
-    public function getFilter(): array
-    {
-        return $this->filter;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getOrderingMode(): ?string
-    {
-        return $this->orderingMode;
     }
 
     /**
@@ -92,13 +50,5 @@ class LuigisBoxBatchLoadData
     public function getUserIdentifier(): string
     {
         return $this->userIdentifier;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getFacetNames(): array
-    {
-        return $this->facetNames;
     }
 }

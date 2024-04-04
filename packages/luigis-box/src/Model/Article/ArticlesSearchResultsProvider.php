@@ -36,7 +36,7 @@ class ArticlesSearchResultsProvider extends SearchResultsProvider implements Art
         Argument $argument,
     ): Promise|array {
         return $this->luigisBoxBatchLoader->load(
-            $this->luigisBoxBatchLoadDataFactory->create(
+            $this->luigisBoxBatchLoadDataFactory->createForSearch(
                 TypeInLuigisBoxEnum::ARTICLE,
                 ArticlesSearchQuery::ARTICLE_SEARCH_LIMIT,
                 0,
