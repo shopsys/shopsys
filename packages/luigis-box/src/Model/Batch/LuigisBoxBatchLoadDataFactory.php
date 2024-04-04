@@ -8,14 +8,17 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class LuigisBoxBatchLoadDataFactory
 {
     /**
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
+     * @param \Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum $typeInLuigisBoxEnum
      */
     public function __construct(
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
+        protected readonly TypeInLuigisBoxEnum $typeInLuigisBoxEnum,
     ) {
     }
 
@@ -34,6 +37,8 @@ class LuigisBoxBatchLoadDataFactory
         Argument $argument,
         array $luigisBoxFilter = [],
     ): LuigisBoxBatchLoadData {
+        $this->typeInLuigisBoxEnum->validateCase($type);
+
         if ($luigisBoxFilter === []) {
             $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->mapOnlyType($type);
         }
@@ -63,7 +68,7 @@ class LuigisBoxBatchLoadDataFactory
     protected function getFacetNamesByType(string $type): array
     {
         return match ($type) {
-            LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
+            TypeInLuigisBoxEnum::PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
             default => [],
         };
     }

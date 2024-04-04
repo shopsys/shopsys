@@ -8,9 +8,9 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Search\BrandSearchResultsProviderInterface;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class BrandSearchResultsProvider extends SearchResultsProvider implements BrandSearchResultsProviderInterface
 {
@@ -38,7 +38,7 @@ class BrandSearchResultsProvider extends SearchResultsProvider implements BrandS
     ): Promise|array {
         return $this->luigisBoxBatchLoader->load(
             $this->luigisBoxBatchLoadDataFactory->create(
-                LuigisBoxClient::TYPE_IN_LUIGIS_BOX_BRAND,
+                TypeInLuigisBoxEnum::BRAND,
                 static::SEARCH_LIMIT,
                 0,
                 $argument,
