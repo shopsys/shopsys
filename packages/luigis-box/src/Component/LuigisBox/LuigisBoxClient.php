@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxActionNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Symfony\Bridge\Monolog\Logger;
 use Throwable;
@@ -57,26 +58,15 @@ class LuigisBoxClient
     }
 
     /**
-     * @param string $query
-     * @param string $action
-     * @param int $page
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
      * @param array<string, int> $limitsByType
-     * @param array $filter
-     * @param string $userIdentifier
-     * @param string|null $orderingMode
-     * @param string[] $facetNames
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
     public function getData(
-        string $query,
-        string $action,
-        int $page,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
-        array $filter,
-        string $userIdentifier,
-        ?string $orderingMode,
-        array $facetNames = [],
     ): array {
+        $action = $luigisBoxBatchLoadData->getEndpoint();
         $this->checkNecessaryConfigurationIsSet();
         $this->validateActionIsValid($action);
 
@@ -84,14 +74,8 @@ class LuigisBoxClient
             $data = json_decode(
                 file_get_contents(
                     $this->getLuigisBoxApiUrl(
-                        $query,
-                        $action,
-                        $page,
+                        $luigisBoxBatchLoadData,
                         $limitsByType,
-                        $filter,
-                        $userIdentifier,
-                        $orderingMode,
-                        $facetNames,
                     ),
                 ),
                 true,
@@ -103,14 +87,7 @@ class LuigisBoxClient
                 'Luigi\'s Box API request failed.',
                 [
                     'exception' => $e,
-                    'query' => $query,
-                    'action' => $action,
-                    'page' => $page,
-                    'limitsByType' => $limitsByType,
-                    'filter' => $filter,
-                    'userIdentifier' => $userIdentifier,
-                    'orderingMode' => $orderingMode,
-                    'facets' => $facetNames,
+                    'luigisBoxBatchLoadData' => $luigisBoxBatchLoadData,
                 ],
             );
 
@@ -154,60 +131,78 @@ class LuigisBoxClient
     }
 
     /**
-     * @param string $query
-     * @param string $action
-     * @param int $page
-     * @param array $limitsByType
-     * @param array $filter
-     * @param string $userIdentifier
-     * @param string|null $orderingMode
-     * @param string[] $facetNames
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @param array<string, int> $limitsByType
      * @return string
      */
     protected function getLuigisBoxApiUrl(
-        string $query,
-        string $action,
-        int $page,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
         array $limitsByType,
-        array $filter,
-        string $userIdentifier,
-        ?string $orderingMode,
-        array $facetNames = [],
     ): string {
         $url = $this->luigisBoxApiUrl .
-            $action . '/' .
+            $luigisBoxBatchLoadData->getEndpoint() . '/' .
             '?tracker_id=' . $this->getTrackerId() .
-            '&q=' . urlencode($query) .
+            '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
             '&hit_fields=url' .
-            '&user_id=' . $userIdentifier;
+            '&user_id=' . $luigisBoxBatchLoadData->getUserIdentifier();
 
-        if ($action === static::ACTION_SEARCH) {
+        $url = $this->addSearchSpecificParameters($url, $luigisBoxBatchLoadData, $limitsByType);
+
+        return $this->addAutocompleteSpecificParameters($url, $luigisBoxBatchLoadData, $limitsByType);
+    }
+
+    /**
+     * @param string $url
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @param array<string, int> $limitsByType
+     * @return string
+     */
+    protected function addSearchSpecificParameters(
+        string $url,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+        array $limitsByType,
+    ): string {
+        if ($luigisBoxBatchLoadData->getEndpoint() === static::ACTION_SEARCH) {
             $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);
 
             $url .=
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
-                '&from=' . $page;
+                '&from=' . $luigisBoxBatchLoadData->getPage();
             $url .= $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
 
-            if (count($facetNames) > 0) {
-                $url .= '&facets=' . implode(',', $facetNames);
+            if (count($luigisBoxBatchLoadData->getFacetNames()) > 0) {
+                $url .= '&facets=' . implode(',', $luigisBoxBatchLoadData->getFacetNames());
             }
 
-            foreach ($filter as $key => $filterValues) {
+            foreach ($luigisBoxBatchLoadData->getFilter() as $key => $filterValues) {
                 foreach ($filterValues as $filterValue) {
                     $url .= '&' . $key . '[]=' . urlencode($filterValue);
                 }
             }
 
-            $orderingMode = $this->getOrderingMode($orderingMode);
+            $orderingMode = $this->getOrderingMode($luigisBoxBatchLoadData->getOrderingMode());
 
             if ($orderingMode !== null) {
                 $url .= '&sort=' . $orderingMode;
             }
         }
 
-        if ($action === static::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
+        return $url;
+    }
+
+    /**
+     * @param string $url
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
+     * @param array<string, int> $limitsByType
+     * @return string
+     */
+    protected function addAutocompleteSpecificParameters(
+        string $url,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+        array $limitsByType,
+    ): string {
+        if ($luigisBoxBatchLoadData->getEndpoint() === static::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
             $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
 

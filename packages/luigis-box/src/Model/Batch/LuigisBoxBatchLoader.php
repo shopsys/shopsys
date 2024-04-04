@@ -84,14 +84,8 @@ class LuigisBoxBatchLoader
         return $this->promiseAdapter->all(
             $this->mapDataByTypes(
                 $this->luigisBoxClient->getData(
-                    $mainBatchLoadData->getQuery(),
-                    $mainBatchLoadData->getEndpoint(),
-                    $mainBatchLoadData->getPage(),
+                    $mainBatchLoadData,
                     $limitsByType,
-                    $mainBatchLoadData->getFilter(),
-                    $mainBatchLoadData->getUserIdentifier(),
-                    $mainBatchLoadData->getOrderingMode(),
-                    $mainBatchLoadData->getFacetNames(),
                 ),
                 $limitsByType,
                 $mainBatchLoadData->getEndpoint(),
