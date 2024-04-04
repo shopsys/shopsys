@@ -15,4 +15,14 @@ class AbstractEnum
     {
         return ReflectionHelper::getAllPublicClassConstants(static::class);
     }
+
+    /**
+     * @param string $case
+     */
+    public function validateCase(string $case): void
+    {
+        if (!in_array($case, $this->getAllCases(), true)) {
+            throw new InvalidEnumCaseException(static::class, $case);
+        }
+    }
 }

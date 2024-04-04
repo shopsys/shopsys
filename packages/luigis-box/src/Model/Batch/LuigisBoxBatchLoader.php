@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class LuigisBoxBatchLoader
 {
@@ -106,19 +107,19 @@ class LuigisBoxBatchLoader
         foreach ($limitsByType as $type => $limit) {
             $mappedDataOfCurrentType = [];
 
-            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT) {
+            if ($type === TypeInLuigisBoxEnum::PRODUCT) {
                 $mappedDataOfCurrentType = $this->mapProductData($luigisBoxResults[$type], $limit);
             }
 
-            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_CATEGORY) {
+            if ($type === TypeInLuigisBoxEnum::CATEGORY) {
                 $mappedDataOfCurrentType = $this->mapCategoryData($luigisBoxResults[$type]);
             }
 
-            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_ARTICLE) {
+            if ($type === TypeInLuigisBoxEnum::ARTICLE) {
                 $mappedDataOfCurrentType = $this->mapArticleData($luigisBoxResults[$type]);
             }
 
-            if ($type === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_BRAND) {
+            if ($type === TypeInLuigisBoxEnum::BRAND) {
                 $mappedDataOfCurrentType = $this->mapBrandData($luigisBoxResults[$type]);
             }
 
@@ -202,7 +203,7 @@ class LuigisBoxBatchLoader
         }
 
         foreach ($luigisBoxBatchLoadData as $luigisBoxBatchLoadDataItem) {
-            if ($luigisBoxBatchLoadDataItem->getType() === LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT) {
+            if ($luigisBoxBatchLoadDataItem->getType() === TypeInLuigisBoxEnum::PRODUCT) {
                 $this->mainBatchLoadData = $luigisBoxBatchLoadDataItem;
 
                 break;

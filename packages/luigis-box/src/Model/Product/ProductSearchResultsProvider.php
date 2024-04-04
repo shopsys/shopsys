@@ -15,6 +15,7 @@ use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ProductSearchResultsProvider extends SearchResultsProvider implements ProductSearchResultsProviderInterface
 {
@@ -49,13 +50,13 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         ProductFilterData $productFilterData,
     ): Promise {
         $orderingMode = $argument['orderingMode'];
-        $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT, $productFilterData, $this->domain);
+        $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(TypeInLuigisBoxEnum::PRODUCT, $productFilterData, $this->domain);
 
         return $this->productConnectionFactory->createConnectionPromiseForSearch(
             function ($offset, $limit) use ($argument, $luigisBoxFilter) {
                 return $this->luigisBoxBatchLoader->load(
                     $this->luigisBoxBatchLoadDataFactory->create(
-                        LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT,
+                        TypeInLuigisBoxEnum::PRODUCT,
                         $limit,
                         $offset,
                         $argument,

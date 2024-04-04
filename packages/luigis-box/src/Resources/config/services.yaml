@@ -7,7 +7,7 @@ services:
         public: false
 
     Shopsys\LuigisBoxBundle\:
-        resource: '../../**/*{Factory,Loader,Mapper,Provider,Repository}.php'
+        resource: '../../**/*{Enum,Factory,Loader,Mapper,Provider,Repository}.php'
 
     Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient:
         arguments:

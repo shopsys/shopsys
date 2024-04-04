@@ -9,9 +9,9 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProviderInterface;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ArticlesSearchResultsProvider extends SearchResultsProvider implements ArticlesSearchResultsProviderInterface
 {
@@ -37,7 +37,7 @@ class ArticlesSearchResultsProvider extends SearchResultsProvider implements Art
     ): Promise|array {
         return $this->luigisBoxBatchLoader->load(
             $this->luigisBoxBatchLoadDataFactory->create(
-                LuigisBoxClient::TYPE_IN_LUIGIS_BOX_ARTICLE,
+                TypeInLuigisBoxEnum::ARTICLE,
                 ArticlesSearchQuery::ARTICLE_SEARCH_LIMIT,
                 0,
                 $argument,

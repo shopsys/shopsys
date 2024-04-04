@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxActionNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Symfony\Bridge\Monolog\Logger;
 use Throwable;
@@ -20,11 +21,6 @@ class LuigisBoxClient
 {
     public const string ACTION_SEARCH = 'search';
     public const string ACTION_AUTOCOMPLETE = 'autocomplete/v2';
-
-    public const string TYPE_IN_LUIGIS_BOX_ARTICLE = 'article';
-    public const string TYPE_IN_LUIGIS_BOX_BRAND = 'brand';
-    public const string TYPE_IN_LUIGIS_BOX_CATEGORY = 'category';
-    public const string TYPE_IN_LUIGIS_BOX_PRODUCT = 'item';
 
     /**
      * @param string $luigisBoxApiUrl
@@ -250,8 +246,8 @@ class LuigisBoxClient
      */
     protected function getMainType(array $types): string
     {
-        if (in_array(static::TYPE_IN_LUIGIS_BOX_PRODUCT, $types, true)) {
-            return static::TYPE_IN_LUIGIS_BOX_PRODUCT;
+        if (in_array(TypeInLuigisBoxEnum::PRODUCT, $types, true)) {
+            return TypeInLuigisBoxEnum::PRODUCT;
         }
 
         return reset($types);
@@ -326,7 +322,7 @@ class LuigisBoxClient
         }
 
         if ($type === 'product') {
-            return static::TYPE_IN_LUIGIS_BOX_PRODUCT;
+            return TypeInLuigisBoxEnum::PRODUCT;
         }
 
         return $type;
