@@ -48,16 +48,13 @@ class PromoCodeController extends AdminBaseController
      */
     public function listAction(Request $request): Response
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
-
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
         $grid = $this->promoCodeGridFactory->create(search: $quickSearchForm->getData()->text);
         $grid->enablePaging();
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/PromoCode/list.html.twig', [
             'gridView' => $grid->createView(),

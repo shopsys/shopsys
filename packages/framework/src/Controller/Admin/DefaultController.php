@@ -65,8 +65,6 @@ class DefaultController extends AdminBaseController
      */
     public function dashboardAction(): Response
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
         $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat(
             $registeredInLastTwoWeeks,
@@ -79,7 +77,7 @@ class DefaultController extends AdminBaseController
         $newOrdersInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts(
             $newOrdersCountByDayInLastTwoWeeks,
         );
-        $transferIssuesCount = $this->transferIssueFacade->getTransferIssuesCountFrom($administrator->getTransferIssuesLastSeenDateTime());
+        $transferIssuesCount = $this->transferIssueFacade->getTransferIssuesCountFrom($this->getCurrentAdministrator()->getTransferIssuesLastSeenDateTime());
 
         $quickProductSearchData = new QuickSearchFormData();
         $quickProductSearchForm = $this->createForm(QuickSearchFormType::class, $quickProductSearchData, [

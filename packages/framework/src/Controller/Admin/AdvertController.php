@@ -101,9 +101,6 @@ class AdvertController extends AdminBaseController
      */
     public function listAction(): Response
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
-
         $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('a')
             ->from(Advert::class, 'a')
@@ -139,7 +136,7 @@ class AdvertController extends AdminBaseController
             'TYPE_IMAGE' => Advert::TYPE_IMAGE,
         ]);
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/Advert/list.html.twig', [
             'gridView' => $grid->createView(),

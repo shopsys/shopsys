@@ -116,9 +116,6 @@ class CustomerController extends AdminBaseController
      */
     public function listAction(Request $request)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
-
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
@@ -152,7 +149,7 @@ class CustomerController extends AdminBaseController
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Customer/listGrid.html.twig');
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/list.html.twig', [
             'gridView' => $grid->createView(),

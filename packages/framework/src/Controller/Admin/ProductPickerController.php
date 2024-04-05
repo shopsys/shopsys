@@ -89,8 +89,6 @@ class ProductPickerController extends AdminBaseController
      */
     protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
         $quickSearchData = new QuickSearchFormData();
@@ -135,7 +133,7 @@ class ProductPickerController extends AdminBaseController
         $gridViewParameters['VARIANT_TYPE_VARIANT'] = Product::VARIANT_TYPE_VARIANT;
         $grid->setTheme('@ShopsysFramework/Admin/Content/ProductPicker/listGrid.html.twig', $gridViewParameters);
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         $viewParameters['gridView'] = $grid->createView();
         $viewParameters['quickSearchForm'] = $quickSearchForm->createView();

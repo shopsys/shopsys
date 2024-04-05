@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
  * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade)
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class LegalConditionsController extends BaseLegalConditionsController
 {

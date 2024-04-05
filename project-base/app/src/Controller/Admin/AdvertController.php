@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @property \App\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
  * @property \App\Model\Advert\AdvertDataFactory $advertDataFactory
  * @method __construct(\App\Model\Advert\AdvertFacade $advertFacade, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Twig\ImageExtension $imageExtension, \App\Model\Advert\AdvertDataFactory $advertDataFactory, \App\Model\Advert\AdvertPositionRegistry $advertPositionRegistry, \Doctrine\ORM\EntityManagerInterface $entityManager)
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class AdvertController extends BaseAdvertController
 {

@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @method __construct(\Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \App\Model\Product\ProductFacade $productFacade, \App\Model\Product\ProductDataFactory $productDataFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade, \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade, \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade, \Shopsys\FrameworkBundle\Twig\ProductExtension $productExtension, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Product\Unit\UnitFacade $unitFacade, \App\Component\Setting\Setting $setting)
  * @property \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
  * @property \App\Model\Product\Unit\UnitFacade $unitFacade
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class ProductController extends BaseProductController
 {

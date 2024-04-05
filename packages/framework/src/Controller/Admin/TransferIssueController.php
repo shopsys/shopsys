@@ -40,8 +40,7 @@ class TransferIssueController extends AdminBaseController
      */
     public function listAction(Request $request): Response
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
+        $administrator = $this->getCurrentAdministrator();
 
         $this->administratorFacade->setAdministratorTransferIssuesLastSeenDateTime($administrator);
 
