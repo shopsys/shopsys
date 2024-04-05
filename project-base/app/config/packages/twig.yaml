@@ -3,6 +3,8 @@ twig:
     exception_controller: null
     form_themes:
         - '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/blogCategoriesType.html.twig'
+        - '@ShopsysFramework/Admin/Form/blogCategoryCheckboxType.html.twig'
         - '@ShopsysFramework/Admin/Form/colorpickerFields.html.twig'
         - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyCustomer.html.twig'
@@ -27,8 +29,6 @@ twig:
         - '@ShopsysFramework/Admin/Form/warningMessage.html.twig'
         - '@ShopsysFramework/Common/Form/theme.html.twig'
         - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
-        - 'Admin/Form/blogCategoriesType.html.twig'
-        - 'Admin/Form/blogCategoryCheckboxType.html.twig'
         - 'Admin/Form/grapesJsMailType.html.twig'
         - 'Admin/Form/grapesJsType.html.twig'
         - 'Admin/Form/imageuploadFields.html.twig'
