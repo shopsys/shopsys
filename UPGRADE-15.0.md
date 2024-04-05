@@ -572,3 +572,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   all codegen-generated GQL types now have a `Type` prefix (suffix did not work as expected)
 -   you should update all your imports and make sure to apply the new config
 -   you should also regenerate your codegen-generated files to make sure your own files apply the new config
+
+#### Cypress make command fix ([#3090](https://github.com/shopsys/shopsys/pull/3090))

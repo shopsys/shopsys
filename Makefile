@@ -19,9 +19,14 @@ check-schema:
 	docker-compose exec -u root storefront chown node:node schema.graphql
 	docker-compose exec storefront sh check-code-gen.sh
 
-prepare-data-for-acceptance-tests:
+define prepare-data-for-acceptance-tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
 	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
+endef
+
+.PHONY: prepare-data-for-acceptance-tests
+prepare-data-for-acceptance-tests:
+	$(call prepare-data-for-acceptance-tests)
 
 define run_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
