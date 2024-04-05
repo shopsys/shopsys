@@ -346,6 +346,15 @@ msgstr "Vyplňte prosím telefon"
 msgid "Please enter the filename"
 msgstr "Prosím vyplňte název souboru"
 
+msgid "Please enter the positive value."
+msgstr "Vyplňte prosím kladnou hodnotu."
+
+msgid "Please enter the quantity."
+msgstr "Vyplňte prosím množství."
+
+msgid "Please enter the whole number."
+msgstr "Zadejte prosím celé číslo."
+
 msgid "Please enter time"
 msgstr "Zadejte čas, prosím"
 

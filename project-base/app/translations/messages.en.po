@@ -28,22 +28,10 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-msgid "Add another flag"
-msgstr ""
-
-msgid "Add another limit"
-msgstr ""
-
 msgid "Add another parameter"
 msgstr ""
 
 msgid "Add another video"
-msgstr ""
-
-msgid "Add limit"
-msgstr ""
-
-msgid "Add some flag"
 msgstr ""
 
 msgid "Add some parameters"
@@ -148,9 +136,6 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
-msgid "Batch ID"
-msgstr ""
-
 msgid "Bestselling products - full"
 msgstr ""
 
@@ -190,13 +175,7 @@ msgstr ""
 msgid "Brands - view"
 msgstr ""
 
-msgid "Bulk coupons with prefix"
-msgstr ""
-
 msgid "Bulk creation of promo codes"
-msgstr ""
-
-msgid "Bulk promo code generation"
 msgstr ""
 
 msgid "But at other addresses we have a lot for you..."
@@ -268,12 +247,6 @@ msgstr ""
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
-msgid "Code"
-msgstr ""
-
-msgid "Collapse"
-msgstr ""
-
 msgid "Color"
 msgstr ""
 
@@ -334,12 +307,6 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-msgid "Create and download CSV"
-msgstr ""
-
-msgid "Create bulk promo codes"
-msgstr ""
-
 msgid "Create flag"
 msgstr ""
 
@@ -356,9 +323,6 @@ msgid "Create new order status"
 msgstr ""
 
 msgid "Create notification bar"
-msgstr ""
-
-msgid "Create promo code"
 msgstr ""
 
 msgid "Custom"
@@ -392,9 +356,6 @@ msgid "Description"
 msgstr ""
 
 msgid "Disable two factor authentication"
-msgstr ""
-
-msgid "Discount"
 msgstr ""
 
 msgid "Display"
@@ -439,19 +400,10 @@ msgstr ""
 msgid "Do you really want to remove this payment?"
 msgstr ""
 
-msgid "Do you really want to remove this promo code?"
-msgstr ""
-
 msgid "Do you really want to remove this shipping?"
 msgstr ""
 
 msgid "Domain"
-msgstr ""
-
-msgid "Download file"
-msgstr ""
-
-msgid "Duplicate"
 msgstr ""
 
 msgid "E-shop URL address"
@@ -571,9 +523,6 @@ msgstr ""
 msgid "Exclude from sale on whole eshop"
 msgstr ""
 
-msgid "Expand"
-msgstr ""
-
 msgid "Extended SEO categories"
 msgstr ""
 
@@ -659,9 +608,6 @@ msgid "Free transport and payment - view"
 msgstr ""
 
 msgid "Friendly URL \"%slug%\" was removed."
-msgstr ""
-
-msgid "From"
 msgstr ""
 
 msgid "Full name"
@@ -973,9 +919,6 @@ msgstr ""
 msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
-msgid "Number of generated promo codes"
-msgstr ""
-
 msgid "Number of orders"
 msgstr ""
 
@@ -1114,12 +1057,6 @@ msgstr ""
 msgid "Postcode"
 msgstr ""
 
-msgid "Prefix"
-msgstr ""
-
-msgid "Prefix (e.g. \"SPRING_\")"
-msgstr ""
-
 msgid "Price"
 msgstr ""
 
@@ -1180,19 +1117,10 @@ msgstr ""
 msgid "Promo code"
 msgstr ""
 
-msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
-msgstr ""
-
-msgid "Promo code prefix"
-msgstr ""
-
 msgid "Promo codes"
 msgstr ""
 
 msgid "Promo codes - full"
-msgstr ""
-
-msgid "Promo codes - generated batches"
 msgstr ""
 
 msgid "Promo codes - view"
@@ -1276,9 +1204,6 @@ msgstr ""
 msgid "Save changes in order"
 msgstr ""
 
-msgid "Scaled promo code"
-msgstr ""
-
 msgid "Scripts - full"
 msgstr ""
 
@@ -1293,9 +1218,6 @@ msgstr ""
 
 msgid "Search [verb]"
 msgstr "Search"
-
-msgid "Search by code..."
-msgstr ""
 
 msgid "Search by slug..."
 msgstr ""
@@ -1619,8 +1541,5 @@ msgid "relevance"
 msgstr ""
 
 msgid "unknown catalog number (product will not be displayed)"
-msgstr ""
-
-msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr ""
 

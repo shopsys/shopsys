@@ -32,7 +32,7 @@ msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
 
 msgid "-- Select name of the transfer --"
-msgstr "-- Vyber název převodu --"
+msgstr "-- Vyberte název převodu --"
 
 msgid "0"
 msgstr ""
@@ -70,6 +70,12 @@ msgstr "Přidat"
 msgid "Add URL"
 msgstr "Přidat URL"
 
+msgid "Add another flag"
+msgstr "Přidat další příznak"
+
+msgid "Add another limit"
+msgstr "Přidat další limit"
+
 msgid "Add another mail whitelist pattern"
 msgstr "Přidat další předpis e-mailový whitelist"
 
@@ -85,6 +91,9 @@ msgstr "Přidat položku"
 msgid "Add language combination"
 msgstr "Přidat kombinaci jazyků"
 
+msgid "Add limit"
+msgstr "Přidat limit"
+
 msgid "Add opening hours"
 msgstr "Přidat otevírací dobu"
 
@@ -96,6 +105,9 @@ msgstr "Přidat podmínku"
 
 msgid "Add some alternate language combinations"
 msgstr "Přidejte nějaké kombinace alternativních jazyků"
+
+msgid "Add some flag"
+msgstr "Přidejte nějaký příznak"
 
 msgid "Add some mail whitelist patterns"
 msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
@@ -289,6 +301,9 @@ msgstr "Základní měna frontendu %domainName%"
 msgid "Basic information"
 msgstr "Základní informace"
 
+msgid "Batch ID"
+msgstr "ID dávky"
+
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
 
@@ -378,6 +393,9 @@ msgstr "Hromadné úpravy"
 
 msgid "Bulk editing done"
 msgstr "Hromadná úprava byla provedena"
+
+msgid "Bulk promo code generation"
+msgstr "Hromadné generování kupónu"
 
 msgid "CSS documentation"
 msgstr "CSS dokumentace"
@@ -469,6 +487,9 @@ msgstr "Kód"
 msgid "Code of service Heureka - Verified by Customer"
 msgstr "Kód služby Ověřeno zákazníky"
 
+msgid "Collapse"
+msgstr "Sbalit"
+
 msgid "Collapse menu"
 msgstr "Skrýt menu"
 
@@ -555,6 +576,12 @@ msgstr "Vytvořit SEO stránku"
 
 msgid "Create VAT rate"
 msgstr "Vytvořit sazbu DPH"
+
+msgid "Create and download CSV"
+msgstr "Vytvořit a stáhnout CSV"
+
+msgid "Create bulk promo codes"
+msgstr "Vytvořit hromadné slevové kupóny"
 
 msgid "Create currency"
 msgstr "Vytvořit měnu"
@@ -952,11 +979,17 @@ msgstr "Byla upravena doména <strong>{{ name }}</strong>. Nevidíte-li novou ik
 msgid "Domain name"
 msgstr "Název domény"
 
+msgid "Download file"
+msgstr "Stáhnout soubor"
+
 msgid "Drag your file here"
 msgstr "Zde přetáhněte svůj soubor"
 
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
+
+msgid "Duplicate"
+msgstr "Duplikovat"
 
 msgid "Duration (mm:ss)"
 msgstr "Trvání (mm:ss)"
@@ -1240,6 +1273,9 @@ msgstr "Bez DPH"
 msgid "Existing icon"
 msgstr "Současná ikona"
 
+msgid "Expand"
+msgstr "Rozbalit"
+
 msgid "Expected maximum duration"
 msgstr "Očekávané maximální trvání"
 
@@ -1362,6 +1398,9 @@ msgstr "Frekvence"
 
 msgid "Friday"
 msgstr "Pátek"
+
+msgid "From"
+msgstr "Od"
 
 msgid "Frontend"
 msgstr "Frontend"
@@ -1909,6 +1948,9 @@ msgstr "Poznámka"
 msgid "Nothing to choose from."
 msgstr "Není z čeho vybírat."
 
+msgid "Number of generated promo codes"
+msgstr "Počet generovaných kupónů"
+
 msgid "Number of orders"
 msgstr "Počet objednávek"
 
@@ -2147,7 +2189,7 @@ msgid "Personal information overview"
 msgstr "Přehled osobních údajů"
 
 msgid "Personal pickup"
-msgstr ""
+msgstr "Osobní odběr"
 
 msgid "Phone"
 msgstr "Telefon"
@@ -2175,6 +2217,12 @@ msgstr "Rozcestník kategorií"
 
 msgid "Postcode"
 msgstr "PSČ"
+
+msgid "Prefix"
+msgstr "Prefix"
+
+msgid "Prefix (e.g. \"SPRING_\")"
+msgstr "Prefix (např. \"JARO_\")"
 
 msgid "Preview"
 msgstr "Náhled"
@@ -2290,8 +2338,14 @@ msgstr "Byl upraven slevový kupón <strong><a href=\"{{ url }}\">{{ code }}</a>
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr "Slevový kupón <strong>{{ code }}</strong> byl smazán"
 
+msgid "Promo code prefix"
+msgstr "Prefix slevového kupónu"
+
 msgid "Promo codes"
 msgstr "Slevové kupóny"
+
+msgid "Promo codes - generated batches"
+msgstr "Slevoé kupóny - vygenerované dávky"
 
 msgid "Published data"
 msgstr "Zveřejněné údaje"
@@ -2401,6 +2455,9 @@ msgstr "Uložit změny v pořadí"
 msgid "Save warehouse settings"
 msgstr "Uložit nastavení skladu"
 
+msgid "Scaled promo code"
+msgstr "Škálovaný slevový kupón"
+
 msgid "Schedule"
 msgstr "Naplánovat"
 
@@ -2430,6 +2487,9 @@ msgstr "Přehled skriptů"
 
 msgid "Search [verb]"
 msgstr "Vyhledat"
+
+msgid "Search by code..."
+msgstr "Vyhledat podle kódu..."
 
 msgid "Search by name, catalog number, or product part number..."
 msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
@@ -2639,7 +2699,7 @@ msgid "Sorting priority"
 msgstr "Priorita řazení"
 
 msgid "Standard"
-msgstr ""
+msgstr "Standardní"
 
 msgid "Started at"
 msgstr "Začátek"
@@ -2972,7 +3032,7 @@ msgid "Valid from"
 msgstr "Platnost od"
 
 msgid "Valid to"
-msgstr ""
+msgstr "Platnost do"
 
 msgid "Value"
 msgstr "Hodnota"
@@ -3240,4 +3300,7 @@ msgstr "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__str
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
+
+msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
+msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"
 

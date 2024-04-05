@@ -346,6 +346,15 @@ msgstr ""
 msgid "Please enter the filename"
 msgstr ""
 
+msgid "Please enter the positive value."
+msgstr ""
+
+msgid "Please enter the quantity."
+msgstr ""
+
+msgid "Please enter the whole number."
+msgstr ""
+
 msgid "Please enter time"
 msgstr ""
 

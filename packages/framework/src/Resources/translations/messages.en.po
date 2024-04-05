@@ -70,6 +70,12 @@ msgstr ""
 msgid "Add URL"
 msgstr ""
 
+msgid "Add another flag"
+msgstr ""
+
+msgid "Add another limit"
+msgstr ""
+
 msgid "Add another mail whitelist pattern"
 msgstr ""
 
@@ -85,6 +91,9 @@ msgstr ""
 msgid "Add language combination"
 msgstr ""
 
+msgid "Add limit"
+msgstr ""
+
 msgid "Add opening hours"
 msgstr ""
 
@@ -95,6 +104,9 @@ msgid "Add requirement"
 msgstr ""
 
 msgid "Add some alternate language combinations"
+msgstr ""
+
+msgid "Add some flag"
 msgstr ""
 
 msgid "Add some mail whitelist patterns"
@@ -289,6 +301,9 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
+msgid "Batch ID"
+msgstr ""
+
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr ""
 
@@ -367,10 +382,19 @@ msgstr ""
 msgid "Browse files"
 msgstr ""
 
+msgid "Bulk coupons with prefix"
+msgstr ""
+
+msgid "Bulk creation of promo codes"
+msgstr ""
+
 msgid "Bulk edit"
 msgstr ""
 
 msgid "Bulk editing done"
+msgstr ""
+
+msgid "Bulk promo code generation"
 msgstr ""
 
 msgid "CSS documentation"
@@ -463,6 +487,9 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Collapse"
+msgstr ""
+
 msgid "Collapse menu"
 msgstr ""
 
@@ -548,6 +575,12 @@ msgid "Create SEO page"
 msgstr ""
 
 msgid "Create VAT rate"
+msgstr ""
+
+msgid "Create and download CSV"
+msgstr ""
+
+msgid "Create bulk promo codes"
 msgstr ""
 
 msgid "Create currency"
@@ -946,10 +979,16 @@ msgstr ""
 msgid "Domain name"
 msgstr ""
 
+msgid "Download file"
+msgstr ""
+
 msgid "Drag your file here"
 msgstr ""
 
 msgid "Drag your files here"
+msgstr ""
+
+msgid "Duplicate"
 msgstr ""
 
 msgid "Duration (mm:ss)"
@@ -1234,6 +1273,9 @@ msgstr ""
 msgid "Existing icon"
 msgstr ""
 
+msgid "Expand"
+msgstr ""
+
 msgid "Expected maximum duration"
 msgstr ""
 
@@ -1355,6 +1397,9 @@ msgid "Frequency"
 msgstr ""
 
 msgid "Friday"
+msgstr ""
+
+msgid "From"
 msgstr ""
 
 msgid "Frontend"
@@ -1903,6 +1948,9 @@ msgstr ""
 msgid "Nothing to choose from."
 msgstr ""
 
+msgid "Number of generated promo codes"
+msgstr ""
+
 msgid "Number of orders"
 msgstr ""
 
@@ -2170,6 +2218,12 @@ msgstr ""
 msgid "Postcode"
 msgstr ""
 
+msgid "Prefix"
+msgstr ""
+
+msgid "Prefix (e.g. \"SPRING_\")"
+msgstr ""
+
 msgid "Preview"
 msgstr ""
 
@@ -2284,7 +2338,13 @@ msgstr ""
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr ""
 
+msgid "Promo code prefix"
+msgstr ""
+
 msgid "Promo codes"
+msgstr ""
+
+msgid "Promo codes - generated batches"
 msgstr ""
 
 msgid "Published data"
@@ -2395,6 +2455,9 @@ msgstr ""
 msgid "Save warehouse settings"
 msgstr ""
 
+msgid "Scaled promo code"
+msgstr ""
+
 msgid "Schedule"
 msgstr ""
 
@@ -2424,6 +2487,9 @@ msgstr ""
 
 msgid "Search [verb]"
 msgstr "Search"
+
+msgid "Search by code..."
+msgstr ""
 
 msgid "Search by name, catalog number, or product part number..."
 msgstr ""
@@ -3233,5 +3299,8 @@ msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%coun
 msgstr ""
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
+msgstr ""
+
+msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr ""
 

@@ -139,15 +139,6 @@ msgstr "Vyplňte prosím telefonní číslo"
 msgid "Please enter the message"
 msgstr "Vyplňte prosím zprávu"
 
-msgid "Please enter the positive value."
-msgstr "Vyplňte prosím kladnou hodnotu."
-
-msgid "Please enter the quantity."
-msgstr "Vyplňte prosím množství."
-
-msgid "Please enter the whole number."
-msgstr "Zadejte prosím celé číslo."
-
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
 
