@@ -17,10 +17,17 @@ type LinkProps = NativePropsAnchor & {
     size?: 'small';
 };
 
+const linkPlaceholderTwClassSegments = [
+    'inline-flex cursor-pointer items-center text-greyDark outline-none hover:text-primary',
+    'underline hover:underline',
+];
+
+export const linkPlaceholderTwClass = linkPlaceholderTwClassSegments.join(' ');
+
 export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel, target, className }) => {
     const classNameTwClass = twMergeCustom(
-        'inline-flex cursor-pointer items-center text-greyDark outline-none hover:text-primary',
-        isButton ? 'no-underline hover:no-underline' : 'underline hover:underline',
+        linkPlaceholderTwClassSegments[0],
+        isButton ? 'no-underline hover:no-underline' : linkPlaceholderTwClassSegments[1],
     );
 
     const props = {
