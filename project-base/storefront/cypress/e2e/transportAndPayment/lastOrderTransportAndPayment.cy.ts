@@ -38,7 +38,7 @@ describe('Last order transport and payment select tests', () => {
         changeSelectionOfPaymentByName(payment.cash.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');
 
-        cy.reload();
+        cy.reloadAndWaitForStableDOM();
 
         takeSnapshotAndCompare('change-preselected-last-order-transport-and-payment');
 

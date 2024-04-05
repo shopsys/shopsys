@@ -185,11 +185,6 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
         });
 });
 
-Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
-    cy.visit(url);
-    return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
-});
-
 Cypress.Commands.add('logout', () => {
     const currentAppStoreAsString = window.localStorage.getItem('app-store');
     if (!currentAppStoreAsString) {

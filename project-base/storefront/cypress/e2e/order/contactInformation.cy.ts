@@ -80,7 +80,7 @@ describe('Contact information page tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
 
-        cy.reload();
+        cy.reloadAndWaitForStableDOM();
 
         takeSnapshotAndCompare('keep-filled-contact-information-after-reload');
     });
@@ -121,7 +121,7 @@ describe('Contact information page tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
-        cy.reload();
+        cy.reloadAndWaitForStableDOM();
 
         takeSnapshotAndCompare('should-remove-contact-information-after-logout');
         checkThatContactInformationWasRemovedFromLocalStorage();
