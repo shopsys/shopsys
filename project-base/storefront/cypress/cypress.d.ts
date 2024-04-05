@@ -9,6 +9,7 @@ declare global {
             storeCartUuidInLocalStorage(cartUuid: string): Cypress.Chainable<undefined>;
             visitAndWaitForStableDOM(url: string): Cypress.Chainable<JQuery<HTMLElement>>;
             reloadAndWaitForStableDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
+            reloadAndWaitForStableDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
             addProductToCartForTest(productUuid?: string, quantity?: number): Cypress.Chainable<any>;
             preselectTransportForTest(
                 transportUuid: string,

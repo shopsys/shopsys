@@ -36,6 +36,16 @@ Cypress.Commands.add('storeCartUuidInLocalStorage', (cartUuid: string) => {
     });
 });
 
+Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
+    cy.visit(url);
+    return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
+});
+
+Cypress.Commands.add('reloadAndWaitForStableDOM', () => {
+    cy.reload();
+    return cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
+});
+
 compareSnapshotCommand({
     capture: 'fullPage',
 });
