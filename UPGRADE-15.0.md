@@ -596,3 +596,5 @@ components={{
    ),
 }}
 ```
+
+#### fixed incorrect keys in cache exchange config ([#3094](https://github.com/shopsys/shopsys/pull/3094))
