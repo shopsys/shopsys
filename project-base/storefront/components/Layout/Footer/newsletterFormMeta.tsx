@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'components/Basic/Link/Link';
+import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -67,7 +67,7 @@ export const useNewsletterFormMeta = (
                                 lnk1: privacyPolicyArticleUrl ? (
                                     <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                 ) : (
-                                    <span />
+                                    <span className={linkPlaceholderTwClass} />
                                 ),
                             }}
                         />

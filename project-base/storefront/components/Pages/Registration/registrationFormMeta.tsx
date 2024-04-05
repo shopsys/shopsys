@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'components/Basic/Link/Link';
+import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import {
     validateCity,
     validateCompanyNameRequired,
@@ -219,7 +219,7 @@ export const useRegistrationFormMeta = (
                                     privacyPolicyArticleUrl !== undefined ? (
                                         <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                     ) : (
-                                        <span />
+                                        <span className={linkPlaceholderTwClass} />
                                     ),
                             }}
                         />

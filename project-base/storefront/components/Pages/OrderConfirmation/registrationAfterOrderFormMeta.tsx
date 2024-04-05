@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'components/Basic/Link/Link';
+import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { useTermsAndConditionsArticleUrlQuery } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -75,7 +75,7 @@ export const useRegistrationAfterOrderFormMeta = (
                                     termsAndConditionUrl !== undefined ? (
                                         <Link isExternal href={termsAndConditionUrl} target="_blank" />
                                     ) : (
-                                        <span />
+                                        <span className={linkPlaceholderTwClass} />
                                     ),
                             }}
                         />
