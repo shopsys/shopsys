@@ -1,4 +1,4 @@
-import { Link } from 'components/Basic/Link/Link';
+import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -22,7 +22,6 @@ export const ContactInformationSendOrderButton: FC = () => {
     const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQuery();
     const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
     const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
-
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
 
     const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
@@ -38,13 +37,13 @@ export const ContactInformationSendOrderButton: FC = () => {
                             termsAndConditionsArticleUrl !== undefined ? (
                                 <Link isExternal href={termsAndConditionsArticleUrl} target="_blank" />
                             ) : (
-                                <span />
+                                <span className={linkPlaceholderTwClass} />
                             ),
                         lnk2:
                             privacyPolicyArticleUrl !== undefined ? (
                                 <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                             ) : (
-                                <span />
+                                <span className={linkPlaceholderTwClass} />
                             ),
                     }}
                 />

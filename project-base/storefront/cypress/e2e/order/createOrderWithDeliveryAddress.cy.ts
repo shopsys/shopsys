@@ -34,7 +34,7 @@ describe('Create order with delivery address tests', () => {
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
 
-        cy.reload();
+        cy.reloadAndWaitForStableDOM();
 
         takeSnapshotAndCompare('order-with-delivery-address_basic-1');
 
@@ -103,7 +103,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
 
-        cy.reload();
+        cy.reloadAndWaitForStableDOM();
 
         takeSnapshotAndCompare('order-with-delivery-address_logged-in-1');
 
@@ -172,7 +172,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
             clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
             loseFocus();
 
-            cy.reload();
+            cy.reloadAndWaitForStableDOM();
 
             takeSnapshotAndCompare('order-with-delivery-address_logged-in-3');
 
@@ -244,7 +244,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
         clearAndFillDeliveryContactInThirdStep(deliveryAddress);
         loseFocus();
 
-        cy.reload();
+        cy.reloadAndWaitForStableDOM();
 
         takeSnapshotAndCompare('order-with-delivery-address_pickup-point-1');
 
@@ -316,7 +316,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
             clearAndFillDeliveryContactInThirdStep(deliveryAddress);
             loseFocus();
 
-            cy.reload();
+            cy.reloadAndWaitForStableDOM();
 
             takeSnapshotAndCompare('order-with-delivery-address_pickup-point-logged-in-1');
 

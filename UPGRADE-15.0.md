@@ -573,4 +573,26 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   you should update all your imports and make sure to apply the new config
 -   you should also regenerate your codegen-generated files to make sure your own files apply the new config
 
-#### Cypress make command fix ([#3090](https://github.com/shopsys/shopsys/pull/3090))
+#### cypress make command fix ([#3090](https://github.com/shopsys/shopsys/pull/3090))
+
+#### cypress stability fixes ([#3093](https://github.com/shopsys/shopsys/pull/3093))
+
+-   make sure all your links which wait for the `href` to be fetched dynamically use the same styling even before the `href` is available
+    -   you can use the newly provided `linkPlaceholderTwClass` as seen below
+
+```diff
+components={{
+   lnk1: privacyPolicyArticleUrl ? (
+       <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+   ) : (
+-       <span />
+   ),
+}}
+components={{
+   lnk1: privacyPolicyArticleUrl ? (
+       <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+   ) : (
++       <span className={linkPlaceholderTwClass} />
+   ),
+}}
+```

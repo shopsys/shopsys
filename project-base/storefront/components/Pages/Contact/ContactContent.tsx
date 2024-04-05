@@ -1,5 +1,5 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
-import { Link } from 'components/Basic/Link/Link';
+import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -120,7 +120,7 @@ export const ContactContent: FC = () => {
                                             privacyPolicyArticleUrl !== undefined ? (
                                                 <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                             ) : (
-                                                <span />
+                                                <span className={linkPlaceholderTwClass} />
                                             ),
                                     }}
                                 />

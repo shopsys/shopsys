@@ -85,6 +85,7 @@ describe('<Domain Specific Functionality> tests', () => {
 Below are some examples of custom commands. We mention only those, that should be used instead of the default cypress commands.
 
 -   `cy.visitAndWaitForStableDOM` (instead of `cy.visit`): Use this command for visiting pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements.
+-   `cy.reloadAndWaitForStableDOM` (instead of `cy.reload`): Use this command for reloading pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements.
 
 #### How to write a custom cypress command
 
