@@ -451,6 +451,8 @@ class ProductExportRepository extends BaseProductExportRepository
         $parameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
 
         foreach ($parameterValuesData as $key => $parameterValueData) {
+            $parameterValuesData[$key]['parameter_value_for_slider_filter'] = null;
+
             if ($parameterValueData['parameter_type'] === Parameter::PARAMETER_TYPE_SLIDER) {
                 $parameterValuesData[$key]['parameter_value_for_slider_filter'] = (float)$parameterValueData['parameter_value_text'];
             }

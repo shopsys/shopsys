@@ -62,6 +62,8 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
             $filledParameter['parameter_group'] = $parameter['parameter_group'] ?? null;
             $filledParameter['parameter_unit'] = $parameter['parameter_unit'] ?? null;
             $filledParameter['parameter_value_for_slider_filter'] = $parameter['parameter_value_for_slider_filter'] ?? null;
+            $filledParameter['ordering_priority'] = $parameter['ordering_priority'] ?? null;
+            $filledParameter['parameter_type'] = $parameter['parameter_type'] ?? null;
             $results[] = $filledParameter;
         }
 

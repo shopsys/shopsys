@@ -1,13 +1,13 @@
 {
-  "fields": [
-    "name",
-    "licenseType",
-    "author",
-    "homepage",
-    "link"
-  ],
-  "homepage": {
-    "value": "-",
-    "label": "Homepage"
-  }
+    "fields": [
+        "name",
+        "licenseType",
+        "author",
+        "homepage",
+        "link"
+    ],
+    "homepage": {
+        "value": "-",
+        "label": "Homepage"
+    }
 }
