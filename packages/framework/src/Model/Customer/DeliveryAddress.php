@@ -34,32 +34,32 @@ class DeliveryAddress
     protected $companyName;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=100)
      */
     protected $firstName;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=100)
      */
     protected $lastName;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=100)
      */
     protected $street;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=100)
      */
     protected $city;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=30)
      */
     protected $postcode;
 
@@ -70,9 +70,9 @@ class DeliveryAddress
     protected $telephone;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
+     * @var \Shopsys\FrameworkBundle\Model\Country\Country
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
     protected $country;
 
@@ -125,7 +125,7 @@ class DeliveryAddress
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getFirstName()
     {
@@ -133,7 +133,7 @@ class DeliveryAddress
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getLastName()
     {
@@ -141,7 +141,7 @@ class DeliveryAddress
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getStreet()
     {
@@ -149,7 +149,7 @@ class DeliveryAddress
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getCity()
     {
@@ -157,7 +157,7 @@ class DeliveryAddress
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getPostcode()
     {
@@ -173,7 +173,7 @@ class DeliveryAddress
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
+     * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
     public function getCountry()
     {
