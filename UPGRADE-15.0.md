@@ -488,6 +488,17 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `$country`
 -   see #project-base-diff to update your project
 
+#### restrict limit of requests how many can robot ask from eshop ([#2820](https://github.com/shopsys/shopsys/pull/2820))
+
+-   this change adds migration `Version20230919173422` that adds SEO robot limits to your `robots.txt` file. If you do not want to change it in your project, add it as skipped migration to `migrations-lock.yaml`
+-   if you have defined rules for all robots (`User-agent: *`), then you have to manually add these lines to your robots.txt
+    ```diff
+        User-agent: *
+    +   Crawl-delay: 3
+    +   Request-rate: 300/1m
+    ```
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
