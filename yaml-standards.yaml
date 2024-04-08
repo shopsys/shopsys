@@ -1,16 +1,5 @@
 -   pathsToCheck:
-        - ./**/*.{yaml,yml}
-    excludedPaths:
-        - ./docker-compose.yml
-        - ./docker-sync.yml
-        - ./.github/workflows/**/*.{yaml,yml} # yaml standards have problems with multiline definitions in workflows
-        - ./vendor/**/*.{yaml,yml}
-        - ./project-base/app/node_modules/**/*.{yaml,yml}
-        - ./project-base/app/config/domains_urls.yaml
-        - ./project-base/app/config/oauth2/parameters_oauth.yaml.dist
-        - ./project-base/storefront/**/*.{yaml,yml}
-        - ./project-base/storefront/*.{yaml,yml}
-        - ./packages/framework/assets/node_modules/**/*.{yaml,yml}
+        - ./*.{yml,yaml,yml.dist,yaml.dist}
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
@@ -19,3 +8,23 @@
             parameters:
                 { serviceAliasingType: long, indents: 4 }
         -   pathToChecker: YamlStandards\Model\YamlEmptyLineAtEnd\YamlEmptyLineAtEndChecker
+        -   pathToChecker: YamlStandards\Model\YamlAlphabetical\YamlAlphabeticalChecker
+            parameters:
+                depth: 3
+                prioritizedKeys: [ imports, _defaults::exact, Shopsys\FrameworkBundle\::exact, Shopsys\FrameworkBundle\Controller\::exact, Shopsys\Releaser\::exact, Shopsys\MigrationBundle\Command\::exact, Shopsys\FrontendApiBundle\::exact, resolverMaps::exact ]
+    excludedPaths:
+        - ./**/*.types.{yaml,yml}
+        - ./**/docker*
+        - ./**/gitlab*
+        - ./**/migrations-lock.{yaml,yml}
+        - ./**/monolog.{yaml,yml}
+        - ./**/navigation.{yaml,yml}
+        - ./**/routing*.{yaml,yml}
+        - ./docker*
+        - ./packages/framework/assets/node_modules/*
+        - ./project-base/app/config/cron.yaml
+        - ./project-base/app/config/packages/security.yaml
+        - ./project-base/app/node_modules/*
+        - ./project-base/app/var/*
+        - ./project-base/storefront/*
+        - ./vendor/*

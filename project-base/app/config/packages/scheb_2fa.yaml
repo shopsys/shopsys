@@ -1,18 +1,18 @@
 # See the configuration reference at https://github.com/scheb/2fa/blob/master/doc/configuration.md
 scheb_two_factor:
-    security_tokens:
-        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
 
     email:
-        enabled: true
         digits: 6
+        enabled: true
         mailer:
             'App\Model\Administrator\Mail\TwoFactorAuthenticationMailFacade'
         template: 'Admin/Content/Login/LoginFormTwoFA.html.twig'
     google:
-        enabled: true
-        server_name: Shopsys Platform
-        issuer: Shopsys
         digits: 6
-        window: 1
+        enabled: true
+        issuer: Shopsys
+        server_name: Shopsys Platform
         template: 'Admin/Content/Login/LoginFormTwoFA.html.twig'
+        window: 1
+    security_tokens:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken

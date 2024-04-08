@@ -1,7 +1,7 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     # this package is not Symfony package so services are not registered and could not be even auto-registered because they are from different namespace
@@ -9,8 +9,8 @@ services:
         resource: '%shopsys.vendor_dir%/commerceguys/intl/src/NumberFormat/*'
 
     Shopsys\FrameworkBundle\Twig\:
-        resource: '../../Twig/'
         exclude: '../../Twig/{JsFormValidatorTwigExtension.php}'
+        resource: '../../Twig/'
 
     Shopsys\FrameworkBundle\Twig\DomainExtension:
         arguments:

@@ -1,16 +1,22 @@
 parameters:
+    env(S3_ACCESS_KEY): ''
+    env(S3_BUCKET_NAME): ''
     env(S3_ENDPOINT): ''
     env(S3_REGION): ''
-    env(S3_ACCESS_KEY): ''
     env(S3_SECRET): ''
-    env(S3_BUCKET_NAME): ''
     env(S3_VERSION): '2006-03-01'
 
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
+
+    Shopsys\S3Bridge\Component\FilesystemFactoryDecorator:
+        arguments:
+            $inner: '@Shopsys\S3Bridge\Component\FilesystemFactoryDecorator.inner'
+        decorates: Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory
+        decoration_inner_name: Shopsys\S3Bridge\Component\FilesystemFactoryDecorator.inner
 
     Shopsys\S3Bridge\Component\S3Configuration:
         arguments:
@@ -20,9 +26,3 @@ services:
             $secret: '%env(S3_SECRET)%'
             $bucketName: '%env(S3_BUCKET_NAME)%'
             $version: '%env(S3_VERSION)%'
-
-    Shopsys\S3Bridge\Component\FilesystemFactoryDecorator:
-        decorates: Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory
-        decoration_inner_name: Shopsys\S3Bridge\Component\FilesystemFactoryDecorator.inner
-        arguments:
-            $inner: '@Shopsys\S3Bridge\Component\FilesystemFactoryDecorator.inner'

@@ -1,5 +1,4 @@
 fos_ck_editor:
-    default_config: default
     autoload: false
     configs:
         default:
@@ -39,6 +38,7 @@ fos_ck_editor:
                 - ['Format']
                 - ['FontSize']
                 - ['TextColor']
+    default_config: default
 
     plugins:
         layoutmanager:

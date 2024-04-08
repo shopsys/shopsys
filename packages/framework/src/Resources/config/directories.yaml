@@ -1,16 +1,16 @@
 parameters:
-    shopsys.framework.default_public_directories:
-        - '/web/%shopsys.content_dir_name%/feeds'
-        - '/web/%shopsys.content_dir_name%/sitemaps'
-        - '/web/%shopsys.content_dir_name%/wysiwyg'
     shopsys.framework.default_internal_directories:
         - '%kernel.project_dir%/build/stats'
         - '%kernel.project_dir%/docs/generated'
         - '%kernel.project_dir%/var/cache'
+        - '%kernel.project_dir%/var/errorPages'
         - '%kernel.project_dir%/var/lock'
         - '%kernel.project_dir%/var/log'
-        - '%kernel.project_dir%/var/errorPages'
         - '%kernel.project_dir%/var/uploadedFiles'
         - '%shopsys.web_dir%/assets/admin/styles'
         - '%shopsys.web_dir%/assets/frontend/styles'
         - '%shopsys.web_dir%/assets/scripts'
+    shopsys.framework.default_public_directories:
+        - '/web/%shopsys.content_dir_name%/feeds'
+        - '/web/%shopsys.content_dir_name%/sitemaps'
+        - '/web/%shopsys.content_dir_name%/wysiwyg'

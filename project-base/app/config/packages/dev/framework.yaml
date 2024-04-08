@@ -1,8 +1,8 @@
 framework:
-    router:
-        strict_requirements: true
     profiler:
-        enabled: true
         collect: true
+        enabled: true
         only_exceptions: false
         only_main_requests: true
+    router:
+        strict_requirements: true

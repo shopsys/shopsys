@@ -1,7 +1,7 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     Shopsys\FrameworkBundle\Command\:
@@ -10,16 +10,6 @@ services:
     Shopsys\FrameworkBundle\Command\ConfigureDomainsUrlsCommand:
         arguments:
             $configFilepath: '%shopsys.domain_urls_config_filepath%'
-
-    Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand:
-        arguments:
-            - '%kernel.project_dir%/web'
-            - '%kernel.environment%'
-
-    Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand:
-        arguments:
-            - '%kernel.project_dir%/web'
-            - '%kernel.environment%'
 
     Shopsys\FrameworkBundle\Command\CreateApplicationDirectoriesCommand:
         arguments:
@@ -35,3 +25,13 @@ services:
     Shopsys\FrameworkBundle\Command\MigrateImagesCommand:
         arguments:
             - '%shopsys.image_dir%'
+
+    Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand:
+        arguments:
+            - '%kernel.project_dir%/web'
+            - '%kernel.environment%'
+
+    Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand:
+        arguments:
+            - '%kernel.project_dir%/web'
+            - '%kernel.environment%'

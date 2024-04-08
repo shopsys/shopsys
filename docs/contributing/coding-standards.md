@@ -99,3 +99,10 @@ Besides the rules that are checked by automatic tools, we have few rules for whi
           }
 
 -   All monetary values (_prices, account balances, discount amounts, price limits, etc._) must be represented and manipulated by [the `Money` class](../model/how-to-work-with-money.md).
+
+## YAML standards
+
+We are using `sspooky13/yaml-standards` for several checks and fixes of YAML files like alphabetical ordering of keys, indentation, etc.
+You can run them using `php phing yaml-standards` and `php phing yaml-standards-fix` commands, and they are also part of the `standards` and `standards-fix` Phing targets.
+Configuration of YAML standards is placed in `yaml-standards.yaml` file.
+In case you do not want to have your file, e.g., alphabetically sorted, you need to add it as ignored into the mentioned config file.

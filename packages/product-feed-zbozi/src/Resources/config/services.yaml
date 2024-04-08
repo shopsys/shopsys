@@ -1,7 +1,7 @@
 services:
     _defaults:
-        autowire: true
         autoconfigure: true
+        autowire: true
         public: false
 
     Shopsys\ProductFeed\ZboziBundle\:
@@ -12,13 +12,13 @@ services:
         tags:
             - { name: shopsys.data_fixture }
 
-    Shopsys\ProductFeed\ZboziBundle\ZboziFeed:
-        tags:
-            - { name: shopsys.feed, hours: '3', minutes: '0' }
-
     Shopsys\ProductFeed\ZboziBundle\Form\ZboziProductCrudExtension:
         tags:
             - { name: shopsys.crud_extension, type: product }
 
     Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface:
         alias: Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory
+
+    Shopsys\ProductFeed\ZboziBundle\ZboziFeed:
+        tags:
+            - { name: shopsys.feed, hours: '3', minutes: '0' }

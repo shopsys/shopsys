@@ -1,11 +1,11 @@
 doctrine_migrations:
     migrations_paths:
         'App\Migrations': '%kernel.project_dir%/src/Migrations'
+    services:
+        'Doctrine\Migrations\MigrationsRepository': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository'
+        'Doctrine\Migrations\Version\Comparator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator'
+        'Doctrine\Migrations\Version\Executor': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor'
+        'Doctrine\Migrations\Version\MigrationPlanCalculator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator'
     storage:
         table_storage:
             table_name: migrations
-    services:
-        'Doctrine\Migrations\Version\Comparator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator'
-        'Doctrine\Migrations\Version\MigrationPlanCalculator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator'
-        'Doctrine\Migrations\MigrationsRepository': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository'
-        'Doctrine\Migrations\Version\Executor': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor'

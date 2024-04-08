@@ -1,27 +1,27 @@
 parameters:
     # Default Redis keys prefix
     build-version: '0000000000000000'
+    env(ELASTIC_SEARCH_INDEX_PREFIX): ''
+
+    env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
+    env(MAILER_FORCE_WHITELIST): 0
+    env(REDIS_PREFIX): ''
 
     # Seed for demo data generation
     faker.seed: 1234
 
-    # Administration locale. Must be registered in domains.yaml
-    shopsys.admin_locale: en
+    gopay_config: []
 
     # Time zone that the admin use for entering and viewing dates and times in the datetime pickers
     shopsys.admin_display_timezone: ~
 
+    # Administration locale. Must be registered in domains.yaml
+    shopsys.admin_locale: en
+
     # Hours defined in cron.yaml correspond to this timezone (default is PHP timezone)
     shopsys.cron_timezone: ~
 
-    # Default extended classes mapping
-    shopsys.entity_extension.map: {}
-
     shopsys.display_cron_overview_for_superadmin_only: false
 
-    env(IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK): '0'
-    env(REDIS_PREFIX): ''
-    env(ELASTIC_SEARCH_INDEX_PREFIX): ''
-    env(MAILER_FORCE_WHITELIST): 0
-
-    gopay_config: []
+    # Default extended classes mapping
+    shopsys.entity_extension.map: {}
