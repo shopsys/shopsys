@@ -1,3 +1,5 @@
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
@@ -59,6 +61,17 @@ export const ContactInformationFormWrapper: FC = () => {
                         label: formMeta.fields.note.label,
                         rows: 3,
                     }}
+                />
+
+                <CheckboxControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.isWithoutHeurekaAgreement.name}
+                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                    checkboxProps={{
+                        label: formMeta.fields.isWithoutHeurekaAgreement.label,
+                    }}
+                    onChange={(event) => updateContactInformation({ isWithoutHeurekaAgreement: event.target.checked })}
                 />
             </div>
         </div>

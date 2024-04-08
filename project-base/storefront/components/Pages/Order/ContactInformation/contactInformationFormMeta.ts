@@ -94,6 +94,7 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
             newsletterSubscription: Yup.boolean(),
             deliveryAddressUuid: Yup.string().optional().nullable(),
             note: Yup.string().optional().nullable(),
+            isWithoutHeurekaAgreement: Yup.boolean(),
         }),
     );
     const defaultValues = contactInformationValues;
@@ -264,6 +265,13 @@ export const useContactInformationFormMeta = (
                 note: {
                     name: 'note' as const,
                     label: t('Note'),
+                    errorMessage: undefined,
+                },
+                isWithoutHeurekaAgreement: {
+                    name: 'isWithoutHeurekaAgreement' as const,
+                    label: t(
+                        'I do not agree to send satisfaction questionnaires within the Verified by Customers program',
+                    ),
                     errorMessage: undefined,
                 },
             },
