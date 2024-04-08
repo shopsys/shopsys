@@ -268,6 +268,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                     $note: String
                     $cartUuid: Uuid
                     $newsletterSubscription: Boolean
+                    $heurekaAgreement: Boolean!
                 ) {
                     CreateOrder(
                         input: {
@@ -296,6 +297,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                             note: $note
                             cartUuid: $cartUuid
                             newsletterSubscription: $newsletterSubscription
+                            heurekaAgreement: $heurekaAgreement
                         }
                     ) {
                         order {

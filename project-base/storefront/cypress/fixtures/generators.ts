@@ -50,4 +50,5 @@ export const generateCreateOrderInput = (email?: string): CreateOrderMutationVar
     note: null,
     cartUuid: null,
     newsletterSubscription: false,
+    heurekaAgreement: true,
 });

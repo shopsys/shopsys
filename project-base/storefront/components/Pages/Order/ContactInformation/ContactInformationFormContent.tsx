@@ -1,3 +1,5 @@
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationAddress';
@@ -6,6 +8,7 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -59,6 +62,17 @@ export const ContactInformationFormContent: FC = () => {
                         rows: 3,
                         onChange: (event) => updateContactInformation({ note: event.currentTarget.value }),
                     }}
+                />
+
+                <CheckboxControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.isWithoutHeurekaAgreement.name}
+                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                    checkboxProps={{
+                        label: formMeta.fields.isWithoutHeurekaAgreement.label,
+                    }}
+                    onChange={(event) => updateContactInformation({ isWithoutHeurekaAgreement: event.target.checked })}
                 />
             </div>
         </div>
