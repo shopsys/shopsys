@@ -10,6 +10,7 @@ arrange:
     - frontend-api
     - storefront
     - extensibility
+    - integration
     - asynchronous-processing
     - automated-testing
     - contributing
