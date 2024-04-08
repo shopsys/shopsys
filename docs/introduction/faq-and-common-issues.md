@@ -184,3 +184,12 @@ You can set this hostname in your `docker-compose` file like this:
       image: namshi/smtp:latest
 +     hostname: my-host-machine-hostname.provider.org
 ```
+
+## Why I see Enum classes in the Framework that are not actually PHP enums?
+
+The main reason, why we do not use PHP enums, is that [they are not extensible](https://www.php.net/manual/en/language.enumerations.object-differences.inheritance.php).
+The class inheritance is one of the main approaches how to extend the Shopsys Framework functionality on a project, so we decided to use classes instead of enums to enable the extensibility.
+Therefore, you can see e.g. `ProductListTypeEnum` which is a class with constants instead of the PHP enum.
+Moreover, the class extends `AbstractEnum` that provides `getAllCases()` method.
+The method uses reflection to return all the public constants of the class which simulates the behavior of `cases()` method of the PHP enums.
+The key factor here is that the method is not static, and therefore it would include also the constants of the child class when the "enum" class is extended on a project.
