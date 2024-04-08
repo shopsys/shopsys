@@ -8,7 +8,7 @@ This repository is maintained by [shopsys/shopsys] monorepo, information about c
 
 ## Documentation
 
-[Documentation](https://docs.shopsys.com/en/latest/) can be found in Shopsys Platform Knowledge Base.
+[Documentation](https://docs.shopsys.com/en/latest/integration/luigis-box/) can be found in Shopsys Platform Knowledge Base.
 
 ## Installation
 
