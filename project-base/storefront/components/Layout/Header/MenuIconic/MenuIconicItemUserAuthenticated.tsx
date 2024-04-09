@@ -24,7 +24,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                     href={customerUrl}
                     tid={TIDs.my_account_link}
                 >
-                    <UserIcon className="w-4 text-white group-hover:text-dark" />
+                    <UserIcon className="w-5 lg:w-4 text-white group-hover:text-dark" />
                     {t('My account')}
                 </MenuIconicItemLink>
 

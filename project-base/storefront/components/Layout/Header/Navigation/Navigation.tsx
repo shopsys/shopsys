@@ -1,16 +1,14 @@
 import { NavigationItem } from './NavigationItem';
-import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 
-export const Navigation: FC = () => {
-    const [{ data: navigationData }] = useNavigationQuery();
+export type NavigationProps = {
+    navigation: TypeCategoriesByColumnFragment[];
+};
 
-    if (!navigationData?.navigation.length) {
-        return null;
-    }
-
+export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     return (
         <ul className="relative hidden w-full lg:flex lg:gap-6 xl:gap-12">
-            {navigationData.navigation.map((navigationItem, index) => (
+            {navigation.map((navigationItem, index) => (
                 <NavigationItem key={index} navigationItem={navigationItem} />
             ))}
         </ul>

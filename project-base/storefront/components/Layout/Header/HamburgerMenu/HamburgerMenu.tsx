@@ -4,7 +4,7 @@ import { MouseEventHandler } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type HamburgerMenuProps = {
-    onClick: MouseEventHandler<HTMLDivElement>;
+    onClick: MouseEventHandler<HTMLDivElement> | undefined;
 };
 
 export const HamburgerMenu: FC<HamburgerMenuProps> = ({ onClick }) => {
@@ -12,7 +12,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ onClick }) => {
 
     return (
         <div
-            className={twJoin('flex h-10 w-full cursor-pointer items-center rounded bg-orangeLight p-3')}
+            className={twJoin('flex h-12 w-full cursor-pointer items-center rounded bg-orangeLight p-3')}
             onClick={onClick}
         >
             <div className="flex w-4 items-center justify-center">

@@ -6,10 +6,16 @@ import { useEffect, useRef } from 'react';
 
 export const useGtmContactInformationPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (didPageViewRun && gtmPageViewEvent._isLoaded && gtmPageViewEvent.cart && !wasViewedRef.current) {
+        if (
+            isScriptLoaded &&
+            didPageViewRun &&
+            gtmPageViewEvent._isLoaded &&
+            gtmPageViewEvent.cart &&
+            !wasViewedRef.current
+        ) {
             wasViewedRef.current = true;
             gtmSafePushEvent(getGtmContactInformationPageViewEvent(gtmPageViewEvent.cart));
         }

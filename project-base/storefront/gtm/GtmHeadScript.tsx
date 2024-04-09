@@ -1,12 +1,9 @@
+import { useGtmContext } from './context/useGtmContext';
 import Script from 'next/script';
 import { getDomainConfig } from 'utils/domain/domainConfig';
-import { isClient } from 'utils/isClient';
 
 export const GtmHeadScript: FC = () => {
-    if (!isClient) {
-        return null;
-    }
-
+    const { setIsScriptLoaded } = useGtmContext();
     const GTM_ID = getDomainConfig(window.location.host).gtmId;
     if (GTM_ID === undefined || GTM_ID.length === 0) {
         return null;
@@ -24,6 +21,7 @@ export const GtmHeadScript: FC = () => {
                 })(window,document,'script','dataLayer','${GTM_ID}');
             `,
             }}
+            onLoad={() => setIsScriptLoaded(true)}
         />
     );
 };

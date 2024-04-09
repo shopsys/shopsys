@@ -10,6 +10,7 @@ export const usePageLoader = () => {
 
     const onRouteChangeStart = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
         updatePortalContent(null);
+        updatePageLoadingState({ hadClientSideNavigation: true });
         if (!shallow) {
             Nprogress.start();
         }

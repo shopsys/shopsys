@@ -7,13 +7,12 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-// TODO PRG
-const dummyData = {
-    phone: '+420 111 222 333',
-    opening: 'Po - Út, 10 - 16 hod',
+type FooterBoxInfoProps = {
+    phone: string;
+    opening: string;
 };
 
-export const FooterBoxInfo: FC = () => {
+export const FooterBoxInfo: FC<FooterBoxInfoProps> = ({ opening, phone }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
@@ -33,11 +32,11 @@ export const FooterBoxInfo: FC = () => {
                     <PhoneIcon className="mr-3 w-5 text-orange" />
                     <a
                         className="mr-4 font-bold text-white no-underline hover:text-white lg:text-lg"
-                        href={'tel:' + dummyData.phone}
+                        href={'tel:' + phone}
                     >
-                        {dummyData.phone}
+                        {phone}
                     </a>
-                    <p className="m-0 text-sm text-white">{dummyData.opening}</p>
+                    <p className="m-0 text-sm text-white">{opening}</p>
                 </div>
                 <ExtendedNextLink href={contactUrl}>
                     <Button className="z-above" variant="secondary">

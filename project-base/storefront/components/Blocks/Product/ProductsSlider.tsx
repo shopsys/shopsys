@@ -9,7 +9,7 @@ import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 
-type ProductsSliderProps = {
+export type ProductsSliderProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin?: GtmMessageOriginType;

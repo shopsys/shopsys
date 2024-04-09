@@ -9,10 +9,10 @@ export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, fetc
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
     const lastViewedSlug = useRef<string>();
-    const { setDidPageViewRun } = useGtmContext();
+    const { setDidPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (gtmPageViewEvent._isLoaded && lastViewedSlug.current !== slug && !fetching) {
+        if (isScriptLoaded && gtmPageViewEvent._isLoaded && lastViewedSlug.current !== slug && !fetching) {
             lastViewedSlug.current = slug;
             gtmSafePushEvent(gtmPageViewEvent);
             setDidPageViewRun(true);

@@ -42,7 +42,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                             )}
                         >
                             {!!item.mainImage && (
-                                <div className="mr-3 flex w-11">
+                                <div className="mr-3 flex w-11 h-11 justify-center items-center">
                                     <Image
                                         alt={item.mainImage.name || item.text}
                                         height={44}

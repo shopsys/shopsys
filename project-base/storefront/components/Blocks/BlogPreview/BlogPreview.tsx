@@ -3,29 +3,29 @@ import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
-import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
+import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
-import { useBlogUrlQuery } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
-export const BlogPreview: FC = () => {
+export type BlogPreviewProps = {
+    blogArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
+    blogUrl: string | undefined;
+    fetchingArticles: boolean;
+    fetchingBlogUrl: boolean;
+};
+
+export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetchingArticles, fetchingBlogUrl }) => {
     const { t } = useTranslation();
-    const [{ data: blogPreviewData, fetching: fetchingArticles }] = useBlogArticlesQuery({
-        variables: BLOG_PREVIEW_VARIABLES,
-    });
-    const [{ data: blogUrlData, fetching: fetchingBlogUrl }] = useBlogUrlQuery();
-    const blogUrl = blogUrlData?.blogCategories[0].link;
 
     const blogMainItems = useMemo(
-        () => mapConnectionEdges<TypeListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
-        [blogPreviewData?.blogArticles.edges],
+        () => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles?.slice(0, 2)),
+        [blogArticles],
     );
     const blogSideItems = useMemo(
-        () => mapConnectionEdges<TypeListedBlogArticleFragment>(blogPreviewData?.blogArticles.edges?.slice(2)),
-        [blogPreviewData?.blogArticles.edges],
+        () => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles?.slice(2)),
+        [blogArticles],
     );
 
     return (

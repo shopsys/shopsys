@@ -1,8 +1,8 @@
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
-import { Footer } from './Footer/Footer';
-import { NewsletterForm } from './Footer/NewsletterForm';
+import { DeferredFooter } from './Footer/DeferredFooter';
+import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';
 import { Header } from './Header/Header';
-import { Navigation } from './Header/Navigation/Navigation';
+import { DeferredNavigation } from './Header/Navigation/DeferredNavigation';
 import { NotificationBars } from './NotificationBars/NotificationBars';
 import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
@@ -49,7 +49,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
             <Webline className="relative mb-8" type="colored">
                 <Header />
-                <Navigation />
+                <DeferredNavigation />
             </Webline>
 
             <Adverts withGapBottom withWebline positionName="header" />
@@ -67,11 +67,11 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <Adverts withGapBottom withGapTop withWebline positionName="footer" />
 
             <Webline type="light">
-                <NewsletterForm />
+                <DeferredNewsletterForm />
             </Webline>
 
             <Webline type="dark">
-                <Footer />
+                <DeferredFooter />
             </Webline>
         </>
     );

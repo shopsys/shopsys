@@ -1,13 +1,12 @@
+import { DeferredProductDetailRelatedProductsTab } from './DeferredProductDetailRelatedProductsTab';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 
-type ProductDetailTabsProps = {
+export type ProductDetailTabsProps = {
     description: string | null;
     parameters: TypeParameterFragment[];
     relatedProducts: TypeListedProductFragment[];
@@ -54,10 +53,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
             {!!relatedProducts.length && (
                 <TabsContent headingTextMobile={t('Related Products')}>
-                    <ProductsSlider
-                        gtmProductListName={GtmProductListNameType.product_detail_related_products}
-                        products={relatedProducts}
-                    />
+                    <DeferredProductDetailRelatedProductsTab relatedProducts={relatedProducts} />{' '}
                 </TabsContent>
             )}
         </Tabs>

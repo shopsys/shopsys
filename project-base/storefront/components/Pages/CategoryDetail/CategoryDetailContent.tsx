@@ -1,28 +1,33 @@
-import { AdvancedSeoCategories } from './AdvancedSeoCategories';
-import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
-import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
+import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
-import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
+import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
-import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
+import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
-const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay), {
+    ssr: false,
+});
+
+const AdvancedSeoCategories = dynamic(() =>
+    import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
+);
+
+const CategoryBestsellers = dynamic(() =>
+    import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
+);
 
 type CategoryDetailContentProps = {
     category: TypeCategoryDetailFragment;
 };
 
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {
-    const { t } = useTranslation();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
@@ -52,7 +57,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         isPanelOpen && 'translate-x-0',
                     )}
                 >
-                    <FilterPanel
+                    <DeferredFilterPanel
                         defaultOrderingMode={category.products.defaultOrderingMode}
                         orderingMode={category.products.orderingMode}
                         originalSlug={category.originalCategorySlug}
@@ -63,7 +68,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     />
                 </div>
 
-                <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
+                {isPanelOpen && <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />}
 
                 <div className="flex flex-1 flex-col">
                     <Adverts className="mt-6" currentCategory={category} positionName="productList" />
@@ -88,23 +93,13 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row">
-                        <div
-                            className="relative flex flex-1 cursor-pointer items-center justify-center rounded bg-primary p-3 font-bold uppercase text-white vl:mb-3 vl:hidden"
-                            onClick={handlePanelOpenerClick}
-                        >
-                            <FilterIcon className="mr-3 w-6 font-bold text-white" />
-                            {t('Filter')}
-                        </div>
+                    <DeferredFilterAndSortingBar
+                        handlePanelOpenerClick={handlePanelOpenerClick}
+                        sorting={category.products.orderingMode}
+                        totalCount={category.products.totalCount}
+                    />
 
-                        <SortingBar
-                            className="flex-1"
-                            sorting={category.products.orderingMode}
-                            totalCount={category.products.totalCount}
-                        />
-                    </div>
-
-                    <CategoryDetailProductsWrapper
+                    <DeferredCategoryDetailProductsWrapper
                         category={category}
                         paginationScrollTargetRef={paginationScrollTargetRef}
                     />

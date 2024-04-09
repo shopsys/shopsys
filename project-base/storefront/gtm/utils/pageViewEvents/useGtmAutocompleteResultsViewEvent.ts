@@ -9,10 +9,15 @@ export const useGtmAutocompleteResultsViewEvent = (
     TypeSearchQuery: string,
 ): void => {
     const lastViewedAutocompleteResults = useRef<TypeAutocompleteSearchQuery>();
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (didPageViewRun && searchResults !== undefined && lastViewedAutocompleteResults.current !== searchResults) {
+        if (
+            isScriptLoaded &&
+            didPageViewRun &&
+            searchResults !== undefined &&
+            lastViewedAutocompleteResults.current !== searchResults
+        ) {
             lastViewedAutocompleteResults.current = searchResults;
             gtmSafePushEvent(getGtmAutocompleteResultsViewEvent(searchResults, TypeSearchQuery));
         }

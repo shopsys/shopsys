@@ -8,7 +8,7 @@ import Skeleton from 'react-loading-skeleton';
 import { desktopFirstSizes } from 'utils/mediaQueries';
 import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
 
-type BannersSliderProps = {
+export type BannersSliderProps = {
     sliderItems: TypeSliderItemFragment[];
 };
 

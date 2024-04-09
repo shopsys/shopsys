@@ -6,10 +6,11 @@ import { useEffect, useRef } from 'react';
 
 export const useGtmPaymentAndTransportPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
         if (
+            isScriptLoaded &&
             didPageViewRun &&
             gtmPageViewEvent._isLoaded &&
             gtmPageViewEvent.cart !== null &&
