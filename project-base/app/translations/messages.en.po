@@ -175,9 +175,6 @@ msgstr ""
 msgid "Brands - view"
 msgstr ""
 
-msgid "Bulk creation of promo codes"
-msgstr ""
-
 msgid "But at other addresses we have a lot for you..."
 msgstr ""
 
@@ -337,9 +334,6 @@ msgstr ""
 msgid "Customers - view"
 msgstr ""
 
-msgid "Customers overview"
-msgstr ""
-
 msgid "Date and time of order creation"
 msgstr ""
 
@@ -475,16 +469,10 @@ msgstr ""
 msgid "Editing pararameter value of type color - %name%"
 msgstr ""
 
-msgid "Editing promo code"
-msgstr ""
-
 msgid "Editing script"
 msgstr ""
 
 msgid "Email"
-msgstr ""
-
-msgid "Email newsletter"
 msgstr ""
 
 msgid "Email settings modified."
@@ -617,9 +605,6 @@ msgid "GTM ID"
 msgstr ""
 
 msgid "GTM creative"
-msgstr ""
-
-msgid "Generated batches"
 msgstr ""
 
 msgid "Google analytics"
@@ -860,9 +845,6 @@ msgid "New notification bar"
 msgstr ""
 
 msgid "New page"
-msgstr ""
-
-msgid "New promo code"
 msgstr ""
 
 msgid "New script"
@@ -1115,9 +1097,6 @@ msgid "Products transfer"
 msgstr ""
 
 msgid "Promo code"
-msgstr ""
-
-msgid "Promo codes"
 msgstr ""
 
 msgid "Promo codes - full"

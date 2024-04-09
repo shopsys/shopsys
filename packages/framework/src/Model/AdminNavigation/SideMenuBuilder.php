@@ -108,12 +108,15 @@ class SideMenuBuilder
         $menu = $this->menuFactory->createItem(
             'customers',
             [
-                'route' => 'admin_customer_list',
                 'label' => t('Customers'),
             ],
         );
         $menu->setExtra('icon', 'person-public');
 
+        $menu->addChild('customers_overview', [
+            'route' => 'admin_customer_list',
+            'label' => t('Customers overview'),
+        ]);
         $menu->addChild('new', [
             'route' => 'admin_customer_new',
             'label' => t('New customer'),
@@ -127,6 +130,35 @@ class SideMenuBuilder
                 'display' => false,
             ],
         );
+        $menu->addChild('newsletter', [
+            'route' => 'admin_newsletter_list',
+            'label' => t('Email newsletter'),
+        ]);
+
+        $promoCodeMenu = $menu->addChild('promo_codes', [
+            'route' => 'admin_promocode_list',
+            'label' => t('Promo codes'),
+        ]);
+        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', [
+            'route' => 'admin_promocode_listmassgeneratebatch',
+            'display' => true,
+            'label' => t('Generated batches'),
+        ]);
+        $promoCodeMenu->addChild('promo_codes_new', [
+            'route' => 'admin_promocode_new',
+            'display' => false,
+            'label' => t('New promo code'),
+        ]);
+        $promoCodeMenu->addChild('promo_codes_edit', [
+            'route' => 'admin_promocode_edit',
+            'display' => false,
+            'label' => t('Editing promo code'),
+        ]);
+        $promoCodeMenu->addChild('promo_codes_newmassgenerate', [
+            'route' => 'admin_promocode_newmassgenerate',
+            'label' => t('Bulk creation of promo codes'),
+            'display' => false,
+        ]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);
 
@@ -200,18 +232,6 @@ class SideMenuBuilder
             );
             $currenciesMenuItem->setExtra('superadmin', true);
         }
-        $promoCodesMenu = $menu->addChild(
-            'promo_codes',
-            ['route' => 'admin_promocode_list', 'label' => t('Promo codes')],
-        );
-        $promoCodesMenu->addChild(
-            'new',
-            ['route' => 'admin_promocode_new', 'label' => t('New promo code'), 'display' => false],
-        );
-        $promoCodesMenu->addChild(
-            'edit',
-            ['route' => 'admin_promocode_edit', 'label' => t('Editing promo code'), 'display' => false],
-        );
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_PRICING, $menu);
 
@@ -285,8 +305,6 @@ class SideMenuBuilder
         $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Blog articles')]);
         $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
         $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
-
-        $menu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 

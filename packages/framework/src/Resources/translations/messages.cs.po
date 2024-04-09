@@ -1414,6 +1414,9 @@ msgstr "Vygenerovat"
 msgid "Generated"
 msgstr "Vygenerováno"
 
+msgid "Generated batches"
+msgstr "Vygenerované dávky"
+
 msgid "Go to Frontend"
 msgstr "Přejít na Frontend"
 

@@ -1414,6 +1414,9 @@ msgstr ""
 msgid "Generated"
 msgstr ""
 
+msgid "Generated batches"
+msgstr ""
+
 msgid "Go to Frontend"
 msgstr ""
 

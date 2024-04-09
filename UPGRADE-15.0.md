@@ -738,6 +738,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -    public function transportsQuery(): array
     -    public function transportsQuery(?string $cartUuid = null): array
     ```
+
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
     -   `Cart` properties (and all the related logic):
         -   `$promoCodes`
