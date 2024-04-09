@@ -64,6 +64,7 @@ class LuigisBoxClient
      * @param array $filter
      * @param string $userIdentifier
      * @param string|null $orderingMode
+     * @param string[] $facetNames
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
     public function getData(
@@ -74,6 +75,7 @@ class LuigisBoxClient
         array $filter,
         string $userIdentifier,
         ?string $orderingMode,
+        array $facetNames = [],
     ): array {
         $this->checkNecessaryConfigurationIsSet();
         $this->validateActionIsValid($action);
@@ -89,6 +91,7 @@ class LuigisBoxClient
                         $filter,
                         $userIdentifier,
                         $orderingMode,
+                        $facetNames,
                     ),
                 ),
                 true,
@@ -107,13 +110,14 @@ class LuigisBoxClient
                     'filter' => $filter,
                     'userIdentifier' => $userIdentifier,
                     'orderingMode' => $orderingMode,
+                    'facets' => $facetNames,
                 ],
             );
 
             return $this->getEmptyResults(array_keys($limitsByType));
         }
 
-        if ($action === self::ACTION_SEARCH) {
+        if ($action === static::ACTION_SEARCH) {
             $data = $data['results'];
         }
 
@@ -129,7 +133,7 @@ class LuigisBoxClient
         $resultsByType = [];
 
         foreach ($types as $type) {
-            $resultsByType[$type] = new LuigisBoxResult([], [], 0);
+            $resultsByType[$type] = new LuigisBoxResult([], [], 0, []);
         }
 
         return $resultsByType;
@@ -142,7 +146,7 @@ class LuigisBoxClient
      */
     protected function getTotalHitsFromData(array $data, string $action): int
     {
-        if ($action === self::ACTION_AUTOCOMPLETE) {
+        if ($action === static::ACTION_AUTOCOMPLETE) {
             return (int)$data['exact_match_hits_count'] + (int)$data['partial_match_hits_count'];
         }
 
@@ -157,6 +161,7 @@ class LuigisBoxClient
      * @param array $filter
      * @param string $userIdentifier
      * @param string|null $orderingMode
+     * @param string[] $facetNames
      * @return string
      */
     protected function getLuigisBoxApiUrl(
@@ -167,6 +172,7 @@ class LuigisBoxClient
         array $filter,
         string $userIdentifier,
         ?string $orderingMode,
+        array $facetNames = [],
     ): string {
         $url = $this->luigisBoxApiUrl .
             $action . '/' .
@@ -175,15 +181,18 @@ class LuigisBoxClient
             '&hit_fields=url' .
             '&user_id=' . $userIdentifier;
 
-        if ($action === self::ACTION_SEARCH) {
+        if ($action === static::ACTION_SEARCH) {
             $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);
 
             $url .=
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
                 '&from=' . $page;
-            $url .=
-                $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
+            $url .= $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
+
+            if (count($facetNames) > 0) {
+                $url .= '&facets=' . implode(',', $facetNames);
+            }
 
             foreach ($filter as $key => $filterValues) {
                 foreach ($filterValues as $filterValue) {
@@ -198,7 +207,7 @@ class LuigisBoxClient
             }
         }
 
-        if ($action === self::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
+        if ($action === static::ACTION_AUTOCOMPLETE && count($limitsByType) > 0) {
             $url .= '&type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
         }
 
@@ -214,8 +223,8 @@ class LuigisBoxClient
         return match ($orderingMode) {
             ProductListOrderingConfig::ORDER_BY_NAME_ASC => 'name:asc',
             ProductListOrderingConfig::ORDER_BY_NAME_DESC => 'name:desc',
-            ProductListOrderingConfig::ORDER_BY_PRICE_ASC => 'price:asc',
-            ProductListOrderingConfig::ORDER_BY_PRICE_DESC => 'price:desc',
+            ProductListOrderingConfig::ORDER_BY_PRICE_ASC => 'price_amount:asc',
+            ProductListOrderingConfig::ORDER_BY_PRICE_DESC => 'price_amount:desc',
             default => null,
         };
     }
@@ -247,7 +256,7 @@ class LuigisBoxClient
     protected function getMainType(array $types): string
     {
         if (in_array(static::TYPE_IN_LUIGIS_BOX_PRODUCT, $types, true)) {
-            return self::TYPE_IN_LUIGIS_BOX_PRODUCT;
+            return static::TYPE_IN_LUIGIS_BOX_PRODUCT;
         }
 
         return reset($types);
@@ -302,6 +311,7 @@ class LuigisBoxClient
                 $idsByType[$type] ?? [],
                 $idsWithPrefixByType[$type] ?? [],
                 $this->getTotalHitsFromData($data, $action),
+                $data['facets'] ?? [],
             );
         }
 
@@ -347,7 +357,7 @@ class LuigisBoxClient
      */
     protected function validateActionIsValid(string $action): void
     {
-        if (!in_array($action, [self::ACTION_SEARCH, self::ACTION_AUTOCOMPLETE], true)) {
+        if (!in_array($action, [static::ACTION_SEARCH, static::ACTION_AUTOCOMPLETE], true)) {
             throw new LuigisBoxActionNotRecognizedException($action);
         }
     }

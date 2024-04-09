@@ -4,8 +4,8 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
-import { isStoreHydrated } from 'helpers/isStoreHydrated';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 
@@ -14,20 +14,26 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
+    const [isCartHydrated, setIsCartHydrated] = useState(false);
     const isWithCart = isUserLoggedIn || !!cartUuid;
+
+    useEffect(() => {
+        setIsCartHydrated(true);
+    }, []);
 
     const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQueryApi({
         variables: { cartUuid },
-        pause: !isWithCart,
+        pause: !isCartHydrated || !isWithCart,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
-    const cartData = isWithCart && fetchedCartData?.cart ? fetchedCartData.cart : null;
+    const cartData = fetchedCartData?.cart ? fetchedCartData.cart : null;
 
     return {
         fetchCart,
+        isCartHydrated,
         isWithCart,
-        cart: isStoreHydrated() ? cartData : undefined,
+        cart: cartData,
         transport: cartData?.transport ?? null,
         pickupPlace: getSelectedPickupPlace(
             cartData?.transport,

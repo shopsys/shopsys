@@ -21,6 +21,6 @@ export const usePersistStore = create<PersistStore>()(
             }),
             STORE_NAME,
         ),
-        { name: STORE_NAME, skipHydration: true },
+        { name: STORE_NAME },
     ),
 );

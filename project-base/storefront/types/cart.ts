@@ -11,6 +11,7 @@ import { UseQueryExecute } from 'urql';
 
 export type CurrentCartType = {
     cart: Maybe<CartFragmentApi> | undefined;
+    isCartHydrated: boolean;
     isWithCart: boolean;
     transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi>;
     pickupPlace: Maybe<ListedStoreFragmentApi>;

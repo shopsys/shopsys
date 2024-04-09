@@ -93,7 +93,7 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
-    protected function createProductFilterOptions(
+    public function createProductFilterOptions(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,

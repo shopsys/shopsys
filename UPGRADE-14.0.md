@@ -1482,6 +1482,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   migration `App\Migrations\Version20200219145345` was moved to framework. You can safety delete it.
     -   see #project-base-diff to update your project
 -   updated revision ranges in composer conflicts to latest standards ([#3082](https://github.com/shopsys/shopsys/pull/3082))
+
+    -   see #project-base-diff to update your project
+
+-   enable product filters provided by Luigi's Box when using Luigi's Box ([#3074](https://github.com/shopsys/shopsys/pull/3074))
+    -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory::createProductFilterOptions()` has changed its visibility to `public`
     -   see #project-base-diff to update your project
 
 ### Storefront

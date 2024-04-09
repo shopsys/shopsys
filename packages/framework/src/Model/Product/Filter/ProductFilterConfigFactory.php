@@ -38,6 +38,22 @@ class ProductFilterConfigFactory
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterChoices
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flagChoices
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brandChoices
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange $priceRange
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function create(
+        array $parameterChoices,
+        array $flagChoices,
+        array $brandChoices,
+        PriceRange $priceRange,
+    ): ProductFilterConfig {
+        return new ProductFilterConfig($parameterChoices, $flagChoices, $brandChoices, $priceRange);
+    }
+
+    /**
      * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
@@ -56,7 +72,7 @@ class ProductFilterConfigFactory
             $locale,
         );
 
-        return new ProductFilterConfig(
+        return $this->create(
             $this->getSortedParameterFilterChoicesForCategory($aggregatedParameterFilterChoices, $category),
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
@@ -70,7 +86,7 @@ class ProductFilterConfigFactory
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForSearch($domainId, $locale, $searchText)
+    public function createForSearch(int $domainId, string $locale, ?string $searchText): ProductFilterConfig
     {
         $parameterFilterChoices = [];
         $pricingGroup = $this->currentCustomerUser->getPricingGroup();
@@ -85,7 +101,7 @@ class ProductFilterConfigFactory
             $searchText,
         );
 
-        return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
+        return $this->create($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
     }
 
     /**
@@ -101,7 +117,7 @@ class ProductFilterConfigFactory
             ->getFlagFilterChoicesForBrand($domainId, $pricingGroup, $locale, $brand);
         $priceRange = $this->priceRangeRepository->getPriceRangeForBrand($domainId, $pricingGroup, $brand);
 
-        return new ProductFilterConfig([], $flagFilterChoices, [], $priceRange);
+        return $this->create([], $flagFilterChoices, [], $priceRange);
     }
 
     /**
@@ -118,7 +134,7 @@ class ProductFilterConfigFactory
         $brandFilterChoices = $this->brandFilterChoiceRepository
             ->getBrandFilterChoicesForAll($domainId, $pricingGroup);
 
-        return new ProductFilterConfig([], $flagFilterChoices, $brandFilterChoices, $priceRange);
+        return $this->create([], $flagFilterChoices, $brandFilterChoices, $priceRange);
     }
 
     /**
