@@ -1,0 +1,5 @@
+query MainBlogCategoryUrlSettingsQuery {
+    settings {
+        mainBlogCategoryUrl
+    }
+}

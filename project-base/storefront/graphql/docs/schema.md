@@ -7238,6 +7238,15 @@ Timezone that is used for displaying time
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainBlogCategoryUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Absolute URL of the blog main category
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>maxAllowedPaymentTransactions</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

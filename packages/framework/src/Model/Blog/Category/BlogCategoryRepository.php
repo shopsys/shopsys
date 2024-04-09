@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
@@ -314,5 +315,22 @@ class BlogCategoryRepository extends NestedTreeRepository
         }
 
         return $blogCategory;
+    }
+
+    /**
+     * @param int $domainId
+     * @return int|null
+     */
+    public function findVisibleMainBlogCategoryIdOnDomain(int $domainId): ?int
+    {
+        try {
+            return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+                ->select('bc.id')
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getSingleScalarResult();
+        } catch (NoResultException) {
+            return null;
+        }
     }
 }
