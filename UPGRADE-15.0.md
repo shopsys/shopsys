@@ -513,6 +513,275 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### move order and cart related logic from project-base to packages ([#3088](https://github.com/shopsys/shopsys/pull/3088))
+
+-   `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    +       protected readonly TransferIssueFacade $transferIssueFacade,
+    ```
+-   `Shopsys\FrameworkBundle\Controller\Admin\ProductController::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    -       protected readonly ProductDataFactoryInterface $productDataFactory,
+    +       protected readonly ProductDataFactory $productDataFactory,
+    ```
+-   `Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    +       protected readonly PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory,
+    ```
+-   `Shopsys\FrameworkBundle\Model\Cart\CartFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+        -       protected readonly CartWatcherFacade $cartWatcherFacade,
+        +       protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        ```
+    -   `addProductToCart()` method was removed, use `addProductToExistingCart()` instead
+    -   `changeQuantities()` method was removed, use `addProductToExistingCart()` with properly set parameters (`$isAbsoluteQuantity` and `$quantity`) instead
+    -   `deleteCartItem()` method was removed, use `removeItemFromExistingCartByUuid()` instead
+    -   `deleteCartOfCurrentCustomerUser()` method was removed, use `deleteCart()` instead
+    -   `cleanAdditionalData()` method was removed without replacement
+    -   `getCartOfCurrentCustomerUserCreateIfNotExists()` method was removed, use `findCartByCustomerUserIdentifier()` instead
+    -   `getQuantifiedProductsOfCurrentCustomer()` method was removed, use `Cart::getQuantifiedProducts()` instead
+-   `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade` class was removed, use `Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade` instead
+-   `Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            protected readonly array $quantifiedProductsByIndex,
+            protected readonly array $quantifiedItemsPricesByIndex,
+            protected readonly array $quantifiedItemsDiscountsByIndex,
+            protected readonly Price $productsPrice,
+            protected readonly Price $totalPrice,
+    +       protected readonly Price $totalPriceDiscount,
+    +       protected readonly Price $totalPriceWithoutDiscountTransportAndPayment,
+            protected readonly ?Transport $transport = null,
+            protected readonly ?Price $transportPrice = null,
+            protected readonly ?Payment $payment = null,
+            protected readonly ?Price $paymentPrice = null,
+            protected readonly ?Price $roundingPrice = null,
+    -       $promoCodeDiscountPercent = null,
+    +       protected readonly ?string $promoCodeDiscountPercent = null,
+    +       protected readonly ?Store $personalPickupStore = null,
+    +       protected readonly ?PromoCode $promoCode = null,
+    ``
+    ```
+-   `Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+        +       protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        ```
+    -   `calculatePreview()` method changed its interface:
+        ```diff
+            public function calculatePreview(
+                Currency $currency,
+                int $domainId,
+                array $quantifiedProducts,
+                ?Transport $transport = null,
+                ?Payment $payment = null,
+                ?CustomerUser $customerUser = null,
+                ?string $promoCodeDiscountPercent = null,
+        +       ?Store $personalPickupStore = null,
+        +       ?PromoCode $promoCode = null,
+        ```
+-   `Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory` class was changed:
+    -   `create()` method changed its interface:
+        ```diff
+            public function create(
+                Currency $currency,
+        -       $domainId,
+        +       int $domainId,
+                array $quantifiedProducts,
+                ?Transport $transport = null,
+                ?Payment $payment = null,
+                ?CustomerUser $customerUser = null,
+        +       ?string $promoCodeDiscountPercent = null,
+        +       ?Store $personalPickupStore = null,
+        +       ?PromoCode $promoCode = null,
+        +   ): OrderPreview {
+        ```
+    -   `createForCurrentUser()` method was removed, use `create()` instead
+-   `Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly PromoCodeFacade $promoCodeFacade,
+        -       protected readonly RequestStack $requestStack,
+        +       protected readonly PromoCodeProductRepository $promoCodeProductRepository,
+        +       protected readonly Domain $domain,
+        +       protected readonly ProductPromoCodeFiller $productPromoCodeFiller,
+        +       protected readonly PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
+        +       protected readonly CurrentCustomerUser $currentCustomerUser,
+        +       protected readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        ```
+    -   `PROMO_CODE_SESSION_KEY` constant was removed
+    -   `getValidEnteredPromoCodeOrNull()` method was removed, use `getValidatedPromoCode()` instead
+    -   `setEnteredPromoCode()` method was removed, use `Cart::applyPromoCode()` instead
+    -   `removeEnteredPromoCode()` method was removed, use `Cart::removePromoCodeById()` instead
+-   `Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory` class was changed
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+                protected readonly GridFactory $gridFactory,
+        +       protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        +       protected readonly PromoCodeLimitRepository $promoCodeLimitRepository,
+        ```
+    -   `create()` method changed its interface:
+        ```diff
+        -   public function create($withEditButton = false)
+        +   public function create(bool $withEditButton = true, ?string $search = null): Grid
+        ```
+-   `Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode::$percent` property (and `getPercent()` method) was removed, use `PromoCodeLimit::$discount` instead
+-   `Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData::$percent` property was removed, use `PromoCodeLimit::$discount` instead
+-   `Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade` class was changed:
+    -   the methods are now type-hinted
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+                protected readonly PromoCodeRepository $promoCodeRepository,
+                protected readonly PromoCodeFactoryInterface $promoCodeFactory,
+        +       protected readonly PromoCodeLimitRepository $promoCodeLimitRepository,
+        +       protected readonly PromoCodeProductRepository $promoCodeProductRepository,
+        +       protected readonly PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        +       protected readonly PromoCodeProductFactory $promoCodeProductFactory,
+        +       protected readonly PromoCodeCategoryFactory $promoCodeCategoryFactory,
+        +       protected readonly PromoCodeBrandRepository $promoCodeBrandRepository,
+        +       protected readonly PromoCodeBrandFactory $promoCodeBrandFactory,
+        +       protected readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        +       protected readonly PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
+        +       protected readonly PromoCodeFlagRepository $promoCodeFlagRepository,
+        +       protected readonly HashGenerator $hashGenerator,
+        ```
+    -   `findPromoCodeByCode()` method was removed, use `findPromoCodeByCodeAndDomain()` instead
+-   `Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository::findByCode()` method was removed, use `findByCodeAndDomainId()` instead
+-   `Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        +       protected readonly PromoCodeLimitResolver $promoCodeLimitResolver,
+                protected readonly PriceCalculation $priceCalculation,
+                protected readonly Rounding $rounding,
+        +       protected readonly PromoCodeApplicableProductsTotalPriceCalculator $promoCodeApplicableProductsTotalPriceCalculator,
+        ```
+    -   `calculateDiscountsRoundedByCurrency()` method was removed, use `calculateDiscountsPerProductRoundedByCurrency()` instead
+-   `Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface` interface was removed
+-   `Shopsys\FrameworkBundle\Model\Store\StoreIdsToStoresTransformer` class was removed
+-   `Shopsys\FrontendApiBundle\Component\Constraints\PaymentCanBeUsed` class was removed
+-   `Shopsys\FrontendApiBundle\Component\Constraints\PaymentCanBeUsedValidator` class was removed
+-   `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder` class was renamed to `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder`
+-   `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrderValidator` class was renamed to `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrderValidator`
+-   `Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelationValidator::__construct` method changed its interface:
+    ```diff
+        public function __construct(
+    -       protected readonly PaymentFacade $paymentFacade,
+    -       protected readonly TransportFacade $transportFacade,
+    +       protected readonly CurrentCustomerUser $currentCustomerUser,
+    +       protected readonly CartApiFacade $cartApiFacade,
+    ```
+-   `Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrdered` class was removed
+-   `Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrderedValidator` class was removed
+-   `Shopsys\FrontendApiBundle\Component\Constraints\TransportCanBeUsed` class was removed
+-   `Shopsys\FrontendApiBundle\Component\Constraints\TransportCanBeUsedValidator` class was removed
+-   `Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+                protected readonly CountryFacade $countryFacade,
+                protected readonly ProductFacade $productFacade,
+        +       protected readonly StoreFacade $storeFacade,
+        ```
+    -   `createQuantifiedProductsFromArgument()` method was removed, use `Cart::getQuantifiedProducts()` instead
+-   `Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+                protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
+        +       protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        +       protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        +       protected readonly DeliveryAddressFactory $deliveryAddressFactory,
+        +       protected readonly NewsletterFacade $newsletterFacade,
+        +       protected readonly PromoCodeLimitResolver $promoCodeLimitResolver,
+        ```
+    -   `placeOrder()` method changed its interface:
+        ```diff
+            public function placeOrder(
+                 OrderData $orderData,
+                 array $quantifiedProducts,
+        +        ?PromoCode $promoCode = null,
+        +        ?DeliveryAddress $deliveryAddress = null,
+        + ): Order {
+        ```
+    -   `createOrderPreview()` method was removed
+-   `Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsQuery` class was changed:
+-   `__construct()` method changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly TransportFacade $transportFacade,
+    -       protected readonly PaymentFacade $paymentFacade,
+    +       protected readonly CartApiFacade $cartApiFacade,
+    +       protected readonly CurrentCustomerUser $currentCustomerUser,
+    ```
+-   `transportsQuery()` method changed its interface:
+
+    ```diff
+    -    public function transportsQuery(): array
+    -    public function transportsQuery(?string $cartUuid = null): array
+    ```
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
+    -   `Cart` properties (and all the related logic):
+        -   `$promoCodes`
+        -   `$transport`
+        -   `$transportWatchedPrice`
+        -   `$payment`
+        -   `$paymentWatchedPrice`
+        -   `$paymentGoPayBankSwift`
+        -   `$pickupPlaceIdentifier`
+    -   `CartItem::$uuid` property
+    -   `Order` properties (and all the related logic):
+        -   `$pickupPlaceIdentifier`
+        -   `$trackingNumber`
+    -   `Administrator::$transferIssuesLastSeen` property (and all the related logic)
+    -   `Transport` properties (and all the related logic):
+        -   `$trackingUrl`
+        -   `$trackingInstruction`
+        -   `$transportType`
+        -   `$maxWeight`
+    -   `Product::$weight` property (and all the related logic)
+    -   `PromoCode` properties (and all the related logic):
+        -   `$discountType`
+        -   `$registeredOnly`
+        -   `$domainId`
+        -   `$datetimeValidFrom`
+        -   `$datetimeValidTo`
+        -   `$remainingUses`
+        -   `$massGenerate`
+        -   `$prefix`
+        -   `$massGenerateBatchId`
+    -   `PromoCodeBrand` entity (and all the related logic)
+    -   `PromoCodeCategory` entity (and all the related logic)
+    -   `PromoCodeProduct` entity (and all the related logic)
+    -   `PromoCodeFlag` entity (and all the related logic)
+    -   `PromoCodePricingGroup` entity (and all the related logic)
+    -   `PromoCodeLimit` entity (and all the related logic)
+    -   `Transfer` and `TransferIssue` entities (and all the related logic)
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the frontend-api package:
+    -   `CartMutation` and all the related logic
+    -   `CartQuery` and all the related logic
+    -   `CreateOrderMutation` and all the related logic
+    -   see classes in the `Shopsys\FrontendApiBundle\Model\Cart` namespace
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
