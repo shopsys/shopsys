@@ -2111,6 +2111,8 @@ export type TypeQuery = {
   promotedCategories: Array<TypeCategory>;
   /** Returns promoted products */
   promotedProducts: Array<TypeProduct>;
+  /** Return recommended products from Luigi's Box by provided arguments */
+  recommendedProducts: Array<TypeProduct>;
   /** Returns SEO settings for a specific page based on the url slug of that page */
   seoPage: Maybe<TypeSeoPage>;
   /** Returns current settings */
@@ -2319,6 +2321,14 @@ export type TypeQueryProductsSearchArgs = {
 };
 
 
+export type TypeQueryRecommendedProductsArgs = {
+  itemUuids: InputMaybe<Array<Scalars['Uuid']['input']>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  recommendationType: TypeRecommendationType;
+  userIdentifier: Scalars['Uuid']['input'];
+};
+
+
 export type TypeQuerySeoPageArgs = {
   pageSlug: Scalars['String']['input'];
 };
@@ -2351,6 +2361,14 @@ export type TypeQueryTransportArgs = {
 export type TypeQueryTransportsArgs = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
+
+export enum TypeRecommendationType {
+  Basket = 'basket',
+  BasketPopup = 'basket_popup',
+  Category = 'category',
+  ItemDetail = 'item_detail',
+  Personalized = 'personalized'
+}
 
 export type TypeRecoverPasswordInput = {
   /** Customer user email. */

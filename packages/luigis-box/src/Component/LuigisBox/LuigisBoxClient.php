@@ -11,11 +11,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
+use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxRecommendationBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Symfony\Bridge\Monolog\Logger;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
 class LuigisBoxClient
@@ -26,6 +28,7 @@ class LuigisBoxClient
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum $luigisBoxEndpointEnum
+     * @param \Symfony\Component\HttpClient\TraceableHttpClient $httpClient
      */
     public function __construct(
         protected readonly string $luigisBoxApiUrl,
@@ -33,6 +36,7 @@ class LuigisBoxClient
         protected readonly Domain $domain,
         protected readonly Logger $logger,
         protected readonly LuigisBoxEndpointEnum $luigisBoxEndpointEnum,
+        protected readonly HttpClientInterface $httpClient,
     ) {
     }
 
@@ -66,18 +70,29 @@ class LuigisBoxClient
         $this->checkNecessaryConfigurationIsSet();
         $this->luigisBoxEndpointEnum->validateCase($endpoint);
 
+        $options = [
+            'headers' => [
+                'Content-Type' => 'application/json; charset=utf-8',
+            ],
+        ];
+
+        $body = $this->getBody($luigisBoxBatchLoadData);
+
+        if ($body !== []) {
+            $options['body'] = json_encode([$body], JSON_THROW_ON_ERROR);
+        }
+
         try {
-            $data = json_decode(
-                file_get_contents(
-                    $this->getLuigisBoxApiUrl(
-                        $luigisBoxBatchLoadData,
-                        $limitsByType,
-                    ),
+            $response = $this->httpClient->request(
+                $endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS ? 'POST' : 'GET',
+                $this->getLuigisBoxApiUrl(
+                    $luigisBoxBatchLoadData,
+                    $limitsByType,
                 ),
-                true,
-                512,
-                JSON_THROW_ON_ERROR,
+                $options,
             );
+
+            $data = $response->toArray();
         } catch (Throwable $e) {
             $this->logger->error(
                 'Luigi\'s Box API request failed.',
@@ -92,6 +107,10 @@ class LuigisBoxClient
 
         if ($endpoint === LuigisBoxEndpointEnum::SEARCH) {
             $data = $data['results'];
+        }
+
+        if ($endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
+            $data = reset($data);
         }
 
         return $this->getResultsIndexedByItemType($data, $endpoint, array_keys($limitsByType));
@@ -123,6 +142,10 @@ class LuigisBoxClient
             return (int)$data['exact_match_hits_count'] + (int)$data['partial_match_hits_count'];
         }
 
+        if ($endpoint === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
+            return count($data['hits']);
+        }
+
         return $data['total_hits'];
     }
 
@@ -152,7 +175,7 @@ class LuigisBoxClient
     protected function getUrlWithBasicParameters(LuigisBoxBatchLoadData $luigisBoxBatchLoadData): string
     {
         return $this->luigisBoxApiUrl .
-            $luigisBoxBatchLoadData->getEndpoint() . '/' .
+            $luigisBoxBatchLoadData->getEndpoint() .
             '?tracker_id=' . $this->getTrackerId() .
             '&hit_fields=url' .
             '&user_id=' . $luigisBoxBatchLoadData->getUserIdentifier();
@@ -222,21 +245,42 @@ class LuigisBoxClient
     }
 
     /**
-     * @param string $url
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData $luigisBoxBatchLoadData
-     * @param array<string, int> $limitsByType
-     * @return string
+     * @return array
      */
-    protected function addRecommendationsParameters(
-        string $url,
+    protected function getBody(
         LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
-        array $limitsByType,
-    ): string {
-        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
-            $url .= '&recommendation_type=' . $this->mapLimitsByTypeToLuigisBoxLimit($limitsByType);
+    ): array {
+        $body = [];
+
+        if ($luigisBoxBatchLoadData instanceof LuigisBoxRecommendationBatchLoadData) {
+            $body = $this->addRecommendationSpecificParametersToBody($body, $luigisBoxBatchLoadData);
         }
 
-        return $url;
+        return $body;
+    }
+
+    /**
+     * @param array $body
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxRecommendationBatchLoadData $luigisBoxBatchLoadData
+     * @return array
+     */
+    protected function addRecommendationSpecificParametersToBody(
+        array $body,
+        LuigisBoxBatchLoadData $luigisBoxBatchLoadData,
+    ): array {
+        if ($luigisBoxBatchLoadData->getEndpoint() === LuigisBoxEndpointEnum::RECOMMENDATIONS) {
+            $body['recommendation_type'] = $luigisBoxBatchLoadData->getType();
+            $body['user_id'] = $luigisBoxBatchLoadData->getUserIdentifier();
+            $body['size'] = $luigisBoxBatchLoadData->getLimit();
+            $body['hit_fields'] = ['url'];
+
+            if (count($luigisBoxBatchLoadData->getItemIds()) > 0) {
+                $body['item_ids'] = $luigisBoxBatchLoadData->getItemIds();
+            }
+        }
+
+        return $body;
     }
 
     /**
