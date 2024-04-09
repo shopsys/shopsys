@@ -2169,6 +2169,8 @@ export type QueryApi = {
   promotedCategories: Array<CategoryApi>;
   /** Returns promoted products */
   promotedProducts: Array<ProductApi>;
+  /** Return recommended products from Luigi's Box by provided arguments */
+  recommendedProducts: Array<ProductApi>;
   /** Returns SEO settings for a specific page based on the url slug of that page */
   seoPage: Maybe<SeoPageApi>;
   /** Returns current settings */
@@ -2377,6 +2379,14 @@ export type QueryProductsSearchArgsApi = {
 };
 
 
+export type QueryRecommendedProductsArgsApi = {
+  itemUuids: InputMaybe<Array<Scalars['Uuid']['input']>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  recommendationType: RecommendationTypeApi;
+  userIdentifier: Scalars['Uuid']['input'];
+};
+
+
 export type QuerySeoPageArgsApi = {
   pageSlug: Scalars['String']['input'];
 };
@@ -2409,6 +2419,14 @@ export type QueryTransportArgsApi = {
 export type QueryTransportsArgsApi = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
+
+export enum RecommendationTypeApi {
+  BasketApi = 'basket',
+  BasketPopupApi = 'basket_popup',
+  CategoryApi = 'category',
+  ItemDetailApi = 'item_detail',
+  PersonalizedApi = 'personalized'
+}
 
 export type RecoverPasswordInputApi = {
   /** Customer user email. */

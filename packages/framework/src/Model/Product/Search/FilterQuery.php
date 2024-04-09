@@ -35,6 +35,11 @@ class FilterQuery
     protected ?int $from = null;
 
     /**
+     * @var string[]
+     */
+    protected array $fields = [];
+
+    /**
      * @param string $indexName
      */
     public function __construct(protected readonly string $indexName)
@@ -508,7 +513,7 @@ class FilterQuery
      */
     public function getQuery(): array
     {
-        return [
+        $query = [
             'index' => $this->indexName,
             'body' => [
                 'from' => $this->from !== null ? $this->from : $this->countFrom($this->page, $this->limit),
@@ -522,6 +527,13 @@ class FilterQuery
                 ],
             ],
         ];
+
+        if ($this->fields !== []) {
+            $query['body']['_source'] = false;
+            $query['body']['fields'] = $this->fields;
+        }
+
+        return $query;
     }
 
     /**
@@ -841,5 +853,18 @@ class FilterQuery
         unset($query['body']['aggs']['parameters']);
 
         return $query;
+    }
+
+    /**
+     * @param string[] $fields
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function restrictFields(array $fields): self
+    {
+        $clone = clone $this;
+
+        $clone->fields = $fields;
+
+        return $clone;
     }
 }

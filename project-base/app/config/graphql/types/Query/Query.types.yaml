@@ -18,3 +18,4 @@ Query:
         - 'CountryQuery'
         - 'LanguageConstantQuery'
         - 'SeoPageQuery'
+        - 'RecommendationQueryDecorator'

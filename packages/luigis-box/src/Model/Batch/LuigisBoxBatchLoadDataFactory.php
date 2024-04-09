@@ -8,6 +8,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
+use Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class LuigisBoxBatchLoadDataFactory
@@ -15,10 +16,12 @@ class LuigisBoxBatchLoadDataFactory
     /**
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
      * @param \Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum $typeInLuigisBoxEnum
+     * @param \Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum $recommendationTypeEnum
      */
     public function __construct(
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
         protected readonly TypeInLuigisBoxEnum $typeInLuigisBoxEnum,
+        protected readonly RecommendationTypeEnum $recommendationTypeEnum,
     ) {
     }
 
@@ -71,5 +74,31 @@ class LuigisBoxBatchLoadDataFactory
             TypeInLuigisBoxEnum::PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
             default => [],
         };
+    }
+
+    /**
+     * @param string $type
+     * @param int $limit
+     * @param array $itemIds
+     * @param string $userIdentifier
+     * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
+     */
+    public function createForRecommendation(
+        string $type,
+        int $limit,
+        array $itemIds,
+        string $userIdentifier,
+    ): LuigisBoxBatchLoadData {
+        $this->recommendationTypeEnum->validateCase($type);
+
+        $endpoint = LuigisBoxEndpointEnum::RECOMMENDATIONS;
+
+        return new LuigisBoxRecommendationBatchLoadData(
+            $type,
+            $endpoint,
+            $userIdentifier,
+            $limit,
+            $itemIds,
+        );
     }
 }

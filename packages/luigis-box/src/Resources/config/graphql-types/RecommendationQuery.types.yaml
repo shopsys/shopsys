@@ -1,0 +1,20 @@
+RecommendationQueryDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            recommendedProducts:
+                type: '[Product!]!'
+                args:
+                    userIdentifier:
+                        type: Uuid!
+                    recommendationType:
+                        type: RecommendationType!
+                    limit:
+                        type: Int
+                        defaultValue: 10
+                    itemUuids:
+                        type: '[Uuid!]'
+                        description: "For type 'category' provide one category UUID, for other types provide product UUIDs"
+                resolve: "@=query('recommendationQuery', args)"
+                description: "Return recommended products from Luigi's Box by provided arguments"
