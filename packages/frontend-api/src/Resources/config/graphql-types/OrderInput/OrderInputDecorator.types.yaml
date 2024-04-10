@@ -147,7 +147,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 100
                             maxMessage: "First name of contact person cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryLastName:
                 type: "String"
                 description: "Last name of the contact person for delivery (required when differentDeliveryAddress is true)"
@@ -158,7 +157,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 100
                             maxMessage: "Last name of contact person cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryCompanyName:
                 type: "String"
                 description: "Company name for delivery"
@@ -166,7 +164,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 100
                             maxMessage: "Company name cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryTelephone:
                 type: "String"
                 description: "Contact telephone number for delivery"
@@ -174,7 +171,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 30
                             maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryStreet:
                 type: "String"
                 description: "Street name for delivery (required when differentDeliveryAddress is true)"
@@ -185,7 +181,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 100
                             maxMessage: "Street name cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryCity:
                 type: "String"
                 description: "City name for delivery (required when differentDeliveryAddress is true)"
@@ -196,7 +191,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 100
                             maxMessage: "City name cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryPostcode:
                 type: "String"
                 description: "Zip code for delivery (required when differentDeliveryAddress is true)"
@@ -207,7 +201,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 30
                             maxMessage: "Zip code cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryCountry:
                 type: "String"
                 description: "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)"
@@ -216,7 +209,6 @@ OrderInputDecorator:
                             message: "Please choose country"
                             groups: "differentDeliveryAddress"
                     -   Shopsys\FrameworkBundle\Form\Constraints\Country:
-                            groups: "differentDeliveryAddress"
 
             note:
                 type: "String"
