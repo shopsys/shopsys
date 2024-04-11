@@ -6,7 +6,7 @@ type NativeProps = ExtractNativePropsFromDefault<FormHTMLAttributes<HTMLFormElem
 
 type FormProps = NativeProps;
 
-export const Form: FC<FormProps> = ({ onSubmit, style, children, className }) => {
+export const Form: FC<FormProps> = ({ onSubmit, style, children, className, tid }) => {
     const formProviderMethods = useFormContext();
     const controlledOnSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -19,7 +19,7 @@ export const Form: FC<FormProps> = ({ onSubmit, style, children, className }) =>
     };
 
     return (
-        <form noValidate className={className} style={style} onSubmit={controlledOnSubmitHandler}>
+        <form noValidate className={className} style={style} tid={tid} onSubmit={controlledOnSubmitHandler}>
             {children}
         </form>
     );

@@ -22,7 +22,7 @@ describe('Create order with delivery address tests', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillBillingInfoForDeliveryAddressTests();
     });
 
@@ -90,7 +90,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
 
@@ -122,7 +122,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
 
@@ -151,7 +151,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
             'first-select-saved-then-fill-and-keep-filled-after-refresh@shopsys.com',
         );
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
 
@@ -179,7 +179,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
             'first-select-saved-then-change-to-new-then-to-saved-and-to-new-again@shopsys.com',
         );
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
 
@@ -216,7 +216,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
         cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
         cy.preselectPaymentForTest(payment.cash.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillBillingInfoForDeliveryAddressTests();
     });
 
@@ -284,7 +284,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
             payment.cash.uuid,
         );
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
 
@@ -314,7 +314,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
             payment.cash.uuid,
         );
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
 
