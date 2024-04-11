@@ -52,6 +52,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   if you had no custom changes in the moved features, you should be fine, you can safely remove the features from your project and use the ones from the packages (project-base diff in each section will help you with that)
     -   if you had custom changes in the moved features, you will need to adjust your project to the changes
         -   you should remove everything that was not modified in your project and keep just the custom changes using the recommended ways of the [framework extensibility](https://docs.shopsys.com/en/latest/extensibility/)
+    -   one way or another, you should pay a special attention to the database migrations that were added with the feature movement. If they suit your needs, you should keep them and remove the original migrations from your project, otherwise, you should skip the newly added migrations.
 
 <!-- Insert upgrade instructions in the following format:
 - general instruction ([#<PR number>](https://github.com/shopsys/shopsys/pull/<PR number>))

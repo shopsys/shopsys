@@ -7,6 +7,7 @@ namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\Migrations\Query\Query;
+use Exception;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 
 abstract class AbstractMigration extends DoctrineAbstractMigration
@@ -81,10 +82,15 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         $isAppMigrationNotInstalled = $this->isAppMigrationNotInstalled($version);
 
         if (!$isAppMigrationNotInstalled) {
+            $appMigrationVersion = $this->prefixAppMigrationVersion($version);
             $this->sql(
                 'DELETE FROM migrations WHERE version = :version;',
-                ['version' => $this->prefixAppMigrationVersion($version)],
+                ['version' => $appMigrationVersion],
             );
+
+            if (class_exists($appMigrationVersion)) {
+                throw new Exception(sprintf('%s migration file must be removed as the migration is now replaced by %s', $appMigrationVersion, static::class));
+            }
         }
 
         return $isAppMigrationNotInstalled;
