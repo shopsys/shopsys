@@ -8,6 +8,7 @@ OrderInputDecorator:
             -   Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder: ~
             -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder: ~
             -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
+            -   Shopsys\FrontendApiBundle\Component\Constraints\DeliveryAddressUuid: ~
         fields:
             cartUuid:
                 type: "Uuid"
