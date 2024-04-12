@@ -106,7 +106,7 @@ class Version20231228112326 extends AbstractMigration
                 ADD CONSTRAINT FK_B3CF6BD538248176 FOREIGN KEY (currency_id) REFERENCES currencies (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         }
 
-        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20230224083344')) {
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20230226100142')) {
             $this->sql('ALTER TABLE gopay_payment_methods ALTER currency_id SET NOT NULL');
         }
     }

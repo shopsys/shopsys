@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
 use phpDocumentor\Reflection\DocBlock\Tags\TagWithType;
 use phpDocumentor\Reflection\DocBlockFactory;
+use phpDocumentor\Reflection\DocBlockFactoryInterface;
 use phpDocumentor\Reflection\Type;
 use Roave\BetterReflection\Reflection\ReflectionParameter;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
@@ -13,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\Exception\DocBlockParserAmb
 
 class DocBlockParser
 {
-    protected DocBlockFactory $docBlockFactory;
+    protected DocBlockFactory|DocBlockFactoryInterface $docBlockFactory;
 
     public function __construct()
     {
