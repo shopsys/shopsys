@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
-enum ProductRecalculationPriorityEnum: string implements ProductRecalculationPriorityEnumInterface
+use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
+
+class ProductRecalculationPriorityEnum extends AbstractEnum
 {
-    case HIGH = 'high';
-    case REGULAR = 'regular';
+    public const string HIGH = 'high';
+    public const string REGULAR = 'regular';
 
     /**
      * @return string
      */
-    public static function getPipeSeparatedValues(): string
+    public function getPipeSeparatedValues(): string
     {
-        return implode('|', array_column(self::cases(), 'value'));
+        return implode('|', $this->getAllCases());
     }
 }

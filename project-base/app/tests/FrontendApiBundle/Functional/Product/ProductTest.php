@@ -192,7 +192,7 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'availability' => [
                         'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'status' => AvailabilityStatusEnum::InStock->name,
+                        'status' => AvailabilityStatusEnum::IN_STOCK,
                     ],
                     'stockQuantity' => 2700,
                     'categories' => [
@@ -385,13 +385,13 @@ class ProductTest extends GraphQlTestCase
                                 'name' => 'Ostrava',
                             ],
                             'availabilityInformation' => t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
+                            'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                         ], [
                             'store' => [
                                 'name' => 'Pardubice',
                             ],
                             'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
+                            'availabilityStatus' => AvailabilityStatusEnum::IN_STOCK,
                         ],
                     ],
                     'availableStoresCount' => 1,

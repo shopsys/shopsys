@@ -134,11 +134,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      */
     public function getStoreAvailabilities(array $data): array
     {
-        // after update graphql bundle (to v1 - support php8.1) we can expose availability status as enum
-        //        foreach ($data['store_availabilities_information'] as $storeIndex => $storeAvailabilitiesInformation) {
-        //            $data['store_availabilities_information'][$storeIndex]['availability_status'] = AvailabilityStatusEnum::from($storeAvailabilitiesInformation['availability_status']);
-        //        }
-
         return $data['store_availabilities_information'];
     }
 

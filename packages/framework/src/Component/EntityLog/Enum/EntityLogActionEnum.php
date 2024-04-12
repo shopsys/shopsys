@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Enum;
 
-enum EntityLogActionEnum: string implements EntityLogActionEnumInterface
+use Shopsys\FrameworkBundle\Component\Enum\AbstractEnum;
+
+class EntityLogActionEnum extends AbstractEnum
 {
-    case CREATE = 'create';
-    case UPDATE = 'update';
-    case DELETE = 'delete';
+    public const string CREATE = 'create';
+    public const string UPDATE = 'update';
+    public const string DELETE = 'delete';
 }

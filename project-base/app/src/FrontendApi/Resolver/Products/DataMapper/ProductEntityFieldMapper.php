@@ -230,7 +230,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
                 'store_name' => $storeAvailabilityInformation->getStoreName(),
                 'store_id' => $storeAvailabilityInformation->getStoreId(),
                 'availability_information' => $storeAvailabilityInformation->getAvailabilityInformation(),
-                'availability_status' => $storeAvailabilityInformation->getAvailabilityStatus()->value,
+                'availability_status' => $storeAvailabilityInformation->getAvailabilityStatus(),
             ];
         }
 

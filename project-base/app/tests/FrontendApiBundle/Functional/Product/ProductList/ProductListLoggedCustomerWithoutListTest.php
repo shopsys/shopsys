@@ -7,7 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -18,13 +17,13 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      */
     public function testFindProductListForCustomerUserWithoutProductListReturnsNull(
-        ProductListTypeEnum $productListType,
+        string $productListType,
     ): void {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListQuery.graphql', [
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
 
         $this->assertNull($response['data']['productList']);
@@ -32,13 +31,13 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      */
     public function testGetProductListsForCustomerUserWithoutProductListReturnsEmptyArray(
-        ProductListTypeEnum $productListType,
+        string $productListType,
     ): void {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListsByTypeQuery.graphql', [
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
 
         $this->assertEmpty($response['data']['productListsByType']);
@@ -46,31 +45,31 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      */
-    public function testAddProductCreatesNewList(ProductListTypeEnum $productListType): void
+    public function testAddProductCreatesNewList(string $productListType): void
     {
         $productToAddId = 69;
         $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId, Product::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $productToAdd->getUuid(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'AddProductToList');
 
-        $this->assertSame($productListType->name, $data['type']);
+        $this->assertSame($productListType, $data['type']);
         $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
     }
 
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      */
-    public function testRemoveProductFromListProductListNotFoundUserError(ProductListTypeEnum $productListType): void
+    public function testRemoveProductFromListProductListNotFoundUserError(string $productListType): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
             'productUuid' => Uuid::uuid4()->toString(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
 
         $this->assertResponseContainsArrayOfErrors($response);
@@ -81,46 +80,46 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      */
-    public function testRemoveProductFromList(ProductListTypeEnum $productListType): void
+    public function testRemoveProductFromList(string $productListType): void
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2, Product::class);
         $addProductResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $product1->getUuid(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
         $productListUuid = $this->getResponseDataForGraphQlType($addProductResponse, 'AddProductToList')['uuid'];
         $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $product2->getUuid(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
             'productUuid' => $product2->getUuid(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'RemoveProductFromList');
 
         $this->assertSame($productListUuid, $data['uuid']);
-        $this->assertSame($productListType->name, $data['type']);
+        $this->assertSame($productListType, $data['type']);
         $this->assertSame([$product1->getId()], array_column($data['products'], 'id'));
     }
 
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $productListType
      */
-    public function testRemoveLastProductFromList(ProductListTypeEnum $productListType): void
+    public function testRemoveLastProductFromList(string $productListType): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
         $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
             'productUuid' => $product->getUuid(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
             'productUuid' => $product->getUuid(),
-            'type' => $productListType->name,
+            'type' => $productListType,
         ]);
 
         $this->assertNull($response['data']['RemoveProductFromList']);
