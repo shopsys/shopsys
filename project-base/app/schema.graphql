@@ -1130,19 +1130,19 @@ input OrderInput {
   country: String!
   "Delivery address identifier"
   deliveryAddressUuid: Uuid = null
-  "City name for delivery (required when differentDeliveryAddress is true)"
+  "City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryCity: String
   "Company name for delivery"
   deliveryCompanyName: String
-  "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)"
+  "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryCountry: String
-  "First name of the contact person for delivery (required when differentDeliveryAddress is true)"
+  "First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryFirstName: String
-  "Last name of the contact person for delivery (required when differentDeliveryAddress is true)"
+  "Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryLastName: String
-  "Zip code for delivery (required when differentDeliveryAddress is true)"
+  "Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryPostcode: String
-  "Street name for delivery (required when differentDeliveryAddress is true)"
+  "Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryStreet: String
   "Contact telephone number for delivery"
   deliveryTelephone: String

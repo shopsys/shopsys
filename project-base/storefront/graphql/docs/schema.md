@@ -8994,7 +8994,7 @@ Delivery address identifier
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-City name for delivery (required when differentDeliveryAddress is true)
+City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9012,7 +9012,7 @@ Company name for delivery
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)
+Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9021,7 +9021,7 @@ Country code in ISO 3166-1 alpha-2 for delivery (required when differentDelivery
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-First name of the contact person for delivery (required when differentDeliveryAddress is true)
+First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9030,7 +9030,7 @@ First name of the contact person for delivery (required when differentDeliveryAd
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Last name of the contact person for delivery (required when differentDeliveryAddress is true)
+Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9039,7 +9039,7 @@ Last name of the contact person for delivery (required when differentDeliveryAdd
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Zip code for delivery (required when differentDeliveryAddress is true)
+Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9048,7 +9048,7 @@ Zip code for delivery (required when differentDeliveryAddress is true)
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Street name for delivery (required when differentDeliveryAddress is true)
+Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
