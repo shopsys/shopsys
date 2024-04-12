@@ -1128,7 +1128,7 @@ input OrderInput {
   companyTaxNumber: String
   "Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"
   country: String!
-  "Delivery address identifier"
+  "Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.)"
   deliveryAddressUuid: Uuid = null
   "City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryCity: String

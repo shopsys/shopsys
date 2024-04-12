@@ -1458,7 +1458,7 @@ export type TypeOrderInput = {
   companyTaxNumber: InputMaybe<Scalars['String']['input']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String']['input'];
-  /** Delivery address identifier */
+  /** Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.) */
   deliveryAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryCity: InputMaybe<Scalars['String']['input']>;

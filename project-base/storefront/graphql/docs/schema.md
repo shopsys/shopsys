@@ -8985,7 +8985,7 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
-Delivery address identifier
+Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.)
 
 </td>
 </tr>

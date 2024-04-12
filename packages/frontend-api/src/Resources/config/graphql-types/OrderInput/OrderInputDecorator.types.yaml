@@ -136,7 +136,7 @@ OrderInputDecorator:
                 description: "Determines whether to deliver products to a different address than the billing one"
             deliveryAddressUuid:
                 type: "Uuid"
-                description: "Delivery address identifier"
+                description: "Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.)"
                 defaultValue: null
             deliveryFirstName:
                 type: "String"
