@@ -797,6 +797,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   `Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS` constant was renamed to `VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS_WITHOUT_PRESELECTED`
 -   see #project-base-diff to update your project
 
+#### dispatch product stocks export after Setting::TRANSFER_DAYS_BETWEEN_STOCKS is set ([#3104](https://github.com/shopsys/shopsys/pull/3104))
+
+-   `Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade::__construct` interface has changed:
+    ```diff
+        public function __construct(
+            // ...
+    +       protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+    ```
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
