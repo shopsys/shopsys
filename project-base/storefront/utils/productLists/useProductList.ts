@@ -21,6 +21,7 @@ export const useProductList = (
     },
 ) => {
     const productListUuids = usePersistStore((s) => s.productListUuids);
+    const authLoading = usePersistStore((s) => s.authLoading);
     const updateProductListUuid = useUpdateProductListUuid(productListType);
     const productListUuid = productListUuids[productListType] ?? null;
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -36,7 +37,7 @@ export const useProductList = (
                 uuid: productListUuid,
             },
         },
-        pause: !productListUuid && !isUserLoggedIn,
+        pause: (!productListUuid && !isUserLoggedIn) || authLoading !== null,
     });
 
     useEffect(() => {
