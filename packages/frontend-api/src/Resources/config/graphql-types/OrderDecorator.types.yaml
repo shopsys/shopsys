@@ -109,3 +109,6 @@ OrderDecorator:
             isPaid:
                 type: "Boolean!"
                 description: "Indicates whether the order is paid successfully with GoPay payment type"
+            heurekaAgreement:
+                type: "Boolean!"
+                description: "Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program"

@@ -57,6 +57,7 @@ class FullOrderTest extends GraphQlTestCase
                 'note' => 'Thank You',
                 'paymentTransactionsCount' => 0,
                 'isPaid' => false,
+                'heurekaAgreement' => true,
             ],
         ];
 
@@ -103,6 +104,7 @@ class FullOrderTest extends GraphQlTestCase
             'deliveryCity' => 'deliveryCity',
             'deliveryCountry' => 'SK',
             'deliveryPostcode' => '13453',
+            'heurekaAgreement' => true,
         ]);
 
         return $this->getResponseDataForGraphQlType($response, 'CreateOrder');

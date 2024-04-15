@@ -5148,6 +5148,15 @@ The customer's first name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>heurekaAgreement</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isPaid</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -9072,6 +9081,15 @@ The customer's email address
 <td>
 
 The customer's first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>heurekaAgreement</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program
 
 </td>
 </tr>

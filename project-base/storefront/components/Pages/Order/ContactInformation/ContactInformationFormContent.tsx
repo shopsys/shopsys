@@ -23,6 +23,7 @@ export const ContactInformationFormContent: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
+    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
 
     return (
         <div className="overflow-hidden transition-all" ref={cssTransitionRef}>
@@ -64,16 +65,17 @@ export const ContactInformationFormContent: FC = () => {
                     }}
                 />
 
-                <CheckboxControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.isWithoutHeurekaAgreement.name}
-                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                    checkboxProps={{
-                        label: formMeta.fields.isWithoutHeurekaAgreement.label,
-                    }}
-                    onChange={(event) => updateContactInformation({ isWithoutHeurekaAgreement: event.target.checked })}
-                />
+                {settingsData?.settings?.heurekaEnabled && (
+                    <CheckboxControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.isWithoutHeurekaAgreement.name}
+                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                        checkboxProps={{
+                            label: formMeta.fields.isWithoutHeurekaAgreement.label,
+                        }}
+                    />
+                )}
             </div>
         </div>
     );

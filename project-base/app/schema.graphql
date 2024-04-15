@@ -1071,6 +1071,8 @@ type Order {
   email: String!
   "The customer's first name"
   firstName: String
+  "Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program"
+  heurekaAgreement: Boolean!
   "Indicates whether the order is paid successfully with GoPay payment type"
   isPaid: Boolean!
   "All items in the order including payment and transport"
@@ -1169,6 +1171,8 @@ input OrderInput {
   email: String!
   "The customer's first name"
   firstName: String!
+  "Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program"
+  heurekaAgreement: Boolean! = false
   "The customer's last name"
   lastName: String!
   "Allows user to subscribe/unsubscribe newsletter."

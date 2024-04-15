@@ -1399,6 +1399,8 @@ export type TypeOrder = {
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
+  heurekaAgreement: Scalars['Boolean']['output'];
   /** Indicates whether the order is paid successfully with GoPay payment type */
   isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
@@ -1499,6 +1501,8 @@ export type TypeOrderInput = {
   email: Scalars['String']['input'];
   /** The customer's first name */
   firstName: Scalars['String']['input'];
+  /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
+  heurekaAgreement: Scalars['Boolean']['input'];
   /** The customer's last name */
   lastName: Scalars['String']['input'];
   /** Allows user to subscribe/unsubscribe newsletter. */
