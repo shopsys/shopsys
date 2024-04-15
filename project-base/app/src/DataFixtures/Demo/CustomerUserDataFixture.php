@@ -21,35 +21,38 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInt
 
 class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
+    public const string USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
+    public const string USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL = 'vitek@shopsys.com';
+    public const string DELIVERY_ADDRESS_PERSISTENT_REFERENCE = 'delivery_address_persistent_reference';
 
-    public const CUSTOMER_PREFIX = 'customer_';
+    public const string CUSTOMER_PREFIX = 'customer_';
 
-    private const KEY_CUSTOMER_USER_DATA = 'customerUserData';
-    private const KEY_BILLING_ADDRESS = 'billingAddress';
-    private const KEY_DELIVERY_ADDRESS = 'deliveryAddress';
+    private const string KEY_CUSTOMER_USER_DATA = 'customerUserData';
+    private const string KEY_BILLING_ADDRESS = 'billingAddress';
+    private const string KEY_DELIVERY_ADDRESS = 'deliveryAddress';
 
-    private const KEY_CUSTOMER_USER_DATA_FIRST_NAME = 'firstName';
-    private const KEY_CUSTOMER_USER_DATA_LAST_NAME = 'lastName';
-    private const KEY_CUSTOMER_USER_DATA_EMAIL = 'email';
-    private const KEY_CUSTOMER_USER_DATA_PASSWORD = 'password';
-    private const KEY_CUSTOMER_USER_DATA_TELEPHONE = 'telephone';
-    private const KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION = 'newsletterSubscription';
-    private const KEY_CUSTOMER_USER_DATA_UUID = 'uuid';
+    private const string KEY_CUSTOMER_USER_DATA_FIRST_NAME = 'firstName';
+    private const string KEY_CUSTOMER_USER_DATA_LAST_NAME = 'lastName';
+    private const string KEY_CUSTOMER_USER_DATA_EMAIL = 'email';
+    private const string KEY_CUSTOMER_USER_DATA_PASSWORD = 'password';
+    private const string KEY_CUSTOMER_USER_DATA_TELEPHONE = 'telephone';
+    private const string KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION = 'newsletterSubscription';
+    private const string KEY_CUSTOMER_USER_DATA_UUID = 'uuid';
 
-    private const KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
-    private const KEY_ADDRESS_COMPANY_NAME = 'companyName';
-    private const KEY_ADDRESS_COMPANY_NUMBER = 'companyNumber';
-    private const KEY_ADDRESS_COMPANY_TAX_NUMBER = 'companyTaxNumber';
-    private const KEY_ADDRESS_STREET = 'street';
-    private const KEY_ADDRESS_CITY = 'city';
-    private const KEY_ADDRESS_POSTCODE = 'postcode';
-    private const KEY_ADDRESS_COUNTRY = 'country';
-    private const KEY_ADDRESS_ADDRESS_FILLED = 'addressFilled';
-    private const KEY_ADDRESS_TELEPHONE = 'telephone';
-    private const KEY_ADDRESS_FIRST_NAME = 'firstName';
-    private const KEY_ADDRESS_LAST_NAME = 'lastName';
-    private const KEY_ADDRESS_UUID = 'uuid';
+    private const string KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
+    private const string KEY_ADDRESS_COMPANY_NAME = 'companyName';
+    private const string KEY_ADDRESS_COMPANY_NUMBER = 'companyNumber';
+    private const string KEY_ADDRESS_COMPANY_TAX_NUMBER = 'companyTaxNumber';
+    private const string KEY_ADDRESS_STREET = 'street';
+    private const string KEY_ADDRESS_CITY = 'city';
+    private const string KEY_ADDRESS_POSTCODE = 'postcode';
+    private const string KEY_ADDRESS_COUNTRY = 'country';
+    private const string KEY_ADDRESS_ADDRESS_FILLED = 'addressFilled';
+    private const string KEY_ADDRESS_TELEPHONE = 'telephone';
+    private const string KEY_ADDRESS_FIRST_NAME = 'firstName';
+    private const string KEY_ADDRESS_LAST_NAME = 'lastName';
+    private const string KEY_ADDRESS_UUID = 'uuid';
+    public const string DELIVERY_ADDRESS_PERSISTENT_REFERENCE_UUID = 'd5595a22-cb85-4c05-846e-8475f09229ef';
 
     /**
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -93,6 +96,10 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 
                 $this->addReference(self::CUSTOMER_PREFIX . $customerUser->getId(), $customerUser);
+
+                if ($customerUser->getDefaultDeliveryAddress()?->getUuid() === self::DELIVERY_ADDRESS_PERSISTENT_REFERENCE_UUID) {
+                    $this->addReference(self::DELIVERY_ADDRESS_PERSISTENT_REFERENCE, $customerUser->getDefaultDeliveryAddress());
+                }
 
                 if ($customerUser->getId() !== 1) {
                     continue;
@@ -254,7 +261,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_CUSTOMER_USER_DATA => [
                     self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Rostislav',
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Vítek',
-                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'vitek@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => false,
@@ -280,7 +287,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_STREET => 'Rudná 15',
                     self::KEY_ADDRESS_TELEPHONE => '123456789',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                    self::KEY_ADDRESS_UUID => 'd5595a22-cb85-4c05-846e-8475f09229ef',
+                    self::KEY_ADDRESS_UUID => self::DELIVERY_ADDRESS_PERSISTENT_REFERENCE_UUID,
                 ],
             ],
             [

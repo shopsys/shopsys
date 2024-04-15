@@ -79,7 +79,7 @@ class OrderDataFactory
 
         $cloneOrderData->country = $this->countryFacade->findByCode($input['country']);
 
-        if ($input['differentDeliveryAddress']) {
+        if ($input['differentDeliveryAddress'] && array_key_exists('deliveryCountry', $input)) {
             $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
         }
 

@@ -34,16 +34,8 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
      */
     public function load(ObjectManager $manager)
     {
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier(self::CART_UUID);
-        $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
-
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
-        $this->updateCartItemUuid($result->getCartItem()->getId(), '5096bd50-45e1-40a6-bbe8-6192592feb56');
-
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
-        $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
-        $this->updateCartItemUuid($result->getCartItem()->getId(), 'f0d0cb7c-f873-4107-8187-f733d292b02f');
+        $this->createAnonymousCart();
+        $this->createCartForCustomerUser();
     }
 
     /**
@@ -53,6 +45,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
     {
         return [
             ProductDataFixture::class,
+            CustomerUserDataFixture::class,
         ];
     }
 
@@ -72,5 +65,29 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
                 ),
             )
             ->execute();
+    }
+
+    private function createAnonymousCart(): void
+    {
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier(self::CART_UUID);
+        $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
+        $this->updateCartItemUuid($result->getCartItem()->getId(), '5096bd50-45e1-40a6-bbe8-6192592feb56');
+
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
+        $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
+        $this->updateCartItemUuid($result->getCartItem()->getId(), 'f0d0cb7c-f873-4107-8187-f733d292b02f');
+    }
+
+    private function createCartForCustomerUser(): void
+    {
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . '6'));
+        $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $result = $this->cartFacade->addProductToExistingCart($product, 1, $cart);
+        $this->updateCartItemUuid($result->getCartItem()->getId(), '37b71f81-3b14-4ce9-ae7d-9c8465c13464');
     }
 }

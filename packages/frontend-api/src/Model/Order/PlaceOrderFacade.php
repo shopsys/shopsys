@@ -86,6 +86,10 @@ class PlaceOrderFacade
             $promoCode,
         );
 
+        if ($deliveryAddress !== null) {
+            $this->setOrderDataDeliveryFieldsByDeliveryAddress($deliveryAddress, $orderData);
+        }
+
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
 
         if ($customerUser instanceof CustomerUser) {
@@ -156,5 +160,23 @@ class PlaceOrderFacade
         $deliveryAddressData->customer = $order->getCustomerUser()?->getCustomer();
 
         return $this->deliveryAddressFactory->create($deliveryAddressData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     */
+    protected function setOrderDataDeliveryFieldsByDeliveryAddress(
+        DeliveryAddress $deliveryAddress,
+        OrderData $orderData,
+    ): void {
+        $orderData->deliveryFirstName = $deliveryAddress->getFirstName();
+        $orderData->deliveryLastName = $deliveryAddress->getLastName();
+        $orderData->deliveryCompanyName = $deliveryAddress->getCompanyName();
+        $orderData->deliveryTelephone = $deliveryAddress->getTelephone();
+        $orderData->deliveryStreet = $deliveryAddress->getStreet();
+        $orderData->deliveryCity = $deliveryAddress->getCity();
+        $orderData->deliveryPostcode = $deliveryAddress->getPostcode();
+        $orderData->deliveryCountry = $deliveryAddress->getCountry();
     }
 }

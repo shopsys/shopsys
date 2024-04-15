@@ -16,6 +16,7 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFaca
  * @method \App\Model\Order\Order placeOrder(\App\Model\Order\OrderData $orderData, array $quantifiedProducts, \App\Model\Order\PromoCode\PromoCode|null $promoCode = null, \App\Model\Customer\DeliveryAddress|null $deliveryAddress = null)
  * @method string|null getPromoCodeDiscountPercent(\Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts, \App\Model\Order\PromoCode\PromoCode|null $promoCode)
  * @method \App\Model\Customer\DeliveryAddress|null createDeliveryAddressForAmendingCustomerUserData(\App\Model\Order\Order $order)
+ * @method setOrderDataDeliveryFieldsByDeliveryAddress(\App\Model\Customer\DeliveryAddress $deliveryAddress, \App\Model\Order\OrderData $orderData)
  */
 class PlaceOrderFacade extends BasePlaceOrderFacade
 {

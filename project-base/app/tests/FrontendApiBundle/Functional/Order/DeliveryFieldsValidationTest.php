@@ -21,6 +21,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         'city' => 'Springfield',
         'postcode' => '12345',
         'country' => 'CZ',
+        'onCompanyBehalf' => false,
     ];
 
     public function testValidationErrorWhenDifferentDeliveryAddressIsTrueAndFieldsAreMissing(): void
@@ -67,7 +68,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
 
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateOrderWithDeliveryAddressValidationMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
             'differentDeliveryAddress' => true,
         ]);
@@ -80,7 +81,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
     {
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateOrderWithDeliveryAddressValidationMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
             'differentDeliveryAddress' => false,
         ]);
@@ -91,7 +92,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
     {
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateOrderWithDeliveryAddressValidationMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
             'differentDeliveryAddress' => true,
             'deliveryAddressUuid' => '00000000-0000-0000-0000-000000000000',
