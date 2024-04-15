@@ -184,6 +184,9 @@ msgstr "Doprava musí být vybrána před odesláním objednávky"
 msgid "Transport with provided UUID is not available"
 msgstr "Doprava se zadaným UUID není dostupná"
 
+msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
+msgstr "Musíte být přihlášen, pokud chcete poskytnout UUID dodací adresy jako vstup pro vytvoření objednávky"
+
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 

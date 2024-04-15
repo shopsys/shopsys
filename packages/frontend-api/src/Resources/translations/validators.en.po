@@ -184,6 +184,9 @@ msgstr ""
 msgid "Transport with provided UUID is not available"
 msgstr ""
 
+msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
+msgstr ""
+
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
 
