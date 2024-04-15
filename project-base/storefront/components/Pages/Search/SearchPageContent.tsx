@@ -12,7 +12,7 @@ import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchS
 export const SearchPageContent: FC = () => {
     const { t } = useTranslation();
     const searchString = useCurrentSearchStringQuery();
-    const userIdentifier = usePersistStore((state) => state.userId);
+    const userIdentifier = usePersistStore((state) => state.userIdentifier);
 
     const [{ data: searchData, fetching }] = useSearchQuery({
         variables: {

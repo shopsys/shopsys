@@ -9,8 +9,8 @@ import { v4 as uuidV4 } from 'uuid';
 export const useSetInitialStoreValues = ({ cookiesStore }: ServerSidePropsType) => {
     const isStoreSet = useRef(false);
 
-    const userId = usePersistStore((store) => store.userId);
-    const updateUserId = usePersistStore((store) => store.updateUserId);
+    const userIdentifier = usePersistStore((store) => store.userIdentifier);
+    const updateUserIdentifier = usePersistStore((store) => store.updateUserIdentifier);
     const setCookieStoreValue = useCookiesStore((state) => state.setCookiesStoreState);
 
     const setCookiesStoresValues = () => {
@@ -20,8 +20,8 @@ export const useSetInitialStoreValues = ({ cookiesStore }: ServerSidePropsType) 
     };
 
     const setPersistStoreValues = () => {
-        if (!userId) {
-            updateUserId(uuidV4());
+        if (!userIdentifier) {
+            updateUserIdentifier(uuidV4());
         }
     };
 

@@ -31,7 +31,7 @@ export const AutocompleteSearch: FC = () => {
     const [searchData, setSearchData] = useState<TypeAutocompleteSearchQuery>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
-    const userIdentifier = usePersistStore((store) => store.userId)!;
+    const userIdentifier = usePersistStore((store) => store.userIdentifier)!;
 
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;

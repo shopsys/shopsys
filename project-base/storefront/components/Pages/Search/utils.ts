@@ -38,7 +38,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
     const [isFetching, setIsFetching] = useState(!searchProductsData);
     const [isLoadMoreFetching, setIsLoadMoreFetching] = useState(false);
 
-    const userIdentifier = usePersistStore((store) => store.userId)!;
+    const userIdentifier = usePersistStore((store) => store.userIdentifier)!;
 
     const fetchProducts = async (
         variables: TypeSearchProductsQueryVariables,
