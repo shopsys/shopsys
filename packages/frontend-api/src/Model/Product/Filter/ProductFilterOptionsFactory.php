@@ -111,6 +111,24 @@ class ProductFilterOptionsFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
+     */
+    public function createFullProductFilterOptions(
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
+        ProductFilterData $productFilterData,
+    ): ProductFilterOptions {
+        $productFilterOptions = $this->createProductFilterOptions($productFilterConfig, $productFilterCountData, $productFilterData);
+        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+        $this->fillParameters($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+
+        return $productFilterOptions;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $searchText
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions

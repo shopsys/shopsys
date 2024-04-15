@@ -22,6 +22,8 @@ use Throwable;
 
 class LuigisBoxClient
 {
+    protected const int COUNT_OF_DYNAMIC_PARAMETER_FILTERS = 5;
+
     /**
      * @param string $luigisBoxApiUrl
      * @param array $trackerIdsByDomainIds
@@ -199,7 +201,8 @@ class LuigisBoxClient
                 '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
-                '&from=' . $luigisBoxBatchLoadData->getPage();
+                '&from=' . $luigisBoxBatchLoadData->getPage() .
+                '&dynamic_facets_size=' . static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS;
             $url .= $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
 
             if (count($luigisBoxBatchLoadData->getFacetNames()) > 0) {

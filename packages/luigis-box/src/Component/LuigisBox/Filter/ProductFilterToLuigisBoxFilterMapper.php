@@ -46,6 +46,7 @@ class ProductFilterToLuigisBoxFilterMapper
         $luigisBoxFilter = $this->mapAvailability($productFilterData, $luigisBoxFilter);
         $luigisBoxFilter = $this->mapFlags($productFilterData, $luigisBoxFilter, $domain->getLocale());
         $luigisBoxFilter = $this->mapBrands($productFilterData, $luigisBoxFilter);
+        $luigisBoxFilter = $this->mapParameters($productFilterData, $luigisBoxFilter);
 
         return $luigisBoxFilter;
     }
@@ -115,10 +116,8 @@ class ProductFilterToLuigisBoxFilterMapper
      */
     protected function mapFlags(ProductFilterData $productFilterData, array $luigisBoxFilter, string $locale): array
     {
-        if (count($productFilterData->flags) > 0) {
-            foreach ($productFilterData->flags as $flag) {
-                $luigisBoxFilter[self::FILTER_OR][] = 'labels:' . $flag->getName($locale);
-            }
+        foreach ($productFilterData->flags as $flag) {
+            $luigisBoxFilter[self::FILTER_OR][] = 'labels:' . $flag->getName($locale);
         }
 
         return $luigisBoxFilter;
@@ -131,9 +130,23 @@ class ProductFilterToLuigisBoxFilterMapper
      */
     protected function mapBrands(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
-        if (count($productFilterData->brands) > 0) {
-            foreach ($productFilterData->brands as $brand) {
-                $luigisBoxFilter[self::FILTER_OR][] = 'brand:' . $brand->getName();
+        foreach ($productFilterData->brands as $brand) {
+            $luigisBoxFilter[self::FILTER_OR][] = 'brand:' . $brand->getName();
+        }
+
+        return $luigisBoxFilter;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param array $luigisBoxFilter
+     * @return array
+     */
+    protected function mapParameters(ProductFilterData $productFilterData, array $luigisBoxFilter): array
+    {
+        foreach ($productFilterData->parameters as $parameterFilterData) {
+            foreach ($parameterFilterData->values as $parameterValue) {
+                $luigisBoxFilter[self::FILTER_OR][] = $parameterFilterData->parameter->getName() . ':' . $parameterValue->getText();
             }
         }
 
