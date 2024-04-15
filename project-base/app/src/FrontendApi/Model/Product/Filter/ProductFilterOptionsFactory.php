@@ -148,7 +148,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterCountData,
             $productFilterData,
         );
-        $this->fillParameters(
+        $this->fillParametersForCategory(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
@@ -195,7 +195,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\Model\Category\Category|null $category
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      */
-    protected function fillParameters(
+    protected function fillParametersForCategory(
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
@@ -243,6 +243,58 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 $parameterValueFilterOptions,
                 in_array($parameter, $collapsedParameters, true),
                 $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice),
+                $isSliderSelectable,
+            );
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     */
+    protected function fillParameters(
+        ProductFilterOptions $productFilterOptions,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
+        ProductFilterData $productFilterData,
+    ): void {
+        foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            $parameter = $parameterFilterChoice->getParameter();
+            $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
+
+            $parameterValueFilterOptions = [];
+
+            $isSliderSelectable = false;
+
+            foreach ($parameterFilterChoice->getValues() as $parameterValue) {
+                /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
+                $parameterValueCount = $this->getParameterValueCount(
+                    $parameter,
+                    $parameterValue,
+                    $productFilterData,
+                    $productFilterCountData,
+                );
+
+                if ($parameterValueCount > 0 && $parameter->isSlider()) {
+                    $isSliderSelectable = true;
+                }
+
+                $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
+                    $parameterValue,
+                    $parameterValueCount,
+                    $isAbsolute,
+                    false,
+                );
+            }
+
+            $productFilterOptions->parameters[] = $this->createParameterFilterOption(
+                $parameter,
+                $parameterValueFilterOptions,
+                false,
+                null,
                 $isSliderSelectable,
             );
         }
