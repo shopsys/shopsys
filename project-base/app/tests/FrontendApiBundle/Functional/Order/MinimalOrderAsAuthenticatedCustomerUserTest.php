@@ -6,13 +6,83 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
     public const DEFAULT_USER_EMAIL = CustomerUserDataFixture::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL;
 
+    private const array DEFAULT_INPUT_VALUES = [
+        'firstName' => 'firstName',
+        'lastName' => 'lastName',
+        'email' => 'user@example.com',
+        'telephone' => '+53 123456789',
+        'street' => '123 Fake Street',
+        'city' => 'Springfield',
+        'postcode' => '12345',
+        'country' => 'CZ',
+        'onCompanyBehalf' => false,
+    ];
+
     use OrderTestTrait;
+
+    public function testMinimalOrderAsAuthenticatedUser(): void
+    {
+        $this->addCzechPostTransportToCart(null);
+        $this->addCashOnDeliveryPaymentToCart(null);
+
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $expectedOrderItems = $this->getExpectedOrderItems();
+
+        $expected = [
+            'order' => [
+                'transport' => [
+                    'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                ],
+                'payment' => [
+                    'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                ],
+                'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'totalPrice' => self::getSerializedOrderTotalPriceByExpectedOrderItems(
+                    $expectedOrderItems,
+                ),
+                'items' => $expectedOrderItems,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => '+53 123456789',
+                'companyName' => null,
+                'companyNumber' => null,
+                'companyTaxNumber' => null,
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => [
+                    'code' => 'CZ',
+                ],
+                'differentDeliveryAddress' => false,
+                'deliveryFirstName' => 'firstName',
+                'deliveryLastName' => 'lastName',
+                'deliveryCompanyName' => null,
+                'deliveryTelephone' => '+53 123456789',
+                'deliveryStreet' => '123 Fake Street',
+                'deliveryCity' => 'Springfield',
+                'deliveryPostcode' => '12345',
+                'deliveryCountry' => [
+                    'code' => 'CZ',
+                ],
+                'note' => null,
+            ],
+        ];
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
+            ...self::DEFAULT_INPUT_VALUES,
+            'differentDeliveryAddress' => false,
+        ]);
+
+        $this->assertSame($expected, $this->getResponseDataForGraphQlType($response, 'CreateOrder'));
+    }
 
     public function testMinimalOrderWithDeliveryAddressAsAuthenticatedCustomerUser(): void
     {
@@ -22,15 +92,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
         $deliveryAddress = $this->getReference(CustomerUserDataFixture::DELIVERY_ADDRESS_PERSISTENT_REFERENCE, DeliveryAddress::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
-            'firstName' => 'firstName',
-            'lastName' => 'lastName',
-            'email' => 'user@example.com',
-            'telephone' => '+53 123456789',
-            'onCompanyBehalf' => false,
-            'street' => '123 Fake Street',
-            'city' => 'Springfield',
-            'postcode' => '12345',
-            'country' => 'CZ',
+            ...self::DEFAULT_INPUT_VALUES,
             'differentDeliveryAddress' => true,
             'deliveryAddressUuid' => $deliveryAddress->getUuid(),
         ]);
