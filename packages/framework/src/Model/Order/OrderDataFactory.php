@@ -99,5 +99,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
         foreach ($order->getPaymentTransactions() as $paymentTransaction) {
             $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = $this->paymentTransactionRefundDataFactory->createFromPaymentTransaction($paymentTransaction);
         }
+
+        $orderData->heurekaAgreement = $order->isHeurekaAgreement();
     }
 }

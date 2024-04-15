@@ -5153,6 +5153,15 @@ The customer's first name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>heurekaAgreement</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isPaid</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -9082,6 +9091,15 @@ The customer's first name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>heurekaAgreement</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -9998,11 +10016,11 @@ One of possible types of the product list
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>WISHLIST</strong></td>
+<td valign="top"><strong>COMPARISON</strong></td>
 <td></td>
 </tr>
 <tr>
-<td valign="top"><strong>COMPARISON</strong></td>
+<td valign="top"><strong>WISHLIST</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -10019,10 +10037,18 @@ One of possible ordering modes for product
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>PRIORITY</strong></td>
+<td valign="top"><strong>NAME_ASC</strong></td>
 <td>
 
-Order by priority
+Order by name ascending
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>NAME_DESC</strong></td>
+<td>
+
+Order by name descending
 
 </td>
 </tr>
@@ -10043,18 +10069,10 @@ Order by price descending
 </td>
 </tr>
 <tr>
-<td valign="top"><strong>NAME_ASC</strong></td>
+<td valign="top"><strong>PRIORITY</strong></td>
 <td>
 
-Order by name ascending
-
-</td>
-</tr>
-<tr>
-<td valign="top"><strong>NAME_DESC</strong></td>
-<td>
-
-Order by name descending
+Order by priority
 
 </td>
 </tr>

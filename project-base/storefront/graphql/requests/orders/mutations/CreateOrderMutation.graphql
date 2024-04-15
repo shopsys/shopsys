@@ -24,7 +24,7 @@ mutation CreateOrderMutation(
     $note: String
     $cartUuid: Uuid
     $newsletterSubscription: Boolean
-    $isWithoutHeurekaAgreement: Boolean
+    $heurekaAgreement: Boolean!
 ) {
     CreateOrder(
         input: {
@@ -51,7 +51,7 @@ mutation CreateOrderMutation(
             deliveryCountry: $deliveryCountry
             deliveryAddressUuid: $deliveryAddressUuid
             note: $note
-            isWithoutHeurekaAgreement: $isWithoutHeurekaAgreement
+            heurekaAgreement: $heurekaAgreement
             cartUuid: $cartUuid
             newsletterSubscription: $newsletterSubscription
         }

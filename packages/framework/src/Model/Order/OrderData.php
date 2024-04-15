@@ -193,11 +193,17 @@ class OrderData
      */
     public $paymentTransactionRefunds;
 
+    /**
+     * @var bool
+     */
+    public $heurekaAgreement;
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
         $this->paymentTransactionRefunds = [];
+        $this->heurekaAgreement = false;
     }
 
     /**

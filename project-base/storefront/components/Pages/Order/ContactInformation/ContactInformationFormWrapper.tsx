@@ -8,6 +8,7 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useSettingsQueryApi } from 'graphql/generated';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -21,6 +22,7 @@ export const ContactInformationFormWrapper: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
+    const [{ data: settingsData }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
 
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
@@ -63,16 +65,17 @@ export const ContactInformationFormWrapper: FC = () => {
                     }}
                 />
 
-                <CheckboxControlled
-                    control={formProviderMethods.control}
-                    formName={formMeta.formName}
-                    name={formMeta.fields.isWithoutHeurekaAgreement.name}
-                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                    checkboxProps={{
-                        label: formMeta.fields.isWithoutHeurekaAgreement.label,
-                    }}
-                    onChange={(event) => updateContactInformation({ isWithoutHeurekaAgreement: event.target.checked })}
-                />
+                {settingsData?.settings?.heurekaEnabled && (
+                    <CheckboxControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.isWithoutHeurekaAgreement.name}
+                        render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                        checkboxProps={{
+                            label: formMeta.fields.isWithoutHeurekaAgreement.label,
+                        }}
+                    />
+                )}
             </div>
         </div>
     );
