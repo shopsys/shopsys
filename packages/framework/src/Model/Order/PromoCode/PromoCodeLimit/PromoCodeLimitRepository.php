@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 class PromoCodeLimitRepository
@@ -55,16 +56,18 @@ class PromoCodeLimitRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param string $price
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceAmountWithVat
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit|null
      */
-    public function getHighestLimitByPromoCodeAndTotalPrice(PromoCode $promoCode, string $price): ?PromoCodeLimit
-    {
+    public function getHighestLimitByPromoCodeAndTotalPrice(
+        PromoCode $promoCode,
+        Money $totalPriceAmountWithVat,
+    ): ?PromoCodeLimit {
         return $this->getQueryBuilder()
             ->select('l')
             ->from(PromoCodeLimit::class, 'l')
             ->where('l.fromPriceWithVat <= :totalPrice')
-            ->setParameter('totalPrice', $price)
+            ->setParameter('totalPrice', $totalPriceAmountWithVat->getAmount())
             ->andWhere('l.promoCode = :promoCode')
             ->setParameter('promoCode', $promoCode)
             ->orderBy('l.fromPriceWithVat', 'desc')

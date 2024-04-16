@@ -6,16 +6,19 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\LimitNotReachedException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeBrand\PromoCodeBrandRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class PromoCodeFacade
 {
@@ -359,5 +362,24 @@ class PromoCodeFacade
     public function findByMassBatchId(int $batchId): ?array
     {
         return $this->promoCodeRepository->findByMassBatchId($batchId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit
+     */
+    public function getHighestLimitByPromoCodeAndTotalPrice(PromoCode $promoCode, Price $price): PromoCodeLimit
+    {
+        $promoCodeLimit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
+            $promoCode,
+            $price->getPriceWithVat(),
+        );
+
+        if ($promoCodeLimit === null) {
+            throw new LimitNotReachedException($promoCode);
+        }
+
+        return $promoCodeLimit;
     }
 }
