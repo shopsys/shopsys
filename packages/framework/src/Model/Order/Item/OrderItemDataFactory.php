@@ -51,8 +51,8 @@ class OrderItemDataFactory
     protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem)
     {
         $orderItemData->name = $orderItem->getName();
-        $orderItemData->priceWithVat = $orderItem->getPriceWithVat();
-        $orderItemData->priceWithoutVat = $orderItem->getPriceWithoutVat();
+        $orderItemData->unitPriceWithVat = $orderItem->getPriceWithVat();
+        $orderItemData->unitPriceWithoutVat = $orderItem->getPriceWithoutVat();
 
         $orderItemTotalPrice = $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
         $orderItemData->totalPriceWithVat = $orderItemTotalPrice->getPriceWithVat();
@@ -95,7 +95,7 @@ class OrderItemDataFactory
             $orderItem->getOrder()->getDomainId(),
         );
 
-        if (!$orderItemData->priceWithoutVat->equals($calculatedPriceWithoutVat)) {
+        if (!$orderItemData->unitPriceWithoutVat->equals($calculatedPriceWithoutVat)) {
             throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
                 $orderItem,
                 $calculatedPriceWithoutVat,

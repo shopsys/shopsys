@@ -37,7 +37,7 @@ class OrderItemFactory
         return new $entityClassName(
             $order,
             $orderItemData->name,
-            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
+            new Price($orderItemData->unitPriceWithoutVat, $orderItemData->unitPriceWithVat),
             $orderItemData->vatPercent,
             $orderItemData->quantity,
             $orderItemType,

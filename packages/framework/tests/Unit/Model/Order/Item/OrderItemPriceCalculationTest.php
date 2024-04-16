@@ -29,7 +29,7 @@ class OrderItemPriceCalculationTest extends TestCase
         );
 
         $orderItemData = new OrderItemData();
-        $orderItemData->priceWithVat = Money::create(1000);
+        $orderItemData->unitPriceWithVat = Money::create(1000);
         $orderItemData->vatPercent = '10';
 
         $orderItemPriceCalculation = new OrderItemPriceCalculation(

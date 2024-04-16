@@ -43,8 +43,8 @@ class OrderItemTest extends TestCase
 
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'order item transport';
-        $orderItemData->priceWithVat = Money::zero();
-        $orderItemData->priceWithoutVat = Money::zero();
+        $orderItemData->unitPriceWithVat = Money::zero();
+        $orderItemData->unitPriceWithoutVat = Money::zero();
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
         /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport|\PHPUnit\Framework\MockObject\MockObject $transport */
@@ -77,8 +77,8 @@ class OrderItemTest extends TestCase
 
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'order item payment';
-        $orderItemData->priceWithVat = Money::zero();
-        $orderItemData->priceWithoutVat = Money::zero();
+        $orderItemData->unitPriceWithVat = Money::zero();
+        $orderItemData->unitPriceWithoutVat = Money::zero();
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment|\PHPUnit\Framework\MockObject\MockObject $payment */
@@ -117,8 +117,8 @@ class OrderItemTest extends TestCase
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
-        $orderItemData->priceWithVat = Money::create(20);
-        $orderItemData->priceWithoutVat = Money::create(30);
+        $orderItemData->unitPriceWithVat = Money::create(20);
+        $orderItemData->unitPriceWithoutVat = Money::create(30);
         $orderItemData->quantity = 2;
         $orderItemData->vatPercent = '10';
 
@@ -136,8 +136,8 @@ class OrderItemTest extends TestCase
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
-        $orderItemData->priceWithVat = Money::create(20);
-        $orderItemData->priceWithoutVat = Money::create(30);
+        $orderItemData->unitPriceWithVat = Money::create(20);
+        $orderItemData->unitPriceWithoutVat = Money::create(30);
         $orderItemData->quantity = 2;
         $orderItemData->vatPercent = '10';
 

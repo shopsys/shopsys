@@ -35,8 +35,8 @@ class CopyTotalPricesOfOrderItemTransformer implements DataTransformerInterface
             );
         }
 
-        $value->totalPriceWithVat = $value->priceWithVat;
-        $value->totalPriceWithoutVat = $value->priceWithoutVat;
+        $value->totalPriceWithVat = $value->unitPriceWithVat;
+        $value->totalPriceWithoutVat = $value->unitPriceWithoutVat;
 
         return $value;
     }

@@ -285,8 +285,8 @@ class OrderItem
     public function edit(OrderItemData $orderItemData)
     {
         $this->name = $orderItemData->name;
-        $this->priceWithoutVat = $orderItemData->priceWithoutVat;
-        $this->priceWithVat = $orderItemData->priceWithVat;
+        $this->priceWithoutVat = $orderItemData->unitPriceWithoutVat;
+        $this->priceWithVat = $orderItemData->unitPriceWithVat;
 
         if ($orderItemData->usePriceCalculation) {
             $this->setTotalPrice(null);

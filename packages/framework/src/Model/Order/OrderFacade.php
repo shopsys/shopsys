@@ -548,7 +548,7 @@ class OrderFacade
     protected function calculateOrderItemDataPrices(OrderItemData $orderItemData, int $domainId): void
     {
         if ($orderItemData->usePriceCalculation) {
-            $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
+            $orderItemData->unitPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
                 $orderItemData,
                 $domainId,
             );
@@ -556,7 +556,7 @@ class OrderFacade
             $orderItemData->totalPriceWithoutVat = null;
         } else {
             Assert::allNotNull(
-                [$orderItemData->priceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
+                [$orderItemData->unitPriceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
                 'When not using price calculation for an order item, all prices must be filled.',
             );
         }
@@ -628,8 +628,8 @@ class OrderFacade
 
         $orderPaymentData = $this->orderItemDataFactory->create();
         $orderPaymentData->name = $payment->getName();
-        $orderPaymentData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderPaymentData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderPaymentData->unitPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderPaymentData->unitPriceWithVat = $paymentPrice->getPriceWithVat();
         $orderPaymentData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
         $orderPaymentData->quantity = 1;
         $orderPaymentData->payment = $payment;

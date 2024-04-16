@@ -56,8 +56,8 @@ class OrderItemFacade
 
         $orderItemData = $this->orderItemDataFactory->create();
         $orderItemData->name = $product->getName($orderDomainConfig->getLocale());
-        $orderItemData->priceWithVat = $productPrice->getPriceWithVat();
-        $orderItemData->priceWithoutVat = $productPrice->getPriceWithoutVat();
+        $orderItemData->unitPriceWithVat = $productPrice->getPriceWithVat();
+        $orderItemData->unitPriceWithoutVat = $productPrice->getPriceWithoutVat();
         $orderItemData->vatPercent = $product->getVatForDomain($order->getDomainId())->getPercent();
         $orderItemData->quantity = static::DEFAULT_PRODUCT_QUANTITY;
         $orderItemData->unitName = $product->getUnit()->getName($orderDomainConfig->getLocale());

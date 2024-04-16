@@ -12,11 +12,6 @@ class OrderItemData
     public $name;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public $priceWithVat;
-
-    /**
      * If this attribute is set to true, all prices in this data object other that $priceWithVat will be ignored.
      * The prices will be recalculated when the OrderItem entity is edited.
      * This means you can set only a single price ($priceWithVat) and others will be calculated automatically.
@@ -28,7 +23,12 @@ class OrderItemData
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public $priceWithoutVat;
+    public $unitPriceWithVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public $unitPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
