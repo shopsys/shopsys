@@ -1,3 +1,4 @@
+import { PageDefer } from 'components/Layout/PageDefer';
 import {
     ProductDetailQueryDocument,
     TypeProductDetailQuery,
@@ -10,7 +11,6 @@ import {
 import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -24,9 +24,9 @@ const ProductDetailWrapper = dynamic(() =>
 
 const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     return (
-        <Suspense>
+        <PageDefer>
             <ProductDetailWrapper />
-        </Suspense>
+        </PageDefer>
     );
 };
 

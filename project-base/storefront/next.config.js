@@ -40,6 +40,7 @@ const nextConfig = {
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
         errorDebuggingLevel: process.env.ERROR_DEBUGGING_LEVEL,
         showSymfonyToolbar: process.env.SHOW_SYMFONY_TOOLBAR,
+        shouldUseDefer: process.env.SHOULD_USE_DEFER === '1',
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,

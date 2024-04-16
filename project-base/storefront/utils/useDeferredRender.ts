@@ -1,7 +1,12 @@
+import getConfig from 'next/config';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
+
+const {
+    publicRuntimeConfig: { shouldUseDefer },
+} = getConfig();
 
 type DeferPage = 'product' | 'category' | 'homepage';
 
@@ -31,13 +36,13 @@ export const useDeferredRender = (place: DeferPlace) => {
     const router = useRouter();
     const page = getDeferPage(router);
     const isDeferredPage = page !== 'non_deferred';
-    const [shouldRender, setShouldRender] = useState(!isDeferredPage || hadClientSideNavigation);
+    const [shouldRender, setShouldRender] = useState(!shouldUseDefer || !isDeferredPage || hadClientSideNavigation);
 
     useEffect(() => {
         let timer: NodeJS.Timeout | undefined;
 
-        if (isDeferredPage) {
-            const defer = getDeferByPageAndPlace(page, place);
+        if (!shouldRender) {
+            const defer = getDeferByPageAndPlace(page as DeferPage, place);
             timer = setTimeout(() => {
                 setShouldRender(true);
             }, defer);
@@ -50,6 +55,7 @@ export const useDeferredRender = (place: DeferPlace) => {
 
     return shouldRender;
 };
+
 const PRODUCT_PAGE_DEFER_ORDER = [
     'loaders',
     'footer',
@@ -114,4 +120,4 @@ const getDeferByPageAndPlace = (page: DeferPage, place: DeferPlace) => {
 };
 
 const DEFER_START = 150;
-const DEFER_GAP = 70;
+const DEFER_GAP = 75;

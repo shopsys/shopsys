@@ -1,3 +1,4 @@
+import { PageDefer } from 'components/Layout/PageDefer';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import {
     TypeBlogArticlesQueryVariables,
@@ -14,7 +15,6 @@ import { SliderItemsQueryDocument } from 'graphql/requests/sliderItems/queries/S
 import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
@@ -24,9 +24,9 @@ const HomePageContent = dynamic(() =>
 
 const HomePage: NextPage<ServerSidePropsType> = () => {
     return (
-        <Suspense>
+        <PageDefer>
             <HomePageContent />
-        </Suspense>
+        </PageDefer>
     );
 };
 

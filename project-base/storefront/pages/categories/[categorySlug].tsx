@@ -1,4 +1,5 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
+import { PageDefer } from 'components/Layout/PageDefer';
 import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/utils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
@@ -9,7 +10,6 @@ import {
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
@@ -41,13 +41,13 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     useHandleDefaultFiltersUpdate(categoryData?.products);
 
     return (
-        <Suspense>
+        <PageDefer>
             <CategoryDetailWrapper
                 categoryData={categoryData}
                 currentFilter={currentFilter}
                 isFetchingVisible={isFetchingVisible}
             />
-        </Suspense>
+        </PageDefer>
     );
 };
 
