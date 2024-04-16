@@ -85,6 +85,8 @@ function deploy() {
         ["REDIS_PREFIX"]=${PROJECT_NAME}
 
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
+
+        ["LUIGIS_BOX_ENABLED_DOMAIN_IDS"]=${LUIGIS_BOX_ENABLED_DOMAIN_IDS}
     )
 
     declare -A CRON_INSTANCES=(

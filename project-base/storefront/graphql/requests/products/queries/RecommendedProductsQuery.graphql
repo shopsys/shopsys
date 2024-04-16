@@ -1,0 +1,15 @@
+query RecommendedProductsQuery(
+    $userIdentifier: Uuid!
+    $recommendationType: RecommendationType!
+    $limit: Int
+    $itemUuids: [Uuid!]
+) {
+    recommendedProducts(
+        userIdentifier: $userIdentifier
+        recommendationType: $recommendationType
+        limit: $limit
+        itemUuids: $itemUuids
+    ) {
+        ...ListedProductFragment
+    }
+}

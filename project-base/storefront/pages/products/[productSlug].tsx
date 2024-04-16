@@ -6,17 +6,21 @@ import {
     ProductDetailQueryApi,
     ProductDetailQueryDocumentApi,
     ProductDetailQueryVariablesApi,
+    RecommendationTypeApi,
+    RecommendedProductsQueryDocumentApi,
+    RecommendedProductsQueryVariablesApi,
     useProductDetailQueryApi,
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { getCookiesStoreStateFromContext } from 'helpers/cookies/cookiesStoreUtils';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { createCookiesStoreOnServer } from 'store/useCookiesStore';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
@@ -66,42 +70,57 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const productResponse: OperationResult<ProductDetailQueryApi, ProductDetailQueryVariablesApi> =
-                    await client!
-                        .query(ProductDetailQueryDocumentApi, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
+            const productResponse: OperationResult<ProductDetailQueryApi, ProductDetailQueryVariablesApi> =
+                await client!
+                    .query(ProductDetailQueryDocumentApi, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    productResponse.error?.graphQLErrors,
-                    productResponse.data?.product,
-                    context.res,
-                );
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                productResponse.error?.graphQLErrors,
+                productResponse.data?.product,
+                context.res,
+            );
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
-
-                if (
-                    productResponse.data?.product?.__typename === 'Variant' &&
-                    productResponse.data.product.mainVariant?.slug
-                ) {
-                    return {
-                        redirect: {
-                            destination: productResponse.data.product.mainVariant.slug,
-                            permanent: false,
-                        },
-                    };
-                }
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
             }
 
-            const initServerSideData = await initServerSideProps({
+            if (
+                productResponse.data?.product?.__typename === 'Variant' &&
+                productResponse.data.product.mainVariant?.slug
+            ) {
+                return {
+                    redirect: {
+                        destination: productResponse.data.product.mainVariant.slug,
+                        permanent: false,
+                    },
+                };
+            }
+
+            const initServerSideData = await initServerSideProps<RecommendedProductsQueryVariablesApi>({
                 context,
                 client,
                 ssrExchange,
                 domainConfig,
+                prefetchedQueries: [
+                    ...(domainConfig.isLuigisBoxActive && productResponse.data?.product?.__typename === 'RegularProduct'
+                        ? [
+                              {
+                                  query: RecommendedProductsQueryDocumentApi,
+                                  variables: {
+                                      itemUuids: [productResponse.data.product.uuid],
+                                      userIdentifier: createCookiesStoreOnServer(
+                                          getCookiesStoreStateFromContext(context),
+                                      ).getState().userIdentifier,
+                                      recommendationType: RecommendationTypeApi.ItemDetailApi,
+                                      limit: 10,
+                                  },
+                              },
+                          ]
+                        : []),
+                ],
             });
 
             return initServerSideData;

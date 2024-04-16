@@ -38,4 +38,5 @@ export enum TIDs {
     pages_order_payment = 'pages_order_payment',
     order_detail_number = 'order_detail_number',
     order_detail_creation_date = 'order_detail_creation_date',
+    popup_go_to_cart_button = 'popup_go_to_cart_button',
 }

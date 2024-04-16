@@ -22,6 +22,7 @@ type ProductsListProps = {
     swipeHandlers?: SwipeableHandlers;
     className?: string;
     classNameProduct?: string;
+    isWithSimpleCards?: boolean;
 };
 
 export const ProductsListContent: FC<ProductsListProps> = ({
@@ -34,6 +35,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     ref,
     children,
     swipeHandlers,
+    isWithSimpleCards,
 }) => {
     const { currentPage } = useQueryParams();
     const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
@@ -51,6 +53,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                         gtmProductListName={gtmProductListName}
                         isProductInComparison={isProductInComparison(product.uuid)}
                         isProductInWishlist={isProductInWishlist(product.uuid)}
+                        isSimpleCard={isWithSimpleCards}
                         listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
                         product={product}
                         ref={productRefs?.[index]}

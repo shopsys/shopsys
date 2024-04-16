@@ -54,6 +54,7 @@ const nextConfig = {
                     zoom: 7,
                 },
                 gtmId: process.env.GTM_ID,
+                isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('1'),
             },
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
@@ -68,6 +69,7 @@ const nextConfig = {
                     zoom: 7,
                 },
                 gtmId: process.env.GTM_ID,
+                isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
             },
         ],
     },
