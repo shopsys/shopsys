@@ -1853,3 +1853,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   domainConfig is moved from `SessionStore` to `Context` for easier handling and solve issue with SSR session (see previous comment from cookies refactoring)
 
 -   fix a wrong link type for searched articles ([#3062](https://github.com/shopsys/shopsys/pull/3062))
+
+-   cart and product lists are not refetched while auth loading is active ([#3096](https://github.com/shopsys/shopsys/pull/3096))

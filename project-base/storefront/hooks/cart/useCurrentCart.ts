@@ -11,6 +11,7 @@ import { CurrentCartType } from 'types/cart';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = useIsUserLoggedIn();
+    const authLoading = usePersistStore((s) => s.authLoading);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
@@ -23,7 +24,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQueryApi({
         variables: { cartUuid },
-        pause: !isCartHydrated || !isWithCart,
+        pause: !isCartHydrated || !isWithCart || authLoading !== null,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
