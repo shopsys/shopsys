@@ -8,6 +8,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -21,6 +25,9 @@ class CartPaymentDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
@@ -28,6 +35,9 @@ class CartPaymentDataFactory
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly OrderProcessor $orderProcessor,
+        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly OrderDataFactory $orderDataFactory,
     ) {
     }
 
@@ -60,15 +70,18 @@ class CartPaymentDataFactory
     protected function getPaymentWatchedPriceWithVat(int $domainId, Cart $cart, Payment $payment): Money
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
-        $watchedPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $currency,
-            $orderPreview->getProductsPrice(),
-            $domainId,
+        $orderData = $this->orderDataFactory->create();
+        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
+        $inputOrderData->setPayment($payment);
+
+        $orderData = $this->orderProcessor->process(
+            $inputOrderData,
+            $orderData,
+            $this->domain->getDomainConfigById($domainId),
+            $customerUser,
         );
 
-        return $watchedPrice->getPriceWithVat();
+        return $orderData->totalPriceByItemType[OrderItem::TYPE_PAYMENT]->getPriceWithVat();
     }
 }

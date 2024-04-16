@@ -465,6 +465,9 @@ services:
     Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade:
         alias: App\Model\Mail\Setting\MailSettingFacade
 
+    Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade:
+        alias: App\Model\Order\CreateOrderFacade
+
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory:
         alias: App\Model\Order\Item\OrderItemDataFactory
 

@@ -7,9 +7,7 @@ namespace Tests\App\Functional\Component\EntityLog;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
-use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataFactory;
-use App\Model\Order\OrderFacade;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
@@ -17,10 +15,13 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
+use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -37,6 +38,12 @@ class EntityLogTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
+    private OrderProcessor $orderProcessor;
+
+    /**
+     * @inject
+     */
+    private CreateOrderFacade $createOrderFacade;
 
     /**
      * @inject
@@ -67,6 +74,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
      * @inject
      */
     private OrderDataFactory $orderDataFactory;
+
+    /**
+     * @inject
+     */
+    private InputOrderDataFactory $inputOrderDataFactory;
 
     /**
      * @inject
@@ -170,7 +182,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($newStatus->getName(), $log->getChangeSet()['status']['newReadableValue']);
     }
 
-    public function testEditCollectionEntity()
+    public function testEditCollectionEntity(): void
     {
         $productTicketName = '100 Czech crowns ticket';
 
@@ -254,15 +266,15 @@ class EntityLogTest extends TransactionFunctionalTestCase
     private function getNewOrder(): Order
     {
         $product = $this->productRepository->getById(1);
-
-        /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportRepository->getById(3);
-        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
-        $orderData = new OrderData();
-        $orderData->transport = $transport;
-        $orderData->payment = $payment;
+        $inputOrderData = $this->inputOrderDataFactory->create();
+        $inputOrderData->addProduct($product, 1);
+        $inputOrderData->setTransport($transport);
+        $inputOrderData->setPayment($payment);
+
+        $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
@@ -288,8 +300,13 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
+        $orderData = $this->orderProcessor->process(
+            $inputOrderData,
+            $orderData,
+            $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID),
+            null,
         );
 
-        return $this->orderFacade->createOrder($orderData, $orderPreview, null);
+        return $this->createOrderFacade->createOrder($orderData, null);
     }
 }

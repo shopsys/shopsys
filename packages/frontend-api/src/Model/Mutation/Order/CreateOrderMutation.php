@@ -6,19 +6,28 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Order;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
+use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Order\CreateOrderResult;
 use Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
 
 class CreateOrderMutation extends AbstractMutation
 {
@@ -27,23 +36,41 @@ class CreateOrderMutation extends AbstractMutation
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory $createOrderResultFactory
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
+     * @param \Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade $createOrderFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      */
     public function __construct(
         protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly PlaceOrderFacade $placeOrderFacade,
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
         protected readonly CreateOrderResultFactory $createOrderResultFactory,
         protected readonly CartWatcherFacade $cartWatcherFacade,
+        protected readonly Domain $domain,
+        protected readonly OrderProcessor $orderProcessor,
+        protected readonly CreateOrderFacade $createOrderFacade,
+        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
+        protected readonly DeliveryAddressFactory $deliveryAddressFactory,
+        protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
     ) {
     }
 
@@ -72,20 +99,40 @@ class CreateOrderMutation extends AbstractMutation
             );
         }
 
-        $this->orderDataFactory->updateOrderDataFromCart($orderData, $cart);
+        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
 
-        /** @var string|null $deliveryAddressUuid */
-        $deliveryAddressUuid = $input['deliveryAddressUuid'];
-        $deliveryAddress = $this->resolveDeliveryAddress($deliveryAddressUuid, $customerUser);
-
-        $order = $this->placeOrderFacade->placeOrder(
+        $orderData = $this->orderProcessor->process(
+            $inputOrderData,
             $orderData,
-            $cart->getQuantifiedProducts(),
-            $cart->getFirstAppliedPromoCode(),
-            $deliveryAddress,
+            $this->domain->getCurrentDomainConfig(),
+            $customerUser,
         );
-        $this->cartApiFacade->deleteCart($cart);
 
+        $order = $this->createOrderFacade->createOrder($orderData, $customerUser);
+
+        if ($customerUser instanceof CustomerUser) {
+            /** @var string|null $deliveryAddressUuid */
+            $deliveryAddressUuid = $input['deliveryAddressUuid'];
+            $deliveryAddress = $this->resolveDeliveryAddress($deliveryAddressUuid, $customerUser);
+            $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+            $customerUserUpdateData->customerUserData->newsletterSubscription = $orderData->newsletterSubscription;
+            $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
+            $deliveryAddress = $deliveryAddress ?? $this->createDeliveryAddressForAmendingCustomerUserData($order);
+            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
+        } elseif ($orderData->newsletterSubscription) {
+            $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
+                $orderData->email,
+                $this->domain->getId(),
+            );
+
+            if ($newsletterSubscriber === null) {
+                $this->newsletterFacade->addSubscribedEmail($orderData->email, $this->domain->getId());
+            }
+        }
+
+        $this->placedOrderMessageDispatcher->dispatchPlacedOrderMessage($order->getId());
+
+        $this->cartApiFacade->deleteCart($cart);
         $this->sendEmail($order);
 
         return $this->createOrderResultFactory->getCreateOrderResultByOrder($order);
@@ -136,5 +183,35 @@ class CreateOrderMutation extends AbstractMutation
             $deliveryAddressUuid,
             $customerUser->getCustomer(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    protected function createDeliveryAddressForAmendingCustomerUserData(Order $order): ?DeliveryAddress
+    {
+        $orderTransport = $order->getTransportItem()->getTransport();
+
+        if (
+            $orderTransport->isPersonalPickup() ||
+            $orderTransport->isPacketery() ||
+            $order->isDeliveryAddressSameAsBillingAddress()
+        ) {
+            return null;
+        }
+
+        $deliveryAddressData = $this->deliveryAddressDataFactory->create();
+        $deliveryAddressData->firstName = $order->getDeliveryFirstName();
+        $deliveryAddressData->lastName = $order->getDeliveryLastName();
+        $deliveryAddressData->companyName = $order->getDeliveryCompanyName();
+        $deliveryAddressData->street = $order->getDeliveryStreet();
+        $deliveryAddressData->city = $order->getDeliveryCity();
+        $deliveryAddressData->postcode = $order->getDeliveryPostcode();
+        $deliveryAddressData->country = $order->getDeliveryCountry();
+        $deliveryAddressData->postcode = $order->getDeliveryPostcode();
+        $deliveryAddressData->customer = $order->getCustomerUser()?->getCustomer();
+
+        return $this->deliveryAddressFactory->create($deliveryAddressData);
     }
 }

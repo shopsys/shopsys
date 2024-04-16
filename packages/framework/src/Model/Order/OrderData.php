@@ -322,4 +322,15 @@ class OrderData
     {
         $this->items[] = $item;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
+    {
+        return $this->totalPrice
+            ->subtract($this->totalPriceByItemType[OrderItem::TYPE_TRANSPORT])
+            ->subtract($this->totalPriceByItemType[OrderItem::TYPE_PAYMENT])
+            ->add($this->totalPriceByItemType[OrderItem::TYPE_DISCOUNT]);
+    }
 }

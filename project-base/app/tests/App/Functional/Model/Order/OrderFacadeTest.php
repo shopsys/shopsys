@@ -7,21 +7,24 @@ namespace Tests\App\Functional\Model\Order;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
+use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataFactory;
-use App\Model\Order\OrderFacade;
 use App\Model\Order\Status\OrderStatus;
+use App\Model\Payment\PaymentRepository;
+use App\Model\Product\ProductRepository;
+use App\Model\Transport\TransportRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class OrderFacadeTest extends TransactionFunctionalTestCase
@@ -53,22 +56,32 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @inject
-     * @phpstan-ignore-next-line Test is skipped
      */
     private OrderDataFactory $orderDataFactory;
+
+    /**
+     * @inject
+     */
+    private InputOrderDataFactory $inputOrderDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderProcessor $orderProcessor;
+
+    /**
+     * @inject
+     */
+    private CreateOrderFacade $createOrderFacade;
 
     public function testCreate(): void
     {
         $product = $this->productRepository->getById(1);
-
-        /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportRepository->getById(3);
-        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
-        $orderData = new OrderData();
-        $orderData->transport = $transport;
-        $orderData->payment = $payment;
+        $orderData = $this->orderDataFactory->create();
+
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
@@ -94,13 +107,23 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
+        $inputOrderData = $this->inputOrderDataFactory->create();
+        $inputOrderData->addProduct($product, 1);
+        $inputOrderData->setTransport($transport);
+        $inputOrderData->setPayment($payment);
+
+        $orderData = $this->orderProcessor->process(
+            $inputOrderData,
+            $orderData,
+            $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID),
+            null,
         );
-        $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
+        $order = $this->createOrderFacade->createOrder($orderData, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
-        $this->assertSame($orderData->transport->getId(), $orderFromDb->getTransport()->getId());
-        $this->assertSame($orderData->payment->getId(), $orderFromDb->getPayment()->getId());
+        $this->assertSame($orderData->transport->getId(), $orderFromDb->getTransportItem()->getTransport()->getId());
+        $this->assertSame($orderData->payment->getId(), $orderFromDb->getPaymentItem()->getPayment()->getId());
         $this->assertSame($orderData->firstName, $orderFromDb->getFirstName());
         $this->assertSame($orderData->lastName, $orderFromDb->getLastName());
         $this->assertSame($orderData->email, $orderFromDb->getEmail());
@@ -125,10 +148,6 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
     public function testEdit(): void
     {
-        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
-            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
-
-        // @phpstan-ignore-next-line Tests are skipped
         $order = $this->getReference('order_1', Order::class);
 
         $this->assertCount(4, $order->getItems());
