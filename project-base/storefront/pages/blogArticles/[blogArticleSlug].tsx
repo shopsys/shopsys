@@ -39,7 +39,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             description={blogArticleData?.blogArticle?.seoMetaDescription}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={fetching}
-            title={blogArticleData?.blogArticle?.seoTitle}
+            title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
         >
             {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
             <LastVisitedProducts />

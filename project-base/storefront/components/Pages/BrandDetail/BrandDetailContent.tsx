@@ -16,7 +16,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     return (
         <>
             <Webline>
-                <h1 className="mb-3">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</h1>
+                <h1 className="mb-3">{brand.seoH1 || brand.name}</h1>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
                     <div className="mr-5 min-w-[13.75rem] self-start">
                         <Image

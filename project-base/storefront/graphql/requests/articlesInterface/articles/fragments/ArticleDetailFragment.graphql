@@ -11,4 +11,5 @@ fragment ArticleDetailFragment on ArticleSite {
     seoTitle
     seoMetaDescription
     createdAt
+    seoH1
 }

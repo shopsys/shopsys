@@ -33,7 +33,13 @@ const ArticleDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout breadcrumbs={article?.breadcrumb} canonicalQueryParams={[]} isFetchingData={fetching}>
+        <CommonLayout
+            breadcrumbs={article?.breadcrumb}
+            canonicalQueryParams={[]}
+            description={article?.seoMetaDescription}
+            isFetchingData={fetching}
+            title={article?.seoTitle || article?.articleName}
+        >
             {!!article && <ArticleDetailContent article={article} />}
         </CommonLayout>
     );
