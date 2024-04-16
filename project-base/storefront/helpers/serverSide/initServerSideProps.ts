@@ -15,7 +15,7 @@ import {
 } from 'graphql/generated';
 import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
-import { getCookiesStore } from 'helpers/cookies/cookiesStoreUtils';
+import { getCookiesStoreStateFromContext } from 'helpers/cookies/cookiesStoreUtils';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
@@ -24,6 +24,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { CookiesStoreState, createCookiesStoreOnServer } from 'store/useCookiesStore';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 
@@ -31,7 +32,7 @@ export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
     domainConfig: DomainConfigType;
-    cookiesStore: string | null;
+    cookiesStore: CookiesStoreState;
 };
 
 type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
@@ -157,7 +158,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
-            cookiesStore: getCookiesStore(context),
+            cookiesStore: createCookiesStoreOnServer(getCookiesStoreStateFromContext(context)).getState(),
         },
     };
 };

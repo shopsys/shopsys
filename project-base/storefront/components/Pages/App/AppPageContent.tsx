@@ -10,7 +10,6 @@ import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
-import { useSetInitialStoreValues } from 'hooks/useSetInitialStoreValues';
 import { NextComponentType, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
@@ -48,7 +47,6 @@ type AppPageContentProps = {
 };
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
-    useSetInitialStoreValues(pageProps);
     useCookiesStoreSync();
     useAuthLoader();
     usePageLoader();

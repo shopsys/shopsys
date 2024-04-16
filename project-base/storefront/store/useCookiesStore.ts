@@ -1,29 +1,52 @@
 import { CookiesStoreContext } from 'components/providers/CookiesStoreProvider';
 import { useContext } from 'react';
+import { v4 as uuidV4 } from 'uuid';
 import { useStore } from 'zustand';
 import { createStore } from 'zustand/vanilla';
 
-export type CookiesStoreState = { lastVisitedProductsCatnums: string[] | undefined };
+export type CookiesStoreState = {
+    lastVisitedProductsCatnums: string[] | null;
+    userIdentifier: string;
+};
 
 export type CookiesStoreActions = {
-    setCookiesStoreState: (value: Partial<CookiesStoreState>) => void;
+    setCookiesStoreStateOnClient: (value: Partial<CookiesStoreState>) => void;
 };
 
-export type CookiesStore = CookiesStoreState & CookiesStoreActions;
+export type CookiesStoreOnClient = CookiesStoreState & CookiesStoreActions;
+export type CookiesStoreOnServer = CookiesStoreState;
 
-export const defaultInitState: CookiesStoreState = {
-    lastVisitedProductsCatnums: undefined,
-};
+const getDefaultInitState = (): CookiesStoreState => ({
+    lastVisitedProductsCatnums: null,
+    userIdentifier: uuidV4(),
+});
 
-export const createCookiesStore = (initState: CookiesStoreState = defaultInitState) =>
-    createStore<CookiesStore>()((set) => ({
-        ...initState,
-        setCookiesStoreState: (value) => {
+export const createCookiesStore = (cookieStoreFromServer: CookiesStoreState) =>
+    createStore<CookiesStoreOnClient>()((set) => ({
+        ...cookieStoreFromServer,
+        setCookiesStoreStateOnClient: (value) => {
             set((state) => ({ ...state, ...value }));
         },
     }));
 
-export const useCookiesStore = <T>(selector: (store: CookiesStore) => T): T => {
+export const createCookiesStoreOnServer = (cookieStoreStateFromContext: string | null) => {
+    let initState = getDefaultInitState();
+
+    if (cookieStoreStateFromContext) {
+        initState = JSON.parse(cookieStoreStateFromContext);
+    }
+
+    /**
+     * This cannot contain functions or non-serializable properties
+     * If you want to include such things, you have to manually
+     * serialize it before returning from getServerSideProps
+     */
+    return createStore<CookiesStoreOnServer>()(() => ({
+        ...initState,
+    }));
+};
+
+export const useCookiesStore = <T>(selector: (store: CookiesStoreOnClient) => T): T => {
     const cookiesStoreContext = useContext(CookiesStoreContext);
 
     if (!cookiesStoreContext) {
