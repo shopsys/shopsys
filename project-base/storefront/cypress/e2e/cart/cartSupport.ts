@@ -59,5 +59,5 @@ export const searchProductByNameTypeEnterAndCheckResult = (productName: string, 
 
 export const checkProductAndGoToCartFromCartPopupWindow = (productName: string) => {
     cy.getByTID([TIDs.layout_popup, TIDs.blocks_product_addtocartpopup_product_name]).contains(productName);
-    cy.getByTID([TIDs.layout_popup, TIDs.basic_link]).click();
+    cy.getByTID([TIDs.layout_popup, TIDs.popup_go_to_cart_button]).click();
 };

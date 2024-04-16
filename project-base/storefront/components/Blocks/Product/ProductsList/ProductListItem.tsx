@@ -27,6 +27,7 @@ type ProductItemProps = {
     isProductInWishlist: boolean;
     toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
+    isSimpleCard?: boolean;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -41,6 +42,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             toggleProductInComparison,
             toggleProductInWishlist,
             className,
+            isSimpleCard,
         },
         ref,
     ) => {
@@ -56,7 +58,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     className,
                 )}
             >
-                {gtmProductListName === GtmProductListNameType.wishlist && (
+                {!isSimpleCard && gtmProductListName === GtmProductListNameType.wishlist && (
                     <button
                         className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-none transition hover:bg-blueLight"
                         title={t('Remove from wishlist')}
@@ -73,14 +75,19 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
-                    <div className="relative flex h-56 items-center justify-center">
+                    <div
+                        className={twMergeCustom([
+                            'relative flex h-56 items-center justify-center',
+                            isSimpleCard && 'h-44',
+                        ])}
+                    >
                         <Image
                             alt={product.mainImage?.name || product.fullName}
                             className="max-h-full object-contain"
                             draggable={false}
-                            height={250}
+                            height={isSimpleCard ? 150 : 250}
                             src={product.mainImage?.url}
-                            width={250}
+                            width={isSimpleCard ? 150 : 250}
                         />
 
                         {!!product.flags.length && (
@@ -94,25 +101,29 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
                     <ProductPrice productPrice={product.price} />
 
-                    <div className="flex flex-col gap-1 text-sm text-black">
-                        <div>{product.availability.name}</div>
-                        <ProductAvailableStoresCount
-                            availableStoresCount={product.availableStoresCount}
-                            isMainVariant={product.isMainVariant}
-                        />
-                    </div>
+                    {!isSimpleCard && (
+                        <div className="flex flex-col gap-1 text-sm text-black">
+                            <div>{product.availability.name}</div>
+                            <ProductAvailableStoresCount
+                                availableStoresCount={product.availableStoresCount}
+                                isMainVariant={product.isMainVariant}
+                            />
+                        </div>
+                    )}
                 </ExtendedNextLink>
 
-                <div className="flex justify-end gap-2">
-                    <ProductCompareButton
-                        isProductInComparison={isProductInComparison}
-                        toggleProductInComparison={toggleProductInComparison}
-                    />
-                    <ProductWishlistButton
-                        isProductInWishlist={isProductInWishlist}
-                        toggleProductInWishlist={toggleProductInWishlist}
-                    />
-                </div>
+                {!isSimpleCard && (
+                    <div className="flex justify-end gap-2">
+                        <ProductCompareButton
+                            isProductInComparison={isProductInComparison}
+                            toggleProductInComparison={toggleProductInComparison}
+                        />
+                        <ProductWishlistButton
+                            isProductInWishlist={isProductInWishlist}
+                            toggleProductInWishlist={toggleProductInWishlist}
+                        />
+                    </div>
+                )}
 
                 <ProductAction
                     gtmMessageOrigin={gtmMessageOrigin}

@@ -52,7 +52,7 @@ class RecommendationQuery extends AbstractQuery
                 $category = $this->categoryFacade->getVisibleOnDomainByUuid($this->domain->getId(), $categoryUuid);
                 $itemIds[] = LuigisBoxCategoryFeedItem::UNIQUE_IDENTIFIER_PREFIX . '-' . $category->getId();
             } else {
-                $productIds = $this->productElasticsearchProvider->getSellableProductIdsByUuids($argument['productUuids']);
+                $productIds = $this->productElasticsearchProvider->getSellableProductIdsByUuids($argument['itemUuids']);
 
                 foreach ($productIds as $productId) {
                     $itemIds[] = LuigisBoxProductFeedItem::UNIQUE_IDENTIFIER_PREFIX . '-' . $productId;
