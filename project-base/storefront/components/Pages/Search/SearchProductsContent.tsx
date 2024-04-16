@@ -30,7 +30,7 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
     useGtmPaginatedProductListViewEvent(searchResultProducts, GtmProductListNameType.search_results);
 
     const isWithProductsShown = !!searchProductsData.totalCount;
-    const noProductsFound = parseInt(searchProductsData.productFilterOptions.maximalPrice) === 0;
+    const noProductsFound = parseFloat(searchProductsData.productFilterOptions.maximalPrice) === 0;
 
     if (isFetching) {
         return (
