@@ -626,7 +626,7 @@ class OrderFacade
             $order->getDomainId(),
         );
 
-        $orderPaymentData = $this->orderItemDataFactory->create();
+        $orderPaymentData = $this->orderItemDataFactory->create(OrderItem::TYPE_PAYMENT);
         $orderPaymentData->name = $payment->getName();
         $orderPaymentData->unitPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
         $orderPaymentData->unitPriceWithVat = $paymentPrice->getPriceWithVat();

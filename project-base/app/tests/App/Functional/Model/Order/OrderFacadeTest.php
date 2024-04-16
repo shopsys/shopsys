@@ -156,6 +156,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemData1->unitPriceWithVat = Money::create(121);
         $orderItemData1->vatPercent = '21';
         $orderItemData1->quantity = 3;
+        $orderItemData1->type = OrderItem::TYPE_PRODUCT;
 
         $orderItemData2 = new OrderItemData();
         $orderItemData2->name = 'itemName2';
@@ -163,6 +164,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemData2->unitPriceWithVat = Money::create(333);
         $orderItemData2->vatPercent = '0';
         $orderItemData2->quantity = 1;
+        $orderItemData2->type = OrderItem::TYPE_PRODUCT;
 
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData1;
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '2'] = $orderItemData2;

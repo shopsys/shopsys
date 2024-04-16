@@ -97,7 +97,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PRODUCT);
         $orderItemData->name = 'new item';
         $orderItemData->quantity = 10;
         $orderItemData->vatPercent = '50.00';
@@ -120,7 +120,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PRODUCT);
         $orderItemData->name = 'new item';
         $orderItemData->quantity = 10;
         $orderItemData->usePriceCalculation = false;

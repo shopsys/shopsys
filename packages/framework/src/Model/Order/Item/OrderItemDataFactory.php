@@ -24,11 +24,16 @@ class OrderItemDataFactory
     }
 
     /**
+     * @param string $orderItemType
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
-    public function create(): OrderItemData
+    public function create(string $orderItemType): OrderItemData
     {
-        return $this->createInstance();
+        $orderItemData = $this->createInstance();
+
+        $orderItemData->type = $orderItemType;
+
+        return $orderItemData;
     }
 
     /**
