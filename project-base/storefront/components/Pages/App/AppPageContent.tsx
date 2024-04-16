@@ -8,7 +8,7 @@ import { GtmProvider } from 'gtm/context/GtmProvider';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
-import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
+import { useCookiesStoreSync } from 'utils/cookies/cookieStoreUtils';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error503Content = dynamic(
