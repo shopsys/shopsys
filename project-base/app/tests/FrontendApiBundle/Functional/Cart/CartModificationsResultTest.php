@@ -512,7 +512,9 @@ class CartModificationsResultTest extends GraphQlTestCase
             'quantity' => $productQuantity,
         ]);
 
-        return $response['data']['AddToCart']['cart'];
+        $data = $this->getResponseDataForGraphQlType($response, 'AddToCart');
+
+        return $data['cart'];
     }
 
     private function hideTestingProduct(): void
@@ -618,23 +620,13 @@ class CartModificationsResultTest extends GraphQlTestCase
         Transport $transport,
         ?string $pickupPlaceIdentifier = null,
     ): void {
-        $pickupPlaceIdentifierLine = '';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'transportUuid' => $transport->getUuid(),
+            'pickupPlaceIdentifier' => $pickupPlaceIdentifier,
+        ]);
 
-        if ($pickupPlaceIdentifier !== null) {
-            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
-        }
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    cartUuid: "' . $cartUuid . '"
-                    transportUuid: "' . $transport->getUuid() . '"
-                    ' . $pickupPlaceIdentifierLine . '
-                }) {
-                    uuid
-                }
-            }
-        ';
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
     }
 
     /**

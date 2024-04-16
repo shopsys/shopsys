@@ -73,21 +73,9 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $discountedTotalPriceWithoutVat = $cartResponseData['cart']['totalPrice']['priceWithoutVat'] * 0.9;
         $expectedPrice = $this->getSerializedPriceConvertedToDomainDefaultCurrency((string)$discountedTotalPriceWithoutVat, $vatHigh);
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                promoCode: "' . $promoCode->getCode() . '"
-            }) {
-                uuid
-                promoCode
-                totalPrice {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $promoCode->getCode(),
+        ]);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
         self::assertNull($data['uuid']);
@@ -109,9 +97,9 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
      */
     public function usablePromoCodeDataProvider(): iterable
     {
-        yield [PromoCodeDataFixture::VALID_PROMO_CODE];
+        yield 'valid promo code' => [PromoCodeDataFixture::VALID_PROMO_CODE];
 
-        yield [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY];
+        yield 'promo code for registered only' => [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY];
     }
 
     public function testApplyPromoCodeMultipleTimes(): void
@@ -120,23 +108,18 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
         $this->createUserCartWithHelloKittyProduct();
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                promoCode: "' . $promoCode->getCode() . '"
-            }) {
-                uuid
-                promoCode
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $promoCode->getCode(),
+        ]);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
         self::assertNull($data['uuid']);
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
 
         // apply promo code again
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $promoCode->getCode(),
+        ]);
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
@@ -152,16 +135,10 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
     {
         $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                promoCode: "' . $promoCode->getCode() . '"
-            }) {
-                uuid
-                promoCode
-            }
-        }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $promoCode->getCode(),
+        ]);
 
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -175,17 +152,11 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
         $this->createUserCartWithHelloKittyProduct();
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                promoCode: "' . $promoCode->getCode() . '"
-            }) {
-                uuid
-                promoCode
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $promoCode->getCode(),
+        ]);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
 
         $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
@@ -230,16 +201,9 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
         $this->createUserCartWithHelloKittyProduct();
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                promoCode: "' . $validPromoCode->getCode() . '"
-            }) {
-                uuid
-                promoCode
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $validPromoCode->getCode(),
+        ]);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
         self::assertEquals($validPromoCode->getCode(), $data['promoCode']);
@@ -293,16 +257,9 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
         $this->createUserCartWithHelloKittyProduct();
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                promoCode: "' . $promoCodeCode . '"
-            }) {
-                uuid
-                promoCode
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'promoCode' => $promoCodeCode,
+        ]);
 
         self::assertArrayHasKey('errors', $response);
 

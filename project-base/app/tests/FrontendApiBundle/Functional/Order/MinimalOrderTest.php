@@ -65,7 +65,9 @@ class MinimalOrderTest extends GraphQlTestCase
             'quantity' => 1,
         ]);
 
-        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
+        $data = $this->getResponseDataForGraphQlType($response, 'AddToCart');
+
+        $cartUuid = $data['cart']['uuid'];
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
