@@ -206,6 +206,14 @@ class OrderItem
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getPrice(): Price
+    {
+        return new Price($this->priceWithoutVat, $this->priceWithVat);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public function getTotalPriceWithoutVat()

@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+
 class OrderData
 {
     public const string NEW_ITEM_PREFIX = 'new_';
@@ -139,9 +144,15 @@ class OrderData
     public $note;
 
     /**
+     * @deprecated replace with getter call
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */
     public $itemsWithoutTransportAndPayment;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    public $items = [];
 
     /**
      * @var \DateTime|null
@@ -223,6 +234,16 @@ class OrderData
      */
     public $trackingNumber;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public $totalPrice;
+
+    /**
+     * @var array<string, \Shopsys\FrameworkBundle\Model\Pricing\Price>
+     */
+    public $totalPriceByItemType = [];
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];
@@ -230,6 +251,10 @@ class OrderData
         $this->paymentTransactionRefunds = [];
         $this->heurekaAgreement = false;
         $this->isCompanyCustomer = false;
+
+        $this->totalPrice = new Price(Money::zero(), Money::zero());
+
+        $this->setZeroPricesForAllTypes();
     }
 
     /**
@@ -246,5 +271,55 @@ class OrderData
         }
 
         return $newItemsWithoutTransportAndPayment;
+    }
+
+    protected function setZeroPricesForAllTypes(): void
+    {
+        $this->totalPriceByItemType[OrderItem::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
+        $this->totalPriceByItemType[OrderItem::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
+    }
+
+    /**
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    public function getItemsByType(string $type): array
+    {
+        return array_values(array_filter(
+            $this->items,
+            fn (OrderItemData $item) => $item->type === $type,
+        ));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToAdd
+     * @param string $type
+     */
+    public function addTotalPrice(Price $priceToAdd, string $type): void
+    {
+        $this->totalPriceByItemType[$type] = $this->totalPriceByItemType[$type]->add($priceToAdd);
+        $this->totalPrice = $this->totalPrice->add($priceToAdd);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToSubtract
+     * @param string $type
+     */
+    public function subtractTotalPrice(Price $priceToSubtract, string $type): void
+    {
+        // @todo this is probably unintuitive
+        $this->totalPriceByItemType[$type] = $this->totalPriceByItemType[$type]->add($priceToSubtract);
+        $this->totalPrice = $this->totalPrice->subtract($priceToSubtract);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $item
+     */
+    public function addItem(OrderItemData $item): void
+    {
+        $this->items[] = $item;
     }
 }

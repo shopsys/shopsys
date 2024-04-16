@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+
 class OrderItemData
 {
     /**
@@ -71,7 +73,51 @@ class OrderItemData
     public $payment;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public $product;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
+     */
+    public $promoCode;
+
+    /**
      * @var string|null
      */
     public $type;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
+     */
+    public function setUnitPrice(Price $unitPrice): void
+    {
+        $this->unitPriceWithVat = $unitPrice->getPriceWithVat();
+        $this->unitPriceWithoutVat = $unitPrice->getPriceWithoutVat();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     */
+    public function setTotalPrice(Price $totalPrice): void
+    {
+        $this->totalPriceWithVat = $totalPrice->getPriceWithVat();
+        $this->totalPriceWithoutVat = $totalPrice->getPriceWithoutVat();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice(): Price
+    {
+        return new Price($this->totalPriceWithoutVat, $this->totalPriceWithVat);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getUnitPrice(): Price
+    {
+        return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
+    }
 }

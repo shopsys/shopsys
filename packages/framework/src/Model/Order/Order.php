@@ -371,7 +371,7 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
-        $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero(), Money::zero()));
+        $this->setTotalPrices(Price::zero(), Price::zero());
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
@@ -647,6 +647,14 @@ class Order
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice()
+    {
+        return new Price($this->totalPriceWithoutVat, $this->totalPriceWithVat);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
     public function getTotalVatAmount(): Money
@@ -663,6 +671,7 @@ class Order
     }
 
     /**
+     * @deprecated use setTotalPrices instead
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice $orderTotalPrice
      */
     public function setTotalPrice(OrderTotalPrice $orderTotalPrice): void
@@ -671,6 +680,18 @@ class Order
         $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
         $this->totalProductPriceWithVat = $orderTotalPrice->getProductPriceWithVat();
         $this->totalProductPriceWithoutVat = $orderTotalPrice->getProductPriceWithoutVat();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $orderTotalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsTotalPrice
+     */
+    public function setTotalPrices(Price $orderTotalPrice, Price $productsTotalPrice): void
+    {
+        $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
+        $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
+        $this->totalProductPriceWithVat = $productsTotalPrice->getPriceWithVat();
+        $this->totalProductPriceWithoutVat = $productsTotalPrice->getPriceWithoutVat();
     }
 
     /**

@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderItemResolverMap extends ResolverMap
 {
@@ -29,7 +28,7 @@ class OrderItemResolverMap extends ResolverMap
                     return $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
                 },
                 'unitPrice' => function (OrderItem $orderItem) {
-                    return new Price($orderItem->getPriceWithoutVat(), $orderItem->getPriceWithVat());
+                    return $orderItem->getPrice();
                 },
                 'unit' => function (OrderItem $orderItem) {
                     return $orderItem->getUnitName();
