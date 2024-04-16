@@ -213,9 +213,9 @@ Though this may be obvious, when running `open-acceptance-tests-base` or `open-a
 -   You can view the videos in `/videos` to see where the test got stuck
 -   You can view snapshot diffs in `/snapshotDiffs` if your tests fail because of visual differences, they should help you to spot the differences
     -   For example, looking at the following reported diff, the red highlighting should tell you what part of the image to focus on
-        ![snapshot diff](image.png)
+        ![snapshot diff](./images/cypress-diff-entire-page.png)
         and then by closely analyzing it, you can even see which exact part has changed and why. For example here, the price of a specific payment method has changed to 1000.99
-        ![alt text](image-1.png)
+        ![snapshot diff detail](./images/cypress-diff-detail.png)
 -   You can log within your tests, though this is considerably harder than the methods above, as logging is not intuitive in cypress, however, you can read more in the [official docs](https://docs.cypress.io/api/commands/log)
 -   You can run the tests using the cypress interactive GUI. This is very helpful especially when dealing with complex bugs. Within the GUI, even a browser console is available. However, definitely read the [part about running your tests](#how-to-run-tests) and the [part about various gotchas you might face](#gotchas-when-running-tests).
 
