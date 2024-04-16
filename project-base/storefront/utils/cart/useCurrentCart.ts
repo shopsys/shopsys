@@ -9,6 +9,7 @@ import { isStoreHydrated } from 'utils/store/isStoreHydrated';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = useIsUserLoggedIn();
+    const authLoading = usePersistStore((s) => s.authLoading);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
@@ -16,7 +17,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
-        pause: !isWithCart,
+        pause: !isWithCart || authLoading !== null,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
