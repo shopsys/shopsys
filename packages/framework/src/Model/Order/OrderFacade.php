@@ -151,7 +151,8 @@ class OrderFacade
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
         $locale = $domainConfig->getLocale();
 
-        if ($this->heurekaFacade->isDomainLocaleSupported($locale) === false ||
+        if ($order->isHeurekaAgreement() === false ||
+            $this->heurekaFacade->isDomainLocaleSupported($locale) === false ||
             $this->heurekaFacade->isHeurekaShopCertificationActivated($order->getDomainId()) === false
         ) {
             return false;

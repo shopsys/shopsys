@@ -63,6 +63,17 @@ class OrderFacadeHeurekaTest extends TestCase
         $this->runHeurekaTest($heurekaFacade);
     }
 
+    public function testNotSendHeurekaOrderInfoForOrderWithoutAgreement(): void
+    {
+        $heurekaFacade = $this->createMock(HeurekaFacade::class);
+        $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
+        $heurekaFacade->method('isDomainLocaleSupported')->willReturn(true);
+
+        $heurekaFacade->expects($this->never())->method('sendOrderInfo');
+
+        $this->runHeurekaTest($heurekaFacade, false);
+    }
+
     public function testSendHeurekaOrderInfo(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
@@ -119,10 +130,11 @@ class OrderFacadeHeurekaTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
+     * @param bool $heurekaAgreement
      */
-    private function runHeurekaTest(HeurekaFacade $heurekaFacade): void
+    private function runHeurekaTest(HeurekaFacade $heurekaFacade, bool $heurekaAgreement = true): void
     {
-        $order = $this->createOrderMock();
+        $order = $this->createOrderMock($heurekaAgreement);
         $orderFacade = $this->createOrderFacade($heurekaFacade, $order);
         $orderFacade->sendHeurekaOrderInfo($order->getId());
     }
@@ -139,13 +151,15 @@ class OrderFacadeHeurekaTest extends TestCase
     }
 
     /**
+     * @param bool $heurekaAgreement
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
-    private function createOrderMock(): MockObject
+    private function createOrderMock(bool $heurekaAgreement): MockObject
     {
         $order = $this->createMock(Order::class);
         $order->method('getId')->willReturn(1);
         $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
+        $order->method('isHeurekaAgreement')->willReturn($heurekaAgreement);
 
         return $order;
     }
