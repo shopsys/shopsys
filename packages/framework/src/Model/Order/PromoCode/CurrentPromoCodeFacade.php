@@ -138,6 +138,7 @@ class CurrentPromoCodeFacade
      */
     protected function validatePromoCodeByFlags(PromoCode $promoCode, Cart $cart): void
     {
+        $domainId = $this->domain->getId();
         $isValidPromoCode = false;
 
         foreach ($cart->getItems() as $cartItem) {
