@@ -20,6 +20,7 @@
         - ./**/routing*.{yaml,yml}
         - ./config/cron.yaml
         - ./config/packages/security.yaml
+        - ./config/packages/shopsys_framework.yaml
         - ./docker*
         - ./migrations-lock.{yaml,yml}
         - ./node_modules/*

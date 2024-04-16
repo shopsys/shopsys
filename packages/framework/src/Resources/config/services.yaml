@@ -740,6 +740,10 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
 
+    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor: ~
+
     Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~

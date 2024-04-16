@@ -9,12 +9,14 @@ use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataT
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class ShopsysFrameworkExtension extends Extension implements PrependExtensionInterface
@@ -55,6 +57,14 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(DataTypeResolverInterface::class)
             ->addTag('shopsys.data_type_resolver');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $this->setMiddlewareServicesToStack(
+            $config['order']['processing_middlewares'],
+            $container,
+        );
     }
 
     /**
@@ -80,5 +90,22 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
                 'Shopsys\FrameworkBundle\Migrations' => __DIR__ . '/../Migrations',
             ],
         ]);
+    }
+
+    /**
+     * @param string[] $orderProcessingMiddlewareClassNames
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function setMiddlewareServicesToStack(
+        array $orderProcessingMiddlewareClassNames,
+        ContainerBuilder $container,
+    ): void {
+        $middlewareReferences = array_map(
+            static fn (string $id) => new Reference($id),
+            $orderProcessingMiddlewareClassNames,
+        );
+
+        $container->getDefinition(OrderProcessingStack::class)
+            ->setArgument('$processingMiddlewares', $middlewareReferences);
     }
 }
