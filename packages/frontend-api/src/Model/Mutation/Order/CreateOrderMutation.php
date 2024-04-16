@@ -22,8 +22,8 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
 
 class CreateOrderMutation extends AbstractMutation
 {
-    public const VALIDATION_GROUP_IS_DELIVERY_ADDRESS_DIFFERENT_FROM_BILLING_WITHOUT_PRESELECTED = 'isDeliveryAddressDifferentFromBillingWithoutPreselected';
-    public const VALIDATION_GROUP_ON_COMPANY_BEHALF = 'onCompanyBehalf';
+    public const string VALIDATION_GROUP_IS_DELIVERY_ADDRESS_DIFFERENT_FROM_BILLING_WITHOUT_PRESELECTED = 'isDeliveryAddressDifferentFromBillingWithoutPreselected';
+    public const string VALIDATION_GROUP_ON_COMPANY_BEHALF = 'onCompanyBehalf';
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory $orderDataFactory
@@ -94,7 +94,7 @@ class CreateOrderMutation extends AbstractMutation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function sendEmail(Order $order)
+    protected function sendEmail(Order $order): void
     {
         $this->orderMailFacade->sendEmail($order);
     }

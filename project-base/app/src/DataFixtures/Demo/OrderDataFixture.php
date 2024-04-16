@@ -29,10 +29,10 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class OrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     private const string UUID_NAMESPACE = '0338e624-c961-4475-a29d-c90080d02d1f';
-    public const ORDER_PREFIX = 'order_';
-    private const ORDER_WITH_GOPAY_PAYMENT_PREFIX = 'order_with_gopay_payment_';
-    public const ORDER_WITH_GOPAY_PAYMENT_1 = 'order_with_gopay_payment_1';
-    public const ORDER_WITH_GOPAY_PAYMENT_14 = 'order_with_gopay_payment_14';
+    public const string ORDER_PREFIX = 'order_';
+    private const string ORDER_WITH_GOPAY_PAYMENT_PREFIX = 'order_with_gopay_payment_';
+    public const string ORDER_WITH_GOPAY_PAYMENT_1 = 'order_with_gopay_payment_1';
+    public const string ORDER_WITH_GOPAY_PAYMENT_14 = 'order_with_gopay_payment_14';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -55,7 +55,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();

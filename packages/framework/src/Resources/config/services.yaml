@@ -92,8 +92,6 @@ services:
         arguments:
             $routerMatchCommand: '@console.command.router_match'
 
-    Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
-
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
         arguments: [!tagged shopsys.breadcrumb_generator]
 
@@ -811,12 +809,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactory
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
 

@@ -71,7 +71,7 @@ class OrderItem
 
     /**
      * This property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
@@ -80,7 +80,7 @@ class OrderItem
 
     /**
      * This property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
@@ -225,7 +225,7 @@ class OrderItem
 
     /**
      * The total price property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $totalPrice
      */

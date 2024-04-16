@@ -38,10 +38,6 @@ class OrderDataFixture
 
     private const BATCH_SIZE = 10;
 
-    private int $orderTotalCount;
-
-    private int $orderItemCountPerOrder;
-
     /**
      * @var int[]
      */
@@ -67,8 +63,8 @@ class OrderDataFixture
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
-        $orderTotalCount,
-        $orderItemCountPerOrder,
+        private int $orderTotalCount,
+        private int $orderItemCountPerOrder,
         private readonly EntityManagerInterface $em,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly Faker $faker,
@@ -80,8 +76,6 @@ class OrderDataFixture
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly OrderDataFactory $orderDataFactory,
     ) {
-        $this->orderTotalCount = $orderTotalCount;
-        $this->orderItemCountPerOrder = $orderItemCountPerOrder;
         $this->performanceProductIds = [];
     }
 

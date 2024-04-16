@@ -79,7 +79,7 @@ class CurrentPromoCodeFacade
     {
         $remainingCodeUses = $promoCode->getRemainingUses();
 
-        if ($remainingCodeUses !== null && $remainingCodeUses === 0) {
+        if ($remainingCodeUses === 0) {
             throw new InvalidPromoCodeException($promoCode->getCode());
         }
     }

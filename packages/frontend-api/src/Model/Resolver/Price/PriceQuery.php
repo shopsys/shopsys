@@ -59,7 +59,7 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function priceByProductQuery($data): ProductPrice
+    public function priceByProductQuery(Product|array $data): ProductPrice
     {
         if ($data instanceof Product) {
             $productPrice = $this->productCachedAttributesFacade->getProductSellingPrice($data);

@@ -179,7 +179,7 @@ class PromoCode
 
     public function decreaseRemainingUses(): void
     {
-        if ($this->remainingUses !== null & $this->remainingUses > 0) {
+        if ($this->remainingUses !== null && $this->remainingUses > 0) {
             $this->remainingUses--;
         }
     }
