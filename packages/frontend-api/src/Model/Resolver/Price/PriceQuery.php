@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 use ArrayObject;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -36,7 +35,6 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      */
@@ -49,7 +47,6 @@ class PriceQuery extends AbstractQuery
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly PriceFacade $priceFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly OrderApiFacade $orderApiFacade,
     ) {
@@ -111,14 +108,6 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentPaymentPrice($payment);
         }
 
-        $domainId = $this->domain->getId();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $orderPreview = $this->orderPreviewFactory->create(
-            $currency,
-            $domainId,
-            $cart->getQuantifiedProducts(),
-            null,
-            $payment,
             $customerUser,
             null,
             null,

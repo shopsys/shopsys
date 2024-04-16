@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -21,7 +20,6 @@ class CartPaymentDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      */
     public function __construct(
@@ -29,7 +27,6 @@ class CartPaymentDataFactory
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
     ) {
     }
@@ -64,17 +61,6 @@ class CartPaymentDataFactory
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $orderPreview = $this->orderPreviewFactory->create(
-            $currency,
-            $domainId,
-            $cart->getQuantifiedProducts(),
-            $cart->getTransport(),
-            $payment,
-            $customerUser,
-            null,
-            null,
-            $cart->getFirstAppliedPromoCode(),
-        );
 
         $watchedPrice = $this->paymentPriceCalculation->calculatePrice(
             $payment,

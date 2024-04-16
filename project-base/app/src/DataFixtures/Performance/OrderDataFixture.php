@@ -56,7 +56,6 @@ class OrderDataFixture
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
@@ -70,7 +69,6 @@ class OrderDataFixture
         private readonly Faker $faker,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly OrderFacade $orderFacade,
-        private readonly OrderPreviewFactory $orderPreviewFactory,
         private readonly ProductFacade $productFacade,
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly ProgressBarFactory $progressBarFactory,
@@ -113,12 +111,6 @@ class OrderDataFixture
         $orderData = $this->createOrderData($customerUser);
         $quantifiedProducts = $this->createQuantifiedProducts();
 
-        $orderPreview = $this->orderPreviewFactory->create(
-            $orderData->currency,
-            $orderData->domainId,
-            $quantifiedProducts,
-            $orderData->transport,
-            $orderData->payment,
             $customerUser,
             null,
         );

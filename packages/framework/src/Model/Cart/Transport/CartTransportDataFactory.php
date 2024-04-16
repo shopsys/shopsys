@@ -21,7 +21,6 @@ class CartTransportDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      */
     public function __construct(
@@ -29,7 +28,6 @@ class CartTransportDataFactory
         protected readonly TransportFacade $transportFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
     ) {
     }
@@ -66,18 +64,6 @@ class CartTransportDataFactory
     protected function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $orderPreview = $this->orderPreviewFactory->create(
-            $currency,
-            $domainId,
-            $cart->getQuantifiedProducts(),
-            $transport,
-            $cart->getPayment(),
-            $customerUser,
-            null,
-            null,
-            $cart->getFirstAppliedPromoCode(),
-        );
 
         $watchedPrice = $this->transportPriceCalculation->calculatePrice(
             $transport,

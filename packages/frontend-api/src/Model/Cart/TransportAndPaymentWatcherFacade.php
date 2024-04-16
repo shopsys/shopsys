@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -31,7 +30,6 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
@@ -44,7 +42,6 @@ class TransportAndPaymentWatcherFacade
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportFacade $transportFacade,
         protected readonly PaymentFacade $paymentFacade,
-        protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
@@ -72,16 +69,6 @@ class TransportAndPaymentWatcherFacade
         $transport = $cart->getTransport();
         $payment = $cart->getPayment();
 
-        $orderPreview = $this->orderPreviewFactory->create(
-            $currency,
-            $domainId,
-            $cart->getQuantifiedProducts(),
-            $transport,
-            $payment,
-            $customerUser,
-            null,
-            null,
-            $cart->getFirstAppliedPromoCode(),
         );
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {

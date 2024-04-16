@@ -56,7 +56,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Form/Admin/*/*FormType.php',
             __DIR__ . '/src/Migrations/Version*.php',
             __DIR__ . '/src/Model/AdminNavigation/SideMenuBuilder.php',
-            __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
             __DIR__ . '/src/Model/Product/ProductVisibilityRepository.php',
             __DIR__ . '/src/Model/Product/Search/FilterQuery.php',
             __DIR__ . '/src/Controller/Admin/AdministratorController.php',
@@ -100,7 +99,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/*',
             __DIR__ . '/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php',
             __DIR__ . '/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php',
-            __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
             __DIR__ . '/src/Component/EntityExtension/EntityExtensionSubscriber.php',
         ],
         ForbiddenDumpSniff::class => [

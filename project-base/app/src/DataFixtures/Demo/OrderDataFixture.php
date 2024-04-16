@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class OrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -37,7 +36,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -45,7 +43,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public function __construct(
         private readonly CustomerUserRepository $customerUserRepository,
         private readonly OrderFacade $orderFacade,
-        private readonly OrderPreviewFactory $orderPreviewFactory,
         private readonly OrderDataFactory $orderDataFactory,
         private readonly Domain $domain,
         private readonly CurrencyFacade $currencyFacade,
@@ -792,12 +789,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $uniqueOrderHash .= $product->getCatnum() . '-' . $quantity;
         }
 
-        $orderPreview = $this->orderPreviewFactory->create(
-            $orderData->currency,
-            $orderData->domainId,
-            $quantifiedProducts,
-            $orderData->transport,
-            $orderData->payment,
             $customerUser,
             null,
         );

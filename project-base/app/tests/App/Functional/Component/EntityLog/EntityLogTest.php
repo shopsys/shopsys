@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -38,7 +37,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private OrderPreviewFactory $orderPreviewFactory;
 
     /**
      * @inject
@@ -290,12 +288,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        $orderPreview = $this->orderPreviewFactory->create(
-            $orderData->currency,
-            $orderData->domainId,
-            [new QuantifiedProduct($product, 1)],
-            $transport,
-            $payment,
         );
 
         return $this->orderFacade->createOrder($orderData, $orderPreview, null);

@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -23,7 +22,6 @@ class TransportValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      */
@@ -31,7 +29,6 @@ class TransportValidationFacade
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
     ) {
@@ -70,15 +67,7 @@ class TransportValidationFacade
      */
     public function checkTransportPrice(Transport $transport, Cart $cart): void
     {
-        $domainId = $this->domain->getId();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $orderPreview = $this->orderPreviewFactory->create(
-            $currency,
-            $domainId,
-            $cart->getQuantifiedProducts(),
-            $transport,
-            $cart->getPayment(),
             $currentCustomerUser,
             null,
             null,
