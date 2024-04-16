@@ -18,10 +18,12 @@ describe('Authentication tests', () => {
     it('should login from header and then log out', () => {
         cy.visitAndWaitForStableDOM('/');
         loginFromHeader(customer1.emailRegistered, customer1.password);
-        checkUserIsLoggedIn();
         checkAndHideSuccessToast();
+        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
+        checkUserIsLoggedIn();
         cy.getByTID([TIDs.my_account_link]).should('be.visible').realHover();
         cy.getByTID([TIDs.header_logout]).should('be.visible').click();
+        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
         checkIfLoginLinkIsVisible();
     });
 
@@ -29,11 +31,13 @@ describe('Authentication tests', () => {
         cy.visitAndWaitForStableDOM(url.login);
         fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, customer1.password);
         cy.getByTID([TIDs.pages_login_submit]).click();
-        checkUserIsLoggedIn();
         checkAndHideSuccessToast();
+        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
+        checkUserIsLoggedIn();
         cy.getByTID([TIDs.my_account_link]).click();
         checkUrl(url.customer);
         cy.getByTID([TIDs.customer_page_logout]).click();
+        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
         checkUrl(url.loginWithCustomerRedirect);
         checkIfLoginLinkIsVisible();
     });
