@@ -1,3 +1,7 @@
 shopsys_framework:
     order:
         processing_middlewares:
+            - 'App\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware'
+            - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware'
+            - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware'
+            - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware'

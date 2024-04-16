@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
+use Shopsys\FrontendApiBundle\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
 use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportPriceChangedException;
@@ -81,7 +82,7 @@ class TransportAndPaymentWatcherFacade
             $this->currentCustomerUser->findCurrentCustomerUser(),
         );
 
-        $productsPrice = $orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT];
+        $productsPrice = $orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT]->subtract($orderData->totalPriceByItemType[OrderItem::TYPE_DISCOUNT]);
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {
             $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
@@ -163,6 +164,17 @@ class TransportAndPaymentWatcherFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    protected function checkPacketeryIdIsValid(Transport $transport, Cart $cart): void
+    {
+        if ($transport->isPacketery() && !is_numeric($cart->getPickupPlaceIdentifier())) {
+            throw new InvalidPacketeryAddressIdUserError('Wrong packetery address ID');
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      */
     protected function checkTransport(Cart $cart): void
@@ -190,6 +202,7 @@ class TransportAndPaymentWatcherFacade
         $this->checkTransportPrice($transport, $cart);
         $this->checkTransportWeightLimit($transport, $cart);
         $this->checkPersonalPickupStoreAvailability($transport, $cart);
+        $this->checkPacketeryIdIsValid($transport, $cart);
     }
 
     /**
