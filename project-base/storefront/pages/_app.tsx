@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     return (
         <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
             <UrqlWrapper pageProps={pageProps}>
-                <CookiesStoreProvider>
+                <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
                         <AppPageContent Component={Component} pageProps={pageProps} />
                     </DomainConfigProvider>

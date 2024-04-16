@@ -11,11 +11,10 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useAuthLoader } from 'utils/app/useAuthLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
 import { useReloadCart } from 'utils/cart/useReloadCart';
-import { useCookiesStoreSync } from 'utils/cookies/useCookiesStoreSync';
+import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { isEnvironment } from 'utils/isEnvironment';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { useSetInitialStoreValues } from 'utils/store/useSetInitialStoreValues';
 import { useBroadcastChannel } from 'utils/useBroadcastChannel';
 
 const UserConsent = dynamic(
@@ -48,7 +47,6 @@ type AppPageContentProps = {
 };
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
-    useSetInitialStoreValues(pageProps);
     useCookiesStoreSync();
     useAuthLoader();
     usePageLoader();

@@ -5,14 +5,14 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useSearchQuery } from 'graphql/requests/search/queries/SearchQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { usePersistStore } from 'store/usePersistStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { isClient } from 'utils/isClient';
 import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchStringQuery';
 
 export const SearchPageContent: FC = () => {
     const { t } = useTranslation();
     const searchString = useCurrentSearchStringQuery();
-    const userIdentifier = usePersistStore((state) => state.userIdentifier);
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
     const [{ data: searchData, fetching }] = useSearchQuery({
         variables: {

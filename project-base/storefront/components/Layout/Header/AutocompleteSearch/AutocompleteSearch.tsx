@@ -10,7 +10,7 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { twJoin } from 'tailwind-merge';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
@@ -31,7 +31,7 @@ export const AutocompleteSearch: FC = () => {
     const [searchData, setSearchData] = useState<TypeAutocompleteSearchQuery>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
 
-    const userIdentifier = usePersistStore((store) => store.userIdentifier)!;
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
