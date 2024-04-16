@@ -30,7 +30,7 @@ class ProductOrderingModeProvider
      */
     public function getDefaultOrderingMode(Argument $argument): string
     {
-        if (isset($argument['search'])) {
+        if (isset($argument['searchInput']['search'])) {
             return $this->getDefaultOrderingModeForSearch();
         }
 

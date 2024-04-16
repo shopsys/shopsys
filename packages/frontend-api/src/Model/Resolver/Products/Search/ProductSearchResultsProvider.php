@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
@@ -39,13 +38,14 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         ProductFilterData $productFilterData,
     ): ProductConnection {
         $search = $argument['searchInput']['search'] ?? '';
+        $orderingMode = $this->productOrderingModeProvider->getOrderingModeFromArgument($argument);
 
         return $this->productConnectionFactory->createConnectionForAll(
-            function ($offset, $limit) use ($search, $productFilterData) {
+            function ($offset, $limit) use ($search, $productFilterData, $orderingMode) {
                 return $this->productFacade->getFilteredProductsOnCurrentDomain(
                     $limit,
                     $offset,
-                    ProductListOrderingConfig::ORDER_BY_RELEVANCE,
+                    $orderingMode,
                     $productFilterData,
                     $search,
                 );
@@ -53,7 +53,7 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData,
-            $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
+            $orderingMode,
         );
     }
 
