@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
  * @method \App\Model\Payment\Payment|null getPayment()
  * @method \App\Model\Cart\Item\CartItem getItemByUuid(string $itemUuid)
  * @method assignCartToCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @method \App\Model\Product\Product[] getProducts()
  */
 class Cart extends BaseCart
 {

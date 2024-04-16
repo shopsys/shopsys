@@ -227,6 +227,17 @@ class Cart
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getProducts(): array
+    {
+        return array_map(
+            static fn (QuantifiedProduct $quantifiedProduct) => $quantifiedProduct->getProduct(),
+            $this->getQuantifiedProducts(),
+        );
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $item
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem|null
      */
