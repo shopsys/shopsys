@@ -32,7 +32,6 @@ import './MailTemplate';
 import './MailWhitelist';
 import './MassAction';
 import './MassActionConfirm';
-import './MeasuringScript';
 import './OpeningHoursCollection';
 import './OrderPreview';
 import './OrderItems';

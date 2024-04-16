@@ -1517,6 +1517,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
     -   see #project-base-diff to update your project
 
+-   remove measuring scripts functionality ([#3122](https://github.com/shopsys/shopsys/pull/3122))
+
+    -   if you do not want to remove functionality and are still using it, you should skip migration `Version20240222100000` and keep the functionality
+    -   you can use GTM for this purpose, see [our docs](docs/integration/third-party-scripts.md) for more information
+    -   see #project-base-diff to update your project
+
 ### Storefront
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))

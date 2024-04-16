@@ -583,9 +583,6 @@ msgstr ""
 msgid "Editing promo code"
 msgstr ""
 
-msgid "Editing script"
-msgstr ""
-
 msgid "Editing transport type"
 msgstr ""
 
@@ -665,9 +662,6 @@ msgid "Extended SEO category - filters"
 msgstr ""
 
 msgid "Extended SEO category - set combinations with SEO values"
-msgstr ""
-
-msgid "External scripts"
 msgstr ""
 
 msgid "Facebook URL"
@@ -752,9 +746,6 @@ msgid "GTM creative"
 msgstr ""
 
 msgid "Generated batches"
-msgstr ""
-
-msgid "Google analytics"
 msgstr ""
 
 msgid "Groups"
@@ -1013,9 +1004,6 @@ msgid "New promo code"
 msgstr ""
 
 msgid "New registered customers"
-msgstr ""
-
-msgid "New script"
 msgstr ""
 
 msgid "New store"
@@ -1412,15 +1400,6 @@ msgid "Save changes in order"
 msgstr ""
 
 msgid "Scaled promo code"
-msgstr ""
-
-msgid "Scripts - full"
-msgstr ""
-
-msgid "Scripts - view"
-msgstr ""
-
-msgid "Scripts overview"
 msgstr ""
 
 msgid "Search [noun]"

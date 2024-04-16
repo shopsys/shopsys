@@ -166,9 +166,6 @@ class MenuItemsGrantedRolesSetting
             'integrations' . self::MENU_ITEM_PATH_SEPARATOR . 'heureka' => [
                 Roles::ROLE_HEUREKA_VIEW,
             ],
-            'integrations' . self::MENU_ITEM_PATH_SEPARATOR . 'external_scripts' => [
-                Roles::ROLE_SCRIPT_VIEW,
-            ],
         ];
     }
 
