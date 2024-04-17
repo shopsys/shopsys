@@ -60,20 +60,38 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
             differentDeliveryAddress: Yup.boolean(),
             deliveryFirstName: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
                 is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
-                    shouldValidateDeliveryAddressField(isUserLoggedIn, differentDeliveryAddress, deliveryAddressUuid),
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                        true,
+                    ),
                 then: validateFirstName(t),
                 otherwise: Yup.string(),
             }),
             deliveryLastName: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
                 is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
-                    shouldValidateDeliveryAddressField(isUserLoggedIn, differentDeliveryAddress, deliveryAddressUuid),
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                        true,
+                    ),
                 then: validateLastName(t),
                 otherwise: Yup.string(),
             }),
             deliveryCompanyName: Yup.string(),
             deliveryTelephone: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
                 is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
-                    shouldValidateDeliveryAddressField(isUserLoggedIn, differentDeliveryAddress, deliveryAddressUuid),
+                    shouldValidateDeliveryAddressField(
+                        isUserLoggedIn,
+                        differentDeliveryAddress,
+                        deliveryAddressUuid,
+                        !!pickupPlace,
+                        true,
+                    ),
                 then: validateTelephone(t),
                 otherwise: Yup.string(),
             }),
@@ -139,9 +157,14 @@ const shouldValidateDeliveryAddressField = (
     differentDeliveryAddress: boolean,
     deliveryAddressUuid: string,
     isPickupPlaceSelected?: boolean,
+    isRelevantForPickupPlace?: boolean,
 ) => {
-    if (!differentDeliveryAddress || isPickupPlaceSelected) {
+    if (!differentDeliveryAddress || !isRelevantForPickupPlace) {
         return false;
+    }
+
+    if (isPickupPlaceSelected) {
+        return true;
     }
 
     if (isUserLoggedIn) {

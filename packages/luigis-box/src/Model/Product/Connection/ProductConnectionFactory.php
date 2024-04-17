@@ -15,21 +15,23 @@ use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory 
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
+use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
 
 class ProductConnectionFactory
 {
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $frontendApiProductConnectionFactory
+     * @param \Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper $luigisBoxFacetsToProductFilterConfigMapper
      */
     public function __construct(
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
         protected readonly FrontendApiProductConnectionFactory $frontendApiProductConnectionFactory,
+        protected readonly LuigisBoxFacetsToProductFilterOptionsMapper $luigisBoxFacetsToProductFilterConfigMapper,
     ) {
     }
 
     /**
-     * @param string $search
      * @param \Closure $retrieveProductClosure
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
@@ -37,13 +39,14 @@ class ProductConnectionFactory
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function createConnectionPromiseForSearch(
-        string $search,
         Closure $retrieveProductClosure,
         Argument $argument,
         ProductFilterData $productFilterData,
         ?string $orderingMode,
     ): Promise {
-        $productFilterOptionsClosure = $this->frontendApiProductConnectionFactory->getProductFilterOptionsClosure($productFilterData, $search);
+        $productFilterOptionsClosure = function () use ($productFilterData) {
+            return $this->luigisBoxFacetsToProductFilterConfigMapper->map(LuigisBoxBatchLoader::getFacets(), $productFilterData);
+        };
         $orderingMode = $orderingMode ?? $this->productOrderingModeProvider->getDefaultOrderingModeForSearch();
 
         return $this->getConnectionPromise(

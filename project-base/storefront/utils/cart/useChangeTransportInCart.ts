@@ -4,7 +4,6 @@ import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/Liste
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
@@ -23,52 +22,49 @@ export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] =>
 
     const gtmCart = useLatest(gtmCartInfo);
 
-    const changeTransportHandler = useCallback<ChangeTransportHandler>(
-        async (newTransportUuid, newPickupPlace) => {
-            const changeTransportResult = await changeTransportInCart(
-                {
-                    input: {
-                        transportUuid: newTransportUuid,
-                        pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
-                        cartUuid,
-                    },
+    const changeTransportHandler: ChangeTransportHandler = async (newTransportUuid, newPickupPlace) => {
+        const changeTransportResult = await changeTransportInCart(
+            {
+                input: {
+                    transportUuid: newTransportUuid,
+                    pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
+                    cartUuid,
                 },
-                { additionalTypenames: ['dedup'] },
-            );
+            },
+            { additionalTypenames: ['dedup'] },
+        );
 
-            // EXTEND TRANSPORT MODIFICATIONS HERE
+        // EXTEND TRANSPORT MODIFICATIONS HERE
 
-            if (changeTransportResult.error !== undefined) {
-                const { userError } = getUserFriendlyErrors(changeTransportResult.error, t);
-                if (userError?.validation?.transport !== undefined) {
-                    showErrorMessage(
-                        userError.validation.transport.message,
-                        GtmMessageOriginType.transport_and_payment_page,
-                    );
-                }
-                if (userError?.validation?.pickupPlaceIdentifier !== undefined) {
-                    showErrorMessage(
-                        userError.validation.pickupPlaceIdentifier.message,
-                        GtmMessageOriginType.transport_and_payment_page,
-                    );
-                }
-
-                return null;
+        if (changeTransportResult.error !== undefined) {
+            const { userError } = getUserFriendlyErrors(changeTransportResult.error, t);
+            if (userError?.validation?.transport !== undefined) {
+                showErrorMessage(
+                    userError.validation.transport.message,
+                    GtmMessageOriginType.transport_and_payment_page,
+                );
+            }
+            if (userError?.validation?.pickupPlaceIdentifier !== undefined) {
+                showErrorMessage(
+                    userError.validation.pickupPlaceIdentifier.message,
+                    GtmMessageOriginType.transport_and_payment_page,
+                );
             }
 
-            import('gtm/handlers/onGtmTransportChangeEventHandler').then(({ onGtmTransportChangeEventHandler }) => {
-                onGtmTransportChangeEventHandler(
-                    gtmCart.current,
-                    changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
-                    newPickupPlace,
-                    changeTransportResult.data?.ChangeTransportInCart.payment?.name,
-                );
-            });
+            return null;
+        }
 
-            return changeTransportResult.data?.ChangeTransportInCart;
-        },
-        [cartUuid, changeTransportInCart, gtmCart, t],
-    );
+        import('gtm/handlers/onGtmTransportChangeEventHandler').then(({ onGtmTransportChangeEventHandler }) => {
+            onGtmTransportChangeEventHandler(
+                gtmCart.current,
+                changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
+                newPickupPlace,
+                changeTransportResult.data?.ChangeTransportInCart.payment?.name,
+            );
+        });
+
+        return changeTransportResult.data?.ChangeTransportInCart;
+    };
 
     return [changeTransportHandler, fetching];
 };

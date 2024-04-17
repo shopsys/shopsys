@@ -21,7 +21,7 @@ describe('Last order transport and payment select tests', () => {
     });
 
     it('should preselect transport and payment from last order for logged-in user', () => {
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name]).should('be.visible');
 
@@ -29,7 +29,7 @@ describe('Last order transport and payment select tests', () => {
     });
 
     it('should be able to change preselected transport and payment from last order for logged-in user', () => {
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');

@@ -50,9 +50,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                         <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                     </FormLine>
                 )}
-                onChange={(event) =>
-                    updateContactInformation({ differentDeliveryAddress: Boolean(event.currentTarget.value) })
-                }
+                onChange={(event) => updateContactInformation({ differentDeliveryAddress: event.target.checked })}
             />
 
             <div className="pb-10">
@@ -105,8 +103,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                 </div>
                             </FormLine>
                         )}
-
-                        {(!user?.deliveryAddresses.length || deliveryAddressUuid === '') && (
+                        {(!user?.deliveryAddresses.length || deliveryAddressUuid === '' || !!pickupPlace) && (
                             <>
                                 <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                     <TextInputControlled

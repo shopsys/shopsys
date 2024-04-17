@@ -10,6 +10,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { TIDs } from 'cypress/tids';
 import { useCreateOrderMutation } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -226,7 +227,10 @@ export const ContactInformationWrapper: FC = () => {
     return (
         <OrderContentWrapper activeStep={3}>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
+                <Form
+                    tid={TIDs.contact_information_form}
+                    onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}
+                >
                     <>
                         <ContactInformationEmail setIsLoginPopupOpened={setIsLoginPopupOpened} />
                         {isEmailFilledCorrectly && <ContactInformationFormContent />}

@@ -6406,7 +6406,7 @@ Information to aid in pagination.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Total number of products
+Total number of products (-1 means that the total count is not available)
 
 </td>
 </tr>

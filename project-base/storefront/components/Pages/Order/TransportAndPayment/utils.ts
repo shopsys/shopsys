@@ -320,11 +320,9 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     };
 
     useEffect(() => {
-        if (!isUserLoggedIn || !cart) {
-            return;
+        if (!!cart && isUserLoggedIn) {
+            loadTransportAndPaymentFromLastOrder();
         }
-
-        loadTransportAndPaymentFromLastOrder();
     }, [!cart]);
 
     return [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace];

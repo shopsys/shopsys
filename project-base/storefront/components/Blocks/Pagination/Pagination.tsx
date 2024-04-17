@@ -52,14 +52,16 @@ export const Pagination: FC<PaginationProps> = ({
     return (
         <div className="flex w-full flex-col justify-between vl:flex-row vl:justify-between">
             <div className="w-2/5" />
+
             <div className="order-2 my-3 flex justify-center vl:order-1 vl:w-1/5">
                 {isWithLoadMore && hasNextPage && (
-                    <Button className="h-11 px-3 vl:h-7" variant="primary" onClick={loadMore}>
+                    <Button className="px-3" variant="primary" onClick={loadMore}>
                         {t('Load more')}
                     </Button>
                 )}
             </div>
-            <div className="order-1 my-3 flex w-full justify-center gap-1 vl:order-2 vl:w-2/5 vl:justify-end">
+
+            <div className="order-1 my-3 flex w-full justify-center gap-1 vl:order-2 vl:w-2/5 vl:justify-end items-center">
                 {paginationButtons.map((pageNumber, index, array) => {
                     const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
                     const pageParams = urlPageNumber
@@ -115,7 +117,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
             <Tag
                 href={href}
                 className={twJoin(
-                    'flex h-11 w-11 items-center  justify-center rounded border font-bold no-underline hover:no-underline vl:h-7 vl:w-7',
+                    'flex h-12 w-12 items-center justify-center rounded border font-bold no-underline hover:no-underline',
                     (isActive || isDotButton) && 'hover:cursor-default',
                     isActive
                         ? 'border-none bg-primary text-white hover:bg-primaryDarker hover:text-white'

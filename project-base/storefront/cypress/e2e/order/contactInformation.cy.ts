@@ -23,7 +23,7 @@ describe('Contact information page tests', () => {
     it('should redirect to cart page and not display contact information form if cart is empty and user is not logged in', () => {
         cy.visit(url.order.contactInformation);
 
-        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+        cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
 
         cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
         checkUrl(url.cart);
@@ -33,9 +33,9 @@ describe('Contact information page tests', () => {
 
     it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
-        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+        cy.getByTID([TIDs.contact_information_form]).should('not.exist');
 
         cy.getByTID([TIDs.pages_order_transport]).should('exist');
         checkUrl(url.order.transportAndPayment);
@@ -45,9 +45,9 @@ describe('Contact information page tests', () => {
 
     it('should redirect to cart page and not display contact information form if cart is empty and user is logged in', () => {
         cy.registerAsNewUser(generateCustomerRegistrationData());
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
-        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+        cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
 
         cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
         checkUrl(url.cart);
@@ -58,9 +58,9 @@ describe('Contact information page tests', () => {
     it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in', () => {
         cy.registerAsNewUser(generateCustomerRegistrationData());
         cy.addProductToCartForTest();
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
-        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+        cy.getByTID([TIDs.contact_information_form]).should('not.exist');
 
         cy.getByTID([TIDs.pages_order_transport]).should('exist');
         checkUrl(url.order.transportAndPayment);
@@ -73,7 +73,7 @@ describe('Contact information page tests', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
@@ -91,7 +91,7 @@ describe('Contact information page tests', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         clearEmailInThirdStep();
         fillEmailInThirdStep('refresh-page-contact-information-changed@shopsys.com');
         fillCustomerInformationInThirdStep('123', ' changed', ' changed');
@@ -109,7 +109,7 @@ describe('Contact information page tests', () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
 
-        cy.visit(url.order.contactInformation);
+        cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-differentDeliveryAddress');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);

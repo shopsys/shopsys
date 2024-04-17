@@ -53,9 +53,9 @@ describe('Transport select tests', () => {
     });
 
     it('should redirect to cart page and not display transport options if cart is empty and user is not logged in', () => {
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
-        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+        cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
 
         cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
         checkUrl(url.cart);
@@ -65,9 +65,9 @@ describe('Transport select tests', () => {
 
     it('should redirect to cart page and not display transport options if cart is empty and user is logged in', () => {
         cy.registerAsNewUser(generateCustomerRegistrationData());
-        cy.visit(url.order.transportAndPayment);
+        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
-        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+        cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
 
         cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
         checkUrl(url.cart);

@@ -84,12 +84,15 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
         callback();
     };
 
+    const shouldDisplaySearchCounts = productsSearch.totalCount !== -1;
+
     return (
         <>
-            {productsSearch.totalCount > 0 && (
+            {productsSearch.edges?.length !== undefined && productsSearch.edges.length > 0 && (
                 <div>
                     <SearchResultSectionTitle>
-                        {`${t('Products')} (${productsSearch.totalCount})`}
+                        {`${t('Products')}`}
+                        {shouldDisplaySearchCounts && ` (${productsSearch.totalCount})`}
                     </SearchResultSectionTitle>
 
                     <ul
@@ -137,7 +140,10 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
             {brandSearch.length > 0 && (
                 <div>
-                    <SearchResultSectionTitle>{`${t('Brands')} (${brandSearch.length})`}</SearchResultSectionTitle>
+                    <SearchResultSectionTitle>
+                        {`${t('Brands')}`}
+                        {shouldDisplaySearchCounts && ` (${brandSearch.length})`}
+                    </SearchResultSectionTitle>
 
                     <SearchResultSectionGroup>
                         {brandSearch.map(
@@ -164,10 +170,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 </div>
             )}
 
-            {categoriesSearch.totalCount > 0 && (
+            {categoriesSearch.edges?.length !== undefined && categoriesSearch.edges.length > 0 && (
                 <div>
                     <SearchResultSectionTitle>
-                        {`${t('Categories')} (${categoriesSearch.totalCount})`}
+                        {`${t('Categories')}`}
+                        {shouldDisplaySearchCounts && ` (${categoriesSearch.totalCount})`}
                     </SearchResultSectionTitle>
 
                     <SearchResultSectionGroup>
@@ -197,7 +204,10 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
             {articlesSearch.length > 0 && (
                 <div>
-                    <SearchResultSectionTitle>{`${t('Articles')} (${articlesSearch.length})`}</SearchResultSectionTitle>
+                    <SearchResultSectionTitle>
+                        {`${t('Articles')}`}
+                        {shouldDisplaySearchCounts && ` (${articlesSearch.length})`}
+                    </SearchResultSectionTitle>
 
                     <SearchResultSectionGroup>
                         {articlesSearch.map(

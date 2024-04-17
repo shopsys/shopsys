@@ -9,7 +9,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
@@ -24,13 +23,11 @@ export const Cart: FC = ({ className }) => {
     const { cart, isFetching } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const authLoading = usePersistStore((store) => store.authLoading);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
-    const isLoading = isFetching || !!authLoading;
 
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>
-            {isLoading && (
+            {isFetching && (
                 <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-greyLighter py-2 opacity-50" />
             )}
 
