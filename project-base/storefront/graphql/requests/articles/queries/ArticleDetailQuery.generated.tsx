@@ -9,7 +9,7 @@ export type TypeArticleDetailQueryVariables = Types.Exact<{
 }>;
 
 
-export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typename?: 'ArticleLink' } | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: any, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> } | null };
+export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typename?: 'ArticleLink' } | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, createdAt: any, seoH1: string | null, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> } | null };
 
 
       export interface PossibleTypesResultData {
