@@ -13,7 +13,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
 
     return (
         <Webline>
-            <ArticleTitle>{article.articleName}</ArticleTitle>
+            <ArticleTitle>{article.seoH1 || article.articleName}</ArticleTitle>
             <p className="mb-2 px-5 text-left text-xs font-semibold text-grey">{formatDate(article.createdAt, 'l')}</p>
             <div className="px-5 lg:flex">
                 {article.text !== null && (

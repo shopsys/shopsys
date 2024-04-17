@@ -1855,3 +1855,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix a wrong link type for searched articles ([#3062](https://github.com/shopsys/shopsys/pull/3062))
 
 -   cart and product lists are not refetched while auth loading is active ([#3096](https://github.com/shopsys/shopsys/pull/3096))
+
+-   fixed fix SEO page title, description and heading H1 ([#3109](https://github.com/shopsys/shopsys/pull/3109))
