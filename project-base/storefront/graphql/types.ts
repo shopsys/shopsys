@@ -2631,6 +2631,8 @@ export type TypeSettings = {
   contactFormMainText: Scalars['String']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
+  /** Returns true if Heureka is available for the current domain */
+  heurekaEnabled: Scalars['Boolean']['output'];
   /** Absolute URL of the blog main category */
   mainBlogCategoryUrl: Maybe<Scalars['String']['output']>;
   /** Max allowed payment transactions (how many times is user allowed to try the same payment) */

@@ -2013,6 +2013,8 @@ type Settings {
   contactFormMainText: String!
   "Timezone that is used for displaying time"
   displayTimezone: String!
+  "Returns true if Heureka is available for the current domain"
+  heurekaEnabled: Boolean!
   "Absolute URL of the blog main category"
   mainBlogCategoryUrl: String
   "Max allowed payment transactions (how many times is user allowed to try the same payment)"
