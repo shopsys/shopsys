@@ -63,7 +63,13 @@ class FlagRepository extends BaseFlagRepository
             ->setParameter('flagId', $flagId)
             ->setParameter('locale', $locale);
 
-        return $flagsQueryBuilder->getQuery()->getSingleResult();
+        $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($flag === null) {
+            throw new FlagNotFoundException(sprintf('Flag with ID "%s" does not exist.', $flagId));
+        }
+
+        return $flag;
     }
 
     /**
