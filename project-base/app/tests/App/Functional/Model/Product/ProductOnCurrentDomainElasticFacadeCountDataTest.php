@@ -174,7 +174,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 5,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
-            65 => [
+            64 => [
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
@@ -234,7 +234,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 1,
                 $this->getParameterValueIdForFirstDomain('No') => 1,
             ],
-            65 => [
+            64 => [
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
@@ -313,7 +313,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
-            65 => [
+            64 => [
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
