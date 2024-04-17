@@ -61,7 +61,7 @@ try {
         $databasePassword
     );
 
-    $statement = $connection->prepare('SELECT route_name, entity_id, main FROM friendly_urls WHERE slug = :slug AND domain_id = :domain_id');
+    $statement = $connection->prepare('SELECT route_name, entity_id, main, redirect_to FROM friendly_urls WHERE slug = :slug AND domain_id = :domain_id');
     $statement->execute(['slug' => $slug, 'domain_id' => (int)$domainId]);
     $result = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -73,6 +73,10 @@ try {
 
         header("HTTP/1.1 404 Not Found");
         exit;
+    }
+
+    if ($result['redirect_to'] !== null) {
+        returnSlug($result['route_name'], $result['redirect_to']);
     }
 
     if ($result['main'] === true) {
