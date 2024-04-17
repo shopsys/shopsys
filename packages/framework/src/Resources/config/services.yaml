@@ -356,6 +356,12 @@ services:
 
     Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
 
+    Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator:
+        arguments:
+            $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            $messageBus: '@Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator.inner'
+        decorates: 'messenger.bus.default'
+
     Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
