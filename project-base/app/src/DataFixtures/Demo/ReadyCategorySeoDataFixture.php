@@ -160,7 +160,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'Colour' => 'black'
-            63 => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            22 => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),

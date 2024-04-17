@@ -68,7 +68,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $parameterColorNamesByLocale,
             [
                 $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
-                $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
             ],
             Parameter::PARAMETER_TYPE_COLOR,
             Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
@@ -150,7 +149,13 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterData->akeneoType = $akeneoType;
         $parameterData->name = $namesByLocale;
 
-        $parameter = $this->parameterFacade->create($parameterData);
+        $parameter = $this->parameterFacade->findParameterByNames($namesByLocale);
+
+        if ($parameter !== null) {
+            $this->parameterFacade->edit($parameter->getId(), $parameterData);
+        } else {
+            $parameter = $this->parameterFacade->create($parameterData);
+        }
 
         $counter = 0;
 
