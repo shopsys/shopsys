@@ -1,0 +1,89 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
+
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
+
+class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
+{
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     */
+    public function __construct(
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly Rounding $rounding,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
+    ) {
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
+     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
+     */
+    public function handle(
+        OrderProcessingData $orderProcessingData,
+        OrderProcessingStack $orderProcessingStack,
+    ): OrderProcessingData {
+        $orderData = $orderProcessingData->orderData;
+
+        $payment = $orderData->payment;
+        $domainId = $orderProcessingData->domainConfig->getId();
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        if (!$payment?->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
+            return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        }
+
+        $priceWithVat = $orderData->totalPrice->getPriceWithVat();
+        $roundedPriceWithVat = $priceWithVat->round(0);
+
+        $roundingPriceAmount = $this->rounding->roundPriceWithVatByCurrency(
+            $roundedPriceWithVat->subtract($priceWithVat),
+            $currency,
+        );
+
+        $roundingPrice = new Price($roundingPriceAmount, $roundingPriceAmount);
+
+        if (!$roundingPrice->isZero()) {
+            $orderData->addItem($this->createRoundingItemData($roundingPrice, $orderProcessingData->domainConfig));
+            $orderData->addTotalPrice($roundingPrice, OrderItem::TYPE_ROUNDING);
+        }
+
+        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $roundingPrice
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
+     */
+    public function createRoundingItemData(Price $roundingPrice, DomainConfig $domainConfig): OrderItemData
+    {
+        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_ROUNDING);
+
+        $orderItemData->unitPriceWithoutVat = $roundingPrice->getPriceWithoutVat();
+        $orderItemData->unitPriceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->totalPriceWithoutVat = $roundingPrice->getPriceWithoutVat();
+        $orderItemData->totalPriceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainConfig->getLocale());
+        $orderItemData->quantity = 1;
+
+        return $orderItemData;
+    }
+}
