@@ -7257,6 +7257,15 @@ Timezone that is used for displaying time
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>heurekaEnabled</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Returns true if Heureka is available for the current domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>maxAllowedPaymentTransactions</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

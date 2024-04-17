@@ -2637,6 +2637,8 @@ export type SettingsApi = {
   contactFormMainText: Scalars['String']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
+  /** Returns true if Heureka is available for the current domain */
+  heurekaEnabled: Scalars['Boolean']['output'];
   /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
   maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
@@ -3667,7 +3669,7 @@ export type SeoSettingFragmentApi = { __typename: 'SeoSetting', title: string, t
 export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, heurekaEnabled: boolean, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 export type SliderItemFragmentApi = { __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, url: string } | null, mobileMainImage: { __typename: 'Image', name: string | null, url: string } | null };
 
@@ -6200,6 +6202,7 @@ export const SettingsQueryDocumentApi = gql`
     contactFormMainText
     maxAllowedPaymentTransactions
     displayTimezone
+    heurekaEnabled
   }
 }
     ${PricingSettingFragmentApi}

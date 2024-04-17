@@ -24,3 +24,7 @@ SettingsDecorator:
                 type: String!
                 resolve: "@=query('displayTimezoneQuery')"
                 description: "Timezone that is used for displaying time"
+            heurekaEnabled:
+                type: Boolean!
+                resolve: "@=query('heurekaEnabledQuery')"
+                description: "Returns true if Heureka is available for the current domain"

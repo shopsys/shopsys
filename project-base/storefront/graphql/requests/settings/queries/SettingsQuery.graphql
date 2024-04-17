@@ -9,5 +9,6 @@ query SettingsQuery @redisCache(ttl: 3600) {
         contactFormMainText
         maxAllowedPaymentTransactions
         displayTimezone
+        heurekaEnabled
     }
 }
