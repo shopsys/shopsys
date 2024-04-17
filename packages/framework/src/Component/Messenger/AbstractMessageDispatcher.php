@@ -23,9 +23,5 @@ abstract class AbstractMessageDispatcher
     {
         $this->transportDsn = $messageDispatcherDependency->transportDsn;
         $this->messageBus = $messageDispatcherDependency->messageBus;
-
-        if ($this->transportDsn === '') {
-            $this->messageBus = new NullMessageBus();
-        }
     }
 }
