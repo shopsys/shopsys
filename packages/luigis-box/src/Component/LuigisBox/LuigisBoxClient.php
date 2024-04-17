@@ -201,8 +201,12 @@ class LuigisBoxClient
                 '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
-                '&from=' . $luigisBoxBatchLoadData->getPage() .
                 '&dynamic_facets_size=' . static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS;
+
+            if ($luigisBoxBatchLoadData->getPage() > 0) {
+                $url .= '&from=' . $luigisBoxBatchLoadData->getPage();
+            }
+
             $url .= $quicksearchTypesWithLimits !== '' ? '&quicksearch_types=' . $quicksearchTypesWithLimits : '';
 
             if (count($luigisBoxBatchLoadData->getFacetNames()) > 0) {
