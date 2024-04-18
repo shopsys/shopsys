@@ -20,7 +20,7 @@ class GrapesJsParser
      */
     public function parse(?string $text): ?string
     {
-        if ($text === null) {
+        if ($text === null || $text === '') {
             return null;
         }
 
