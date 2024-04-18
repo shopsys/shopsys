@@ -24,13 +24,11 @@ class OrderItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $orderItemType
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
     protected function doCreateOrderItem(
         OrderItemData $orderItemData,
         Order $order,
-        string $orderItemType,
     ): OrderItem {
         $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
 
@@ -40,7 +38,7 @@ class OrderItemFactory
             new Price($orderItemData->unitPriceWithoutVat, $orderItemData->unitPriceWithVat),
             $orderItemData->vatPercent,
             $orderItemData->quantity,
-            $orderItemType,
+            $orderItemData->type,
             $orderItemData->unitName,
             $orderItemData->catnum,
         );
@@ -60,7 +58,6 @@ class OrderItemFactory
         $orderItem = $this->doCreateOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_PRODUCT,
         );
 
         $orderItem->setProduct($product);
@@ -82,7 +79,6 @@ class OrderItemFactory
         $orderItem = $this->doCreateOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_TRANSPORT,
         );
 
         $orderItem->setTransport($transport);
@@ -104,7 +100,6 @@ class OrderItemFactory
         $orderItem = $this->doCreateOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_PAYMENT,
         );
 
         $orderItem->setPayment($payment);
@@ -124,7 +119,6 @@ class OrderItemFactory
         return $this->doCreateOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_DISCOUNT,
         );
     }
 
@@ -140,7 +134,6 @@ class OrderItemFactory
         return $this->doCreateOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_ROUNDING,
         );
     }
 }

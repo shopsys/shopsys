@@ -54,7 +54,6 @@ class OrderItemFactory extends BaseOrderItemFactory {
         return $this->doCreateOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_SERVICE,
         );
     }
 ```
