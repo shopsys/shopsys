@@ -100,9 +100,13 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                               })
                             : undefined;
 
+                    if (!selectedParameterOptions || !selectedParameterValues) {
+                        return null;
+                    }
+
                     return (
-                        <SelectedParametersList key={selectedParameterOptions?.uuid}>
-                            <SelectedParametersName>{selectedParameterOptions?.name}:</SelectedParametersName>
+                        <SelectedParametersList key={selectedParameterOptions.uuid}>
+                            <SelectedParametersName>{selectedParameterOptions.name}:</SelectedParametersName>
                             {isSliderParameter ? (
                                 <SelectedParametersListItem key={selectedParameterOptions.uuid}>
                                     <span>{t('from')}&nbsp;</span>
@@ -119,7 +123,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     />
                                 </SelectedParametersListItem>
                             ) : (
-                                selectedParameterValues?.map((selectedValue) => (
+                                selectedParameterValues.map((selectedValue) => (
                                     <SelectedParametersListItem key={selectedValue.uuid}>
                                         {selectedValue.text}
                                         <SelectedParametersIcon
