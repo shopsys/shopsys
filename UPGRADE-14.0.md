@@ -1487,7 +1487,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   enable product filters provided by Luigi's Box when using Luigi's Box ([#3074](https://github.com/shopsys/shopsys/pull/3074))
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory::createProductFilterOptions()` has changed its visibility to `public`
+    -   see #project-base-diff to update your project
+
+-   add customer option for Verified by Customers Heureka ([#3098](https://github.com/shopsys/shopsys/pull/3098))
+    -   `Shopsys\FrameworkBundle\Component\Setting\Setting\HeurekaSetting::HEUREKA_API_KEY` constant changed its visibility from `protected` to `public`
     -   see #project-base-diff to update your project
 
 ### Storefront
@@ -1857,3 +1862,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   cart and product lists are not refetched while auth loading is active ([#3096](https://github.com/shopsys/shopsys/pull/3096))
 
 -   fixed fix SEO page title, description and heading H1 ([#3109](https://github.com/shopsys/shopsys/pull/3109))
+
+-   add customer option for Verified by Customers Heureka ([#3098](https://github.com/shopsys/shopsys/pull/3098))
