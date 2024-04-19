@@ -15,7 +15,6 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -67,35 +66,33 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const productResponse: OperationResult<TypeProductDetailQuery, TypeProductDetailQueryVariables> =
-                    await client!
-                        .query(ProductDetailQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
+            const productResponse: OperationResult<TypeProductDetailQuery, TypeProductDetailQueryVariables> =
+                await client!
+                    .query(ProductDetailQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    productResponse.error?.graphQLErrors,
-                    productResponse.data?.product,
-                    context.res,
-                );
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                productResponse.error?.graphQLErrors,
+                productResponse.data?.product,
+                context.res,
+            );
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
+            }
 
-                if (
-                    productResponse.data?.product?.__typename === 'Variant' &&
-                    productResponse.data.product.mainVariant?.slug
-                ) {
-                    return {
-                        redirect: {
-                            destination: productResponse.data.product.mainVariant.slug,
-                            permanent: false,
-                        },
-                    };
-                }
+            if (
+                productResponse.data?.product?.__typename === 'Variant' &&
+                productResponse.data.product.mainVariant?.slug
+            ) {
+                return {
+                    redirect: {
+                        destination: productResponse.data.product.mainVariant.slug,
+                        permanent: false,
+                    },
+                };
             }
 
             const initServerSideData = await initServerSideProps({

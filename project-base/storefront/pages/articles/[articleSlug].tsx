@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
@@ -56,34 +55,32 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
-                    await client!
-                        .query(ArticleDetailQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
-
-                const article =
-                    articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
-
-                const parsedCatnums = parseCatnums(article?.text ?? '');
-
+            const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
                 await client!
-                    .query(ProductsByCatnumsDocument, {
-                        catnums: parsedCatnums,
+                    .query(ArticleDetailQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
                     })
                     .toPromise();
 
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    articleResponse.error?.graphQLErrors,
-                    articleResponse.data?.article,
-                    context.res,
-                );
+            const article =
+                articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            const parsedCatnums = parseCatnums(article?.text ?? '');
+
+            await client!
+                .query(ProductsByCatnumsDocument, {
+                    catnums: parsedCatnums,
+                })
+                .toPromise();
+
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                articleResponse.error?.graphQLErrors,
+                articleResponse.data?.article,
+                context.res,
+            );
+
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
             }
 
             const initServerSideData = await initServerSideProps({

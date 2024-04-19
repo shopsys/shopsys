@@ -121,17 +121,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
             ...
-            if (isRedirectedFromSsr(context.req.headers)) {
-                ...
-                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    categoryDetailResponse.error?.graphQLErrors,
-                    categoryDetailResponse.data?.category,
-                    context.res,
-                );
+            const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                categoryDetailResponse.error?.graphQLErrors,
+                categoryDetailResponse.data?.category,
+                context.res,
+            );
 
-                if (serverSideErrorResponse) {
-                    return serverSideErrorResponse;
-                }
+            if (serverSideErrorResponse) {
+                return serverSideErrorResponse;
             }
             ...
         },
