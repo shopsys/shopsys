@@ -12,6 +12,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting;
+use Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -24,11 +26,13 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
      */
     public function __construct(
         private readonly Setting $setting,
         private readonly Domain $domain,
         private readonly PricingSetting $pricingSetting,
+        private readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
     ) {
     }
 
@@ -133,6 +137,14 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             );
 
             $this->setDomainDefaultCurrency($domainId);
+
+            if ($this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale)) {
+                $this->setting->setForDomain(
+                    HeurekaSetting::HEUREKA_API_KEY,
+                    '96411416349324269511946875061235',
+                    $domainId,
+                );
+            }
         }
         $this->setting->set(BaseSetting::IMAGE_STRUCTURE_MIGRATED_FOR_PROXY, true);
     }
