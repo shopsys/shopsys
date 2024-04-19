@@ -7,3 +7,4 @@ shopsys_framework:
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyPercentagePromoCodeMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware'
+            - 'App\Model\Order\Processing\OrderProcessorMiddleware\SetOrderDataAsAdministratorMiddleware'

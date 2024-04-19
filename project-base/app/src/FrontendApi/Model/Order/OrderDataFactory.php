@@ -15,7 +15,6 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory as BaseOrderDataFacto
  * @method \App\Model\Order\OrderData createOrderDataFromArgument(\Overblog\GraphQLBundle\Definition\Argument $argument)
  * @method \App\Model\Order\OrderData withResolvedFields(array $input, \App\Model\Order\OrderData $orderData)
  * @method updateOrderDataFromCart(\App\Model\Order\OrderData $orderData, \App\Model\Cart\Cart $cart)
- * @method setOrderDataByStore(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Store\Store $store)
  */
 class OrderDataFactory extends BaseOrderDataFactory
 {

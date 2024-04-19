@@ -5,37 +5,20 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
 class CreateOrderFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     */
     public function __construct(
         protected readonly OrderStatusRepository $orderStatusRepository,
         protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
         protected readonly OrderHashGeneratorRepository $orderHashGeneratorRepository,
         protected readonly OrderFactory $orderFactory,
         protected readonly EntityManagerInterface $em,
-        protected readonly OrderPriceCalculation $orderPriceCalculation,
-        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
         protected readonly OrderItemFactory $orderItemFactory,
-        protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
@@ -61,8 +44,6 @@ class CreateOrderFacade
         $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
 
-        $this->setOrderDataAdministrator($orderData);
-
         $order = $this->orderFactory->create(
             $orderData,
             $orderNumber,
@@ -79,22 +60,6 @@ class CreateOrderFacade
         $this->em->flush();
 
         return $order;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
-    protected function setOrderDataAdministrator(OrderData $orderData): void
-    {
-        if ($this->administratorFrontSecurityFacade->isAdministratorLoggedAsCustomer()) {
-            try {
-                $currentAdmin = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
-                $orderData->createdAsAdministrator = $currentAdmin;
-                $orderData->createdAsAdministratorName = $currentAdmin->getRealName();
-            } catch (AdministratorIsNotLoggedException) {
-                return;
-            }
-        }
     }
 
     /**
