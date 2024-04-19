@@ -28,6 +28,7 @@ const ApplicationErrors = {
     'wishlist-product-list-not-found': 'flash-message',
     'wishlist-product-already-in-list': 'flash-message',
     'wishlist-product-not-in-list': 'flash-message',
+    'unable-to-generate-breadcrumb-items': 'no-flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {
