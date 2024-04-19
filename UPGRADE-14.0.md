@@ -1497,6 +1497,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   fix friendly URLs ([#3115](https://github.com/shopsys/shopsys/pull/3115))
+
+    -   see #project-base-diff to update your project
+
+-   take promo code into account in priceByTransportQuery and priceByPaymentQuery ([#3118](https://github.com/shopsys/shopsys/pull/3118))
     -   see #project-base-diff to update your project
 
 ### Storefront
