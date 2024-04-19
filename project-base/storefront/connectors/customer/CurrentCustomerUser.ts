@@ -61,5 +61,6 @@ const mapCurrentCustomerContactInformationApiData = (
                 : CustomerTypeEnum.CommonCustomer,
         differentDeliveryAddress: false,
         note: '',
+        isWithoutHeurekaAgreement: false,
     };
 };

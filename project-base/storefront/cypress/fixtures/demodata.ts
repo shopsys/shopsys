@@ -139,6 +139,7 @@ export const DEFAULT_APP_STORE = {
             deliveryAddressUuid: null,
             newsletterSubscription: false,
             note: '',
+            isWithoutHeurekaAgreement: false,
         },
         packeteryPickupPoint: null,
         userConsent: {

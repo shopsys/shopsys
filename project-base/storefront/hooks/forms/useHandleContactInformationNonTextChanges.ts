@@ -10,11 +10,12 @@ export const useHandleContactInformationNonTextChanges = (
 ): void => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const [
-        customerValue,
-        countryValue,
-        differentDeliveryAddressValue,
-        deliveryCountryValue,
-        newsletterSubscriptionValue,
+        customer,
+        country,
+        differentDeliveryAddress,
+        deliveryCountry,
+        newsletterSubscription,
+        isWithoutHeurekaAgreement,
     ] = useWatch({
         name: [
             formMeta.fields.customer.name,
@@ -22,27 +23,32 @@ export const useHandleContactInformationNonTextChanges = (
             formMeta.fields.differentDeliveryAddress.name,
             formMeta.fields.deliveryCountry.name,
             formMeta.fields.newsletterSubscription.name,
+            formMeta.fields.isWithoutHeurekaAgreement.name,
         ],
         control,
     });
 
     useEffect(() => {
-        updateContactInformation({ customer: customerValue });
-    }, [customerValue]);
+        updateContactInformation({ customer });
+    }, [customer]);
 
     useEffect(() => {
-        updateContactInformation({ country: countryValue });
-    }, [countryValue]);
+        updateContactInformation({ country });
+    }, [country]);
 
     useEffect(() => {
-        updateContactInformation({ differentDeliveryAddress: differentDeliveryAddressValue });
-    }, [differentDeliveryAddressValue]);
+        updateContactInformation({ differentDeliveryAddress });
+    }, [differentDeliveryAddress]);
 
     useEffect(() => {
-        updateContactInformation({ deliveryCountry: deliveryCountryValue });
-    }, [deliveryCountryValue]);
+        updateContactInformation({ deliveryCountry });
+    }, [deliveryCountry]);
 
     useEffect(() => {
-        updateContactInformation({ newsletterSubscription: newsletterSubscriptionValue });
-    }, [newsletterSubscriptionValue]);
+        updateContactInformation({ newsletterSubscription });
+    }, [newsletterSubscription]);
+
+    useEffect(() => {
+        updateContactInformation({ isWithoutHeurekaAgreement });
+    }, [newsletterSubscription]);
 };

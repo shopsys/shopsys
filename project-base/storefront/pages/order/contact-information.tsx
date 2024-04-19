@@ -141,6 +141,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             deliveryAddressUuid: formValues.deliveryAddressUuid !== '' ? formValues.deliveryAddressUuid : null,
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
+            heurekaAgreement: !formValues.isWithoutHeurekaAgreement,
         });
 
         if (

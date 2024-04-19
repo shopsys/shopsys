@@ -1403,6 +1403,8 @@ export type OrderApi = {
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
+  heurekaAgreement: Scalars['Boolean']['output'];
   /** Indicates whether the order is paid successfully with GoPay payment type */
   isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
@@ -1503,6 +1505,8 @@ export type OrderInputApi = {
   email: Scalars['String']['input'];
   /** The customer's first name */
   firstName: Scalars['String']['input'];
+  /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
+  heurekaAgreement: Scalars['Boolean']['input'];
   /** The customer's last name */
   lastName: Scalars['String']['input'];
   /** Allows user to subscribe/unsubscribe newsletter. */
@@ -2633,6 +2637,8 @@ export type SettingsApi = {
   contactFormMainText: Scalars['String']['output'];
   /** Timezone that is used for displaying time */
   displayTimezone: Scalars['String']['output'];
+  /** Returns true if Heureka is available for the current domain */
+  heurekaEnabled: Scalars['Boolean']['output'];
   /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
   maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
@@ -3337,6 +3343,7 @@ export type CreateOrderMutationVariablesApi = Exact<{
   note: InputMaybe<Scalars['String']['input']>;
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   newsletterSubscription: InputMaybe<Scalars['Boolean']['input']>;
+  heurekaAgreement: Scalars['Boolean']['input'];
 }>;
 
 
@@ -3662,7 +3669,7 @@ export type SeoSettingFragmentApi = { __typename: 'SeoSetting', title: string, t
 export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, heurekaEnabled: boolean, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 export type SliderItemFragmentApi = { __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, url: string } | null, mobileMainImage: { __typename: 'Image', name: string | null, url: string } | null };
 
@@ -5648,9 +5655,9 @@ export function useChangePaymentInOrderMutationApi() {
   return Urql.useMutation<ChangePaymentInOrderMutationApi, ChangePaymentInOrderMutationVariablesApi>(ChangePaymentInOrderMutationDocumentApi);
 };
 export const CreateOrderMutationDocumentApi = gql`
-    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean) {
+    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean, $heurekaAgreement: Boolean!) {
   CreateOrder(
-    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, deliveryAddressUuid: $deliveryAddressUuid, note: $note, cartUuid: $cartUuid, newsletterSubscription: $newsletterSubscription}
+    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, deliveryAddressUuid: $deliveryAddressUuid, note: $note, heurekaAgreement: $heurekaAgreement, cartUuid: $cartUuid, newsletterSubscription: $newsletterSubscription}
   ) {
     orderCreated
     order {
@@ -6195,6 +6202,7 @@ export const SettingsQueryDocumentApi = gql`
     contactFormMainText
     maxAllowedPaymentTransactions
     displayTimezone
+    heurekaEnabled
   }
 }
     ${PricingSettingFragmentApi}

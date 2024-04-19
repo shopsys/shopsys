@@ -169,6 +169,12 @@ class OrderFormType extends AbstractType
                 'user' => $order->getCustomerUser(),
             ]);
 
+        $builderBasicInformationGroup
+            ->add('heurekaAgreement', DisplayOnlyType::class, [
+                'label' => t('Heureka agreement'),
+                'data' => $order->isHeurekaAgreement() ? t('Yes') : t('No'),
+            ]);
+
         if ($order->getOrigin() !== null) {
             $builderBasicInformationGroup
                 ->add('origin', DisplayOnlyType::class, [
