@@ -641,3 +641,7 @@ components={{
 During new project implementation phase it is important for a developer who is adjusting new design to be able to see how those changes affect important/base components. This is why we have Styleguide where we have those base components so implementation is faster and developer has better overview of the changes.
 
 #### fixed fix SEO page title, description and heading H1 ([#3108](https://github.com/shopsys/shopsys/pull/3108))
+
+#### removed isRedirectedFromSsr as it was unnecessary ([#3117](https://github.com/shopsys/shopsys/pull/3117))
+
+-   remove `isRedirectedFromSsr` from all `getServerSideProps` calls, as there is no reason to differentiate between client-side navigation and first page load
