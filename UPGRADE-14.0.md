@@ -1510,6 +1510,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   enable recommended query from Luigi's Box in your frontend API ([#3099](https://github.com/shopsys/shopsys/pull/3099))
+
+    -   see #project-base-diff to update your project
+
+-   fix order repetition ([#3112](https://github.com/shopsys/shopsys/pull/3112))
+
     -   see #project-base-diff to update your project
 
 ### Storefront
