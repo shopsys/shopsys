@@ -15,7 +15,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 
-type CommonLayoutProps = {
+export type CommonLayoutProps = {
     title?: string | null;
     description?: string | null;
     breadcrumbs?: TypeBreadcrumbFragment[];
