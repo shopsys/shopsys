@@ -1,6 +1,7 @@
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { GtmProvider } from 'gtm/context/GtmProvider';
+import { LazyMotion } from 'framer-motion';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
 import { AppProps as NextAppProps } from 'next/app';
@@ -13,6 +14,8 @@ import 'styles/globals.css';
 import 'styles/user-text.css';
 import { logException } from 'utils/errors/logException';
 import { initDayjsLocale } from 'utils/formaters/formatDate';
+
+const framerMotionPlugins = () => import('utils/animations/framerMotionPlugins').then((res) => res.default);
 
 type AppProps = {
     pageProps: any;
@@ -60,7 +63,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
                         <GtmProvider>
+                        <LazyMotion features={framerMotionPlugins}>
                             <AppPageContent Component={Component} pageProps={pageProps} />
+                        </LazyMotion>
                         </GtmProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>

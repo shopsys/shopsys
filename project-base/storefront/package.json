@@ -33,6 +33,7 @@
         "cookies-next": "~4.1.1",
         "crypto-js": "~4.2.0",
         "dayjs": "~1.11.10",
+        "framer-motion": "^11.1.9",
         "graphql": "~16.8.1",
         "graphql-tag": "~2.12.6",
         "js-base64": "~3.7.6",

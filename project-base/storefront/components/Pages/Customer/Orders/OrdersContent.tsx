@@ -2,7 +2,6 @@ import { OrderItem } from './OrderItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -20,25 +19,21 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
     const { t } = useTranslation();
 
     if (areOrdersFetching) {
-        return (
-            <Webline>
-                <SkeletonModuleCustomerOrders />
-            </Webline>
-        );
+        return <SkeletonModuleCustomerOrders />;
     }
 
     if (!orders?.length) {
         return (
-            <Webline className="text-lg vl:text-xl flex gap-2">
+            <div className="text-lg vl:text-xl flex gap-2">
                 <InfoIcon className="w-5" />
                 {t('You have no orders')}
-            </Webline>
+            </div>
         );
     }
 
     return (
         <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-            <Webline className="flex flex-col gap-7">
+            <div className="flex flex-col gap-7">
                 {orders.map((order, index) => (
                     <OrderItem
                         key={order.uuid}
@@ -47,11 +42,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, order
                         order={order}
                     />
                 ))}
-            </Webline>
+            </div>
 
-            <Webline>
-                <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
-            </Webline>
+            <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
         </div>
     );
 };

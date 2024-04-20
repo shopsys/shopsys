@@ -1,3 +1,4 @@
+import { UserNavigation } from 'components/Blocks/UserNavigation/UserNavigation';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout, CommonLayoutProps } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -8,7 +9,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { twMergeCustom } from 'utils/twMerge';
 
 type CustomerLayoutProps = {
-    pageTitle?: string;
+    pageHeading?: string;
 } & CommonLayoutProps;
 
 export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children, breadcrumbs, ...props }) => {
