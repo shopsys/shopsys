@@ -61,13 +61,13 @@ class OrderItem
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      * @ORM\Column(type="money", precision=20, scale=6)
      */
-    protected $priceWithoutVat;
+    protected $unitPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      * @ORM\Column(type="money", precision=20, scale=6)
      */
-    protected $priceWithVat;
+    protected $unitPriceWithVat;
 
     /**
      * This property can be used when order item has prices that differ from current price calculation implementation.
@@ -154,8 +154,8 @@ class OrderItem
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
-        $this->priceWithoutVat = $price->getPriceWithoutVat();
-        $this->priceWithVat = $price->getPriceWithVat();
+        $this->unitPriceWithoutVat = $price->getPriceWithoutVat();
+        $this->unitPriceWithVat = $price->getPriceWithVat();
         $this->vatPercent = Decimal::create($vatPercent, 6)->innerValue();
         $this->quantity = $quantity;
         $this->type = $type;
@@ -192,17 +192,17 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithoutVat()
+    public function getUnitPriceWithoutVat()
     {
-        return $this->priceWithoutVat;
+        return $this->unitPriceWithoutVat;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithVat()
+    public function getUnitPriceWithVat()
     {
-        return $this->priceWithVat;
+        return $this->unitPriceWithVat;
     }
 
     /**
@@ -210,7 +210,7 @@ class OrderItem
      */
     public function getPrice(): Price
     {
-        return new Price($this->priceWithoutVat, $this->priceWithVat);
+        return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
     }
 
     /**
@@ -226,7 +226,7 @@ class OrderItem
      */
     public function getTotalPriceWithVat()
     {
-        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
+        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->unitPriceWithVat->multiply(
             $this->quantity,
         );
     }
@@ -293,8 +293,8 @@ class OrderItem
     public function edit(OrderItemData $orderItemData)
     {
         $this->name = $orderItemData->name;
-        $this->priceWithoutVat = $orderItemData->unitPriceWithoutVat;
-        $this->priceWithVat = $orderItemData->unitPriceWithVat;
+        $this->unitPriceWithoutVat = $orderItemData->unitPriceWithoutVat;
+        $this->unitPriceWithVat = $orderItemData->unitPriceWithVat;
 
         if ($orderItemData->usePriceCalculation) {
             $this->setTotalPrice(null);

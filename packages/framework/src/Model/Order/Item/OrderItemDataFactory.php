@@ -56,8 +56,8 @@ class OrderItemDataFactory
     protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem)
     {
         $orderItemData->name = $orderItem->getName();
-        $orderItemData->unitPriceWithVat = $orderItem->getPriceWithVat();
-        $orderItemData->unitPriceWithoutVat = $orderItem->getPriceWithoutVat();
+        $orderItemData->unitPriceWithVat = $orderItem->getUnitPriceWithVat();
+        $orderItemData->unitPriceWithoutVat = $orderItem->getUnitPriceWithoutVat();
 
         $orderItemTotalPrice = $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
         $orderItemData->totalPriceWithVat = $orderItemTotalPrice->getPriceWithVat();

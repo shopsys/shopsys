@@ -59,8 +59,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(1000)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -84,8 +84,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(950)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(400)));
 
@@ -107,8 +107,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemByName($this->order, 'new item');
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(1000)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -134,8 +134,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemByName($this->order, 'new item');
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(950)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(400)));
 
@@ -154,8 +154,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -178,8 +178,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
 
@@ -198,8 +198,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -222,8 +222,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
 

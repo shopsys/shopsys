@@ -21,8 +21,8 @@ class OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException extends R
         $message = sprintf(
             'The order item %s has unit prices inconsistent with price calculation (%s with VAT and %s without VAT). Either the unit price without VAT should be %s, or the total prices should be forced.',
             $orderItem->getId() !== null ? sprintf('with ID %d', $orderItem->getId()) : 'without ID',
-            $orderItem->getPriceWithVat()->getAmount(),
-            $orderItem->getPriceWithoutVat()->getAmount(),
+            $orderItem->getUnitPriceWithVat()->getAmount(),
+            $orderItem->getUnitPriceWithoutVat()->getAmount(),
             $calculatedPriceWithoutVat->getAmount(),
         );
 

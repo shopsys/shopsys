@@ -251,11 +251,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $changeSet = reset($logs)->getChangeSet();
 
         $this->assertArrayHasKey('name', $changeSet);
-        $this->assertArrayHasKey('priceWithoutVat', $changeSet);
+        $this->assertArrayHasKey('unitPriceWithoutVat', $changeSet);
         $this->assertArrayHasKey('vatPercent', $changeSet);
         $this->assertArrayHasKey('quantity', $changeSet);
         $this->assertSame($expectedName, $changeSet['name']['newReadableValue']);
-        $this->assertSame($expectedPriceWithoutVat, $changeSet['priceWithoutVat']['newReadableValue']);
+        $this->assertSame($expectedPriceWithoutVat, $changeSet['unitPriceWithoutVat']['newReadableValue']);
         $this->assertSame($expectedVatPercent, $changeSet['vatPercent']['newReadableValue']);
         $this->assertSame($expectedQuantity, $changeSet['quantity']['newReadableValue']);
     }
