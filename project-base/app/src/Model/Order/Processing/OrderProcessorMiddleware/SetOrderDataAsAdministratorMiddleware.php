@@ -31,7 +31,7 @@ class SetOrderDataAsAdministratorMiddleware implements OrderProcessorMiddlewareI
         $currentAdministratorLoggedAsCustomer = $this->loginAsUserFacade->getCurrentAdministratorLoggedAsCustomer();
 
         if ($currentAdministratorLoggedAsCustomer === null) {
-            return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+            return $orderProcessingStack->processNext($orderProcessingData);
         }
 
         $orderData = $orderProcessingData->orderData;
@@ -39,6 +39,6 @@ class SetOrderDataAsAdministratorMiddleware implements OrderProcessorMiddlewareI
         $orderData->createdAsAdministrator = $currentAdministratorLoggedAsCustomer;
         $orderData->createdAsAdministratorName = $currentAdministratorLoggedAsCustomer->getRealName();
 
-        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        return $orderProcessingStack->processNext($orderProcessingData);
     }
 }

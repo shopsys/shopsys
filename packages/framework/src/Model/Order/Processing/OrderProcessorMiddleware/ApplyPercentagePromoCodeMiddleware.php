@@ -96,7 +96,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
             }
         }
 
-        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        return $orderProcessingStack->processNext($orderProcessingData);
     }
 
     /**

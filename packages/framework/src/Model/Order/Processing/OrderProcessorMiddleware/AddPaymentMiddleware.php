@@ -39,7 +39,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $payment = $orderProcessingData->inputOrderData->getPayment();
 
         if ($payment === null) {
-            return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+            return $orderProcessingStack->processNext($orderProcessingData);
         }
 
         $domainId = $orderProcessingData->domainConfig->getId();
@@ -71,6 +71,6 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
 
         $orderData->addItem($orderItemData);
 
-        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        return $orderProcessingStack->processNext($orderProcessingData);
     }
 }

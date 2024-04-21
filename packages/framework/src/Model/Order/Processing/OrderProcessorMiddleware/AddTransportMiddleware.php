@@ -37,7 +37,7 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         $transport = $orderProcessingData->inputOrderData->getTransport();
 
         if ($transport === null) {
-            return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+            return $orderProcessingStack->processNext($orderProcessingData);
         }
 
         $domainId = $orderProcessingData->domainConfig->getId();
@@ -68,6 +68,6 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
 
         $orderData->addItem($orderItemData);
 
-        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        return $orderProcessingStack->processNext($orderProcessingData);
     }
 }

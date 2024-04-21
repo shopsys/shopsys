@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing;
 
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
-
 class OrderProcessingStack
 {
+    protected int $position = 0;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface[] $processingMiddlewares
      */
@@ -17,23 +17,28 @@ class OrderProcessingStack
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
+     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
      */
-    public function next(): OrderProcessorMiddlewareInterface
+    public function processNext(OrderProcessingData $orderProcessingData): OrderProcessingData
     {
-        $value = current($this->processingMiddlewares);
-
-        if (!$value) {
-            throw new NoMoreMiddlewareInStackException();
+        if ($this->hasNext()) {
+            return $this->processingMiddlewares[$this->position++]->handle($orderProcessingData, $this);
         }
 
-        next($this->processingMiddlewares);
+        return $orderProcessingData;
+    }
 
-        return $value;
+    /**
+     * @return bool
+     */
+    protected function hasNext(): bool
+    {
+        return $this->position < count($this->processingMiddlewares);
     }
 
     public function rewind(): void
     {
-        reset($this->processingMiddlewares);
+        $this->position = 0;
     }
 }

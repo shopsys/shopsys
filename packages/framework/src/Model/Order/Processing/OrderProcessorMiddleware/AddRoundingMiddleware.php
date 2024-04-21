@@ -46,7 +46,7 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         if (!$payment?->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
-            return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+            return $orderProcessingStack->processNext($orderProcessingData);
         }
 
         $priceWithVat = $orderData->totalPrice->getPriceWithVat();
@@ -64,7 +64,7 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
             $orderData->addTotalPrice($roundingPrice, OrderItem::TYPE_ROUNDING);
         }
 
-        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        return $orderProcessingStack->processNext($orderProcessingData);
     }
 
     /**

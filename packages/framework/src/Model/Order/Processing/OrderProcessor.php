@@ -43,12 +43,8 @@ class OrderProcessor
 
         $this->orderProcessingStack->rewind();
 
-        try {
-            $this->orderProcessingStack->next()->handle($orderProcessingData, $this->orderProcessingStack);
-        } catch (NoMoreMiddlewareInStackException) {
-            // pass
-        }
+        $orderProcessingData = $this->orderProcessingStack->processNext($orderProcessingData);
 
-        return $orderData;
+        return $orderProcessingData->orderData;
     }
 }

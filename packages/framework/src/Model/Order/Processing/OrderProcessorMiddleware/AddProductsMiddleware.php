@@ -52,7 +52,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
             $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItem::TYPE_PRODUCT);
         }
 
-        return $orderProcessingStack->next()->handle($orderProcessingData, $orderProcessingStack);
+        return $orderProcessingStack->processNext($orderProcessingData);
     }
 
     /**
