@@ -606,20 +606,30 @@ class Order
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
-     * @deprecated use getPaymentItem() instead
      */
     public function getPayment()
     {
-        return $this->payment;
+        $payment = $this->getPaymentItem()->getPayment();
+
+        if ($payment === null) {
+            throw new OrderItemNotFoundException('Order item `payment` not found.');
+        }
+
+        return $payment;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
-     * @deprecated use getTransportItem() instead
      */
     public function getTransport()
     {
-        return $this->transport;
+        $transport = $this->getTransportItem()->getTransport();
+
+        if ($transport === null) {
+            throw new OrderItemNotFoundException('Order item `transport` not found.');
+        }
+
+        return $transport;
     }
 
     /**
@@ -668,18 +678,6 @@ class Order
     public function getCurrency()
     {
         return $this->currency;
-    }
-
-    /**
-     * @deprecated use setTotalPrices instead
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice $orderTotalPrice
-     */
-    public function setTotalPrice(OrderTotalPrice $orderTotalPrice): void
-    {
-        $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
-        $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
-        $this->totalProductPriceWithVat = $orderTotalPrice->getProductPriceWithVat();
-        $this->totalProductPriceWithoutVat = $orderTotalPrice->getProductPriceWithoutVat();
     }
 
     /**

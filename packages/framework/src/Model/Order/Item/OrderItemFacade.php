@@ -69,9 +69,8 @@ class OrderItemFacade
             $product,
         );
 
-        $order->setTotalPrice(
-            $this->orderPriceCalculation->getOrderTotalPrice($order),
-        );
+        $orderTotalPrice = $this->orderPriceCalculation->getOrderTotalPrice($order);
+        $order->setTotalPrices($orderTotalPrice->getPrice(), $orderTotalPrice->getProductPrice());
 
         $this->em->flush();
 
