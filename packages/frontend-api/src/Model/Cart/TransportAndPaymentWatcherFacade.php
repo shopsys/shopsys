@@ -82,7 +82,7 @@ class TransportAndPaymentWatcherFacade
             $this->currentCustomerUser->findCurrentCustomerUser(),
         );
 
-        $productsPrice = $orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT]->subtract($orderData->totalPriceByItemType[OrderItem::TYPE_DISCOUNT]);
+        $productsPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]->subtract($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {
             $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
@@ -95,11 +95,11 @@ class TransportAndPaymentWatcherFacade
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
-        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->totalPriceByItemType[OrderItem::TYPE_DISCOUNT]);
+        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
         $this->cartWithModificationsResult->setTotalPriceWithoutDiscountTransportAndPayment(
             $orderData->getTotalPriceWithoutDiscountTransportAndPayment(),
         );
-        $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPriceByItemType[OrderItem::TYPE_ROUNDING]);
+        $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItem::TYPE_ROUNDING]);
 
         $this->checkTransport($cart);
         $this->checkPayment($cart);

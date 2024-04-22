@@ -55,7 +55,7 @@ class CreateOrderFacade
 
         $this->fillOrderItems($order, $orderData);
 
-        $order->setTotalPrices($orderData->totalPrice, $orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT]);
+        $order->setTotalPrices($orderData->totalPrice, $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]);
 
         $this->em->flush();
 

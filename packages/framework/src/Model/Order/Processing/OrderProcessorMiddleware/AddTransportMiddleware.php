@@ -46,7 +46,7 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         $transportPrice = $this->transportPriceCalculation->calculatePrice(
             $transport,
             $currency,
-            $orderProcessingData->orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT],
+            $orderProcessingData->orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT],
             $domainId,
         );
 

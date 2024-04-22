@@ -48,7 +48,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
             $payment,
             $currency,
-            $orderProcessingData->orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT],
+            $orderProcessingData->orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT],
             $domainId,
         );
 

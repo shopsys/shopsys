@@ -132,7 +132,7 @@ class PriceQuery extends AbstractQuery
             $cart->getFirstAppliedPromoCode(),
         );
 
-        return $orderData->totalPriceByItemType[OrderItem::TYPE_PAYMENT];
+        return $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT];
     }
 
     /**
@@ -187,7 +187,7 @@ class PriceQuery extends AbstractQuery
             $cart->getFirstAppliedPromoCode(),
         );
 
-        return $orderData->totalPriceByItemType[OrderItem::TYPE_TRANSPORT];
+        return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT];
     }
 
     /**

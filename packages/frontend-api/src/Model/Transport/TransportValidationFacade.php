@@ -89,7 +89,7 @@ class TransportValidationFacade
             $currentCustomerUser,
         );
 
-        $calculatedTransportPrice = $orderData->totalPriceByItemType[OrderItem::TYPE_TRANSPORT];
+        $calculatedTransportPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT];
 
         $transportWatchedPrice = $cart->getTransportWatchedPrice();
 

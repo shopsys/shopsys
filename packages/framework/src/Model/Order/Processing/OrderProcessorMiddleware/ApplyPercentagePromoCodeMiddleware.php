@@ -66,11 +66,11 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
             try {
                 $validProductIds = $this->currentPromoCodeFacade->validatePromoCode(
                     $appliedPromoCode,
-                    $orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT],
+                    $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT],
                     $products,
                 );
 
-                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPriceByItemType[OrderItem::TYPE_PRODUCT]);
+                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]);
             } catch (PromoCodeException) {
                 continue;
             }

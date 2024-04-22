@@ -85,6 +85,6 @@ class CartTransportDataFactory
             $customerUser,
         );
 
-        return $orderData->totalPriceByItemType[OrderItem::TYPE_TRANSPORT]->getPriceWithVat();
+        return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT]->getPriceWithVat();
     }
 }

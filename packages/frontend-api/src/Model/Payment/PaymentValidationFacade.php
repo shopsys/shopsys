@@ -57,7 +57,7 @@ class PaymentValidationFacade
             $currentCustomerUser,
         );
 
-        $calculatedPaymentPrice = $orderData->totalPriceByItemType[OrderItem::TYPE_PAYMENT];
+        $calculatedPaymentPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT];
 
         $paymentWatchedPrice = $cart->getPaymentWatchedPrice();
 

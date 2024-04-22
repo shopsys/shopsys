@@ -82,6 +82,6 @@ class CartPaymentDataFactory
             $customerUser,
         );
 
-        return $orderData->totalPriceByItemType[OrderItem::TYPE_PAYMENT]->getPriceWithVat();
+        return $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT]->getPriceWithVat();
     }
 }

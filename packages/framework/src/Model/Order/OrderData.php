@@ -242,7 +242,7 @@ class OrderData
     /**
      * @var array<string, \Shopsys\FrameworkBundle\Model\Pricing\Price>
      */
-    public $totalPriceByItemType = [];
+    public $totalPricesByItemType = [];
 
     public function __construct()
     {
@@ -275,11 +275,11 @@ class OrderData
 
     protected function setZeroPricesForAllTypes(): void
     {
-        $this->totalPriceByItemType[OrderItem::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
-        $this->totalPriceByItemType[OrderItem::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
-        $this->totalPriceByItemType[OrderItem::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
-        $this->totalPriceByItemType[OrderItem::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
-        $this->totalPriceByItemType[OrderItem::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItem::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItem::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItem::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItem::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItem::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
     }
 
     /**
@@ -300,7 +300,7 @@ class OrderData
      */
     public function addTotalPrice(Price $priceToAdd, string $type): void
     {
-        $this->totalPriceByItemType[$type] = $this->totalPriceByItemType[$type]->add($priceToAdd);
+        $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToAdd);
         $this->totalPrice = $this->totalPrice->add($priceToAdd);
     }
 
@@ -311,7 +311,7 @@ class OrderData
     public function subtractTotalPrice(Price $priceToSubtract, string $type): void
     {
         // @todo this is probably unintuitive
-        $this->totalPriceByItemType[$type] = $this->totalPriceByItemType[$type]->add($priceToSubtract);
+        $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToSubtract);
         $this->totalPrice = $this->totalPrice->subtract($priceToSubtract);
     }
 
@@ -329,8 +329,8 @@ class OrderData
     public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
     {
         return $this->totalPrice
-            ->subtract($this->totalPriceByItemType[OrderItem::TYPE_TRANSPORT])
-            ->subtract($this->totalPriceByItemType[OrderItem::TYPE_PAYMENT])
-            ->add($this->totalPriceByItemType[OrderItem::TYPE_DISCOUNT]);
+            ->subtract($this->totalPricesByItemType[OrderItem::TYPE_TRANSPORT])
+            ->subtract($this->totalPricesByItemType[OrderItem::TYPE_PAYMENT])
+            ->add($this->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
     }
 }
