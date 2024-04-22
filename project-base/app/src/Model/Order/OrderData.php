@@ -24,10 +24,5 @@ class OrderData extends BaseOrderData
     /**
      * @var string|null
      */
-    public $password;
-
-    /**
-     * @var string|null
-     */
     public $gtmCoupon;
 }
