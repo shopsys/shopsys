@@ -8,7 +8,7 @@ import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
-import { MouseEventHandler, useRef } from 'react';
+import { MouseEventHandler, useEffect, useRef } from 'react';
 
 type CartListItemProps = {
     item: CartItemFragmentApi;
@@ -43,6 +43,12 @@ export const CartListItem: FC<CartListItemProps> = ({
             onItemQuantityChange(product.uuid, spinboxRef.current!.valueAsNumber, listIndex, true);
         }, 500);
     };
+
+    useEffect(() => {
+        if (quantity > 0 && spinboxRef.current) {
+            spinboxRef.current.valueAsNumber = quantity;
+        }
+    }, [quantity]);
 
     return (
         <div
