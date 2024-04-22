@@ -20,14 +20,14 @@ class OrderProcessor
 
     /**
      * @template T of \Shopsys\FrameworkBundle\Model\Order\OrderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderData $inputOrderData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput $orderInput
      * @param T $orderData
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return T
      */
     public function process(
-        InputOrderData $inputOrderData,
+        OrderInput $orderInput,
         OrderData $orderData,
         DomainConfig $domainConfig,
         ?CustomerUser $customerUser,
@@ -35,7 +35,7 @@ class OrderProcessor
         $orderData = clone $orderData;
 
         $orderProcessingData = new OrderProcessingData(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $domainConfig,
             $customerUser,

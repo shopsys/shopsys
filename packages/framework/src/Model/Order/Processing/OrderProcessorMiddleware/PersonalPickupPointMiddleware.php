@@ -32,7 +32,7 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
-        $pickupPlaceIdentifier = $orderProcessingData->inputOrderData->findAdditionalData(static::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER);
+        $pickupPlaceIdentifier = $orderProcessingData->orderInput->findAdditionalData(static::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER);
 
         if ($pickupPlaceIdentifier === null) {
             return $orderProcessingStack->processNext($orderProcessingData);

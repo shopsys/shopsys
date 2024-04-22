@@ -27,7 +27,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -60,7 +60,7 @@ class OrderDataFixture
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \App\Model\Order\CreateOrderFacade $createOrderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -76,7 +76,7 @@ class OrderDataFixture
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly OrderDataFactory $orderDataFactory,
-        private readonly InputOrderDataFactory $inputOrderDataFactory,
+        private readonly OrderInputFactory $orderInputFactory,
         private readonly OrderProcessor $orderProcessor,
         private readonly CreateOrderFacade $createOrderFacade,
         private readonly Domain $domain,
@@ -121,19 +121,19 @@ class OrderDataFixture
         $transport = $this->getRandomTransport();
         $payment = $this->getRandomPayment();
 
-        $inputOrderData = $this->inputOrderDataFactory->create();
-        $inputOrderData->setTransport($transport);
-        $inputOrderData->setPayment($payment);
+        $orderInput = $this->orderInputFactory->create();
+        $orderInput->setTransport($transport);
+        $orderInput->setPayment($payment);
 
         foreach ($quantifiedProducts as $quantifiedProduct) {
-            $inputOrderData->addProduct(
+            $orderInput->addProduct(
                 $quantifiedProduct->getProduct(),
                 $quantifiedProduct->getQuantity(),
             );
         }
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getDomainConfigById($orderData->domainId),
             $customerUser,

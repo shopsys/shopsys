@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
@@ -41,7 +41,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      */
     public function __construct(
         private readonly CustomerUserRepository $customerUserRepository,
@@ -50,7 +50,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         private readonly Domain $domain,
         private readonly CurrencyFacade $currencyFacade,
         private readonly OrderProcessor $orderProcessor,
-        private readonly InputOrderDataFactory $inputOrderDataFactory,
+        private readonly OrderInputFactory $orderInputFactory,
     ) {
     }
 
@@ -795,13 +795,13 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $transport = $this->getReference($transportReferenceName, Transport::class);
         $payment = $this->getReference($paymentReferenceName, Payment::class);
 
-        $inputOrderData = $this->inputOrderDataFactory->create();
-        $inputOrderData->setTransport($transport);
-        $inputOrderData->setPayment($payment);
+        $orderInput = $this->orderInputFactory->create();
+        $orderInput->setTransport($transport);
+        $orderInput->setPayment($payment);
 
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName, Product::class);
-            $inputOrderData->addProduct($product, $quantity);
+            $orderInput->addProduct($product, $quantity);
             $uniqueOrderHash .= $product->getCatnum() . '-' . $quantity;
         }
 
@@ -809,7 +809,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, md5($uniqueOrderHash))->toString();
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getDomainConfigById($orderData->domainId),
             $customerUser,

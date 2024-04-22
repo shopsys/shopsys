@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -26,7 +26,7 @@ class CartPaymentDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
@@ -36,7 +36,7 @@ class CartPaymentDataFactory
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly OrderProcessor $orderProcessor,
-        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly OrderInputFactory $orderInputFactory,
         protected readonly OrderDataFactory $orderDataFactory,
     ) {
     }
@@ -72,11 +72,11 @@ class CartPaymentDataFactory
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $orderData = $this->orderDataFactory->create();
-        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
-        $inputOrderData->setPayment($payment);
+        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput->setPayment($payment);
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getDomainConfigById($domainId),
             $customerUser,

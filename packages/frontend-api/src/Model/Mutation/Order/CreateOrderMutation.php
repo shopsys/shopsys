@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
@@ -45,7 +45,7 @@ class CreateOrderMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade $createOrderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
@@ -64,7 +64,7 @@ class CreateOrderMutation extends AbstractMutation
         protected readonly Domain $domain,
         protected readonly OrderProcessor $orderProcessor,
         protected readonly CreateOrderFacade $createOrderFacade,
-        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly OrderInputFactory $orderInputFactory,
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly NewsletterFacade $newsletterFacade,
@@ -99,10 +99,10 @@ class CreateOrderMutation extends AbstractMutation
             );
         }
 
-        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart);
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getCurrentDomainConfig(),
             $customerUser,

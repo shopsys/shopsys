@@ -36,7 +36,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
-        $payment = $orderProcessingData->inputOrderData->getPayment();
+        $payment = $orderProcessingData->orderInput->getPayment();
 
         if ($payment === null) {
             return $orderProcessingStack->processNext($orderProcessingData);
@@ -67,7 +67,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
 
         $orderData->orderPayment = $orderItemData;
         $orderData->payment = $payment;
-        $orderData->goPayBankSwift = $orderProcessingData->inputOrderData->findAdditionalData(static::ADDITIONAL_DATA_GOPAY_BANK_SWIFT);
+        $orderData->goPayBankSwift = $orderProcessingData->orderInput->findAdditionalData(static::ADDITIONAL_DATA_GOPAY_BANK_SWIFT);
 
         $orderData->addItem($orderItemData);
 

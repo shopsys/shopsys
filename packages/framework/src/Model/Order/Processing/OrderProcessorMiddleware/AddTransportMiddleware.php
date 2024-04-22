@@ -34,7 +34,7 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
-        $transport = $orderProcessingData->inputOrderData->getTransport();
+        $transport = $orderProcessingData->orderInput->getTransport();
 
         if ($transport === null) {
             return $orderProcessingStack->processNext($orderProcessingData);

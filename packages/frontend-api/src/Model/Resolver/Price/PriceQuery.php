@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -43,7 +43,7 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      */
     public function __construct(
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -58,7 +58,7 @@ class PriceQuery extends AbstractQuery
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly OrderProcessor $orderProcessor,
         protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly OrderInputFactory $orderInputFactory,
     ) {
     }
 
@@ -118,12 +118,12 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentPaymentPrice($payment);
         }
 
-        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
-        $inputOrderData->setPayment($payment);
+        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput->setPayment($payment);
         $orderData = $this->orderDataFactory->create();
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getCurrentDomainConfig(),
             $customerUser,
@@ -173,12 +173,12 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentTransportPrice($transport);
         }
 
-        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
-        $inputOrderData->setTransport($transport);
+        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput->setTransport($transport);
         $orderData = $this->orderDataFactory->create();
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getCurrentDomainConfig(),
             $customerUser,

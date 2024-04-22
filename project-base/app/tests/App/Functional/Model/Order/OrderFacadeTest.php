@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -62,7 +62,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private InputOrderDataFactory $inputOrderDataFactory;
+    private OrderInputFactory $orderInputFactory;
 
     /**
      * @inject
@@ -107,13 +107,13 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        $inputOrderData = $this->inputOrderDataFactory->create();
-        $inputOrderData->addProduct($product, 1);
-        $inputOrderData->setTransport($transport);
-        $inputOrderData->setPayment($payment);
+        $orderInput = $this->orderInputFactory->create();
+        $orderInput->addProduct($product, 1);
+        $orderInput->setTransport($transport);
+        $orderInput->setPayment($payment);
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID),
             null,

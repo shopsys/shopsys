@@ -49,7 +49,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
-        $appliedPromoCodes = $orderProcessingData->inputOrderData->getPromoCodes();
+        $appliedPromoCodes = $orderProcessingData->orderInput->getPromoCodes();
 
         $orderData = $orderProcessingData->orderData;
 

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -41,7 +41,7 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
@@ -55,7 +55,7 @@ class TransportAndPaymentWatcherFacade
         protected readonly PaymentValidationFacade $paymentValidationFacade,
         protected readonly OrderProcessor $orderProcessor,
         protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly OrderInputFactory $orderInputFactory,
         protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
@@ -74,9 +74,9 @@ class TransportAndPaymentWatcherFacade
         $domainId = $this->domain->getId();
 
         $orderData = $this->orderDataFactory->create();
-        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart);
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getCurrentDomainConfig(),
             $this->currentCustomerUser->findCurrentCustomerUser(),

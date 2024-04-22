@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -30,7 +30,7 @@ class TransportValidationFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory $inputOrderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
@@ -40,7 +40,7 @@ class TransportValidationFacade
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly OrderProcessor $orderProcessor,
         protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly InputOrderDataFactory $inputOrderDataFactory,
+        protected readonly OrderInputFactory $orderInputFactory,
     ) {
     }
 
@@ -80,10 +80,10 @@ class TransportValidationFacade
         $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $orderData = $this->orderDataFactory->create();
-        $inputOrderData = $this->inputOrderDataFactory->createFromCart($cart);
-        $inputOrderData->setTransport($transport);
+        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput->setTransport($transport);
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getCurrentDomainConfig(),
             $currentCustomerUser,

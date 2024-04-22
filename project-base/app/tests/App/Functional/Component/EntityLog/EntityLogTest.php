@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -78,7 +78,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private InputOrderDataFactory $inputOrderDataFactory;
+    private OrderInputFactory $orderInputFactory;
 
     /**
      * @inject
@@ -269,10 +269,10 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $transport = $this->transportRepository->getById(3);
         $payment = $this->paymentRepository->getById(1);
 
-        $inputOrderData = $this->inputOrderDataFactory->create();
-        $inputOrderData->addProduct($product, 1);
-        $inputOrderData->setTransport($transport);
-        $inputOrderData->setPayment($payment);
+        $orderInput = $this->orderInputFactory->create();
+        $orderInput->addProduct($product, 1);
+        $orderInput->setTransport($transport);
+        $orderInput->setPayment($payment);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
@@ -301,7 +301,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
         $orderData = $this->orderProcessor->process(
-            $inputOrderData,
+            $orderInput,
             $orderData,
             $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID),
             null,

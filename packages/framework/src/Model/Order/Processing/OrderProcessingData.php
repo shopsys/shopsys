@@ -11,13 +11,13 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData;
 class OrderProcessingData
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\InputOrderData $inputOrderData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput $orderInput
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(
-        public readonly InputOrderData $inputOrderData,
+        public readonly OrderInput $orderInput,
         public readonly OrderData $orderData,
         public readonly DomainConfig $domainConfig,
         public readonly ?CustomerUser $customerUser,

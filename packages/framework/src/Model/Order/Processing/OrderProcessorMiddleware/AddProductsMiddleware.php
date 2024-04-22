@@ -39,7 +39,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         $locale = $orderProcessingData->domainConfig->getLocale();
         $domainId = $orderProcessingData->domainConfig->getId();
 
-        foreach ($orderProcessingData->inputOrderData->getQuantifiedProducts() as $quantifiedProduct) {
+        foreach ($orderProcessingData->orderInput->getQuantifiedProducts() as $quantifiedProduct) {
             $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
                 $quantifiedProduct,
                 $domainId,

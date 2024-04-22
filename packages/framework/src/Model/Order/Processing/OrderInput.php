@@ -10,30 +10,24 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
-class InputOrderData
+class OrderInput
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $product
+     * @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
     protected array $products = [];
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $product
-     */
     protected ?Transport $transport = null;
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $product
-     */
     protected ?Payment $payment = null;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[] $product
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
     protected array $promoCodes = [];
 
     /**
-     * @var array
+     * @var array<int, mixed>
      */
     protected array $additionalData = [];
 
