@@ -10,19 +10,19 @@ importers:
     dependencies:
       '@floating-ui/react':
         specifier: ~0.26.8
-        version: 0.26.9(react-dom@18.2.0)(react@18.2.0)
+        version: 0.26.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@hookform/resolvers':
         specifier: ~2.6.1
-        version: 2.6.1(react-hook-form@7.35.0)
+        version: 2.6.1(react-hook-form@7.35.0(react@18.2.0))
       '@next/bundle-analyzer':
         specifier: ~14.1.0
         version: 14.1.0
       '@sentry/nextjs':
         specifier: ~7.99.0
-        version: 7.99.0(next@14.1.0)(react@18.2.0)
+        version: 7.99.0(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       '@urql/devtools':
         specifier: ~2.0.3
-        version: 2.0.3(@urql/core@4.2.3)(graphql@16.8.1)
+        version: 2.0.3(@urql/core@4.2.3(graphql@16.8.1))(graphql@16.8.1)
       '@urql/exchange-auth':
         specifier: ~2.1.6
         version: 2.1.6(graphql@16.8.1)
@@ -58,16 +58,16 @@ importers:
         version: 1.5.0
       next:
         specifier: ~14.1.0
-        version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-translate:
         specifier: ~2.6.2
-        version: 2.6.2(next@14.1.0)(react@18.2.0)
+        version: 2.6.2(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       next-translate-plugin:
         specifier: ~2.6.2
-        version: 2.6.2(next-translate@2.6.2)
+        version: 2.6.2(next-translate@2.6.2(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0))
       next-urql:
         specifier: ~5.0.2
-        version: 5.0.2(react@18.2.0)(urql@4.0.6)
+        version: 5.0.2(react@18.2.0)(urql@4.0.6(graphql@16.8.1)(react@18.2.0))
       nprogress:
         specifier: ~0.2.0
         version: 0.2.0
@@ -91,7 +91,7 @@ importers:
         version: 2.1.1
       react-select:
         specifier: ~5.8.0
-        version: 5.8.0(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.8.0(@types/react@18.2.55)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-swipeable:
         specifier: ~7.0.1
         version: 7.0.1(react@18.2.0)
@@ -100,10 +100,10 @@ importers:
         version: 6.0.2(react@18.2.0)
       react-toastify:
         specifier: ~10.0.4
-        version: 10.0.4(react-dom@18.2.0)(react@18.2.0)
+        version: 10.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-transition-group:
         specifier: ~4.4.5
-        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+        version: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       redis:
         specifier: ~4.6.12
         version: 4.6.13
@@ -146,13 +146,13 @@ importers:
         version: 4.0.1(graphql@16.8.1)
       '@graphql-codegen/typescript-urql':
         specifier: ~4.0.0
-        version: 4.0.0(graphql-tag@2.12.6)(graphql@16.8.1)
+        version: 4.0.0(graphql-tag@2.12.6(graphql@16.8.1))(graphql@16.8.1)
       '@mswjs/interceptors':
         specifier: 0.19.0
         version: 0.19.0
       '@testing-library/react':
         specifier: ~14.2.0
-        version: 14.2.1(react-dom@18.2.0)(react@18.2.0)
+        version: 14.2.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ~4.3.0
         version: 4.3.0(prettier@3.2.5)
@@ -182,7 +182,7 @@ importers:
         version: 9.0.8
       '@typescript-eslint/eslint-plugin':
         specifier: ~6.20.0
-        version: 6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3)
+        version: 6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)
       '@typescript-eslint/parser':
         specifier: ~6.20.0
         version: 6.20.0(eslint@8.56.0)(typescript@5.3.3)
@@ -191,7 +191,7 @@ importers:
         version: 1.0.3(graphql@16.8.1)
       '@vitejs/plugin-react':
         specifier: ~4.2.1
-        version: 4.2.1(vite@4.5.2)
+        version: 4.2.1(vite@4.5.2(@types/node@20.11.16))
       autoprefixer:
         specifier: ~10.4.17
         version: 10.4.17(postcss@8.4.34)
@@ -215,7 +215,7 @@ importers:
         version: 4.6.0(eslint@8.56.0)
       eslint-plugin-unused-imports:
         specifier: ~3.0.0
-        version: 3.0.0(@typescript-eslint/eslint-plugin@6.20.0)(eslint@8.56.0)
+        version: 3.0.0(@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)
       graphql-markdown:
         specifier: ~7.0.0
         version: 7.0.0(graphql@16.8.1)
@@ -233,7 +233,7 @@ importers:
         version: 3.2.5
       prettier-plugin-tailwindcss:
         specifier: ~0.5.11
-        version: 0.5.11(@trivago/prettier-plugin-sort-imports@4.3.0)(prettier@3.2.5)
+        version: 0.5.11(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.2.5))(prettier@3.2.5)
       tailwindcss:
         specifier: ~3.4.1
         version: 3.4.1
@@ -242,7 +242,7 @@ importers:
         version: 5.3.3
       vite-tsconfig-paths:
         specifier: ~4.3.1
-        version: 4.3.1(typescript@5.3.3)(vite@4.5.2)
+        version: 4.3.1(typescript@5.3.3)(vite@4.5.2(@types/node@20.11.16))
       vitest:
         specifier: ~0.33.0
         version: 0.33.0(jsdom@24.0.0)
@@ -4753,7 +4753,7 @@ packages:
 snapshots:
 
   '@0no-co/graphql.web@1.0.4(graphql@16.8.1)':
-    dependencies:
+    optionalDependencies:
       graphql: 16.8.1
 
   '@aashutoshrathi/word-wrap@1.2.6': {}
@@ -5195,9 +5195,10 @@ snapshots:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@emotion/utils': 1.2.1
       '@emotion/weak-memoize': 0.3.1
-      '@types/react': 18.2.55
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@emotion/serialize@1.1.3':
     dependencies:
@@ -5386,15 +5387,15 @@ snapshots:
       '@floating-ui/core': 1.6.0
       '@floating-ui/utils': 0.2.1
 
-  '@floating-ui/react-dom@2.0.8(react-dom@18.2.0)(react@18.2.0)':
+  '@floating-ui/react-dom@2.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@floating-ui/dom': 1.6.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@floating-ui/react@0.26.9(react-dom@18.2.0)(react@18.2.0)':
+  '@floating-ui/react@0.26.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@floating-ui/react-dom': 2.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@floating-ui/react-dom': 2.0.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@floating-ui/utils': 0.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -5604,7 +5605,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@graphql-codegen/typescript-urql@4.0.0(graphql-tag@2.12.6)(graphql@16.8.1)':
+  '@graphql-codegen/typescript-urql@4.0.0(graphql-tag@2.12.6(graphql@16.8.1))(graphql@16.8.1)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 3.1.2(graphql@16.8.1)
       '@graphql-codegen/visitor-plugin-common': 2.13.1(graphql@16.8.1)
@@ -5973,7 +5974,7 @@ snapshots:
     dependencies:
       is-negated-glob: 1.0.0
 
-  '@hookform/resolvers@2.6.1(react-hook-form@7.35.0)':
+  '@hookform/resolvers@2.6.1(react-hook-form@7.35.0(react@18.2.0))':
     dependencies:
       react-hook-form: 7.35.0(react@18.2.0)
 
@@ -6171,6 +6172,7 @@ snapshots:
       glob: 8.1.0
       is-reference: 1.2.1
       magic-string: 0.27.0
+    optionalDependencies:
       rollup: 2.78.0
 
   '@rollup/pluginutils@5.1.0(rollup@2.78.0)':
@@ -6178,6 +6180,7 @@ snapshots:
       '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    optionalDependencies:
       rollup: 2.78.0
 
   '@sentry-internal/feedback@7.99.0':
@@ -6233,7 +6236,7 @@ snapshots:
       '@sentry/utils': 7.99.0
       localforage: 1.10.0
 
-  '@sentry/nextjs@7.99.0(next@14.1.0)(react@18.2.0)':
+  '@sentry/nextjs@7.99.0(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@rollup/plugin-commonjs': 24.0.0(rollup@2.78.0)
       '@sentry/core': 7.99.0
@@ -6245,7 +6248,7 @@ snapshots:
       '@sentry/vercel-edge': 7.99.0
       '@sentry/webpack-plugin': 1.21.0
       chalk: 3.0.0
-      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       resolve: 1.22.8
       rollup: 2.78.0
@@ -6315,7 +6318,7 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  '@testing-library/react@14.2.1(react-dom@18.2.0)(react@18.2.0)':
+  '@testing-library/react@14.2.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.23.9
       '@testing-library/dom': 9.3.4
@@ -6426,7 +6429,7 @@ snapshots:
     dependencies:
       '@types/node': 20.11.16
 
-  '@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3)':
+  '@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)':
     dependencies:
       '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 6.20.0(eslint@8.56.0)(typescript@5.3.3)
@@ -6441,6 +6444,7 @@ snapshots:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.2.1(typescript@5.3.3)
+    optionalDependencies:
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -6453,6 +6457,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 6.20.0
       debug: 4.3.4
       eslint: 8.56.0
+    optionalDependencies:
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -6469,6 +6474,7 @@ snapshots:
       debug: 4.3.4
       eslint: 8.56.0
       ts-api-utils: 1.2.1(typescript@5.3.3)
+    optionalDependencies:
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -6485,6 +6491,7 @@ snapshots:
       minimatch: 9.0.3
       semver: 7.6.0
       ts-api-utils: 1.2.1(typescript@5.3.3)
+    optionalDependencies:
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -6517,7 +6524,7 @@ snapshots:
     transitivePeerDependencies:
       - graphql
 
-  '@urql/devtools@2.0.3(@urql/core@4.2.3)(graphql@16.8.1)':
+  '@urql/devtools@2.0.3(@urql/core@4.2.3(graphql@16.8.1))(graphql@16.8.1)':
     dependencies:
       '@urql/core': 4.2.3(graphql@16.8.1)
       graphql: 16.8.1
@@ -6542,7 +6549,7 @@ snapshots:
     dependencies:
       graphql: 16.8.1
 
-  '@vitejs/plugin-react@4.2.1(vite@4.5.2)':
+  '@vitejs/plugin-react@4.2.1(vite@4.5.2(@types/node@20.11.16))':
     dependencies:
       '@babel/core': 7.23.9
       '@babel/plugin-transform-react-jsx-self': 7.23.3(@babel/core@7.23.9)
@@ -7140,6 +7147,7 @@ snapshots:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
+    optionalDependencies:
       typescript: 5.3.3
 
   cross-fetch@3.1.8:
@@ -7509,11 +7517,12 @@ snapshots:
       semver: 6.3.1
       string.prototype.matchall: 4.0.10
 
-  eslint-plugin-unused-imports@3.0.0(@typescript-eslint/eslint-plugin@6.20.0)(eslint@8.56.0):
+  eslint-plugin-unused-imports@3.0.0(@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3)
       eslint: 8.56.0
       eslint-rule-composer: 0.3.0
+    optionalDependencies:
+      '@typescript-eslint/eslint-plugin': 6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)
 
   eslint-rule-composer@0.3.0: {}
 
@@ -8443,7 +8452,7 @@ snapshots:
   merge2@1.4.1: {}
 
   meros@1.3.0(@types/node@20.11.16):
-    dependencies:
+    optionalDependencies:
       '@types/node': 20.11.16
 
   micromatch@4.0.5:
@@ -8514,23 +8523,23 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-translate-plugin@2.6.2(next-translate@2.6.2):
+  next-translate-plugin@2.6.2(next-translate@2.6.2(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)):
     dependencies:
-      next-translate: 2.6.2(next@14.1.0)(react@18.2.0)
+      next-translate: 2.6.2(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       typescript: 4.5.2
 
-  next-translate@2.6.2(next@14.1.0)(react@18.2.0):
+  next-translate@2.6.2(next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
     dependencies:
-      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
 
-  next-urql@5.0.2(react@18.2.0)(urql@4.0.6):
+  next-urql@5.0.2(react@18.2.0)(urql@4.0.6(graphql@16.8.1)(react@18.2.0)):
     dependencies:
       react: 18.2.0
       react-ssr-prepass: 1.5.0(react@18.2.0)
       urql: 4.0.6(graphql@16.8.1)(react@18.2.0)
 
-  next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0):
+  next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@next/env': 14.1.0
       '@swc/helpers': 0.5.2
@@ -8791,8 +8800,9 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.34):
     dependencies:
       lilconfig: 3.0.0
-      postcss: 8.4.34
       yaml: 2.3.4
+    optionalDependencies:
+      postcss: 8.4.34
 
   postcss-nested@6.0.1(postcss@8.4.34):
     dependencies:
@@ -8820,10 +8830,11 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.5.11(@trivago/prettier-plugin-sort-imports@4.3.0)(prettier@3.2.5):
+  prettier-plugin-tailwindcss@0.5.11(@trivago/prettier-plugin-sort-imports@4.3.0(prettier@3.2.5))(prettier@3.2.5):
     dependencies:
-      '@trivago/prettier-plugin-sort-imports': 4.3.0(prettier@3.2.5)
       prettier: 3.2.5
+    optionalDependencies:
+      '@trivago/prettier-plugin-sort-imports': 4.3.0(prettier@3.2.5)
 
   prettier@3.2.5: {}
 
@@ -8912,7 +8923,7 @@ snapshots:
 
   react-refresh@0.14.0: {}
 
-  react-select@5.8.0(@types/react@18.2.55)(react-dom@18.2.0)(react@18.2.0):
+  react-select@5.8.0(@types/react@18.2.55)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.23.9
       '@emotion/cache': 11.11.0
@@ -8923,7 +8934,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+      react-transition-group: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.55)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
@@ -8942,13 +8953,13 @@ snapshots:
       prop-types: 15.8.1
       react: 18.2.0
 
-  react-toastify@10.0.4(react-dom@18.2.0)(react@18.2.0):
+  react-toastify@10.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       clsx: 2.1.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
+  react-transition-group@4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.23.9
       dom-helpers: 5.2.1
@@ -9314,9 +9325,10 @@ snapshots:
 
   styled-jsx@5.1.1(@babel/core@7.23.9)(react@18.2.0):
     dependencies:
-      '@babel/core': 7.23.9
       client-only: 0.0.1
       react: 18.2.0
+    optionalDependencies:
+      '@babel/core': 7.23.9
 
   stylis@4.2.0: {}
 
@@ -9460,7 +9472,7 @@ snapshots:
   ts-log@2.2.5: {}
 
   tsconfck@3.0.2(typescript@5.3.3):
-    dependencies:
+    optionalDependencies:
       typescript: 5.3.3
 
   tslib@2.4.1: {}
@@ -9579,8 +9591,9 @@ snapshots:
 
   use-isomorphic-layout-effect@1.1.2(@types/react@18.2.55)(react@18.2.0):
     dependencies:
-      '@types/react': 18.2.55
       react: 18.2.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   use-sync-external-store@1.2.0(react@18.2.0):
     dependencies:
@@ -9659,11 +9672,12 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@4.3.1(typescript@5.3.3)(vite@4.5.2):
+  vite-tsconfig-paths@4.3.1(typescript@5.3.3)(vite@4.5.2(@types/node@20.11.16)):
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 3.0.2(typescript@5.3.3)
+    optionalDependencies:
       vite: 4.5.2(@types/node@20.11.16)
     transitivePeerDependencies:
       - supports-color
@@ -9671,11 +9685,11 @@ snapshots:
 
   vite@4.5.2(@types/node@20.11.16):
     dependencies:
-      '@types/node': 20.11.16
       esbuild: 0.18.20
       postcss: 8.4.34
       rollup: 3.29.4
     optionalDependencies:
+      '@types/node': 20.11.16
       fsevents: 2.3.3
 
   vitest@0.33.0(jsdom@24.0.0):
@@ -9693,7 +9707,6 @@ snapshots:
       cac: 6.7.14
       chai: 4.4.1
       debug: 4.3.4
-      jsdom: 24.0.0
       local-pkg: 0.4.3
       magic-string: 0.30.7
       pathe: 1.1.2
@@ -9705,6 +9718,8 @@ snapshots:
       vite: 4.5.2(@types/node@20.11.16)
       vite-node: 0.33.0(@types/node@20.11.16)
       why-is-node-running: 2.2.2
+    optionalDependencies:
+      jsdom: 24.0.0
     transitivePeerDependencies:
       - less
       - lightningcss
@@ -9933,6 +9948,7 @@ snapshots:
 
   zustand@4.4.7(@types/react@18.2.55)(react@18.2.0):
     dependencies:
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    optionalDependencies:
       '@types/react': 18.2.55
       react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
