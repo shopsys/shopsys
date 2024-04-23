@@ -103,7 +103,7 @@ const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title 
         disabled={isDisabled}
         title={title}
         className={twMergeCustom(
-            'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker disabled:bg-greyLighter',
+            'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-skyBlue pt-1 text-whiteSnow outline-none transition hover:bg-skyBlue disabled:bg-graySlate',
         )}
         onClick={onClick}
     >

@@ -78,13 +78,13 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 </div>
             </div>
             <div
-                className="absolute top-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white transition-colors hover:bg-greyVeryLight"
+                className="absolute top-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white transition-colors hover:bg-whiteSnow"
                 onClick={() => {
                     toggleProductInComparison();
                     calcMaxMarginLeft();
                 }}
             >
-                <RemoveIcon className="w-4 text-grey" />
+                <RemoveIcon className="w-4 text-skyBlue" />
             </div>
 
             {product.flags.length > 0 && (

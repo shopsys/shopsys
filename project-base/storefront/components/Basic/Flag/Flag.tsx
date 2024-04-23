@@ -5,7 +5,7 @@ type FlagProps = { href?: string };
 
 export const Flag: FC<FlagProps> = ({ children, href, className }) => {
     const flagTwClass = twMergeCustom(
-        'inline-flex rounded bg-primaryLight py-1 px-2 text-xs uppercase text-dark no-underline hover:text-dark hover:no-underline',
+        'inline-flex rounded bg-secondaryLight py-1 px-2 text-xs uppercase text-dark no-underline hover:text-dark hover:no-underline',
         className,
     );
 

@@ -16,7 +16,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     );
 
     return (
-        <ul className="mb-6 flex justify-between border-b border-greyLighter p-0 lg:mb-3">
+        <ul className="mb-6 flex justify-between border-b border-graySlate p-0 lg:mb-3">
             <OrderStepsListItem>
                 {activeStep > 1 ? (
                     <OrderStepsListItemLink isClickable href={cartUrl} isActive={false}>

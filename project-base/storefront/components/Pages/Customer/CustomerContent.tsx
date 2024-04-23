@@ -47,7 +47,7 @@ export const CustomerContent: FC = () => {
 };
 
 const CustomerListItem: FC = ({ children }) => (
-    <li className="block flex-1 cursor-pointer rounded bg-greyVeryLight text-lg text-dark transition hover:bg-greyLighter [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:no-underline hover:[&_a]:text-dark hover:[&_a]:no-underline">
+    <li className="block flex-1 cursor-pointer rounded bg-whiteSnow text-lg text-dark transition hover:bg-graySlate [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:no-underline hover:[&_a]:text-dark hover:[&_a]:no-underline">
         {children}
     </li>
 );

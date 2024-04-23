@@ -31,19 +31,19 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     return (
         <div className="py-10 vl:py-16 vl:pb-20">
             <div className="mb-5 flex flex-wrap items-baseline">
-                <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9 text-creamWhite">
+                <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9 text-whiteSnow">
                     {t('Shopsys magazine')}
                 </h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        className="mb-2 flex items-center font-bold uppercase text-creamWhite no-underline hover:text-creamWhite hover:no-underline"
+                        className="mb-2 flex items-center font-bold uppercase text-whiteSnow no-underline hover:text-whiteSnow hover:no-underline"
                         href={blogUrl}
                         type="blogCategory"
                     >
                         <>
                             {t('View all')}
-                            <ArrowRightIcon className="relative top-0 ml-2 text-xs text-creamWhite" />
+                            <ArrowRightIcon className="relative top-0 ml-2 text-xs text-whiteSnow" />
                         </>
                     </ExtendedNextLink>
                 )}

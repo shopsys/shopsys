@@ -19,7 +19,7 @@ type SelectProps = NativeProps & {
 const DropdownIndicator = (props: any) => {
     return (
         <components.DropdownIndicator {...props}>
-            <ArrowIcon className="text-greyDark" />
+            <ArrowIcon className="text-skyBlue" />
         </components.DropdownIndicator>
     );
 };

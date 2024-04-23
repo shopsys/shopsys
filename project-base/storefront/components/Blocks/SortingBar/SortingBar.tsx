@@ -47,7 +47,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     return (
         <div
             className={twMergeCustom(
-                'relative flex select-none items-center justify-center gap-3 rounded border-greyLighter bg-border p-3 vl:flex-row vl:justify-between vl:rounded-none vl:border-b vl:bg-opacity-0 vl:p-0',
+                'relative flex select-none items-center justify-center gap-3 rounded border-graySlate bg-skyBlue p-3 vl:flex-row vl:justify-between vl:rounded-none vl:border-b vl:bg-opacity-0 vl:p-0',
                 isSortMenuOpen && 'rounded-b-none',
                 className,
             )}
@@ -63,7 +63,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
 
             <div
                 className={twJoin(
-                    'w-full rounded-b max-vl:bg-border vl:static vl:flex vl:gap-3',
+                    'w-full rounded-b max-vl:bg-skyBlue vl:static vl:flex vl:gap-3',
                     isSortMenuOpen ? 'absolute top-full z-[1]' : 'hidden',
                 )}
             >

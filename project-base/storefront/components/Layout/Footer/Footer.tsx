@@ -41,7 +41,7 @@ export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles, phone, o
                 )}
                 <FooterCopyright />
                 <ExtendedNextLink
-                    className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline"
+                    className="self-center text-graySlate no-underline transition hover:text-whiteSnow hover:no-underline"
                     href={cookieConsentUrl}
                 >
                     {t('Cookie consent update')}

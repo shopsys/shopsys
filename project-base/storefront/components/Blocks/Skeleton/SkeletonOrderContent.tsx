@@ -2,7 +2,7 @@ import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonOrderContent: FC = () => (
     <>
-        <div className="w-full mb-6 border-b border-greyLighter p-0 lg:mb-3">
+        <div className="w-full mb-6 border-b border-graySlate p-0 lg:mb-3">
             <Skeleton className="w-full h-8" />
         </div>
 

@@ -22,7 +22,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             onClick={toggleProductInComparison}
         >
-            <CompareIcon className={twMergeCustom('text-grey', isProductInComparison && 'text-green')} />
+            <CompareIcon className={twMergeCustom('text-primary', isProductInComparison && 'text-secondary')} />
             {isWithText && <span>{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>}
         </div>
     );

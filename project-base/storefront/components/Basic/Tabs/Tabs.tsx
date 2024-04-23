@@ -33,7 +33,7 @@ export const Tabs: TabFC<Partial<TabsProps>> = ({ children, className, ...props 
 );
 
 export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
-    <TabList className="z-above hidden flex-row border-b border-border lg:flex">{children}</TabList>
+    <TabList className="z-above hidden flex-row border-b border-skyBlue lg:flex">{children}</TabList>
 );
 
 export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
@@ -65,7 +65,7 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             {...props}
         >
             <h3
-                className="flex w-full cursor-pointer items-center justify-between rounded bg-blueLight py-4 px-5 font-bold lg:hidden"
+                className="flex w-full cursor-pointer items-center justify-between rounded bg-graySlate py-4 px-5 font-bold lg:hidden"
                 onClick={mobileTab}
             >
                 {headingTextMobile}

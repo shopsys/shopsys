@@ -104,8 +104,8 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
     <button
         disabled={!isActive}
         className={twMergeCustom(
-            'absolute right-0 top-40 z-[2] h-10 w-10 cursor-pointer items-center justify-center rounded border border-greenVeryLight bg-greyVeryLight transition-colors vl:static',
-            isActive ? 'hover:bg-greyLight' : 'cursor-default border border-greyLight bg-white',
+            'absolute right-0 top-40 z-[2] h-10 w-10 cursor-pointer items-center justify-center rounded border border-secondary bg-whiteSnow transition-colors vl:static',
+            isActive ? 'hover:bg-graySlate' : 'cursor-default border border-graySlate bg-white',
 
             !isRight && 'right-auto left-0',
             isShowed ? 'flex' : 'hidden',
@@ -113,7 +113,7 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
         onClick={onClick}
     >
         <ArrowIcon
-            className={twJoin('w-5 text-dark', isRight ? '-rotate-90' : 'rotate-90', !isActive && 'text-greyLight')}
+            className={twJoin('w-5 text-dark', isRight ? '-rotate-90' : 'rotate-90', !isActive && 'text-graySlate')}
         />
     </button>
 );

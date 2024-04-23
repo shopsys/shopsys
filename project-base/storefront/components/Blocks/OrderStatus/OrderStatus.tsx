@@ -17,7 +17,7 @@ export const OrderStatus: FC<OrderStatusProps> = ({ order }) => {
                 <>
                     {' '}
                     (
-                    <span className={order.isPaid ? 'text-greenDark' : 'text-red'}>
+                    <span className={order.isPaid ? 'text-green' : 'text-red'}>
                         {order.isPaid ? t('Paid') : t('Not paid')}
                     </span>
                     )

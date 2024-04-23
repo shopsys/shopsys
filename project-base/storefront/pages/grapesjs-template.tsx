@@ -43,7 +43,7 @@ const Index: FC = () => {
                 <ArticleTitle>Blog or Article title</ArticleTitle>
                 <div className="px-5">
                     <div className="mb-12 flex w-full flex-col">
-                        <div className="mb-2 text-left text-xs font-semibold text-grey">
+                        <div className="mb-2 text-left text-xs font-semibold text-skyBlue">
                             {new Date().toLocaleDateString() + ''}
                         </div>
                         <GrapesJs className="gjs-editable pt-4 pb-4" />

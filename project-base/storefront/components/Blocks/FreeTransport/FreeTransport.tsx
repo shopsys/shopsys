@@ -37,7 +37,7 @@ export const FreeTransport: FC = () => {
 };
 
 const Wrapper: FC = ({ children }) => (
-    <div className="my-2 block rounded bg-greenVeryLight px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-greenDark">
+    <div className="my-2 block rounded bg-primary text-white px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-green">
         {children}
     </div>
 );

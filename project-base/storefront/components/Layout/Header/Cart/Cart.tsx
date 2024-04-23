@@ -29,21 +29,21 @@ export const Cart: FC = ({ className }) => {
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>
             {isFetching && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-greyLighter py-2 opacity-50" />
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-graySlate py-2 opacity-50" />
             )}
 
             <ExtendedNextLink
                 href={cartUrl}
                 tid={TIDs.header_cart_link}
                 className={twJoin(
-                    'min-w-24 hidden items-center gap-x-3 rounded h-12 bg-orangeLight pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
+                    'min-w-24 hidden items-center gap-x-3 rounded h-12 bg-secondary pr-2 pl-4 text-white no-underline transition-all group-hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}
             >
                 <span className="relative flex text-lg">
                     <CartIcon className="w-6 lg:w-5" />
                     <CartCount>{cart?.items.length ?? 0}</CartCount>
                 </span>
-                <span className="hidden text-sm font-bold lg:block">
+                <span className="hidden text-sm font-semibold lg:block">
                     {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
                         explicitZero: true,
                     })}
@@ -79,7 +79,7 @@ export const Cart: FC = ({ className }) => {
                 ) : (
                     <>
                         <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <EmptyCartIcon className={twJoin('w-20 text-orange')} />
+                        <EmptyCartIcon className={twJoin('w-20 text-secondary')} />
                     </>
                 )}
             </div>

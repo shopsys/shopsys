@@ -108,7 +108,6 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                         </Cell>
                                         <Cell>
                                             <Button
-                                                className="bg-white text-greyDarker hover:bg-orangeLight hover:text-greyDark"
                                                 size="small"
                                                 tid={TIDs.order_list_repeat_order_button}
                                                 onClick={() => addOrderItemsToEmptyCart(order.uuid)}

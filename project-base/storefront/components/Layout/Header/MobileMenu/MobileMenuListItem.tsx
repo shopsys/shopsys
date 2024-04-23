@@ -12,7 +12,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
     const isWithChildren = !!navigationItem.children?.length;
 
     return (
-        <div key={navigationItem.link} className="flex py-3 border-b border-greyLighter last:border-b-0">
+        <div key={navigationItem.link} className="flex py-3 border-b border-graySlate last:border-b-0">
             <ExtendedNextLink
                 className="flex-1 font-bold text-dark no-underline uppercase"
                 href={navigationItem.link}

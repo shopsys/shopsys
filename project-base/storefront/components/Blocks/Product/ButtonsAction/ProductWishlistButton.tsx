@@ -27,7 +27,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             onClick={toggleProductInWishlist}
         >
             <HeartIcon
-                className={twMergeCustom('text-grey', isProductInWishlist && 'text-green')}
+                className={twMergeCustom('text-primary', isProductInWishlist && 'text-secondary')}
                 isFull={isProductInWishlist}
             />
             {isWithText && <span>{isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}</span>}

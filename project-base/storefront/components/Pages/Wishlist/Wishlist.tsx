@@ -20,9 +20,9 @@ export const Wishlist: FC = () => {
 
             {wishlist?.products && !fetching && (
                 <>
-                    <div className="flex w-full flex-col items-center justify-between border-b border-greyLighter pb-2 lg:flex-row">
+                    <div className="flex w-full flex-col items-center justify-between border-b border-graySlate pb-2 lg:flex-row">
                         <div
-                            className="mb-2 cursor-pointer items-center rounded bg-greyVeryLight py-2 px-4 transition-colors hover:bg-greyLighter sm:inline-flex lg:mb-0"
+                            className="mb-2 cursor-pointer items-center rounded bg-whiteSnow py-2 px-4 transition-colors hover:bg-graySlate sm:inline-flex lg:mb-0"
                             onClick={() => {
                                 handleRemoveWishlist();
                             }}

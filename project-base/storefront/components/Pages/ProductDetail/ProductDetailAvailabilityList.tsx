@@ -22,14 +22,14 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                     {storeAvailabilities.map(
                         (storeAvailability, index) =>
                             storeAvailability.store && (
-                                <li key={index} className="flex w-full items-center border-b border-greyLighter py-4">
+                                <li key={index} className="flex w-full items-center border-b border-graySlate py-4">
                                     <strong className="mr-2 w-36">{storeAvailability.store.storeName}</strong>
 
                                     <span
                                         className={twJoin(
                                             'flex-1 pr-3 text-sm',
                                             storeAvailability.availabilityStatus ===
-                                                TypeAvailabilityStatusEnum.InStock && 'text-inStock',
+                                                TypeAvailabilityStatusEnum.InStock && 'text-secondary',
                                             storeAvailability.availabilityStatus ===
                                                 TypeAvailabilityStatusEnum.OutOfStock && 'text-red',
                                         )}

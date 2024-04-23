@@ -180,9 +180,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     </SelectedParametersList>
                 )}
             </div>
-            <div className="flex cursor-pointer items-center text-sm text-greyLight" onClick={resetAllFilterQueries}>
+            <div className="flex cursor-pointer items-center text-sm text-graySlate" onClick={resetAllFilterQueries}>
                 <div className="font-bold uppercase">{t('Clear all')}</div>
-                <RemoveIcon className="ml-2 cursor-pointer text-greenLight" />
+                <RemoveIcon className="ml-2 cursor-pointer text-secondary" />
             </div>
         </div>
     );

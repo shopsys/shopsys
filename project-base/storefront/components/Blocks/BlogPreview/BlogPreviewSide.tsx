@@ -33,7 +33,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                     ))}
 
                     <ArticleLink
-                        className="block text-lg font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite"
+                        className="block text-lg font-bold leading-5 text-whiteSnow no-underline hover:text-whiteSnow"
                         href={article.link}
                     >
                         {article.name}

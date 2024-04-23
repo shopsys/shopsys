@@ -33,12 +33,12 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                             {t('My orders')}
                         </MenuIconicSubItemLink>
                     </li>
-                    <li className="block border-t border-border">
+                    <li className="block border-t border-skyBlue">
                         <MenuIconicSubItemLink href={customerEditProfileUrl} tid={TIDs.header_edit_profile_link}>
                             {t('Edit profile')}
                         </MenuIconicSubItemLink>
                     </li>
-                    <li className="block border-t border-border">
+                    <li className="block border-t border-skyBlue">
                         <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
                             {t('Logout')}
                         </MenuIconicSubItemLink>

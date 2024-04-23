@@ -165,7 +165,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 type ResetButtonProps = { text: string; onClick: () => void };
 
 const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid }) => (
-    <button className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm" tid={tid} onClick={onClick}>
+    <button className="flex w-full items-center bg-whiteSnow px-2 py-1 text-sm" tid={tid} onClick={onClick}>
         {text}
         <ArrowIcon className="ml-2" />
     </button>

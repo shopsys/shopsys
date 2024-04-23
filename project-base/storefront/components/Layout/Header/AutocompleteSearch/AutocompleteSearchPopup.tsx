@@ -256,7 +256,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 };
 
 const SearchResultSectionTitle: FC = ({ children }) => {
-    return <p className="mb-6 text-sm text-greyLight">{children}</p>;
+    return <p className="mb-6 text-sm text-graySlate">{children}</p>;
 };
 
 const SearchResultSectionGroup: FC = ({ children }) => <ul className="flex flex-col gap-2">{children}</ul>;

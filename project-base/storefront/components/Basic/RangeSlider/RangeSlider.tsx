@@ -180,9 +180,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onTouchEnd={handleMaxValueThumbCallback}
             />
             <div className="relative w-full">
-                <div className="absolute z-above h-1 w-full rounded bg-greyLighter" />
+                <div className="absolute z-above h-1 w-full rounded bg-graySlate" />
                 <div
-                    className={twJoin('absolute z-[2] h-1 rounded', isDisabled ? 'bg-greyLight' : 'bg-primary')}
+                    className={twJoin('absolute z-[2] h-1 rounded', isDisabled ? 'bg-graySlate' : 'bg-primary')}
                     ref={range}
                 />
                 <div className="absolute -left-2 mt-5 w-20 text-xs text-black">
@@ -238,8 +238,8 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ isActive, disabled, ...pr
                 mozTwClass,
                 msTwClass,
                 isActive
-                    ? '[&::-moz-range-thumb]:bg-orange [&::-ms-thumb]:bg-orange [&::-webkit-slider-thumb]:bg-orange'
-                    : '[&::-moz-range-thumb]:bg-greyLight [&::-ms-thumb]:bg-greyLight [&::-webkit-slider-thumb]:bg-greyLight',
+                    ? '[&::-moz-range-thumb]:bg-secondary [&::-ms-thumb]:bg-secondary [&::-webkit-slider-thumb]:bg-secondary'
+                    : '[&::-moz-range-thumb]:bg-graySlate [&::-ms-thumb]:bg-graySlate [&::-webkit-slider-thumb]:bg-graySlate',
                 disabled &&
                     '[&::-moz-range-thumb]:cursor-not-allowed [&::-ms-thumb]:cursor-not-allowed [&::-webkit-slider-thumb]:cursor-not-allowed',
             )}

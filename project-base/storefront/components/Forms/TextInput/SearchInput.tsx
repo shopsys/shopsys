@@ -44,7 +44,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded border-2 border-white bg-white pr-20 pl-4 text-dark placeholder:text-grey placeholder:opacity-100 focus:outline-none [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
+                    'peer mb-0 h-12 w-full rounded border-2 border-white bg-white pr-20 pl-4 text-dark placeholder:text-skyBlue placeholder:opacity-100 focus:outline-none [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
                     value ? 'pr-20' : 'pr-12',
                     className,
                 )}
@@ -67,7 +67,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {!!value && (
                 <div
-                    className="absolute right-11 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-greyLighter p-2"
+                    className="absolute right-11 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-graySlate p-2"
                     onClick={onClear}
                 >
                     <CloseIcon />

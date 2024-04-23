@@ -26,7 +26,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
     return (
-        <div className="flex flex-wrap items-center gap-y-4 border-t border-greyLight py-4 first-of-type:border-0 lg:flex-nowrap lg:gap-5">
+        <div className="flex flex-wrap items-center gap-y-4 border-t border-graySlate py-4 first-of-type:border-0 lg:flex-nowrap lg:gap-5">
             <ExtendedNextLink
                 className="flex items-center gap-5 font-bold no-underline lg:flex-1"
                 href={productUrl}
@@ -48,7 +48,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             <div className="basis-4/6 lg:basis-3/12 lg:text-center">
                 <span
                     className={twJoin(
-                        product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-inStock',
+                        product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-secondary',
                         product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-red ',
                     )}
                 >

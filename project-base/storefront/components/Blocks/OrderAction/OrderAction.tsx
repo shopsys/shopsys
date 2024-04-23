@@ -54,12 +54,12 @@ export const OrderAction: FC<OrderActionProps> = ({
                     href={buttonBackLink}
                     tid={TIDs.blocks_orderaction_back}
                 >
-                    <ArrowIcon className="relative top-0 mr-1 rotate-90 text-greyLight" />
+                    <ArrowIcon className="relative top-0 mr-1 rotate-90 text-graySlate" />
                     {buttonBack}
                 </ExtendedNextLink>
             </div>
             <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
-                <SubmitButton isWithDisabledLook={hasDisabledLook} variant="primary" onClick={onNextStepHandler}>
+                <SubmitButton isWithDisabledLook={hasDisabledLook} onClick={onNextStepHandler}>
                     {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
                     <ArrowIcon className="relative top-0 ml-1 -rotate-90 text-white" />

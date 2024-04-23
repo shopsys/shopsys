@@ -25,7 +25,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                 onChange={onChange}
             />
             <label
-                className="absolute top-0 left-0 h-6 w-11 cursor-pointer rounded bg-greyLight after:my-[2px] after:ml-[2px] after:block after:h-5 after:w-5 after:rounded after:bg-white after:shadow-sm after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:ml-[22px] peer-checked:after:block"
+                className="absolute top-0 left-0 h-6 w-11 cursor-pointer rounded bg-graySlate after:my-[2px] after:ml-[2px] after:block after:h-5 after:w-5 after:rounded after:bg-white after:shadow-sm after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:ml-[22px] peer-checked:after:block"
                 htmlFor={id}
             />
         </div>

@@ -6,9 +6,9 @@ type TableProps = {
 };
 
 export const Table: FC<TableProps> = ({ head, children, className }) => (
-    <div className={twMergeCustom('overflow-x-auto rounded border-2 border-border p-6', className)}>
+    <div className={twMergeCustom('overflow-x-auto rounded border-2 border-skyBlue p-6', className)}>
         <table className="w-full">
-            {!!head && <thead className="border-b border-border">{head}</thead>}
+            {!!head && <thead className="border-b border-skyBlue">{head}</thead>}
             <tbody>{children}</tbody>
         </table>
     </div>
@@ -22,7 +22,7 @@ type CellProps = {
 };
 
 export const Row: FC = ({ children, className }) => (
-    <tr className={twMergeCustom('border-b border-border text-greyLight last:border-b-0', className)}>{children}</tr>
+    <tr className={twMergeCustom('border-b border-skyBlue text-graySlate last:border-b-0', className)}>{children}</tr>
 );
 
 export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, colSpan }) => {
@@ -47,13 +47,13 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
 };
 
 export const CellHead: FC<CellProps> = ({ className, children, ...props }) => (
-    <Cell isHead className={twMergeCustom('font-bold text-greyLight', className)} {...props}>
+    <Cell isHead className={twMergeCustom('font-bold text-graySlate', className)} {...props}>
         {children}
     </Cell>
 );
 
 export const CellMinor: FC<CellProps> = ({ className, children, ...props }) => (
-    <Cell className={twMergeCustom(' text-greyLight', className)} {...props}>
+    <Cell className={twMergeCustom(' text-graySlate', className)} {...props}>
         {children}
     </Cell>
 );

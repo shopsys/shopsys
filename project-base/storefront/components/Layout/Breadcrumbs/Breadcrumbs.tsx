@@ -14,7 +14,7 @@ type BreadcrumbsProps = {
 };
 
 export const breadcrumbsTwClass =
-    'flex items-center gap-2 border-b-2 border-greyLighter py-3 lg:ml-4 lg:border-none lg:py-0';
+    'flex items-center gap-2 border-b-2 border-graySlate py-3 lg:ml-4 lg:border-none lg:py-0';
 
 export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className }) => {
     const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
             <div className={twMergeCustom(breadcrumbsTwClass, className)}>
-                <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
+                <ArrowIcon className="mr-3 w-3 rotate-90 text-graySlate lg:hidden" />
 
                 <BreadcrumbsLink href="/">{t('Home page')}</BreadcrumbsLink>
 
@@ -54,14 +54,14 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 };
 
 export const BreadcrumbsSpan: FC = ({ children, tid }) => (
-    <span className="hidden text-greyLight lg:inline-block" tid={tid}>
+    <span className="hidden text-graySlate lg:inline-block" tid={tid}>
         {children}
     </span>
 );
 
 const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey }> = ({ href, type, children }) => (
     <ExtendedNextLink
-        className="hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
+        className="hidden text-graySlate no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
         href={href}
         type={type}
     >

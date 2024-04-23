@@ -20,12 +20,12 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     };
 
     return (
-        <div className="rounded bg-blueLight px-3 py-4">
+        <div className="rounded bg-whiteSnow px-3 py-4">
             <div
                 className={twJoin(
                     'flex cursor-pointer items-center font-bold no-underline hover:no-underline',
                     product.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                        'text-inStock hover:text-inStock',
+                        'text-secondary hover:text-secondary',
                     product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-red hover:text-red',
                 )}
                 onClick={scrollOnClickHandler}

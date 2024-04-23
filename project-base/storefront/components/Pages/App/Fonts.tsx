@@ -1,16 +1,16 @@
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-const robotoFont = Roboto({
-    weight: ['400', '500', '700'],
+const interFont = Inter({
+    weight: ['500', '700'],
     subsets: ['latin-ext', 'latin'],
-    variable: '--font-dm_sans',
+    variable: '--font-inter',
 });
 
 export const Fonts: FC = () => {
     return (
         <style global jsx>{`
             html {
-                font-family: ${robotoFont.style.fontFamily};
+                font-family: ${interFont.style.fontFamily};
             }
         `}</style>
     );

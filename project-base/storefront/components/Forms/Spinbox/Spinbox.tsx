@@ -132,14 +132,14 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         if (size === 'small') {
             return (
-                <div className="inline-flex w-20 overflow-hidden rounded border-2 border-border bg-white [&>button]:translate-y-0 [&>button]:text-xs">
+                <div className="inline-flex w-20 overflow-hidden rounded border-2 border-skyBlue bg-white [&>button]:translate-y-0 [&>button]:text-xs">
                     {content}
                 </div>
             );
         }
 
         return (
-            <div className="inline-flex h-12 w-32 overflow-hidden rounded border-2 border-border bg-white">
+            <div className="inline-flex h-12 w-32 overflow-hidden rounded border-2 border-skyBlue bg-white">
                 {content}
             </div>
         );

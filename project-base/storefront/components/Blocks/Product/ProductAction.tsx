@@ -14,7 +14,7 @@ type ProductActionProps = {
     listIndex: number;
 };
 
-const wrapperTwClass = 'rounded bg-greyVeryLight p-2';
+const wrapperTwClass = 'rounded bg-whiteSnow p-2';
 
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
     const { t } = useTranslation();

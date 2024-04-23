@@ -20,12 +20,12 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
                 href={navigationItem.link}
                 type={isCatalogLink ? 'homepage' : 'category'}
                 className={twJoin(
-                    'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-orangeLight hover:no-underline group-hover:text-orangeLight group-hover:no-underline vl:text-base',
+                    'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-secondary hover:no-underline group-hover:text-secondary group-hover:no-underline vl:text-base',
                 )}
             >
                 {navigationItem.name}
                 {hasChildren && (
-                    <ArrowIcon className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight" />
+                    <ArrowIcon className="ml-2 text-white group-hover:rotate-180 group-hover:text-secondary" />
                 )}
             </ExtendedNextLink>
 

@@ -54,13 +54,13 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'relative flex select-none flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
+                    'relative flex select-none flex-col justify-between gap-3 border-b border-graySlate p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
                     className,
                 )}
             >
                 {!isSimpleCard && gtmProductListName === GtmProductListNameType.wishlist && (
                     <button
-                        className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-none transition hover:bg-blueLight"
+                        className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whiteSnow p-0 outline-none transition hover:bg-graySlate"
                         title={t('Remove from wishlist')}
                         onClick={toggleProductInWishlist}
                     >

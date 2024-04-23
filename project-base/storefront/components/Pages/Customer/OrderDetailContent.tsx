@@ -279,7 +279,5 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
 };
 
 const ColumnHeader: FC = ({ children, className }) => (
-    <div className={twMergeCustom('border-b-2 border-greyLighter p-4 pl-0 text-lg text-dark', className)}>
-        {children}
-    </div>
+    <div className={twMergeCustom('border-b-2 border-graySlate p-4 pl-0 text-lg text-dark', className)}>{children}</div>
 );

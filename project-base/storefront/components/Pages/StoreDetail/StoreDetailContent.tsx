@@ -81,9 +81,9 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         )}
                     </div>
 
-                    <div className="mt-6 flex items-center justify-between rounded border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
+                    <div className="mt-6 flex items-center justify-between rounded border border-graySlate py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
                         <div className="flex flex-row items-center text-lg text-primary">
-                            <ChatIcon className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
+                            <ChatIcon className="mr-3 w-6 text-2xl text-primary xl:mr-5" />
                             <ExtendedNextLink
                                 passHref
                                 className="relative flex-grow text-primary md:text-lg"
@@ -109,7 +109,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
             </div>
 
             {store.storeImages.length > 0 && (
-                <div className="mt-6 bg-greyVeryLight p-3">
+                <div className="mt-6 bg-whiteSnow p-3">
                     <ul className="flex flex-wrap justify-center lg:justify-start">
                         {store.storeImages.map((image, index) => (
                             <li
