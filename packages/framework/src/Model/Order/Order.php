@@ -317,6 +317,12 @@ class Order
     protected $goPayBankSwift;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $heurekaAgreement;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -477,6 +483,7 @@ class Order
         );
 
         $this->status = $orderData->status;
+        $this->heurekaAgreement = $orderData->heurekaAgreement;
 
         $this->setDeliveryAddress($orderData);
     }
@@ -1053,5 +1060,13 @@ class Order
     public function getTotalProductsPrice(): Price
     {
         return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHeurekaAgreement()
+    {
+        return $this->heurekaAgreement;
     }
 }

@@ -28,3 +28,7 @@ SettingsDecorator:
                 type: String
                 resolve: "@=query('mainBlogCategoryUrlQuery')"
                 description: "Absolute URL of the blog main category"
+            heurekaEnabled:
+                type: Boolean!
+                resolve: "@=query('heurekaEnabledQuery')"
+                description: "Returns true if Heureka is available for the current domain"

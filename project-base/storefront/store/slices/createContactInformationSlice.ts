@@ -27,6 +27,7 @@ export type ContactInformation = {
     deliveryAddressUuid: string;
     newsletterSubscription: boolean;
     note: string;
+    isWithoutHeurekaAgreement: boolean;
 };
 
 const defaultContactInformation: ContactInformation = {
@@ -54,6 +55,7 @@ const defaultContactInformation: ContactInformation = {
     deliveryAddressUuid: '',
     newsletterSubscription: false,
     note: '',
+    isWithoutHeurekaAgreement: false,
 };
 
 export type ContactInformationSlice = {

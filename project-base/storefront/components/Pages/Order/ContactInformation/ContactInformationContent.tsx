@@ -138,6 +138,7 @@ export const ContactInformationWrapper: FC = () => {
             deliveryAddressUuid,
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
+            heurekaAgreement: !formValues.isWithoutHeurekaAgreement,
         });
 
         if (

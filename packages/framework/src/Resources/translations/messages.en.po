@@ -1357,6 +1357,9 @@ msgstr ""
 msgid "Heureka Widget code"
 msgstr ""
 
+msgid "Heureka agreement"
+msgstr ""
+
 msgid "Hidden"
 msgstr ""
 

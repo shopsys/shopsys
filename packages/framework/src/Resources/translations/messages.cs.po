@@ -1357,6 +1357,9 @@ msgstr "Služba Heureka - Ověřeno zákazníky nepodporuje jazyk této domény.
 msgid "Heureka Widget code"
 msgstr "Kód Heureka Widgetu"
 
+msgid "Heureka agreement"
+msgstr "Souhlas s Heureka Ověřeno zákazníky"
+
 msgid "Hidden"
 msgstr "Skryté"
 

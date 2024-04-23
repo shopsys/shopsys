@@ -19,7 +19,8 @@ mutation CreateFullOrder(
     $deliveryStreet: String!,
     $deliveryCity: String!,
     $deliveryCountry: String!,
-    $deliveryPostcode: String
+    $deliveryPostcode: String,
+    $heurekaAgreement: Boolean!
 ) {
     CreateOrder(
         input: {
@@ -44,6 +45,7 @@ mutation CreateFullOrder(
             deliveryCity: $deliveryCity
             deliveryCountry: $deliveryCountry
             deliveryPostcode: $deliveryPostcode
+            heurekaAgreement: $heurekaAgreement
         }
     ) {
         order {
@@ -102,6 +104,7 @@ mutation CreateFullOrder(
             note
             paymentTransactionsCount
             isPaid
+            heurekaAgreement
         }
     }
 }
