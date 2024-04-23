@@ -6,17 +6,13 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-type ProductComparePopupProps = {
-    onCloseCallback: () => void;
-};
-
-export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallback }) => {
+export const ProductComparePopup: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
 
     return (
-        <Popup onCloseCallback={onCloseCallback}>
+        <Popup>
             <div className="text-base lg:text-lg">{t('Comparison')}</div>
 
             <div className="flex flex-col">
@@ -31,5 +27,3 @@ export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallb
         </Popup>
     );
 };
-
-ProductComparePopup.displayName = 'ProductComparePopup';

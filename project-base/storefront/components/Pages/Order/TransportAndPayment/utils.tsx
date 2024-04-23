@@ -18,8 +18,10 @@ import { getGtmPickupPlaceFromLastOrder } from 'gtm/mappers/getGtmPickupPlaceFro
 import { getGtmPickupPlaceFromStore } from 'gtm/mappers/getGtmPickupPlaceFromStore';
 import { Translate } from 'next-translate';
 import getConfig from 'next/config';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
@@ -27,6 +29,16 @@ import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { logException } from 'utils/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
+
+const PickupPlacePopup = dynamic(
+    () =>
+        import('components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/PickupPlacePopup').then(
+            (component) => component.PickupPlacePopup,
+        ),
+    {
+        ssr: false,
+    },
+);
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -52,11 +64,10 @@ export const useTransportChangeInSelect = (
 ) => {
     const { defaultLocale } = useDomainConfig();
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState(lastOrderPickupPlace);
-    const [preSelectedTransport, setPreselectedTransport] =
-        useState<TypeTransportWithAvailablePaymentsAndStoresFragment | null>(null);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const { transport: currentTransport, pickupPlace: currentPickupPlace } = useCurrentCart();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const resetTransportAndPayment = async () => {
         await changeTransportHandler(null, null);
@@ -127,30 +138,27 @@ export const useTransportChangeInSelect = (
         }
 
         clearPacketeryPickupPoint();
-        setPreselectedTransport(newTransport);
+        updatePortalContent(
+            <PickupPlacePopup transport={newTransport} onChangePickupPlaceCallback={changePickupPlace} />,
+        );
     };
 
-    const changePickupPlace = (selectedPickupPlace: TypeListedStoreFragment | null) => {
-        if (selectedPickupPlace && preSelectedTransport) {
-            changeTransportHandler(preSelectedTransport.uuid, selectedPickupPlace);
+    const changePickupPlace = (
+        transport: TypeTransportWithAvailablePaymentsAndStoresFragment,
+        selectedPickupPlace: TypeListedStoreFragment | null,
+    ) => {
+        if (selectedPickupPlace) {
+            changeTransportHandler(transport.uuid, selectedPickupPlace);
         } else {
             changeTransport(null);
             clearPacketeryPickupPoint();
         }
 
-        setPreselectedTransport(null);
-    };
-
-    const closePickupPlacePopup = () => {
-        clearPacketeryPickupPoint();
-        setPreselectedTransport(null);
+        updatePortalContent(null);
     };
 
     return {
-        preSelectedTransport,
         changeTransport,
-        changePickupPlace,
-        closePickupPlacePopup,
         resetTransportAndPayment,
     };
 };

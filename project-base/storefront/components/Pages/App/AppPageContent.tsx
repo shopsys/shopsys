@@ -1,4 +1,5 @@
 import { Fonts } from './Fonts';
+import { Portal } from 'components/Basic/Portal/Portal';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { GtmProvider } from 'gtm/context/GtmProvider';
@@ -69,8 +70,6 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <GtmHeadScript />
             <Fonts />
 
-            <div id="portal" />
-
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
 
             <GtmProvider>
@@ -79,6 +78,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             </GtmProvider>
 
             {SymfonyDebugToolbar && <SymfonyDebugToolbar />}
+            <Portal />
         </>
     );
 };

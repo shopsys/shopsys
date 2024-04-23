@@ -1,22 +1,29 @@
 import { TypeProductListTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useSessionStore } from 'store/useSessionStore';
 import { useProductList } from 'utils/productLists/useProductList';
 import { useUpdateProductListUuid } from 'utils/productLists/useUpdateProductListUuid';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
+const ProductComparePopup = dynamic(() =>
+    import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
+        (component) => component.ProductComparePopup,
+    ),
+);
+
 export const useComparison = () => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
-    const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
         TypeProductListTypeEnum.Comparison,
         {
             addProductError: () => showErrorMessage(t('Unable to add product to comparison.')),
             addProductSuccess: (result) => {
-                setIsPopupCompareOpen(true);
+                updatePortalContent(<ProductComparePopup />);
                 updateComparisonUuid(result?.uuid ?? null);
             },
             removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
@@ -41,7 +48,5 @@ export const useComparison = () => {
         isProductInComparison: isProductInList,
         toggleProductInComparison: toggleProductInList,
         removeComparison: removeList,
-        isPopupCompareOpen,
-        setIsPopupCompareOpen,
     };
 };

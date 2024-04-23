@@ -4,17 +4,22 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 
-type ContactInformationEmailProps = {
-    setIsLoginPopupOpened: Dispatch<SetStateAction<boolean>>;
-};
+const LoginPopup = dynamic(
+    () => import('components/Blocks/Login/LoginPopup').then((component) => component.LoginPopup),
+    {
+        ssr: false,
+    },
+);
 
-export const ContactInformationEmail: FC<ContactInformationEmailProps> = ({ setIsLoginPopupOpened }) => {
+export const ContactInformationEmail: FC = () => {
     const { t } = useTranslation();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -24,6 +29,7 @@ export const ContactInformationEmail: FC<ContactInformationEmailProps> = ({ setI
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQuery({
         variables: {
@@ -32,9 +38,13 @@ export const ContactInformationEmail: FC<ContactInformationEmailProps> = ({ setI
         pause: !isEmailFilledCorrectly,
     });
 
+    const openLoginPopup = () => {
+        updatePortalContent(<LoginPopup shouldOverwriteCustomerUserCart defaultEmail={emailValue} />);
+    };
+
     useEffect(() => {
         if (isUserLoggedIn) {
-            setIsLoginPopupOpened(false);
+            updatePortalContent(null);
         }
     }, [isUserLoggedIn]);
 
@@ -58,7 +68,7 @@ export const ContactInformationEmail: FC<ContactInformationEmailProps> = ({ setI
                 }}
             />
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <Button className="mb-5" size="small" type="button" onClick={() => setIsLoginPopupOpened(true)}>
+                <Button className="mb-5" size="small" type="button" onClick={openLoginPopup}>
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}

@@ -1,18 +1,7 @@
-import { useRef } from 'react';
-import { createPortal } from 'react-dom';
+import { useSessionStore } from 'store/useSessionStore';
 
-export const Portal: FC = ({ children }) => {
-    const portalElementRef = useRef(document.getElementById('portal'));
-    const hasMounted = useRef(false);
+export const Portal: FC = () => {
+    const portalContent = useSessionStore((s) => s.portalContent);
 
-    if (!portalElementRef.current) {
-        return null;
-    }
-
-    if (!hasMounted.current) {
-        portalElementRef.current.innerHTML = '';
-        hasMounted.current = true;
-    }
-
-    return createPortal(children, portalElementRef.current);
+    return portalContent;
 };

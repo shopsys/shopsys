@@ -10,6 +10,7 @@ import { TypeRecommendationType } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -17,34 +18,30 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 type AddToCartPopupProps = {
-    onCloseCallback: () => void;
     addedCartItem: TypeCartItemFragment;
+    key: string;
 };
 
-export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, addedCartItem: { product, quantity } }) => {
+export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { product, quantity } }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const router = useRouter();
     const { url, isLuigisBoxActive } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
     const navigateToCart = () => {
         if (router.asPath === cartUrl) {
-            onCloseCallback();
+            updatePortalContent(null);
         } else {
             router.push(cartUrl);
         }
     };
 
     return (
-        <Popup
-            hideCloseButton
-            className="w-full sm:w-11/12 max-w-5xl"
-            contentClassName="overflow-y-auto"
-            onCloseCallback={onCloseCallback}
-        >
+        <Popup key={key} hideCloseButton className="w-full sm:w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
             <div className="mb-4 flex w-full items-center md:mb-6">
                 <CheckmarkIcon className="mr-4 w-7 text-greenDark" />
                 <div className="h2 text-primary">{t('Great choice! We have added your item to the cart')}</div>
@@ -99,7 +96,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
             )}
 
             <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
-                <Button className="mt-2 lg:w-auto lg:justify-start" onClick={onCloseCallback}>
+                <Button className="mt-2 lg:w-auto lg:justify-start" onClick={() => updatePortalContent(null)}>
                     {t('Back to shop')}
                 </Button>
 

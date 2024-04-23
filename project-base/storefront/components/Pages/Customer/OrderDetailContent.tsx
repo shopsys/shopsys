@@ -7,17 +7,11 @@ import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/Payments
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { PaymentTypeEnum } from 'types/payment';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { twMergeCustom } from 'utils/twMerge';
-
-const NotAddedProductsPopup = dynamic(() =>
-    import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
-);
-const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((component) => component.MergeCartsPopup));
 
 type OrderDetailContentProps = {
     order: TypeOrderDetailFragment;
@@ -27,14 +21,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
-    const {
-        orderForPrefillingUuid,
-        setOrderForPrefillingUuid,
-        addOrderItemsToEmptyCart,
-        mergeOrderItemsWithCurrentCart,
-        notAddedProductNames,
-        setNotAddedProductNames,
-    } = useAddOrderItemsToCart();
+    const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
 
     return (
         <>
@@ -283,21 +270,6 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                     </div>
                 )}
             </Webline>
-
-            {!!orderForPrefillingUuid && (
-                <MergeCartsPopup
-                    mergeOrderItemsWithCurrentCart={mergeOrderItemsWithCurrentCart}
-                    orderForPrefillingUuid={orderForPrefillingUuid}
-                    onCloseCallback={() => setOrderForPrefillingUuid(undefined)}
-                />
-            )}
-
-            {!!notAddedProductNames?.length && (
-                <NotAddedProductsPopup
-                    notAddedProductNames={notAddedProductNames}
-                    onCloseCallback={() => setNotAddedProductNames(undefined)}
-                />
-            )}
         </>
     );
 };

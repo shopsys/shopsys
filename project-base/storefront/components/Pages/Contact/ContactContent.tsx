@@ -1,5 +1,5 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -13,16 +13,13 @@ import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuer
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
-
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 export const ContactContent: FC = () => {
     const { t } = useTranslation();
@@ -31,8 +28,9 @@ export const ContactContent: FC = () => {
     const [{ data }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const [, contact] = useContactMutation();
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
         async (values) => {
@@ -49,97 +47,87 @@ export const ContactContent: FC = () => {
     );
 
     return (
-        <>
-            <div className="mb-8">
-                <Webline>
-                    <h1 className="mb-3">{t('Write to us')}</h1>
-                    {data?.settings?.contactFormMainText !== undefined && (
-                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
-                    )}
-                    <FormProvider {...formProviderMethods}>
-                        <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.name.name}
-                                render={(textInput) => (
-                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                            {textInput}
-                                        </FormLine>
-                                    </FormColumn>
-                                )}
-                                textInputProps={{
-                                    label: formMeta.fields.name.label,
-                                    required: true,
-                                    type: 'text',
-                                    autoComplete: 'name',
+        <div className="mb-8">
+            <Webline>
+                <h1 className="mb-3">{t('Write to us')}</h1>
+                {data?.settings?.contactFormMainText !== undefined && (
+                    <div className="mb-4" dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
+                )}
+                <FormProvider {...formProviderMethods}>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            name={formMeta.fields.name.name}
+                            render={(textInput) => (
+                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                    <FormLine bottomGap className="w-full flex-none lg:w-1/2">
+                                        {textInput}
+                                    </FormLine>
+                                </FormColumn>
+                            )}
+                            textInputProps={{
+                                label: formMeta.fields.name.label,
+                                required: true,
+                                type: 'text',
+                                autoComplete: 'name',
+                            }}
+                        />
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            name={formMeta.fields.email.name}
+                            render={(textInput) => (
+                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                    <FormLine bottomGap className="w-full flex-none lg:w-1/2">
+                                        {textInput}
+                                    </FormLine>
+                                </FormColumn>
+                            )}
+                            textInputProps={{
+                                label: formMeta.fields.email.label,
+                                required: true,
+                                type: 'email',
+                                autoComplete: 'email',
+                            }}
+                        />
+                        <TextareaControlled
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            name={formMeta.fields.message.name}
+                            render={(textarea) => (
+                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                    <FormLine bottomGap className="w-full">
+                                        {textarea}
+                                    </FormLine>
+                                </FormColumn>
+                            )}
+                            textareaProps={{
+                                label: formMeta.fields.message.label,
+                                required: true,
+                                rows: 4,
+                            }}
+                        />
+                        <div className="mb-4">
+                            <Trans
+                                defaultTrans="By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>."
+                                i18nKey="ContactFormInfo"
+                                components={{
+                                    lnk1:
+                                        privacyPolicyArticleUrl !== undefined ? (
+                                            <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+                                        ) : (
+                                            <span />
+                                        ),
                                 }}
                             />
-                            <TextInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.email.name}
-                                render={(textInput) => (
-                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                            {textInput}
-                                        </FormLine>
-                                    </FormColumn>
-                                )}
-                                textInputProps={{
-                                    label: formMeta.fields.email.label,
-                                    required: true,
-                                    type: 'email',
-                                    autoComplete: 'email',
-                                }}
-                            />
-                            <TextareaControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.message.name}
-                                render={(textarea) => (
-                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                        <FormLine bottomGap className="w-full">
-                                            {textarea}
-                                        </FormLine>
-                                    </FormColumn>
-                                )}
-                                textareaProps={{
-                                    label: formMeta.fields.message.label,
-                                    required: true,
-                                    rows: 4,
-                                }}
-                            />
-                            <div className="mb-4">
-                                <Trans
-                                    defaultTrans="By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>."
-                                    i18nKey="ContactFormInfo"
-                                    components={{
-                                        lnk1:
-                                            privacyPolicyArticleUrl !== undefined ? (
-                                                <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
-                                            ) : (
-                                                <span className={linkPlaceholderTwClass} />
-                                            ),
-                                    }}
-                                />
-                            </div>
-                            <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid} variant="primary">
-                                {t('Send message')}
-                            </SubmitButton>
-                        </Form>
-                    </FormProvider>
-                </Webline>
-            </div>
-
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    fields={formMeta.fields}
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                />
-            )}
-        </>
+                        </div>
+                        <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid} variant="primary">
+                            {t('Send message')}
+                        </SubmitButton>
+                    </Form>
+                </FormProvider>
+            </Webline>
+        </div>
     );
 };

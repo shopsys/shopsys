@@ -23,12 +23,6 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
-const ProductComparePopup = dynamic(() =>
-    import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
-        (component) => component.ProductComparePopup,
-    ),
-);
-
 const RecommendedProducts = dynamic(() =>
     import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
 );
@@ -42,8 +36,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const { t } = useTranslation();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
-    const { isProductInComparison, toggleProductInComparison, isPopupCompareOpen, setIsPopupCompareOpen } =
-        useComparison();
+    const { isProductInComparison, toggleProductInComparison } = useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
     const { isLuigisBoxActive } = useDomainConfig();
 
@@ -121,7 +114,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                 {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
             </Webline>
-            {isPopupCompareOpen && <ProductComparePopup onCloseCallback={() => setIsPopupCompareOpen(false)} />}
         </>
     );
 };
