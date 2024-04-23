@@ -73,6 +73,14 @@ class LuigisBoxProductFeedItemFactory
             $parameterValuesIndexedByName[$parameterName] = $productParameterValue->getValue()->getText();
         }
 
+        $mainVariantId = null;
+
+        if ($product->isMainVariant()) {
+            $mainVariantId = $product->getId();
+        } elseif ($product->isVariant()) {
+            $mainVariantId = $product->getMainVariant()->getId();
+        }
+
         return new LuigisBoxProductFeedItem(
             $product->getId(),
             $product->getName($domainConfig->getLocale()),
@@ -94,7 +102,7 @@ class LuigisBoxProductFeedItemFactory
             $product->getBrand()?->getName(),
             $productDescription,
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
-            $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            $mainVariantId,
         );
     }
 
