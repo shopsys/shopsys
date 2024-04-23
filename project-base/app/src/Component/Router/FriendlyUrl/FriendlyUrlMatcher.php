@@ -44,11 +44,14 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
             throw new ResourceNotFoundException();
         }
 
+        $matchedParameters = [];
+
         if ($friendlyUrl->getRedirectTo() !== null) {
             $matchedParameters['_route'] = $friendlyUrl->getRouteName();
             $matchedParameters['_controller'] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction';
             $matchedParameters['path'] = $friendlyUrl->getRedirectTo();
             $matchedParameters['permanent'] = $friendlyUrl->getRedirectCode() !== 302;
+            $matchedParameters['id'] = $friendlyUrl->getEntityId();
 
             return $matchedParameters;
         }
@@ -73,7 +76,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
         $matchedParameters['id'] = $friendlyUrl->getEntityId();
 
         if (!$friendlyUrl->isMain()) {
-            $matchedParameters['_controller'] = 'FrameworkBundle:Redirect:redirect';
+            $matchedParameters['_controller'] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction';
             $matchedParameters['route'] = $friendlyUrl->getRouteName();
             $matchedParameters['permanent'] = true;
         }

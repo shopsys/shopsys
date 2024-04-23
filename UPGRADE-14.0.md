@@ -1492,7 +1492,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   add customer option for Verified by Customers Heureka ([#3098](https://github.com/shopsys/shopsys/pull/3098))
+
     -   `Shopsys\FrameworkBundle\Component\Setting\Setting\HeurekaSetting::HEUREKA_API_KEY` constant changed its visibility from `protected` to `public`
+    -   see #project-base-diff to update your project
+
+-   fix friendly URLs ([#3115](https://github.com/shopsys/shopsys/pull/3115))
     -   see #project-base-diff to update your project
 
 ### Storefront
