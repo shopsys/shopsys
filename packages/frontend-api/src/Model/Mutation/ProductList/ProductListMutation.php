@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\ProductList;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
@@ -60,6 +61,10 @@ class ProductListMutation extends AbstractMutation
         }
 
         if ($productList === null) {
+            if ($productListUuid !== null && $this->productListFacade->existsProductListWithUuid($productListUuid)) {
+                $productListUuid = Uuid::uuid4()->toString();
+            }
+
             $productListData = $this->productListDataFactory->create($productListType, $customerUser, $productListUuid);
             $productList = $this->productListFacade->create($productListData);
         }

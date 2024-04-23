@@ -152,6 +152,28 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param string $productListType
+     */
+    public function testAddProductCreatesNewListWithNewUuidWhenUuidOfAnonymousListIsProvided(
+        string $productListType,
+    ): void {
+        $anonymousProductListUuid = $this->getAnonymousProductListUuid($productListType);
+        $productToAddId = 69;
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
+            'productListUuid' => $anonymousProductListUuid,
+            'productUuid' => $productToAdd->getUuid(),
+            'type' => $productListType,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'AddProductToList');
+
+        $this->assertNotSame($anonymousProductListUuid, $data['uuid']);
+        $this->assertSame($productListType, $data['type']);
+        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+    }
+
+    /**
      * @dataProvider productListDataProvider
      * @param string $productListType
      * @param string $uuid
@@ -240,5 +262,18 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
             'expectedUuid' => ProductListDataFixture::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID,
             'expectedProductIds' => [1],
         ];
+    }
+
+    /**
+     * @param string $productListType
+     * @return string
+     */
+    private function getAnonymousProductListUuid(string $productListType): string
+    {
+        return match ($productListType) {
+            ProductListTypeEnum::COMPARISON => ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListTypeEnum::WISHLIST => ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+            default => throw new UnknownProductListTypeException($productListType),
+        };
     }
 }
