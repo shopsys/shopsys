@@ -3,13 +3,13 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { TIDs } from 'cypress/tids';
-import { CartItemFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 
 const AddToCartPopup = dynamic(() =>
     import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
@@ -36,7 +36,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
     const [changeCartItemQuantity, fetching] = useAddToCart(gtmMessageOrigin, gtmProductListName);
-    const [popupData, setPopupData] = useState<CartItemFragmentApi | undefined>(undefined);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
@@ -45,7 +45,15 @@ export const AddToCart: FC<AddToCartProps> = ({
 
         const addToCartResult = await changeCartItemQuantity(productUuid, spinboxRef.current.valueAsNumber, listIndex);
         spinboxRef.current!.valueAsNumber = 1;
-        setPopupData(addToCartResult?.addProductResult.cartItem);
+
+        if (addToCartResult) {
+            updatePortalContent(
+                <AddToCartPopup
+                    key={addToCartResult.addProductResult.cartItem.uuid}
+                    addedCartItem={addToCartResult.addProductResult.cartItem}
+                />,
+            );
+        }
     };
 
     return (
@@ -70,10 +78,6 @@ export const AddToCart: FC<AddToCartProps> = ({
                 {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}
                 <span>{t('Add to cart')}</span>
             </Button>
-
-            {!!popupData && (
-                <AddToCartPopup addedCartItem={popupData} onCloseCallback={() => setPopupData(undefined)} />
-            )}
         </div>
     );
 };

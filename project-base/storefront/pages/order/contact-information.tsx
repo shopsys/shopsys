@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
-import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Form } from 'components/Forms/Form/Form';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
@@ -31,22 +30,17 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { useErrorPopup } from 'hooks/forms/useErrorPopup';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import React, { useEffect, useState } from 'react';
-import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
-const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
-
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
-    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const router = useRouter();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -64,10 +58,10 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const [{ fetching }, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const user = useCurrentCustomerData();
     const userContactInformation = useCurrentUserContactInformation();
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -230,37 +224,20 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
             <OrderLayout activeStep={3}>
                 {!orderCreating ? (
-                    <>
-                        <FormProvider {...formProviderMethods}>
-                            <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                                <ContactInformationContent setIsLoginPopupOpened={setIsLoginPopupOpened} />
-                                <OrderAction
-                                    withGapBottom
-                                    buttonBack={t('Back')}
-                                    buttonBackLink={transportAndPaymentUrl}
-                                    buttonNext={t('Submit order')}
-                                    hasDisabledLook={!formProviderMethods.formState.isValid}
-                                    isLoading={fetching}
-                                    withGapTop={false}
-                                />
-                            </Form>
-                        </FormProvider>
-
-                        {isErrorPopupVisible && (
-                            <ErrorPopup
-                                fields={formMeta.fields}
-                                gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
-                                onCloseCallback={() => setErrorPopupVisibility(false)}
+                    <FormProvider {...formProviderMethods}>
+                        <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
+                            <ContactInformationContent />
+                            <OrderAction
+                                withGapBottom
+                                buttonBack={t('Back')}
+                                buttonBackLink={transportAndPaymentUrl}
+                                buttonNext={t('Submit order')}
+                                hasDisabledLook={!formProviderMethods.formState.isValid}
+                                isLoading={fetching}
+                                withGapTop={false}
                             />
-                        )}
-
-                        {isLoginPopupOpened && (
-                            <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
-                                <div className="h2 mb-3">{t('Login')}</div>
-                                <Login shouldOverwriteCustomerUserCart defaultEmail={emailValue} />
-                            </Popup>
-                        )}
-                    </>
+                        </Form>
+                    </FormProvider>
                 ) : (
                     <CartLoading />
                 )}

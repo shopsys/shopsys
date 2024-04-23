@@ -3,12 +3,19 @@ import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useProductList } from 'hooks/productLists/useProductList';
 import { useUpdateProductListUuid } from 'hooks/productLists/useUpdateProductListUuid';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useSessionStore } from 'store/useSessionStore';
+
+const ProductComparePopup = dynamic(() =>
+    import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
+        (component) => component.ProductComparePopup,
+    ),
+);
 
 export const useComparison = () => {
     const { t } = useTranslation();
     const updateComparisonUuid = useUpdateProductListUuid(ProductListTypeEnumApi.ComparisonApi);
-    const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
         ProductListTypeEnumApi.ComparisonApi,
@@ -16,7 +23,7 @@ export const useComparison = () => {
         {
             addProductError: () => showErrorMessage(t('Unable to add product to comparison.')),
             addProductSuccess: (result) => {
-                setIsPopupCompareOpen(true);
+                updatePortalContent(<ProductComparePopup />);
                 updateComparisonUuid(result?.uuid ?? null);
             },
             removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
@@ -41,7 +48,5 @@ export const useComparison = () => {
         isProductInComparison: isProductInList,
         toggleProductInComparison: toggleProductInList,
         removeComparison: removeList,
-        isPopupCompareOpen,
-        setIsPopupCompareOpen,
     };
 };

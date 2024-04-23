@@ -14,10 +14,13 @@ import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup), {
+    ssr: false,
+});
 
 export const TransportAndPaymentContent: FC = () => {
     const router = useRouter();
@@ -25,11 +28,11 @@ export const TransportAndPaymentContent: FC = () => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { transport, pickupPlace, payment, paymentGoPayBankSwift, cart, isCartHydrated } = useCurrentCart();
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
         url,
     );
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
@@ -55,7 +58,12 @@ export const TransportAndPaymentContent: FC = () => {
 
     const onSelectTransportAndPaymentHandler = () => {
         if (hasValidationErrors(validationMessages)) {
-            setErrorPopupVisibility(true);
+            updatePortalContent(
+                <ErrorPopup
+                    fields={validationMessages}
+                    gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                />,
+            );
 
             return;
         }
@@ -102,14 +110,6 @@ export const TransportAndPaymentContent: FC = () => {
                             (isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment
                         }
                     />
-
-                    {isErrorPopupVisible && (
-                        <ErrorPopup
-                            fields={validationMessages}
-                            gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
-                            onCloseCallback={() => setErrorPopupVisibility(false)}
-                        />
-                    )}
                 </>
             ) : (
                 <CartLoading />

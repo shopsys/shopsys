@@ -12,21 +12,19 @@ import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import 'helpers/getInternationalizedStaticUrls';
 import { showSuccessMessage } from 'helpers/toasts';
-import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { useErrorPopup } from 'hooks/forms/useErrorPopup';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
-
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 export const ResetPasswordContent: FC = () => {
     const { t } = useTranslation();
     const [, resetPassword] = usePasswordRecoveryMutationApi();
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const {
         fieldState: { invalid },
@@ -50,37 +48,28 @@ export const ResetPasswordContent: FC = () => {
     );
 
     return (
-        <>
-            <SimpleLayout heading={t('Forgotten password')}>
-                <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
-                        <TextInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.email.name}
-                            render={(textInput) => <FormLine>{textInput}</FormLine>}
-                            textInputProps={{
-                                label: formMeta.fields.email.label,
-                                required: true,
-                                type: 'email',
-                                autoComplete: 'email',
-                            }}
-                        />
-                        <div className="mt-8 flex w-full justify-center">
-                            <SubmitButton isWithDisabledLook={invalid || value.length === 0}>
-                                {t('Reset password')}
-                            </SubmitButton>
-                        </div>
-                    </Form>
-                </FormProvider>
-            </SimpleLayout>
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    fields={formMeta.fields}
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                />
-            )}
-        </>
+        <SimpleLayout heading={t('Forgotten password')}>
+            <FormProvider {...formProviderMethods}>
+                <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.email.name}
+                        render={(textInput) => <FormLine>{textInput}</FormLine>}
+                        textInputProps={{
+                            label: formMeta.fields.email.label,
+                            required: true,
+                            type: 'email',
+                            autoComplete: 'email',
+                        }}
+                    />
+                    <div className="mt-8 flex w-full justify-center">
+                        <SubmitButton isWithDisabledLook={invalid || value.length === 0}>
+                            {t('Reset password')}
+                        </SubmitButton>
+                    </div>
+                </Form>
+            </FormProvider>
+        </SimpleLayout>
     );
 };

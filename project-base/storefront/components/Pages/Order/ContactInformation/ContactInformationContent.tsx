@@ -14,22 +14,28 @@ import {
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 
-type ContactInformationContentProps = {
-    setIsLoginPopupOpened: Dispatch<SetStateAction<boolean>>;
-};
+const LoginPopup = dynamic(
+    () => import('components/Blocks/Login/LoginPopup').then((component) => component.LoginPopup),
+    {
+        ssr: false,
+    },
+);
 
-export const ContactInformationContent: FC<ContactInformationContentProps> = ({ setIsLoginPopupOpened }) => {
+export const ContactInformationContent: FC = () => {
     const { t } = useTranslation();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { formState } = formProviderMethods;
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
@@ -47,9 +53,13 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
         pause: !isEmailFilledCorrectly,
     });
 
+    const openLoginPopup = () => {
+        updatePortalContent(<LoginPopup shouldOverwriteCustomerUserCart defaultEmail={emailValue} />);
+    };
+
     useEffect(() => {
         if (isUserLoggedIn) {
-            setIsLoginPopupOpened(false);
+            updatePortalContent(null);
         }
     }, [isUserLoggedIn]);
 
@@ -74,7 +84,7 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
             />
 
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <Button className="mb-5" size="small" type="button" onClick={() => setIsLoginPopupOpened(true)}>
+                <Button className="mb-5" size="small" type="button" onClick={openLoginPopup}>
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}

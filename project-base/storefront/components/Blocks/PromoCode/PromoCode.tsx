@@ -15,6 +15,7 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
+import { useSessionStore } from 'store/useSessionStore';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -33,10 +34,10 @@ export const PromoCode: FC = () => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [elementHeight, calcHeight] = useCalcElementHeight(contentElement);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const [promoCodeValue, setPromoCodeValue] = useState<string>(promoCode === null ? '' : promoCode);
     const [applyPromoCode, fetchingApplyPromoCode] = useApplyPromoCodeToCart();
     const [removePromoCode, fetchingRemovePromoCode] = useRemovePromoCodeFromCart();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const promoCodeValidationMessages = useMemo(() => {
         const errors: Partial<TransportAndPaymentErrorsType> = {};
@@ -62,7 +63,9 @@ export const PromoCode: FC = () => {
 
     const onApplyPromoCodeHandler: MouseEventHandler<HTMLButtonElement> = useCallback(async () => {
         if (hasValidationErrors(promoCodeValidationMessages)) {
-            setErrorPopupVisibility(true);
+            updatePortalContent(
+                <ErrorPopup fields={promoCodeValidationMessages} gtmMessageOrigin={GtmMessageOriginType.cart} />,
+            );
 
             return;
         }
@@ -91,71 +94,62 @@ export const PromoCode: FC = () => {
     );
 
     return (
-        <>
-            <div className="relative w-80">
-                {promoCode !== null ? (
-                    <>
-                        {fetchingRemovePromoCode && <LoaderWithOverlay className="w-5" />}
-                        <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
-                    </>
-                ) : (
-                    <>
-                        <button
-                            className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
-                            tid={TIDs.blocks_promocode_add_button}
-                            onClick={() => setIsContentVisible(!isContentVisible)}
-                        >
-                            <PlusIcon className="mr-3 w-3" />
-                            {t('I have a discount coupon')}
-                        </button>
-                        <Transition
-                            unmountOnExit
-                            in={isContentVisible}
-                            nodeRef={cssTransitionRef}
-                            timeout={300}
-                            onEnter={calcHeight}
-                            onExit={calcHeight}
-                        >
-                            {(state) => (
-                                <div
-                                    className="overflow-hidden transition-all"
-                                    ref={cssTransitionRef}
-                                    style={{
-                                        ...transitionStyles[state],
-                                    }}
-                                >
-                                    <div className="flex" ref={contentElement}>
-                                        <TextInput
-                                            className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
-                                            id="blocks-promocode-input"
-                                            label={t('Coupon')}
-                                            type="text"
-                                            value={promoCodeValue}
-                                            onChange={onChangePromoCodeValueHandler}
-                                        />
-                                        <SubmitButton
-                                            className="!rounded-r !rounded-l-none !px-3"
-                                            isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
-                                            tid={TIDs.blocks_promocode_apply_button}
-                                            onClick={onApplyPromoCodeHandler}
-                                        >
-                                            {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}
-                                            {t('Apply')}
-                                        </SubmitButton>
-                                    </div>
+        <div className="relative w-80">
+            {promoCode !== null ? (
+                <>
+                    {fetchingRemovePromoCode && <LoaderWithOverlay className="w-5" />}
+                    <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
+                </>
+            ) : (
+                <>
+                    <button
+                        className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
+                        tid={TIDs.blocks_promocode_add_button}
+                        onClick={() => setIsContentVisible(!isContentVisible)}
+                    >
+                        <PlusIcon className="mr-3 w-3" />
+                        {t('I have a discount coupon')}
+                    </button>
+                    <Transition
+                        unmountOnExit
+                        in={isContentVisible}
+                        nodeRef={cssTransitionRef}
+                        timeout={300}
+                        onEnter={calcHeight}
+                        onExit={calcHeight}
+                    >
+                        {(state) => (
+                            <div
+                                className="overflow-hidden transition-all"
+                                ref={cssTransitionRef}
+                                style={{
+                                    ...transitionStyles[state],
+                                }}
+                            >
+                                <div className="flex" ref={contentElement}>
+                                    <TextInput
+                                        className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
+                                        id="blocks-promocode-input"
+                                        label={t('Coupon')}
+                                        type="text"
+                                        value={promoCodeValue}
+                                        onChange={onChangePromoCodeValueHandler}
+                                    />
+                                    <SubmitButton
+                                        className="!rounded-r !rounded-l-none !px-3"
+                                        isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                        tid={TIDs.blocks_promocode_apply_button}
+                                        onClick={onApplyPromoCodeHandler}
+                                    >
+                                        {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}
+                                        {t('Apply')}
+                                    </SubmitButton>
                                 </div>
-                            )}
-                        </Transition>
-                    </>
-                )}
-            </div>
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    fields={promoCodeValidationMessages}
-                    gtmMessageOrigin={GtmMessageOriginType.cart}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                />
+                            </div>
+                        )}
+                    </Transition>
+                </>
             )}
-        </>
+        </div>
     );
 };
