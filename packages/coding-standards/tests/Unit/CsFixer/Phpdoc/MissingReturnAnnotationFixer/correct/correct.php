@@ -18,6 +18,15 @@ class EnvironmentType
     {
         return $environment === self::DEVELOPMENT;
     }
+
+    /**
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
+    public function foo(): bool
+    {
+        return true;
+    }
 }
 
 

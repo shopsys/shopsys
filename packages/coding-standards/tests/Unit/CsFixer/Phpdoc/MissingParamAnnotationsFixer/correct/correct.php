@@ -2,8 +2,11 @@
 
 namespace Shopsys\ProductFeed\ZboziBundle\Form;
 
+use Override;
+use ReturnTypeWillChange;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Form\Constraints\MoneyRange;
 use Symfony\Component\Form\AbstractType;
@@ -29,9 +32,18 @@ class ZboziProductFormType extends AbstractType
     }
 
     /**
+     * @param string $bar
+     */
+    #[EntityLogIdentify(isLocalized: true)]
+    public function foo(string $bar): void
+    {
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

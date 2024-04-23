@@ -8,6 +8,7 @@ use Nette\Utils\Strings;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -166,9 +167,35 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     {
         do {
             $index = $tokens->getPrevNonWhitespace($index);
+
+            $index = $this->skipAttributes($tokens, $index);
         } while ($tokens[$index]->isGivenKind(
-            [T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT],
+            [T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT, T_ATTRIBUTE, CT::T_ATTRIBUTE_CLOSE],
         ));
+
+        return $index;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @param int $index
+     * @return int
+     */
+    public function skipAttributes(Tokens $tokens, int $index): int
+    {
+        if ($tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+            $depth = 1;
+
+            while ($depth > 0 && $index > 0) {
+                $index--;
+
+                if ($tokens[$index]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+                    $depth++;
+                } elseif ($tokens[$index]->isGivenKind(T_ATTRIBUTE)) {
+                    $depth--;
+                }
+            }
+        }
 
         return $index;
     }
@@ -191,7 +218,6 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     /**
      * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @param \PhpCsFixer\DocBlock\Line[] $newLines
-     * @param int|null $offset
      * @return string
      */
     protected function createDocContentFromDocTokenAndNewLines(Token $docToken, array $newLines): string
@@ -218,7 +244,11 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     {
         for ($i = $index; $i > 0; --$i) {
             if ($this->isWhitespaceWithNewline($tokens, $i)) {
-                return $i + 1;
+                if (!$tokens[$i - 1]->isGivenKind(CT::T_ATTRIBUTE_CLOSE)) {
+                    return $i + 1;
+                }
+
+                return $this->skipAttributes($tokens, $i - 1);
             }
         }
 

@@ -47,6 +47,8 @@ final class MissingReturnAnnotationFixerTest extends AbstractFixerTestCase
 
         yield [__DIR__ . '/fixed/fixed2.php', __DIR__ . '/wrong/wrong2.php'];
 
+        yield [__DIR__ . '/fixed/fixed3.php', __DIR__ . '/wrong/wrong3.php'];
+
         yield [__DIR__ . '/correct/correct.php'];
     }
 }

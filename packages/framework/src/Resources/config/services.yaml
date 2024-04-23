@@ -1066,3 +1066,9 @@ services:
     Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
         arguments:
             - '%gopay_config%'
+
+    Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator:
+        decorates: 'messenger.bus.default'
+        arguments:
+            $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            $messageBus: '@Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator.inner'
