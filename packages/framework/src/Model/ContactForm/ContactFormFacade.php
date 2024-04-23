@@ -31,13 +31,14 @@ class ContactFormFacade
      */
     public function sendMail(ContactFormData $contactFormData)
     {
+        $mainAdminMail = $this->mailSettingFacade->getMainAdminMail($this->domain->getId());
         $messageData = new MessageData(
-            $this->mailSettingFacade->getMainAdminMail($this->domain->getId()),
+            $mainAdminMail,
             null,
             $this->getMailBody($contactFormData),
             t('Contact form'),
-            $contactFormData->email,
-            $contactFormData->name,
+            $mainAdminMail,
+            $this->mailSettingFacade->getMainAdminMailName($this->domain->getId()),
         );
         $this->mailer->sendForDomain($messageData, $this->domain->getId());
     }
