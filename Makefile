@@ -46,13 +46,21 @@ run-acceptance-tests-base:
 run-acceptance-tests-actual:
 	$(call run_acceptance_tests,actual)
 
+IS_WSL := $(shell uname -r | grep -i microsoft)
+
+ifeq ($(IS_WSL),)
 get_ip = $(shell ifconfig | awk '/^[a-z0-9]+: /{iface=substr($$1, 1, length($$1)-1)} /status: active/{print iface}' | head -1 | xargs -I {} ifconfig {} | awk '/inet /{print $$2; exit}')
+else
+get_ip = $(shell awk '/nameserver / {print $$2; exit}' /etc/resolv.conf)
+endif
 
 define open_acceptance_tests
 	$(call prepare-data-for-acceptance-tests)
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
-	xhost + $(get_ip);
+	@if [ "$(IS_WSL)" = "" ]; then \
+		xhost + $(get_ip); \
+	fi
 	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress;
 	docker compose stop storefront-cypress
 	docker compose up -d storefront
