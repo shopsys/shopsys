@@ -28,10 +28,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
 
 const PickupPlacePopup = dynamic(
-    () =>
-        import('components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/PickupPlacePopup').then(
-            (component) => component.PickupPlacePopup,
-        ),
+    () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
     {
         ssr: false,
     },

@@ -18,9 +18,12 @@ import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup), {
-    ssr: false,
-});
+const ErrorPopup = dynamic(
+    () => import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+    {
+        ssr: false,
+    },
+);
 
 export const TransportAndPaymentContent: FC = () => {
     const router = useRouter();

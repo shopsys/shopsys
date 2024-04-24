@@ -1888,3 +1888,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   instead of having a local state and modifying some variable based on which a popup is displayed, use `updatePortalContent(<DisplayedComponent />)` to show and `updatePortalContent(null)` to hide the desired content
     -   `useErrorPopupVisibility` was renamed to `useErrorPopup`which now does not return anything but handles popup displaying
     -   cookie store is now initialized on the server and then synced on the client, which was necessary to have a value (`userIdentifier`) available immediately and then synced in all subsequent loads
+    -   all popup components should be moved inside `components/Blocks/Popup`

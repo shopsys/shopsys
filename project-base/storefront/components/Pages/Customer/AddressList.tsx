@@ -1,16 +1,22 @@
-import { ArrowIcon, PhoneIcon, RemoveIcon } from 'components/Basic/Icon/IconsSvg';
-import { Button } from 'components/Forms/Button/Button';
+import { PhoneIcon, RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
 
-const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
+const DeleteDeliveryAddressPopup = dynamic(
+    () =>
+        import('components/Blocks/Popup/DeleteDeliveryAddressPopup').then(
+            (component) => component.DeleteDeliveryAddressPopup,
+        ),
+    {
+        ssr: false,
+    },
+);
 
 type AddressListProps = {
     defaultDeliveryAddress: DeliveryAddressType | undefined;
@@ -18,7 +24,6 @@ type AddressListProps = {
 };
 
 export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deliveryAddresses }) => {
-    const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutationApi();
     const { t } = useTranslation();
@@ -30,7 +35,6 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
         }
 
         updatePortalContent(null);
-        setAddressToBeDeleted(undefined);
         const deleteDeliveryAddressResult = await deleteDeliveryAddress({ deliveryAddressUuid });
 
         if (deleteDeliveryAddressResult.error !== undefined) {
@@ -41,28 +45,11 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
         showSuccessMessage(t('Your delivery address has been deleted'));
     };
 
-    const openDeleteAddressPopup = () => {
+    const openDeleteAddressPopup = (addressToBeDeletedUuid: string) => {
         updatePortalContent(
-            <Popup className="w-11/12 lg:w-4/5 vl:w-auto">
-                <div className="flex flex-col">
-                    {t('Do you really want to delete this delivery address?')}
-                    <div className="mt-4 flex flex-row flex-nowrap justify-between">
-                        <Button
-                            onClick={() => {
-                                updatePortalContent(null);
-                                setAddressToBeDeleted(undefined);
-                            }}
-                        >
-                            <ArrowIcon className="relative mr-4 rotate-90 text-white" />
-                            {t('No')}
-                        </Button>
-                        <Button onClick={() => deleteItemHandler(addressToBeDeleted)}>
-                            {t('Yes')}
-                            <ArrowIcon className="relative ml-4 -rotate-90" />
-                        </Button>
-                    </div>
-                </div>
-            </Popup>,
+            <DeleteDeliveryAddressPopup
+                deleteDeliveryAddressHandler={() => deleteItemHandler(addressToBeDeletedUuid)}
+            />,
         );
     };
 
@@ -118,8 +105,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                     <RemoveIcon
                         className="w-7 shrink-0 cursor-pointer p-2 text-greyLight hover:text-red"
                         onClick={() => {
-                            setAddressToBeDeleted(address.uuid);
-                            openDeleteAddressPopup();
+                            openDeleteAddressPopup(address.uuid);
                         }}
                     />
                 </div>

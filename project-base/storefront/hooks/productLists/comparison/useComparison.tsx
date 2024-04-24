@@ -7,9 +7,7 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 
 const ProductComparePopup = dynamic(() =>
-    import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
-        (component) => component.ProductComparePopup,
-    ),
+    import('components/Blocks/Popup/ProductComparePopup').then((component) => component.ProductComparePopup),
 );
 
 export const useComparison = () => {

@@ -17,7 +17,9 @@ import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, us
 import { Transition } from 'react-transition-group';
 import { useSessionStore } from 'store/useSessionStore';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
+const ErrorPopup = dynamic(() =>
+    import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+);
 
 type TransportAndPaymentErrorsType = {
     promoCode: {

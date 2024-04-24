@@ -1,14 +1,23 @@
-import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { Image } from 'components/Basic/Image/Image';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
-import { Popup } from 'components/Layout/Popup/Popup';
 import { TIDs } from 'cypress/tids';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+
+const ProductVariantsAvailabilityPopup = dynamic(
+    () =>
+        import('components/Blocks/Popup/ProductVariantsAvailabilityPopup').then(
+            (component) => component.ProductVariantsAvailabilityPopup,
+        ),
+    {
+        ssr: false,
+    },
+);
 
 type ProductVariantsTableProps = {
     variants: MainVariantDetailFragmentApi['variants'];
@@ -45,9 +54,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         className="flex-1 cursor-pointer text-center lg:text-left"
                         onClick={() => {
                             updatePortalContent(
-                                <Popup className="w-11/12 max-w-2xl">
-                                    <ProductDetailAvailabilityList storeAvailabilities={variant.storeAvailabilities} />
-                                </Popup>,
+                                <ProductVariantsAvailabilityPopup storeAvailabilities={variant.storeAvailabilities} />,
                             );
                         }}
                     >

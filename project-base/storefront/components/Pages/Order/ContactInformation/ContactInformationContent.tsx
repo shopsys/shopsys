@@ -23,7 +23,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 
 const LoginPopup = dynamic(
-    () => import('components/Blocks/Login/LoginPopup').then((component) => component.LoginPopup),
+    () => import('components/Blocks/Popup/LoginPopup').then((component) => component.LoginPopup),
     {
         ssr: false,
     },
