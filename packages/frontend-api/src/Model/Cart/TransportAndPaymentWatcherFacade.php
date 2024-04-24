@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
@@ -42,7 +41,6 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
@@ -56,7 +54,6 @@ class TransportAndPaymentWatcherFacade
         protected readonly OrderProcessor $orderProcessor,
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly OrderInputFactory $orderInputFactory,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -74,12 +71,10 @@ class TransportAndPaymentWatcherFacade
         $domainId = $this->domain->getId();
 
         $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getCurrentDomainConfig(),
-            $this->currentCustomerUser->findCurrentCustomerUser(),
         );
 
         $productsPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]->subtract($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);

@@ -121,9 +121,10 @@ class OrderDataFixture
         $transport = $this->getRandomTransport();
         $payment = $this->getRandomPayment();
 
-        $orderInput = $this->orderInputFactory->create();
+        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById($orderData->domainId));
         $orderInput->setTransport($transport);
         $orderInput->setPayment($payment);
+        $orderInput->setCustomerUser($customerUser);
 
         foreach ($quantifiedProducts as $quantifiedProduct) {
             $orderInput->addProduct(
@@ -135,8 +136,6 @@ class OrderDataFixture
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getDomainConfigById($orderData->domainId),
-            $customerUser,
         );
 
         $this->createOrderFacade->createOrder($orderData, $customerUser);

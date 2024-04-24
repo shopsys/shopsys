@@ -36,17 +36,14 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
     ): OrderProcessingData {
         $orderData = $orderProcessingData->orderData;
 
-        $locale = $orderProcessingData->domainConfig->getLocale();
-        $domainId = $orderProcessingData->domainConfig->getId();
-
         foreach ($orderProcessingData->orderInput->getQuantifiedProducts() as $quantifiedProduct) {
             $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
                 $quantifiedProduct,
-                $domainId,
-                $orderProcessingData->customerUser,
+                $orderProcessingData->getDomainId(),
+                $orderProcessingData->orderInput->getCustomerUser(),
             );
 
-            $orderItemData = $this->createProductOrderItem($quantifiedItemPrice, $quantifiedProduct, $locale);
+            $orderItemData = $this->createProductOrderItem($quantifiedItemPrice, $quantifiedProduct, $orderProcessingData->getDomainLocale());
             $orderData->addItem($orderItemData);
 
             $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItem::TYPE_PRODUCT);

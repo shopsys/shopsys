@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
@@ -22,7 +21,6 @@ class CartTransportDataFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
@@ -32,7 +30,6 @@ class CartTransportDataFactory
     public function __construct(
         protected readonly Domain $domain,
         protected readonly TransportFacade $transportFacade,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly OrderProcessor $orderProcessor,
@@ -72,17 +69,13 @@ class CartTransportDataFactory
      */
     protected function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
     {
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
         $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getDomainConfigById($domainId));
         $orderInput->setTransport($transport);
 
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getDomainConfigById($domainId),
-            $customerUser,
         );
 
         return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT]->getPriceWithVat();

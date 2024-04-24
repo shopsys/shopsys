@@ -269,7 +269,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $transport = $this->transportRepository->getById(3);
         $payment = $this->paymentRepository->getById(1);
 
-        $orderInput = $this->orderInputFactory->create();
+        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
         $orderInput->addProduct($product, 1);
         $orderInput->setTransport($transport);
         $orderInput->setPayment($payment);
@@ -303,8 +303,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID),
-            null,
         );
 
         return $this->createOrderFacade->createOrder($orderData, null);

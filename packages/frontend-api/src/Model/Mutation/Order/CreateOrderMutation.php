@@ -99,13 +99,11 @@ class CreateOrderMutation extends AbstractMutation
             );
         }
 
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
 
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getCurrentDomainConfig(),
-            $customerUser,
         );
 
         $order = $this->createOrderFacade->createOrder($orderData, $customerUser);

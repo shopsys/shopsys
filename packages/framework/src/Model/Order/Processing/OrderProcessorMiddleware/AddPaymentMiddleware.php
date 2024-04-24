@@ -42,7 +42,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
             return $orderProcessingStack->processNext($orderProcessingData);
         }
 
-        $domainId = $orderProcessingData->domainConfig->getId();
+        $domainId = $orderProcessingData->getDomainId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
@@ -58,7 +58,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $orderItemData->totalPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
         $orderItemData->totalPriceWithVat = $paymentPrice->getPriceWithVat();
         $orderItemData->vatPercent = $payment->getPaymentDomain($domainId)->getVat()->getPercent();
-        $orderItemData->name = $payment->getName($orderProcessingData->domainConfig->getLocale());
+        $orderItemData->name = $payment->getName($orderProcessingData->getDomainLocale());
         $orderItemData->quantity = 1;
 
         $orderData = $orderProcessingData->orderData;

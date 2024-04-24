@@ -118,18 +118,13 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentPaymentPrice($payment);
         }
 
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
         $orderInput->setPayment($payment);
         $orderData = $this->orderDataFactory->create();
 
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getCurrentDomainConfig(),
-            $customerUser,
-            null,
-            null,
-            $cart->getFirstAppliedPromoCode(),
         );
 
         return $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT];
@@ -173,18 +168,13 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentTransportPrice($transport);
         }
 
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
         $orderInput->setTransport($transport);
         $orderData = $this->orderDataFactory->create();
 
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getCurrentDomainConfig(),
-            $customerUser,
-            null,
-            null,
-            $cart->getFirstAppliedPromoCode(),
         );
 
         return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT];

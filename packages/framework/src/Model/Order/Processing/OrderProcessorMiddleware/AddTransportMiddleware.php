@@ -40,7 +40,7 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
             return $orderProcessingStack->processNext($orderProcessingData);
         }
 
-        $domainId = $orderProcessingData->domainConfig->getId();
+        $domainId = $orderProcessingData->getDomainId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $transportPrice = $this->transportPriceCalculation->calculatePrice(
@@ -56,7 +56,7 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         $orderItemData->totalPriceWithoutVat = $transportPrice->getPriceWithoutVat();
         $orderItemData->totalPriceWithVat = $transportPrice->getPriceWithVat();
         $orderItemData->vatPercent = $transport->getTransportDomain($domainId)->getVat()->getPercent();
-        $orderItemData->name = $transport->getName($orderProcessingData->domainConfig->getLocale());
+        $orderItemData->name = $transport->getName($orderProcessingData->getDomainLocale());
         $orderItemData->quantity = 1;
 
         $orderData = $orderProcessingData->orderData;

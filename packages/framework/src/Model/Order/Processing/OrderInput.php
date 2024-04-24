@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -21,6 +23,8 @@ class OrderInput
 
     protected ?Payment $payment = null;
 
+    protected ?CustomerUser $customerUser = null;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
@@ -30,6 +34,14 @@ class OrderInput
      * @var array<int, mixed>
      */
     protected array $additionalData = [];
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     */
+    public function __construct(
+        protected readonly DomainConfig $domainConfig,
+    ) {
+    }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
@@ -112,5 +124,29 @@ class OrderInput
     public function getPromoCodes(): array
     {
         return $this->promoCodes;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     */
+    public function getCustomerUser(): ?CustomerUser
+    {
+        return $this->customerUser;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     */
+    public function setCustomerUser(?CustomerUser $customerUser): void
+    {
+        $this->customerUser = $customerUser;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+     */
+    public function getDomainConfig(): DomainConfig
+    {
+        return $this->domainConfig;
     }
 }

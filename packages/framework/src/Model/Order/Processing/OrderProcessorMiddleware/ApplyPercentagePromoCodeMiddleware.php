@@ -84,7 +84,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
                     $appliedPromoCode,
                     $promoCodeLimit,
                     $productItem,
-                    $orderProcessingData->domainConfig,
+                    $orderProcessingData->getDomainConfig(),
                 );
 
                 if ($discountOrderItemData === null) {

@@ -77,16 +77,12 @@ class TransportValidationFacade
      */
     public function checkTransportPrice(Transport $transport, Cart $cart): void
     {
-        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
         $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
         $orderInput->setTransport($transport);
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getCurrentDomainConfig(),
-            $currentCustomerUser,
         );
 
         $calculatedTransportPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT];

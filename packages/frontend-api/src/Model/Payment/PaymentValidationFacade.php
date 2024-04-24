@@ -45,16 +45,12 @@ class PaymentValidationFacade
      */
     public function checkPaymentPrice(Payment $payment, Cart $cart): void
     {
-        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
         $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart);
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
         $orderInput->setPayment($payment);
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getCurrentDomainConfig(),
-            $currentCustomerUser,
         );
 
         $calculatedPaymentPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT];

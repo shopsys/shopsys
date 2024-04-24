@@ -45,7 +45,7 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
             try {
                 $store = $this->storeFacade->getByUuidAndDomainId(
                     $pickupPlaceIdentifier,
-                    $orderProcessingData->domainConfig->getId(),
+                    $orderProcessingData->getDomainId(),
                 );
 
                 // $orderData->getItemsByType(OrderItem::TYPE_TRANSPORT)[0]->name .= ' ' . $store->getName();

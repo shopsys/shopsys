@@ -795,9 +795,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $transport = $this->getReference($transportReferenceName, Transport::class);
         $payment = $this->getReference($paymentReferenceName, Payment::class);
 
-        $orderInput = $this->orderInputFactory->create();
+        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById($orderData->domainId));
         $orderInput->setTransport($transport);
         $orderInput->setPayment($payment);
+        $orderInput->setCustomerUser($customerUser);
 
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName, Product::class);
@@ -811,8 +812,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
-            $this->domain->getDomainConfigById($orderData->domainId),
-            $customerUser,
         );
 
         $order = $this->createOrderFacade->createOrder($orderData, $customerUser);
