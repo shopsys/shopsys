@@ -96,10 +96,6 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     productRefs={productElementRefs}
                     products={products}
                     swipeHandlers={handlers}
-                    className={twJoin([
-                        "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] [&::-webkit-scrollbar]:hidden",
-                        !isWithSimpleCards && 'vl:auto-cols-[25%]',
-                    ])}
                 />
             </div>
         </div>
