@@ -5,14 +5,14 @@ const LAST_VISITED_MAX_ITEMS = 10;
 
 export const useLastVisitedProductView = (visitedProduct: string) => {
     const lastVisitedProductsCatnums = useCookiesStore((state) => state.lastVisitedProductsCatnums);
-    const setCookiesStoreStateOnClient = useCookiesStore((state) => state.setCookiesStoreStateOnClient);
+    const setCookiesStoreState = useCookiesStore((state) => state.setCookiesStoreState);
 
     useEffect(() => {
         const newLastVisitedProductsCatnums = Array.from(
             new Set([visitedProduct, ...(lastVisitedProductsCatnums || [])]),
         );
 
-        setCookiesStoreStateOnClient({
+        setCookiesStoreState({
             lastVisitedProductsCatnums: newLastVisitedProductsCatnums.slice(0, LAST_VISITED_MAX_ITEMS),
         });
     }, []);

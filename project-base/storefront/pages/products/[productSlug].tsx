@@ -13,14 +13,12 @@ import {
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { getCookiesStoreStateFromContext } from 'helpers/cookies/cookiesStoreUtils';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { createCookiesStoreOnServer } from 'store/useCookiesStore';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
@@ -60,7 +58,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, ssrExchange, t }) =>
+    ({ redisClient, domainConfig, ssrExchange, t, cookiesStoreState }) =>
         async (context) => {
             const client = createClient({
                 t,
@@ -111,9 +109,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                                   query: RecommendedProductsQueryDocumentApi,
                                   variables: {
                                       itemUuids: [productResponse.data.product.uuid],
-                                      userIdentifier: createCookiesStoreOnServer(
-                                          getCookiesStoreStateFromContext(context),
-                                      ).getState().userIdentifier,
+                                      userIdentifier: cookiesStoreState.userIdentifier,
                                       recommendationType: RecommendationTypeApi.ItemDetailApi,
                                       limit: 10,
                                   },

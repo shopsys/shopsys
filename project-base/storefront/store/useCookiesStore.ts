@@ -1,6 +1,5 @@
 import { CookiesStoreContext } from 'components/providers/CookiesStoreProvider';
 import { useContext } from 'react';
-import { v4 as uuidV4 } from 'uuid';
 import { useStore } from 'zustand';
 import { createStore } from 'zustand/vanilla';
 
@@ -9,44 +8,21 @@ export type CookiesStoreState = {
     userIdentifier: string;
 };
 
-export type CookiesStoreActions = {
-    setCookiesStoreStateOnClient: (value: Partial<CookiesStoreState>) => void;
+type CookiesStoreActions = {
+    setCookiesStoreState: (value: Partial<CookiesStoreState>) => void;
 };
 
-export type CookiesStoreOnClient = CookiesStoreState & CookiesStoreActions;
-export type CookiesStoreOnServer = CookiesStoreState;
-
-const getDefaultInitState = (): CookiesStoreState => ({
-    lastVisitedProductsCatnums: null,
-    userIdentifier: uuidV4(),
-});
+export type CookiesStore = CookiesStoreState & CookiesStoreActions;
 
 export const createCookiesStore = (cookieStoreFromServer: CookiesStoreState) =>
-    createStore<CookiesStoreOnClient>()((set) => ({
+    createStore<CookiesStore>()((set) => ({
         ...cookieStoreFromServer,
-        setCookiesStoreStateOnClient: (value) => {
+        setCookiesStoreState: (value) => {
             set((state) => ({ ...state, ...value }));
         },
     }));
 
-export const createCookiesStoreOnServer = (cookieStoreStateFromContext: string | null) => {
-    let initState = getDefaultInitState();
-
-    if (cookieStoreStateFromContext) {
-        initState = JSON.parse(cookieStoreStateFromContext);
-    }
-
-    /**
-     * This cannot contain functions or non-serializable properties
-     * If you want to include such things, you have to manually
-     * serialize it before returning from getServerSideProps
-     */
-    return createStore<CookiesStoreOnServer>()(() => ({
-        ...initState,
-    }));
-};
-
-export const useCookiesStore = <T>(selector: (store: CookiesStoreOnClient) => T): T => {
+export const useCookiesStore = <T>(selector: (store: CookiesStore) => T): T => {
     const cookiesStoreContext = useContext(CookiesStoreContext);
 
     if (!cookiesStoreContext) {

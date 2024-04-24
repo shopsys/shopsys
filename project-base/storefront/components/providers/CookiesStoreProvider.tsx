@@ -1,8 +1,8 @@
 import { createContext, useRef } from 'react';
-import { CookiesStoreOnClient, CookiesStoreState, createCookiesStore } from 'store/useCookiesStore';
+import { CookiesStore, CookiesStoreState, createCookiesStore } from 'store/useCookiesStore';
 import { type StoreApi } from 'zustand';
 
-export const CookiesStoreContext = createContext<StoreApi<CookiesStoreOnClient> | null>(null);
+export const CookiesStoreContext = createContext<StoreApi<CookiesStore> | null>(null);
 
 type CookiesStoreProviderProps = {
     cookieStoreStateFromServer: CookiesStoreState;
@@ -12,7 +12,7 @@ export const CookiesStoreProvider: FC<CookiesStoreProviderProps> = ({
     children,
     cookieStoreStateFromServer: cookieStoreFromServer,
 }) => {
-    const storeRef = useRef<StoreApi<CookiesStoreOnClient>>(createCookiesStore(cookieStoreFromServer));
+    const storeRef = useRef<StoreApi<CookiesStore>>(createCookiesStore(cookieStoreFromServer));
 
     return <CookiesStoreContext.Provider value={storeRef.current}>{children}</CookiesStoreContext.Provider>;
 };

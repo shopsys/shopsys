@@ -21,13 +21,11 @@ import {
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
-import { getCookiesStoreStateFromContext } from 'helpers/cookies/cookiesStoreUtils';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { createCookiesStoreOnServer } from 'store/useCookiesStore';
 
 const RecommendedProducts = dynamic(() =>
     import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
@@ -80,7 +78,7 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, t }) =>
+    ({ redisClient, domainConfig, t, cookiesStoreState }) =>
         async (context) =>
             initServerSideProps<BlogArticlesQueryVariablesApi | RecommendedProductsQueryVariablesApi>({
                 context,
@@ -98,9 +96,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                                   query: RecommendedProductsQueryDocumentApi,
                                   variables: {
                                       itemUuids: [],
-                                      userIdentifier: createCookiesStoreOnServer(
-                                          getCookiesStoreStateFromContext(context),
-                                      ).getState().userIdentifier,
+                                      userIdentifier: cookiesStoreState.userIdentifier,
                                       recommendationType: RecommendationTypeApi.PersonalizedApi,
                                       limit: 10,
                                   },
