@@ -429,7 +429,7 @@ security:
         - { path: ^/%admin_url%/constant/delete, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
         - { path: ^/%admin_url%/constant/list/, roles: ROLE_LANGUAGE_CONSTANTS_VIEW }
         # transfers
-        - { path: ^/%admin_url%/transfer/list/, roles: ROLE_TRANSFER_VIEW }
+        - { path: ^/%admin_url%/transfer/issue/list/, roles: ROLE_TRANSFER_VIEW }
         # special paths for file manager in wysiwyg, product picker, grid, domain selector, login as user.
         - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/_grid/save-form/, roles: ROLE_ALL }

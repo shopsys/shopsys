@@ -31,9 +31,6 @@ export type TypeOpeningHoursFragment = { __typename?: 'OpeningHours', isOpen: bo
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

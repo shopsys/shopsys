@@ -115,6 +115,12 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $rolesChangedAt;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $transferIssuesLastSeenDateTime;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      */
     public function __construct(AdministratorData $administratorData)
@@ -125,6 +131,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->multidomainLoginToken = '';
         $this->multidomainLoginTokenExpiration = new DateTime();
         $this->roles = new ArrayCollection();
+        $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
         $this->setData($administratorData);
     }
 
@@ -445,5 +452,21 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         );
 
         throw new MandatoryAdministratorRoleIsMissingException($message);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTransferIssuesLastSeenDateTime()
+    {
+        return $this->transferIssuesLastSeenDateTime;
+    }
+
+    /**
+     * @param \DateTime $transferIssuesLastSeenDateTime
+     */
+    public function setTransferIssuesLastSeenDateTime($transferIssuesLastSeenDateTime): void
+    {
+        $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
     }
 }

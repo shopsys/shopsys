@@ -40,22 +40,28 @@ msgstr ""
 msgid "Payment cannot be changed"
 msgstr ""
 
+msgid "Payment must be set in cart before sending the order"
+msgstr ""
+
+msgid "Payment with provided UUID is not available"
+msgstr ""
+
 msgid "Payment {{ paymentUuid }} cannot be used with SWIFT {{ swift }}"
 msgstr ""
 
 msgid "Payment {{ paymentUuid }} is not available for order {{ orderUuid }}"
 msgstr ""
 
-msgid "Payment {{ uuid }} doesn't exist"
+msgid "Pickup place with provided UUID is not available"
+msgstr ""
+
+msgid "Please check Tax number format"
 msgstr ""
 
 msgid "Please choose a valid combination of transport and payment"
 msgstr ""
 
 msgid "Please choose country"
-msgstr ""
-
-msgid "Please enter at least one product"
 msgstr ""
 
 msgid "Please enter city"
@@ -106,19 +112,34 @@ msgstr ""
 msgid "Please enter zip code"
 msgstr ""
 
-msgid "Price for payment {{ uuid }} has changed"
+msgid "Please fill in numbers only"
 msgstr ""
 
-msgid "Price for product {{ uuid }} has changed"
+msgid "Promo code is already applied in the current cart."
 msgstr ""
 
-msgid "Price for transport {{ uuid }} has changed"
+msgid "Promo code is available for registered customers only."
 msgstr ""
 
-msgid "Product {{ uuid }} does not have any selling price"
+msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
 msgstr ""
 
-msgid "Product {{ uuid }} no longer available or doesn't exist"
+msgid "Selected payment price has changed"
+msgstr ""
+
+msgid "Selected pickup place is not available"
+msgstr ""
+
+msgid "Selected transport is not available"
+msgstr ""
+
+msgid "Selected transport needs to have pickup place identifier set"
+msgstr ""
+
+msgid "Selected transport price has changed"
+msgstr ""
+
+msgid "Selected transport weight limit has been exceeded"
 msgstr ""
 
 msgid "Street name cannot be longer than {{ limit }} characters"
@@ -130,10 +151,37 @@ msgstr ""
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "The payment is not allowed in combination with already selected transport"
+msgstr ""
+
+msgid "The promo code can only be used for a higher total price."
+msgstr ""
+
+msgid "The promo code is no longer valid. Check it, please."
+msgstr ""
+
+msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
+msgstr ""
+
+msgid "The promo code is not valid or it has been already used. Check it, please."
+msgstr ""
+
+msgid "The promo code is not valid yet. Check it, please."
+msgstr ""
+
+msgid "The transport is not allowed in combination with already selected payment"
+msgstr ""
+
+msgid "There are no products in the cart"
+msgstr ""
+
 msgid "This email is already registered"
 msgstr ""
 
-msgid "Transport {{ uuid }} doesn't exist"
+msgid "Transport must be set in cart before sending the order"
+msgstr ""
+
+msgid "Transport with provided UUID is not available"
 msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"

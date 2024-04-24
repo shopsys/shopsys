@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData as BaseOrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory as BaseOrderItemDataFactory;
 
@@ -13,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory as BaseOrderIt
  * @method addFieldsByOrderItemType(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method bool isUsingPriceCalculation(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  * @method \App\Model\Order\Item\OrderItemData createFromOrderItem(\App\Model\Order\Item\OrderItem $orderItem)
+ * @method fillFromOrderItem(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Item\OrderItem $orderItem)
  */
 class OrderItemDataFactory extends BaseOrderItemDataFactory
 {
@@ -22,16 +22,5 @@ class OrderItemDataFactory extends BaseOrderItemDataFactory
     protected function createInstance(): BaseOrderItemData
     {
         return new OrderItemData();
-    }
-
-    /**
-     * @param \App\Model\Order\Item\OrderItemData $orderItemData
-     * @param \App\Model\Order\Item\OrderItem $orderItem
-     */
-    protected function fillFromOrderItem(BaseOrderItemData $orderItemData, BaseOrderItem $orderItem): void
-    {
-        parent::fillFromOrderItem($orderItemData, $orderItem);
-
-        $orderItemData->promoCodeIdentifier = $orderItem->getPromoCodeIdentifier();
     }
 }

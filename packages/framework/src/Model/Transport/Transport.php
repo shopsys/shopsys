@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 
 /**
  * @ORM\Table(name="transports")
@@ -93,6 +94,25 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $daysUntilDelivery;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Type\TransportType")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $transportType;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $maxWeight;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $trackingUrl;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
     public function __construct(TransportData $transportData)
@@ -124,6 +144,9 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
+        $this->transportType = $transportData->transportType;
+        $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
+        $this->trackingUrl = $transportData->trackingUrl;
         $this->setTranslations($transportData);
     }
 
@@ -142,6 +165,10 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
         foreach ($transportData->instructions as $locale => $instructions) {
             $this->translation($locale)->setInstructions($instructions);
+        }
+
+        foreach ($transportData->trackingInstructions as $locale => $trackingInstruction) {
+            $this->translation($locale)->setTrackingInstruction($trackingInstruction);
         }
     }
 
@@ -402,5 +429,54 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getDaysUntilDelivery()
     {
         return $this->daysUntilDelivery;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
+     */
+    public function getTransportType()
+    {
+        return $this->transportType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPersonalPickup(): bool
+    {
+        return $this->transportType->getCode() === TransportType::TYPE_PERSONAL_PICKUP;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPacketery(): bool
+    {
+        return $this->transportType->getCode() === TransportType::TYPE_PACKETERY;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMaxWeight()
+    {
+        return $this->maxWeight;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getTrackingUrl()
+    {
+        return $this->trackingUrl;
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getTrackingInstruction($locale = null)
+    {
+        return $this->translation($locale)->getTrackingInstruction();
     }
 }

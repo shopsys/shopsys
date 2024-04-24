@@ -1,11 +1,4 @@
 RemovePromoCodeFromCartInput:
     type: input-object
-    config:
-        fields:
-            cartUuid:
-                type: "Uuid"
-                defaultValue: null
-                description: "Cart identifier or null if customer is logged in"
-            promoCode:
-                type: "String!"
-                description: "Promo code to be removed"
+    inherits:
+        - 'RemovePromoCodeFromCartInputDecorator'

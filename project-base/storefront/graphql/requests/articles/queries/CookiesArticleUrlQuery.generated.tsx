@@ -36,9 +36,6 @@ export type TypeCookiesArticleUrlQuery = { __typename?: 'Query', cookiesArticle:
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

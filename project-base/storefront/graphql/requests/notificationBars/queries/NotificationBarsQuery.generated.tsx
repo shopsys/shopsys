@@ -37,9 +37,6 @@ export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Arr
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

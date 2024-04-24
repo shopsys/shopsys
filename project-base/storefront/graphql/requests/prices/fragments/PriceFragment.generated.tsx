@@ -31,9 +31,6 @@ export type TypePriceFragment = { __typename: 'Price', priceWithVat: string, pri
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

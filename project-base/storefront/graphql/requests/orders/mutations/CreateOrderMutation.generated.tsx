@@ -64,9 +64,6 @@ export type TypeCreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { 
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

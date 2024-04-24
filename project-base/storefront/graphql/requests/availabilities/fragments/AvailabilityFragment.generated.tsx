@@ -31,9 +31,6 @@ export type TypeAvailabilityFragment = { __typename: 'Availability', name: strin
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

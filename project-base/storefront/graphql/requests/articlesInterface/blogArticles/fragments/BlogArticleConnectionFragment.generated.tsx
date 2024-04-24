@@ -33,9 +33,6 @@ export type TypeBlogArticleConnectionFragment = { __typename: 'BlogArticleConnec
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

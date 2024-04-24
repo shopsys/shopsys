@@ -28,9 +28,6 @@ msgstr ""
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Flag \"{{ flagName }}\" is selected multiple times."
-msgstr ""
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
@@ -67,37 +64,19 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr ""
 
-msgid "Payment must be set in cart before sending the order"
-msgstr ""
-
-msgid "Payment with provided UUID is not available"
-msgstr ""
-
-msgid "Pickup place with provided UUID is not available"
-msgstr ""
-
 msgid "Please check Tax number format"
 msgstr ""
 
 msgid "Please choose country"
 msgstr ""
 
-msgid "Please choose flag"
-msgstr ""
-
 msgid "Please choose image"
-msgstr ""
-
-msgid "Please choose type of limitation"
 msgstr ""
 
 msgid "Please enter GTM ID"
 msgstr ""
 
 msgid "Please enter article name"
-msgstr ""
-
-msgid "Please enter at least one discount limit"
 msgstr ""
 
 msgid "Please enter city"
@@ -130,9 +109,6 @@ msgstr ""
 msgid "Please enter last name"
 msgstr ""
 
-msgid "Please enter limit from"
-msgstr ""
-
 msgid "Please enter link URL"
 msgstr ""
 
@@ -154,9 +130,6 @@ msgstr ""
 msgid "Please enter password"
 msgstr ""
 
-msgid "Please enter promo code"
-msgstr ""
-
 msgid "Please enter street"
 msgstr ""
 
@@ -164,15 +137,6 @@ msgid "Please enter telephone number"
 msgstr ""
 
 msgid "Please enter the message"
-msgstr ""
-
-msgid "Please enter the positive value."
-msgstr ""
-
-msgid "Please enter the quantity."
-msgstr ""
-
-msgid "Please enter the whole number."
 msgstr ""
 
 msgid "Please enter valid email"
@@ -214,58 +178,10 @@ msgstr ""
 msgid "Product with entered catalog number already exists"
 msgstr ""
 
-msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
-msgstr ""
-
-msgid "Promo code \"%promoCode%\" is already applied."
-msgstr ""
-
-msgid "Promo code \"%promoCode%\" is available for registered customer user only."
-msgstr ""
-
-msgid "Promo code \"%promoCode%\" is no longer valid."
-msgstr ""
-
-msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
-msgstr ""
-
-msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
-msgstr ""
-
-msgid "Promo code \"%promoCode%\" is not yet valid."
-msgstr ""
-
-msgid "Promo code is already applied in the current cart."
-msgstr ""
-
-msgid "Promo code is available for registered customers only."
-msgstr ""
-
-msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
-msgstr ""
-
 msgid "Provided hash is not valid."
 msgstr ""
 
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
-msgstr ""
-
-msgid "Selected payment price has changed"
-msgstr ""
-
-msgid "Selected pickup place is not available"
-msgstr ""
-
-msgid "Selected transport is not available"
-msgstr ""
-
-msgid "Selected transport needs to have pickup place identifier set"
-msgstr ""
-
-msgid "Selected transport price has changed"
-msgstr ""
-
-msgid "Selected transport weight limit has been exceeded"
 msgstr ""
 
 msgid "Street and house number must contain a number"
@@ -289,43 +205,7 @@ msgstr ""
 msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr ""
 
-msgid "The identifier must contain two characters"
-msgstr ""
-
-msgid "The payment is not allowed in combination with already selected transport"
-msgstr ""
-
-msgid "The promo code can only be used for a higher total price."
-msgstr ""
-
-msgid "The promo code is no longer valid. Check it, please."
-msgstr ""
-
-msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
-msgstr ""
-
-msgid "The promo code is not valid or it has been already used. Check it, please."
-msgstr ""
-
-msgid "The promo code is not valid yet. Check it, please."
-msgstr ""
-
-msgid "The transport is not allowed in combination with already selected payment"
-msgstr ""
-
-msgid "There are no products in the cart"
-msgstr ""
-
 msgid "This email is already registered"
-msgstr ""
-
-msgid "Transport must be set in cart before sending the order"
-msgstr ""
-
-msgid "Transport type name cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Transport with provided UUID is not available"
 msgstr ""
 
 msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."

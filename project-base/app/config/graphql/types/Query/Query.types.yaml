@@ -13,8 +13,6 @@ Query:
         - 'ProductQuery'
         - 'SlugQuery'
         - 'NotificationBarQuery'
-        - 'CartQuery'
-        - 'TransportQuery'
         - 'CountryQuery'
         - 'LanguageConstantQuery'
         - 'SeoPageQuery'

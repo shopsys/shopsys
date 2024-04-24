@@ -7,6 +7,9 @@ namespace App\Controller\Admin;
 use Shopsys\FrameworkBundle\Controller\Admin\DomainController as BaseDomainController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
+ */
 class DomainController extends BaseDomainController
 {
     /**

@@ -31,9 +31,6 @@ export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: st
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

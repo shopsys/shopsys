@@ -31,9 +31,6 @@ export type TypeCountryFragment = { __typename: 'Country', name: string, code: s
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

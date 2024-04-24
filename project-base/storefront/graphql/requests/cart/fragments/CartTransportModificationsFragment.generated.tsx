@@ -31,9 +31,6 @@ export type TypeCartTransportModificationsFragment = { __typename: 'CartTranspor
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

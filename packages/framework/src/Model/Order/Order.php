@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -323,6 +324,18 @@ class Order
     protected $heurekaAgreement;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $pickupPlaceIdentifier;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $trackingNumber;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -362,6 +375,7 @@ class Order
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
+        $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
     }
 
     /**
@@ -475,6 +489,7 @@ class Order
         $this->postcode = $orderData->postcode;
         $this->country = $orderData->country;
         $this->note = $orderData->note;
+        $this->trackingNumber = $orderData->trackingNumber;
 
         $this->setCompanyInfo(
             $orderData->companyName,
@@ -1068,5 +1083,46 @@ class Order
     public function isHeurekaAgreement()
     {
         return $this->heurekaAgreement;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPickupPlaceIdentifier()
+    {
+        return $this->pickupPlaceIdentifier;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrackingNumber()
+    {
+        return $this->trackingNumber;
+    }
+
+    /**
+     * @param string $trackingNumber
+     */
+    public function setTrackingNumber($trackingNumber): void
+    {
+        $this->trackingNumber = $trackingNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrackingUrl(): ?string
+    {
+        $trackingUrl = $this->transport->getTrackingUrl();
+        $trackingNumber = $this->getTrackingNumber();
+
+        if ($trackingUrl === null || $trackingNumber === null) {
+            return null;
+        }
+
+        return strtr($trackingUrl, [
+            OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
+        ]);
     }
 }

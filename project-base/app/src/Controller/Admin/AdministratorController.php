@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * @property \App\Model\Administrator\AdministratorFacade $administratorFacade
  * @property \App\Model\Administrator\AdministratorDataFactory $administratorDataFactory
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class AdministratorController extends BaseAdministratorController
 {
@@ -184,10 +185,7 @@ class AdministratorController extends BaseAdministratorController
      */
     public function validateEmailCode(string $code, ExecutionContextInterface $context): void
     {
-        /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
-
-        if ($code !== $administrator->getEmailAuthCode()) {
+        if ($code !== $this->getCurrentAdministrator()->getEmailAuthCode()) {
             $context->addViolation(t('Entered code is not valid'));
         }
     }
@@ -198,10 +196,7 @@ class AdministratorController extends BaseAdministratorController
      */
     public function validateGoogleAuthCode(string $code, ExecutionContextInterface $context): void
     {
-        /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
-
-        if (!$this->administratorTwoFactorFacade->isGoogleAuthenticatorCodeValid($administrator, $code)) {
+        if (!$this->administratorTwoFactorFacade->isGoogleAuthenticatorCodeValid($this->getCurrentAdministrator(), $code)) {
             $context->addViolation(t('Entered code is not valid'));
         }
     }

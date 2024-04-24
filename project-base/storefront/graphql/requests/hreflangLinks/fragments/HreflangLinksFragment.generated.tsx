@@ -31,9 +31,6 @@ export type TypeHreflangLinksFragment = { __typename?: 'HreflangLink', hreflang:
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

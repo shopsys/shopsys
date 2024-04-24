@@ -151,8 +151,6 @@ class OrderController extends AdminBaseController
     {
         $domainFilterNamespace = 'orders';
 
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
         $advancedSearchForm = $this->advancedSearchOrderFacade->createAdvancedSearchOrderForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
 
@@ -210,7 +208,7 @@ class OrderController extends AdminBaseController
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Order/listGrid.html.twig');
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/list.html.twig', [
             'gridView' => $grid->createView(),

@@ -7,13 +7,13 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
-use App\FrontendApi\Model\Component\Constraints\TransportInCart;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportInCartValidationTest extends GraphQlTestCase

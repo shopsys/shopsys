@@ -41,9 +41,6 @@ export type TypeBlogCategoryArticles = { __typename?: 'Query', blogCategory: { _
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

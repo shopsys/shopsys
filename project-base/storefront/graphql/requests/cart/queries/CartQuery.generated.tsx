@@ -39,9 +39,6 @@ export type TypeCartQuery = { __typename?: 'Query', cart: { __typename: 'Cart', 
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

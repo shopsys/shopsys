@@ -1,0 +1,9 @@
+AddToCartResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            addProductResult:
+                type: "AddProductResult!"
+            cart:
+                type: "Cart!"

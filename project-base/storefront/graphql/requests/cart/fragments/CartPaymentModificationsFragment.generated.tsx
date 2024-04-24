@@ -31,9 +31,6 @@ export type TypeCartPaymentModificationsFragment = { __typename: 'CartPaymentMod
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

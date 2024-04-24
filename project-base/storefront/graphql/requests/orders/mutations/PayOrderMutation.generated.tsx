@@ -38,9 +38,6 @@ export type TypePayOrderMutation = { __typename?: 'Mutation', PayOrder: { __type
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

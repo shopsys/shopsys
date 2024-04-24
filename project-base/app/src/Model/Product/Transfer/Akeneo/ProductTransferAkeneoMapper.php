@@ -16,12 +16,12 @@ use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFaca
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface;
 
 class ProductTransferAkeneoMapper
 {
@@ -53,7 +53,7 @@ class ProductTransferAkeneoMapper
     /**
      * @param array $akeneoProductData
      * @param \App\Model\Product\Product|null $product
-     * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface $transferLogger
      * @return \App\Model\Product\ProductData
      */
     public function mapAkeneoProductDataToProductData(
@@ -136,7 +136,7 @@ class ProductTransferAkeneoMapper
     /**
      * @param array $akeneoProductData
      * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface $transferLogger
      */
     private function mapProductParameters(
         array $akeneoProductData,

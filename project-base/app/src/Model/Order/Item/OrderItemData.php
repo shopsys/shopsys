@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData as BaseOrderItemData;
 class OrderItemData extends BaseOrderItemData
 {
     /**
-     * @var string|null
-     */
-    public $promoCodeIdentifier;
-
-    /**
      * @var \App\Model\Order\Item\OrderItem|null
      */
     public $relatedOrderItem;

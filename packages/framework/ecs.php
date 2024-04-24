@@ -121,6 +121,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Migrations/Version20231124121921.php',
             __DIR__ . '/src/Model/Blog/Article/Elasticsearch/BlogArticleElasticsearchDataFetcher.php',
             __DIR__ . '/src/Model/Product/Elasticsearch/ProductExportRepository.php',
+            __DIR__ . '/src/Migrations/Version20240403091822.php',
         ],
         EmptyStatementSniff::class . '.DetectedCatch' => [
             __DIR__ . '/src/Component/Elasticsearch/Debug/ElasticsearchTracer.php',

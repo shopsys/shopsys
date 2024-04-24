@@ -36,10 +36,6 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType }
 
-    App\Form\Admin\OrderFormTypeExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType }
-
     App\Form\Admin\ProductFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType }
@@ -52,17 +48,9 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType }
 
-    App\Form\Admin\PromoCodeFormTypeExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType }
-
     App\Form\Admin\SliderItemFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType }
-
-    App\Form\Admin\TransportFormTypeExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType }
 
     App\Form\Type\CKEditorTypeExtension:
         tags:

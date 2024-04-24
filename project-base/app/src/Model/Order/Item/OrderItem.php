@@ -31,33 +31,11 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 class OrderItem extends BaseOrderItem
 {
     /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $promoCodeIdentifier;
-
-    /**
      * @var \App\Model\Order\Item\OrderItem|null
      * @ORM\OneToOne(targetEntity="App\Model\Order\Item\OrderItem")
      * @ORM\JoinColumn(name="related_order_item_id", referencedColumnName="id", nullable=true)
      */
     private $relatedOrderItem;
-
-    /**
-     * @return string|null
-     */
-    public function getPromoCodeIdentifier(): ?string
-    {
-        return $this->promoCodeIdentifier;
-    }
-
-    /**
-     * @param string|null $promoCodeIdentifier
-     */
-    public function setPromoCodeIdentifier(?string $promoCodeIdentifier): void
-    {
-        $this->promoCodeIdentifier = $promoCodeIdentifier;
-    }
 
     /**
      * @param \App\Model\Order\Item\OrderItem|null $relatedOrderItem
@@ -69,29 +47,5 @@ class OrderItem extends BaseOrderItem
         }
 
         $this->relatedOrderItem = $relatedOrderItem;
-    }
-
-    /**
-     * @return \App\Model\Order\Item\OrderItem|null
-     */
-    public function getRelatedCoupon(): ?self
-    {
-        if ($this->type !== self::TYPE_PRODUCT || $this->promoCodeIdentifier !== null) {
-            throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
-        }
-
-        return $this->relatedOrderItem;
-    }
-
-    /**
-     * @return \App\Model\Order\Item\OrderItem|null
-     */
-    public function getRelatedProduct(): ?self
-    {
-        if ($this->type !== self::TYPE_PRODUCT || $this->promoCodeIdentifier === null) {
-            throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
-        }
-
-        return $this->relatedOrderItem;
     }
 }

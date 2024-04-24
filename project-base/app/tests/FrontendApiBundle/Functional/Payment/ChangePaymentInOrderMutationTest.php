@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder;
+use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ChangePaymentInOrderMutationTest extends GraphQlTestCase
@@ -129,7 +129,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertSame(PaymentInOrder::UNAVAILABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
+        self::assertSame(PaymentInExistingOrder::UNAVAILABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
     }
 
     public function testChangePaymentInOrderValidationInvalidPaymentTransportCombination(): void
@@ -146,7 +146,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertSame(PaymentInOrder::UNAVAILABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
+        self::assertSame(PaymentInExistingOrder::UNAVAILABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
     }
 
     public function testChangePaymentInOrderValidationAlreadyPaidGoPayOrder(): void
@@ -169,7 +169,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertSame(PaymentInOrder::UNCHANGEABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
+        self::assertSame(PaymentInExistingOrder::UNCHANGEABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
     }
 
     public function testChangePaymentInOrderValidationNotGoPayOrder(): void
@@ -186,7 +186,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertSame(PaymentInOrder::UNCHANGEABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
+        self::assertSame(PaymentInExistingOrder::UNCHANGEABLE_PAYMENT_ERROR, $violations['input'][0]['code']);
     }
 
     public function testChangePaymentInOrderValidationNonExistingSwift(): void
@@ -222,6 +222,6 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertSame(PaymentInOrder::INVALID_PAYMENT_SWIFT_ERROR, $violations['input'][0]['code']);
+        self::assertSame(PaymentInExistingOrder::INVALID_PAYMENT_SWIFT_ERROR, $violations['input'][0]['code']);
     }
 }

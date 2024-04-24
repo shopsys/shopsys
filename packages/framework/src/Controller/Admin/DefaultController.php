@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
+use Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +41,7 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
         protected readonly StatisticsFacade $statisticsFacade,
@@ -53,6 +55,7 @@ class DefaultController extends AdminBaseController
         protected readonly CronFacade $cronFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+        protected readonly TransferIssueFacade $transferIssueFacade,
     ) {
     }
 
@@ -74,6 +77,7 @@ class DefaultController extends AdminBaseController
         $newOrdersInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts(
             $newOrdersCountByDayInLastTwoWeeks,
         );
+        $transferIssuesCount = $this->transferIssueFacade->getTransferIssuesCountFrom($this->getCurrentAdministrator()->getTransferIssuesLastSeenDateTime());
 
         $quickProductSearchData = new QuickSearchFormData();
         $quickProductSearchForm = $this->createForm(QuickSearchFormType::class, $quickProductSearchData, [
@@ -122,6 +126,7 @@ class DefaultController extends AdminBaseController
                 'newOrdersTrend' => $ordersTrend,
                 'ordersValue' => $currentValueOfOrders,
                 'ordersValueTrend' => $ordersValueTrend,
+                'transferIssuesCount' => $transferIssuesCount,
                 'cronGridViews' => $this->getCronGridViews(),
             ],
         );

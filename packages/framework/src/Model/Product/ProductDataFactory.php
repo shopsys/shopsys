@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
-class ProductDataFactory implements ProductDataFactoryInterface
+class ProductDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
@@ -200,6 +200,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
+        $productData->weight = $product->getWeight();
     }
 
     /**

@@ -33,9 +33,6 @@ export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name:
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

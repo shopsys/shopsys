@@ -38,9 +38,6 @@ export type TypeIsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustom
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

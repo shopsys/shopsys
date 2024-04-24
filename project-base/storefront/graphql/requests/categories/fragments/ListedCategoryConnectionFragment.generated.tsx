@@ -32,9 +32,6 @@ export type TypeListedCategoryConnectionFragment = { __typename: 'CategoryConnec
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

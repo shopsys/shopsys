@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
@@ -184,7 +184,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return \App\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
     private function findCartOfCurrentCustomer(): ?Cart
     {

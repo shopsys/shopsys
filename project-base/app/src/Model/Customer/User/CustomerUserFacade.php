@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
-use App\Component\String\HashGenerator;
 use App\Model\Administrator\Administrator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
@@ -60,7 +60,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \App\Component\String\HashGenerator $hashGenerator
+     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
         EntityManagerInterface $em,

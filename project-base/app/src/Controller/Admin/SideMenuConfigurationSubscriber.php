@@ -26,10 +26,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ConfigureMenuEvent::SIDE_MENU_CUSTOMERS => 'configureCustomersMenu',
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
-            ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
-            ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
             ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS => 'configureAdministratorMenu',
@@ -49,74 +46,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
      */
-    public function configureDashboardMenu(ConfigureMenuEvent $event)
-    {
-        $dashboardMenu = $event->getMenu();
-        $dashboardMenu->addChild('transferList', [
-            'route' => 'admin_transfer_list',
-            'display' => false,
-            'label' => t('Transfer issues overview'),
-        ]);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
-    public function configureCustomersMenu(ConfigureMenuEvent $event): void
-    {
-        $customersMenu = $event->getMenu();
-        $customersMenu->setUri(null);
-        $customersExtras = $customersMenu->getExtras();
-        unset($customersExtras['routes']);
-        $customersMenu->setExtras($customersExtras);
-
-        $customersMenu->addChild('customers_overview', [
-            'route' => 'admin_customer_list',
-            'label' => t('Customers overview'),
-        ]);
-        $customersMenu->addChild('newsletter', [
-            'route' => 'admin_newsletter_list',
-            'label' => t('Email newsletter'),
-        ]);
-
-        $promoCodeMenu = $customersMenu->addChild('promo_codes', [
-            'route' => 'admin_promocode_list',
-            'label' => t('Promo codes'),
-        ]);
-        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', [
-            'route' => 'admin_promocode_listmassgeneratebatch',
-            'display' => true,
-            'label' => t('Generated batches'),
-        ]);
-        $promoCodeMenu->addChild('promo_codes_new', [
-            'route' => 'admin_promocode_new',
-            'display' => false,
-            'label' => t('New promo code'),
-        ]);
-        $promoCodeMenu->addChild('promo_codes_edit', [
-            'route' => 'admin_promocode_edit',
-            'display' => false,
-            'label' => t('Editing promo code'),
-        ]);
-        $promoCodeMenu->addChild('promo_codes_newmassgenerate', [
-            'route' => 'admin_promocode_newmassgenerate',
-            'label' => t('Bulk creation of promo codes'),
-            'display' => false,
-        ]);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
-    public function configurePricingMenu(ConfigureMenuEvent $event): void
-    {
-        $pricingMenu = $event->getMenu();
-        $pricingMenu->removeChild('promo_codes');
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
     public function configureMarketingMenu(ConfigureMenuEvent $event): void
     {
         $marketingMenu = $event->getMenu();
@@ -126,7 +55,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $marketingMenu->removeChild('top_products');
         $marketingMenu->removeChild('top_categories');
         $marketingMenu->removeChild('feeds');
-        $marketingMenu->removeChild('newsletter');
 
         $homepageMenu = $marketingMenu->addChild('homepage', ['label' => t('Home page')]);
         $bannersMenu = $homepageMenu->addChild('banners', ['route' => 'admin_slider_list', 'label' => t('Banners')]);

@@ -79,6 +79,9 @@ msgstr ""
 msgid "First name of contact person cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Flag \"{{ flagName }}\" is selected multiple times."
+msgstr ""
+
 msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
@@ -163,10 +166,16 @@ msgstr ""
 msgid "Please choose default unit"
 msgstr ""
 
+msgid "Please choose flag"
+msgstr ""
+
 msgid "Please choose image"
 msgstr ""
 
 msgid "Please choose parameter"
+msgstr ""
+
+msgid "Please choose type of limitation"
 msgstr ""
 
 msgid "Please choose unit"
@@ -196,10 +205,10 @@ msgstr ""
 msgid "Please enter article name"
 msgstr ""
 
-msgid "Please enter city"
+msgid "Please enter at least one discount limit"
 msgstr ""
 
-msgid "Please enter code"
+msgid "Please enter city"
 msgstr ""
 
 msgid "Please enter company name"
@@ -271,6 +280,9 @@ msgstr ""
 msgid "Please enter last name of contact person"
 msgstr ""
 
+msgid "Please enter limit from"
+msgstr ""
+
 msgid "Please enter link"
 msgstr ""
 
@@ -310,6 +322,9 @@ msgstr ""
 msgid "Please enter pricing group name"
 msgstr ""
 
+msgid "Please enter promo code"
+msgstr ""
+
 msgid "Please enter quantity"
 msgstr ""
 
@@ -329,6 +344,15 @@ msgid "Please enter telephone number"
 msgstr ""
 
 msgid "Please enter the filename"
+msgstr ""
+
+msgid "Please enter the positive value."
+msgstr ""
+
+msgid "Please enter the quantity."
+msgstr ""
+
+msgid "Please enter the whole number."
 msgstr ""
 
 msgid "Please enter time"
@@ -382,7 +406,25 @@ msgstr ""
 msgid "Product parameters are duplicate."
 msgstr ""
 
-msgid "Promo code with this code already exists"
+msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
+msgstr ""
+
+msgid "Promo code \"%promoCode%\" is already applied."
+msgstr ""
+
+msgid "Promo code \"%promoCode%\" is available for registered customer user only."
+msgstr ""
+
+msgid "Promo code \"%promoCode%\" is no longer valid."
+msgstr ""
+
+msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
+msgstr ""
+
+msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
+msgstr ""
+
+msgid "Promo code \"%promoCode%\" is not yet valid."
 msgstr ""
 
 msgid "Quantity must be greater than {{ compared_value }}"
@@ -428,6 +470,9 @@ msgid "This field must be empty"
 msgstr ""
 
 msgid "This value is not a valid email address."
+msgstr ""
+
+msgid "Transport type name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Unit name cannot be longer than {{ limit }} characters"

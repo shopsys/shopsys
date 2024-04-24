@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Customer\User;
 
-use App\FrontendApi\Model\Cart\MergeCartFacade;
 use App\FrontendApi\Model\Order\OrderApiFacade;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
@@ -16,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation as BaseCustomerUserMutation;
@@ -48,7 +48,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
-     * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderFacade
      */
     public function __construct(

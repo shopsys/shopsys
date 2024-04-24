@@ -39,9 +39,6 @@ export type TypeRemoveProductFromListMutation = { __typename?: 'Mutation', Remov
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

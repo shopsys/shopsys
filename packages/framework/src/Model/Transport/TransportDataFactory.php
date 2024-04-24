@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade;
 
 class TransportDataFactory implements TransportDataFactoryInterface
 {
@@ -15,11 +17,13 @@ class TransportDataFactory implements TransportDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly TransportTypeFacade $transportTypeFacade,
     ) {
     }
 
@@ -51,6 +55,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
     protected function fillNew(TransportData $transportData): void
     {
         $transportData->daysUntilDelivery = 0;
+        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportType::TYPE_COMMON);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
@@ -62,6 +67,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
             $transportData->name[$locale] = null;
             $transportData->description[$locale] = null;
             $transportData->instructions[$locale] = null;
+            $transportData->trackingInstructions[$locale] = null;
         }
     }
 
@@ -86,6 +92,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $names = [];
         $descriptions = [];
         $instructions = [];
+        $trackingInstruction = [];
 
         /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation[] $translations */
         $translations = $transport->getTranslations();
@@ -94,11 +101,13 @@ class TransportDataFactory implements TransportDataFactoryInterface
             $names[$translate->getLocale()] = $translate->getName();
             $descriptions[$translate->getLocale()] = $translate->getDescription();
             $instructions[$translate->getLocale()] = $translate->getInstructions();
+            $trackingInstruction[$translate->getLocale()] = $translate->getTrackingInstruction();
         }
 
         $transportData->name = $names;
         $transportData->description = $descriptions;
         $transportData->instructions = $instructions;
+        $transportData->trackingInstructions = $trackingInstruction;
         $transportData->hidden = $transport->isHidden();
 
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -110,5 +119,8 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
         $transportData->payments = $transport->getPayments();
         $transportData->image = $this->imageUploadDataFactory->createFromEntityAndType($transport);
+        $transportData->transportType = $transport->getTransportType();
+        $transportData->maxWeight = $transport->getMaxWeight();
+        $transportData->trackingUrl = $transport->getTrackingUrl();
     }
 }

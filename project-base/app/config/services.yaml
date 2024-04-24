@@ -73,14 +73,6 @@ services:
             $imageUrlPrefix: '%shopsys.image_url_prefix%'
             $cache: '@image_cache'
 
-    App\Component\Packetery\PacketeryClient: ~
-
-    App\Component\Packetery\PacketeryConfig:
-        arguments:
-            $packeteryConfig: "%packetery_config%"
-
-    App\Component\Packetery\PacketeryRenderer: ~
-
     App\Component\Redis\RedisFacade:
         arguments:
             $allClients: !tagged snc_redis.client
@@ -182,12 +174,6 @@ services:
 
     App\Model\Order\Mail\OrderMail: ~
 
-    App\Model\Order\Preview\OrderPreviewCalculation: ~
-
-    App\Model\Order\PromoCode\ProductPromoCodeFiller: ~
-
-    App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
-
     App\Model\PersonalData\Mail\PersonalDataExportMail: ~
 
     App\Model\ProductFeed\Mergado\MergadoFeedInfo: ~
@@ -214,10 +200,6 @@ services:
     App\Model\Sitemap\SitemapListener:
         tags:
             - { name: 'kernel.event_subscriber', priority: 100 }
-
-    App\Model\Transfer\TransferLoggerFactory:
-        arguments:
-            - '@monolog.logger.cron'
 
     App\ProductFeed\MergadoFeed\MergadoFeed:
         tags:
@@ -358,9 +340,6 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\ProductController:
         class: 'App\Controller\Admin\ProductController'
 
-    Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
-        class: 'App\Controller\Admin\PromoCodeController'
-
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: App\Model\Administrator\AdministratorDataFactory
 
@@ -404,9 +383,6 @@ services:
         alias: App\Model\Cart\CartFacade
 
     Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade: ~
-
-    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
-        alias: App\Model\Cart\Watcher\CartWatcherFacade
 
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
         alias: App\Model\Category\CategoryDataFactory
@@ -510,17 +486,8 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderRepository:
         alias: App\Model\Order\OrderRepository
 
-    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation:
-        alias: App\Model\Order\Preview\OrderPreviewCalculation
-
-    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory:
-        alias: App\Model\Order\Preview\OrderPreviewFactory
-
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
         alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory:
-        alias: App\Model\Order\PromoCode\Grid\PromoCodeGridFactory
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
         alias: App\Model\Order\PromoCode\PromoCodeDataFactory
@@ -639,7 +606,7 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
         alias: App\Model\Product\ProductBreadcrumbGenerator
 
-    Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Product\ProductDataFactory:
         alias: App\Model\Product\ProductDataFactory
 
     Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider:
@@ -731,11 +698,6 @@ services:
 
     Shopsys\FrameworkBundle\Twig\LocalizationExtension:
         alias: App\Twig\LocalizationExtension
-
-    Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelationValidator:
-        class: App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelationValidator
-        tags:
-            - validator.constraint_validator
 
     Shopsys\FrontendApiBundle\Model\Category\CategoryRepository:
         alias: App\FrontendApi\Model\Category\CategoryRepository

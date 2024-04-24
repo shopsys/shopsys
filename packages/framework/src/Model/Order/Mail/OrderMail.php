@@ -36,6 +36,9 @@ class OrderMail implements MessageFactoryInterface
     public const VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
     public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
     public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
+    public const TRANSPORT_VARIABLE_TRACKING_NUMBER = '{tracking_number}';
+    public const TRANSPORT_VARIABLE_TRACKING_URL = '{tracking_url}';
+    public const VARIABLE_TRACKING_INSTRUCTIONS = '{tracking_instructions}';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -132,6 +135,7 @@ class OrderMail implements MessageFactoryInterface
             self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
             self::VARIABLE_TRANSPORT_INSTRUCTIONS => $transportInstructions,
             self::VARIABLE_PAYMENT_INSTRUCTIONS => $paymentInstructions,
+            self::VARIABLE_TRACKING_INSTRUCTIONS => $this->getTrackingInstructions($order),
         ];
     }
 
@@ -220,5 +224,29 @@ class OrderMail implements MessageFactoryInterface
     protected function getDomainLocaleByOrder(Order $order)
     {
         return $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException
+     * @return string|null
+     */
+    protected function getTrackingInstructions(Order $order): ?string
+    {
+        $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
+        $transport = $order->getTransportItem()->getTransport();
+
+        $trackingInstructions = $transport->getTrackingInstruction($orderDomainConfig->getLocale());
+        $trackingUrl = $order->getTrackingUrl();
+        $trackingNumber = $order->getTrackingNumber();
+
+        if ($trackingInstructions === null || $trackingUrl === null || $trackingNumber === null) {
+            return null;
+        }
+
+        return strtr($trackingInstructions, [
+            self::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
+            self::TRANSPORT_VARIABLE_TRACKING_URL => $trackingUrl,
+        ]);
     }
 }

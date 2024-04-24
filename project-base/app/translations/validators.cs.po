@@ -28,9 +28,6 @@ msgstr "Zadaný RGB Hex je v neplatném formátu. Platné formáty jsou #336699 
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
-msgid "Flag \"{{ flagName }}\" is selected multiple times."
-msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, např.: #3333ff"
 
@@ -67,38 +64,20 @@ msgstr "Heslo musí být delší alespoň {{ limit }} znaků dlouhé"
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
 
-msgid "Payment must be set in cart before sending the order"
-msgstr "Platba musí být vybrána před odesláním objednávky"
-
-msgid "Payment with provided UUID is not available"
-msgstr "Platba se zadaným UUID není dostupná"
-
-msgid "Pickup place with provided UUID is not available"
-msgstr "Odběrné místo se zadaným UUID není dostupné"
-
 msgid "Please check Tax number format"
 msgstr "Prosím zkontrolujte formát DIČ"
 
 msgid "Please choose country"
 msgstr "Prosím vyberte stát"
 
-msgid "Please choose flag"
-msgstr "Prosím vyberte příznak"
-
 msgid "Please choose image"
 msgstr "Vyberte prosím obrázek"
-
-msgid "Please choose type of limitation"
-msgstr "Prosím vyberte typ omezení"
 
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
 
 msgid "Please enter article name"
 msgstr "Vyplňte prosím název článku"
-
-msgid "Please enter at least one discount limit"
-msgstr "Vložte, prosím, alespoň jeden limit se slevou"
 
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
@@ -130,9 +109,6 @@ msgstr "Prosím vyplňte IČ"
 msgid "Please enter last name"
 msgstr "Vyplňte prosím příjmení"
 
-msgid "Please enter limit from"
-msgstr "Prosím vložte limit od"
-
 msgid "Please enter link URL"
 msgstr "Vyplňte prosím URL odkazu"
 
@@ -154,9 +130,6 @@ msgstr "Prosím vyplňte čísla a znak +"
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
 
-msgid "Please enter promo code"
-msgstr "Vyplňte prosím promo kód"
-
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 
@@ -165,15 +138,6 @@ msgstr "Vyplňte prosím telefonní číslo"
 
 msgid "Please enter the message"
 msgstr "Vyplňte prosím zprávu"
-
-msgid "Please enter the positive value."
-msgstr "Vyplňte prosím kladnou hodnotu."
-
-msgid "Please enter the quantity."
-msgstr "Vyplňte prosím množství."
-
-msgid "Please enter the whole number."
-msgstr "Zadejte prosím celé číslo."
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
@@ -214,59 +178,11 @@ msgstr "Suffix produktu nesmí být delší než {{ limit }} znaků"
 msgid "Product with entered catalog number already exists"
 msgstr "Produkt s tímto katalogovým číslem již existuje"
 
-msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
-msgstr "Slevový kupón \"%invalidPromoCode%\" není dostupný pro Vaši cenovou skupinu."
-
-msgid "Promo code \"%promoCode%\" is already applied."
-msgstr "Slevový kupón \"%promoCode%\" už byl uplatněn."
-
-msgid "Promo code \"%promoCode%\" is available for registered customer user only."
-msgstr "Slevový kupón \"%promoCode%\" je dostupný jen pro registrované uživatele."
-
-msgid "Promo code \"%promoCode%\" is no longer valid."
-msgstr "Slevový kupón \"%promoCode%\" už není platný."
-
-msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
-msgstr "Slevový kupón \"%promoCode%\" není možné uplatnit pro výši nákupu Vašeho košíku."
-
-msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
-msgstr "Slevový kupón \"%promoCode%\" není platný pro žádný produkt v košíku."
-
-msgid "Promo code \"%promoCode%\" is not yet valid."
-msgstr "Slevový kupón \"%promoCode%\" není ještě možné uplatnit."
-
-msgid "Promo code is already applied in the current cart."
-msgstr "Promo kód je již použit v aktuálním košíku."
-
-msgid "Promo code is available for registered customers only."
-msgstr "Promo kód je dostupný pouze přihlášeným uživatelům."
-
-msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
-msgstr "Promo kód není dostupný pro vaši cenovou skupinu. Možná jste se zapomněl přihlásit."
-
 msgid "Provided hash is not valid."
 msgstr "Zadaný hash není validní."
 
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
-
-msgid "Selected payment price has changed"
-msgstr "Cena vybrané dopravy se změnila"
-
-msgid "Selected pickup place is not available"
-msgstr "Vybrané odběrné místo není dostupné"
-
-msgid "Selected transport is not available"
-msgstr "Vybraná doprava není dostupná"
-
-msgid "Selected transport needs to have pickup place identifier set"
-msgstr "Pro vybranou dopravu je potřeba nastavit identifikátor odběrného místa"
-
-msgid "Selected transport price has changed"
-msgstr "Cena vybrané dopravy se změnila"
-
-msgid "Selected transport weight limit has been exceeded"
-msgstr "Váhový limit vybrané dopravy byl překročen"
 
 msgid "Street and house number must contain a number"
 msgstr "Ulice a číslo popisná musí obsahovat čísla"
@@ -289,44 +205,8 @@ msgstr "Telefonní číslo nesmí být delší než {{ limit }} znaků"
 msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
 
-msgid "The identifier must contain two characters"
-msgstr "Identifikátor musí obsahovat dva znaky"
-
-msgid "The payment is not allowed in combination with already selected transport"
-msgstr "Platba není povolena v kombinaci s již vybranou dopravou"
-
-msgid "The promo code can only be used for a higher total price."
-msgstr "Promo kód lze použít pouze pro vyšší celkovou cenu."
-
-msgid "The promo code is no longer valid. Check it, please."
-msgstr "Promo kód už není platný. Zkontrolujte jej, prosím."
-
-msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
-msgstr "Promo kód není použitelný s žádným produktem v košíku. Zkontrolujte jej, prosím."
-
-msgid "The promo code is not valid or it has been already used. Check it, please."
-msgstr "Promo kód není platný, nebo už byl využit. Zkontrolujte jej, prosím."
-
-msgid "The promo code is not valid yet. Check it, please."
-msgstr "Promo kód ještě není platný. Zkontrolujte jej, prosím."
-
-msgid "The transport is not allowed in combination with already selected payment"
-msgstr "Doprava není povolena v kombinaci s již vybranou platbou"
-
-msgid "There are no products in the cart"
-msgstr "V košíku nejsou žádné produkty"
-
 msgid "This email is already registered"
 msgstr "Tento email je již registrován"
-
-msgid "Transport must be set in cart before sending the order"
-msgstr "Doprava musí být vybrána před odesláním objednávky"
-
-msgid "Transport type name cannot be longer than {{ limit }} characters"
-msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"
-
-msgid "Transport with provided UUID is not available"
-msgstr "Doprava se zadaným UUID není dostupná"
 
 msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
 msgstr "Uploadovaný soubor je příliš velký ({{ size }} {{ suffix }}). Maximální velikost souboru je {{ limit }} {{ suffix }}."

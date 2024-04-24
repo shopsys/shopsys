@@ -1,0 +1,18 @@
+ChangeTransportInCartInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart: ~
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier or null if customer is logged in"
+            transportUuid:
+                type: "Uuid"
+                description: "UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart"
+            pickupPlaceIdentifier:
+                type: "String"
+                defaultValue: null
+                description: "The identifier of selected personal pickup place"

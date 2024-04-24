@@ -1,10 +1,4 @@
 CreateOrderResult:
     type: object
-    config:
-        fields:
-            order:
-                type: "Order"
-            cart:
-                type: "Cart"
-            orderCreated:
-                type: "Boolean!"
+    inherits:
+        - 'CreateOrderResultDecorator'

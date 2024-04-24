@@ -32,9 +32,6 @@ export type TypeDeliveryAddressFragment = { __typename: 'DeliveryAddress', uuid:
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

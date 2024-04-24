@@ -7,10 +7,12 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
 {
@@ -25,6 +27,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -37,6 +40,7 @@ class TransportFacade
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly TransportFactoryInterface $transportFactory,
         protected readonly TransportPriceFactoryInterface $transportPriceFactory,
+        protected readonly PaymentFacade $paymentFacade,
     ) {
     }
 
@@ -255,5 +259,34 @@ class TransportFacade
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Transport
     {
         return $this->transportRepository->getEnabledOnDomainByUuid($uuid, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return bool
+     */
+    public function isTransportVisibleAndEnabledOnCurrentDomain(Transport $transport): bool
+    {
+        try {
+            $this->getEnabledOnDomainByUuid($transport->getUuid(), $this->domain->getId());
+        } catch (TransportNotFoundException) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int|null $totalWeight
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(?int $totalWeight = null): array
+    {
+        $domainId = $this->domain->getId();
+        $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $totalWeight);
+
+        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
+
+        return $this->transportVisibilityCalculation->filterVisible($transports, $visiblePayments, $domainId);
     }
 }

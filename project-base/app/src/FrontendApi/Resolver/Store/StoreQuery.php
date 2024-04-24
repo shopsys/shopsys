@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store;
 
-use App\FrontendApi\Resolver\Store\Exception\StoreNotFoundUserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Store\Exception\StoreNotFoundUserError;
 
 class StoreQuery extends AbstractQuery
 {

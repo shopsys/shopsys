@@ -3,7 +3,7 @@ ChangePaymentInOrderInputDecorator:
     decorator: true
     config:
         validation:
-            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder: ~
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder: ~
         fields:
             orderUuid:
                 type: "Uuid!"

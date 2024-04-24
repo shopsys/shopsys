@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class ArticleController extends BaseArticleController
 {

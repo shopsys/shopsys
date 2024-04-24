@@ -44,4 +44,19 @@ class DeliveryAddressRepository
 
         return $deliveryAddress;
     }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
+     */
+    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
+    {
+        return $this->getDeliveryAddressRepository()->findOneBy(
+            [
+                'uuid' => $uuid,
+                'customer' => $customer,
+            ],
+        );
+    }
 }

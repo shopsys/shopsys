@@ -43,9 +43,6 @@ export type TypeCategoryProductsQuery = { __typename?: 'Query', products: { __ty
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -39,9 +39,6 @@ export type TypeChangePersonalDataMutation = { __typename?: 'Mutation', ChangePe
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

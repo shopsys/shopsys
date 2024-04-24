@@ -32,7 +32,7 @@ services:
         tags:
             - { name: shopsys.cron, hours: '5', minutes: '0', instanceName: service, readableName: 'Delete old temporary uploaded files' }
 
-    App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
+    Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Delete old transfer issues' }
 
@@ -115,6 +115,6 @@ services:
 
     # Packetery
 
-    App\Component\Packetery\PacketeryCronModule:
+    Shopsys\FrameworkBundle\Component\Packetery\PacketeryCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: packetery, readableName: 'Sending parcels to the packetery' }

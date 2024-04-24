@@ -1,14 +1,4 @@
 CartItem:
     type: object
-    config:
-        description: "Represent one item in the cart"
-        fields:
-            product:
-                type: "Product!"
-                description: "Product in the cart"
-            uuid:
-                type: "Uuid!"
-                description: "Cart item UUID"
-            quantity:
-                type: "Int!"
-                description: "Quantity of items in the cart"
+    inherits:
+        - 'CartItemDecorator'

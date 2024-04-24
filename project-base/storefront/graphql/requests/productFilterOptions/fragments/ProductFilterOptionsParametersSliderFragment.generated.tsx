@@ -31,9 +31,6 @@ export type TypeProductFilterOptionsParametersSliderFragment = { __typename: 'Pa
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -42,9 +42,6 @@ export type TypeSimpleProductFragment = TypeSimpleProductFragment_MainVariant_ |
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

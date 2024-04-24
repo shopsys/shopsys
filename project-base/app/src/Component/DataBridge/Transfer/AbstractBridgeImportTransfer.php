@@ -8,12 +8,12 @@ use App\Component\DataBridge\BridgeConfig;
 use App\Component\DataBridge\Transfer\Exception\TransferException;
 use App\Component\DataBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\DataBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
-use App\Model\Transfer\TransferIdentificationInterface;
-use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Generator;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Model\Transfer\TransferIdentificationInterface;
+use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

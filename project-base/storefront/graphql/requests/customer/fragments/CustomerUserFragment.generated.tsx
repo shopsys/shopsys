@@ -37,9 +37,6 @@ export type TypeCustomerUserFragment = TypeCustomerUserFragment_CompanyCustomerU
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

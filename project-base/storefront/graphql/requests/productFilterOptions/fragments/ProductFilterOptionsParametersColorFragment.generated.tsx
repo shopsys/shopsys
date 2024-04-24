@@ -31,9 +31,6 @@ export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'Par
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

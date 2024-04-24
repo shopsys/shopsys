@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class FlagController extends BaseFlagController
 {

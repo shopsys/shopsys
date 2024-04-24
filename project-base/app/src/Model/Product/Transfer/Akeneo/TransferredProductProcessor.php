@@ -11,10 +11,10 @@ use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
-use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use League\Flysystem\FilesystemOperator;
+use Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface;
 
 class TransferredProductProcessor
 {
@@ -60,7 +60,7 @@ class TransferredProductProcessor
 
     /**
      * @param array $akeneoProductData
-     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface $logger
      * @return \App\Model\Product\Product
      */
     public function processProduct(array $akeneoProductData, TransferLoggerInterface $logger): Product
@@ -85,7 +85,7 @@ class TransferredProductProcessor
 
     /**
      * @param array $akeneoProductDetailData
-     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface $logger
      */
     public function processProductDetail(array $akeneoProductDetailData, TransferLoggerInterface $logger): void
     {
@@ -100,7 +100,7 @@ class TransferredProductProcessor
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface $logger
      * @return \App\Model\Product\Product
      */
     private function createProduct(ProductData $productData, TransferLoggerInterface $logger): Product
@@ -122,7 +122,7 @@ class TransferredProductProcessor
     /**
      * @param \App\Model\Product\Product $product
      * @param array $akeneoProductDetailData
-     * @param \App\Model\Transfer\TransferLoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerInterface $logger
      */
     private function setProductAccessoriesByAkeneoProductDetailData(
         Product $product,

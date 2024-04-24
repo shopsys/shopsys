@@ -40,9 +40,6 @@ export type TypeArticlesQuery = { __typename?: 'Query', articles: { __typename?:
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

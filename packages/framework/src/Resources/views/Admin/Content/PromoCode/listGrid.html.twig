@@ -12,7 +12,15 @@
 {% endblock %}
 
 {% block grid_value_cell_id_percent %}
-    {{ value|formatPercent }}
+    {% if value|length > 1 %}
+        {{ 'Scaled promo code'|trans }}
+    {% else %}
+        {% if row['pc']['discountType'] == constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCode::DISCOUNT_TYPE_PERCENT') %}
+            {{ value[0]|formatPercent }}
+        {% else %}
+            {{ value[0]|priceFromDecimalStringWithCurrencyAdmin }}
+        {% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block grid_pager_totalcount %}
@@ -23,4 +31,13 @@
 {% block grid_inline_edit_add_button %}
     {% set addEntity = 'Create promo code'|trans %}
     {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_prefix %}
+    {% set prefix = value %}
+    {% set prefixJsClass = 'js-promo-code-mass' ~ value %}
+    {{ value }}
+    {% if value != '' %}
+        <span class="js-promo-code-mass {{ prefixJsClass }}" data-promo-code-prefix="{{ prefix }}" data-promo-code-prefix-js-class="{{ prefixJsClass }}" data-promo-code-group-enabled="{{ value != '' ? 1 : 0 }}"></span>
+    {% endif %}
 {% endblock %}

@@ -79,8 +79,11 @@ QueryDecorator:
                 description: "Returns payment filtered using UUID"
             transports:
                 type: '[Transport!]!'
-                resolve: "@=query('transportsQuery')"
-                description: "Returns complete list of transport methods"
+                resolve: "@=query('transportsQuery', args['cartUuid'])"
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                description: "Returns available transport methods based on the current cart state"
             transport:
                 type: 'Transport'
                 resolve: "@=query('transportByTransportUuidQuery', args['uuid'])"
@@ -252,3 +255,11 @@ QueryDecorator:
                 args:
                     currencyCode:
                         type: "String!"
+            cart:
+                type: 'Cart'
+                args:
+                    cartInput:
+                        type: CartInput
+                        validation: cascade
+                resolve: "@=query('cartQuery', args)"
+                description: "Return cart of logged customer or cart by UUID for anonymous user"

@@ -1,0 +1,45 @@
+CartDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid"
+                description: "UUID of the cart, null for authenticated user"
+            items:
+                type: "[CartItem!]!"
+                description: "All items in the cart"
+            transport:
+                type: "Transport"
+                description: "Selected transport if transport provided"
+            payment:
+                type: "Payment"
+                description: "Selected payment if payment provided"
+            selectedPickupPlaceIdentifier:
+                type: "String"
+                description: "Selected pickup place identifier if provided"
+            promoCode:
+                type: "String"
+                description: "Applied promo code if provided"
+            modifications:
+                type: "CartModificationsResult!"
+            totalPrice:
+                type: "Price!"
+                description: "Total price including transport and payment"
+            totalItemsPrice:
+                type: "Price!"
+                description: "Total items price (excluding transport and payment)"
+            totalDiscountPrice:
+                type: "Price!"
+            totalPriceWithoutDiscountTransportAndPayment:
+                type: "Price!"
+                description: "Total price (exluding discount, transport and payment)"
+            remainingAmountWithVatForFreeTransport:
+                type: "Money"
+                description: "Remaining amount for free transport and payment; null = transport cannot be free"
+            paymentGoPayBankSwift:
+                type: "String"
+                description: "Selected bank swift code of goPay payment bank transfer"
+            roundingPrice:
+                type: "Price"
+                description: "Rounding amount if payment has rounding allowed"

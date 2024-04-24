@@ -1,0 +1,9 @@
+CartInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier, new cart will be created if not provided and customer is not logged in"

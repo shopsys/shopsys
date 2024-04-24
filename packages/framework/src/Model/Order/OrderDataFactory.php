@@ -101,5 +101,6 @@ class OrderDataFactory
         }
 
         $orderData->heurekaAgreement = $order->isHeurekaAgreement();
+        $orderData->trackingNumber = $order->getTrackingNumber();
     }
 }

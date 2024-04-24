@@ -31,9 +31,6 @@ export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, nam
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

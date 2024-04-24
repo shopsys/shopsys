@@ -41,9 +41,6 @@ export type TypeFlagDetailQuery = { __typename?: 'Query', flag: { __typename: 'F
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

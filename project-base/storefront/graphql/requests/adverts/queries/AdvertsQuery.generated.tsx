@@ -37,9 +37,6 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

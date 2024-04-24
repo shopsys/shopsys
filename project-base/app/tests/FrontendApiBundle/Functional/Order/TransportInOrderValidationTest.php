@@ -7,9 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
-use App\FrontendApi\Model\Cart\CartFacade;
-use App\FrontendApi\Model\Component\Constraints\TransportInOrder;
-use App\Model\Cart\Transport\CartTransportFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
@@ -17,6 +14,9 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
+use Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder;
+use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
+use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportInOrderValidationTest extends GraphQlTestCase
@@ -46,7 +46,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     /**
      * @inject
      */
-    private CartFacade $cartFacade;
+    private CartApiFacade $cartApiFacade;
 
     public function testTransportNotSet(): void
     {
@@ -75,7 +75,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testInvalidTransportPaymentCombination(): void
     {
         $this->addCardPaymentToDemoCart();
-        $cart = $this->cartFacade->findCart(null, CartDataFixture::CART_UUID);
+        $cart = $this->cartApiFacade->findCart(null, CartDataFixture::CART_UUID);
         $transportDrone = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
         $this->cartTransportFacade->updateTransportInCart($cart, $transportDrone->getUuid(), null);
         $mutation = $this->getCreateOrderMutationFromDemoCart();
@@ -129,7 +129,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $demoCartUuid = CartDataFixture::CART_UUID;
         $this->addTransportToCart($demoCartUuid, $transportPersonal, $store->getUuid());
-        $demoCart = $this->cartFacade->findCart(null, $demoCartUuid);
+        $demoCart = $this->cartApiFacade->findCart(null, $demoCartUuid);
         $this->cartTransportFacade->unsetPickupPlaceIdentifierFromCart($demoCart);
 
         $mutation = $this->getCreateOrderMutationFromDemoCart();

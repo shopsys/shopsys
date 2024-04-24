@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @property \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
  * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\Mail\MailTemplateFacade $mailTemplateFacade, \App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \App\Model\Mail\Grid\MailTemplateGridFactory $mailTemplateGridFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration, \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory)
  * @property \App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class MailController extends baseMailController
 {

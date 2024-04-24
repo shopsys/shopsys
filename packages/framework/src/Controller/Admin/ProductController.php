@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
@@ -41,7 +41,7 @@ class ProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade
@@ -56,7 +56,7 @@ class ProductController extends AdminBaseController
         protected readonly ProductMassActionFacade $productMassActionFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly ProductFacade $productFacade,
-        protected readonly ProductDataFactoryInterface $productDataFactory,
+        protected readonly ProductDataFactory $productDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly ProductListAdminFacade $productListAdminFacade,
@@ -165,8 +165,6 @@ class ProductController extends AdminBaseController
      */
     public function listAction(Request $request)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
         $quickSearchData = new QuickSearchFormData();
@@ -207,7 +205,7 @@ class ProductController extends AdminBaseController
             return $this->redirect($request->headers->get('referer', $this->generateUrl('admin_product_list')));
         }
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         $productCanBeCreated = $this->productCanBeCreated();
 

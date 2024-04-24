@@ -31,9 +31,6 @@ export type TypeSimpleArticleSiteFragment = { __typename: 'ArticleSite', uuid: s
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

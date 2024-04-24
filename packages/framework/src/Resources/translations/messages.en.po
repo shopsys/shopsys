@@ -31,6 +31,9 @@ msgstr ""
 msgid "-- Choose unit --"
 msgstr ""
 
+msgid "-- Select name of the transfer --"
+msgstr ""
+
 msgid "0"
 msgstr ""
 
@@ -67,6 +70,12 @@ msgstr ""
 msgid "Add URL"
 msgstr ""
 
+msgid "Add another flag"
+msgstr ""
+
+msgid "Add another limit"
+msgstr ""
+
 msgid "Add another mail whitelist pattern"
 msgstr ""
 
@@ -82,6 +91,9 @@ msgstr ""
 msgid "Add language combination"
 msgstr ""
 
+msgid "Add limit"
+msgstr ""
+
 msgid "Add opening hours"
 msgstr ""
 
@@ -92,6 +104,9 @@ msgid "Add requirement"
 msgstr ""
 
 msgid "Add some alternate language combinations"
+msgstr ""
+
+msgid "Add some flag"
 msgstr ""
 
 msgid "Add some mail whitelist patterns"
@@ -196,6 +211,27 @@ msgstr ""
 msgid "Applicable variables for Subject"
 msgstr ""
 
+msgid "Apply according to customer"
+msgstr ""
+
+msgid "Apply according to date and time limit"
+msgstr ""
+
+msgid "Apply according to product flags"
+msgstr ""
+
+msgid "Apply according to the total price of the order"
+msgstr ""
+
+msgid "Apply to selected brands"
+msgstr ""
+
+msgid "Apply to selected categories"
+msgstr ""
+
+msgid "Apply to selected products"
+msgstr ""
+
 msgid "Area"
 msgstr ""
 
@@ -250,6 +286,9 @@ msgstr ""
 msgid "Avg duration (mm:ss)"
 msgstr ""
 
+msgid "Back to dashboard"
+msgstr ""
+
 msgid "Back to overview"
 msgstr ""
 
@@ -260,6 +299,9 @@ msgid "Basic frontend currency %domainName%"
 msgstr ""
 
 msgid "Basic information"
+msgstr ""
+
+msgid "Batch ID"
 msgstr ""
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
@@ -340,10 +382,19 @@ msgstr ""
 msgid "Browse files"
 msgstr ""
 
+msgid "Bulk coupons with prefix"
+msgstr ""
+
+msgid "Bulk creation of promo codes"
+msgstr ""
+
 msgid "Bulk edit"
 msgstr ""
 
 msgid "Bulk editing done"
+msgstr ""
+
+msgid "Bulk promo code generation"
 msgstr ""
 
 msgid "CSS documentation"
@@ -436,6 +487,9 @@ msgstr ""
 msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
+msgid "Collapse"
+msgstr ""
+
 msgid "Collapse menu"
 msgstr ""
 
@@ -521,6 +575,12 @@ msgid "Create SEO page"
 msgstr ""
 
 msgid "Create VAT rate"
+msgstr ""
+
+msgid "Create and download CSV"
+msgstr ""
+
+msgid "Create bulk promo codes"
 msgstr ""
 
 msgid "Create currency"
@@ -703,6 +763,9 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
+msgid "Date and time"
+msgstr ""
+
 msgid "Date and time of order creation"
 msgstr ""
 
@@ -722,6 +785,9 @@ msgid "Day"
 msgstr ""
 
 msgid "Days for transfer between warehouses"
+msgstr ""
+
+msgid "Days until delivery"
 msgstr ""
 
 msgid "Default VAT rate"
@@ -793,6 +859,9 @@ msgstr ""
 msgid "Discount (%)"
 msgstr ""
 
+msgid "Discount type"
+msgstr ""
+
 msgid "Display"
 msgstr ""
 
@@ -815,6 +884,9 @@ msgid "Do you really want to delete this category?"
 msgstr ""
 
 msgid "Do you really want to discard all changes?"
+msgstr ""
+
+msgid "Do you really want to mark this issue as resolved?"
 msgstr ""
 
 msgid "Do you really want to remove currency \"%name%\" permanently?"
@@ -907,10 +979,16 @@ msgstr ""
 msgid "Domain name"
 msgstr ""
 
+msgid "Download file"
+msgstr ""
+
 msgid "Drag your file here"
 msgstr ""
 
 msgid "Drag your files here"
+msgstr ""
+
+msgid "Duplicate"
 msgstr ""
 
 msgid "Duration (mm:ss)"
@@ -1075,6 +1153,12 @@ msgstr ""
 msgid "Editing slider page - %name%"
 msgstr ""
 
+msgid "Editing transport type"
+msgstr ""
+
+msgid "Editing transport type - %code%"
+msgstr ""
+
 msgid "Editing warehouse"
 msgstr ""
 
@@ -1121,6 +1205,12 @@ msgid "Enter 32-digit code which will be sent to server"
 msgstr ""
 
 msgid "Enter in the store local time"
+msgstr ""
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr ""
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
 msgstr ""
 
 msgid "Entered customer not found, please check entered data."
@@ -1181,6 +1271,9 @@ msgid "Excluding VAT"
 msgstr ""
 
 msgid "Existing icon"
+msgstr ""
+
+msgid "Expand"
 msgstr ""
 
 msgid "Expected maximum duration"
@@ -1279,6 +1372,9 @@ msgstr ""
 msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
 msgstr ""
 
+msgid "For registered customers only"
+msgstr ""
+
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr ""
 
@@ -1303,6 +1399,9 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
+msgid "From"
+msgstr ""
+
 msgid "Frontend"
 msgstr ""
 
@@ -1313,6 +1412,9 @@ msgid "Generate"
 msgstr ""
 
 msgid "Generated"
+msgstr ""
+
+msgid "Generated batches"
 msgstr ""
 
 msgid "Go to Frontend"
@@ -1507,6 +1609,9 @@ msgstr ""
 msgid "Legal conditions settings modified."
 msgstr ""
 
+msgid "Limits"
+msgstr ""
+
 msgid "Link"
 msgstr ""
 
@@ -1600,10 +1705,16 @@ msgstr ""
 msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
+msgid "Maximum weight (g)"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
 msgid "Message"
+msgstr ""
+
+msgid "Message text"
 msgstr ""
 
 msgid "Meta description"
@@ -1813,10 +1924,16 @@ msgstr ""
 msgid "No subscribers found."
 msgstr ""
 
+msgid "No transport types found."
+msgstr ""
+
 msgid "No units found. You have to create some first."
 msgstr ""
 
 msgid "No warehouse associated"
+msgstr ""
+
+msgid "Nominal"
 msgstr ""
 
 msgid "Not possible to assign product to itself"
@@ -1832,6 +1949,9 @@ msgid "Note"
 msgstr ""
 
 msgid "Nothing to choose from."
+msgstr ""
+
+msgid "Number of generated promo codes"
 msgstr ""
 
 msgid "Number of orders"
@@ -1945,6 +2065,9 @@ msgstr ""
 msgid "Out of stock"
 msgstr ""
 
+msgid "Package tracking"
+msgstr ""
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -2047,6 +2170,9 @@ msgstr ""
 msgid "Percent"
 msgstr ""
 
+msgid "Percents"
+msgstr ""
+
 msgid "Perex"
 msgstr ""
 
@@ -2063,6 +2189,9 @@ msgid "Personal information export"
 msgstr ""
 
 msgid "Personal information overview"
+msgstr ""
+
+msgid "Personal pickup"
 msgstr ""
 
 msgid "Phone"
@@ -2090,6 +2219,12 @@ msgid "Popular categories"
 msgstr ""
 
 msgid "Postcode"
+msgstr ""
+
+msgid "Prefix"
+msgstr ""
+
+msgid "Prefix (e.g. \"SPRING_\")"
 msgstr ""
 
 msgid "Preview"
@@ -2188,6 +2323,12 @@ msgstr ""
 msgid "Products overview"
 msgstr ""
 
+msgid "Products with this flag"
+msgstr ""
+
+msgid "Products without this flag"
+msgstr ""
+
 msgid "Promo code"
 msgstr ""
 
@@ -2200,7 +2341,13 @@ msgstr ""
 msgid "Promo code <strong>{{ code }}</strong> deleted."
 msgstr ""
 
+msgid "Promo code prefix"
+msgstr ""
+
 msgid "Promo codes"
+msgstr ""
+
+msgid "Promo codes - generated batches"
 msgstr ""
 
 msgid "Published data"
@@ -2228,6 +2375,9 @@ msgid "Registered cust."
 msgstr ""
 
 msgid "Registration confirmation"
+msgstr ""
+
+msgid "Remaining number of uses"
 msgstr ""
 
 msgid "Remove"
@@ -2308,6 +2458,9 @@ msgstr ""
 msgid "Save warehouse settings"
 msgstr ""
 
+msgid "Scaled promo code"
+msgstr ""
+
 msgid "Schedule"
 msgstr ""
 
@@ -2338,7 +2491,13 @@ msgstr ""
 msgid "Search [verb]"
 msgstr "Search"
 
+msgid "Search by code..."
+msgstr ""
+
 msgid "Search by name, catalog number, or product part number..."
+msgstr ""
+
+msgid "Search in transfers"
 msgstr ""
 
 msgid "Searching in all currencies"
@@ -2432,6 +2591,9 @@ msgid "Selected shipping doesn't exist."
 msgstr ""
 
 msgid "Selected subscriber doesn't exist."
+msgstr ""
+
+msgid "Selected transfer issue was not found"
 msgstr ""
 
 msgid "Selected unit doesn't exist"
@@ -2537,6 +2699,9 @@ msgid "Some data may not be localized or serve the technical administrators of t
 msgstr ""
 
 msgid "Sorting priority"
+msgstr ""
+
+msgid "Standard"
 msgstr ""
 
 msgid "Started at"
@@ -2713,7 +2878,43 @@ msgstr ""
 msgid "Tracking ID"
 msgstr ""
 
+msgid "Tracking URL"
+msgstr ""
+
+msgid "Tracking URL variables"
+msgstr ""
+
+msgid "Tracking instructions"
+msgstr ""
+
+msgid "Tracking instructions variables"
+msgstr ""
+
+msgid "Tracking number"
+msgstr ""
+
+msgid "Transfer"
+msgstr ""
+
+msgid "Transfer issues overview"
+msgstr ""
+
+msgid "Transfer problem has been marked as resolved"
+msgstr ""
+
+msgid "Transfer type"
+msgstr ""
+
+msgid "Transfers"
+msgstr ""
+
 msgid "Transport type"
+msgstr ""
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr ""
+
+msgid "Transport types"
 msgstr ""
 
 msgid "Tuesday"
@@ -2830,6 +3031,12 @@ msgstr ""
 msgid "VAT settings modified"
 msgstr ""
 
+msgid "Valid from"
+msgstr ""
+
+msgid "Valid to"
+msgstr ""
+
 msgid "Value"
 msgstr ""
 
@@ -2885,6 +3092,9 @@ msgid "Warehouse settings"
 msgstr ""
 
 msgid "Wednesday"
+msgstr ""
+
+msgid "Weight (g)"
 msgstr ""
 
 msgid "When changing the default currency there is no recalculation of prices"
@@ -3092,5 +3302,8 @@ msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%coun
 msgstr ""
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
+msgstr ""
+
+msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr ""
 

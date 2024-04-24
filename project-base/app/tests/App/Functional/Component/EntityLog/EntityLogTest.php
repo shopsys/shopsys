@@ -10,19 +10,18 @@ use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
-use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
+use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -31,11 +30,6 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class EntityLogTest extends TransactionFunctionalTestCase
 {
-    /**
-     * @inject
-     */
-    private CartFacade $cartFacade;
-
     /**
      * @inject
      */
@@ -262,8 +256,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
     private function getNewOrder(): Order
     {
         $product = $this->productRepository->getById(1);
-
-        $this->cartFacade->addProductToCart($product->getId(), 1);
 
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportRepository->getById(3);

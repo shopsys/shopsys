@@ -31,9 +31,6 @@ export type TypeSimpleArticleLinkFragment = { __typename: 'ArticleLink', uuid: s
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -36,9 +36,6 @@ export type TypeCartFragment = { __typename: 'Cart', uuid: string | null, remain
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"
@@ -93,7 +90,7 @@ export type TypeCartFragment = { __typename: 'Cart', uuid: string | null, remain
       export default result;
     
 export const CartFragment = gql`
-    fragment CartFragment on CartInterface {
+    fragment CartFragment on Cart {
   __typename
   uuid
   items {

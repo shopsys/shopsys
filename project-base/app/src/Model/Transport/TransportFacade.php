@@ -4,19 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
-use App\Model\Payment\PaymentFacade;
-use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
-use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 
 /**
  * @property \App\Model\Transport\TransportRepository $transportRepository
@@ -33,77 +21,11 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getPricesIndexedByDomainId(\App\Model\Transport\Transport|null $transport)
  * @method \App\Model\Transport\Transport getByUuid(string $uuid)
  * @method \App\Model\Transport\Transport getEnabledOnDomainByUuid(string $uuid, int $domainId)
+ * @method bool isTransportVisibleAndEnabledOnCurrentDomain(\App\Model\Transport\Transport $transport)
+ * @property \App\Model\Payment\PaymentFacade $paymentFacade
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
+ * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(int|null $totalWeight = null)
  */
 class TransportFacade extends BaseTransportFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Transport\TransportRepository $transportRepository
-     * @param \App\Model\Payment\PaymentRepository $paymentRepository
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactory $transportFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory
-     * @param \App\Model\Payment\PaymentFacade $paymentFacade
-     */
-    public function __construct(
-        EntityManagerInterface $em,
-        TransportRepository $transportRepository,
-        PaymentRepository $paymentRepository,
-        TransportVisibilityCalculation $transportVisibilityCalculation,
-        Domain $domain,
-        ImageFacade $imageFacade,
-        CurrencyFacade $currencyFacade,
-        TransportPriceCalculation $transportPriceCalculation,
-        TransportFactoryInterface $transportFactory,
-        TransportPriceFactoryInterface $transportPriceFactory,
-        private PaymentFacade $paymentFacade,
-    ) {
-        parent::__construct(
-            $em,
-            $transportRepository,
-            $paymentRepository,
-            $transportVisibilityCalculation,
-            $domain,
-            $imageFacade,
-            $currencyFacade,
-            $transportPriceCalculation,
-            $transportFactory,
-            $transportPriceFactory,
-        );
-    }
-
-    /**
-     * @param int|null $totalWeight
-     * @return \App\Model\Transport\Transport[]
-     */
-    public function getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(?int $totalWeight = null): array
-    {
-        $domainId = $this->domain->getId();
-        $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $totalWeight);
-
-        $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
-        /** @var \App\Model\Transport\Transport[] $filteredTransports */
-        $filteredTransports = $this->transportVisibilityCalculation->filterVisible($transports, $visiblePayments, $domainId);
-
-        return $filteredTransports;
-    }
-
-    /**
-     * @param \App\Model\Transport\Transport $transport
-     * @return bool
-     */
-    public function isTransportVisibleAndEnabledOnCurrentDomain(Transport $transport): bool
-    {
-        try {
-            $this->getEnabledOnDomainByUuid($transport->getUuid(), $this->domain->getId());
-        } catch (TransportNotFoundException $exception) {
-            return false;
-        }
-
-        return true;
-    }
 }

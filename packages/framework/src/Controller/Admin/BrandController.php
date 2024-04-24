@@ -87,9 +87,6 @@ class BrandController extends AdminBaseController
      */
     public function listAction()
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
-        $administrator = $this->getUser();
-
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'b.id');
 
@@ -108,7 +105,7 @@ class BrandController extends AdminBaseController
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Brand/listGrid.html.twig');
 
-        $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/Brand/list.html.twig', [
             'gridView' => $grid->createView(),

@@ -36,9 +36,6 @@ export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalData
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

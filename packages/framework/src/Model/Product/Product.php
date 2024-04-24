@@ -159,6 +159,12 @@ class Product extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $weight;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -219,6 +225,7 @@ class Product extends AbstractTranslatableEntity
         $this->hidden = $productData->hidden;
         $this->brand = $productData->brand;
         $this->unit = $productData->unit;
+        $this->weight = $productData->weight;
         $this->setTranslations($productData);
     }
 
@@ -468,6 +475,21 @@ class Product extends AbstractTranslatableEntity
     public function getFlags(int $domainId)
     {
         return $this->getProductDomain($domainId)->getFlags();
+    }
+
+    /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getFlagsIdsForDomain(int $domainId): array
+    {
+        $flagIds = [];
+
+        foreach ($this->getFlags($domainId) as $flag) {
+            $flagIds[] = $flag->getId();
+        }
+
+        return $flagIds;
     }
 
     /**
@@ -859,5 +881,13 @@ class Product extends AbstractTranslatableEntity
     public function getShortDescriptionUsp5(int $domainId)
     {
         return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }

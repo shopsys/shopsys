@@ -46,9 +46,6 @@ export type TypeSearchProductsQuery = { __typename?: 'Query', productsSearch: { 
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

@@ -6,7 +6,6 @@ namespace App\Model\Administrator;
 
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use App\Model\Security\Roles;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
 use Ramsey\Uuid\Uuid;
@@ -41,12 +40,6 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     private string $uuid;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
-     */
-    protected $transferIssuesLastSeenDateTime;
-
-    /**
      * @var string|null
      * @ORM\Column(type="string", length=32, nullable=true)
      */
@@ -78,7 +71,6 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
         parent::__construct($administratorData);
 
         $this->uuid = Uuid::uuid4()->toString();
-        $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
     }
 
     /**
@@ -105,22 +97,6 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     public function getUuid(): string
     {
         return $this->uuid;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getTransferIssuesLastSeenDateTime(): DateTime
-    {
-        return $this->transferIssuesLastSeenDateTime;
-    }
-
-    /**
-     * @param \DateTime $transferIssuesLastSeenDateTime
-     */
-    public function setTransferIssuesLastSeenDateTime(DateTime $transferIssuesLastSeenDateTime): void
-    {
-        $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
     }
 
     /**

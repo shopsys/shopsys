@@ -40,9 +40,6 @@ export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePasswo
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

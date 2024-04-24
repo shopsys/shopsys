@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -49,11 +50,11 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->willReturn($quantifiedItemsPrices);
 
         $quantifiedProductDiscountCalculationMock = $this->getMockBuilder(QuantifiedProductDiscountCalculation::class)
-            ->setMethods(['calculateDiscountsRoundedByCurrency', '__construct'])
+            ->setMethods(['calculateDiscountsPerProductRoundedByCurrency', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
-            'calculateDiscountsRoundedByCurrency',
+            'calculateDiscountsPerProductRoundedByCurrency',
         )
             ->willReturn($quantifiedProductsDiscounts);
 
@@ -75,12 +76,15 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->getMock();
         $orderPriceCalculationMock->expects($this->any())->method('calculateOrderRoundingPrice')->willReturn(null);
 
+        $currentPromoCodeFacadeMock = $this->createMock(CurrentPromoCodeFacade::class);
+
         $previewCalculation = new OrderPreviewCalculation(
             $quantifiedProductPriceCalculationMock,
             $quantifiedProductDiscountCalculationMock,
             $transportPriceCalculationMock,
             $paymentPriceCalculationMock,
             $orderPriceCalculationMock,
+            $currentPromoCodeFacadeMock,
         );
 
         $quantifiedProductMock = $this->createMock(QuantifiedProduct::class);
@@ -143,11 +147,11 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->willReturn($quantifiedItemsPrices);
 
         $quantifiedProductDiscountCalculationMock = $this->getMockBuilder(QuantifiedProductDiscountCalculation::class)
-            ->setMethods(['calculateDiscountsRoundedByCurrency', '__construct'])
+            ->setMethods(['calculateDiscountsPerProductRoundedByCurrency', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
-            'calculateDiscountsRoundedByCurrency',
+            'calculateDiscountsPerProductRoundedByCurrency',
         )
             ->willReturn($quantifiedProductsDiscounts);
 
@@ -164,6 +168,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $transportPriceCalculationMock->expects($this->never())->method('calculatePrice');
 
         $orderPriceCalculationMock = $this->createMock(OrderPriceCalculation::class);
+        $currentPromoCodeFacadeMock = $this->createMock(CurrentPromoCodeFacade::class);
 
         $previewCalculation = new OrderPreviewCalculation(
             $quantifiedProductPriceCalculationMock,
@@ -171,6 +176,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             $transportPriceCalculationMock,
             $paymentPriceCalculationMock,
             $orderPriceCalculationMock,
+            $currentPromoCodeFacadeMock,
         );
 
         $quantifiedProductMock = $this->createMock(QuantifiedProduct::class);

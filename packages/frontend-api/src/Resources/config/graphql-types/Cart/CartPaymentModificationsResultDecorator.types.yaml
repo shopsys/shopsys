@@ -1,0 +1,9 @@
+CartPaymentModificationsResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            paymentPriceChanged:
+                type: "Boolean!"
+            paymentUnavailable:
+                type: "Boolean!"

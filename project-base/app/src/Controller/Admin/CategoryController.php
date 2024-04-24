@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @property \App\Model\Category\CategoryDataFactory $categoryDataFactory
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
  */
 class CategoryController extends BaseCategoryController
 {

@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -46,7 +46,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductDataFactoryInterface $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @inject

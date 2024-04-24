@@ -111,11 +111,8 @@
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
     * [OrderInput](#orderinput)
-    * [OrderProductInput](#orderproductinput)
     * [ParameterFilter](#parameterfilter)
-    * [PaymentInput](#paymentinput)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
-    * [PriceInput](#priceinput)
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
     * [ProductListUpdateInput](#productlistupdateinput)
@@ -125,7 +122,6 @@
     * [RemoveFromCartInput](#removefromcartinput)
     * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
     * [SearchInput](#searchinput)
-    * [TransportInput](#transportinput)
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
@@ -145,7 +141,6 @@
     * [Advert](#advert)
     * [ArticleInterface](#articleinterface)
     * [Breadcrumb](#breadcrumb)
-    * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
     * [Hreflang](#hreflang)
     * [NotBlogArticleInterface](#notblogarticleinterface)
@@ -9139,29 +9134,11 @@ Determines whether the order is made on the company behalf.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#paymentinput">PaymentInput</a></td>
-<td>
-
-Deprecated, this field is not used, the payment is taken from the server cart instead.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Billing address zip code (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top">[<a href="#orderproductinput">OrderProductInput</a>!]</td>
-<td>
-
-Deprecated, this field is not used, the products are taken from the server cart instead.
 
 </td>
 </tr>
@@ -9180,58 +9157,6 @@ Billing address street name (will be on the tax invoice)
 <td>
 
 The customer's phone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transportinput">TransportInput</a></td>
-<td>
-
-Deprecated, this field is not used, the transport is taken from the server cart instead.
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### OrderProductInput
-
-Represents a product in order
-
-<table>
-<thead>
-<tr>
-<th colspan="2" align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Quantity of products
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>unitPrice</strong></td>
-<td valign="top"><a href="#priceinput">PriceInput</a>!</td>
-<td>
-
-Product price per unit
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
 
 </td>
 </tr>
@@ -9290,40 +9215,6 @@ Array of uuids representing parameter values to be filtered by
 </tbody>
 </table>
 
-### PaymentInput
-
-Represents a payment in order
-
-<table>
-<thead>
-<tr>
-<th colspan="2" align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#priceinput">PriceInput</a>!</td>
-<td>
-
-Price for payment
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
 ### PersonalDataAccessRequestInput
 
 <table>
@@ -9350,49 +9241,6 @@ The customer's email address
 <td>
 
 One of two possible types for personal data access request - display or export
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### PriceInput
-
-Represents the price
-
-<table>
-<thead>
-<tr>
-<th colspan="2" align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price without VAT
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price with VAT
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>vatAmount</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Total value of VAT
 
 </td>
 </tr>
@@ -9861,40 +9709,6 @@ Unique identifier of the user who initiated the search in format UUID version 4 
 </tbody>
 </table>
 
-### TransportInput
-
-Represents a transport in order
-
-<table>
-<thead>
-<tr>
-<th colspan="2" align="left">Field</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#priceinput">PriceInput</a>!</td>
-<td>
-
-Price for transport
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
 ## Enums
 
 ### ArticlePlacementTypeEnum
@@ -10267,98 +10081,6 @@ Represents entity able to return breadcrumb
 Hierarchy of the current element in relation to the structure
 
 </td>
-</tr>
-</tbody>
-</table>
-
-### CartInterface
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
-<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>modifications</strong></td>
-<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#payment">Payment</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
-<td valign="top"><a href="#money">Money</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>roundingPrice</strong></td>
-<td valign="top"><a href="#price">Price</a></td>
-<td>
-
-Rounding amount if payment has rounding allowed
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalItemsPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total items price (excluding transport and payment)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total price including transport and payment
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
 </tr>
 </tbody>
 </table>

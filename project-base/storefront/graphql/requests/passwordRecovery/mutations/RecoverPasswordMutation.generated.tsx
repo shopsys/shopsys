@@ -41,9 +41,6 @@ export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPass
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

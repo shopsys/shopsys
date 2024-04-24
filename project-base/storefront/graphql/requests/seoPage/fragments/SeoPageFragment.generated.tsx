@@ -33,9 +33,6 @@ export type TypeSeoPageFragment = { __typename: 'SeoPage', title: string | null,
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"

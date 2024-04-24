@@ -8,25 +8,24 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 
 class AddProductResult
 {
-    protected bool $isNew;
-
-    protected int $addedQuantity;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
      * @param bool $isNew
      * @param int $addedQuantity
+     * @param int $notOnStockQuantity
      */
-    public function __construct(protected readonly CartItem $cartItem, $isNew, $addedQuantity)
-    {
-        $this->isNew = $isNew;
-        $this->addedQuantity = $addedQuantity;
+    public function __construct(
+        protected readonly CartItem $cartItem,
+        protected readonly bool $isNew,
+        protected readonly int $addedQuantity,
+        protected readonly int $notOnStockQuantity,
+    ) {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getCartItem()
+    public function getCartItem(): CartItem
     {
         return $this->cartItem;
     }
@@ -34,7 +33,7 @@ class AddProductResult
     /**
      * @return bool
      */
-    public function getIsNew()
+    public function getIsNew(): bool
     {
         return $this->isNew;
     }
@@ -42,8 +41,16 @@ class AddProductResult
     /**
      * @return int
      */
-    public function getAddedQuantity()
+    public function getAddedQuantity(): int
     {
         return $this->addedQuantity;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNotOnStockQuantity(): int
+    {
+        return $this->notOnStockQuantity;
     }
 }

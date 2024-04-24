@@ -1,0 +1,7 @@
+CartMultipleAddedProductModificationsResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            notAddedProducts:
+                type: "[Product!]!"

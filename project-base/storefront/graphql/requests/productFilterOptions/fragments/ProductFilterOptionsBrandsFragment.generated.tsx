@@ -31,9 +31,6 @@ export type TypeProductFilterOptionsBrandsFragment = { __typename: 'BrandFilterO
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"
