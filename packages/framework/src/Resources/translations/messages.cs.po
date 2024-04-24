@@ -37,11 +37,20 @@ msgstr "-- Vyberte název převodu --"
 msgid "0"
 msgstr ""
 
+msgid "<a href=\"{{ url }}\">Cookies information article for domain {{ domainName }} is not set.</a>"
+msgstr "<a href=\"{{ url }}\">Není nastaven článek informace o cookies pro doménu {{ domainName }}.</a>"
+
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastavena výchozí jednotka.</a>"
 
+msgid "<a href=\"{{ url }}\">Privacy policy article for domain {{ domainName }} is not set.</a>"
+msgstr "<a href=\"{{ url }}\">Není nastaven článek zásady ochrany osobních údajů pro doménu {{ domainName }}.</a>"
+
 msgid "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"{{ url }}\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
+
+msgid "<a href=\"{{ url }}\">Terms and conditions article for domain {{ domainName }} is not set.</a>"
+msgstr "<a href=\"{{ url }}\">Není nastaven článek obchodní podmínky pro doménu {{ domainName }}.</a>"
 
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
 msgstr "<a href=\"{{ url }}\">Neexistují žádné jednotky, musíte nějakou vytvořit.</a>"

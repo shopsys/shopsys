@@ -37,10 +37,19 @@ msgstr ""
 msgid "0"
 msgstr ""
 
+msgid "<a href=\"{{ url }}\">Cookies information article for domain {{ domainName }} is not set.</a>"
+msgstr ""
+
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr ""
 
+msgid "<a href=\"{{ url }}\">Privacy policy article for domain {{ domainName }} is not set.</a>"
+msgstr ""
+
 msgid "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
+msgstr ""
+
+msgid "<a href=\"{{ url }}\">Terms and conditions article for domain {{ domainName }} is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
