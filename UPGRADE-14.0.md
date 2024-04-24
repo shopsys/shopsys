@@ -1501,6 +1501,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   take promo code into account in priceByTransportQuery and priceByPaymentQuery ([#3118](https://github.com/shopsys/shopsys/pull/3118))
+
+    -   see #project-base-diff to update your project
+
+-   addProductToListMutation: ensure new product list is created with non-conflicting uuid ([#3126](https://github.com/shopsys/shopsys/pull/3126))
+    -   add new tests to `ProductListLoggedCustomerTest` and `ProductListNotLoggedCustomerTest` classes
     -   see #project-base-diff to update your project
 
 ### Storefront

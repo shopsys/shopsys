@@ -109,6 +109,15 @@ class ProductListFacade
     }
 
     /**
+     * @param string $uuid
+     * @return bool
+     */
+    public function existsProductListWithUuid(string $uuid): bool
+    {
+        return $this->productListRepository->existsProductListWithUuid($uuid);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null

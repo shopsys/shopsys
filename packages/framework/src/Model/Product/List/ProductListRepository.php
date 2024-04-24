@@ -119,4 +119,13 @@ class ProductListRepository
     {
         return $this->entityManager->getRepository(ProductList::class);
     }
+
+    /**
+     * @param string $uuid
+     * @return bool
+     */
+    public function existsProductListWithUuid(string $uuid): bool
+    {
+        return $this->getRepository()->count(['uuid' => $uuid]) > 0;
+    }
 }
