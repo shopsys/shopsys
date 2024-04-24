@@ -135,3 +135,7 @@ services:
     App\FrontendApi\Component\SessionChecker\SessionChecker:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -999 } # must be run before the session is closed (in Symfony\Component\HttpKernel\EventListener\SessionListener::onKernelResponse)
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery:
+        alias: App\FrontendApi\Resolver\Price\PriceQuery
+        public: true
