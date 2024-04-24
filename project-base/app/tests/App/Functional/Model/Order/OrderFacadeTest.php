@@ -19,9 +19,9 @@ use App\Model\Transport\TransportRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -72,7 +72,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private CreateOrderFacade $createOrderFacade;
+    private PlaceOrderFacade $placeOrderFacade;
 
     public function testCreate(): void
     {
@@ -116,7 +116,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
             $orderInput,
             $orderData,
         );
-        $order = $this->createOrderFacade->createOrder($orderData);
+        $order = $this->placeOrderFacade->placeOrder($orderData);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
 

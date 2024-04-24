@@ -24,9 +24,9 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -62,7 +62,7 @@ class OrderDataFixture
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \App\Model\Order\CreateOrderFacade $createOrderFacade
+     * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -78,7 +78,7 @@ class OrderDataFixture
         private readonly OrderDataFactory $orderDataFactory,
         private readonly OrderInputFactory $orderInputFactory,
         private readonly OrderProcessor $orderProcessor,
-        private readonly CreateOrderFacade $createOrderFacade,
+        private readonly PlaceOrderFacade $placeOrderFacade,
         private readonly Domain $domain,
     ) {
         $this->performanceProductIds = [];
@@ -138,7 +138,7 @@ class OrderDataFixture
             $orderData,
         );
 
-        $this->createOrderFacade->createOrder($orderData);
+        $this->placeOrderFacade->placeOrder($orderData);
     }
 
     /**

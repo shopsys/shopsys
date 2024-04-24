@@ -15,11 +15,11 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
@@ -43,7 +43,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private CreateOrderFacade $createOrderFacade;
+    private PlaceOrderFacade $placeOrderFacade;
 
     /**
      * @inject
@@ -305,6 +305,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
             $orderData,
         );
 
-        return $this->createOrderFacade->createOrder($orderData);
+        return $this->placeOrderFacade->placeOrder($orderData);
     }
 }

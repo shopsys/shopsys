@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
-class CreateOrderFacade
+class PlaceOrderFacade
 {
     public function __construct(
         protected readonly OrderStatusRepository $orderStatusRepository,
@@ -25,7 +25,7 @@ class CreateOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(
+    public function placeOrder(
         OrderData $orderData,
     ): Order {
         foreach ($orderData->getItemsByType(OrderItem::TYPE_DISCOUNT) as $discount) {

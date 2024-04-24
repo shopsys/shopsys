@@ -19,9 +19,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
-use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -36,7 +36,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \App\Model\Order\CreateOrderFacade $createOrderFacade
+     * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -45,7 +45,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     public function __construct(
         private readonly CustomerUserRepository $customerUserRepository,
-        private readonly CreateOrderFacade $createOrderFacade,
+        private readonly PlaceOrderFacade $placeOrderFacade,
         private readonly OrderDataFactory $orderDataFactory,
         private readonly Domain $domain,
         private readonly CurrencyFacade $currencyFacade,
@@ -814,7 +814,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
         );
 
-        $order = $this->createOrderFacade->createOrder($orderData);
+        $order = $this->placeOrderFacade->placeOrder($orderData);
 
         $referenceName = self::ORDER_PREFIX . $order->getId();
         $this->addReference($referenceName, $order);

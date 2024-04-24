@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
-use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -44,7 +44,7 @@ class CreateOrderMutation extends AbstractMutation
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade $createOrderFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -63,7 +63,7 @@ class CreateOrderMutation extends AbstractMutation
         protected readonly CartWatcherFacade $cartWatcherFacade,
         protected readonly Domain $domain,
         protected readonly OrderProcessor $orderProcessor,
-        protected readonly CreateOrderFacade $createOrderFacade,
+        protected readonly PlaceOrderFacade $placeOrderFacade,
         protected readonly OrderInputFactory $orderInputFactory,
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerUserFacade $customerUserFacade,
@@ -106,7 +106,7 @@ class CreateOrderMutation extends AbstractMutation
             $orderData,
         );
 
-        $order = $this->createOrderFacade->createOrder($orderData);
+        $order = $this->placeOrderFacade->placeOrder($orderData);
 
         if ($customerUser instanceof CustomerUser) {
             /** @var string|null $deliveryAddressUuid */
