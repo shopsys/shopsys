@@ -305,6 +305,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
             $orderData,
         );
 
-        return $this->createOrderFacade->createOrder($orderData, null);
+        return $this->createOrderFacade->createOrder($orderData);
     }
 }

@@ -1,6 +1,7 @@
 shopsys_framework:
     order:
         processing_middlewares:
+            - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetCustomerUserMiddleware'
             - 'App\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddTransportMiddleware'
             - 'Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddPaymentMiddleware'

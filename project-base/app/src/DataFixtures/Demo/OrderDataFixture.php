@@ -814,7 +814,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
         );
 
-        $order = $this->createOrderFacade->createOrder($orderData, $customerUser);
+        $order = $this->createOrderFacade->createOrder($orderData);
 
         $referenceName = self::ORDER_PREFIX . $order->getId();
         $this->addReference($referenceName, $order);

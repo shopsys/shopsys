@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
@@ -24,13 +23,10 @@ class CreateOrderFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function createOrder(
         OrderData $orderData,
-        //@todo maybe customer user is not necessary as it may be part of orderdata - to avoid misuse
-        ?CustomerUser $customerUser,
     ): Order {
         foreach ($orderData->getItemsByType(OrderItem::TYPE_DISCOUNT) as $discount) {
             $discount->promoCode->decreaseRemainingUses();
@@ -48,7 +44,7 @@ class CreateOrderFacade
             $orderData,
             $orderNumber,
             $orderUrlHash,
-            $customerUser,
+            $orderData->customerUser,
         );
 
         $this->em->persist($order);

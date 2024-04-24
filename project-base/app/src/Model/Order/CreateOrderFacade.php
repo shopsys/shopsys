@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\CreateOrderFacade as BaseCreateOrderFaca
 /**
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
  * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
- * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData)
  * @method fillOrderItems(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method fillOrderDiscounts(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method fillOrderProducts(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)

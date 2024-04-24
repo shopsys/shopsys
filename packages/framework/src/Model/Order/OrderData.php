@@ -244,6 +244,11 @@ class OrderData
      */
     public $totalPricesByItemType = [];
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public $customerUser;
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];

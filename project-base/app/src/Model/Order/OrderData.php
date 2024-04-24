@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @property \App\Model\Order\Item\OrderItemData[] $items
  * @method \App\Model\Order\Item\OrderItemData[] getItemsByType(string $type)
  * @method addItem(\App\Model\Order\Item\OrderItemData $item)
+ * @property \App\Model\Customer\User\CustomerUser $customerUser
  */
 class OrderData extends BaseOrderData
 {

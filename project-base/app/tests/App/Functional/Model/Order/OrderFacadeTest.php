@@ -116,7 +116,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
             $orderInput,
             $orderData,
         );
-        $order = $this->createOrderFacade->createOrder($orderData, null);
+        $order = $this->createOrderFacade->createOrder($orderData);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
 

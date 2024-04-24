@@ -106,7 +106,7 @@ class CreateOrderMutation extends AbstractMutation
             $orderData,
         );
 
-        $order = $this->createOrderFacade->createOrder($orderData, $customerUser);
+        $order = $this->createOrderFacade->createOrder($orderData);
 
         if ($customerUser instanceof CustomerUser) {
             /** @var string|null $deliveryAddressUuid */
