@@ -216,7 +216,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
             return null;
         }
 
-        return static::UNIQUE_IDENTIFIER_PREFIX . $this->mainVariantId;
+        return static::UNIQUE_IDENTIFIER_PREFIX . '-' . $this->mainVariantId;
     }
 
     /**
