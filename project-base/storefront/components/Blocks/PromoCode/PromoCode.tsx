@@ -17,7 +17,9 @@ import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCar
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { useCalcElementHeight } from 'utils/ui/useCalcElementHeight';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
+const ErrorPopup = dynamic(() =>
+    import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+);
 
 type TransportAndPaymentErrorsType = {
     promoCode: {

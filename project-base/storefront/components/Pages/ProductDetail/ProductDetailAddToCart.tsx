@@ -18,7 +18,7 @@ type ProductDetailAddToCartProps = {
 };
 
 const AddToCartPopup = dynamic(() =>
-    import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
+    import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
 );
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {

@@ -19,9 +19,12 @@ import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup), {
-    ssr: false,
-});
+const ErrorPopup = dynamic(
+    () => import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+    {
+        ssr: false,
+    },
+);
 
 export const TransportAndPaymentContent: FC = () => {
     const router = useRouter();

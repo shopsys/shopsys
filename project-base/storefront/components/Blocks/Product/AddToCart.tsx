@@ -13,7 +13,7 @@ import { useAddToCart } from 'utils/cart/useAddToCart';
 import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>
-    import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
+    import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
 );
 
 type AddToCartProps = {

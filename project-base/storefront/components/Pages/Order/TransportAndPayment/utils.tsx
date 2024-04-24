@@ -31,10 +31,7 @@ import { logException } from 'utils/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
 
 const PickupPlacePopup = dynamic(
-    () =>
-        import('components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/PickupPlacePopup').then(
-            (component) => component.PickupPlacePopup,
-        ),
+    () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
     {
         ssr: false,
     },
