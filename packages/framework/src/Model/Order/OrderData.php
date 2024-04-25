@@ -329,6 +329,25 @@ class OrderData
     }
 
     /**
+     * @param string[] $itemTypes
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceForItemTypes(array $itemTypes): Price
+    {
+        $totalPrice = new Price(Money::zero(), Money::zero());
+
+        foreach ($itemTypes as $itemType) {
+            if ($itemType === OrderItem::TYPE_DISCOUNT) {
+                $totalPrice = $totalPrice->subtract($this->totalPricesByItemType[$itemType]);
+            } else {
+                $totalPrice = $totalPrice->add($this->totalPricesByItemType[$itemType]);
+            }
+        }
+
+        return $totalPrice;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function getTotalPriceWithoutDiscountTransportAndPayment(): Price

@@ -77,7 +77,7 @@ class TransportAndPaymentWatcherFacade
             $orderData,
         );
 
-        $productsPrice = $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]->subtract($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
+        $productsPrice = $orderData->getTotalPriceForItemTypes([OrderItem::TYPE_PRODUCT, OrderItem::TYPE_DISCOUNT]);
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {
             $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
