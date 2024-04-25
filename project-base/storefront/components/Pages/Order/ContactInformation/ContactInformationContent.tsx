@@ -127,7 +127,7 @@ export const ContactInformationWrapper: FC = () => {
 
         let deliveryAddressUuid = null;
 
-        if (formValues.deliveryAddressUuid !== '') {
+        if (formValues.deliveryAddressUuid !== '' && !currentCart.pickupPlace) {
             deliveryAddressUuid = formValues.deliveryAddressUuid;
         }
 
