@@ -13,7 +13,9 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustomerUserFacade;
@@ -43,6 +45,10 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
  * @property \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
  * @property \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
  * @property \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+ * @property \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+ * @method updateCustomerUserByOrder(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Order\Order $order, string|null $deliveryAddressUuid, bool $isSubscribeToNewsletter)
+ * @method \App\Model\Customer\DeliveryAddress|null resolveDeliveryAddress(string|null $deliveryAddressUuid, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Customer\DeliveryAddress|null createDeliveryAddressForAmendingCustomerUserData(\App\Model\Order\Order $order)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
@@ -59,6 +65,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
+     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
@@ -75,8 +83,10 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerDataFactoryInterface $customerDataFactory,
         BillingAddressFacade $billingAddressFacade,
         CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
-        private NewsletterFacade $newsletterFacade,
-        private HashGenerator $hashGenerator,
+        DeliveryAddressFactory $deliveryAddressFactory,
+        DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        private readonly NewsletterFacade $newsletterFacade,
+        private readonly HashGenerator $hashGenerator,
     ) {
         parent::__construct(
             $em,
@@ -91,6 +101,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $customerDataFactory,
             $billingAddressFacade,
             $customerUserRefreshTokenChainFacade,
+            $deliveryAddressFactory,
+            $deliveryAddressDataFactory,
         );
     }
 

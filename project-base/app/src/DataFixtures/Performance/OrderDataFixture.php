@@ -138,7 +138,7 @@ class OrderDataFixture
             $orderData,
         );
 
-        $this->placeOrderFacade->placeOrder($orderData);
+        $this->placeOrderFacade->createOrder($orderData);
     }
 
     /**

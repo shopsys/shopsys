@@ -5,12 +5,28 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
+use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
 class PlaceOrderFacade
 {
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     */
     public function __construct(
         protected readonly OrderStatusRepository $orderStatusRepository,
         protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
@@ -18,20 +34,53 @@ class PlaceOrderFacade
         protected readonly OrderFactory $orderFactory,
         protected readonly EntityManagerInterface $em,
         protected readonly OrderItemFactory $orderItemFactory,
+        protected readonly OrderMailFacade $orderMailFacade,
+        protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
+        protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly CustomerUserFacade $customerUserFacade,
     ) {
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param string|null $deliveryAddressUuid
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function placeOrder(
+        OrderData $orderData,
+        ?string $deliveryAddressUuid = null,
+    ): Order {
+        foreach ($orderData->getItemsByType(OrderItem::TYPE_DISCOUNT) as $discount) {
+            $discount->promoCode->decreaseRemainingUses();
+        }
+
+        $order = $this->createOrder($orderData);
+
+        $customerUser = $order->getCustomerUser();
+
+        if ($customerUser !== null) {
+            $this->customerUserFacade->updateCustomerUserByOrder(
+                $customerUser,
+                $order,
+                $deliveryAddressUuid,
+                (bool)$orderData->newsletterSubscription,
+            );
+        } else {
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($order->getEmail(), $order->getDomainId());
+        }
+
+        $this->orderMailFacade->sendEmail($order);
+        $this->placedOrderMessageDispatcher->dispatchPlacedOrderMessage($order->getId());
+
+        return $order;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function placeOrder(
-        OrderData $orderData,
-    ): Order {
-        foreach ($orderData->getItemsByType(OrderItem::TYPE_DISCOUNT) as $discount) {
-            $discount->promoCode->decreaseRemainingUses();
-        }
-
+    public function createOrder(OrderData $orderData): Order
+    {
         if ($orderData->status === null) {
             $status = $this->orderStatusRepository->getDefault();
             $orderData->status = $status;
