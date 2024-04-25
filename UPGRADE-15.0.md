@@ -788,6 +788,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add new tests to `ProductListLoggedCustomerTest` and `ProductListNotLoggedCustomerTest` classes
 -   see #project-base-diff to update your project
 
+#### fix builds ([#3131](https://github.com/shopsys/shopsys/pull/3131))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
