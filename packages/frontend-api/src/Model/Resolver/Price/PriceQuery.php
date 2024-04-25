@@ -6,11 +6,8 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use ArrayObject;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -18,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
@@ -32,7 +28,6 @@ class PriceQuery extends AbstractQuery
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -41,13 +36,10 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
      */
     public function __construct(
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
-        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,
@@ -56,9 +48,7 @@ class PriceQuery extends AbstractQuery
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly OrderApiFacade $orderApiFacade,
-        protected readonly OrderProcessor $orderProcessor,
-        protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly CartPriceProvider $cartPriceProvider,
     ) {
     }
 
@@ -118,16 +108,7 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentPaymentPrice($payment);
         }
 
-        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
-        $orderInput->setPayment($payment);
-        $orderData = $this->orderDataFactory->create();
-
-        $orderData = $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
-
-        return $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT];
+        return $this->cartPriceProvider->getPaymentPrice($cart, $payment, $this->domain->getCurrentDomainConfig());
     }
 
     /**
@@ -168,16 +149,7 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentTransportPrice($transport);
         }
 
-        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
-        $orderInput->setTransport($transport);
-        $orderData = $this->orderDataFactory->create();
-
-        $orderData = $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
-
-        return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT];
+        return $this->cartPriceProvider->getTransportPrice($cart, $transport, $this->domain->getCurrentDomainConfig());
     }
 
     /**

@@ -7,34 +7,21 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class CartTransportDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly TransportFacade $transportFacade,
-        protected readonly CurrencyFacade $currencyFacade,
-        protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly OrderProcessor $orderProcessor,
-        protected readonly OrderInputFactory $orderInputFactory,
-        protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly CartPriceProvider $cartPriceProvider,
     ) {
     }
 
@@ -69,15 +56,10 @@ class CartTransportDataFactory
      */
     protected function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
     {
-        $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getDomainConfigById($domainId));
-        $orderInput->setTransport($transport);
-
-        $orderData = $this->orderProcessor->process(
-            $orderInput,
-            $orderData,
-        );
-
-        return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT]->getPriceWithVat();
+        return $this->cartPriceProvider->getTransportPrice(
+            $cart,
+            $transport,
+            $this->domain->getDomainConfigById($domainId),
+        )->getPriceWithVat();
     }
 }
