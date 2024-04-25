@@ -63,7 +63,7 @@ export const BreadcrumbsSpan: FC = ({ tid }) => (
 
 const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey }> = ({ href, type, children }) => (
     <ExtendedNextLink
-        className="hidden text-primaryDark no-underline font-bold text-[13px] last-of-type:inline lg:inline hover:no-underline lg:text-primaryDark"
+        className="hidden text-primaryDark no-underline font-semibold text-[13px] last-of-type:inline lg:inline hover:no-underline lg:text-primaryDark font-secondary"
         href={href}
         type={type}
     >

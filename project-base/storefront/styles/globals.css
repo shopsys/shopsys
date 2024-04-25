@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    @apply min-h-full;
+    @apply min-h-full [font-feature-settings:'lnum'_1];
 }
 
 body,
@@ -35,11 +35,15 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 .h1,
 .h2,
 .h3,
-.h4 {
-    @apply font-bold;
+.h4,
+.h5,
+.h6 {
+    @apply font-secondary font-semibold;
 }
 
 h1,

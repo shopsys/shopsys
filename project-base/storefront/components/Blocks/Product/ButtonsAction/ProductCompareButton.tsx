@@ -18,8 +18,11 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
 
     return (
         <div
-            className={twMergeCustom('flex cursor-pointer items-center gap-2 p-2 text-primaryDark', className)}
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
+            className={twMergeCustom(
+                'flex cursor-pointer items-center gap-2 p-2 text-primaryDark font-secondary font-semibold',
+                className,
+            )}
             onClick={toggleProductInComparison}
         >
             <CompareIcon className={twMergeCustom(isProductInComparison && 'text-secondary')} />

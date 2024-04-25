@@ -34,6 +34,7 @@ module.exports = {
         },
         fontFamily: {
             default: ['var(--font-inter)'],
+            secondary: ['var(--font-raleway)'],
         },
         zIndex: {
             hidden: -1000,

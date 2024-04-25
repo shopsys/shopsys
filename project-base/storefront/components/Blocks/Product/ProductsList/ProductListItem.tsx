@@ -97,7 +97,9 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         )}
                     </div>
 
-                    <div className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark">{product.fullName}</div>
+                    <div className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark font-secondary">
+                        {product.fullName}
+                    </div>
 
                     <ProductPrice productPrice={product.price} />
 

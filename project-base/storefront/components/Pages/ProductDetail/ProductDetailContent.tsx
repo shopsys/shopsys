@@ -85,7 +85,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
                         <div className="bg-grayLight rounded-xl p-6 flex flex-col gap-4">
-                            <div className="text-2xl font-bold text-primaryDark">
+                            <div className="text-2xl font-bold text-primaryDark font-secondary">
                                 {formatPrice(product.price.priceWithVat)}
                             </div>
 
