@@ -1,0 +1,87 @@
+mutation CreateMinimalOrderMutation(
+    $cartUuid: Uuid,
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
+    $telephone: String!,
+    $street: String!,
+    $city: String!,
+    $postcode: String!,
+    $country: String!,
+    $onCompanyBehalf: Boolean!,
+    $differentDeliveryAddress: Boolean!,
+    $deliveryAddressUuid: Uuid,
+) {
+    CreateOrder(
+        input: {
+            cartUuid: $cartUuid
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            telephone: $telephone
+            street: $street
+            city: $city
+            postcode: $postcode
+            country: $country
+            onCompanyBehalf: $onCompanyBehalf
+            differentDeliveryAddress: $differentDeliveryAddress
+            deliveryAddressUuid: $deliveryAddressUuid
+        }
+    ) {
+        order {
+            transport {
+                name
+            }
+            payment {
+                name
+            }
+            status
+            totalPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            items {
+                name
+                unitPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                totalPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                quantity
+                vatRate
+                unit
+            }
+            firstName
+            lastName
+            email
+            telephone
+            companyName
+            companyNumber
+            companyTaxNumber
+            street
+            city
+            postcode
+            country {
+                code
+            }
+            differentDeliveryAddress
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry {
+                code
+            }
+            note
+        }
+    }
+}

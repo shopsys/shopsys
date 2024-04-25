@@ -1458,21 +1458,21 @@ export type TypeOrderInput = {
   companyTaxNumber: InputMaybe<Scalars['String']['input']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String']['input'];
-  /** Delivery address identifier */
+  /** Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.) */
   deliveryAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
-  /** City name for delivery (required when differentDeliveryAddress is true) */
+  /** City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryCity: InputMaybe<Scalars['String']['input']>;
   /** Company name for delivery */
   deliveryCompanyName: InputMaybe<Scalars['String']['input']>;
-  /** Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true) */
+  /** Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryCountry: InputMaybe<Scalars['String']['input']>;
-  /** First name of the contact person for delivery (required when differentDeliveryAddress is true) */
+  /** First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryFirstName: InputMaybe<Scalars['String']['input']>;
-  /** Last name of the contact person for delivery (required when differentDeliveryAddress is true) */
+  /** Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryLastName: InputMaybe<Scalars['String']['input']>;
-  /** Zip code for delivery (required when differentDeliveryAddress is true) */
+  /** Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryPostcode: InputMaybe<Scalars['String']['input']>;
-  /** Street name for delivery (required when differentDeliveryAddress is true) */
+  /** Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
   deliveryStreet: InputMaybe<Scalars['String']['input']>;
   /** Contact telephone number for delivery */
   deliveryTelephone: InputMaybe<Scalars['String']['input']>;

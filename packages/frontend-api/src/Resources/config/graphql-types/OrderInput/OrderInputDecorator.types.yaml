@@ -8,6 +8,7 @@ OrderInputDecorator:
             -   Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder: ~
             -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder: ~
             -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
+            -   Shopsys\FrontendApiBundle\Component\Constraints\DeliveryAddressUuid: ~
         fields:
             cartUuid:
                 type: "Uuid"
@@ -135,30 +136,28 @@ OrderInputDecorator:
                 description: "Determines whether to deliver products to a different address than the billing one"
             deliveryAddressUuid:
                 type: "Uuid"
-                description: "Delivery address identifier"
+                description: "Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.)"
                 defaultValue: null
             deliveryFirstName:
                 type: "String"
-                description: "First name of the contact person for delivery (required when differentDeliveryAddress is true)"
+                description: "First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter first name of contact person"
-                            groups: "differentDeliveryAddress"
+                            groups: "differentDeliveryAddressWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "First name of contact person cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryLastName:
                 type: "String"
-                description: "Last name of the contact person for delivery (required when differentDeliveryAddress is true)"
+                description: "Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter last name of contact person"
-                            groups: "differentDeliveryAddress"
+                            groups: "differentDeliveryAddressWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "Last name of contact person cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryCompanyName:
                 type: "String"
                 description: "Company name for delivery"
@@ -166,7 +165,6 @@ OrderInputDecorator:
                     -   Length:
                             max: 100
                             maxMessage: "Company name cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryTelephone:
                 type: "String"
                 description: "Contact telephone number for delivery"
@@ -174,49 +172,44 @@ OrderInputDecorator:
                     -   Length:
                             max: 30
                             maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryStreet:
                 type: "String"
-                description: "Street name for delivery (required when differentDeliveryAddress is true)"
+                description: "Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter street"
-                            groups: "differentDeliveryAddress"
+                            groups: "differentDeliveryAddressWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "Street name cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryCity:
                 type: "String"
-                description: "City name for delivery (required when differentDeliveryAddress is true)"
+                description: "City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter city"
-                            groups: "differentDeliveryAddress"
+                            groups: "differentDeliveryAddressWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "City name cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryPostcode:
                 type: "String"
-                description: "Zip code for delivery (required when differentDeliveryAddress is true)"
+                description: "Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter zip code"
-                            groups: "differentDeliveryAddress"
+                            groups: "differentDeliveryAddressWithoutPreselected"
                     -   Length:
                             max: 30
                             maxMessage: "Zip code cannot be longer than {{ limit }} characters"
-                            groups: "differentDeliveryAddress"
             deliveryCountry:
                 type: "String"
-                description: "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)"
+                description: "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please choose country"
-                            groups: "differentDeliveryAddress"
+                            groups: "differentDeliveryAddressWithoutPreselected"
                     -   Shopsys\FrameworkBundle\Form\Constraints\Country:
-                            groups: "differentDeliveryAddress"
 
             note:
                 type: "String"
