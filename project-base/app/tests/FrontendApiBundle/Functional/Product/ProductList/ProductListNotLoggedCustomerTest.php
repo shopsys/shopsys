@@ -171,6 +171,28 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    public function testAddProductCreatesNewListWithNewUuidWhenUuidOfCustomerUserListIsProvided(
+        string $productListType,
+    ): void {
+        $customerUserProductListUuid = $this->getCustomerUserProductListUuid($productListType);
+        $productToAddId = 69;
+        $productToAdd = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productToAddId);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddProductToListMutation.graphql', [
+            'productListUuid' => $customerUserProductListUuid,
+            'productUuid' => $productToAdd->getUuid(),
+            'type' => $productListType,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'AddProductToList');
+
+        $this->assertNotSame($customerUserProductListUuid, $data['uuid']);
+        $this->assertSame($productListType, $data['type']);
+        $this->assertSame([$productToAddId], array_column($data['products'], 'id'));
+    }
+
+    /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param string $productListType
+     */
     public function testAddProductCreatesNewList(string $productListType): void
     {
         $productToAddId = 69;
@@ -464,5 +486,18 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 
         $this->assertTrue($originalAnonymousWishlist === null, 'Original anonymous wishlist should not exist anymore');
         $this->assertTrue($originalAnonymousComparison === null, 'Original anonymous comparison should not exist anymore');
+    }
+
+    /**
+     * @param string $productListType
+     * @return string
+     */
+    private function getCustomerUserProductListUuid(string $productListType): string
+    {
+        return match ($productListType) {
+            ProductListTypeEnum::COMPARISON => ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID,
+            ProductListTypeEnum::WISHLIST => ProductListDataFixture::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID,
+            default => throw new UnknownProductListTypeException($productListType),
+        };
     }
 }
