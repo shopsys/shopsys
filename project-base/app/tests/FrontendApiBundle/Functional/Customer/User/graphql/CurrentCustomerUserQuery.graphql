@@ -1,0 +1,48 @@
+query CurrentCustomerUserQuery {
+    currentCustomerUser {
+        __typename
+        firstName
+        lastName
+        email
+        telephone
+        newsletterSubscription
+        street
+        city
+        postcode
+        country {
+            code
+        }
+        pricingGroup
+        defaultDeliveryAddress {
+            uuid
+            companyName
+            street
+            city
+            postcode
+            telephone
+            country {
+                code
+            }
+            firstName
+            lastName
+        }
+        deliveryAddresses {
+            uuid
+            companyName
+            street
+            city
+            postcode
+            telephone
+            country {
+                code
+            }
+            firstName
+            lastName
+        }
+        ... on CompanyCustomerUser {
+            companyName
+            companyNumber
+            companyTaxNumber
+        }
+    }
+}

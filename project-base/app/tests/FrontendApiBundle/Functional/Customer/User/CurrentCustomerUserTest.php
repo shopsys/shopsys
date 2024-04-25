@@ -24,260 +24,146 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
         $pricingGroupName = $customerUser->getPricingGroup()->getName();
 
-        $query = '
-{
-    query: currentCustomerUser {
-        __typename
-        firstName
-        lastName
-        email
-        telephone
-        newsletterSubscription
-        street
-        city
-        postcode
-        country {
-            code
-        }
-        pricingGroup
-        defaultDeliveryAddress {
-            uuid
-            companyName
-            street
-            city
-            postcode
-            telephone
-            country {
-                code
-            }
-            firstName
-            lastName
-        }
-        deliveryAddresses {
-            uuid
-            companyName
-            street
-            city
-            postcode
-            telephone
-            country {
-                code
-            }
-            firstName
-            lastName
-        }
-        ... on CompanyCustomerUser {
-            companyName
-            companyNumber
-            companyTaxNumber
-        }
-    }
-}
-        ';
-
-        $jsonExpected = '
-{
-    "data": {
-        "query": {
-            "__typename": "CompanyCustomerUser",
-            "firstName": "Jaromír",
-            "lastName": "Jágr",
-            "email": "no-reply@shopsys.com",
-            "telephone": "605000123",
-            "newsletterSubscription": true,
-            "street": "Hlubinská 10",
-            "city": "Ostrava",
-            "postcode": "70200",
-            "country": {
-                "code": "CZ"
-            },
-            "pricingGroup" : "' . $pricingGroupName . '",
-            "defaultDeliveryAddress": {
-                "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
-                "companyName": "Rockpoint",
-                "street": "Rudná 123",
-                "city": "Ostrava",
-                "postcode": "70030",
-                "telephone": "123456789",
-                "country": {
-                    "code": "CZ"
-                },
-                "firstName": "Eva",
-                "lastName": "Wallicová"
-            },
-            "deliveryAddresses": [
-                {
-                    "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
-                    "companyName": "Rockpoint",
-                    "street": "Rudná 123",
-                    "city": "Ostrava",
-                    "postcode": "70030",
-                    "telephone": "123456789",
-                    "country": {
-                        "code": "CZ"
-                    },
-                    "firstName": "Eva",
-                    "lastName": "Wallicová"
-                }
+        $expected = [
+            '__typename' => 'CompanyCustomerUser',
+            'firstName' => 'Jaromír',
+            'lastName' => 'Jágr',
+            'email' => 'no-reply@shopsys.com',
+            'telephone' => '605000123',
+            'newsletterSubscription' => true,
+            'street' => 'Hlubinská 10',
+            'city' => 'Ostrava',
+            'postcode' => '70200',
+            'country' => [
+                'code' => 'CZ',
             ],
-            "companyName": "Shopsys",
-            "companyNumber": "12345678",
-            "companyTaxNumber": "CZ65432123"
-        }
-    }
-}';
+            'pricingGroup' => $pricingGroupName,
+            'defaultDeliveryAddress' => [
+                'uuid' => $defaultDeliveryAddress->getUuid(),
+                'companyName' => 'Rockpoint',
+                'street' => 'Rudná 123',
+                'city' => 'Ostrava',
+                'postcode' => '70030',
+                'telephone' => '123456789',
+                'country' => [
+                    'code' => 'CZ',
+                ],
+                'firstName' => 'Eva',
+                'lastName' => 'Wallicová',
+            ],
+            'deliveryAddresses' => [
+                [
+                    'uuid' => $defaultDeliveryAddress->getUuid(),
+                    'companyName' => 'Rockpoint',
+                    'street' => 'Rudná 123',
+                    'city' => 'Ostrava',
+                    'postcode' => '70030',
+                    'telephone' => '123456789',
+                    'country' => [
+                        'code' => 'CZ',
+                    ],
+                    'firstName' => 'Eva',
+                    'lastName' => 'Wallicová',
+                ],
+            ],
+            'companyName' => 'Shopsys',
+            'companyNumber' => '12345678',
+            'companyTaxNumber' => 'CZ65432123',
+        ];
 
-        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CurrentCustomerUserQuery.graphql');
+        $data = $this->getResponseDataForGraphQlType($response, 'currentCustomerUser');
+
+        $this->assertEquals($expected, $data);
+    }
+
+    /**
+     * @return array{telephone: string, firstName: string, lastName: string, newsletterSubscription: false, street: string, city: string, country: string, postcode: string}
+     */
+    private function getJohnDoeBaseData(): array
+    {
+        return [
+            'telephone' => '123456321',
+            'firstName' => 'John',
+            'lastName' => 'Doe',
+            'newsletterSubscription' => false,
+            'street' => '123 Fake street',
+            'city' => 'Springfield',
+            'country' => 'CZ',
+            'postcode' => '54321',
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function assertJohnDoeBaseData(array $data): void
+    {
+        $this->assertSame('John', $data['firstName']);
+        $this->assertSame('Doe', $data['lastName']);
+        $this->assertSame('123456321', $data['telephone']);
+        $this->assertSame('no-reply@shopsys.com', $data['email']);
+        $this->assertSame('123 Fake street', $data['street']);
+        $this->assertSame('Springfield', $data['city']);
+        $this->assertSame('CZ', $data['country']['code']);
+        $this->assertSame('54321', $data['postcode']);
+        $this->assertFalse($data['newsletterSubscription']);
     }
 
     public function testChangePersonalData(): void
     {
-        $query = '
-mutation {
-    ChangePersonalData(input: {
-        telephone: "123456321"
-        firstName: "John"
-        lastName: "Doe"
-        newsletterSubscription: false
-        street: "123 Fake street"
-        city: "Springfield"
-        country: "CZ"
-        postcode: "54321"
-    }) {
-        firstName
-        lastName,
-        telephone,
-        email
-        street
-        city
-        country {
-            code
-        }
-        postcode
-    }
-}';
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            $this->getJohnDoeBaseData(),
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
 
-        $jsonExpected = '
-{
-    "data": {
-        "ChangePersonalData": {
-            "firstName": "John",
-            "lastName": "Doe",
-            "telephone": "123456321",
-            "email": "no-reply@shopsys.com",
-            "street": "123 Fake street",
-            "city": "Springfield",
-            "country": {
-                "code": "CZ"
-            },
-            "postcode": "54321"
-        }
-    }
-}';
-
-        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+        $this->assertJohnDoeBaseData($data);
     }
 
     public function testEditCustomerCompany(): void
     {
-        $mutation = 'mutation {
-            ChangePersonalData(input: {
-                telephone: "123456321"
-                firstName: "John"
-                lastName: "Doe"
-                newsletterSubscription: false
-                street: "123 Fake street"
-                city: "Springfield"
-                country: "CZ"
-                postcode: "54321"
-                companyCustomer: true
-                companyName: "AirLocks inc."
-                companyNumber: "98765432"
-                companyTaxNumber: "AL987654321"
-            }) {
-                firstName
-                lastName
-                telephone
-                email
-                street
-                city
-                country {
-                    code
-                }
-                postcode
-                ...on CompanyCustomerUser {
-                    companyName
-                    companyNumber
-                    companyTaxNumber
-                }
-            }
-        }';
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            [
+                ...$this->getJohnDoeBaseData(),
+                'companyCustomer' => true,
+                'companyName' => 'AirLocks inc.',
+                'companyNumber' => '98765432',
+                'companyTaxNumber' => 'AL987654321',
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
 
-        $jsonExpectedTemplate = '{
-            "data": {
-                "%s": {
-                    "firstName": "John",
-                    "lastName": "Doe",
-                    "telephone": "123456321",
-                    "email": "no-reply@shopsys.com",
-                    "street": "123 Fake street",
-                    "city": "Springfield",
-                    "country": {
-                        "code": "CZ"
-                    },
-                    "postcode": "54321",
-                    "companyName" : "AirLocks inc.",
-                    "companyNumber" : "98765432",
-                    "companyTaxNumber" : "AL987654321"
-                }
-            }
-        }';
+        $this->assertJohnDoeBaseData($data);
+        $this->assertSame('AirLocks inc.', $data['companyName']);
+        $this->assertSame('98765432', $data['companyNumber']);
+        $this->assertSame('AL987654321', $data['companyTaxNumber']);
 
-        $this->assertQueryWithExpectedJson($mutation, sprintf($jsonExpectedTemplate, 'ChangePersonalData'));
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CurrentCustomerUserQuery.graphql');
+        $data = $this->getResponseDataForGraphQlType($response, 'currentCustomerUser');
 
-        $query = '{
-            currentCustomerUser {
-                firstName
-                lastName
-                telephone
-                email
-                street
-                city
-                country {
-                    code
-                }
-                postcode
-                ...on CompanyCustomerUser {
-                    companyName
-                    companyNumber
-                    companyTaxNumber
-                }
-            }
-        }';
-
-        $this->assertQueryWithExpectedJson($query, sprintf($jsonExpectedTemplate, 'currentCustomerUser'));
+        $this->assertJohnDoeBaseData($data);
+        $this->assertSame('AirLocks inc.', $data['companyName']);
+        $this->assertSame('98765432', $data['companyNumber']);
+        $this->assertSame('AL987654321', $data['companyTaxNumber']);
     }
 
     public function testChangePersonalDataWithWrongData(): void
     {
-        $query = '
-mutation {
-    ChangePersonalData(input: {
-        telephone: "1234567890123456789012345678901"
-        firstName: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s"
-        lastName: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s"
-        newsletterSubscription: false
-        street: "123 Fake street"
-        city: "Springfield"
-        country: "CZ"
-        postcode: "54321"
-    }) {
-    firstName
-        lastName,
-        telephone,
-        email
-    }
-}';
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            [
+                'telephone' => '1234567890123456789012345678901',
+                'firstName' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
+                'lastName' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
+                'newsletterSubscription' => false,
+                'street' => '123 Fake street',
+                'city' => 'Springfield',
+                'country' => 'CZ',
+                'postcode' => '54321',
+            ],
+        );
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedViolationMessages = [
@@ -301,7 +187,6 @@ mutation {
             ),
         ];
 
-        $response = $this->getResponseContentForQuery($query);
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $responseData = $this->getErrorsExtensionValidationFromResponse($response);
 
@@ -318,38 +203,16 @@ mutation {
 
     public function testChangePersonalDataWithWrongCompanyData(): void
     {
-        $mutation = 'mutation {
-            ChangePersonalData(input: {
-                telephone: "123456321"
-                firstName: "John"
-                lastName: "Doe"
-                newsletterSubscription: false
-                street: "123 Fake street"
-                city: "Springfield"
-                country: "CZ"
-                postcode: "54321"
-                companyCustomer: true
-                companyName: "  "
-                companyNumber: "9876543210123212313212321321321312313123213213131231321321323"
-                companyTaxNumber: "123"
-            }) {
-                firstName
-                lastName
-                telephone
-                email
-                street
-                city
-                country {
-                    code
-                }
-                postcode
-                ...on CompanyCustomerUser {
-                    companyName
-                    companyNumber
-                    companyTaxNumber
-                }
-            }
-        }';
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            [
+                ...$this->getJohnDoeBaseData(),
+                'companyCustomer' => true,
+                'companyName' => '  ',
+                'companyNumber' => '9876543210123212313212321321321312313123213213131231321321323',
+                'companyTaxNumber' => '123',
+            ],
+        );
 
         $expectedViolationCodes = [
             0 => NotBlank::IS_BLANK_ERROR,
@@ -357,7 +220,6 @@ mutation {
             2 => Regex::REGEX_FAILED_ERROR,
         ];
 
-        $response = $this->getResponseContentForQuery($mutation);
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $responseData = $this->getErrorsExtensionValidationFromResponse($response);
 

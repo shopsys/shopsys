@@ -1,0 +1,46 @@
+mutation ChangePersonalDataMutation(
+    $firstName: String!
+    $lastName: String!
+    $telephone: String!
+    $newsletterSubscription: Boolean!
+    $street: String!
+    $city: String!
+    $country: String!
+    $postcode: String!
+    $companyCustomer: Boolean! = false
+    $companyName: String
+    $companyNumber: String
+    $companyTaxNumber: String
+) {
+    ChangePersonalData(input: {
+        telephone: $telephone
+        firstName: $firstName
+        lastName: $lastName
+        newsletterSubscription: $newsletterSubscription
+        street: $street
+        city: $city
+        country: $country
+        postcode: $postcode
+        companyCustomer: $companyCustomer
+        companyName: $companyName
+        companyNumber: $companyNumber
+        companyTaxNumber: $companyTaxNumber
+    }) {
+        firstName
+        lastName,
+        telephone,
+        email
+        street
+        city
+        country {
+            code
+        }
+        postcode
+        newsletterSubscription
+        ...on CompanyCustomerUser {
+            companyName
+            companyNumber
+            companyTaxNumber
+        }
+    }
+}
