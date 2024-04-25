@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\SetDeliveryAddressByDeliveryAddressUuidMiddleware;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
@@ -72,15 +73,16 @@ class CreateOrderMutation extends AbstractMutation
             );
         }
 
+        /** @var string|null $deliveryAddressUuid */
+        $deliveryAddressUuid = $input['deliveryAddressUuid'];
+
         $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
+        $orderInput->addAdditionalData(SetDeliveryAddressByDeliveryAddressUuidMiddleware::DELIVERY_ADDRESS_UUID, $deliveryAddressUuid);
 
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
         );
-
-        /** @var string|null $deliveryAddressUuid */
-        $deliveryAddressUuid = $input['deliveryAddressUuid'];
 
         $order = $this->placeOrderFacade->placeOrder($orderData, $deliveryAddressUuid);
 
