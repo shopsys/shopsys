@@ -28,7 +28,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     return (
         <div className="flex flex-wrap items-center gap-y-4 border-t border-graySlate py-4 first-of-type:border-0 lg:flex-nowrap lg:gap-5">
             <ExtendedNextLink
-                className="flex items-center gap-5 font-bold no-underline lg:flex-1"
+                className="flex items-center gap-5 font-bold no-underline hover:no-underline lg:flex-1"
                 href={productUrl}
                 type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
                 onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
@@ -61,7 +61,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 />
             </div>
 
-            <div className="basis-2/6 text-right font-bold leading-5 text-primary lg:basis-2/12">
+            <div className="basis-2/6 text-right font-bold leading-5 text-primaryDark lg:basis-2/12">
                 {formatPrice(product.price.priceWithVat)}
             </div>
         </div>

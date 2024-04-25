@@ -11,7 +11,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({ productPrice }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <div className="text-lg font-bold text-primary">
+        <div className="text-lg font-bold text-primaryDark">
             {productPrice.isPriceFrom && t('From') + '\u00A0'}
             {formatPrice(productPrice.priceWithVat)}
         </div>

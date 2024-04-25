@@ -2,11 +2,11 @@ import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistBut
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
-import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
-import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
+import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
@@ -19,7 +19,6 @@ import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEven
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
@@ -30,7 +29,6 @@ type ProductDetailContentProps = {
 
 export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, fetching }) => {
     const { t } = useTranslation();
-    const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
 
     const { isLuigisBoxActive } = useDomainConfig();
@@ -62,25 +60,41 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                                 {product.name} {product.nameSuffix}
                             </ProductDetailHeading>
 
-                            <ProductDetailCode>
-                                {t('Code')}: {product.catalogNumber}
-                            </ProductDetailCode>
+                            <div className="flex gap-4 text-[13px]">
+                                {product.brand && (
+                                    <div>
+                                        <span>{t('Brand')}: </span>
+                                        <ExtendedNextLink
+                                            className="text-dark hover:text-primary"
+                                            href={product.brand.slug}
+                                            type="brand"
+                                        >
+                                            {product.brand.name}
+                                        </ExtendedNextLink>
+                                    </div>
+                                )}
+
+                                <div>
+                                    {t('Code')}: {product.catalogNumber}
+                                </div>
+                            </div>
                         </div>
 
-                        {product.shortDescription && <div>{product.shortDescription}</div>}
+                        {product.shortDescription && <div className="text-sm">{product.shortDescription}</div>}
 
-                        {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
+                        {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
-                        <div className="flex flex-col gap-4 rounded bg-blueLight p-3">
-                            <div className="text-2xl font-bold text-primary">
+                        <div className="bg-grayLight rounded-xl p-6 flex flex-col gap-4">
+                            <div className="text-2xl font-bold text-primaryDark">
                                 {formatPrice(product.price.priceWithVat)}
                             </div>
+
+                            <ProductDetailAvailability product={product} />
+
                             <DeferredProductDetailAddToCart product={product} />
+
+                            <DeferredComparisonAndWishlistButtons product={product} />
                         </div>
-
-                        <ProductDetailAvailability product={product} scrollTarget={scrollTarget} />
-
-                        <DeferredComparisonAndWishlistButtons product={product} />
                     </div>
                 </div>
 
@@ -90,7 +104,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                     relatedProducts={product.relatedProducts}
                 />
 
-                <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
                 {isLuigisBoxActive && (
                     <DeferredRecommendedProducts
                         itemUuids={[product.uuid]}

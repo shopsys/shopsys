@@ -62,7 +62,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                 <SubmitButton isWithDisabledLook={hasDisabledLook} onClick={onNextStepHandler}>
                     {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
-                    <ArrowIcon className="relative top-0 ml-1 -rotate-90 text-white" />
+                    <ArrowIcon className="relative top-0 ml-1 -rotate-90" />
                 </SubmitButton>
             </div>
         </div>

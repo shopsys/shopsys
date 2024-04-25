@@ -1,46 +1,43 @@
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
-import { RefObject } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailAvailabilityProps = {
     product: TypeProductDetailFragment;
-    scrollTarget: RefObject<HTMLUListElement>;
 };
 
-export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ product, scrollTarget }) => {
+export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ product }) => {
     const { t } = useTranslation();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const scrollOnClickHandler = () => {
-        if (scrollTarget.current !== null) {
-            scrollTarget.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    };
+    if (!product.availableStoresCount) {
+        return null;
+    }
 
     return (
-        <div className="rounded bg-whiteSnow px-3 py-4">
-            <div
-                className={twJoin(
-                    'flex cursor-pointer items-center font-bold no-underline hover:no-underline',
-                    product.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                        'text-secondary hover:text-secondary',
-                    product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-red hover:text-red',
-                )}
-                onClick={scrollOnClickHandler}
-            >
-                {product.availability.name}
-                <ArrowIcon className="ml-1 text-dark" />
-            </div>
-
-            {!!product.availableStoresCount && (
-                <span className="mr-1 text-sm">
-                    {t('This item is available immediately in {{ count }} stores', {
-                        count: product.availableStoresCount,
-                    })}
-                </span>
+        <button
+            className={twJoin(
+                'mr-1 text-sm flex cursor-pointer items-center no-underline hover:no-underline font-secondary',
+                product.availability.status === TypeAvailabilityStatusEnum.InStock &&
+                    'text-secondary hover:text-secondary',
+                product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-red hover:text-red',
             )}
-        </div>
+            onClick={() =>
+                updatePortalContent(
+                    <Popup>
+                        <ProductDetailAvailabilityList storeAvailabilities={product.storeAvailabilities} />
+                    </Popup>,
+                )
+            }
+        >
+            {`${product.availability.name}. ${t('This item is available immediately in {{ count }} stores', {
+                availability: product.availability.name,
+                count: product.availableStoresCount,
+            })}`}
+        </button>
     );
 };

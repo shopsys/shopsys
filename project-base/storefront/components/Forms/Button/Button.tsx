@@ -21,8 +21,8 @@ export const Button: FC<ButtonProps> = forwardRef(
                 tid={tid}
                 type="button"
                 className={twMergeCustom(
-                    'inline-flex w-auto cursor-pointer items-center justify-center gap-2 rounded text-center font-bold uppercase outline-none transition-all hover:no-underline border-2 hover:text-white max-vl:active:scale-105',
-                    size === 'small' ? 'py-1 px-4 text-sm' : 'py-3 px-8',
+                    'inline-flex w-auto cursor-pointer items-center justify-center gap-2 rounded text-center font-bold uppercase outline-none transition-all hover:no-underline border-2 hover:text-white max-vl:active:scale-105 font-secondary',
+                    size === 'small' ? 'py-1 px-4 text-sm' : 'py-2.5 px-8',
                     variant === 'primary' &&
                         'border-secondary bg-secondary text-white hover:bg-secondaryLight hover:border-secondaryLight',
                     variant === 'secondary' &&

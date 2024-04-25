@@ -67,7 +67,7 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {!!value && (
                 <div
-                    className="absolute right-11 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-graySlate p-2"
+                    className="absolute right-11 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-primaryLight text-whiteSnow p-2"
                     onClick={onClear}
                 >
                     <CloseIcon />

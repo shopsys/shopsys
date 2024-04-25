@@ -37,7 +37,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
 
             <div className="text-sm">{quantity + product.unit.name}</div>
 
-            <div className="w-28 break-words text-right text-sm font-bold text-primary">
+            <div className="w-28 break-words text-right text-sm font-bold text-primaryDark">
                 {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
             </div>
 

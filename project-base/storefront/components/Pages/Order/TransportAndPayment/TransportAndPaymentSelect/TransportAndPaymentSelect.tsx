@@ -123,7 +123,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <PacketeryContainer />
             <div>
                 <div tid={TIDs.pages_order_transport}>
-                    <div className="h3 mb-3">{t('Choose transport')}</div>
+                    <div className="h4 mb-3">{t('Choose transport')}</div>
                     <ul>
                         {transport
                             ? renderTransportListItem(transport, true)
@@ -141,7 +141,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     <div className="relative mt-12" tid={TIDs.pages_order_payment}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 
-                        <div className="h3 mb-3">{t('Choose payment')}</div>
+                        <div className="h4 mb-3">{t('Choose payment')}</div>
 
                         <ul>
                             {payment

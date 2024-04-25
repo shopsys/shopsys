@@ -1,5 +1,5 @@
 import { ProductsListContent } from './ProductsList/ProductsListContent';
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -7,7 +7,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
-import { twMergeCustom } from 'utils/twMerge';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { wait } from 'utils/wait';
 
@@ -83,7 +82,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     return (
         <div className="relative" tid={tid}>
             {isWithControls && (
-                <div className="absolute -top-11 right-0 hidden items-center justify-center vl:flex ">
+                <div className="absolute -top-8 right-0 hidden items-center justify-center vl:flex gap-2">
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
                     <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
                 </div>
@@ -111,13 +110,11 @@ type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabl
 
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
     <button
+        className="cursor-pointer disabled:cursor-auto rounded border-none p-1 outline-none transition text-dark hover:text-primary disabled:text-graySlate"
         disabled={isDisabled}
         title={title}
-        className={twMergeCustom(
-            'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-skyBlue pt-1 text-whiteSnow outline-none transition hover:bg-skyBlue disabled:bg-graySlate',
-        )}
         onClick={onClick}
     >
-        <ArrowIcon className={twMergeCustom('-translate-y-[2px] rotate-90', type === 'next' && '-rotate-90')} />
+        <ArrowRightIcon className={twJoin('w-5', type === 'prev' && 'rotate-180')} />
     </button>
 );

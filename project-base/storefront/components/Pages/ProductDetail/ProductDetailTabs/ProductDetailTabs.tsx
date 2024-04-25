@@ -35,9 +35,9 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
             {!!parameters.length && (
                 <TabsContent headingTextMobile={t('Parameters')}>
-                    <Table className="border-0 p-0">
+                    <Table className="border-0 p-0 max-w-screen-lg mx-auto">
                         {parameters.map((parameter) => (
-                            <Row key={parameter.uuid} className="border-t border-graySlate first:border-t-0">
+                            <Row key={parameter.uuid} className="even:bg-grayLight border-none">
                                 <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
                                     {parameter.name}
                                 </Cell>

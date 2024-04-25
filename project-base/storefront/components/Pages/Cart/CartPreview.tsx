@@ -28,7 +28,7 @@ export const CartPreview: FC = () => {
                 <CartPreviewRow tid={TIDs.pages_cart_cartpreview_total}>
                     <CartPreviewCell>{t('You pay')}</CartPreviewCell>
                     <CartPreviewCell isAlignRight>
-                        <strong className="text-2xl text-primary">
+                        <strong className="text-2xl text-primaryDark">
                             {formatPrice(cart.totalItemsPrice.priceWithVat)}
                         </strong>
                     </CartPreviewCell>

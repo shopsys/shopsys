@@ -20,7 +20,7 @@ export const ContactInformationAddress: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{t('Billing address')}</div>
+            <div className="h4 mb-3">{t('Billing address')}</div>
             <FormLine className="flex-none lg:w-[65%]">
                 <TextInputControlled
                     control={formProviderMethods.control}

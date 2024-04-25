@@ -48,35 +48,36 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         }
     };
 
-    if (product.isSellingDenied) {
-        return <p>{t('This item can no longer be purchased')}</p>;
-    }
-
     return (
-        <div className="text-sm vl:text-base">
-            <div className="flex items-center justify-between">
-                <Spinbox
-                    defaultValue={1}
-                    id={product.uuid}
-                    max={product.stockQuantity}
-                    min={1}
-                    ref={spinboxRef}
-                    step={1}
-                />
-                <div className="ml-2 flex-1">
-                    <Button
-                        className="w-full"
-                        isDisabled={fetching}
-                        tid={TIDs.pages_productdetail_addtocart_button}
-                        variant="primary"
-                        onClick={onAddToCartHandler}
-                    >
-                        {fetching ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
+        <>
+            {product.isSellingDenied ? (
+                <p className="text-red">{t('This item can no longer be purchased')}</p>
+            ) : (
+                <div className="text-sm vl:text-base">
+                    <div className="flex items-center justify-between">
+                        <Spinbox
+                            defaultValue={1}
+                            id={product.uuid}
+                            max={product.stockQuantity}
+                            min={1}
+                            ref={spinboxRef}
+                            step={1}
+                        />
+                        <div className="ml-2 flex-1">
+                            <Button
+                                className="whitespace-nowrap px-4 sm:px-8 w-fit h-12"
+                                isDisabled={fetching}
+                                tid={TIDs.pages_productdetail_addtocart_button}
+                                onClick={onAddToCartHandler}
+                            >
+                                {fetching ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
 
-                        {t('Add to cart')}
-                    </Button>
+                                {t('Add to cart')}
+                            </Button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };

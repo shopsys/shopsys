@@ -15,7 +15,7 @@ export const ContactInformationUser: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{t('Customer information')}</div>
+            <div className="h4 mb-3">{t('Customer information')}</div>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}

@@ -86,7 +86,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             <ChatIcon className="mr-3 w-6 text-2xl text-primary xl:mr-5" />
                             <ExtendedNextLink
                                 passHref
-                                className="relative flex-grow text-primary md:text-lg"
+                                className="relative flex-grow text-primary md:text-lg no-underline hover:no-underline"
                                 href={contactUrl}
                             >
                                 {t('Do you have any questions?')}

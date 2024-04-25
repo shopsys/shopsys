@@ -94,7 +94,7 @@ p {
 }
 
 a {
-    @apply cursor-pointer text-primary underline outline-none hover:text-primaryLight hover:underline;
+    @apply cursor-pointer text-primaryDark underline outline-none hover:text-primary hover:underline;
 }
 
 b,
@@ -173,47 +173,24 @@ input[type='number'] {
     }
 }
 
+.Toastify__toast--info {
+    @apply !bg-orange;
+}
+
+.Toastify__toast--success {
+    @apply !bg-secondary text-white;
+}
+
+.Toastify__toast--error {
+    @apply !bg-red;
+}
+
+.Toastify__progress-bar-theme--colored {
+    @apply !bg-black bg-opacity-20;
+}
+
 .Toastify__close-button {
     @apply !self-center !text-dark !opacity-100;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--info {
-    @apply !border !border-primary !bg-[#f2f2ff];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--info .Toastify__toast-icon {
-    @apply !text-primary;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--info
-    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--info {
-    @apply !bg-secondaryLight;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--success {
-    @apply !border !border-green !bg-[#ddf9f5];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--success .Toastify__toast-icon {
-    @apply !text-green;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--success
-    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--success {
-    @apply !bg-[#81f7da];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--error {
-    @apply !border !border-red !bg-[#ffc4c4];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--error .Toastify__toast-icon {
-    @apply !text-red;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--error
-    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
-    @apply !bg-[#f2a2a2];
 }
 
 /* CSS Transition styles */

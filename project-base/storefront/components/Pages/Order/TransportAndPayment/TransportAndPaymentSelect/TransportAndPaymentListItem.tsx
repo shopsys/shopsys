@@ -10,7 +10,7 @@ export const TransportAndPaymentListItem: FC<TransportAndPaymentListItemProps> =
     <li
         className={twMergeCustom(
             'relative order-1 flex min-w-full cursor-pointer flex-wrap gap-2 border-b border-graySlate p-3',
-            isActive && 'border-b-0 bg-graySlate',
+            isActive && 'border-b-0 bg-grayLight',
             className,
         )}
     >

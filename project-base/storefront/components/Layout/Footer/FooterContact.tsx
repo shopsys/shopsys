@@ -8,7 +8,7 @@ export const FooterContact: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3 text-center uppercase text-white">{t('Follow Us')}</div>
+            <div className="h4 mb-3 text-center uppercase text-white">{t('Follow Us')}</div>
 
             <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-graySlate">
                 <FooterContactSocialsItem href="#" title="Instagram">

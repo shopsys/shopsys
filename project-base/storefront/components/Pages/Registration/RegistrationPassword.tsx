@@ -13,7 +13,7 @@ export const RegistrationPassword: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{t('Create a password')}</div>
+            <div className="h4 mb-3">{t('Create a password')}</div>
             <FormColumn>
                 <PasswordInputControlled
                     control={formProviderMethods.control}

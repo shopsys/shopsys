@@ -106,7 +106,7 @@ export const clearAndFillInRegistrationFormPasswords = (password: string) => {
         .type(password);
     cy.get('#registration-form-passwordSecond')
         .should('have.attr', 'placeholder', placeholder.passwordAgain)
-        .clear()
+        .clear({ force: true })
         .type(password);
 };
 

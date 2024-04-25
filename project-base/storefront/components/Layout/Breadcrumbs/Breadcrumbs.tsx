@@ -14,7 +14,7 @@ type BreadcrumbsProps = {
 };
 
 export const breadcrumbsTwClass =
-    'flex items-center gap-2 border-b-2 border-graySlate py-3 lg:ml-4 lg:border-none lg:py-0';
+    'flex items-center gap-3 border-b-2 border-graySlate py-3 lg:ml-4 lg:border-none lg:py-0';
 
 export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className }) => {
     const { t } = useTranslation();
@@ -36,32 +36,34 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 
                 <BreadcrumbsLink href="/">{t('Home page')}</BreadcrumbsLink>
 
-                <BreadcrumbsSpan>/</BreadcrumbsSpan>
+                <BreadcrumbsSpan />
 
                 {linkedBreadcrumbs.map((linkedBreadcrumb, index) => (
                     <Fragment key={index}>
                         <BreadcrumbsLink href={linkedBreadcrumb.slug} type={type}>
                             {linkedBreadcrumb.name}
                         </BreadcrumbsLink>
-                        <BreadcrumbsSpan>/</BreadcrumbsSpan>
+                        <BreadcrumbsSpan />
                     </Fragment>
                 ))}
 
-                <BreadcrumbsSpan tid={TIDs.breadcrumbs_tail}>{lastBreadcrumb.name}</BreadcrumbsSpan>
+                <span className="hidden font-semibold text-[13px] lg:inline-block" tid={TIDs.breadcrumbs_tail}>
+                    {lastBreadcrumb.name}
+                </span>
             </div>
         </>
     );
 };
 
-export const BreadcrumbsSpan: FC = ({ children, tid }) => (
-    <span className="hidden text-graySlate lg:inline-block" tid={tid}>
-        {children}
+export const BreadcrumbsSpan: FC = ({ tid }) => (
+    <span className="hidden text-graySlate lg:flex items-center" tid={tid}>
+        <ArrowIcon className="-rotate-90 w-3" />
     </span>
 );
 
 const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey }> = ({ href, type, children }) => (
     <ExtendedNextLink
-        className="hidden text-graySlate no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
+        className="hidden text-primaryDark no-underline font-bold text-[13px] last-of-type:inline lg:inline hover:no-underline lg:text-primaryDark"
         href={href}
         type={type}
     >

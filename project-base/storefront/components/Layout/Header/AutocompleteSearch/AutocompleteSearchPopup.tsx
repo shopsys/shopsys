@@ -104,7 +104,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                 index < AUTOCOMPLETE_PRODUCT_LIMIT && (
                                     <li key={product.slug} className="text-sm">
                                         <ExtendedNextLink
-                                            className="flex cursor-pointer items-center gap-2 text-dark no-underline outline-none lg:flex-col lg:items-start"
+                                            className="flex cursor-pointer items-center gap-2 text-dark no-underline hover:no-underline outline-none lg:flex-col lg:items-start"
                                             href={product.slug}
                                             type={
                                                 product.__typename === 'Variant' || product.isMainVariant
@@ -131,7 +131,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
                                             <span className="flex-1">{product.fullName}</span>
 
-                                            <span className="font-bold text-primary">
+                                            <span className="font-bold text-primaryDark">
                                                 {formatPrice(product.price.priceWithVat)}
                                             </span>
                                         </ExtendedNextLink>
@@ -265,7 +265,7 @@ const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPa
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, onClick, href, type }, _) => (
         <ExtendedNextLink
-            className="text-sm font-bold text-dark no-underline"
+            className="text-sm font-bold text-dark no-underline hover:no-underline"
             href={href}
             type={type}
             onClick={onClick}

@@ -36,7 +36,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{t('Delivery address')}</div>
+            <div className="h4 mb-3">{t('Delivery address')}</div>
 
             <CheckboxControlled
                 control={formProviderMethods.control}
