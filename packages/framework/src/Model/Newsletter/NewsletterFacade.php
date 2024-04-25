@@ -26,7 +26,7 @@ class NewsletterFacade
      * @param string $email
      * @param int $domainId
      */
-    public function addSubscribedEmail($email, $domainId)
+    public function addSubscribedEmailIfNotExists(string $email, int $domainId): void
     {
         if ($this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
             return;
@@ -74,19 +74,38 @@ class NewsletterFacade
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
      */
-    public function getNewsletterSubscriberById(int $id)
+    public function getNewsletterSubscriberById(int $id): NewsletterSubscriber
     {
-        return $this->newsletterRepository->getNewsletterSubscriberById($id);
+        $newsletterSubscriber = $this->newsletterRepository->findNewsletterSubscriberById($id);
+
+        if ($newsletterSubscriber === null) {
+            throw new NewsletterSubscriberNotFoundException();
+        }
+
+        return $newsletterSubscriber;
     }
 
     /**
-     * @param int $id
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber $newsletterSubscriber
      */
-    public function deleteById(int $id)
+    public function delete(NewsletterSubscriber $newsletterSubscriber): void
     {
-        $newsletterSubscriber = $this->getNewsletterSubscriberById($id);
-
         $this->em->remove($newsletterSubscriber);
         $this->em->flush();
+    }
+
+    /**
+     * @param string $email
+     * @param int $domainId
+     */
+    public function deleteSubscribedEmailIfExists(string $email, int $domainId): void
+    {
+        $newsletterSubscriber = $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomainId($email, $domainId);
+
+        if ($newsletterSubscriber === null) {
+            return;
+        }
+
+        $this->delete($newsletterSubscriber);
     }
 }

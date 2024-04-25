@@ -10,10 +10,11 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
-use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberNotFoundException;
 use SplFileObject;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -70,21 +71,22 @@ class NewsletterController extends AdminBaseController
      * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): Response
     {
         try {
-            $email = $this->newsletterFacade->getNewsletterSubscriberById($id)->getEmail();
+            $newsletterSubscriber = $this->newsletterFacade->getNewsletterSubscriberById($id);
 
-            $this->newsletterFacade->deleteById($id);
+            $this->newsletterFacade->delete($newsletterSubscriber);
 
             $this->addSuccessFlashTwig(
                 t('Subscriber <strong>{{ email }}</strong> deleted'),
                 [
-                    'email' => $email,
+                    'email' => $newsletterSubscriber->getEmail(),
                 ],
             );
-        } catch (CustomerUserNotFoundException $ex) {
+        } catch (NewsletterSubscriberNotFoundException) {
             $this->addErrorFlash(t('Selected subscriber doesn\'t exist.'));
         }
 

@@ -108,14 +108,10 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = parent::edit($customerUserId, $customerUserUpdateData, $deliveryAddress);
 
-        $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId());
-
-        if ($newsletterSubscriber === null && $customerUser->isNewsletterSubscription()) {
-            $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
-        }
-
-        if ($newsletterSubscriber !== null && !$customerUser->isNewsletterSubscription()) {
-            $this->newsletterFacade->deleteById($newsletterSubscriber->getId());
+        if ($customerUser->isNewsletterSubscription()) {
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
+        } else {
+            $this->newsletterFacade->deleteSubscribedEmailIfExists($customerUser->getEmail(), $customerUser->getDomainId());
         }
 
         return $customerUser;
