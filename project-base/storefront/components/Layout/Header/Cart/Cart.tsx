@@ -6,6 +6,7 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -33,6 +34,7 @@ export const Cart: FC = ({ className }) => {
 
             <ExtendedNextLink
                 href={cartUrl}
+                tid={TIDs.header_cart_link}
                 className={twJoin(
                     'min-w-24 hidden items-center gap-x-3 rounded h-12 bg-orangeLight pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}

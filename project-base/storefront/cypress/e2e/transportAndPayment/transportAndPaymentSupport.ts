@@ -1,5 +1,5 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
-import { OpeningHoursOfDay } from '../../../graphql/types';
+import { TypeOpeningHoursOfDay } from '../../../graphql/types';
 import { transport } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
@@ -55,7 +55,7 @@ export const changeDayOfWeekInChangeTransportMutationResponse = (dayOfWeek: numb
     });
 };
 
-const getStaticOpeningHoursOfDays = (): OpeningHoursOfDay[] => [
+const getStaticOpeningHoursOfDays = (): TypeOpeningHoursOfDay[] => [
     {
         __typename: 'OpeningHoursOfDay',
         date: '2024-02-19T00:00:00+01:00',

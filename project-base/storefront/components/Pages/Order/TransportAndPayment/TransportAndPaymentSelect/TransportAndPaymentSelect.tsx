@@ -130,7 +130,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             : transports.map((transportItem) => renderTransportListItem(transportItem, false))}
                     </ul>
                     {!!transport && (
-                        <ResetButton text={t('Change transport type')} onClick={resetTransportAndPayment} />
+                        <ResetButton
+                            text={t('Change transport type')}
+                            tid={TIDs.reset_transport_button}
+                            onClick={resetTransportAndPayment}
+                        />
                     )}
                 </div>
                 {transport !== null && (
@@ -145,7 +149,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 : transport.payments.map((paymentItem) => renderPaymentListItem(paymentItem, false))}
                         </ul>
                         {payment !== null && (
-                            <ResetButton text={t('Change payment type')} onClick={resetPaymentAndGoPayBankSwift} />
+                            <ResetButton
+                                text={t('Change payment type')}
+                                tid={TIDs.reset_payment_button}
+                                onClick={resetPaymentAndGoPayBankSwift}
+                            />
                         )}
                     </div>
                 )}
@@ -156,8 +164,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
 type ResetButtonProps = { text: string; onClick: () => void };
 
-const ResetButton: FC<ResetButtonProps> = ({ text, onClick }) => (
-    <button className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm" onClick={onClick}>
+const ResetButton: FC<ResetButtonProps> = ({ text, onClick, tid }) => (
+    <button className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm" tid={tid} onClick={onClick}>
         {text}
         <ArrowIcon className="ml-2" />
     </button>

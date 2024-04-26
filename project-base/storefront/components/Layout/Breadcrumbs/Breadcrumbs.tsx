@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
@@ -46,14 +47,16 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                     </Fragment>
                 ))}
 
-                <BreadcrumbsSpan>{lastBreadcrumb.name}</BreadcrumbsSpan>
+                <BreadcrumbsSpan tid={TIDs.breadcrumbs_tail}>{lastBreadcrumb.name}</BreadcrumbsSpan>
             </div>
         </>
     );
 };
 
-export const BreadcrumbsSpan: FC = ({ children }) => (
-    <span className="hidden text-greyLight lg:inline-block">{children}</span>
+export const BreadcrumbsSpan: FC = ({ children, tid }) => (
+    <span className="hidden text-greyLight lg:inline-block" tid={tid}>
+        {children}
+    </span>
 );
 
 const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey }> = ({ href, type, children }) => (

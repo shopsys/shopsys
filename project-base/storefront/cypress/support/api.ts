@@ -45,6 +45,49 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
     });
 });
 
+Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
+    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+
+    return cy.getCookie('accessToken').then((cookie) => {
+        const accessToken = cookie?.value;
+        let cartUuid: string | null = null;
+
+        if (!accessToken && currentAppStoreAsString) {
+            cartUuid = JSON.parse(currentAppStoreAsString).state.cartUuid;
+        }
+
+        return cy
+            .request({
+                method: 'POST',
+                url: 'graphql/',
+                body: JSON.stringify({
+                    operationName: 'ApplyPromoCodeToCartMutation',
+                    query: `mutation ApplyPromoCodeToCartMutation($input: ApplyPromoCodeToCartInput!) { 
+                    ApplyPromoCodeToCart(input: $input) { 
+                        uuid 
+                        promoCode
+                    } 
+                }`,
+                    variables: {
+                        input: {
+                            cartUuid,
+                            promoCode,
+                        },
+                    },
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken ? { 'X-Auth-Token': 'Bearer ' + accessToken } : {}),
+                },
+            })
+            .its('body.data.ApplyPromoCodeToCart')
+            .then((cart) => {
+                expect(cart.uuid).equal(cartUuid);
+                expect(cart.promoCode).equal(promoCode);
+            });
+    });
+});
+
 Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickupPlaceIdentifier?: string) => {
     const currentAppStoreAsString = window.localStorage.getItem('app-store');
     if (!currentAppStoreAsString) {
@@ -150,7 +193,7 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
     });
 });
 
-Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDataInput) => {
+Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDataInput, shouldLogin = true) => {
     return cy
         .request({
             method: 'POST',
@@ -175,13 +218,15 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
         })
         .its('body.data.Register')
         .then((registrationResponse) => {
-            expect(registrationResponse.tokens.accessToken).to.be.a('string').and.not.be.empty;
-            expect(registrationResponse.tokens.refreshToken).to.be.a('string').and.not.be.empty;
-            cy.setCookie('accessToken', registrationResponse.tokens.accessToken, { path: '/' });
-            cy.setCookie('refreshToken', registrationResponse.tokens.refreshToken, {
-                expiry: Math.floor(Date.now() / 1000) + 3600 * 24 * 14,
-                path: '/',
-            });
+            if (shouldLogin) {
+                expect(registrationResponse.tokens.accessToken).to.be.a('string').and.not.be.empty;
+                expect(registrationResponse.tokens.refreshToken).to.be.a('string').and.not.be.empty;
+                cy.setCookie('accessToken', registrationResponse.tokens.accessToken, { path: '/' });
+                cy.setCookie('refreshToken', registrationResponse.tokens.refreshToken, {
+                    expiry: Math.floor(Date.now() / 1000) + 3600 * 24 * 14,
+                    path: '/',
+                });
+            }
         });
 });
 

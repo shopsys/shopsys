@@ -84,7 +84,10 @@ describe('Delivery address in order tests (logged-in user)', () => {
 
     it('should keep filled delivery address for logged-in user after page refresh', () => {
         cy.registerAsNewUser(
-            generateCustomerRegistrationData('keep-filled-delivery-address-logged-in-after-page-refresh@shopsys.com'),
+            generateCustomerRegistrationData(
+                'commonCustomer',
+                'keep-filled-delivery-address-logged-in-after-page-refresh@shopsys.com',
+            ),
         );
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
@@ -115,6 +118,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
     it('should keep filled delivery address for logged-in user after unchecking the checkbox for different delivery address and then checking it again', () => {
         cy.registerAsNewUser(
             generateCustomerRegistrationData(
+                'commonCustomer',
                 'keep-filled-delivery-address-logged-in-after-unchecking-and-checking@shopsys.com',
             ),
         );

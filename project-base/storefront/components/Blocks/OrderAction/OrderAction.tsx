@@ -49,7 +49,11 @@ export const OrderAction: FC<OrderActionProps> = ({
             )}
         >
             <div className="order-2 lg:order-1">
-                <ExtendedNextLink className="font-bold uppercase text-dark no-underline" href={buttonBackLink}>
+                <ExtendedNextLink
+                    className="font-bold uppercase text-dark no-underline"
+                    href={buttonBackLink}
+                    tid={TIDs.blocks_orderaction_back}
+                >
                     <ArrowIcon className="relative top-0 mr-1 rotate-90 text-greyLight" />
                     {buttonBack}
                 </ExtendedNextLink>

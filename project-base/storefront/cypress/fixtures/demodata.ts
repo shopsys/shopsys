@@ -4,6 +4,8 @@ export const buttonName = {
     login: 'Login',
 };
 
+export const password = 'user123';
+
 export const customer1 = {
     email: 'no-reply123@shopsys.com',
     emailRegistered: 'no-reply@shopsys.com',
@@ -13,7 +15,7 @@ export const customer1 = {
     billingStreet: 'fakturační ulice 1/15a',
     billingCity: 'fakturační město',
     billingPostCode: '70200',
-    password: 'user123',
+    password,
 };
 
 export const deliveryAddress = {
@@ -35,6 +37,7 @@ export const link = {
 export const orderNote = 'Just a tiny note in the order.';
 
 export const orderDetail = {
+    number: '1234567890',
     numberHeading: 'Order number 1234567890',
     creationDate: '10/26/1999 10:10 AM',
 };
@@ -69,6 +72,10 @@ export const placeholder = {
     coupone: 'Coupon',
     note: 'Note',
     company: 'Company',
+    companyName: 'Company name',
+    companyNumber: 'Company number',
+    companyTaxNumber: 'Tax number',
+    passwordAgain: 'Password again',
 };
 
 export const products = {
@@ -83,13 +90,16 @@ export const products = {
         uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
         url: '/philips-32pfl4308',
     },
+    lg47LA790VFHD: {
+        catnum: '5965879P',
+    },
     philips54CRT: {
         name: '54" Philips CRT 32PFL4308',
         catnum: 9176588,
     },
 } as const;
 
-export const quantityUnit = 'pc';
+export const promoCode = 'test';
 
 export const transport = {
     personalCollection: {
@@ -125,9 +135,13 @@ export const url = {
     },
     login: '/login',
     loginWithCustomerRedirect: '/login?r=customer',
-    customer: '/customer',
+    customer: {
+        index: '/customer',
+        orders: '/customer/orders',
+    },
     categoryElectronics: '/electronics',
     productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
+    registration: '/registration',
 } as const;
 
 export const DEFAULT_APP_STORE = {

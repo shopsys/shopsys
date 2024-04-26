@@ -2,6 +2,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -68,7 +69,13 @@ export const ContactInformationEmail: FC = () => {
                 }}
             />
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <Button className="mb-5" size="small" type="button" onClick={openLoginPopup}>
+                <Button
+                    className="mb-5"
+                    size="small"
+                    tid={TIDs.login_in_order_button}
+                    type="button"
+                    onClick={openLoginPopup}
+                >
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}

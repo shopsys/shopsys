@@ -7,6 +7,7 @@ import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/Skeleto
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
@@ -72,7 +73,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                     </Row>
                                 }
                             >
-                                {orders.map((order) => (
+                                {orders.map((order, index) => (
                                     <Row key={order.uuid}>
                                         <Cell>
                                             <ExtendedNextLink
@@ -116,6 +117,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                         </Cell>
                                         <Cell>
                                             <ExtendedNextLink
+                                                tid={TIDs.my_orders_link_ + index}
                                                 type="order"
                                                 href={{
                                                     pathname: customerOrderDetailUrl,

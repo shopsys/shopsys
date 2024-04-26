@@ -1,4 +1,5 @@
-import { products, url } from 'fixtures/demodata';
+import { fillInEmailAndPasswordInLoginPopup } from 'e2e/authentication/authenticationSupport';
+import { buttonName, url } from 'fixtures/demodata';
 import { checkUrl } from 'support';
 import { TIDs } from 'tids';
 
@@ -10,28 +11,13 @@ export const decreaseCartItemQuantityWithSpinbox = (listIndex = 0) => {
     cy.getByTID([[TIDs.pages_cart_list_item_, listIndex], TIDs.forms_spinbox_decrease]).click();
 };
 
-export const checkCartItemTotalPrice = (priceWithCurrency: string, listIndex = 0) => {
-    cy.getByTID([[TIDs.pages_cart_list_item_, listIndex], TIDs.pages_cart_list_item_totalprice]).contains(
-        priceWithCurrency,
-    );
-};
-
-export const checkCartTotalPrice = (priceWithCurrency: string) => {
-    cy.getByTID([TIDs.pages_cart_cartpreview_total]).contains(priceWithCurrency);
-};
-
 export const continueToTransportAndPaymentSelection = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).click();
+    cy.waitForStableDOM();
 };
 
-export const checkIfCorrectlyAddedHelloKittyToCart = () => {
-    checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.fullName);
-    cy.getByTID([[TIDs.pages_cart_list_item_, 0], TIDs.pages_cart_list_item_name]).contains(
-        products.helloKitty.fullName,
-    );
-
-    checkCartTotalPrice('€139.96');
-    checkUrl(url.cart);
+export const goBackToCartPage = () => {
+    cy.getByTID([TIDs.blocks_orderaction_back]).click();
 };
 
 export const addProductToCartFromProductList = (productCatnum: number) => {
@@ -40,7 +26,7 @@ export const addProductToCartFromProductList = (productCatnum: number) => {
         .click();
 };
 
-export const addProductToCartFromPromotedProductsOnHomepage = (productCatnum: number) => {
+export const addProductToCartFromPromotedProductsOnHomepage = (productCatnum: number | string) => {
     cy.getByTID([
         TIDs.blocks_product_slider_promoted_products,
         [TIDs.blocks_product_list_listeditem_, productCatnum],
@@ -60,4 +46,25 @@ export const searchProductByNameTypeEnterAndCheckResult = (productName: string, 
 export const checkProductAndGoToCartFromCartPopupWindow = (productName: string) => {
     cy.getByTID([TIDs.layout_popup, TIDs.blocks_product_addtocartpopup_product_name]).contains(productName);
     cy.getByTID([TIDs.layout_popup, TIDs.popup_go_to_cart_button]).click();
+};
+
+export const goToCartPageFromHeader = () => {
+    cy.getByTID([TIDs.header_cart_link]).click();
+    cy.waitForStableDOM();
+};
+
+export const goToHomepageFromHeader = () => {
+    cy.getByTID([TIDs.header_homepage_link]).click();
+    cy.waitForStableDOM();
+};
+
+export const checkAndCloseAddToCartPopup = () => {
+    cy.getByTID([TIDs.layout_popup]).should('be.visible');
+    cy.realPress('{esc}');
+};
+
+export const loginInThirdOrderStep = (password: string) => {
+    cy.getByTID([TIDs.login_in_order_button]).click();
+    fillInEmailAndPasswordInLoginPopup(undefined, password);
+    cy.getByTID([TIDs.layout_popup]).get('button').contains(buttonName.login).click();
 };

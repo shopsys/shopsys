@@ -105,6 +105,13 @@ export const clearAndFillDeliveryContactInThirdStep = (deliveryContact: {
         .type(deliveryContact.phone);
 };
 
+export const fillRegistrationInfoAfterOrder = (password: string) => {
+    cy.get('#registration-after-order-form-password')
+        .should('have.attr', 'placeholder', placeholder.password)
+        .type(password);
+    cy.get('[for="registration-after-order-form-privacyPolicy"]').find('div').first().click();
+};
+
 export const clickOnSendOrderButton = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).click();
 };
@@ -136,7 +143,7 @@ export const registerAndCreateOrderForDeliveryAddressTests = (
     secondPickupPlaceUuid?: string,
     secondPaymentUuid?: string,
 ) => {
-    cy.registerAsNewUser(generateCustomerRegistrationData(email));
+    cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
     cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
     cy.preselectTransportForTest(transport.czechPost.uuid);
     cy.preselectPaymentForTest(payment.onDelivery.uuid);
@@ -172,4 +179,11 @@ export const checkThatContactInformationWasRemovedFromLocalStorage = () => {
     }
 
     expect(currentAppStoreAsString).to.equal(JSON.stringify(DEFAULT_APP_STORE));
+};
+
+export const goToMyOrdersFromHeader = () => {
+    cy.getByTID([TIDs.my_account_link])
+        .should('be.visible')
+        .realHover()
+        .then(() => cy.getByTID([TIDs.header_my_orders_link]).should('be.visible').click());
 };

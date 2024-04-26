@@ -2,15 +2,15 @@ import {
     fillEmailInThirdStep,
     fillCustomerInformationInThirdStep,
     fillBillingAdressInThirdStep,
+    fillInNoteInThirdStep,
     clearEmailInThirdStep,
     clearPostcodeInThirdStep,
-    fillInNoteInThirdStep,
     clearAndFillDeliveryAdressInThirdStep,
     checkThatContactInformationWasRemovedFromLocalStorage,
 } from './orderSupport';
-import { DEFAULT_APP_STORE, customer1, deliveryAddress, orderNote, payment, transport, url } from 'fixtures/demodata';
+import { DEFAULT_APP_STORE, transport, payment, customer1, orderNote, deliveryAddress, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkUrl, clickOnLabel, loseFocus, takeSnapshotAndCompare } from 'support';
+import { checkUrl, takeSnapshotAndCompare, loseFocus, clickOnLabel } from 'support';
 import { TIDs } from 'tids';
 
 describe('Contact information page tests', () => {
@@ -44,7 +44,7 @@ describe('Contact information page tests', () => {
     });
 
     it('should redirect to cart page and not display contact information form if cart is empty and user is logged in', () => {
-        cy.registerAsNewUser(generateCustomerRegistrationData());
+        cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
         cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
         cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
@@ -56,7 +56,7 @@ describe('Contact information page tests', () => {
     });
 
     it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in', () => {
-        cy.registerAsNewUser(generateCustomerRegistrationData());
+        cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
         cy.addProductToCartForTest();
         cy.visitAndWaitForStableDOM(url.order.contactInformation);
 
@@ -86,7 +86,9 @@ describe('Contact information page tests', () => {
     });
 
     it('should keep changed contact information after page refresh for logged-in user', () => {
-        cy.registerAsNewUser(generateCustomerRegistrationData('refresh-page-contact-information@shopsys.com'));
+        cy.registerAsNewUser(
+            generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
+        );
         cy.addProductToCartForTest();
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
@@ -104,7 +106,9 @@ describe('Contact information page tests', () => {
     });
 
     it('should remove contact information after logout', () => {
-        cy.registerAsNewUser(generateCustomerRegistrationData('remove-contact-information-after-logout@shopsys.com'));
+        cy.registerAsNewUser(
+            generateCustomerRegistrationData('commonCustomer', 'remove-contact-information-after-logout@shopsys.com'),
+        );
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);

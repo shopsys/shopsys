@@ -28,17 +28,17 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 return;
             }
 
-                if (isNaN(newValue) || newValue < min) {
-                    spinboxRef.current.valueAsNumber = min;
-                } else if (newValue > max) {
-                    spinboxRef.current.valueAsNumber = max;
-                } else {
-                    spinboxRef.current.valueAsNumber = newValue;
-                }
+            if (isNaN(newValue) || newValue < min) {
+                spinboxRef.current.valueAsNumber = min;
+            } else if (newValue > max) {
+                spinboxRef.current.valueAsNumber = max;
+            } else {
+                spinboxRef.current.valueAsNumber = newValue;
+            }
 
-                if (onChangeValueCallback !== undefined) {
-                    onChangeValueCallback(spinboxRef.current.valueAsNumber);
-                }
+            if (onChangeValueCallback !== undefined) {
+                onChangeValueCallback(spinboxRef.current.valueAsNumber);
+            }
             setValue(spinboxRef.current.valueAsNumber);
         };
 
@@ -47,9 +47,9 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         }, [spinboxRef]);
 
         const onChangeValueHandler = (amountChange: number) => {
-                if (spinboxRef.current !== null) {
-                    setNewSpinboxValue(spinboxRef.current.valueAsNumber + amountChange);
-                }
+            if (spinboxRef.current !== null) {
+                setNewSpinboxValue(spinboxRef.current.valueAsNumber + amountChange);
+            }
         };
 
         useEffect(() => {
@@ -111,6 +111,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     max={max}
                     min={min}
                     ref={spinboxRef}
+                    tid={TIDs.spinbox_input}
                     type="number"
                     onInput={onInputHandler}
                 />

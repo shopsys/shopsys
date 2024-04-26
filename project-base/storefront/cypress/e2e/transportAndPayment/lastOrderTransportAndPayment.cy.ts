@@ -10,7 +10,7 @@ describe('Last order transport and payment select tests', () => {
             win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
         });
 
-        const registrationInput = generateCustomerRegistrationData();
+        const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput);
         cy.addProductToCartForTest();
         cy.preselectTransportForTest(transport.czechPost.uuid);
@@ -28,14 +28,14 @@ describe('Last order transport and payment select tests', () => {
         takeSnapshotAndCompare('preselected-last-order-transport-and-payment');
     });
 
-    it('should be able to change preselected transport and payment from last order for logged-in user', () => {
+    it('should be able to change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', () => {
         cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');
         changeSelectionOfTransportByName(transport.ppl.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');
-        changeSelectionOfPaymentByName(payment.cash.name);
+        changeSelectionOfPaymentByName(payment.onDelivery.name);
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');
 
         cy.reloadAndWaitForStableDOM();

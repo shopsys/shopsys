@@ -1,13 +1,10 @@
 import {
     addProductToCartFromProductList,
-    checkIfCorrectlyAddedHelloKittyToCart,
-    checkProductAndGoToCartFromCartPopupWindow,
     addProductToCartFromPromotedProductsOnHomepage,
     searchProductByNameTypeEnterAndCheckResult,
-    checkCartTotalPrice,
 } from './cartSupport';
 import { brandSencor, DEFAULT_APP_STORE, products, url } from 'fixtures/demodata';
-import { checkUrl } from 'support';
+import { takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Product add to cart tests', () => {
@@ -17,7 +14,7 @@ describe('Product add to cart tests', () => {
         });
     });
 
-    it('should add product to cart from brand list', () => {
+    it('should add product to cart from brand page', () => {
         cy.visitAndWaitForStableDOM(url.brandsOverwiev);
         cy.getByTID([[TIDs.blocks_simplenavigation_, 22]])
             .contains(brandSencor)
@@ -25,21 +22,55 @@ describe('Product add to cart tests', () => {
             .click();
         addProductToCartFromProductList(products.helloKitty.catnum);
 
-        checkIfCorrectlyAddedHelloKittyToCart();
+        takeSnapshotAndCompare('add-product-from-product-brand-page', 'viewport');
     });
 
     it('should add product to cart from product detail', () => {
         cy.visitAndWaitForStableDOM(products.helloKitty.url);
         cy.getByTID([TIDs.pages_productdetail_addtocart_button]).click();
 
-        checkIfCorrectlyAddedHelloKittyToCart();
+        takeSnapshotAndCompare('add-product-from-product-detail-page', 'viewport');
     });
 
-    it('should add product to cart from product list', () => {
+    it('should add product to cart from category page', () => {
         cy.visitAndWaitForStableDOM(url.categoryElectronics);
         addProductToCartFromProductList(products.helloKitty.catnum);
 
-        checkIfCorrectlyAddedHelloKittyToCart();
+        takeSnapshotAndCompare('add-product-from-category-page', 'viewport');
+    });
+
+    it('should add multiple products to cart from category page using spinbox buttons', () => {
+        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+
+        const spinboxIncreaseButton = cy
+            .getByTID([[TIDs.blocks_product_list_listeditem_, products.helloKitty.catnum], TIDs.forms_spinbox_increase])
+            .should('be.visible');
+        spinboxIncreaseButton.click();
+        spinboxIncreaseButton.click();
+        spinboxIncreaseButton.click();
+        spinboxIncreaseButton.click();
+
+        const spinboxDecreaseButton = cy
+            .getByTID([[TIDs.blocks_product_list_listeditem_, products.helloKitty.catnum], TIDs.forms_spinbox_decrease])
+            .should('be.visible');
+        spinboxDecreaseButton.click();
+        spinboxDecreaseButton.click();
+
+        addProductToCartFromProductList(products.helloKitty.catnum);
+
+        takeSnapshotAndCompare('add-multiple-products-from-category-page-using-spinbox-buttons', 'viewport');
+    });
+
+    it('should try to add more products to cart than allowed from category page using spinbox input, and the spinbox quantity should correct itself', () => {
+        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+
+        cy.getByTID([[TIDs.blocks_product_list_listeditem_, products.helloKitty.catnum], TIDs.spinbox_input])
+            .should('be.visible')
+            .type('3000');
+
+        addProductToCartFromProductList(products.helloKitty.catnum);
+
+        takeSnapshotAndCompare('add-multiple-products-from-category-page-using-spinbox-input', 'viewport');
     });
 
     it('should add variant product to cart from product detail', () => {
@@ -49,26 +80,21 @@ describe('Product add to cart tests', () => {
             TIDs.blocks_product_addtocart,
         ]).click();
 
-        checkProductAndGoToCartFromCartPopupWindow(products.philips54CRT.name);
-        cy.getByTID([[TIDs.pages_cart_list_item_, 0], TIDs.pages_cart_list_item_name]).contains(
-            products.philips54CRT.name,
-        );
-        checkCartTotalPrice('€492.40');
-        checkUrl(url.cart);
+        takeSnapshotAndCompare('add-product-from-variant-product-detail-page', 'viewport');
     });
 
     it('should add product to cart from promoted products on homepage', () => {
         cy.visitAndWaitForStableDOM('/');
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
 
-        checkIfCorrectlyAddedHelloKittyToCart();
+        takeSnapshotAndCompare('add-product-from-promoted-products-on-homepage', 'viewport');
     });
 
-    it('should add product to cart from search results list', () => {
+    it('should add product to cart from search results page', () => {
         cy.visitAndWaitForStableDOM('/');
         searchProductByNameTypeEnterAndCheckResult(products.helloKitty.name, products.helloKitty.catnum);
         addProductToCartFromProductList(products.helloKitty.catnum);
 
-        checkIfCorrectlyAddedHelloKittyToCart();
+        takeSnapshotAndCompare('add-product-from-search-results-page', 'viewport');
     });
 });
