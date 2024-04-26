@@ -45,6 +45,8 @@ class LuigisBoxProductFeedItemFacade
 
         foreach ($products as $product) {
             if ($product->isMainVariant()) {
+                yield $this->luigisBoxProductFeedItemFactory->create($product, $domainConfig);
+
                 $variants = $this->luigisBoxProductRepository->getAllVariantsByMainVariantId($product, $domainConfig->getId(), $pricingGroup);
                 $this->productUrlsBatchLoader->loadForProducts($variants, $domainConfig);
 
