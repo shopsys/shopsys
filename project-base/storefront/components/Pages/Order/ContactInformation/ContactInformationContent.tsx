@@ -4,7 +4,7 @@ import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformati
 import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
-import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
+import { SkeletonPageConfirmation } from 'components/Blocks/Skeleton/SkeletonPageConfirmation';
 import { Form } from 'components/Forms/Form/Form';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
@@ -218,7 +218,7 @@ export const ContactInformationWrapper: FC = () => {
     };
 
     if (orderCreating) {
-        return <SkeletonOrderContent />;
+        return <SkeletonPageConfirmation />;
     }
 
     return (
