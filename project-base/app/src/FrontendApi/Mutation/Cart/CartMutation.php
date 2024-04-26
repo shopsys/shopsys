@@ -116,13 +116,17 @@ class CartMutation extends AbstractMutation
 
         if (!$shouldMerge) {
             $this->cartFacade->deleteCart($cart);
-            $cart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+            $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         }
 
         $notAddedProducts = [];
         $addProductResults = [];
 
         foreach ($order->getProductItems() as $orderItem) {
+            if ($orderItem->getPriceWithoutVat()->isNegative()) {
+                continue;
+            }
+
             try {
                 $addProductResults[] = $this->cartFacade->addProductByUuidToCart($orderItem->getProduct()->getUuid(), $orderItem->getQuantity(), false, $cart);
             } catch (InvalidCartItemUserError) {
