@@ -19,6 +19,7 @@ export type DomainConfigType = {
         zoom: number;
     };
     gtmId?: string;
+    isLuigisBoxActive: boolean;
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {

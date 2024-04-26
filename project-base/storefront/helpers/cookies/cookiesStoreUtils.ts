@@ -1,8 +1,8 @@
 import { getCookies, setCookie } from 'cookies-next';
-import { OptionsType } from 'cookies-next/lib/types';
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 import { CookiesStoreState, useCookiesStore } from 'store/useCookiesStore';
+import { v4 as uuidV4 } from 'uuid';
 
 const COOKIES_STORE_NAME = 'cookiesStore' as const;
 const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
@@ -11,25 +11,22 @@ type CookiesType = {
     cookiesStore: string;
 };
 
-export const getCookiesStore = (context?: GetServerSidePropsContext) => {
+const getDefaultInitState = (): CookiesStoreState => ({
+    lastVisitedProductsCatnums: null,
+    userIdentifier: uuidV4(),
+});
+
+export const getCookiesStoreState = (context?: GetServerSidePropsContext): CookiesStoreState => {
     const { cookiesStore } = getCookies(context) as CookiesType;
 
-    return cookiesStore ? decodeURIComponent(cookiesStore) : null;
+    return cookiesStore ? JSON.parse(decodeURIComponent(cookiesStore)) : getDefaultInitState();
 };
 
 export const useCookiesStoreSync = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { setCookiesStoreState: setCookieStoreValue, ...storeValues } = useCookiesStore((state) => state);
+    const { setCookiesStoreState: setCookiesStoreStateOnClient, ...storeValues } = useCookiesStore((state) => state);
 
     useEffect(() => {
-        setCookieStore(storeValues);
+        setCookie(COOKIES_STORE_NAME, storeValues, { maxAge: THIRTY_DAYS_IN_SECONDS });
     }, [storeValues]);
-};
-
-const setCookieStore = (store: CookiesStoreState, options?: OptionsType) => {
-    const isStoreWithValues = !!Object.values(store).filter((storeValue) => storeValue !== undefined).length;
-
-    if (isStoreWithValues) {
-        setCookie(COOKIES_STORE_NAME, store, { maxAge: THIRTY_DAYS_IN_SECONDS, ...options });
-    }
 };

@@ -10,10 +10,10 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProviderInterface;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
 use Shopsys\LuigisBoxBundle\Model\Provider\SearchResultsProvider;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class CategoriesSearchResultsProvider extends SearchResultsProvider implements CategoriesSearchResultsProviderInterface
 {
@@ -40,8 +40,8 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         $paginator = new Paginator(
             function ($offset, $limit) use ($argument) {
                 return $this->luigisBoxBatchLoader->load(
-                    $this->luigisBoxBatchLoadDataFactory->create(
-                        LuigisBoxClient::TYPE_IN_LUIGIS_BOX_CATEGORY,
+                    $this->luigisBoxBatchLoadDataFactory->createForSearch(
+                        TypeInLuigisBoxEnum::CATEGORY,
                         $limit,
                         $offset,
                         $argument,
@@ -55,7 +55,7 @@ class CategoriesSearchResultsProvider extends SearchResultsProvider implements C
         $promise = $paginator->auto($argument, 0);
 
         $promise->then(function (ConnectionInterface $connection) {
-            $connection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_CATEGORY));
+            $connection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(TypeInLuigisBoxEnum::CATEGORY));
         });
 
         return $promise;

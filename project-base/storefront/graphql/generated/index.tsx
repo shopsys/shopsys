@@ -2169,6 +2169,8 @@ export type QueryApi = {
   promotedCategories: Array<CategoryApi>;
   /** Returns promoted products */
   promotedProducts: Array<ProductApi>;
+  /** Return recommended products from Luigi's Box by provided arguments */
+  recommendedProducts: Array<ProductApi>;
   /** Returns SEO settings for a specific page based on the url slug of that page */
   seoPage: Maybe<SeoPageApi>;
   /** Returns current settings */
@@ -2377,6 +2379,14 @@ export type QueryProductsSearchArgsApi = {
 };
 
 
+export type QueryRecommendedProductsArgsApi = {
+  itemUuids: InputMaybe<Array<Scalars['Uuid']['input']>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  recommendationType: RecommendationTypeApi;
+  userIdentifier: Scalars['Uuid']['input'];
+};
+
+
 export type QuerySeoPageArgsApi = {
   pageSlug: Scalars['String']['input'];
 };
@@ -2409,6 +2419,14 @@ export type QueryTransportArgsApi = {
 export type QueryTransportsArgsApi = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
+
+export enum RecommendationTypeApi {
+  BasketApi = 'basket',
+  BasketPopupApi = 'basket_popup',
+  CategoryApi = 'category',
+  ItemDetailApi = 'item_detail',
+  PersonalizedApi = 'personalized'
+}
 
 export type RecoverPasswordInputApi = {
   /** Customer user email. */
@@ -3607,6 +3625,16 @@ export type PromotedProductsQueryVariablesApi = Exact<{ [key: string]: never; }>
 
 
 export type PromotedProductsQueryApi = { __typename?: 'Query', promotedProducts: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, mainVariant: { __typename?: 'MainVariant', slug: string } | null, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> };
+
+export type RecommendedProductsQueryVariablesApi = Exact<{
+  userIdentifier: Scalars['Uuid']['input'];
+  recommendationType: RecommendationTypeApi;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  itemUuids: InputMaybe<Array<Scalars['Uuid']['input']> | Scalars['Uuid']['input']>;
+}>;
+
+
+export type RecommendedProductsQueryApi = { __typename?: 'Query', recommendedProducts: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, mainVariant: { __typename?: 'MainVariant', slug: string } | null, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> };
 
 export type RegistrationMutationVariablesApi = Exact<{
   input: RegistrationDataInputApi;
@@ -6062,6 +6090,22 @@ export const PromotedProductsQueryDocumentApi = gql`
 
 export function usePromotedProductsQueryApi(options?: Omit<Urql.UseQueryArgs<PromotedProductsQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<PromotedProductsQueryApi, PromotedProductsQueryVariablesApi>({ query: PromotedProductsQueryDocumentApi, ...options });
+};
+export const RecommendedProductsQueryDocumentApi = gql`
+    query RecommendedProductsQuery($userIdentifier: Uuid!, $recommendationType: RecommendationType!, $limit: Int, $itemUuids: [Uuid!]) {
+  recommendedProducts(
+    userIdentifier: $userIdentifier
+    recommendationType: $recommendationType
+    limit: $limit
+    itemUuids: $itemUuids
+  ) {
+    ...ListedProductFragment
+  }
+}
+    ${ListedProductFragmentApi}`;
+
+export function useRecommendedProductsQueryApi(options: Omit<Urql.UseQueryArgs<RecommendedProductsQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<RecommendedProductsQueryApi, RecommendedProductsQueryVariablesApi>({ query: RecommendedProductsQueryDocumentApi, ...options });
 };
 export const RegistrationMutationDocumentApi = gql`
     mutation RegistrationMutation($input: RegistrationDataInput!) {

@@ -17,6 +17,7 @@ describe('Transport select tests', () => {
     it('should select transport to home', () => {
         cy.addProductToCartForTest().then((cartUuid) => cy.storeCartUuidInLocalStorage(cartUuid));
         cy.visit(url.order.transportAndPayment);
+        cy.wait(1000);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
 

@@ -13,7 +13,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { calculatePageSize, getPageSizeInfo, hasReadAllProductsFromCache, mergeProductEdges } from 'helpers/loadMore';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRef, useState, useEffect } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { useClient, Client } from 'urql';
 
 export const useSearchProductsData = (totalProductCount?: number) => {
@@ -29,7 +29,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
     const [fetching, setFetching] = useState(!searchProductsData);
     const [loadMoreFetching, setLoadMoreFetching] = useState(false);
 
-    const userIdentifier = usePersistStore((store) => store.userId)!;
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
     const fetchProducts = async (
         variables: SearchProductsQueryVariablesApi,

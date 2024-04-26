@@ -132,6 +132,7 @@
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
+    * [RecommendationType](#recommendationtype)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
@@ -989,6 +990,39 @@ Returns promoted categories
 Returns promoted products
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>recommendedProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+Return recommended products from Luigi's Box by provided arguments
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">itemUuids</td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]</td>
+<td>
+
+For type 'category' provide one category UUID, for other types provide product UUIDs
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">limit</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">recommendationType</td>
+<td valign="top"><a href="#recommendationtype">RecommendationType</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">userIdentifier</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>RegularCustomerUser</strong></td>
@@ -10092,6 +10126,37 @@ Order by priority
 Order by relevance
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### RecommendationType
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>basket</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>basket_popup</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>category</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>item_detail</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>personalized</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>

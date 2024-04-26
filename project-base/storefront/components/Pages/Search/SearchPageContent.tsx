@@ -7,12 +7,12 @@ import { useSearchQueryApi } from 'graphql/generated';
 import { isClient } from 'helpers/isClient';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
-import { usePersistStore } from 'store/usePersistStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 
 export const SearchPageContent: FC = () => {
     const { t } = useTranslation();
     const { searchString } = useQueryParams();
-    const userIdentifier = usePersistStore((state) => state.userId);
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
     const [{ data: searchData, fetching }] = useSearchQueryApi({
         variables: {

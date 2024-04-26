@@ -1,35 +1,31 @@
-import { StoreSelect } from './StoreSelect';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { StoreSelect } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/StoreSelect';
 import { TIDs } from 'cypress/tids';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 
 type PickupPlacePopupProps = {
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi;
-    onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragmentApi | null) => void;
-    onClosePickupPlacePopupCallback: () => void;
+    onChangePickupPlaceCallback: (
+        transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+        selectedPickupPlace: ListedStoreFragmentApi | null,
+    ) => void;
 };
 
-export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
-    transport,
-    onChangePickupPlaceCallback,
-    onClosePickupPlacePopupCallback,
-}) => {
+export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transport, onChangePickupPlaceCallback }) => {
     const { t } = useTranslation();
     const [selectedStoreUuid, setSelectedStoreUuid] = useState('');
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const onConfirmPickupPlaceHandler = () => {
         const selectedPickupPlace = transport.stores?.edges?.find(
             (storeEdge) => storeEdge?.node?.identifier === selectedStoreUuid,
         )?.node;
 
-        onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
-    };
-
-    const onClosePickupPlacePopupHandler = () => {
-        onClosePickupPlacePopupCallback();
+        onChangePickupPlaceCallback(transport, selectedPickupPlace === undefined ? null : selectedPickupPlace);
     };
 
     const onSelectStoreHandler = (newStoreUuid: string | null) => {
@@ -37,11 +33,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
     };
 
     return (
-        <Popup
-            className="w-11/12 max-w-4xl"
-            contentClassName="overflow-y-auto"
-            onCloseCallback={onClosePickupPlacePopupHandler}
-        >
+        <Popup className="w-11/12 max-w-4xl" contentClassName="overflow-y-auto">
             <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
             <StoreSelect
                 selectedStoreUuid={selectedStoreUuid}
@@ -49,7 +41,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                 onSelectStoreCallback={onSelectStoreHandler}
             />
             <div className="mt-5 flex justify-between">
-                <Button onClick={onClosePickupPlacePopupHandler}>{t('Close')}</Button>
+                <Button onClick={() => updatePortalContent(null)}>{t('Close')}</Button>
                 <Button
                     isDisabled={selectedStoreUuid === ''}
                     tid={TIDs.pages_order_pickupplace_popup_confirm}

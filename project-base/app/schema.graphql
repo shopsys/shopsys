@@ -1783,6 +1783,14 @@ type Query {
   promotedCategories: [Category!]!
   "Returns promoted products"
   promotedProducts: [Product!]!
+  "Return recommended products from Luigi's Box by provided arguments"
+  recommendedProducts(
+    "For type 'category' provide one category UUID, for other types provide product UUIDs"
+    itemUuids: [Uuid!]
+    limit: Int = 10
+    recommendationType: RecommendationType!
+    userIdentifier: Uuid!
+  ): [Product!]!
   RegularCustomerUser: RegularCustomerUser
   RegularProduct: RegularProduct
   "Returns SEO settings for a specific page based on the url slug of that page"
@@ -1804,6 +1812,14 @@ type Query {
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
   Variant: Variant
+}
+
+enum RecommendationType {
+  basket
+  basket_popup
+  category
+  item_detail
+  personalized
 }
 
 input RecoverPasswordInput {

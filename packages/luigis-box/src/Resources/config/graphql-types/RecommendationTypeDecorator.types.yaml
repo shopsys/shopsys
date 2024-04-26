@@ -1,0 +1,15 @@
+RecommendationTypeDecorator:
+    type: enum
+    decorator: true
+    config:
+        values:
+            basket:
+                value: '@=constant("Shopsys\\LuigisBoxBundle\\Model\\Type\\RecommendationTypeEnum::BASKET")'
+            basket_popup:
+                value: '@=constant("Shopsys\\LuigisBoxBundle\\Model\\Type\\RecommendationTypeEnum::BASKET_POPUP")'
+            category:
+                value: '@=constant("Shopsys\\LuigisBoxBundle\\Model\\Type\\RecommendationTypeEnum::CATEGORY")'
+            item_detail:
+                value: '@=constant("Shopsys\\LuigisBoxBundle\\Model\\Type\\RecommendationTypeEnum::ITEM_DETAIL")'
+            personalized:
+                value: '@=constant("Shopsys\\LuigisBoxBundle\\Model\\Type\\RecommendationTypeEnum::PERSONALIZED")'

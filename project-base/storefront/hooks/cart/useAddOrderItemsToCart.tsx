@@ -4,20 +4,19 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { showErrorMessage } from 'helpers/toasts';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 
-export const useAddOrderItemsToCart = (): {
-    orderForPrefillingUuid: string | undefined;
-    setOrderForPrefillingUuid: Dispatch<SetStateAction<string | undefined>>;
-    addOrderItemsToEmptyCart: (orderUuid: string) => Promise<void>;
-    mergeOrderItemsWithCurrentCart: (orderUuid: string, shouldMerge?: boolean) => Promise<void>;
-    notAddedProductNames: string[] | undefined;
-    setNotAddedProductNames: Dispatch<SetStateAction<string[] | undefined>>;
-} => {
-    const [orderForPrefillingUuid, setOrderForPrefillingUuid] = useState<string>();
-    const [notAddedProductNames, setNotAddedProductNames] = useState<string[]>();
+const NotAddedProductsPopup = dynamic(() =>
+    import('components/Blocks/Popup/NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
+);
+const MergeCartsPopup = dynamic(() =>
+    import('components/Blocks/Popup/MergeCartsPopup').then((component) => component.MergeCartsPopup),
+);
+
+export const useAddOrderItemsToCart = () => {
     const { cart } = useCurrentCart();
     const router = useRouter();
     const { url } = useDomainConfig();
@@ -25,10 +24,10 @@ export const useAddOrderItemsToCart = (): {
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutationApi();
     const { t } = useTranslation();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+    const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
 
     const handleAddingItemsToCart = async (input: AddOrderItemsToCartInputApi) => {
         const response = await addOrderItemsToCart({ input });
-        setOrderForPrefillingUuid(undefined);
 
         if (response.error) {
             showErrorMessage(t('Could not prefill your cart'));
@@ -45,14 +44,23 @@ export const useAddOrderItemsToCart = (): {
             if (addedAllProducts) {
                 router.push(cartUrl);
             } else {
-                setNotAddedProductNames(notAddedProducts.map((product) => product.fullName));
+                updatePortalContent(
+                    <NotAddedProductsPopup
+                        notAddedProductNames={notAddedProducts.map((product) => product.fullName)}
+                    />,
+                );
             }
         }
     };
 
     const addOrderItemsToEmptyCart = async (orderUuid: string) => {
         if (cart?.items.length) {
-            setOrderForPrefillingUuid(orderUuid);
+            updatePortalContent(
+                <MergeCartsPopup
+                    mergeOrderItemsWithCurrentCart={mergeOrderItemsWithCurrentCart}
+                    orderForPrefillingUuid={orderUuid}
+                />,
+            );
 
             return;
         }
@@ -64,12 +72,5 @@ export const useAddOrderItemsToCart = (): {
         handleAddingItemsToCart({ orderUuid, cartUuid, shouldMerge });
     };
 
-    return {
-        orderForPrefillingUuid,
-        setOrderForPrefillingUuid,
-        addOrderItemsToEmptyCart,
-        mergeOrderItemsWithCurrentCart,
-        notAddedProductNames,
-        setNotAddedProductNames,
-    };
+    return addOrderItemsToEmptyCart;
 };

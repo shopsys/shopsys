@@ -5,13 +5,19 @@ import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { RecommendationTypeApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+
+const RecommendedProducts = dynamic(() =>
+    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
+);
 
 export const CartContent: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
+    const { url, isLuigisBoxActive } = useDomainConfig();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const { cart, isFetching, isCartHydrated } = useCurrentCart();
 
@@ -44,6 +50,18 @@ export const CartContent: FC = () => {
                 hasDisabledLook={false}
                 withGapTop={false}
             />
+
+            {isLuigisBoxActive && (
+                <RecommendedProducts
+                    itemUuids={cart.items.map((item) => item.uuid)}
+                    recommendationType={RecommendationTypeApi.BasketApi}
+                    render={(recommendedProductsContent) => (
+                        <div className="mb-6 px-0">
+                            <div className="h2 mb-3">{t('Recommended for you')}</div> {recommendedProductsContent}
+                        </div>
+                    )}
+                />
+            )}
         </>
     );
 };

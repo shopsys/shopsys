@@ -1,4 +1,5 @@
 import { Fonts } from './Fonts';
+import { Portal } from 'components/Basic/Portal/Portal';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { GtmProvider } from 'gtm/context/GtmProvider';
@@ -10,7 +11,6 @@ import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
-import { useSetInitialStoreValues } from 'hooks/useSetInitialStoreValues';
 import { NextComponentType, NextPageContext } from 'next';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
@@ -48,7 +48,6 @@ type AppPageContentProps = {
 };
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
-    useSetInitialStoreValues(pageProps);
     useCookiesStoreSync();
     useAuthLoader();
     usePageLoader();
@@ -71,8 +70,6 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <GtmHeadScript />
             <Fonts />
 
-            <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
-
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
 
             <GtmProvider>
@@ -81,6 +78,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             </GtmProvider>
 
             {SymfonyDebugToolbar && <SymfonyDebugToolbar />}
+            <Portal />
         </>
     );
 };

@@ -13,9 +13,9 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory as FrontendApiProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoader;
 use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class ProductConnectionFactory
 {
@@ -79,7 +79,7 @@ class ProductConnectionFactory
         $promise = $paginator->auto($argument, 0);
 
         $promise->then(function (ProductConnection $productConnection) {
-            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT));
+            $productConnection->setTotalCount(LuigisBoxBatchLoader::getTotalByType(TypeInLuigisBoxEnum::PRODUCT));
         });
 
         return $promise;

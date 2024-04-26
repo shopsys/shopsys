@@ -43,6 +43,7 @@ export enum GtmProductListNameType {
     other = 'other',
     bestsellers = 'bestsellers',
     last_visited_products = 'last visited products',
+    luigis_box_recommended_products = 'luigis_box_recommended_products',
 }
 
 export enum GtmEventType {

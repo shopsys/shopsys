@@ -3,21 +3,20 @@ import { useContext } from 'react';
 import { useStore } from 'zustand';
 import { createStore } from 'zustand/vanilla';
 
-export type CookiesStoreState = { lastVisitedProductsCatnums: string[] | undefined };
+export type CookiesStoreState = {
+    lastVisitedProductsCatnums: string[] | null;
+    userIdentifier: string;
+};
 
-export type CookiesStoreActions = {
+type CookiesStoreActions = {
     setCookiesStoreState: (value: Partial<CookiesStoreState>) => void;
 };
 
 export type CookiesStore = CookiesStoreState & CookiesStoreActions;
 
-export const defaultInitState: CookiesStoreState = {
-    lastVisitedProductsCatnums: undefined,
-};
-
-export const createCookiesStore = (initState: CookiesStoreState = defaultInitState) =>
+export const createCookiesStore = (cookieStoreFromServer: CookiesStoreState) =>
     createStore<CookiesStore>()((set) => ({
-        ...initState,
+        ...cookieStoreFromServer,
         setCookiesStoreState: (value) => {
             set((state) => ({ ...state, ...value }));
         },
