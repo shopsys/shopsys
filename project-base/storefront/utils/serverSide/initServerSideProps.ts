@@ -21,11 +21,11 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { CookiesStoreState } from 'store/useCookiesStore';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
-import { getCookiesStore } from 'utils/cookies/getCookiesStore';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
@@ -35,7 +35,7 @@ export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
     domainConfig: DomainConfigType;
-    cookiesStore: string | null;
+    cookiesStore: CookiesStoreState;
 } & Record<string, any>;
 
 type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
@@ -71,7 +71,9 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     client,
     ssrExchange: ssrExchangeOverride,
     additionalProps = {},
-}: InitServerSidePropsParameters<VariablesType>): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
+}: InitServerSidePropsParameters<VariablesType>): Promise<
+    GetServerSidePropsResult<Omit<ServerSidePropsType, 'cookiesStore'>>
+> => {
     const currentSsrCache = ssrExchangeOverride ?? ssrExchange({ isClient: false });
     const currentClient =
         client ??
@@ -163,7 +165,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
-            cookiesStore: getCookiesStore(context),
             ...additionalProps,
         },
     };

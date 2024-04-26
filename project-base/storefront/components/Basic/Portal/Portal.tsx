@@ -1,12 +1,7 @@
-import { useRef } from 'react';
-import { createPortal } from 'react-dom';
+import { useSessionStore } from 'store/useSessionStore';
 
-export const Portal: FC = ({ children }) => {
-    const portalElementRef = useRef(document.getElementById('portal'));
+export const Portal: FC = () => {
+    const portalContent = useSessionStore((s) => s.portalContent);
 
-    if (!portalElementRef.current) {
-        return null;
-    }
-
-    return createPortal(children, portalElementRef.current);
+    return portalContent;
 };

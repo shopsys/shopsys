@@ -6,12 +6,14 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
+import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductsSliderProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin?: GtmMessageOriginType;
+    isWithSimpleCards?: boolean;
 };
 
 const productTwClass = 'snap-center border-b-0 md:snap-start';
@@ -21,11 +23,13 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     gtmProductListName,
     gtmMessageOrigin = GtmMessageOriginType.other,
     tid,
+    isWithSimpleCards,
 }) => {
     const { t } = useTranslation();
+    const maxVisibleSlides = isWithSimpleCards ? 3 : 4;
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
-    const isWithControls = products.length > 4;
+    const isWithControls = products.length > maxVisibleSlides;
 
     useEffect(() => {
         setProductElementRefs(
@@ -54,7 +58,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handleNext = () => {
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex + 4 > productElementRefs!.length;
+        const isEndSlide = nextIndex + maxVisibleSlides > productElementRefs!.length;
         const newActiveIndex = isEndSlide ? 0 : nextIndex;
 
         handleScroll(newActiveIndex);
@@ -76,13 +80,17 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             )}
 
             <ProductsListContent
-                className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
                 classNameProduct={productTwClass}
                 gtmMessageOrigin={gtmMessageOrigin}
                 gtmProductListName={gtmProductListName}
+                isWithSimpleCards={isWithSimpleCards}
                 productRefs={productElementRefs}
                 products={products}
                 swipeHandlers={handlers}
+                className={twJoin([
+                    "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] [&::-webkit-scrollbar]:hidden",
+                    !isWithSimpleCards && 'vl:auto-cols-[25%]',
+                ])}
             />
         </div>
     );

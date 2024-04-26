@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, useEffect } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OverlayProps = {
@@ -8,6 +8,18 @@ type OverlayProps = {
 };
 
 export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, children }) => {
+    useEffect(() => {
+        if (isActive) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isActive]);
+
     return (
         <div
             className={twMergeCustom(
@@ -16,6 +28,12 @@ export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop
                 isHiddenOnDesktop && 'vl:hidden',
             )}
             onClick={onClick}
+            onMouseDown={(event) => {
+                event.stopPropagation();
+            }}
+            onTouchMove={(event) => {
+                event.stopPropagation();
+            }}
         >
             {children}
         </div>

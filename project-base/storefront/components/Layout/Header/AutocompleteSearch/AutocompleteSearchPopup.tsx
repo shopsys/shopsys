@@ -106,7 +106,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                         <ExtendedNextLink
                                             className="flex cursor-pointer items-center gap-2 text-dark no-underline outline-none lg:flex-col lg:items-start"
                                             href={product.slug}
-                                            type="product"
+                                            type={
+                                                product.__typename === 'Variant' || product.isMainVariant
+                                                    ? 'productMainVariant'
+                                                    : 'product'
+                                            }
                                             onClick={handleClickLink(
                                                 onProductDetailRedirectHandler(
                                                     product,

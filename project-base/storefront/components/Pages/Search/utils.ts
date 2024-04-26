@@ -8,7 +8,7 @@ import {
 } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
 import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
 import { useRef, useState, useEffect } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { useClient, Client } from 'urql';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
@@ -38,7 +38,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
     const [isFetching, setIsFetching] = useState(!searchProductsData);
     const [isLoadMoreFetching, setIsLoadMoreFetching] = useState(false);
 
-    const userIdentifier = usePersistStore((store) => store.userIdentifier)!;
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
     const fetchProducts = async (
         variables: TypeSearchProductsQueryVariables,

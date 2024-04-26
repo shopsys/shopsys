@@ -40,4 +40,5 @@ export enum TIDs {
     order_detail_creation_date = 'order_detail_creation_date',
     layout_header_menuiconic_login = 'layout_header_menuiconic_login',
     contact_information_form = 'contact_information_form',
+    popup_go_to_cart_button = 'popup_go_to_cart_button',
 }

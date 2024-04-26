@@ -9,17 +9,14 @@ import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mu
 import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
-
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type PersonalDataOverviewContentProps = {
     contentSiteText: string | undefined;
@@ -30,7 +27,8 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     const [, personalDataOverview] = usePersonalDataRequestMutation();
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onPersonalDataOverviewHandler = useCallback<SubmitHandler<PersonalDataOverviewFormType>>(
         async (data) => {
@@ -51,40 +49,31 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     );
 
     return (
-        <>
-            <SimpleLayout heading={t('Personal Data Overview')}>
-                {contentSiteText !== undefined && (
-                    <div className="[&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
-                        <UserText htmlContent={contentSiteText} />
-                    </div>
-                )}
-                <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
-                        <TextInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.email.name}
-                            render={(textInput) => <FormLine>{textInput}</FormLine>}
-                            textInputProps={{
-                                label: formMeta.fields.email.label,
-                                required: true,
-                                type: 'email',
-                                autoComplete: 'email',
-                            }}
-                        />
-                        <div className="mt-8 flex w-full justify-center">
-                            <SubmitButton>{t('Send')}</SubmitButton>
-                        </div>
-                    </Form>
-                </FormProvider>
-            </SimpleLayout>
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    fields={formMeta.fields}
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                />
+        <SimpleLayout heading={t('Personal Data Overview')}>
+            {contentSiteText !== undefined && (
+                <div className="[&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
+                    <UserText htmlContent={contentSiteText} />
+                </div>
             )}
-        </>
+            <FormProvider {...formProviderMethods}>
+                <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.email.name}
+                        render={(textInput) => <FormLine>{textInput}</FormLine>}
+                        textInputProps={{
+                            label: formMeta.fields.email.label,
+                            required: true,
+                            type: 'email',
+                            autoComplete: 'email',
+                        }}
+                    />
+                    <div className="mt-8 flex w-full justify-center">
+                        <SubmitButton>{t('Send')}</SubmitButton>
+                    </div>
+                </Form>
+            </FormProvider>
+        </SimpleLayout>
     );
 };

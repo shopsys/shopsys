@@ -206,6 +206,18 @@ class ProductElasticsearchRepository implements ResetInterface
     }
 
     /**
+     * @param string[] $productUuids
+     * @return int[]
+     */
+    public function getSellableProductIdsByUuids(array $productUuids): array
+    {
+        $filterQuery = $this->filterQueryFactory->createSellableProductIdsByProductUuidsFilter($productUuids);
+        $result = $this->client->search($filterQuery->getQuery());
+
+        return $this->extractIdsFromFields($result);
+    }
+
+    /**
      * @param array $result
      * @return int[]
      */

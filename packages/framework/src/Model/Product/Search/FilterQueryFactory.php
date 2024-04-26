@@ -271,6 +271,16 @@ class FilterQueryFactory
     }
 
     /**
+     * @param string[] $productUuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createSellableProductIdsByProductUuidsFilter(array $productUuids): FilterQuery
+    {
+        return $this->createSellableProductsByProductUuidsFilter($productUuids)
+            ->restrictFields(['id']);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */

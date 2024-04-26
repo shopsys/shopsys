@@ -9,17 +9,11 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-
-const NotAddedProductsPopup = dynamic(() =>
-    import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
-);
-const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((component) => component.MergeCartsPopup));
 
 type OrdersContentProps = {
     isLoading: boolean;
@@ -34,14 +28,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
     const { url } = useDomainConfig();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
-    const {
-        orderForPrefillingUuid,
-        setOrderForPrefillingUuid,
-        addOrderItemsToEmptyCart,
-        mergeOrderItemsWithCurrentCart,
-        notAddedProductNames,
-        setNotAddedProductNames,
-    } = useAddOrderItemsToCart();
+    const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
 
     return (
         <>
@@ -149,21 +136,6 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                     <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
                 </Webline>
             </div>
-
-            {!!orderForPrefillingUuid && (
-                <MergeCartsPopup
-                    mergeOrderItemsWithCurrentCart={mergeOrderItemsWithCurrentCart}
-                    orderForPrefillingUuid={orderForPrefillingUuid}
-                    onCloseCallback={() => setOrderForPrefillingUuid(undefined)}
-                />
-            )}
-
-            {!!notAddedProductNames?.length && (
-                <NotAddedProductsPopup
-                    notAddedProductNames={notAddedProductNames}
-                    onCloseCallback={() => setNotAddedProductNames(undefined)}
-                />
-            )}
         </>
     );
 };

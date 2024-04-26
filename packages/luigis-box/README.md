@@ -39,6 +39,21 @@ luigisBoxBatchLoader:
     batch_load_fn: "@Shopsys\\LuigisBoxBundle\\Model\\Batch\\LuigisBoxBatchLoader:loadByBatchData"
 ```
 
+Add a recommendation query to your frontend API (`Query.types.yaml`):
+
+```yaml
+- 'RecommendationQueryDecorator'
+```
+
+Add a recommendation type to your frontend API types folder (`config/graphql/types/Recommendation`):
+
+```yaml
+RecommendationType:
+    type: object
+    inherits:
+        - 'RecommendationTypeDecorator'
+```
+
 ## Contributing
 
 Thank you for your contributions to Shopsys LuigisBox package.

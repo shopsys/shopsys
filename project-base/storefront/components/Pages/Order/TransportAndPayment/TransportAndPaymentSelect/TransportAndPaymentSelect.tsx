@@ -1,4 +1,3 @@
-import { PickupPlacePopup } from './PickupPlacePopup';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
@@ -42,13 +41,12 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const [getGoPaySwiftsResult] = useGoPaySwiftsQuery({ variables: { currencyCode } });
     const { changePayment, changeGoPaySwift, resetPaymentAndGoPayBankSwift } =
         usePaymentChangeInSelect(changePaymentInCart);
-    const {
-        preSelectedTransport,
-        changeTransport,
-        changePickupPlace,
-        closePickupPlacePopup,
-        resetTransportAndPayment,
-    } = useTransportChangeInSelect(transports, lastOrderPickupPlace, changeTransportInCart, changePaymentInCart);
+    const { changeTransport, resetTransportAndPayment } = useTransportChangeInSelect(
+        transports,
+        lastOrderPickupPlace,
+        changeTransportInCart,
+        changePaymentInCart,
+    );
 
     const renderTransportListItem = (
         transportItem: TypeTransportWithAvailablePaymentsAndStoresFragment,
@@ -134,15 +132,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     {!!transport && (
                         <ResetButton text={t('Change transport type')} onClick={resetTransportAndPayment} />
                     )}
-                    {!!preSelectedTransport && (
-                        <PickupPlacePopup
-                            transport={preSelectedTransport}
-                            onChangePickupPlaceCallback={changePickupPlace}
-                            onClosePickupPlacePopupCallback={closePickupPlacePopup}
-                        />
-                    )}
                 </div>
-                {transport !== null && preSelectedTransport === null && (
+                {transport !== null && (
                     <div className="relative mt-12" tid={TIDs.pages_order_payment}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 

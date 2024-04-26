@@ -86,4 +86,13 @@ class ProductElasticsearchProvider
     {
         return $this->productElasticsearchRepository->getOnlyExistingProductIds($productIds, $domainId);
     }
+
+    /**
+     * @param string[] $productUuids
+     * @return array
+     */
+    public function getSellableProductIdsByUuids(array $productUuids): array
+    {
+        return $this->productElasticsearchRepository->getSellableProductIdsByUuids($productUuids);
+    }
 }

@@ -1,4 +1,5 @@
 import { Fonts } from './Fonts';
+import { Portal } from 'components/Basic/Portal/Portal';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { GtmProvider } from 'gtm/context/GtmProvider';
@@ -11,11 +12,10 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useAuthLoader } from 'utils/app/useAuthLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
 import { useReloadCart } from 'utils/cart/useReloadCart';
-import { useCookiesStoreSync } from 'utils/cookies/useCookiesStoreSync';
+import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { isEnvironment } from 'utils/isEnvironment';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { useSetInitialStoreValues } from 'utils/store/useSetInitialStoreValues';
 import { useBroadcastChannel } from 'utils/useBroadcastChannel';
 
 const UserConsent = dynamic(
@@ -48,7 +48,6 @@ type AppPageContentProps = {
 };
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
-    useSetInitialStoreValues(pageProps);
     useCookiesStoreSync();
     useAuthLoader();
     usePageLoader();
@@ -71,8 +70,6 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <GtmHeadScript />
             <Fonts />
 
-            <div id="portal" />
-
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
 
             <GtmProvider>
@@ -81,6 +78,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             </GtmProvider>
 
             {SymfonyDebugToolbar && <SymfonyDebugToolbar />}
+            <Portal />
         </>
     );
 };

@@ -9,19 +9,16 @@ type ProductListStoreValue = Partial<{
 export type UserSlice = {
     cartUuid: string | null;
     productListUuids: ProductListStoreValue;
-    userIdentifier: string | null;
     userConsent: UserConsentFormType | null;
 
     updateCartUuid: (value: string | null) => void;
     updateProductListUuids: (value: ProductListStoreValue) => void;
-    updateUserIdentifier: (value: string | null) => void;
     updateUserConsent: (userConsent: UserConsentFormType) => void;
 };
 
 export const createUserSlice: StateCreator<UserSlice> = (set) => ({
     cartUuid: null,
     productListUuids: {},
-    userIdentifier: null,
     userConsent: null,
 
     updateCartUuid: (cartUuid) => {
@@ -29,9 +26,6 @@ export const createUserSlice: StateCreator<UserSlice> = (set) => ({
     },
     updateProductListUuids: (productListUuids) => {
         set({ productListUuids });
-    },
-    updateUserIdentifier: (userIdentifier) => {
-        set({ userIdentifier });
     },
     updateUserConsent: (userConsent) => {
         set({ userConsent });

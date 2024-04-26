@@ -5,7 +5,7 @@ import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { MouseEventHandler, useRef } from 'react';
+import { MouseEventHandler, useRef, useEffect } from 'react';
 import { AddToCartAction } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
@@ -43,6 +43,12 @@ export const CartListItem: FC<CartListItemProps> = ({
             onItemQuantityChange(product.uuid, spinboxRef.current!.valueAsNumber, listIndex, true);
         }, 500);
     };
+
+    useEffect(() => {
+        if (quantity > 0 && spinboxRef.current) {
+            spinboxRef.current.valueAsNumber = quantity;
+        }
+    }, [quantity]);
 
     return (
         <div

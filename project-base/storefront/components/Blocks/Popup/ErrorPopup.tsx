@@ -7,7 +7,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, useEffect, useMemo } from 'react';
 
 type ErrorPopupProps = {
-    onCloseCallback: () => void;
     fields: {
         [fieldName: string]: {
             name: string;
@@ -18,11 +17,7 @@ type ErrorPopupProps = {
     gtmMessageOrigin?: GtmMessageOriginType;
 };
 
-export const ErrorPopup: FC<ErrorPopupProps> = ({
-    onCloseCallback,
-    fields,
-    gtmMessageOrigin = GtmMessageOriginType.other,
-}) => {
+export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = GtmMessageOriginType.other }) => {
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -55,7 +50,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
     }, [fields]);
 
     return (
-        <Popup className="w-11/12 max-w-lg" onCloseCallback={onCloseCallback}>
+        <Popup className="w-11/12 max-w-lg">
             <div className="h2 mb-3">{t('Please check inserted details')}</div>
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>

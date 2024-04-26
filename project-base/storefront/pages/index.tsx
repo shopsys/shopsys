@@ -6,25 +6,37 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import {
-    BlogArticlesQueryDocument,
     TypeBlogArticlesQueryVariables,
+    BlogArticlesQueryDocument,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { BlogUrlQueryDocument } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import { PromotedCategoriesQueryDocument } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import { PromotedProductsQueryDocument } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
+import {
+    RecommendedProductsQueryDocument,
+    TypeRecommendedProductsQueryVariables,
+} from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { SliderItemsQueryDocument } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
+import { TypeRecommendationType } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
+const RecommendedProducts = dynamic(() =>
+    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
+);
+
 const HomePage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
+    const { isLuigisBoxActive } = useDomainConfig();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.homepage);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -42,6 +54,17 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
                     <PromotedCategories />
                 </Webline>
 
+                {isLuigisBoxActive && (
+                    <RecommendedProducts
+                        recommendationType={TypeRecommendationType.Personalized}
+                        render={(recommendedProductsContent) => (
+                            <Webline className="mb-6">
+                                <h2 className="mb-3">{t('Recommended for you')}</h2> {recommendedProductsContent}
+                            </Webline>
+                        )}
+                    />
+                )}
+
                 <Webline className="mb-6">
                     <h2 className="mb-3">{t('Promoted products')}</h2>
                     <PromotedProducts />
@@ -58,9 +81,9 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, t }) =>
+    ({ redisClient, domainConfig, t, cookiesStoreState }) =>
         async (context) =>
-            initServerSideProps<TypeBlogArticlesQueryVariables>({
+            initServerSideProps<TypeBlogArticlesQueryVariables | TypeRecommendedProductsQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,
@@ -70,6 +93,19 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     { query: PromotedProductsQueryDocument },
                     { query: BlogArticlesQueryDocument, variables: BLOG_PREVIEW_VARIABLES },
                     { query: BlogUrlQueryDocument },
+                    ...(domainConfig.isLuigisBoxActive
+                        ? [
+                              {
+                                  query: RecommendedProductsQueryDocument,
+                                  variables: {
+                                      itemUuids: [],
+                                      userIdentifier: cookiesStoreState.userIdentifier,
+                                      recommendationType: TypeRecommendationType.Personalized,
+                                      limit: 10,
+                                  },
+                              },
+                          ]
+                        : []),
                 ],
                 t,
             }),

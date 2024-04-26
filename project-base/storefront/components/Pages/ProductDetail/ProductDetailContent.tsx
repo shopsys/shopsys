@@ -11,7 +11,9 @@ import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/Pr
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeRecommendationType } from 'graphql/types';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -21,10 +23,8 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
-const ProductComparePopup = dynamic(() =>
-    import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
-        (component) => component.ProductComparePopup,
-    ),
+const RecommendedProducts = dynamic(() =>
+    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
 );
 
 type ProductDetailContentProps = {
@@ -36,9 +36,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const { t } = useTranslation();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
-    const { isProductInComparison, toggleProductInComparison, isPopupCompareOpen, setIsPopupCompareOpen } =
-        useComparison();
+    const { isProductInComparison, toggleProductInComparison } = useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
+    const { isLuigisBoxActive } = useDomainConfig();
 
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
@@ -99,10 +99,21 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                 />
 
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
+                {isLuigisBoxActive && (
+                    <RecommendedProducts
+                        itemUuids={[product.uuid]}
+                        recommendationType={TypeRecommendationType.ItemDetail}
+                        render={(recommendedProductsContent) => (
+                            <div>
+                                <div className="text-xl font-bold">{t('Recommended for you')}</div>
+                                {recommendedProductsContent}
+                            </div>
+                        )}
+                    />
+                )}
 
                 {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
             </Webline>
-            {isPopupCompareOpen && <ProductComparePopup onCloseCallback={() => setIsPopupCompareOpen(false)} />}
         </>
     );
 };

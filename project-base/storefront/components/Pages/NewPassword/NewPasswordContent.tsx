@@ -10,19 +10,16 @@ import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mu
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
 import { useLogin } from 'utils/auth/useLogin';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
-
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type NewPasswordContentProps = {
     hash: string;
@@ -36,13 +33,14 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const login = useLogin();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
         fieldState: { invalid: isNewPasswordInvalid },
         field: { value: newPasswordValue },
     } = useController({ name: formMeta.fields.newPasswordAgain.name, control: formProviderMethods.control });
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onNewPasswordHandler = useCallback<SubmitHandler<NewPasswordFormType>>(
         async (data) => {
@@ -103,43 +101,34 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     }
 
     return (
-        <>
-            <SimpleLayout heading={t('Set new password')}>
-                <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.newPassword.name}
-                            render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.newPassword.label,
-                            }}
-                        />
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.newPasswordAgain.name}
-                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            passwordInputProps={{
-                                label: formMeta.fields.newPasswordAgain.label,
-                            }}
-                        />
-                        <div className="mt-8 flex w-full justify-between">
-                            <SubmitButton isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}>
-                                {t('Set new password')}
-                            </SubmitButton>
-                        </div>
-                    </Form>
-                </FormProvider>
-            </SimpleLayout>
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    fields={formMeta.fields}
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                />
-            )}
-        </>
+        <SimpleLayout heading={t('Set new password')}>
+            <FormProvider {...formProviderMethods}>
+                <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>
+                    <PasswordInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.newPassword.name}
+                        render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                        passwordInputProps={{
+                            label: formMeta.fields.newPassword.label,
+                        }}
+                    />
+                    <PasswordInputControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.newPasswordAgain.name}
+                        render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                        passwordInputProps={{
+                            label: formMeta.fields.newPasswordAgain.label,
+                        }}
+                    />
+                    <div className="mt-8 flex w-full justify-between">
+                        <SubmitButton isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}>
+                            {t('Set new password')}
+                        </SubmitButton>
+                    </div>
+                </Form>
+            </FormProvider>
+        </SimpleLayout>
     );
 };

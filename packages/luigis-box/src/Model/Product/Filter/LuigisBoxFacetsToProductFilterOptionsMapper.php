@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\LuigisBoxBundle\Model\Product\Filter;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory;
 use Shopsys\LuigisBoxBundle\Model\Brand\BrandRepository;
 use Shopsys\LuigisBoxBundle\Model\Flag\FlagRepository;
+use Shopsys\LuigisBoxBundle\Model\Product\Parameter\Value\ParameterValueRepository;
 
 class LuigisBoxFacetsToProductFilterOptionsMapper
 {
@@ -32,12 +36,18 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
      * @param \Shopsys\LuigisBoxBundle\Model\Flag\FlagRepository $flagRepository
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory $productFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\LuigisBoxBundle\Model\Product\Parameter\Value\ParameterValueRepository $parameterValueRepository
      */
     public function __construct(
         protected readonly BrandRepository $brandRepository,
         protected readonly FlagRepository $flagRepository,
         protected readonly ProductFilterOptionsFactory $productFilterOptionsFactory,
         protected readonly ProductFilterConfigFactory $productFilterConfigFactory,
+        protected readonly ParameterFacade $parameterFacade,
+        protected readonly Domain $domain,
+        protected readonly ParameterValueRepository $parameterValueRepository,
     ) {
     }
 
@@ -50,58 +60,42 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
     {
         $brands = [];
         $flags = [];
+        $parameterFilterChoices = [];
         $priceRange = new PriceRange(Money::zero(), Money::zero());
 
         $productFilterCountData = new ProductFilterCountData();
 
         foreach ($luigisBoxFacets as $facetData) {
-            if ($facetData['name'] === self::FACET_AVAILABILITY) {
-                $productFilterCountData->countInStock = $facetData['values'][0]['hits_count'] ?? 0;
+            if ($facetData['name'] === static::FACET_AVAILABILITY) {
+                $this->mapAvailability($facetData, $productFilterCountData);
             }
 
-            if ($facetData['name'] === self::FACET_BRAND) {
-                $brandCountsByName = $this->mapValuesToCountsByName($facetData['values']);
-                $brands = $this->brandRepository->getBrandsByNames(array_keys($brandCountsByName));
-
-                foreach ($brands as $brand) {
-                    $productFilterCountData->countByBrandId[$brand->getId()] = $brandCountsByName[$brand->getName()];
-                }
+            if ($facetData['name'] === static::FACET_BRAND) {
+                $brands = $this->mapBrands($facetData, $productFilterCountData);
             }
 
-            if ($facetData['name'] === self::FACET_LABELS) {
-                $flagCountsByName = $this->mapValuesToCountsByName($facetData['values']);
-                $flags = $this->flagRepository->getFlagsByNames(array_keys($flagCountsByName));
-
-                foreach ($flags as $flag) {
-                    $productFilterCountData->countByFlagId[$flag->getId()] = $flagCountsByName[$flag->getName()];
-                }
+            if ($facetData['name'] === static::FACET_LABELS) {
+                $flags = $this->mapFlags($facetData, $productFilterCountData);
             }
 
-            if ($facetData['name'] !== self::FACET_PRICE) {
+            if ($facetData['name'] === static::FACET_PRICE) {
+                $priceRange = $this->mapPriceRange($facetData);
+            }
+
+            if (in_array($facetData['name'], static::PRODUCT_FACET_NAMES, true)) {
                 continue;
             }
 
-            $minPrice = 0;
-            $maxPrice = 0;
+            $parameterFilterChoice = $this->mapParameterWithValues($facetData, $productFilterCountData);
 
-            foreach ($facetData['values'] as $facetValue) {
-                [$minValue, $maxValue] = explode('|', $facetValue['value']);
-
-                if ($minValue < $minPrice || $minPrice === 0) {
-                    $minPrice = $minValue;
-                }
-
-                if ($maxValue > $maxPrice) {
-                    $maxPrice = $maxValue;
-                }
+            if ($parameterFilterChoice !== null) {
+                $parameterFilterChoices[] = $parameterFilterChoice;
             }
-
-            $priceRange = new PriceRange(Money::create($minPrice), Money::create($maxPrice));
         }
 
-        $productFilterConfig = $this->productFilterConfigFactory->create([], $flags, $brands, $priceRange);
+        $productFilterConfig = $this->productFilterConfigFactory->create($parameterFilterChoices, $flags, $brands, $priceRange);
 
-        return $this->productFilterOptionsFactory->createProductFilterOptions(
+        return $this->productFilterOptionsFactory->createFullProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
             $productFilterData,
@@ -121,5 +115,105 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         }
 
         return $valuesToCountsByName;
+    }
+
+    /**
+     * @param array $facetData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     */
+    protected function mapAvailability(array $facetData, ProductFilterCountData $productFilterCountData): void
+    {
+        if ($facetData['name'] === self::FACET_AVAILABILITY) {
+            $productFilterCountData->countInStock = $facetData['values'][0]['hits_count'] ?? 0;
+        }
+    }
+
+    /**
+     * @param array $facetData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @return array|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    protected function mapBrands(
+        array $facetData,
+        ProductFilterCountData $productFilterCountData,
+    ): array {
+        $brandCountsByName = $this->mapValuesToCountsByName($facetData['values']);
+        $brands = $this->brandRepository->getBrandsByNames(array_keys($brandCountsByName));
+
+        foreach ($brands as $brand) {
+            $productFilterCountData->countByBrandId[$brand->getId()] = $brandCountsByName[$brand->getName()];
+        }
+
+        return $brands;
+    }
+
+    /**
+     * @param array $facetData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @return array|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    protected function mapFlags(array $facetData, ProductFilterCountData $productFilterCountData): array
+    {
+        $flagCountsByName = $this->mapValuesToCountsByName($facetData['values']);
+        $flags = $this->flagRepository->getFlagsByNames(array_keys($flagCountsByName));
+
+        foreach ($flags as $flag) {
+            $productFilterCountData->countByFlagId[$flag->getId()] = $flagCountsByName[$flag->getName()];
+        }
+
+        return $flags;
+    }
+
+    /**
+     * @param array $facetData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+     */
+    protected function mapPriceRange(array $facetData): PriceRange
+    {
+        $minPrice = 0;
+        $maxPrice = 0;
+
+        foreach ($facetData['values'] as $facetValue) {
+            [$minValue, $maxValue] = explode('|', $facetValue['value']);
+
+            if ($minValue < $minPrice || $minPrice === 0) {
+                $minPrice = $minValue;
+            }
+
+            if ($maxValue > $maxPrice) {
+                $maxPrice = $maxValue;
+            }
+        }
+
+        return new PriceRange(Money::create($minPrice), Money::create($maxPrice));
+    }
+
+    /**
+     * @param array $facetData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice|null
+     */
+    protected function mapParameterWithValues(
+        array $facetData,
+        ProductFilterCountData $productFilterCountData,
+    ): ?ParameterFilterChoice {
+        $parameterValueCountsByValue = $this->mapValuesToCountsByName($facetData['values']);
+        $parameter = $this->parameterFacade->findParameterByNames([$this->domain->getLocale() => $facetData['name']]);
+
+        if ($parameter === null) {
+            return null;
+        }
+
+        $parameterValues = $this->parameterValueRepository->getExistingParameterValuesByValuesAndLocale(array_keys($parameterValueCountsByValue), $this->domain->getLocale());
+
+        if (count($parameterValues) === 0) {
+            return null;
+        }
+
+        foreach ($parameterValues as $parameterValue) {
+            $productFilterCountData->countByParameterIdAndValueId[$parameter->getId()][$parameterValue->getId()] = $parameterValueCountsByValue[$parameterValue->getText()];
+        }
+
+        return new ParameterFilterChoice($parameter, $parameterValues);
     }
 }

@@ -6,16 +6,22 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
-use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
+use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
 use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
+use Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum;
+use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
 class LuigisBoxBatchLoadDataFactory
 {
     /**
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
+     * @param \Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum $typeInLuigisBoxEnum
+     * @param \Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum $recommendationTypeEnum
      */
     public function __construct(
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
+        protected readonly TypeInLuigisBoxEnum $typeInLuigisBoxEnum,
+        protected readonly RecommendationTypeEnum $recommendationTypeEnum,
     ) {
     }
 
@@ -27,30 +33,32 @@ class LuigisBoxBatchLoadDataFactory
      * @param array $luigisBoxFilter
      * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
-    public function create(
+    public function createForSearch(
         string $type,
         int $limit,
         int $page,
         Argument $argument,
         array $luigisBoxFilter = [],
     ): LuigisBoxBatchLoadData {
+        $this->typeInLuigisBoxEnum->validateCase($type);
+
         if ($luigisBoxFilter === []) {
             $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->mapOnlyType($type);
         }
 
         $search = $argument['searchInput']['search'] ?? '';
         $orderingMode = $argument['orderingMode'];
-        $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxClient::ACTION_AUTOCOMPLETE : LuigisBoxClient::ACTION_SEARCH;
+        $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxEndpointEnum::AUTOCOMPLETE : LuigisBoxEndpointEnum::SEARCH;
         $userIdentifier = $argument['searchInput']['userIdentifier'];
 
-        return new LuigisBoxBatchLoadData(
+        return new LuigisBoxSearchBatchLoadData(
             $type,
+            $endpoint,
+            $userIdentifier,
             $limit,
             $search,
-            $endpoint,
             $page,
             $luigisBoxFilter,
-            $userIdentifier,
             $orderingMode,
             $this->getFacetNamesByType($type),
         );
@@ -63,8 +71,34 @@ class LuigisBoxBatchLoadDataFactory
     protected function getFacetNamesByType(string $type): array
     {
         return match ($type) {
-            LuigisBoxClient::TYPE_IN_LUIGIS_BOX_PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
+            TypeInLuigisBoxEnum::PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
             default => [],
         };
+    }
+
+    /**
+     * @param string $type
+     * @param int $limit
+     * @param array $itemIds
+     * @param string $userIdentifier
+     * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
+     */
+    public function createForRecommendation(
+        string $type,
+        int $limit,
+        array $itemIds,
+        string $userIdentifier,
+    ): LuigisBoxBatchLoadData {
+        $this->recommendationTypeEnum->validateCase($type);
+
+        $endpoint = LuigisBoxEndpointEnum::RECOMMENDATIONS;
+
+        return new LuigisBoxRecommendationBatchLoadData(
+            $type,
+            $endpoint,
+            $userIdentifier,
+            $limit,
+            $itemIds,
+        );
     }
 }

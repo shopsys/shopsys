@@ -6,8 +6,10 @@ import { useSessionStore } from 'store/useSessionStore';
 export const usePageLoader = () => {
     const router = useRouter();
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const onRouteChangeStart = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+        updatePortalContent(null);
         if (!shallow) {
             Nprogress.start();
         }

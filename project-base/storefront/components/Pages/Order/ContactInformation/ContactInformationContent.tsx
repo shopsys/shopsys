@@ -4,7 +4,6 @@ import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformati
 import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
-import { Login } from 'components/Blocks/Popup/Login/Login';
 import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
 import { Form } from 'components/Forms/Form/Form';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -22,7 +21,6 @@ import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderE
 import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import { useState } from 'react';
@@ -32,16 +30,12 @@ import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopupVisibility } from 'utils/forms/useErrorPopupVisibility';
+import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
-const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
-const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
-
 export const ContactInformationWrapper: FC = () => {
-    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const router = useRouter();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -57,9 +51,9 @@ export const ContactInformationWrapper: FC = () => {
     const { t } = useTranslation();
     const [{ fetching }, createOrder] = useCreateOrderMutation();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
+
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const user = useCurrentCustomerData();
     const userContactInformation = useCurrentUserContactInformation();
     const isEmailFilledCorrectly = !!emailValue && !formProviderMethods.formState.errors.email;
@@ -68,6 +62,8 @@ export const ContactInformationWrapper: FC = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
     useGtmContactInformationPageViewEvent(gtmStaticPageViewEvent);
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
         setOrderCreating(true);
@@ -233,7 +229,7 @@ export const ContactInformationWrapper: FC = () => {
                     onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}
                 >
                     <>
-                        <ContactInformationEmail setIsLoginPopupOpened={setIsLoginPopupOpened} />
+                        <ContactInformationEmail />
                         {isEmailFilledCorrectly && <ContactInformationFormContent />}
                         <ContactInformationSendOrderButton />
                     </>
@@ -248,21 +244,6 @@ export const ContactInformationWrapper: FC = () => {
                     />
                 </Form>
             </FormProvider>
-
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    fields={formMeta.fields}
-                    gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                />
-            )}
-
-            {isLoginPopupOpened && (
-                <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
-                    <div className="h2 mb-3">{t('Login')}</div>
-                    <Login shouldOverwriteCustomerUserCart defaultEmail={emailValue} />
-                </Popup>
-            )}
         </OrderContentWrapper>
     );
 };
