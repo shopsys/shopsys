@@ -120,10 +120,6 @@ class CartMutation extends AbstractMutation
         $addProductResults = [];
 
         foreach ($order->getProductItems() as $orderItem) {
-            if ($orderItem->getPriceWithoutVat()->isNegative()) {
-                continue;
-            }
-
             try {
                 $addProductResults[] = $this->cartApiFacade->addProductByUuidToCart($orderItem->getProduct()->getUuid(), $orderItem->getQuantity(), false, $cart);
             } catch (InvalidCartItemUserError) {
