@@ -806,6 +806,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ```
 
+#### remove no longer necessary code from CartMutation ([#3135](https://github.com/shopsys/shopsys/pull/3135))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
