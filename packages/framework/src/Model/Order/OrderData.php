@@ -310,17 +310,6 @@ class OrderData
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToSubtract
-     * @param string $type
-     */
-    public function subtractTotalPrice(Price $priceToSubtract, string $type): void
-    {
-        // @todo this is probably unintuitive
-        $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToSubtract);
-        $this->totalPrice = $this->totalPrice->subtract($priceToSubtract);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $item
      */
     public function addItem(OrderItemData $item): void
@@ -337,11 +326,7 @@ class OrderData
         $totalPrice = new Price(Money::zero(), Money::zero());
 
         foreach ($itemTypes as $itemType) {
-            if ($itemType === OrderItem::TYPE_DISCOUNT) {
-                $totalPrice = $totalPrice->subtract($this->totalPricesByItemType[$itemType]);
-            } else {
-                $totalPrice = $totalPrice->add($this->totalPricesByItemType[$itemType]);
-            }
+            $totalPrice = $totalPrice->add($this->totalPricesByItemType[$itemType]);
         }
 
         return $totalPrice;
@@ -355,6 +340,6 @@ class OrderData
         return $this->totalPrice
             ->subtract($this->totalPricesByItemType[OrderItem::TYPE_TRANSPORT])
             ->subtract($this->totalPricesByItemType[OrderItem::TYPE_PAYMENT])
-            ->add($this->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
+            ->subtract($this->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
     }
 }

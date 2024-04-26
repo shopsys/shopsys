@@ -90,7 +90,7 @@ class TransportAndPaymentWatcherFacade
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
-        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
+        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]->inverse());
         $this->cartWithModificationsResult->setTotalPriceWithoutDiscountTransportAndPayment(
             $orderData->getTotalPriceWithoutDiscountTransportAndPayment(),
         );

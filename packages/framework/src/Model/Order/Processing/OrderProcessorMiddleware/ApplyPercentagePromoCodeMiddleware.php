@@ -92,7 +92,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
                 }
 
                 $orderData->addItem($discountOrderItemData);
-                $orderData->subtractTotalPrice($discountOrderItemData->getTotalPrice(), OrderItem::TYPE_DISCOUNT);
+                $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItem::TYPE_DISCOUNT);
             }
         }
 
@@ -128,6 +128,8 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
 
         $discountOrderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_DISCOUNT);
 
+        $discountPrice = $discountPrice->inverse();
+
         $name = sprintf(
             '%s -%s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
@@ -137,7 +139,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
 
         $discountOrderItemData->name = $name;
         $discountOrderItemData->quantity = 1;
-        $discountOrderItemData->setUnitPrice($discountPrice->inverse());
+        $discountOrderItemData->setUnitPrice($discountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice);
         $discountOrderItemData->vatPercent = $productItem->vatPercent;
         $discountOrderItemData->promoCode = $promoCode;
