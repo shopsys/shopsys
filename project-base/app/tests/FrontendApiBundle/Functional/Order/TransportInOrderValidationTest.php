@@ -11,12 +11,12 @@ use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
 use Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
-use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportInOrderValidationTest extends GraphQlTestCase

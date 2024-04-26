@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Cart\Transport;
+namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -38,7 +38,7 @@ class CartTransportDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param string $transportUuid
      * @param string|null $pickupPlaceIdentifier
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportData
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData
      */
     public function create(
         Cart $cart,

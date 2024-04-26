@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData;
+use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportData;
 
 /**
  * @ORM\Table(name="carts")
@@ -343,7 +343,7 @@ class Cart
     }
 
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportData $cartTransportData
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData $cartTransportData
      */
     public function editCartTransport(CartTransportData $cartTransportData): void
     {

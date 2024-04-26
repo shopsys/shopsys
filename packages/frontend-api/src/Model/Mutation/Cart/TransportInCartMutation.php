@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Cart;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
-use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
 class TransportInCartMutation extends AbstractMutation
@@ -18,7 +18,7 @@ class TransportInCartMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
      */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
