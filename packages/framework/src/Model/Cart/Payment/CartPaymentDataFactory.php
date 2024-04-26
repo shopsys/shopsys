@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Cart\Payment;
+namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -38,7 +38,7 @@ class CartPaymentDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param string $paymentUuid
      * @param string|null $goPayBankSwift
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentData
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData
      */
     public function create(Cart $cart, string $paymentUuid, ?string $goPayBankSwift): CartPaymentData
     {

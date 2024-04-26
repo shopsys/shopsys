@@ -7,14 +7,13 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentData;
 use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportData;
 
 /**
@@ -355,7 +354,7 @@ class Cart
     }
 
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentData $cartPaymentData
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData $cartPaymentData
      */
     public function editCartPayment(CartPaymentData $cartPaymentData): void
     {

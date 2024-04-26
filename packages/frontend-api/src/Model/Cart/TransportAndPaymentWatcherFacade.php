@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Cart;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -15,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
-use Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
 use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
@@ -37,7 +37,7 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
      * @param \Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade $transportValidationFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
      * @param \Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      */
     public function __construct(

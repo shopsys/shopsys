@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Cart\Payment;
+namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
