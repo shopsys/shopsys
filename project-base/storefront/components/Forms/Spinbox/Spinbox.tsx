@@ -1,6 +1,7 @@
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
-import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { FormEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
+import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 
 type SpinboxProps = {
@@ -19,10 +20,14 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
         const intervalRef = useRef<NodeJS.Timeout | null>(null);
-        const spinboxRef = useForwardedRef(spinboxForwardedRef);
+        const spinboxRef = useForwardedRef<HTMLInputElement>(spinboxForwardedRef);
+        const [value, setValue] = useState<number>();
 
-        const setNewSpinboxValue = useCallback(
-            (newValue: number) => {
+        const setNewSpinboxValue = (newValue: number) => {
+            if (!spinboxRef.current) {
+                return;
+            }
+
                 if (isNaN(newValue) || newValue < min) {
                     spinboxRef.current.valueAsNumber = min;
                 } else if (newValue > max) {
@@ -34,18 +39,18 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 if (onChangeValueCallback !== undefined) {
                     onChangeValueCallback(spinboxRef.current.valueAsNumber);
                 }
-            },
-            [min, max, onChangeValueCallback, spinboxRef],
-        );
+            setValue(spinboxRef.current.valueAsNumber);
+        };
 
-        const onChangeValueHandler = useCallback(
-            (amountChange: number) => {
+        useEffect(() => {
+            setValue(spinboxRef.current?.valueAsNumber);
+        }, [spinboxRef]);
+
+        const onChangeValueHandler = (amountChange: number) => {
                 if (spinboxRef.current !== null) {
                     setNewSpinboxValue(spinboxRef.current.valueAsNumber + amountChange);
                 }
-            },
-            [setNewSpinboxValue, spinboxRef],
-        );
+        };
 
         useEffect(() => {
             if (isHoldingDecrease) {
@@ -88,6 +93,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const content = (
             <>
                 <SpinboxButton
+                    disabled={value === min}
                     tid={TIDs.forms_spinbox_decrease}
                     title={t('Decrease')}
                     onClick={() => onChangeValueHandler(-step)}
@@ -110,6 +116,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 />
 
                 <SpinboxButton
+                    disabled={value === max}
                     tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}
                     onClick={() => onChangeValueHandler(step)}
@@ -146,11 +153,15 @@ type SpinboxButtonProps = {
     onMouseUp: () => void;
     onMouseLeave: () => void;
     title: string;
+    disabled: boolean;
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, ...props }) => (
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, ...props }) => (
     <button
-        className="flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-dark outline-none"
+        className={twMergeCustom([
+            'flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-dark outline-none',
+            disabled && 'pointer-events-none text-greyLight',
+        ])}
         {...props}
     >
         {children}
