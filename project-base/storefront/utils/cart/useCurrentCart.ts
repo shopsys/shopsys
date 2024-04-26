@@ -2,8 +2,9 @@ import { useCartQuery } from 'graphql/requests/cart/queries/CartQuery.generated'
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { Maybe } from 'graphql/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCartType } from 'types/cart';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 
@@ -12,12 +13,13 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const authLoading = usePersistStore((s) => s.authLoading);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
+    const isCartHydrated = useSessionStore((s) => s.isCartHydrated);
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
-    const [isCartHydrated, setIsCartHydrated] = useState(false);
     const isWithCart = isUserLoggedIn || !!cartUuid;
 
     useEffect(() => {
-        setIsCartHydrated(true);
+        updatePageLoadingState({ isCartHydrated: true });
     }, []);
 
     const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQuery({

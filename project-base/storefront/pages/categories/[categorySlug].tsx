@@ -12,8 +12,6 @@ import {
     CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -45,9 +43,6 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
         categoryData?.seoTitle,
     );
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData);
-    useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
-
     return (
         <PageDefer>
             {!!currentFilter && <MetaRobots content="noindex, follow" />}
@@ -60,7 +55,9 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 isFetchingData={isFetchingVisible}
                 title={seoTitle}
             >
-                {!!categoryData && <CategoryDetailContent category={categoryData} />}
+                {!!categoryData && (
+                    <CategoryDetailContent category={categoryData} isFetchingVisible={isFetchingVisible} />
+                )}
                 <LastVisitedProducts />
             </CommonLayout>
         </PageDefer>

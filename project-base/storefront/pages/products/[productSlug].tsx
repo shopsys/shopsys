@@ -14,8 +14,6 @@ import {
     RecommendedProductsQueryDocument,
 } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -56,9 +54,6 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
         productData?.product?.__typename === 'RegularProduct' || productData?.product?.__typename === 'MainVariant'
             ? productData.product
             : null;
-
-    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
         <PageDefer>

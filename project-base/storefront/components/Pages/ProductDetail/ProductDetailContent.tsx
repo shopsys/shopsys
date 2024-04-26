@@ -14,6 +14,8 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeRecommendationType } from 'graphql/types';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -34,6 +36,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const { isLuigisBoxActive } = useDomainConfig();
     const formatPrice = useFormatPrice();
 
+    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
+    useGtmPageViewEvent(pageViewEvent, fetching);
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
