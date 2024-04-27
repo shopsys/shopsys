@@ -51,7 +51,7 @@ class OrderItemFactory extends BaseOrderItemFactory {
         OrderItemData $orderItemData,
         Order $order,
     ): OrderItem {
-        return $this->doCreateOrderItem(
+        return $this->createOrderItem(
             $orderItemData,
             $order,
         );

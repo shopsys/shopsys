@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrdere
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -172,7 +173,7 @@ class OrderItemTest extends TestCase
             new Price(Money::create(10), Money::create(12)),
             '0.2',
             1,
-            OrderItem::TYPE_PAYMENT,
+            OrderItemTypeEnum::TYPE_PAYMENT,
             null,
             null,
         );
@@ -194,7 +195,7 @@ class OrderItemTest extends TestCase
             new Price(Money::create(10), Money::create(12)),
             '0.2',
             1,
-            OrderItem::TYPE_TRANSPORT,
+            OrderItemTypeEnum::TYPE_TRANSPORT,
             null,
             null,
         );
@@ -215,7 +216,7 @@ class OrderItemTest extends TestCase
             new Price(Money::create(10), Money::create(12)),
             '0.2',
             1,
-            OrderItem::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_PRODUCT,
             null,
             null,
         );

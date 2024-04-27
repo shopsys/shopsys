@@ -23,12 +23,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem
 {
-    public const string TYPE_PAYMENT = 'payment';
-    public const string TYPE_PRODUCT = 'product';
-    public const string TYPE_TRANSPORT = 'transport';
-    public const string TYPE_DISCOUNT = 'discount';
-    public const string TYPE_ROUNDING = 'rounding';
-
     /**
      * @var int|null
      * @ORM\Column(type="integer")
@@ -402,7 +396,7 @@ class OrderItem
      */
     public function isTypeProduct(): bool
     {
-        return $this->isType(self::TYPE_PRODUCT);
+        return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
     /**
@@ -410,7 +404,7 @@ class OrderItem
      */
     public function isTypePayment(): bool
     {
-        return $this->isType(self::TYPE_PAYMENT);
+        return $this->isType(OrderItemTypeEnum::TYPE_PAYMENT);
     }
 
     /**
@@ -418,7 +412,7 @@ class OrderItem
      */
     public function isTypeTransport(): bool
     {
-        return $this->isType(self::TYPE_TRANSPORT);
+        return $this->isType(OrderItemTypeEnum::TYPE_TRANSPORT);
     }
 
     /**
@@ -426,7 +420,7 @@ class OrderItem
      */
     public function isTypeDiscount(): bool
     {
-        return $this->isType(self::TYPE_DISCOUNT);
+        return $this->isType(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
     /**
@@ -434,7 +428,7 @@ class OrderItem
      */
     public function isTypeRounding(): bool
     {
-        return $this->isType(self::TYPE_ROUNDING);
+        return $this->isType(OrderItemTypeEnum::TYPE_ROUNDING);
     }
 
     /**
@@ -449,26 +443,26 @@ class OrderItem
 
     protected function checkTypeTransport(): void
     {
-        $this->checkTypeOf(self::TYPE_TRANSPORT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_TRANSPORT);
     }
 
     protected function checkTypePayment(): void
     {
-        $this->checkTypeOf(self::TYPE_PAYMENT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PAYMENT);
     }
 
     protected function checkTypeProduct(): void
     {
-        $this->checkTypeOf(self::TYPE_PRODUCT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
     protected function checkTypeDiscount(): void
     {
-        $this->checkTypeOf(self::TYPE_DISCOUNT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
     protected function checkTypeRounding(): void
     {
-        $this->checkTypeOf(self::TYPE_DISCOUNT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 }

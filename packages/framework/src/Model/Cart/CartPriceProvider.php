@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
@@ -45,7 +45,7 @@ class CartPriceProvider
             $orderData,
         );
 
-        return $orderData->totalPricesByItemType[OrderItem::TYPE_PAYMENT];
+        return $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT];
     }
 
     /**
@@ -66,6 +66,6 @@ class CartPriceProvider
             $orderData,
         );
 
-        return $orderData->totalPricesByItemType[OrderItem::TYPE_TRANSPORT];
+        return $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT];
     }
 }

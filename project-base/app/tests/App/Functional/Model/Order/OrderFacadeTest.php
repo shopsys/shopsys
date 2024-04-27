@@ -7,7 +7,6 @@ namespace Tests\App\Functional\Model\Order;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
-use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
@@ -19,6 +18,7 @@ use App\Model\Transport\TransportRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
@@ -161,7 +161,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemData1->unitPriceWithVat = Money::create(121);
         $orderItemData1->vatPercent = '21';
         $orderItemData1->quantity = 3;
-        $orderItemData1->type = OrderItem::TYPE_PRODUCT;
+        $orderItemData1->type = OrderItemTypeEnum::TYPE_PRODUCT;
 
         $orderItemData2 = new OrderItemData();
         $orderItemData2->name = 'itemName2';
@@ -169,7 +169,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemData2->unitPriceWithVat = Money::create(333);
         $orderItemData2->vatPercent = '0';
         $orderItemData2->quantity = 1;
-        $orderItemData2->type = OrderItem::TYPE_PRODUCT;
+        $orderItemData2->type = OrderItemTypeEnum::TYPE_PRODUCT;
 
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData1;
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '2'] = $orderItemData2;

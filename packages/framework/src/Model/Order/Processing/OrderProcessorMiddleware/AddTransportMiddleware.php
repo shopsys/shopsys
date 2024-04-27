@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -46,11 +46,11 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         $transportPrice = $this->transportPriceCalculation->calculatePrice(
             $transport,
             $currency,
-            $orderProcessingData->orderData->getTotalPriceForItemTypes([OrderItem::TYPE_PRODUCT, OrderItem::TYPE_DISCOUNT]),
+            $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
             $domainId,
         );
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_TRANSPORT);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_TRANSPORT);
         $orderItemData->unitPriceWithoutVat = $transportPrice->getPriceWithoutVat();
         $orderItemData->unitPriceWithVat = $transportPrice->getPriceWithVat();
         $orderItemData->totalPriceWithoutVat = $transportPrice->getPriceWithoutVat();
@@ -58,10 +58,11 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         $orderItemData->vatPercent = $transport->getTransportDomain($domainId)->getVat()->getPercent();
         $orderItemData->name = $transport->getName($orderProcessingData->getDomainLocale());
         $orderItemData->quantity = 1;
+        $orderItemData->transport = $transport;
 
         $orderData = $orderProcessingData->orderData;
 
-        $orderData->addTotalPrice($transportPrice, OrderItem::TYPE_TRANSPORT);
+        $orderData->addTotalPrice($transportPrice, OrderItemTypeEnum::TYPE_TRANSPORT);
 
         $orderData->orderTransport = $orderItemData;
         $orderData->transport = $transport;

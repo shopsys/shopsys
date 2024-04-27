@@ -6,9 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddlewar
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
@@ -60,22 +60,22 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
 
             $products = array_map(
                 static fn (OrderItemData $orderItemData) => $orderItemData->product,
-                $orderData->getItemsByType(OrderItem::TYPE_PRODUCT),
+                $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT),
             );
 
             try {
                 $validProductIds = $this->currentPromoCodeFacade->validatePromoCode(
                     $appliedPromoCode,
-                    $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT],
+                    $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT],
                     $products,
                 );
 
-                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]);
+                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
             } catch (PromoCodeException) {
                 continue;
             }
 
-            foreach ($orderData->getItemsByType(OrderItem::TYPE_PRODUCT) as $productItem) {
+            foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
                 if (!in_array($productItem->product->getId(), $validProductIds, true)) {
                     continue;
                 }
@@ -92,7 +92,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
                 }
 
                 $orderData->addItem($discountOrderItemData);
-                $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItem::TYPE_DISCOUNT);
+                $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
             }
         }
 
@@ -126,7 +126,7 @@ class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInte
             return null;
         }
 
-        $discountOrderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_DISCOUNT);
+        $discountOrderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_DISCOUNT);
 
         $discountPrice = $discountPrice->inverse();
 

@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
@@ -77,7 +77,7 @@ class TransportAndPaymentWatcherFacade
             $orderData,
         );
 
-        $productsPrice = $orderData->getTotalPriceForItemTypes([OrderItem::TYPE_PRODUCT, OrderItem::TYPE_DISCOUNT]);
+        $productsPrice = $orderData->getProductsTotalPriceAfterAppliedDiscounts();
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {
             $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
@@ -90,11 +90,11 @@ class TransportAndPaymentWatcherFacade
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);
         $this->cartWithModificationsResult->setTotalItemsPrice($productsPrice);
-        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]->inverse());
+        $this->cartWithModificationsResult->setTotalDiscountPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT]->inverse());
         $this->cartWithModificationsResult->setTotalPriceWithoutDiscountTransportAndPayment(
             $orderData->getTotalPriceWithoutDiscountTransportAndPayment(),
         );
-        $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItem::TYPE_ROUNDING]);
+        $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);
 
         $this->checkTransport($cart);
         $this->checkPayment($cart);

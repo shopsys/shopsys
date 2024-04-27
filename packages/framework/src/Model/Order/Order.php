@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
@@ -784,7 +785,7 @@ class Order
      */
     public function getProductItems(): array
     {
-        return $this->getItemsByType(OrderItem::TYPE_PRODUCT);
+        return $this->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
     /**
@@ -792,7 +793,7 @@ class Order
      */
     public function getTransportItem(): OrderItem
     {
-        $transports = $this->getItemsByType(OrderItem::TYPE_TRANSPORT);
+        $transports = $this->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT);
 
         if (count($transports) === 0) {
             throw new OrderItemNotFoundException('Order item `transport` not found.');
@@ -806,7 +807,7 @@ class Order
      */
     public function getPaymentItem(): OrderItem
     {
-        $payments = $this->getItemsByType(OrderItem::TYPE_PAYMENT);
+        $payments = $this->getItemsByType(OrderItemTypeEnum::TYPE_PAYMENT);
 
         if (count($payments) === 0) {
             throw new OrderItemNotFoundException('Order item `payment` not found.');
@@ -820,7 +821,7 @@ class Order
      */
     public function getDiscountItems(): array
     {
-        return $this->getItemsByType(OrderItem::TYPE_DISCOUNT);
+        return $this->getItemsByType(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
     /**
@@ -828,7 +829,7 @@ class Order
      */
     public function getRoundingItems(): array
     {
-        return $this->getItemsByType(OrderItem::TYPE_ROUNDING);
+        return $this->getItemsByType(OrderItemTypeEnum::TYPE_ROUNDING);
     }
 
     /**

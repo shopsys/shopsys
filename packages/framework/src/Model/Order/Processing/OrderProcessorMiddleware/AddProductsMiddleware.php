@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
@@ -46,7 +46,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
             $orderItemData = $this->createProductOrderItem($quantifiedItemPrice, $quantifiedProduct, $orderProcessingData->getDomainLocale());
             $orderData->addItem($orderItemData);
 
-            $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItem::TYPE_PRODUCT);
+            $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT);
         }
 
         return $orderProcessingStack->processNext($orderProcessingData);
@@ -65,7 +65,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
     ): OrderItemData {
         $product = $quantifiedProduct->getProduct();
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PRODUCT);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->unitPriceWithoutVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithoutVat();
         $orderItemData->unitPriceWithVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithVat();
         $orderItemData->totalPriceWithoutVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithoutVat();

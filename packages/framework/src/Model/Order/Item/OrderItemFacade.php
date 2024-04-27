@@ -54,7 +54,7 @@ class OrderItemFacade
             $order->getCustomerUser(),
         );
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PRODUCT);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = $product->getName($orderDomainConfig->getLocale());
         $orderItemData->unitPriceWithVat = $productPrice->getPriceWithVat();
         $orderItemData->unitPriceWithoutVat = $productPrice->getPriceWithoutVat();

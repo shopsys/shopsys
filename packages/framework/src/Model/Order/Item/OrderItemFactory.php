@@ -26,7 +26,7 @@ class OrderItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    protected function doCreateOrderItem(
+    public function createOrderItem(
         OrderItemData $orderItemData,
         Order $order,
     ): OrderItem {
@@ -55,7 +55,7 @@ class OrderItemFactory
         Order $order,
         ?Product $product,
     ): OrderItem {
-        $orderItem = $this->doCreateOrderItem(
+        $orderItem = $this->createOrderItem(
             $orderItemData,
             $order,
         );
@@ -76,7 +76,7 @@ class OrderItemFactory
         Order $order,
         Transport $transport,
     ): OrderItem {
-        $orderItem = $this->doCreateOrderItem(
+        $orderItem = $this->createOrderItem(
             $orderItemData,
             $order,
         );
@@ -97,7 +97,7 @@ class OrderItemFactory
         Order $order,
         Payment $payment,
     ): OrderItem {
-        $orderItem = $this->doCreateOrderItem(
+        $orderItem = $this->createOrderItem(
             $orderItemData,
             $order,
         );
@@ -116,7 +116,7 @@ class OrderItemFactory
         OrderItemData $orderItemData,
         Order $order,
     ): OrderItem {
-        return $this->doCreateOrderItem(
+        return $this->createOrderItem(
             $orderItemData,
             $order,
         );
@@ -131,7 +131,7 @@ class OrderItemFactory
         OrderItemData $orderItemData,
         Order $order,
     ): OrderItem {
-        return $this->doCreateOrderItem(
+        return $this->createOrderItem(
             $orderItemData,
             $order,
         );

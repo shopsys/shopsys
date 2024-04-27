@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderData
@@ -280,11 +280,11 @@ class OrderData
 
     protected function setZeroPricesForAllTypes(): void
     {
-        $this->totalPricesByItemType[OrderItem::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItem::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItem::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItem::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItem::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
+        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
     }
 
     /**
@@ -335,11 +335,22 @@ class OrderData
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
+    public function getProductsTotalPriceAfterAppliedDiscounts(): Price
+    {
+        return $this->getTotalPriceForItemTypes([
+            OrderItemTypeEnum::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_DISCOUNT,
+        ]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
     public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
     {
         return $this->totalPrice
-            ->subtract($this->totalPricesByItemType[OrderItem::TYPE_TRANSPORT])
-            ->subtract($this->totalPricesByItemType[OrderItem::TYPE_PAYMENT])
-            ->subtract($this->totalPricesByItemType[OrderItem::TYPE_DISCOUNT]);
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT]);
     }
 }

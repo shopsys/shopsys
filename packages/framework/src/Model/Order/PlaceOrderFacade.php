@@ -8,7 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
@@ -26,6 +28,7 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
      */
     public function __construct(
         protected readonly OrderStatusRepository $orderStatusRepository,
@@ -38,6 +41,7 @@ class PlaceOrderFacade
         protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly OrderItemTypeEnum $orderItemTypeEnum,
     ) {
     }
 
@@ -50,7 +54,7 @@ class PlaceOrderFacade
         OrderData $orderData,
         ?string $deliveryAddressUuid = null,
     ): Order {
-        foreach ($orderData->getItemsByType(OrderItem::TYPE_DISCOUNT) as $discount) {
+        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_DISCOUNT) as $discount) {
             $discount->promoCode->decreaseRemainingUses();
         }
 
@@ -100,7 +104,7 @@ class PlaceOrderFacade
 
         $this->fillOrderItems($order, $orderData);
 
-        $order->setTotalPrices($orderData->totalPrice, $orderData->totalPricesByItemType[OrderItem::TYPE_PRODUCT]);
+        $order->setTotalPrices($orderData->totalPrice, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
 
         $this->em->flush();
 
@@ -113,103 +117,49 @@ class PlaceOrderFacade
      */
     protected function fillOrderItems(Order $order, OrderData $orderData): void
     {
-        $this->fillOrderProducts($order, $orderData);
-        $this->fillOrderPayment($order, $orderData);
-        $this->fillOrderTransport($order, $orderData);
-        $this->fillOrderDiscounts($order, $orderData);
-        $this->fillOrderRounding($order, $orderData);
-    }
+        foreach ($this->orderItemTypeEnum->getAllCasesSortedByPriority() as $orderItemType) {
+            foreach ($orderData->getItemsByType($orderItemType) as $orderItemData) {
+                $orderItem = $this->createSpecificOrderItem($orderItemData, $order);
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
-    protected function fillOrderDiscounts(Order $order, OrderData $orderData): void
-    {
-        foreach ($orderData->getItemsByType(OrderItem::TYPE_DISCOUNT) as $orderItemData) {
-            $orderItem = $this->orderItemFactory->createDiscount(
-                $orderItemData,
-                $order,
-            );
-
-            $this->em->persist($orderItem);
+                $this->em->persist($orderItem);
+            }
         }
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    protected function fillOrderProducts(Order $order, OrderData $orderData): void
-    {
-        foreach ($orderData->getItemsByType(OrderItem::TYPE_PRODUCT) as $orderItemData) {
-            $orderItem = $this->orderItemFactory->createProduct(
+    protected function createSpecificOrderItem(
+        OrderItemData $orderItemData,
+        Order $order,
+    ): OrderItem {
+        return match ($orderItemData->type) {
+            OrderItemTypeEnum::TYPE_PRODUCT => $this->orderItemFactory->createProduct(
                 $orderItemData,
                 $order,
                 $orderItemData->product,
-            );
-
-            $this->em->persist($orderItem);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
-    protected function fillOrderPayment(Order $order, OrderData $orderData): void
-    {
-        $payment = $orderData->payment;
-
-        $orderPaymentsData = $orderData->getItemsByType(OrderItem::TYPE_PAYMENT);
-
-        foreach ($orderPaymentsData as $orderPaymentData) {
-            $orderPayment = $this->orderItemFactory->createPayment(
-                $orderPaymentData,
+            ),
+            OrderItemTypeEnum::TYPE_TRANSPORT => $this->orderItemFactory->createTransport(
+                $orderItemData,
                 $order,
-                $payment,
-            );
-
-            $this->em->persist($orderPayment);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
-    protected function fillOrderTransport(Order $order, OrderData $orderData): void
-    {
-        $transport = $orderData->transport;
-
-        $orderTransportsData = $orderData->getItemsByType(OrderItem::TYPE_TRANSPORT);
-
-        foreach ($orderTransportsData as $orderTransportData) {
-            $orderTransport = $this->orderItemFactory->createTransport(
-                $orderTransportData,
+                $orderItemData->transport,
+            ),
+            OrderItemTypeEnum::TYPE_PAYMENT => $this->orderItemFactory->createPayment(
+                $orderItemData,
                 $order,
-                $transport,
-            );
-
-            $this->em->persist($orderTransport);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     */
-    protected function fillOrderRounding(Order $order, OrderData $orderData): void
-    {
-        $orderRoundingsData = $orderData->getItemsByType(OrderItem::TYPE_ROUNDING);
-
-        foreach ($orderRoundingsData as $orderRoundingData) {
-            $orderRounding = $this->orderItemFactory->createRounding(
-                $orderRoundingData,
+                $orderItemData->payment,
+            ),
+            OrderItemTypeEnum::TYPE_DISCOUNT => $this->orderItemFactory->createDiscount(
+                $orderItemData,
                 $order,
-            );
-
-            $this->em->persist($orderRounding);
-        }
+            ),
+            OrderItemTypeEnum::TYPE_ROUNDING => $this->orderItemFactory->createRounding(
+                $orderItemData,
+                $order,
+            ),
+            default => $this->orderItemFactory->createOrderItem($orderItemData, $order),
+        };
     }
 }

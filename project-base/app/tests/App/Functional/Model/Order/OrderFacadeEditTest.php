@@ -12,6 +12,7 @@ use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -97,7 +98,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PRODUCT);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = 'new item';
         $orderItemData->quantity = 10;
         $orderItemData->vatPercent = '50.00';
@@ -120,7 +121,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PRODUCT);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = 'new item';
         $orderItemData->quantity = 10;
         $orderItemData->usePriceCalculation = false;

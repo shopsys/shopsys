@@ -6,9 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddlewar
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -60,7 +60,7 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
 
         if (!$roundingPrice->isZero()) {
             $orderData->addItem($this->createRoundingItemData($roundingPrice, $orderProcessingData->getDomainConfig()));
-            $orderData->addTotalPrice($roundingPrice, OrderItem::TYPE_ROUNDING);
+            $orderData->addTotalPrice($roundingPrice, OrderItemTypeEnum::TYPE_ROUNDING);
         }
 
         return $orderProcessingStack->processNext($orderProcessingData);
@@ -73,7 +73,7 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
      */
     public function createRoundingItemData(Price $roundingPrice, DomainConfig $domainConfig): OrderItemData
     {
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_ROUNDING);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_ROUNDING);
 
         $orderItemData->unitPriceWithoutVat = $roundingPrice->getPriceWithoutVat();
         $orderItemData->unitPriceWithVat = $roundingPrice->getPriceWithVat();

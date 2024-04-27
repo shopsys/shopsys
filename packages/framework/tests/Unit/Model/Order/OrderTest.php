@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
@@ -31,7 +32,7 @@ class OrderTest extends TestCase
             $paymentPrice,
             '0',
             1,
-            OrderItem::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_PRODUCT,
             null,
             null,
         );
@@ -41,7 +42,7 @@ class OrderTest extends TestCase
             $paymentPrice,
             '0',
             1,
-            OrderItem::TYPE_PAYMENT,
+            OrderItemTypeEnum::TYPE_PAYMENT,
             null,
             null,
         );
@@ -68,7 +69,7 @@ class OrderTest extends TestCase
             $paymentItemPrice,
             '0',
             1,
-            OrderItem::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_PRODUCT,
             null,
             null,
         );
@@ -78,7 +79,7 @@ class OrderTest extends TestCase
             $paymentItemPrice,
             '0',
             1,
-            OrderItem::TYPE_PAYMENT,
+            OrderItemTypeEnum::TYPE_PAYMENT,
             null,
             null,
         );

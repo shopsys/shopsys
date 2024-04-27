@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -48,11 +48,11 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
             $payment,
             $currency,
-            $orderProcessingData->orderData->getTotalPriceForItemTypes([OrderItem::TYPE_PRODUCT, OrderItem::TYPE_DISCOUNT]),
+            $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
             $domainId,
         );
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItem::TYPE_PAYMENT);
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PAYMENT);
         $orderItemData->unitPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
         $orderItemData->unitPriceWithVat = $paymentPrice->getPriceWithVat();
         $orderItemData->totalPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
@@ -60,10 +60,11 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $orderItemData->vatPercent = $payment->getPaymentDomain($domainId)->getVat()->getPercent();
         $orderItemData->name = $payment->getName($orderProcessingData->getDomainLocale());
         $orderItemData->quantity = 1;
+        $orderItemData->payment = $payment;
 
         $orderData = $orderProcessingData->orderData;
 
-        $orderData->addTotalPrice($paymentPrice, OrderItem::TYPE_PAYMENT);
+        $orderData->addTotalPrice($paymentPrice, OrderItemTypeEnum::TYPE_PAYMENT);
 
         $orderData->orderPayment = $orderItemData;
         $orderData->payment = $payment;
