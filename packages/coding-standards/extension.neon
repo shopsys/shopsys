@@ -1,3 +1,5 @@
+rules:
+    - \Shopsys\CodingStandards\Phpstan\EntityShouldHaveFactoryRule
 services:
     -
         class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsExtension
