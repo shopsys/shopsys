@@ -469,9 +469,6 @@ msgstr "Editace hodnoty parametru typu barva"
 msgid "Editing pararameter value of type color - %name%"
 msgstr "Úprava hodnoty parametru typu barva - %name%"
 
-msgid "Editing script"
-msgstr "Upravit script"
-
 msgid "Email"
 msgstr "E-mail"
 
@@ -534,9 +531,6 @@ msgstr "Rozšířená SEO kategorie - filtry"
 
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
-
-msgid "External scripts"
-msgstr "Měřící skripty"
 
 msgid "Facebook URL"
 msgstr "Facebook URL"
@@ -606,9 +600,6 @@ msgstr "GTM ID"
 
 msgid "GTM creative"
 msgstr ""
-
-msgid "Google analytics"
-msgstr "Google analytics"
 
 msgid "Groups"
 msgstr "Skupiny"
@@ -846,9 +837,6 @@ msgstr "Nová notifikační lišta"
 
 msgid "New page"
 msgstr "Nová stránka"
-
-msgid "New script"
-msgstr "Nový script"
 
 msgid "New store"
 msgstr "Nová prodejna"
@@ -1182,15 +1170,6 @@ msgstr "Uložit"
 
 msgid "Save changes in order"
 msgstr "Uložit změny v pořadí"
-
-msgid "Scripts - full"
-msgstr "Měřící skripty - vše"
-
-msgid "Scripts - view"
-msgstr "Měřící skripty - zobrazení"
-
-msgid "Scripts overview"
-msgstr "Přehled skriptů"
 
 msgid "Search [noun]"
 msgstr "Hledání"

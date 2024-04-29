@@ -46,9 +46,6 @@ msgstr "<a href=\"{{ url }}\">Některé povinné e-mailové šablony nejsou vypl
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
 msgstr "<a href=\"{{ url }}\">Neexistují žádné jednotky, musíte nějakou vytvořit.</a>"
 
-msgid "ATTENTION - inserting scripts on the page can seriously endanger the security, performance or design of the app."
-msgstr "POZOR - vkládání skriptů na stránky může vážně ohrozit bezpečnost, výkonnost nebo vzhled aplikace!"
-
 msgid "Accessories"
 msgstr "Příslušenství"
 
@@ -171,9 +168,6 @@ msgstr "Reklama <strong>{{ name }}</strong> byla smazána"
 
 msgid "Advertising system"
 msgstr "Reklamní systém"
-
-msgid "After content (all pages)"
-msgstr "Po obsahu (na všech stránkách)"
 
 msgid "All domains"
 msgstr "Všechny domény"
@@ -306,9 +300,6 @@ msgstr "ID dávky"
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
-
-msgid "Before content (all pages)"
-msgstr "Před obsahem (na všech stránkách)"
 
 msgid "Best-selling products of category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> set."
 msgstr "Bylo nastaveno nejprodávanější zboží kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
@@ -628,9 +619,6 @@ msgstr "Vytvořit novou stránku"
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
 
-msgid "Create new script"
-msgstr "Vytvořit nový skript"
-
 msgid "Create new store"
 msgstr "Vytvořit novou prodejnu"
 
@@ -949,9 +937,6 @@ msgstr "Opravdu chcete odstranit toto zboží?"
 msgid "Do you really want to remove this promo code?"
 msgstr "Opravdu chcete odstranit tento slevový kupón?"
 
-msgid "Do you really want to remove this script?"
-msgstr "Opravdu chcete odstranit tento skript?"
-
 msgid "Do you really want to remove this shipping?"
 msgstr "Opravdu chcete odstranit tuto dopravu?"
 
@@ -1138,9 +1123,6 @@ msgstr "Editace slevového kupónu"
 msgid "Editing promo code - %code%"
 msgstr "Editace slevového kupónu - %code%"
 
-msgid "Editing script"
-msgstr "Editace skriptu"
-
 msgid "Editing shipping"
 msgstr "Editace dopravy"
 
@@ -1288,9 +1270,6 @@ msgstr "Externí ID"
 msgid "External bridge ID"
 msgstr "Externí ID můstku"
 
-msgid "External scripts"
-msgstr "Měřící skripty"
-
 msgid "External transaction ID"
 msgstr "Externí indentifikátor transakce"
 
@@ -1434,12 +1413,6 @@ msgstr "Platební metoda GoPay"
 
 msgid "GoPay payment status"
 msgstr "Stav platby GoPay"
-
-msgid "Google analytics"
-msgstr "Google analytics"
-
-msgid "Google script code set"
-msgstr "Kód skriptu Google analytics byl nastaven"
 
 msgid "HTML code"
 msgstr "HTML kód"
@@ -1819,9 +1792,6 @@ msgstr "Nový slevový kupón"
 msgid "New registered customers"
 msgstr "Nově registrovaní zákazníci"
 
-msgid "New script"
-msgstr "Nový skript"
-
 msgid "New shipping"
 msgstr "Nová doprava"
 
@@ -1911,9 +1881,6 @@ msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytv
 
 msgid "No records found."
 msgstr "Nebyly nalezeny žádné záznamy."
-
-msgid "No scripts so far."
-msgstr "Doposud nejsou žádné skripty."
 
 msgid "No shipping created so far."
 msgstr "Doposud nebyly vytvořeny žádné dopravy."
@@ -2467,27 +2434,6 @@ msgstr "Naplánovat"
 msgid "Scheduled"
 msgstr "Naplánován"
 
-msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
-msgstr "Byl vytvořen skript <a href=\"{{ url }}\"><strong>{{ name }}</strong></a>"
-
-msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
-msgstr "Byl upraven skript <a href=\"{{ url }}\"><strong>{{ name }}</strong></a>"
-
-msgid "Script <strong>{{ name }}</strong> deleted"
-msgstr "Skript <strong>{{ name }}</strong> byl smazán"
-
-msgid "Script name"
-msgstr "Název skriptu"
-
-msgid "Script placement"
-msgstr "Umístění skriptu"
-
-msgid "Script will be placed at the beginning of the page, after tag <body>."
-msgstr "Skript bude vložen na začátek stránky, za tag <body>."
-
-msgid "Scripts overview"
-msgstr "Přehled skriptů"
-
 msgid "Search [verb]"
 msgstr "Vyhledat"
 
@@ -2583,9 +2529,6 @@ msgstr "Zvolený produkt neexistuje."
 
 msgid "Selected promo code doesn't exist."
 msgstr "Zvolený slevový kupón neexistuje."
-
-msgid "Selected script doesn't exist."
-msgstr "Zvolený skript neexistuje"
 
 msgid "Selected shipping doesn't exist."
 msgstr "Zvolená doprava neexistuje."
@@ -2818,9 +2761,6 @@ msgstr "Tento e-mail byl odeslán z kontaktního formuláře umístěného pod p
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 
-msgid "This may significantly impact site performance and should be avoided whenever possible."
-msgstr "Toto nastavení může významně ovlivnit výkon webu a nemělo by se používat, pokud to není nutné."
-
 msgid "This payment method is hidden by GoPay."
 msgstr "Tento způsob platby je skrytý systémem GoPay."
 
@@ -2866,17 +2806,11 @@ msgstr "Celková cena za položku s DPH"
 msgid "Total order price (including VAT)"
 msgstr "Celková cena za objednávku (s DPH)"
 
-msgid "Total order price including VAT"
-msgstr "Celková cena objednávky s DPH"
-
 msgid "Total price"
 msgstr "Celková cena"
 
 msgid "Total price including VAT"
 msgstr "Celková cena s DPH"
-
-msgid "Tracking ID"
-msgstr "Číslo pro měření"
 
 msgid "Tracking URL"
 msgstr "URL pro sledování zásilky"
