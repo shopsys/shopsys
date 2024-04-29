@@ -1903,3 +1903,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   all popup components should be moved inside `components/Blocks/Popup`
 
 -   fix main variants in last visited products ([#3139](https://github.com/shopsys/shopsys/pull/3139))
+
+-   cart hydration fix ([#3142](https://github.com/shopsys/shopsys/pull/3142))
