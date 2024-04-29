@@ -453,21 +453,6 @@ class SideMenuBuilder
             );
         }
 
-        $externalScriptsMenu = $menu->addChild('external_scripts', ['label' => t('External scripts')]);
-        $scriptsMenu = $externalScriptsMenu->addChild(
-            'scripts',
-            ['route' => 'admin_script_list', 'label' => t('Scripts overview')],
-        );
-        $scriptsMenu->addChild('new', ['route' => 'admin_script_new', 'label' => t('New script'), 'display' => false]);
-        $scriptsMenu->addChild(
-            'edit',
-            ['route' => 'admin_script_edit', 'label' => t('Editing script'), 'display' => false],
-        );
-        $externalScriptsMenu->addChild(
-            'google_analytics',
-            ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')],
-        );
-
         $heurekaMenu = $menu->addChild('heureka', ['label' => t('Heureka - Verified by Customer')]);
         $heurekaMenu->addChild(
             'settings',

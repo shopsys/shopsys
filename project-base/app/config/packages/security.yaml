@@ -54,7 +54,6 @@ security:
             - ROLE_STOCK_FULL
             - ROLE_FEED_VIEW
             - ROLE_HEUREKA_FULL
-            - ROLE_SCRIPT_FULL
             - ROLE_LANGUAGE_CONSTANTS_FULL
             - ROLE_TRANSFER_VIEW
         ROLE_ALL_VIEW:
@@ -104,7 +103,6 @@ security:
             - ROLE_STOCK_VIEW
             - ROLE_FEED_VIEW
             - ROLE_HEUREKA_VIEW
-            - ROLE_SCRIPT_VIEW
             - ROLE_LANGUAGE_CONSTANTS_VIEW
             - ROLE_TRANSFER_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
@@ -152,7 +150,6 @@ security:
         ROLE_CONTACT_FORM_FULL: [ROLE_CONTACT_FORM_VIEW]
         ROLE_STOCK_FULL: [ROLE_STOCK_VIEW]
         ROLE_HEUREKA_FULL: [ROLE_HEUREKA_VIEW]
-        ROLE_SCRIPT_FULL: [ROLE_SCRIPT_VIEW]
         ROLE_LANGUAGE_CONSTANTS_FULL: [ROLE_LANGUAGE_CONSTANTS_VIEW]
 
     providers:
@@ -418,12 +415,6 @@ security:
         # Heureka
         - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_VIEW, methods: [GET] }
         - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_FULL, methods: [POST] }
-        # scripts
-        - { path: ^/%admin_url%/script/new, roles: ROLE_SCRIPT_FULL }
-        - { path: ^/%admin_url%/script/edit, roles: ROLE_SCRIPT_FULL, methods: [POST] }
-        - { path: ^/%admin_url%/script/delete, roles: ROLE_SCRIPT_FULL }
-        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW, methods: [GET] }
-        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_FULL, methods: [POST] }
         # language constants
         - { path: ^/%admin_url%/constant/edit, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
         - { path: ^/%admin_url%/constant/delete, roles: ROLE_LANGUAGE_CONSTANTS_FULL }

@@ -583,9 +583,6 @@ msgstr "Úprava hodnoty parametru typu barva - %name%"
 msgid "Editing promo code"
 msgstr "Editace slevového kupónu"
 
-msgid "Editing script"
-msgstr "Upravit script"
-
 msgid "Editing transport type"
 msgstr "Editace typu dopravy"
 
@@ -666,9 +663,6 @@ msgstr "Rozšířená SEO kategorie - filtry"
 
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
-
-msgid "External scripts"
-msgstr "Měřící skripty"
 
 msgid "Facebook URL"
 msgstr "Facebook URL"
@@ -753,9 +747,6 @@ msgstr ""
 
 msgid "Generated batches"
 msgstr "Vygenerované dávky"
-
-msgid "Google analytics"
-msgstr "Google analytics"
 
 msgid "Groups"
 msgstr "Skupiny"
@@ -1014,9 +1005,6 @@ msgstr "Nový slevový kupón"
 
 msgid "New registered customers"
 msgstr "Noví registrovaní zákazníci"
-
-msgid "New script"
-msgstr "Nový script"
 
 msgid "New store"
 msgstr "Nová prodejna"
@@ -1413,15 +1401,6 @@ msgstr "Uložit změny v pořadí"
 
 msgid "Scaled promo code"
 msgstr "Škálovaný slevový kupón"
-
-msgid "Scripts - full"
-msgstr "Měřící skripty - vše"
-
-msgid "Scripts - view"
-msgstr "Měřící skripty - zobrazení"
-
-msgid "Scripts overview"
-msgstr "Přehled skriptů"
 
 msgid "Search [noun]"
 msgstr "Hledání"

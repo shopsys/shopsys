@@ -481,9 +481,6 @@ services:
         arguments:
             - '@annotations.reader'
 
-    Shopsys\FrameworkBundle\Model\Script\ScriptFacade:
-        public: true
-
     Shopsys\FrameworkBundle\Model\Security\Authenticator:
         arguments:
             - '@security.token_storage'
@@ -708,9 +705,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory
 
-    Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Script\ScriptFactory
-
     Shopsys\FrameworkBundle\Component\Setting\SettingValueFactoryInterface:
         alias: Shopsys\FrameworkBundle\Component\Setting\SettingValueFactory
 
@@ -830,9 +824,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductDataFactory
-
-    Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Script\ScriptDataFactory
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory
