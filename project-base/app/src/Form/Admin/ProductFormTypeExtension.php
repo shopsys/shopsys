@@ -106,20 +106,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $groupBuilder = $builder->get('displayAvailabilityGroup');
 
         $groupBuilder
-            ->add('sellingDenied', YesNoType::class, [
-                'required' => false,
-                'label' => t('Exclude from sale on whole eshop'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t('Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'),
-                ],
-            ])
-            ->add('saleExclusion', MultidomainType::class, [
-                'label' => t('Exclude from sale on domains'),
-                'required' => false,
-                'entry_type' => YesNoType::class,
-                'position' => ['after' => 'sellingDenied'],
-            ])
             ->add('domainHidden', MultidomainType::class, [
                 'label' => t('Hide on domain'),
                 'required' => false,

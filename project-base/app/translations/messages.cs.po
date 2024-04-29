@@ -505,12 +505,6 @@ msgstr "ID entity"
 msgid "Error messages"
 msgstr "Chybové hlášky"
 
-msgid "Exclude from sale on domains"
-msgstr "Vyřazení z prodeje dle domén"
-
-msgid "Exclude from sale on whole eshop"
-msgstr "Vyřadit z prodeje na celém eshopu"
-
 msgid "Extended SEO categories"
 msgstr "Rozšířené SEO kategorie"
 
@@ -1068,9 +1062,6 @@ msgstr "Produkty - zobrazení"
 
 msgid "Products accessories transfer"
 msgstr "Přenos příslušenství produktů"
-
-msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
-msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhledat. Detail tohoto zboží je dostupný přímým přístupem z URL, zboží ale nelze vložit do košíku."
 
 msgid "Products flags transfer"
 msgstr "Přenos příznaků produktů"
