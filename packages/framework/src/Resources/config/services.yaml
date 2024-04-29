@@ -892,15 +892,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory
 
-    Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Script\ScriptDataFactory
-
-    Shopsys\FrameworkBundle\Model\Script\ScriptFacade:
-        public: true
-
-    Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Script\ScriptFactory
-
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
             - '%kernel.environment%'

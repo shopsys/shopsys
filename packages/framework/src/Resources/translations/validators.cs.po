@@ -328,12 +328,6 @@ msgstr "Vyplňte prosím promo kód"
 msgid "Please enter quantity"
 msgstr "Vyplňte prosím množství"
 
-msgid "Please enter script code"
-msgstr "Vyplňte prosím kód skriptu"
-
-msgid "Please enter script name"
-msgstr "Vyplňte prosím název skriptu"
-
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 

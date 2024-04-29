@@ -469,9 +469,6 @@ msgstr ""
 msgid "Editing pararameter value of type color - %name%"
 msgstr ""
 
-msgid "Editing script"
-msgstr ""
-
 msgid "Email"
 msgstr ""
 
@@ -533,9 +530,6 @@ msgid "Extended SEO category - filters"
 msgstr ""
 
 msgid "Extended SEO category - set combinations with SEO values"
-msgstr ""
-
-msgid "External scripts"
 msgstr ""
 
 msgid "Facebook URL"
@@ -605,9 +599,6 @@ msgid "GTM ID"
 msgstr ""
 
 msgid "GTM creative"
-msgstr ""
-
-msgid "Google analytics"
 msgstr ""
 
 msgid "Groups"
@@ -845,9 +836,6 @@ msgid "New notification bar"
 msgstr ""
 
 msgid "New page"
-msgstr ""
-
-msgid "New script"
 msgstr ""
 
 msgid "New store"
@@ -1181,15 +1169,6 @@ msgid "Save"
 msgstr ""
 
 msgid "Save changes in order"
-msgstr ""
-
-msgid "Scripts - full"
-msgstr ""
-
-msgid "Scripts - view"
-msgstr ""
-
-msgid "Scripts overview"
 msgstr ""
 
 msgid "Search [noun]"
