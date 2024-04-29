@@ -1894,9 +1894,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add customer option for Verified by Customers Heureka ([#3098](https://github.com/shopsys/shopsys/pull/3098))
 
 -   Luigi's Box recommended products ([#3099](https://github.com/shopsys/shopsys/pull/3099))
+
     -   all portal-diplsyaed are now displayed by setting it as content in zustand's portal state slice
     -   we do not use `createPortal` anymore, as it was causing issues with appending children instead of replacing and also with React errors while navigating from a page
     -   instead of having a local state and modifying some variable based on which a popup is displayed, use `updatePortalContent(<DisplayedComponent />)` to show and `updatePortalContent(null)` to hide the desired content
     -   `useErrorPopupVisibility` was renamed to `useErrorPopup`which now does not return anything but handles popup displaying
     -   cookie store is now initialized on the server and then synced on the client, which was necessary to have a value (`userIdentifier`) available immediately and then synced in all subsequent loads
     -   all popup components should be moved inside `components/Blocks/Popup`
+
+-   fix main variants in last visited products ([#3139](https://github.com/shopsys/shopsys/pull/3139))
