@@ -1,4 +1,5 @@
 import { ProductsSlider } from './ProductsSlider';
+import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecommendedProductsQuery } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
@@ -25,7 +26,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
 }) => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const { isLuigisBoxActive } = useDomainConfig();
-    const [{ data: recommendedProductsData }] = useRecommendedProductsQuery({
+    const [{ data: recommendedProductsData, fetching: isFetching }] = useRecommendedProductsQuery({
         variables: {
             itemUuids,
             userIdentifier,
@@ -35,6 +36,14 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
         pause: !isLuigisBoxActive,
     });
     const shouldRender = useDeferredRender('recommended_products');
+
+    if (isFetching) {
+        return render(
+            <SkeletonModuleProductSlider
+                isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
+            />,
+        );
+    }
 
     if (!recommendedProductsData?.recommendedProducts.length) {
         return null;
