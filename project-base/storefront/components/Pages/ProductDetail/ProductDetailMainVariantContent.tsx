@@ -4,6 +4,7 @@ import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
+import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
@@ -33,6 +34,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
         return [...product.images, ...variantImages];
     }, [product]);
 
+    useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
