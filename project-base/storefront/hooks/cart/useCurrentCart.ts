@@ -1,12 +1,13 @@
 import {
-    ListedStoreFragmentApi,
+    useCartQueryApi,
     Maybe,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useCartQueryApi,
+    ListedStoreFragmentApi,
 } from 'graphql/generated';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCartType } from 'types/cart';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
@@ -14,12 +15,13 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const authLoading = usePersistStore((s) => s.authLoading);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
+    const isCartHydrated = useSessionStore((s) => s.isCartHydrated);
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
-    const [isCartHydrated, setIsCartHydrated] = useState(false);
     const isWithCart = isUserLoggedIn || !!cartUuid;
 
     useEffect(() => {
-        setIsCartHydrated(true);
+        updatePageLoadingState({ isCartHydrated: true });
     }, []);
 
     const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQueryApi({

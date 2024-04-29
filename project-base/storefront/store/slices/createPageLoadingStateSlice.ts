@@ -14,6 +14,7 @@ const CUSTOM_PAGE_TYPES = [
 export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];
 
 export type PageLoadingStateSlice = {
+    isCartHydrated: boolean;
     isPageLoading: boolean;
     redirectPageType: PageType | undefined;
 
@@ -21,6 +22,7 @@ export type PageLoadingStateSlice = {
 };
 
 export const createPageLoadingStateSlice: StateCreator<PageLoadingStateSlice> = (set) => ({
+    isCartHydrated: false,
     isPageLoading: false,
     redirectPageType: undefined,
 
