@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
@@ -48,7 +49,7 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
                     $orderProcessingData->getDomainId(),
                 );
 
-                // $orderData->getItemsByType(OrderItem::TYPE_TRANSPORT)[0]->name .= ' ' . $store->getName();
+                $orderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT)[0]->name .= ' ' . $store->getName();
 
                 $this->updateDeliveryDataByStore($orderData, $store);
             } catch (StoreByUuidNotFoundException) {
