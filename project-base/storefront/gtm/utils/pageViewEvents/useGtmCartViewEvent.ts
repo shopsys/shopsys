@@ -7,10 +7,11 @@ import { useEffect, useRef } from 'react';
 export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);
     const previousPromoCodes = useRef(JSON.stringify(gtmPageViewEvent.cart?.promoCodes));
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
         if (
+            isScriptLoaded &&
             didPageViewRun &&
             gtmPageViewEvent._isLoaded &&
             gtmPageViewEvent.cart !== undefined &&

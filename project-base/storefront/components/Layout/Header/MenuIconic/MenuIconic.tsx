@@ -1,26 +1,15 @@
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
+import { MenuIconicItemUserAuthenticated } from './MenuIconicItemUserAuthenticated';
+import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthenticated';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-
-const MenuIconicItemUserAuthenticated = dynamic(() =>
-    import('components/Layout/Header/MenuIconic/MenuIconicItemUserAuthenticated').then(
-        (component) => component.MenuIconicItemUserAuthenticated,
-    ),
-);
-
-const MenuIconicItemUserUnauthenticated = dynamic(() =>
-    import('components/Layout/Header/MenuIconic/MenuIconicItemUserUnauthenticated').then(
-        (component) => component.MenuIconicItemUserUnauthenticated,
-    ),
-);
 
 export const MenuIconic: FC = () => {
     const { t } = useTranslation();
@@ -34,7 +23,7 @@ export const MenuIconic: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
 
     return (
-        <ul className="flex items-center gap-1">
+        <ul className="flex items-center gap-1 h-12">
             <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
                     <MarkerIcon className="w-4 text-white" />

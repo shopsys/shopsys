@@ -22,3 +22,4 @@ The Storefront is a client for consuming and displaying data from [Frontend API]
 -   [Bundle Anylyzer](./bundle-analyzer.md)
 -   [Improving Web Vitals](./web-vitals.md)
 -   [Error Handling On Storefront](./error-handling.md)
+-   [Component Deferring On Storefront](./component-deferring.md)

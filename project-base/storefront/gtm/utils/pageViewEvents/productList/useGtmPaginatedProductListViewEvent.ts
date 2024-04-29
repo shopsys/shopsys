@@ -19,10 +19,15 @@ export const useGtmPaginatedProductListViewEvent = (
     const previousLoadMoreRef = useRef(currentLoadMore);
     const { url } = useDomainConfig();
     const stringifiedProducts = JSON.stringify(paginatedProducts);
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (didPageViewRun && paginatedProducts && lastViewedStringifiedProducts.current !== stringifiedProducts) {
+        if (
+            isScriptLoaded &&
+            didPageViewRun &&
+            paginatedProducts &&
+            lastViewedStringifiedProducts.current !== stringifiedProducts
+        ) {
             lastViewedStringifiedProducts.current = stringifiedProducts;
 
             let paginatedProductsSlice = paginatedProducts;

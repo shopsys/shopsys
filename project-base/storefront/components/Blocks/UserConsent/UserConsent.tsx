@@ -1,10 +1,15 @@
 import { UserConsentForm } from './UserConsentForm';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export const UserConsent: FC = () => {
+export const UserConsent: FC<{ url: string }> = ({ url }) => {
     const [isUserConsentVisible, setUserConsentVisibility] = useState(true);
     const userConsent = usePersistStore((store) => store.userConsent);
+    const router = useRouter();
+    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
+    const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
 
     const onSetCallback = () => {
         if (userConsent) {
@@ -12,7 +17,7 @@ export const UserConsent: FC = () => {
         }
     };
 
-    if (!isUserConsentVisible) {
+    if (userConsent || isConsentUpdatePage || !isUserConsentVisible) {
         return null;
     }
 

@@ -13,10 +13,10 @@ export const useGtmProductDetailViewEvent = (
 ): void => {
     const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
     const { url, currencyCode } = useDomainConfig();
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (didPageViewRun && lastViewedProductDetailSlug.current !== slug && !fetching) {
+        if (isScriptLoaded && didPageViewRun && lastViewedProductDetailSlug.current !== slug && !fetching) {
             lastViewedProductDetailSlug.current = slug;
             gtmSafePushEvent(getGtmProductDetailViewEvent(productDetailData, currencyCode, url));
         }

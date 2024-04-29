@@ -1,10 +1,12 @@
 import { SearchMetadata } from 'components/Basic/Head/SearchMetadata';
 import { Banners } from 'components/Blocks/Banners/Banners';
-import { BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
+import { DeferredBlogPreview } from 'components/Blocks/BlogPreview/DeferredBlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
-import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts';
+import { DeferredPromotedProducts } from 'components/Blocks/Product/DeferredPromotedProducts';
+import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { PageDefer } from 'components/Layout/PageDefer';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
@@ -26,13 +28,8 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
-
-const RecommendedProducts = dynamic(() =>
-    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
-);
 
 const HomePage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -42,7 +39,7 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <>
+        <PageDefer>
             <SearchMetadata />
             <CommonLayout>
                 <Webline className="mb-14">
@@ -53,9 +50,8 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
                     <h2 className="mb-3">{t('Promoted categories')}</h2>
                     <PromotedCategories />
                 </Webline>
-
                 {isLuigisBoxActive && (
-                    <RecommendedProducts
+                    <DeferredRecommendedProducts
                         recommendationType={TypeRecommendationType.Personalized}
                         render={(recommendedProductsContent) => (
                             <Webline className="mb-6">
@@ -64,19 +60,18 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
                         )}
                     />
                 )}
-
                 <Webline className="mb-6">
                     <h2 className="mb-3">{t('Promoted products')}</h2>
-                    <PromotedProducts />
+                    <DeferredPromotedProducts />
                 </Webline>
 
                 <Webline type="blog">
-                    <BlogPreview />
+                    <DeferredBlogPreview />
                 </Webline>
 
-                <LastVisitedProducts />
+                <DeferredLastVisitedProducts />
             </CommonLayout>
-        </>
+        </PageDefer>
     );
 };
 

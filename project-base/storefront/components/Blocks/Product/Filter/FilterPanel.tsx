@@ -10,7 +10,7 @@ import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { ParametersType } from 'types/productFilter';
 
-type FilterPanelProps = {
+export type FilterPanelProps = {
     productFilterOptions: TypeProductFilterOptionsFragment;
     defaultOrderingMode?: TypeProductOrderingModeEnum | null;
     orderingMode: TypeProductOrderingModeEnum | null;

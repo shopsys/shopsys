@@ -34,7 +34,7 @@ export const Cart: FC = ({ className }) => {
             <ExtendedNextLink
                 href={cartUrl}
                 className={twJoin(
-                    'hidden items-center gap-x-4 rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
+                    'min-w-24 hidden items-center gap-x-3 rounded h-12 bg-orangeLight pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}
             >
                 <span className="relative flex text-lg">

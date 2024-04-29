@@ -2,6 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { PageDefer } from 'components/Layout/PageDefer';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/utils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -38,7 +39,6 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
-
     const seoTitle = useSeoTitleWithPagination(
         categoryData?.products.totalCount,
         categoryData?.name,
@@ -49,7 +49,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
 
     return (
-        <>
+        <PageDefer>
             {!!currentFilter && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
@@ -63,7 +63,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 {!!categoryData && <CategoryDetailContent category={categoryData} />}
                 <LastVisitedProducts />
             </CommonLayout>
-        </>
+        </PageDefer>
     );
 };
 

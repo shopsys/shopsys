@@ -1,38 +1,34 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/utils/getCategoryOrSeoCategoryGtmProductListName';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject, useMemo } from 'react';
-import { useSessionStore } from 'store/useSessionStore';
-import { useProductsData } from 'utils/loadMore/useProductsData';
-import { getMappedProducts } from 'utils/mappers/products';
 
-type CategoryDetailProps = {
+export type CategoryDetailProductsWrapperProps = {
     category: TypeCategoryDetailFragment;
+    products: TypeListedProductFragment[] | undefined;
+    fetching: boolean;
+    loadMoreFetching: boolean;
+    hasNextPage: boolean;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
-export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ category, paginationScrollTargetRef }) => {
-    const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
-    const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const [categoryProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
-        CategoryProductsQueryDocument,
-        category.products.totalCount,
-        {
-            shouldAbortFetchingProducts: wasRedirectedToSeoCategory,
-            abortedFetchCallback: () => setWasRedirectedToSeoCategory(false),
-        },
-    );
-    const categoryListedProducts = getMappedProducts(categoryProductsData);
-
+export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProps> = ({
+    category,
+    products,
+    fetching,
+    loadMoreFetching,
+    hasNextPage,
+    paginationScrollTargetRef,
+}) => {
     const gtmProductListName = useMemo(
         () => getCategoryOrSeoCategoryGtmProductListName(category.originalCategorySlug),
         [category],
     );
-    useGtmPaginatedProductListViewEvent(categoryListedProducts, gtmProductListName);
+    useGtmPaginatedProductListViewEvent(products, gtmProductListName);
 
     return (
         <>
@@ -42,7 +38,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
                 gtmProductListName={gtmProductListName}
                 isFetching={fetching}
                 isLoadMoreFetching={loadMoreFetching}
-                products={categoryListedProducts}
+                products={products}
             />
             <Pagination
                 isWithLoadMore

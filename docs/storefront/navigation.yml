@@ -21,3 +21,4 @@ arrange:
     - bundle-analyzer.md
     - web-vitals.md
     - error-handling.md
+    - component-deferring.md

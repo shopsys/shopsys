@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { RecommendedProducts } from 'components/Blocks/Product/RecommendedProducts';
+import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -83,7 +83,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
             </div>
 
             {isLuigisBoxActive && (
-                <RecommendedProducts
+                <DeferredRecommendedProducts
                     itemUuids={[product.uuid]}
                     recommendationType={TypeRecommendationType.BasketPopup}
                     render={(recommendedProductsContent) => (

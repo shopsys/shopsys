@@ -127,6 +127,7 @@ export const url = {
     loginWithCustomerRedirect: '/login?r=customer',
     customer: '/customer',
     categoryElectronics: '/electronics',
+    productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
 } as const;
 
 export const DEFAULT_APP_STORE = {

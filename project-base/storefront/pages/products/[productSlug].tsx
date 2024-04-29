@@ -1,7 +1,8 @@
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
+import { SkeletonPageProductDetail } from 'components/Blocks/Skeleton/SkeletonPageProductDetail';
+import { SkeletonPageProductDetailMainVariant } from 'components/Blocks/Skeleton/SkeletonPageProductDetailMainVariant';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
-import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
+import { PageDefer } from 'components/Layout/PageDefer';
 import {
     ProductDetailQueryDocument,
     TypeProductDetailQuery,
@@ -16,6 +17,7 @@ import { TypeRecommendationType } from 'graphql/types';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
@@ -25,6 +27,25 @@ import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
+const ProductDetailContent = dynamic(
+    () =>
+        import('components/Pages/ProductDetail/ProductDetailContent').then(
+            (component) => component.ProductDetailContent,
+        ),
+    {
+        loading: () => <SkeletonPageProductDetail />,
+    },
+);
+
+const ProductDetailMainVariantContent = dynamic(
+    () =>
+        import('components/Pages/ProductDetail/ProductDetailMainVariantContent').then(
+            (component) => component.ProductDetailMainVariantContent,
+        ),
+    {
+        loading: () => <SkeletonPageProductDetailMainVariant />,
+    },
+);
 const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
     const [{ data: productData, fetching }] = useProductDetailQuery({
@@ -40,23 +61,27 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout
-            breadcrumbs={product?.breadcrumb}
-            breadcrumbsType="category"
-            canonicalQueryParams={[]}
-            description={product?.seoMetaDescription}
-            hreflangLinks={product?.hreflangLinks}
-            isFetchingData={fetching}
-            title={product?.seoTitle || product?.name}
-        >
-            {product?.__typename === 'RegularProduct' && <ProductDetailContent fetching={fetching} product={product} />}
+        <PageDefer>
+            <CommonLayout
+                breadcrumbs={product?.breadcrumb}
+                breadcrumbsType="category"
+                canonicalQueryParams={[]}
+                description={product?.seoMetaDescription}
+                hreflangLinks={product?.hreflangLinks}
+                isFetchingData={fetching}
+                title={product?.seoTitle || product?.name}
+            >
+                {product?.__typename === 'RegularProduct' && (
+                    <ProductDetailContent fetching={fetching} product={product} />
+                )}
 
-            {product?.__typename === 'MainVariant' && (
-                <ProductDetailMainVariantContent fetching={fetching} product={product} />
-            )}
+                {product?.__typename === 'MainVariant' && (
+                    <ProductDetailMainVariantContent fetching={fetching} product={product} />
+                )}
 
-            <LastVisitedProducts currentProductCatnum={product?.catalogNumber} />
-        </CommonLayout>
+                <DeferredLastVisitedProducts currentProductCatnum={product?.catalogNumber} />
+            </CommonLayout>
+        </PageDefer>
     );
 };
 

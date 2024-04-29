@@ -942,3 +942,11 @@ components={{
 During new project implementation phase it is important for a developer who is adjusting new design to be able to see how those changes affect important/base components. This is why we have Styleguide where we have those base components so implementation is faster and developer has better overview of the changes.
 
 #### fixed fix SEO page title, description and heading H1 ([#3108](https://github.com/shopsys/shopsys/pull/3108))
+
+#### SF defer parts of DOM ([#3089](https://github.com/shopsys/shopsys/pull/3089))
+
+-   This PR introduces the possibility of deferring non-critical SF content
+-   It also implements it in various places, which you might or might not want to implement as well
+-   The best set of steps for you to apply these changes is to read the documentation at `docs/storefront/component-deferring.md` and decide if you want to implement this logic
+    -   If you do, then apply it to the already implemented places and use the documentation to pinpoint any other possible places
+    -   If you do not, then you can completely omit these changes, as they are not necessary for any future implementation

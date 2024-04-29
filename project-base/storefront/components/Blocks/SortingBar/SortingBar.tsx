@@ -11,7 +11,7 @@ import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useUpdateSortQuery } from 'utils/queryParams/useUpdateSortQuery';
 import { twMergeCustom } from 'utils/twMerge';
 
-type SortingBarProps = {
+export type SortingBarProps = {
     totalCount: number;
     sorting: TypeProductOrderingModeEnum | null;
     customSortOptions?: TypeProductOrderingModeEnum[];

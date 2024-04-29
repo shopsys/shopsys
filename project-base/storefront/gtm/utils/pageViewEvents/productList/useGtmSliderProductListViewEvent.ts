@@ -12,10 +12,10 @@ export const useGtmSliderProductListViewEvent = (
 ): void => {
     const wasViewedRef = useRef(false);
     const { url } = useDomainConfig();
-    const { didPageViewRun } = useGtmContext();
+    const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (didPageViewRun && products?.length && !wasViewedRef.current) {
+        if (isScriptLoaded && didPageViewRun && products?.length && !wasViewedRef.current) {
             wasViewedRef.current = true;
             gtmSafePushEvent(getGtmProductListViewEvent(products, gtmProuctListName, 1, 0, url));
         }

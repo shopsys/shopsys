@@ -1,14 +1,14 @@
-import { ProductDetailAccessories } from './ProductDetailAccessories';
-import { ProductDetailAddToCart } from './ProductDetailAddToCart';
+import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
+import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
+import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
-import { ProductDetailTabs } from './ProductDetailTabs';
+import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
-import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
-import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
+import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -16,16 +16,10 @@ import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/P
 import { TypeRecommendationType } from 'graphql/types';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
-import { useComparison } from 'utils/productLists/comparison/useComparison';
-import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
-
-const RecommendedProducts = dynamic(() =>
-    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
-);
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -36,9 +30,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const { t } = useTranslation();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
-    const { isProductInComparison, toggleProductInComparison } = useComparison();
-    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
+
     const { isLuigisBoxActive } = useDomainConfig();
+    const formatPrice = useFormatPrice();
 
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
@@ -73,22 +67,16 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                         {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
 
-                        <ProductDetailAddToCart product={product} />
+                        <div className="flex flex-col gap-4 rounded bg-blueLight p-3">
+                            <div className="text-2xl font-bold text-primary">
+                                {formatPrice(product.price.priceWithVat)}
+                            </div>
+                            <DeferredProductDetailAddToCart product={product} />
+                        </div>
 
                         <ProductDetailAvailability product={product} scrollTarget={scrollTarget} />
 
-                        <div className="flex flex-col gap-y-2 gap-x-4 vl:flex-row">
-                            <ProductCompareButton
-                                isWithText
-                                isProductInComparison={isProductInComparison(product.uuid)}
-                                toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
-                            />
-                            <ProductWishlistButton
-                                isWithText
-                                isProductInWishlist={isProductInWishlist(product.uuid)}
-                                toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
-                            />
-                        </div>
+                        <DeferredComparisonAndWishlistButtons product={product} />
                     </div>
                 </div>
 
@@ -100,7 +88,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
                 {isLuigisBoxActive && (
-                    <RecommendedProducts
+                    <DeferredRecommendedProducts
                         itemUuids={[product.uuid]}
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (
@@ -112,7 +100,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                     />
                 )}
 
-                {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
+                <DeferredProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </>
     );

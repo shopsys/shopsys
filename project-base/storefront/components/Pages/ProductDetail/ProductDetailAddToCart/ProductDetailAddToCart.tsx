@@ -13,23 +13,24 @@ import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
-type ProductDetailAddToCartProps = {
+export type ProductDetailAddToCartProps = {
     product: TypeProductDetailFragment;
 };
 
-const AddToCartPopup = dynamic(() =>
-    import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
+const AddToCartPopup = dynamic(
+    () => import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
+    { ssr: false },
 );
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
-    const formatPrice = useFormatPrice();
     const [changeCartItemQuantity, fetching] = useAddToCart(
         GtmMessageOriginType.product_detail_page,
         GtmProductListNameType.product_detail,
     );
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const formatPrice = useFormatPrice();
 
     const onAddToCartHandler = async () => {
         if (!spinboxRef.current) {

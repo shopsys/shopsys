@@ -37,10 +37,12 @@ const AppPageContent = dynamic(() =>
 
 const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => component.ErrorBoundary));
 
-const Error500ContentWithBoundary = dynamic(() =>
-    import('components/Pages/ErrorPage/Error500ContentWithBoundary').then(
-        (component) => component.Error500ContentWithBoundary,
-    ),
+const Error500ContentWithBoundary = dynamic(
+    () =>
+        import('components/Pages/ErrorPage/Error500ContentWithBoundary').then(
+            (component) => component.Error500ContentWithBoundary,
+        ),
+    { ssr: false },
 );
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
@@ -48,7 +50,11 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     initDayjsLocale(defaultLocale);
 
     return (
-        <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
+        <ErrorBoundary
+            fallbackRender={({ error, resetErrorBoundary }) =>
+                error ? <Error500ContentWithBoundary error={error} resetErrorBoundary={resetErrorBoundary} /> : null
+            }
+        >
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>

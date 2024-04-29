@@ -1,7 +1,7 @@
-import { ProductDetailAccessories } from './ProductDetailAccessories';
+import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
-import { ProductDetailTabs } from './ProductDetailTabs';
+import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
