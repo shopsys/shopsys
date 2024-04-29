@@ -88,13 +88,11 @@ class OrderDataFactory
             $orderData->deliveryCountry = $order->getDeliveryCountry();
         }
         $orderData->note = $order->getNote();
-        $orderItemsWithoutTransportAndPaymentData = [];
 
-        foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
+        foreach ($order->getItems() as $orderItem) {
             $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
-            $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()] = $orderItemData;
+            $orderData->items[$orderItem->getId()] = $orderItemData;
         }
-        $orderData->itemsWithoutTransportAndPayment = $orderItemsWithoutTransportAndPaymentData;
         $orderData->createdAt = $order->getCreatedAt();
         $orderData->domainId = $order->getDomainId();
         $orderData->currency = $order->getCurrency();

@@ -144,12 +144,6 @@ class OrderData
     public $note;
 
     /**
-     * @deprecated replace with getter call
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
-     */
-    public $itemsWithoutTransportAndPayment;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */
     public $items = [];
@@ -251,7 +245,6 @@ class OrderData
 
     public function __construct()
     {
-        $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
         $this->paymentTransactionRefunds = [];
         $this->heurekaAgreement = false;
@@ -267,7 +260,7 @@ class OrderData
     {
         $newItemsWithoutTransportAndPayment = [];
 
-        foreach ($this->itemsWithoutTransportAndPayment as $index => $item) {
+        foreach ($this->getItemsWithoutTransportAndPayment() as $index => $item) {
             if (str_starts_with((string)$index, self::NEW_ITEM_PREFIX)) {
                 $newItemsWithoutTransportAndPayment[] = $item;
             }
@@ -341,5 +334,26 @@ class OrderData
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    public function getItemsWithoutTransportAndPayment(): array
+    {
+        return array_filter(
+            $this->items,
+            fn (OrderItemData $item) => !in_array($item->type, [OrderItemTypeEnum::TYPE_TRANSPORT, OrderItemTypeEnum::TYPE_PAYMENT], true),
+        );
+    }
+
+    /**
+     * Method is used for \Shopsys\FrameworkBundle\Form\OrderItemsType to set items without transport and payment during order edit
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[] $items
+     */
+    public function setItemsWithoutTransportAndPayment(array $items): void
+    {
+        $this->items = $items;
     }
 }

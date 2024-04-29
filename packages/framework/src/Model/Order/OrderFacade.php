@@ -258,7 +258,7 @@ class OrderFacade
      */
     protected function refreshOrderItemsWithoutTransportAndPayment(Order $order, OrderData $orderData): void
     {
-        $orderItemsWithoutTransportAndPaymentData = $orderData->itemsWithoutTransportAndPayment;
+        $orderItemsWithoutTransportAndPaymentData = $orderData->getItemsWithoutTransportAndPayment();
 
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
             if (array_key_exists($orderItem->getId(), $orderItemsWithoutTransportAndPaymentData)) {

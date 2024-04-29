@@ -465,4 +465,12 @@ class OrderItem
     {
         $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

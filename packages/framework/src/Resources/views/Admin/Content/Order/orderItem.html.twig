@@ -3,19 +3,14 @@
     <tr class="js-order-item js-order-item-any" id="{{ orderItemForm.vars.id }}" data-index="{{ orderItemId }}">
         <td>
             <div class="relative padding-left-10">
+                {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
+                {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
                 {% if productItem and productItem.product %}
-                    {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
-                    {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
                     <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="in-icon in-icon--after-input" target="_blank">
                         <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
                     </a>
                 {% elseif productItem and not productItem.product %}
-                    {{ form_widget(orderItemForm.name, {attr: { class: 'js-order-item-name'}}) }}
-                    {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
                     <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="top" title="{{ 'Product not in e-shop.'|trans }}"></i>
-                {% else %}
-                    {{ form_widget(orderItemForm.name, { attr: { class: 'js-order-item-name'}}) }}
-                    {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
                 {% endif %}
             </div>
         </td>

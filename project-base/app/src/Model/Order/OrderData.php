@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 /**
  * @property \App\Model\Transport\Transport|null $transport
  * @property \App\Model\Payment\Payment|null $payment
- * @property \App\Model\Order\Item\OrderItemData[] $itemsWithoutTransportAndPayment
  * @property \App\Model\Administrator\Administrator|null $createdAsAdministrator
  * @property \App\Model\Order\Item\OrderItemData|null $orderPayment
  * @property \App\Model\Order\Item\OrderItemData|null $orderTransport
@@ -19,6 +18,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItemData[] getItemsByType(string $type)
  * @method addItem(\App\Model\Order\Item\OrderItemData $item)
  * @property \App\Model\Customer\User\CustomerUser $customerUser
+ * @method \App\Model\Order\Item\OrderItemData[] getItemsWithoutTransportAndPayment()
+ * @method setItemsWithoutTransportAndPayment(\App\Model\Order\Item\OrderItemData[] $items)
  */
 class OrderData extends BaseOrderData
 {

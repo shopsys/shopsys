@@ -52,7 +52,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
+        $orderItemData = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT)[0];
         $orderItemData->quantity = 10;
         $orderItemData->vatPercent = '50.00';
         $orderItemData->unitPriceWithVat = Money::create(100);
@@ -73,7 +73,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
+        $orderItemData = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT)[0];
         $orderItemData->quantity = 10;
         $orderItemData->usePriceCalculation = false;
         $orderItemData->vatPercent = '50.00';
@@ -103,7 +103,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $orderItemData->quantity = 10;
         $orderItemData->vatPercent = '50.00';
         $orderItemData->unitPriceWithVat = Money::create(100);
-        $orderData->itemsWithoutTransportAndPayment[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
+        $orderData->items[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
@@ -130,7 +130,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $orderItemData->unitPriceWithoutVat = Money::create(50);
         $orderItemData->totalPriceWithVat = Money::create(950);
         $orderItemData->totalPriceWithoutVat = Money::create(400);
-        $orderData->itemsWithoutTransportAndPayment[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
+        $orderData->items[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
@@ -275,7 +275,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->order = $this->getReference(OrderDataFixture::ORDER_PREFIX . self::ORDER_ID, Order::class);
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
+        $orderItemData = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT)[0];
         $orderItemData->unitPriceWithVat = Money::create(21590);
 
         $orderPayment = $orderData->orderPayment;

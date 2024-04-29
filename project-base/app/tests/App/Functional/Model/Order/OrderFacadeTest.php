@@ -152,7 +152,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
         $orderData = $this->orderDataFactory->createFromOrder($order);
 
-        $orderItemsData = $orderData->itemsWithoutTransportAndPayment;
+        $orderItemsData = $orderData->getItemsWithoutTransportAndPayment();
         array_pop($orderItemsData);
 
         $orderItemData1 = new OrderItemData();
@@ -174,7 +174,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData1;
         $orderItemsData[OrderData::NEW_ITEM_PREFIX . '2'] = $orderItemData2;
 
-        $orderData->itemsWithoutTransportAndPayment = $orderItemsData;
+        $orderData->items = $orderItemsData;
         $this->orderFacade->edit($order->getId(), $orderData);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());

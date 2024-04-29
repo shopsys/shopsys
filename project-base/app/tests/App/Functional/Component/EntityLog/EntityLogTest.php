@@ -236,7 +236,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
 
-        foreach ($orderData->itemsWithoutTransportAndPayment as &$itemData) {
+        foreach ($orderData->getItemsWithoutTransportAndPayment() as $itemData) {
             $itemData->name = $expectedName;
             $itemData->quantity = $expectedQuantity;
             $itemData->vatPercent = $expectedVatPercent;

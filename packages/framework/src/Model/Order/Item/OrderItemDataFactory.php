@@ -67,6 +67,7 @@ class OrderItemDataFactory
         $orderItemData->quantity = $orderItem->getQuantity();
         $orderItemData->unitName = $orderItem->getUnitName();
         $orderItemData->catnum = $orderItem->getCatnum();
+        $orderItemData->type = $orderItem->getType();
 
         $orderItemData->usePriceCalculation = $this->isUsingPriceCalculation($orderItemData, $orderItem);
     }
