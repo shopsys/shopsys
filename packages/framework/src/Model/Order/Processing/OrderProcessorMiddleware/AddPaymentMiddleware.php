@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
 {
@@ -52,15 +56,7 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
             $domainId,
         );
 
-        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PAYMENT);
-        $orderItemData->unitPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->unitPriceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->totalPriceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->totalPriceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($domainId)->getVat()->getPercent();
-        $orderItemData->name = $payment->getName($orderProcessingData->getDomainLocale());
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
+        $orderItemData = $this->createPaymentItemData($paymentPrice, $payment, $orderProcessingData->getDomainConfig());
 
         $orderData = $orderProcessingData->orderData;
 
@@ -73,5 +69,28 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
         $orderData->addItem($orderItemData);
 
         return $orderProcessingStack->processNext($orderProcessingData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $paymentPrice
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
+     */
+    protected function createPaymentItemData(
+        Price $paymentPrice,
+        Payment $payment,
+        DomainConfig $domainConfig,
+    ): OrderItemData {
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PAYMENT);
+
+        $orderItemData->name = $payment->getName($domainConfig->getLocale());
+        $orderItemData->setUnitPrice($paymentPrice);
+        $orderItemData->setTotalPrice($paymentPrice);
+        $orderItemData->vatPercent = $payment->getPaymentDomain($domainConfig->getId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->payment = $payment;
+
+        return $orderItemData;
     }
 }

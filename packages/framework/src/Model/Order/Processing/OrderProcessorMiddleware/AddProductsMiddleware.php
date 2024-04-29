@@ -43,7 +43,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
                 $orderProcessingData->orderInput->getCustomerUser(),
             );
 
-            $orderItemData = $this->createProductOrderItem($quantifiedItemPrice, $quantifiedProduct, $orderProcessingData->getDomainLocale());
+            $orderItemData = $this->createProductItemData($quantifiedItemPrice, $quantifiedProduct, $orderProcessingData->getDomainLocale());
             $orderData->addItem($orderItemData);
 
             $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT);
@@ -58,7 +58,7 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
-    public function createProductOrderItem(
+    protected function createProductItemData(
         QuantifiedItemPrice $quantifiedItemPrice,
         QuantifiedProduct $quantifiedProduct,
         string $locale,
@@ -66,12 +66,11 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
         $product = $quantifiedProduct->getProduct();
 
         $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
-        $orderItemData->unitPriceWithoutVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithoutVat();
-        $orderItemData->unitPriceWithVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithVat();
-        $orderItemData->totalPriceWithoutVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithoutVat();
-        $orderItemData->totalPriceWithVat = $quantifiedItemPrice->getTotalPrice()->getPriceWithVat();
-        $orderItemData->vatPercent = $quantifiedItemPrice->getVat()->getPercent();
+
         $orderItemData->name = $product->getName($locale);
+        $orderItemData->setUnitPrice($quantifiedItemPrice->getUnitPrice());
+        $orderItemData->setTotalPrice($quantifiedItemPrice->getTotalPrice());
+        $orderItemData->vatPercent = $quantifiedItemPrice->getVat()->getPercent();
         $orderItemData->quantity = $quantifiedProduct->getQuantity();
         $orderItemData->unitName = $product->getUnit()->getName($locale);
         $orderItemData->catnum = $product->getCatnum();

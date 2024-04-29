@@ -71,14 +71,12 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
-    public function createRoundingItemData(Price $roundingPrice, DomainConfig $domainConfig): OrderItemData
+    protected function createRoundingItemData(Price $roundingPrice, DomainConfig $domainConfig): OrderItemData
     {
         $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_ROUNDING);
 
-        $orderItemData->unitPriceWithoutVat = $roundingPrice->getPriceWithoutVat();
-        $orderItemData->unitPriceWithVat = $roundingPrice->getPriceWithVat();
-        $orderItemData->totalPriceWithoutVat = $roundingPrice->getPriceWithoutVat();
-        $orderItemData->totalPriceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->setUnitPrice($roundingPrice);
+        $orderItemData->setTotalPrice($roundingPrice);
         $orderItemData->vatPercent = '0';
         $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainConfig->getLocale());
         $orderItemData->quantity = 1;

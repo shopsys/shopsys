@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -17,13 +18,14 @@ class AddProductsMiddleware extends BaseAddProductsMiddleware
      * @param string $locale
      * @return \App\Model\Order\Item\OrderItemData
      */
-    public function createProductOrderItem(
+    #[Override]
+    protected function createProductItemData(
         QuantifiedItemPrice $quantifiedItemPrice,
         QuantifiedProduct $quantifiedProduct,
         string $locale,
     ): OrderItemData {
         /** @var \App\Model\Order\Item\OrderItemData $orderItemData */
-        $orderItemData = parent::createProductOrderItem($quantifiedItemPrice, $quantifiedProduct, $locale);
+        $orderItemData = parent::createProductItemData($quantifiedItemPrice, $quantifiedProduct, $locale);
 
         /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
