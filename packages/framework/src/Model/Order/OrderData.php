@@ -258,8 +258,6 @@ class OrderData
         $this->isCompanyCustomer = false;
 
         $this->totalPrice = new Price(Money::zero(), Money::zero());
-
-        $this->setZeroPricesForAllTypes();
     }
 
     /**
@@ -276,15 +274,6 @@ class OrderData
         }
 
         return $newItemsWithoutTransportAndPayment;
-    }
-
-    protected function setZeroPricesForAllTypes(): void
-    {
-        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT] = new Price(Money::zero(), Money::zero());
-        $this->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING] = new Price(Money::zero(), Money::zero());
     }
 
     /**
