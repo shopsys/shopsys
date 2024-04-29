@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
@@ -45,6 +46,21 @@ class DiscountCalculation
             return null;
         }
 
+        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent);
+        $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
+
+        return new Price($priceWithoutVat, $priceWithVat);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
+     * @param float $vatPercent
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function calculateNominalDiscount(
+        Money $priceWithVat,
+        float $vatPercent,
+    ): Price {
         $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent);
         $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
 
