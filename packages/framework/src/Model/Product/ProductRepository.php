@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use App\Component\Doctrine\QueryBuilderExtender;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -18,10 +19,12 @@ class ProductRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+     * @param \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+        protected readonly QueryBuilderExtender $queryBuilderExtender,
     ) {
     }
 
@@ -50,7 +53,6 @@ class ProductRepository
     public function getAllListableQueryBuilder($domainId, PricingGroup $pricingGroup)
     {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
-        $this->addDomain($queryBuilder, $domainId);
         $queryBuilder->andWhere('p.variantType != :variantTypeVariant')
             ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT);
 
@@ -79,7 +81,14 @@ class ProductRepository
     public function getAllOfferedQueryBuilder($domainId, PricingGroup $pricingGroup)
     {
         $queryBuilder = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder->andWhere('p.calculatedSellingDenied = FALSE');
+
+        $this->queryBuilderExtender
+            ->addOrExtendJoin($queryBuilder, 'p.domains', 'pd', 'pd.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
+
+        $queryBuilder
+            ->andWhere('pd.saleExclusion = FALSE')
+            ->andWhere('p.calculatedSellingDenied = FALSE');
 
         return $queryBuilder;
     }
@@ -124,8 +133,11 @@ class ProductRepository
      */
     public function addDomain(QueryBuilder $queryBuilder, $domainId)
     {
-        $queryBuilder->addSelect('pd')
-            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId');
+        $queryBuilder->addSelect('pd');
+
+        $this->queryBuilderExtender
+            ->addOrExtendJoin($queryBuilder, 'p.domains', 'pd', 'pd.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
 
         $queryBuilder->setParameter('domainId', $domainId);
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\Product;
 
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -34,8 +33,6 @@ class LuigisBoxProductRepository
     ): iterable {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b, pd')
-            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
-            ->andWhere('pd.saleExclusion = false')
             ->leftJoin('p.brand', 'b')
             ->addSelect('v')->join('pd.vat', 'v')
             ->andWhere('p.variantType != :variantTypeVariant')
