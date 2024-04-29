@@ -1,5 +1,9 @@
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
+import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/utils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
@@ -8,8 +12,9 @@ import {
     CategoryDetailQueryDocument,
 } from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
-import dynamic from 'next/dynamic';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
@@ -25,28 +30,39 @@ import {
     LOAD_MORE_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
-
-const CategoryDetailWrapper = dynamic(() =>
-    import('components/Pages/CategoryDetail/CategoryDetailWrapper').then(
-        (component) => component.CategoryDetailWrapper,
-    ),
-);
 
 const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const currentFilter = useCurrentFilterQuery();
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
+    const seoTitle = useSeoTitleWithPagination(
+        categoryData?.products.totalCount,
+        categoryData?.name,
+        categoryData?.seoTitle,
+    );
+
+    const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData);
+    useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
 
     return (
         <PageDefer>
-            <CategoryDetailWrapper
-                categoryData={categoryData}
-                currentFilter={currentFilter}
-                isFetchingVisible={isFetchingVisible}
-            />
+            {!!currentFilter && <MetaRobots content="noindex, follow" />}
+
+            <CommonLayout
+                breadcrumbs={categoryData?.breadcrumb}
+                breadcrumbsType="category"
+                description={categoryData?.seoMetaDescription}
+                hreflangLinks={categoryData?.hreflangLinks}
+                isFetchingData={isFetchingVisible}
+                title={seoTitle}
+            >
+                {!!categoryData && <CategoryDetailContent category={categoryData} />}
+                <LastVisitedProducts />
+            </CommonLayout>
         </PageDefer>
     );
 };
