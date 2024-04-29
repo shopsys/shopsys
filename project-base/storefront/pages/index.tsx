@@ -3,6 +3,7 @@ import { Banners } from 'components/Blocks/Banners/Banners';
 import { DeferredBlogPreview } from 'components/Blocks/BlogPreview/DeferredBlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
 import { DeferredPromotedProducts } from 'components/Blocks/Product/DeferredPromotedProducts';
+import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
@@ -27,13 +28,8 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
-
-const RecommendedProducts = dynamic(() =>
-    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
-);
 
 const HomePage: NextPage<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -55,7 +51,7 @@ const HomePage: NextPage<ServerSidePropsType> = () => {
                     <PromotedCategories />
                 </Webline>
                 {isLuigisBoxActive && (
-                    <RecommendedProducts
+                    <DeferredRecommendedProducts
                         recommendationType={TypeRecommendationType.Personalized}
                         render={(recommendedProductsContent) => (
                             <Webline className="mb-6">

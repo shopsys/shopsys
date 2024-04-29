@@ -8,6 +8,7 @@ import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
+import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -15,15 +16,10 @@ import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/P
 import { TypeRecommendationType } from 'graphql/types';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
-
-const RecommendedProducts = dynamic(() =>
-    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
-);
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -92,7 +88,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
                 {isLuigisBoxActive && (
-                    <RecommendedProducts
+                    <DeferredRecommendedProducts
                         itemUuids={[product.uuid]}
                         recommendationType={TypeRecommendationType.ItemDetail}
                         render={(recommendedProductsContent) => (

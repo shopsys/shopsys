@@ -9,9 +9,10 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type ProductItemProps = {
     product: TypeListedProductFragment;
+    isSimpleCard?: boolean;
 } & FunctionComponentProps;
 
-export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, className }) => {
+export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, className, isSimpleCard }) => {
     return (
         <li
             className={twMergeCustom(
@@ -30,9 +31,9 @@ export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, clas
                         alt={product.mainImage?.name || product.fullName}
                         className="max-h-full object-contain"
                         draggable={false}
-                        height={250}
+                        height={isSimpleCard ? 150 : 250}
                         src={product.mainImage?.url}
-                        width={250}
+                        width={isSimpleCard ? 150 : 250}
                     />
                 </div>
 
@@ -40,19 +41,23 @@ export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, clas
 
                 <ProductPrice productPrice={product.price} />
 
-                <div className="flex flex-col gap-1 text-sm text-black">
-                    <div>{product.availability.name}</div>
-                    <ProductAvailableStoresCount
-                        availableStoresCount={product.availableStoresCount}
-                        isMainVariant={product.isMainVariant}
-                    />
-                </div>
+                {!isSimpleCard && (
+                    <div className="flex flex-col gap-1 text-sm text-black">
+                        <div>{product.availability.name}</div>
+                        <ProductAvailableStoresCount
+                            availableStoresCount={product.availableStoresCount}
+                            isMainVariant={product.isMainVariant}
+                        />
+                    </div>
+                )}
             </ExtendedNextLink>
 
-            <div className="flex justify-end gap-2">
-                <Skeleton className="w-8 h-8" />
-                <Skeleton className="w-8 h-8" />
-            </div>
+            {!isSimpleCard && (
+                <div className="flex justify-end gap-2">
+                    <Skeleton className="w-8 h-8" />
+                    <Skeleton className="w-8 h-8" />
+                </div>
+            )}
 
             <Skeleton className="h-12" />
         </li>

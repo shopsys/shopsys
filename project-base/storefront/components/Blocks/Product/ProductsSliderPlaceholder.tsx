@@ -5,9 +5,9 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import useTranslation from 'next-translate/useTranslation';
 
-type ProductsSliderPlaceholderProps = Pick<ProductsSliderProps, 'products'>;
+type ProductsSliderPlaceholderProps = Pick<ProductsSliderProps, 'products' | 'isWithSimpleCards'>;
 
-export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({ products }) => {
+export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({ products, isWithSimpleCards }) => {
     const { t } = useTranslation();
 
     return (
@@ -32,7 +32,11 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({ 
             <ul className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden">
                 {products.map((product, index) =>
                     index < 4 ? (
-                        <ProductListItemPlaceholder key={product.uuid} product={product} />
+                        <ProductListItemPlaceholder
+                            key={product.uuid}
+                            isSimpleCard={isWithSimpleCards}
+                            product={product}
+                        />
                     ) : (
                         <ExtendedNextLink key={product.uuid} href={product.slug}>
                             {product.fullName}

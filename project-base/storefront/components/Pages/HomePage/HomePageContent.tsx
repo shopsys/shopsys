@@ -3,6 +3,7 @@ import { Banners } from 'components/Blocks/Banners/Banners';
 import { DeferredBlogPreview } from 'components/Blocks/BlogPreview/DeferredBlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
 import { DeferredPromotedProducts } from 'components/Blocks/Product/DeferredPromotedProducts';
+import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -12,11 +13,7 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
 
-const RecommendedProducts = dynamic(() =>
-    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
-);
 export const HomePageContent: FC = () => {
     const { t } = useTranslation();
     const { isLuigisBoxActive } = useDomainConfig();
@@ -38,7 +35,7 @@ export const HomePageContent: FC = () => {
                 </Webline>
 
                 {isLuigisBoxActive && (
-                    <RecommendedProducts
+                    <DeferredRecommendedProducts
                         recommendationType={TypeRecommendationType.Personalized}
                         render={(recommendedProductsContent) => (
                             <Webline className="mb-6">
