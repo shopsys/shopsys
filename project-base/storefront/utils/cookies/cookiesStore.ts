@@ -30,8 +30,38 @@ const getDefaultInitState = (): CookiesStoreState => ({
 
 export const getCookiesStoreState = (context?: GetServerSidePropsContext): CookiesStoreState => {
     const { cookiesStore } = getCookies(context) as CookiesType;
+    const newState = getDefaultInitState();
 
-    return cookiesStore ? JSON.parse(decodeURIComponent(cookiesStore)) : getDefaultInitState();
+    if (!cookiesStore) {
+        return newState;
+    }
+
+    return removeIncorrectCookiesStoreProperties(
+        Object.keys(newState),
+        addMissingCookiesStoreProperties(newState, JSON.parse(decodeURIComponent(cookiesStore))),
+    );
+};
+
+const addMissingCookiesStoreProperties = (
+    newState: CookiesStoreState,
+    cookiesStoreState: Partial<CookiesStoreState>,
+) => {
+    return { ...newState, ...cookiesStoreState };
+};
+
+const removeIncorrectCookiesStoreProperties = (
+    allowedKeys: string[],
+    cookiesStoreState: CookiesStoreState & Record<string, unknown>,
+) => {
+    const cookiesStoreStateWithoutIncorrectProperties = { ...cookiesStoreState };
+
+    for (const key in cookiesStoreStateWithoutIncorrectProperties) {
+        if (!allowedKeys.includes(key)) {
+            delete cookiesStoreStateWithoutIncorrectProperties[key];
+        }
+    }
+
+    return cookiesStoreStateWithoutIncorrectProperties;
 };
 
 export const useCookiesStoreSync = () => {
