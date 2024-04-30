@@ -1,19 +1,15 @@
 import { CartList } from './CartList/CartList';
-import { CartLoading } from './CartLoading';
 import { CartSummary } from './CartSummary';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
+import { RecommendedProducts } from 'components/Blocks/Product/RecommendedProducts';
+import { SkeletonPageCart } from 'components/Blocks/Skeleton/SkeletonPageCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { RecommendationTypeApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
-
-const RecommendedProducts = dynamic(() =>
-    import('components/Blocks/Product/RecommendedProducts').then((component) => component.RecommendedProducts),
-);
 
 export const CartContent: FC = () => {
     const { t } = useTranslation();
@@ -22,7 +18,7 @@ export const CartContent: FC = () => {
     const { cart, isFetching, isCartHydrated } = useCurrentCart();
 
     if (!isCartHydrated || isFetching) {
-        return <CartLoading />;
+        return <SkeletonPageCart />;
     }
 
     if (!cart || !cart.items.length) {
