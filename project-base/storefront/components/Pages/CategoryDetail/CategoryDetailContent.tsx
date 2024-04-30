@@ -5,6 +5,8 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -25,9 +27,10 @@ const CategoryBestsellers = dynamic(() =>
 
 type CategoryDetailContentProps = {
     category: TypeCategoryDetailFragment;
+    isFetchingVisible: boolean;
 };
 
-export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {
+export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category, isFetchingVisible }) => {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
@@ -44,6 +47,9 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
             return newValue;
         });
     };
+
+    const pageViewEvent = useGtmFriendlyPageViewEvent(category);
+    useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
 
     return (
         <Webline>

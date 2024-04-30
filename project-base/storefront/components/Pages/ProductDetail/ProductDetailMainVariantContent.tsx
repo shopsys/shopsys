@@ -8,6 +8,8 @@ import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisited
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -34,6 +36,8 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
         return [...product.images, ...variantImages];
     }, [product]);
 
+    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
+    useGtmPageViewEvent(pageViewEvent, fetching);
     useLastVisitedProductView(product.catalogNumber);
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
