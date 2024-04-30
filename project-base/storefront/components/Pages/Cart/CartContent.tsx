@@ -1,9 +1,9 @@
 import { CartList } from './CartList/CartList';
-import { CartLoading } from './CartLoading';
 import { CartSummary } from './CartSummary';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
+import { SkeletonPageCart } from 'components/Blocks/Skeleton/SkeletonPageCart';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeRecommendationType } from 'graphql/types';
@@ -18,7 +18,7 @@ export const CartContent: FC = () => {
     const { cart, isFetching } = useCurrentCart();
 
     if (cart === undefined || isFetching) {
-        return <CartLoading />;
+        return <SkeletonPageCart />;
     }
 
     if (!cart?.items.length) {

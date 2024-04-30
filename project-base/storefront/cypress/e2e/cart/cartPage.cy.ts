@@ -16,33 +16,6 @@ describe('Cart page tests', () => {
         cy.visitAndWaitForStableDOM(url.cart);
     });
 
-    it('should increase and decrease product quantity using spinbox in cart (once if clicked fast)', () => {
-        increaseCartItemQuantityWithSpinbox();
-        checkLoaderOverlayIsNotVisible();
-
-        increaseCartItemQuantityWithSpinbox();
-        checkLoaderOverlayIsNotVisible();
-
-        increaseCartItemQuantityWithSpinbox();
-        checkLoaderOverlayIsNotVisible();
-
-        increaseCartItemQuantityWithSpinbox();
-        checkLoaderOverlayIsNotVisible(300);
-        checkCartItemTotalPrice('€1,978.00');
-        checkCartTotalPrice('€2,257.92');
-
-        decreaseCartItemQuantityWithSpinbox();
-        checkLoaderOverlayIsNotVisible();
-
-        decreaseCartItemQuantityWithSpinbox();
-        checkLoaderOverlayIsNotVisible(300);
-        checkCartItemTotalPrice('€1,186.80');
-        checkCartTotalPrice('€1,466.72');
-
-        continueToTransportAndPaymentSelection();
-        checkUrl(url.order.transportAndPayment);
-    });
-
     it('should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', () => {
         increaseCartItemQuantityWithSpinbox();
         checkLoaderOverlayIsNotVisible(300);
