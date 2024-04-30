@@ -1,25 +1,26 @@
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { createEmptyArray } from 'helpers/arrayUtils';
+import { twJoin } from 'tailwind-merge';
 
 export type SkeletonModuleProductsListProps = {
-    isWithoutNavigation?: boolean;
+    isWithSimpleCards?: boolean;
 };
 
-export const SkeletonModuleProductSlider: FC<SkeletonModuleProductsListProps> = ({ isWithoutNavigation }) => (
-    <div className="flex flex-row items-stretch gap-5 h-[500px]">
+export const SkeletonModuleProductSlider: FC<SkeletonModuleProductsListProps> = ({ isWithSimpleCards }) => (
+    <div className="relative">
         <div className="w-full">
-            {!isWithoutNavigation && (
-                <div className="mb-7 flex flex-wrap gap-2">
-                    {createEmptyArray(4).map((_, index) => (
-                        <div
-                            key={index}
-                            className="h-14 sm:w-[calc(50%-4px)] md:w-[calc(33.33%-8px)] lg:h-20 xl:w-[calc(25%-8px)] w-full"
-                        >
-                            <SkeletonModuleProductListItem />
-                        </div>
-                    ))}
-                </div>
-            )}
+            <div
+                className={twJoin([
+                    "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] [&::-webkit-scrollbar]:hidden",
+                    !isWithSimpleCards && 'vl:auto-cols-[25%]',
+                ])}
+            >
+                {createEmptyArray(4).map((_, index) => (
+                    <div key={index}>
+                        <SkeletonModuleProductListItem isSimpleCard={isWithSimpleCards} />
+                    </div>
+                ))}
+            </div>
         </div>
     </div>
 );

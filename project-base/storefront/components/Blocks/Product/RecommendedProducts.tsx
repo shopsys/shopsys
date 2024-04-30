@@ -1,4 +1,5 @@
 import { ProductsSlider } from './ProductsSlider';
+import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { RecommendationTypeApi, useRecommendedProductsQueryApi } from 'graphql/generated';
 import { GtmProductListNameType } from 'gtm/types/enums';
@@ -14,7 +15,7 @@ type RecommendedProductsProps = {
 export const RecommendedProducts: FC<RecommendedProductsProps> = ({ recommendationType, render, itemUuids = [] }) => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const { isLuigisBoxActive } = useDomainConfig();
-    const [{ data: recommendedProductsData }] = useRecommendedProductsQueryApi({
+    const [{ data: recommendedProductsData, fetching: isFetching }] = useRecommendedProductsQueryApi({
         variables: {
             itemUuids,
             userIdentifier,
@@ -23,6 +24,14 @@ export const RecommendedProducts: FC<RecommendedProductsProps> = ({ recommendati
         },
         pause: !isLuigisBoxActive,
     });
+
+    if (isFetching) {
+        return render(
+            <SkeletonModuleProductSlider
+                isWithSimpleCards={recommendationType === RecommendationTypeApi.BasketPopupApi}
+            />,
+        );
+    }
 
     if (!recommendedProductsData?.recommendedProducts.length) {
         return null;

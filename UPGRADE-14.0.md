@@ -1905,3 +1905,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix main variants in last visited products ([#3139](https://github.com/shopsys/shopsys/pull/3139))
 
 -   cart hydration fix ([#3142](https://github.com/shopsys/shopsys/pull/3142))
+
+-   recommended products skeleton ([#3138](https://github.com/shopsys/shopsys/pull/3138))
