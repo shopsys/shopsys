@@ -826,6 +826,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### load products iteratively while generating image sitemaps ([#3144](https://github.com/shopsys/shopsys/pull/3144))
+
+-   `Shopsys\FrameworkBundle\Model\Product\ProductRepository` class was changed:
+    -   `getAllOfferedProducts()` method was removed, use `getAllOfferedProductsPaginated()` instead
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
