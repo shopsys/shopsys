@@ -2,9 +2,8 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { Translate } from 'next-translate';
 import getT from 'next-translate/getT';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
-import { CookiesStoreState } from 'store/useCookiesStore';
 import { SSRExchange, ssrExchange } from 'urql';
-import { getCookiesStoreState } from 'utils/cookies/cookiesStore';
+import { CookiesStoreState, getCookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType, getDomainConfig } from 'utils/domain/domainConfig';
 
 export const getServerSidePropsWrapper =

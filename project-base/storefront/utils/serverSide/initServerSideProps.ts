@@ -21,12 +21,11 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
-import { CookiesStoreState, createCookiesStoreOnServer } from 'store/useCookiesStore';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
-import { getCookiesStoreStateFromContext, serializeCookieStoreOnServer } from 'utils/cookies/cookieStoreUtils';
+import { CookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
@@ -166,10 +165,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
-            cookiesStore: serializeCookieStoreOnServer(
-                createCookiesStoreOnServer(getCookiesStoreStateFromContext(context)).getState(),
-            ),
-
             ...additionalProps,
         },
     };
