@@ -132,7 +132,7 @@ team of {domain}
 
             $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
 
-            $mailTemplateData->subject = t('Registration completion', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mailTemplateData->subject = t('Customer activation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer,<br /><br />you can finish registration and set new password via this link: <a href="{activation_url}">{activation_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);

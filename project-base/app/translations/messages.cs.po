@@ -409,6 +409,9 @@ msgstr "Přehled cronů"
 msgid "Custom"
 msgstr "Vlastní"
 
+msgid "Customer activation"
+msgstr "Aktivace zákazníka"
+
 msgid "Customer not found."
 msgstr "Zákazník nenalezen."
 
@@ -1332,9 +1335,6 @@ msgstr "Typ přesměrování"
 
 msgid "Registration"
 msgstr "Registrace"
-
-msgid "Registration completion"
-msgstr "Dokončení registrace"
 
 msgid "Related products"
 msgstr "Související produkty"
