@@ -783,6 +783,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see classes in the `Shopsys\FrontendApiBundle\Model\Cart` namespace
 -   see #project-base-diff to update your project
 
+#### fix issues reported by phpstan ([#3134](https://github.com/shopsys/shopsys/pull/3134))
+
+-   see #project-base-diff to update your project
+
 #### addProductToListMutation: ensure new product list is created with non-conflicting uuid ([#3126](https://github.com/shopsys/shopsys/pull/3126))
 
 -   add new tests to `ProductListLoggedCustomerTest` and `ProductListNotLoggedCustomerTest` classes
