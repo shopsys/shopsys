@@ -48,7 +48,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
 
     private function registerCustomerActivationMailTemplate(): void
     {
-        $mailTemplate = new MailTemplateVariables(t('Registration completion'));
+        $mailTemplate = new MailTemplateVariables(t('Customer activation'));
         $mailTemplate
             ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
             ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Link to complete the registration'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
