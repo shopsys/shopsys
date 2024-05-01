@@ -73,7 +73,6 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
     - %currentWorkingDirectory%/packages/coding-standards/extension.neon
 rules:
-    - \Shopsys\CodingStandards\Phpstan\EntityShouldHaveFactoryRule
     - \Shopsys\CodingStandards\Phpstan\OrmPropertyGetterAndSetterHasNoTypehintRule
     - \Shopsys\CodingStandards\Phpstan\OrmPropertyHasNoTypehintRule
     - \Shopsys\CodingStandards\Phpstan\EntityDataObjectPropertyHasNoTypehintRule

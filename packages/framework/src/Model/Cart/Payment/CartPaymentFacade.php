@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Cart\Payment;
+namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -12,7 +12,7 @@ class CartPaymentFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentDataFactory $cartPaymentDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentDataFactory $cartPaymentDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,

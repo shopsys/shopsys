@@ -2,65 +2,68 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Cart\Payment;
+namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
-class CartPaymentDataFactory
+class CartTransportDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      */
     public function __construct(
-        protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
+        protected readonly TransportFacade $transportFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly OrderPreviewFactory $orderPreviewFactory,
-        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
     ) {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param string $paymentUuid
-     * @param string|null $goPayBankSwift
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\Payment\CartPaymentData
+     * @param string $transportUuid
+     * @param string|null $pickupPlaceIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData
      */
-    public function create(Cart $cart, string $paymentUuid, ?string $goPayBankSwift): CartPaymentData
-    {
+    public function create(
+        Cart $cart,
+        string $transportUuid,
+        ?string $pickupPlaceIdentifier,
+    ): CartTransportData {
         $domainId = $this->domain->getId();
-        $payment = $this->paymentFacade->getEnabledOnDomainByUuid($paymentUuid, $domainId);
-        $watchedPriceWithVat = $this->getPaymentWatchedPriceWithVat($domainId, $cart, $payment);
+        $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $domainId);
+        $watchedPriceWithVat = $this->getTransportWatchedPriceWithVat($domainId, $cart, $transport);
 
-        $cartPaymentData = new CartPaymentData();
-        $cartPaymentData->payment = $payment;
-        $cartPaymentData->watchedPrice = $watchedPriceWithVat;
-        $cartPaymentData->goPayBankSwift = $goPayBankSwift;
+        $cartTransportData = new CartTransportData();
+        $cartTransportData->transport = $transport;
+        $cartTransportData->watchedPrice = $watchedPriceWithVat;
+        $cartTransportData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
 
-        return $cartPaymentData;
+        return $cartTransportData;
     }
 
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getPaymentWatchedPriceWithVat(int $domainId, Cart $cart, Payment $payment): Money
+    protected function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -68,16 +71,16 @@ class CartPaymentDataFactory
             $currency,
             $domainId,
             $cart->getQuantifiedProducts(),
-            $cart->getTransport(),
-            $payment,
+            $transport,
+            $cart->getPayment(),
             $customerUser,
             null,
             null,
             $cart->getFirstAppliedPromoCode(),
         );
 
-        $watchedPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
+        $watchedPrice = $this->transportPriceCalculation->calculatePrice(
+            $transport,
             $currency,
             $orderPreview->getProductsPrice(),
             $domainId,

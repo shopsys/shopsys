@@ -58,7 +58,6 @@
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^4.0.2",
         "jms/translation-bundle": "^1.6.2",
-        "league/csv": "^9.6",
         "league/flysystem": "^3.11.0",
         "league/flysystem-aws-s3-v3": "^3.12.2",
         "nette/utils": "^3.2",

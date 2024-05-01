@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Cart\Transport;
+namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 class CartTransportFacade
 {
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\Cart\Transport\CartTransportDataFactory $cartTransportDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportDataFactory $cartTransportDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
