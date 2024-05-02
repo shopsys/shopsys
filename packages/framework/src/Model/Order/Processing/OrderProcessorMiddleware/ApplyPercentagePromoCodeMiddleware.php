@@ -4,99 +4,82 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
-class ApplyPercentagePromoCodeMiddleware implements OrderProcessorMiddlewareInterface
+class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation $discountCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation $discountCalculation
+     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      */
     public function __construct(
-        protected readonly OrderItemDataFactory $orderItemDataFactory,
-        protected readonly NumberFormatterExtension $numberFormatterExtension,
+        CurrentPromoCodeFacade $currentPromoCodeFacade,
+        PromoCodeFacade $promoCodeFacade,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly DiscountCalculation $discountCalculation,
-        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        protected readonly NumberFormatterExtension $numberFormatterExtension,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
+        parent::__construct($currentPromoCodeFacade, $promoCodeFacade);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
+     * {@inheritdoc}
      */
-    public function handle(
+    #[Override]
+    protected function getSupportedTypes(): array
+    {
+        return [PromoCode::DISCOUNT_TYPE_PERCENT];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function createAndAddOrderItemData(
+        OrderData $orderData,
+        array $validProductIds,
+        PromoCode $appliedPromoCode,
+        PromoCodeLimit $promoCodeLimit,
         OrderProcessingData $orderProcessingData,
-        OrderProcessingStack $orderProcessingStack,
-    ): OrderProcessingData {
-        $appliedPromoCodes = $orderProcessingData->orderInput->getPromoCodes();
-
-        $orderData = $orderProcessingData->orderData;
-
-        foreach ($appliedPromoCodes as $appliedPromoCode) {
-            if ($appliedPromoCode->getDiscountType() !== PromoCode::DISCOUNT_TYPE_PERCENT) {
+    ): void {
+        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
+            if (!in_array($productItem->product->getId(), $validProductIds, true)) {
                 continue;
             }
 
-            $products = array_map(
-                static fn (OrderItemData $orderItemData) => $orderItemData->product,
-                $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT),
+            $discountOrderItemData = $this->createDiscountOrderItemData(
+                $appliedPromoCode,
+                $promoCodeLimit,
+                $productItem,
+                $orderProcessingData->getDomainConfig(),
             );
 
-            try {
-                $validProductIds = $this->currentPromoCodeFacade->validatePromoCode(
-                    $appliedPromoCode,
-                    $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT],
-                    $products,
-                );
-
-                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
-            } catch (PromoCodeException) {
+            if ($discountOrderItemData === null) {
                 continue;
             }
 
-            foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
-                if (!in_array($productItem->product->getId(), $validProductIds, true)) {
-                    continue;
-                }
-
-                $discountOrderItemData = $this->createDiscountOrderItemData(
-                    $appliedPromoCode,
-                    $promoCodeLimit,
-                    $productItem,
-                    $orderProcessingData->getDomainConfig(),
-                );
-
-                if ($discountOrderItemData === null) {
-                    continue;
-                }
-
-                $orderData->addItem($discountOrderItemData);
-                $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
-            }
+            $orderData->addItem($discountOrderItemData);
+            $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
         }
-
-        return $orderProcessingStack->processNext($orderProcessingData);
     }
 
     /**

@@ -4,79 +4,76 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
-use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 
-class ApplyNominalPromoCodeMiddleware implements OrderProcessorMiddlewareInterface
+class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation $discountCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      */
     public function __construct(
-        protected readonly OrderItemDataFactory $orderItemDataFactory,
-        protected readonly PromoCodeFacade $promoCodeFacade,
+        CurrentPromoCodeFacade $currentPromoCodeFacade,
+        PromoCodeFacade $promoCodeFacade,
         protected readonly DiscountCalculation $discountCalculation,
-        protected readonly VatFacade $vatFacade,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PriceExtension $priceExtension,
+        protected readonly VatFacade $vatFacade,
     ) {
+        parent::__construct($currentPromoCodeFacade, $promoCodeFacade);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
-     * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
+     * {@inheritdoc}
      */
-    public function handle(
+    #[Override]
+    protected function getSupportedTypes(): array
+    {
+        return [PromoCode::DISCOUNT_TYPE_NOMINAL];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function createAndAddOrderItemData(
+        OrderData $orderData,
+        array $validProductIds,
+        PromoCode $appliedPromoCode,
+        PromoCodeLimit $promoCodeLimit,
         OrderProcessingData $orderProcessingData,
-        OrderProcessingStack $orderProcessingStack,
-    ): OrderProcessingData {
-        $appliedPromoCodes = $orderProcessingData->orderInput->getPromoCodes();
+    ): void {
+        $discountOrderItemData = $this->createDiscountOrderItemData(
+            $appliedPromoCode,
+            $promoCodeLimit,
+            $orderProcessingData->getDomainConfig(),
+        );
 
-        $orderData = $orderProcessingData->orderData;
-
-        foreach ($appliedPromoCodes as $appliedPromoCode) {
-            if ($appliedPromoCode->getDiscountType() !== PromoCode::DISCOUNT_TYPE_NOMINAL) {
-                continue;
-            }
-
-            try {
-                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($appliedPromoCode, $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT]);
-            } catch (PromoCodeException) {
-                continue;
-            }
-
-            $discountOrderItemData = $this->createDiscountOrderItemData(
-                $appliedPromoCode,
-                $promoCodeLimit,
-                $orderProcessingData->getDomainConfig(),
-            );
-
-            if ($discountOrderItemData === null) {
-                continue;
-            }
-
-            $orderData->addItem($discountOrderItemData);
-            $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
+        if ($discountOrderItemData === null) {
+            return;
         }
 
-        return $orderProcessingStack->processNext($orderProcessingData);
+        $orderData->addItem($discountOrderItemData);
+        $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
     /**
