@@ -72,7 +72,7 @@ class UploadedFile implements EntityFileUploadInterface
     protected $type;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $temporaryFilename;
 
@@ -111,15 +111,19 @@ class UploadedFile implements EntityFileUploadInterface
      */
     public function getTemporaryFilesForUpload(): array
     {
-        return [
-            static::UPLOAD_KEY => new FileForUpload(
+        $files = [];
+
+        if ($this->temporaryFilename !== null) {
+            $files[static::UPLOAD_KEY] = new FileForUpload(
                 $this->temporaryFilename,
                 false,
                 $this->entityName,
                 null,
                 FileNamingConvention::TYPE_ID,
-            ),
-        ];
+            );
+        }
+
+        return $files;
     }
 
     /**
