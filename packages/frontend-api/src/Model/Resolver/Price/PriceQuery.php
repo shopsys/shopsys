@@ -120,6 +120,9 @@ class PriceQuery extends AbstractQuery
             null,
             $payment,
             $customerUser,
+            null,
+            null,
+            $cart->getFirstAppliedPromoCode(),
         );
 
         return $this->paymentPriceCalculation->calculatePrice(
@@ -177,6 +180,9 @@ class PriceQuery extends AbstractQuery
             $transport,
             null,
             $customerUser,
+            null,
+            null,
+            $cart->getFirstAppliedPromoCode(),
         );
 
         return $this->transportPriceCalculation->calculatePrice(
