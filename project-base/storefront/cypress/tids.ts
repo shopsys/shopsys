@@ -58,4 +58,8 @@ export enum TIDs {
     spinbox_input = 'spinbox_input',
     reset_transport_button = 'reset_transport_button',
     reset_payment_button = 'reset_payment_button',
+    order_list_repeat_order_button = 'order_list_repeat_order_button',
+    repeat_order_dont_merge_carts_button = 'repeat_order_dont_merge_carts_button',
+    repeat_order_merge_carts_button = 'repeat_order_merge_carts_button',
+    order_detail_repeat_order_button = 'order_detail_repeat_order_button',
 }

@@ -83,7 +83,7 @@ export const products = {
         uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
         name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
         fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
-        catnum: 9177759,
+        catnum: '9177759',
         url: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
     },
     philips32PFL4308: {
@@ -91,11 +91,13 @@ export const products = {
         url: '/philips-32pfl4308',
     },
     lg47LA790VFHD: {
+        uuid: '4670eedd-f063-5e1f-9839-1b8dd13cb5b0',
         catnum: '5965879P',
     },
     philips54CRT: {
+        uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb	',
         name: '54" Philips CRT 32PFL4308',
-        catnum: 9176588,
+        catnum: '9176588',
     },
 } as const;
 

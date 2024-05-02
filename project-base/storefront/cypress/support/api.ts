@@ -346,8 +346,6 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                         }
                     ) {
                         order {
-                            number
-                            uuid
                             urlHash
                     }
                 }

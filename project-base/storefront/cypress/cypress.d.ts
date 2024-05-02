@@ -17,7 +17,7 @@ declare global {
             ): Cypress.Chainable<Cypress.Response<any>>;
             preselectPaymentForTest(paymentUuid: string): Cypress.Chainable<Cypress.Response<any>>;
             logout(): Cypress.Chainable<Cypress.Response<any>>;
-            createOrder(createOrderInput: CreateOrderMutationVariables): Cypress.Chainable<Cypress.Response<any>>;
+            createOrder(createOrderInput: CreateOrderMutationVariables): Cypress.Chainable<{ urlHash: string }>;
             registerAsNewUser(
                 registrationInput: RegistrationDataInputApi,
                 shouldLogin?: boolean,

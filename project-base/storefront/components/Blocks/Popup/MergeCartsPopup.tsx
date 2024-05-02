@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 
@@ -22,12 +23,16 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
             </p>
             <div className="flex justify-between">
                 <Button
+                    tid={TIDs.repeat_order_dont_merge_carts_button}
                     variant="secondary"
                     onClick={() => mergeOrderItemsWithCurrentCart(orderForPrefillingUuidRef.current)}
                 >
                     {t('No')}
                 </Button>
-                <Button onClick={() => mergeOrderItemsWithCurrentCart(orderForPrefillingUuidRef.current, true)}>
+                <Button
+                    tid={TIDs.repeat_order_merge_carts_button}
+                    onClick={() => mergeOrderItemsWithCurrentCart(orderForPrefillingUuidRef.current, true)}
+                >
                     {t('Yes')}
                 </Button>
             </div>
