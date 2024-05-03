@@ -63,7 +63,7 @@
         "nette/utils": "^3.2",
         "nyholm/psr7": "^1.5",
         "overblog/dataloader-bundle": "^0.6.0",
-        "phing/phing": "3.0.0-rc6",
+        "phing/phing": "^3.0.0",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "scheb/2fa-bundle": "^5.7",
