@@ -38,7 +38,7 @@ export const FooterBoxInfo: FC<FooterBoxInfoProps> = ({ opening, phone }) => {
                     </a>
                     <p className="m-0 text-sm text-white">{opening}</p>
                 </div>
-                <ExtendedNextLink href={contactUrl}>
+                <ExtendedNextLink className="no-underline" href={contactUrl}>
                     <Button className="z-above" variant="secondary">
                         {t('Write to us')}
                     </Button>

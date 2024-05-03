@@ -3,6 +3,7 @@ import { DeferredCart } from './Cart/DeferredCart';
 import { Logo } from './Logo/Logo';
 import { DeferredMenuIconic } from './MenuIconic/DeferredMenuIconic';
 import { DeferredMobileMenu } from './MobileMenu/DeferredMobileMenu';
+import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 
 const HeaderContact = dynamic(() => import('./Contact/HeaderContact').then((component) => component.HeaderContact));
@@ -13,7 +14,7 @@ type HeaderProps = {
 
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     return (
-        <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-1 lg:gap-x-7 lg:pb-5 lg:pt-6">
+        <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-1 lg:gap-x-7 lg:pb-5 lg:pt-6" tid={TIDs.header}>
             <Logo />
 
             {simpleHeader ? (

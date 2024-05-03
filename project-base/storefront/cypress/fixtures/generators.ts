@@ -65,4 +65,4 @@ export const generateCustomerRegistrationData = (
     return generatedData;
 };
 
-export const generateEmail = () => `no-reply-${uuid()}@shopsys.com`;
+const generateEmail = () => `no-reply-${uuid()}@shopsys.com`;

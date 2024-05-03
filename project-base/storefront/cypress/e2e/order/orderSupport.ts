@@ -3,12 +3,14 @@ import {
     customer1,
     deliveryAddress,
     link,
+    order,
     payment,
     placeholder,
     transport,
     url,
 } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
+import { changeElementText } from 'support';
 import { TIDs } from 'tids';
 
 export const fillEmailInThirdStep = (email: string) => {
@@ -120,18 +122,6 @@ export const fillInNoteInThirdStep = (note: string) => {
     cy.get('#contact-information-form-note').should('have.attr', 'placeholder', placeholder.note).type(note);
 };
 
-export const checkFinishOrderPageAsUnregistredCustomer = () => {
-    cy.url().should('contain', url.order.orderConfirmation);
-    cy.getByTID([TIDs.pages_orderconfirmation])
-        .get('#registration-after-order-form-password')
-        .should('have.attr', 'placeholder', placeholder.password);
-};
-
-export const checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration = () => {
-    cy.url().should('contain', url.order.orderConfirmation);
-    cy.getByTID([TIDs.pages_orderconfirmation]).get('#registration-after-order-form-password').should('not.exist');
-};
-
 export const clickOnOrderDetailButtonOnThankYouPage = () => {
     cy.getByTID([TIDs.pages_orderconfirmation]).contains(link.orderDetail).click();
     cy.url().should('contain', url.order.orderDetail);
@@ -186,4 +176,66 @@ export const goToMyOrdersFromHeader = () => {
         .should('be.visible')
         .realHover()
         .then(() => cy.getByTID([TIDs.header_my_orders_link]).should('be.visible').click());
+    cy.waitForStableAndInteractiveDOM();
+};
+
+export const checkTransportSelectionIsNotVisible = () => {
+    cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
+};
+
+export const checkEmptyCartTextIsVisible = () => {
+    cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist').and('be.visible');
+};
+
+export const checkTransportSelectionIsVisible = () => {
+    cy.getByTID([TIDs.pages_order_transport]).should('exist').and('be.visible');
+};
+
+export const checkContactInformationFormIsNotVisible = () => {
+    cy.getByTID([TIDs.contact_information_form]).should('not.exist');
+};
+
+export const changeOrderDetailDynamicPartsToStaticDemodata = (shouldChangeBreadcrumb: boolean = false) => {
+    changeElementText(TIDs.order_detail_number, order.numberHeading);
+    changeElementText(TIDs.order_detail_creation_date, order.creationDate, false);
+
+    if (shouldChangeBreadcrumb) {
+        changeElementText(TIDs.breadcrumbs_tail, order.number);
+    }
+};
+
+export const changeOrderConfirmationDynamicPartsToStaticDemodata = () => {
+    cy.getByTID([TIDs.order_confirmation_page_text_wrapper]).then((element) => {
+        const originalText = element.html();
+        element.html(originalText.replace(/Order number \d+/, order.numberHeading));
+    });
+};
+
+export const submitRegistrationFormAfterOrder = () => {
+    cy.getByTID([TIDs.registration_after_order_submit_button]).click();
+};
+
+export const goToOrderDetailFromOrderList = (index: number = 0) => {
+    cy.getByTID([[TIDs.my_orders_link_, index]]).click();
+    cy.waitForStableAndInteractiveDOM();
+};
+
+export const repeatOrderFromOrderList = (withMerge?: boolean) => {
+    cy.getByTID([TIDs.order_list_repeat_order_button]).click();
+
+    if (withMerge === true) {
+        cy.getByTID([TIDs.repeat_order_merge_carts_button]).click();
+    } else if (withMerge === false) {
+        cy.getByTID([TIDs.repeat_order_dont_merge_carts_button]).click();
+    }
+};
+
+export const repeatOrderFromOrderDetail = (withMerge?: boolean) => {
+    cy.getByTID([TIDs.order_detail_repeat_order_button]).click();
+
+    if (withMerge === true) {
+        cy.getByTID([TIDs.repeat_order_merge_carts_button]).click();
+    } else if (withMerge === false) {
+        cy.getByTID([TIDs.repeat_order_dont_merge_carts_button]).click();
+    }
 };

@@ -1,5 +1,6 @@
 import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem';
+import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
@@ -77,7 +78,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     return (
-        <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef}>
+        <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef} tid={TIDs.banners_slider}>
             <div className="keen-slider h-[283px] rounded vl:basis-3/4" ref={sliderRef}>
                 {isRecognizingWindowWidth ? (
                     <div className="flex h-full w-full items-center justify-center">

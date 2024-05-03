@@ -9,19 +9,25 @@ import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
-Cypress.Commands.add('getByTID', (selectors: ([TIDs, number | string] | TIDs)[]) => {
-    let selectorString = '';
-    for (const selector of selectors) {
-        if (Array.isArray(selector)) {
-            const [selectorPrefix, index] = selector;
-            selectorString += `[tid=${selectorPrefix}${index}] `;
-        } else {
-            selectorString += `[tid=${selector}] `;
+Cypress.Commands.add(
+    'getByTID',
+    (
+        selectors: ([TIDs, number | string] | TIDs)[],
+        options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow> | undefined,
+    ) => {
+        let selectorString = '';
+        for (const selector of selectors) {
+            if (Array.isArray(selector)) {
+                const [selectorPrefix, index] = selector;
+                selectorString += `[tid=${selectorPrefix}${index}] `;
+            } else {
+                selectorString += `[tid=${selector}] `;
+            }
         }
-    }
 
-    return cy.get(selectorString.trim());
-});
+        return cy.get(selectorString.trim(), options);
+    },
+);
 
 Cypress.Commands.add('storeCartUuidInLocalStorage', (cartUuid: string) => {
     return cy.then(() => {
@@ -36,16 +42,27 @@ Cypress.Commands.add('storeCartUuidInLocalStorage', (cartUuid: string) => {
     });
 });
 
-Cypress.Commands.add('visitAndWaitForStableDOM', (url: string) => {
-    cy.visit(url);
+Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
+    cy.waitForStableDOM();
+    cy.window().then((win) => {
+        win.dispatchEvent(new Event('resize'));
+    });
+    cy.get('.react-loading-skeleton').should('not.exist');
+    cy.get('#nprogress').should('not.exist');
 
     return cy.waitForStableDOM();
 });
 
-Cypress.Commands.add('reloadAndWaitForStableDOM', () => {
+Cypress.Commands.add('visitAndWaitForStableAndInteractiveDOM', (url: string) => {
+    cy.visit(url);
+
+    return cy.waitForStableAndInteractiveDOM();
+});
+
+Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
     cy.reload();
 
-    return cy.waitForStableDOM();
+    return cy.waitForStableAndInteractiveDOM();
 });
 
 compareSnapshotCommand({
@@ -85,21 +102,96 @@ export const goToEditProfileFromHeader = () => {
         .should('be.visible')
         .realHover()
         .then(() => cy.getByTID([TIDs.header_edit_profile_link]).should('be.visible').click());
+    cy.waitForStableAndInteractiveDOM();
 };
 
-export const checkLoaderOverlayIsNotVisible = (timeout?: number) => {
-    cy.getByTID([TIDs.loader_overlay]).should('be.visible', { timeout });
+export const checkLoaderOverlayIsNotVisibleAfterTimePeriod = (timePeriod: number = 300) => {
+    cy.wait(timePeriod);
+    cy.getByTID([TIDs.loader_overlay]).should('not.exist');
 };
 
 export const clickOnLabel = (parentElementId: string) => {
     cy.get(`[for="${parentElementId}"]`).click();
 };
 
-export const takeSnapshotAndCompare = (snapshotName: string, capture: 'viewport' | 'fullPage' = 'fullPage') => {
-    cy.wait(200);
+export type Blackout = { tid: TIDs; zIndex?: number; shouldNotOffset?: boolean };
+
+type SnapshotAdditionalOptions = {
+    capture: 'viewport' | 'fullPage' | TIDs;
+    wait: number;
+    blackout: Blackout[];
+};
+
+export const takeSnapshotAndCompare = (
+    testName: string | undefined,
+    snapshotName: string,
+    options: Partial<SnapshotAdditionalOptions> = {},
+) => {
+    const optionsWithDefaultValues = {
+        capture: options.capture ?? 'fullPage',
+        wait: options.wait ?? 1000,
+        blackout: options.blackout ?? [],
+    };
+
+    if (!testName) {
+        throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
+    }
+
     cy.setDevicePixelRatio(1);
-    cy.screenshot({ capture });
-    cy.compareSnapshot(snapshotName, { capture });
+
+    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
+        cy.wait(optionsWithDefaultValues.wait / 5);
+        cy.scrollTo('bottomLeft', { duration: optionsWithDefaultValues.wait / 5 });
+        cy.wait(optionsWithDefaultValues.wait / 5);
+        cy.scrollTo('topLeft', { duration: optionsWithDefaultValues.wait / 5 });
+        cy.wait(optionsWithDefaultValues.wait / 5);
+    } else {
+        cy.wait(optionsWithDefaultValues.wait);
+    }
+
+    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
+
+    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
+        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
+    } else {
+        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
+    }
+
+    removeBlackoutsAfterScreenshot();
+};
+
+const blackoutBeforeScreenshot = (blackout: Blackout[], capture: 'viewport' | 'fullPage' | TIDs) => {
+    for (const blackoutElement of blackout) {
+        cy.getByTID([blackoutElement.tid]).each((element) => {
+            const rect = element[0].getBoundingClientRect();
+
+            const coverDiv = document.createElement('div');
+            coverDiv.classList.add('blackout');
+            coverDiv.style.position = 'absolute';
+            const scrollbarWidth = 15;
+            const offset = capture === 'fullPage' && !blackoutElement.shouldNotOffset ? scrollbarWidth : 0;
+            coverDiv.style.width = `${rect.width}px`;
+            coverDiv.style.height = `${rect.height}px`;
+            coverDiv.style.top = `${rect.top + window.scrollY}px`;
+            coverDiv.style.left = `${rect.left + window.scrollX + offset}px`;
+            coverDiv.style.backgroundColor = 'black';
+            coverDiv.style.zIndex = blackoutElement.zIndex ? blackoutElement.zIndex.toString() : '10000';
+
+            cy.get('body').then((body) => {
+                body.append(coverDiv);
+            });
+        });
+    }
+};
+
+const removeBlackoutsAfterScreenshot = () => {
+    cy.get('body').then(($body) => {
+        if ($body.find('.blackout').length) {
+            $body.find('.blackout').each(function () {
+                this.remove();
+            });
+        }
+    });
 };
 
 export const changeElementText = (selector: TIDs, newText: string, isRightAfterSSR = true) => {
@@ -113,4 +205,47 @@ export const changeElementText = (selector: TIDs, newText: string, isRightAfterS
 
 export const loseFocus = () => {
     cy.focused().blur();
+};
+
+export const checkPopupIsVisible = (shouldCloseAfterChecking: boolean = false) => {
+    cy.getByTID([TIDs.layout_popup]).should('be.visible');
+
+    if (shouldCloseAfterChecking) {
+        cy.realPress('{esc}');
+    }
+};
+
+export const checkNumberOfApiRequestsTriggeredByActions = (
+    actions: () => void,
+    numberOfRequests: number,
+    requestName: string,
+) => {
+    let requestCounter = 0;
+
+    cy.intercept(`/graphql/${requestName}`, () => {
+        requestCounter += 1;
+    });
+
+    actions();
+
+    cy.wait(1000).then(() => {
+        expect(requestCounter).to.eq(numberOfRequests);
+    });
+};
+
+export const changeCartItemQuantityWithSpinboxInput = (quantity: number, catnum: string) => {
+    cy.getByTID([[TIDs.pages_cart_list_item_, catnum], TIDs.spinbox_input]).type(quantity.toString());
+};
+
+export const changeProductListItemQuantityWithSpinboxInput = (quantity: number, catnum: string) => {
+    cy.getByTID([[TIDs.blocks_product_list_listeditem_, catnum], TIDs.spinbox_input]).type(quantity.toString());
+};
+
+export const goToPageThroughSimpleNavigation = (index: number) => {
+    cy.getByTID([[TIDs.blocks_simplenavigation_, index]]).click();
+    cy.waitForStableAndInteractiveDOM();
+};
+
+export const checkCanGoToNextOrderStep = () => {
+    cy.getByTID([TIDs.blocks_orderaction_next]).should('be.visible').and('not.be.disabled');
 };

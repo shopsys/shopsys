@@ -1,12 +1,12 @@
 import {
     loginFromHeader,
-    checkUserIsLoggedIn,
-    checkIfLoginLinkIsVisible,
     fillInEmailAndPasswordOnLoginPage,
     logoutFromHeader,
+    submitLoginFormOnLoginPage,
+    logoutFromCustomerPage,
 } from './authenticationSupport';
 import { customer1, DEFAULT_APP_STORE, password, url } from 'fixtures/demodata';
-import { checkAndHideSuccessToast, checkUrl } from 'support';
+import { checkAndHideSuccessToast, checkUrl, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Login tests', () => {
@@ -16,29 +16,47 @@ describe('Login tests', () => {
         });
     });
 
-    it('should login from header and then log out', () => {
-        cy.visitAndWaitForStableDOM('/');
-        loginFromHeader(customer1.emailRegistered, password);
-        checkAndHideSuccessToast();
-        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
-        checkUserIsLoggedIn();
-        logoutFromHeader();
-        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
-        checkIfLoginLinkIsVisible();
+    it('should login from login page and then log out', function () {
+        cy.visitAndWaitForStableAndInteractiveDOM(url.login);
+
+        fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, password);
+        submitLoginFormOnLoginPage();
+        checkAndHideSuccessToast('Successfully logged in');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after login', {
+            capture: 'viewport',
+            wait: 2000,
+            blackout: [{ tid: TIDs.banners_slider }],
+        });
+
+        cy.visitAndWaitForStableAndInteractiveDOM(url.customer.index);
+        logoutFromCustomerPage();
+        checkAndHideSuccessToast('Successfully logged out');
+        checkUrl(url.loginWithCustomerRedirect);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after logout');
     });
 
-    it('should login from login page and then log out', () => {
-        cy.visitAndWaitForStableDOM(url.login);
-        fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, password);
-        cy.getByTID([TIDs.pages_login_submit]).click();
-        checkAndHideSuccessToast();
-        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
-        checkUserIsLoggedIn();
-        cy.getByTID([TIDs.my_account_link]).click();
-        checkUrl(url.customer.index);
-        cy.getByTID([TIDs.customer_page_logout]).click();
-        cy.waitForStableDOM({ pollInterval: 500, timeout: 5000 });
-        checkUrl(url.loginWithCustomerRedirect);
-        checkIfLoginLinkIsVisible();
+    it('should login from header and then log out', function () {
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+
+        loginFromHeader(customer1.emailRegistered, password);
+        checkAndHideSuccessToast('Successfully logged in');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after login', {
+            capture: 'viewport',
+            wait: 2000,
+            blackout: [{ tid: TIDs.banners_slider }],
+        });
+
+        logoutFromHeader();
+        checkAndHideSuccessToast('Successfully logged out');
+        checkUrl('/');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after logout', {
+            capture: 'viewport',
+            wait: 2000,
+            blackout: [{ tid: TIDs.banners_slider }],
+        });
     });
 });

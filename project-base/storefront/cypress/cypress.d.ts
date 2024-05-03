@@ -5,10 +5,16 @@ import { TIDs } from 'tids';
 declare global {
     namespace Cypress {
         interface Chainable<Subject = any> {
-            getByTID(value: ([TIDs, number | string] | TIDs)[]): Chainable<JQuery<HTMLElement>>;
+            getByTID(
+                value: ([TIDs, number | string] | TIDs)[],
+                options?:
+                    | Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow>
+                    | undefined,
+            ): Chainable<JQuery<HTMLElement>>;
             storeCartUuidInLocalStorage(cartUuid: string): Cypress.Chainable<undefined>;
-            visitAndWaitForStableDOM(url: string): Cypress.Chainable<JQuery<HTMLElement>>;
-            reloadAndWaitForStableDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
+            waitForStableAndInteractiveDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
+            visitAndWaitForStableAndInteractiveDOM(url: string): Cypress.Chainable<JQuery<HTMLElement>>;
+            reloadAndWaitForStableAndInteractiveDOM(): Cypress.Chainable<JQuery<HTMLElement>>;
             addProductToCartForTest(productUuid?: string, quantity?: number): Cypress.Chainable<any>;
             addPromoCodeToCartForTest(promoCode: string): Cypress.Chainable<any>;
             preselectTransportForTest(

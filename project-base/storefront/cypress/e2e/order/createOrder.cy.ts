@@ -4,16 +4,17 @@ import {
     fillBillingAdressInThirdStep,
     fillInNoteInThirdStep,
     clickOnSendOrderButton,
-    checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration,
     clickOnOrderDetailButtonOnThankYouPage,
-    checkFinishOrderPageAsUnregistredCustomer,
     fillRegistrationInfoAfterOrder,
     goToMyOrdersFromHeader,
+    changeOrderDetailDynamicPartsToStaticDemodata,
+    changeOrderConfirmationDynamicPartsToStaticDemodata,
+    submitRegistrationFormAfterOrder,
+    goToOrderDetailFromOrderList,
 } from './orderSupport';
-import { transport, payment, customer1, orderNote, url, orderDetail, promoCode, password } from 'fixtures/demodata';
+import { transport, payment, customer1, orderNote, url, promoCode, password } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
-    changeElementText,
     checkAndHideSuccessToast,
     checkUrl,
     goToEditProfileFromHeader,
@@ -27,176 +28,208 @@ describe('Create order tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
     });
 
-    it('should create order as unlogged user with a registered email (transport to home, cash on delivery) and check it in order detail', () => {
+    it('should create order as unlogged user with a registered email (transport to home, cash on delivery) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillEmailInThirdStep(customer1.emailRegistered);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-unlogged-user-with-registerd-email-transport-to-home-cash-on-delivery');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration();
         clickOnOrderDetailButtonOnThankYouPage();
-
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-
-        takeSnapshotAndCompare('order-detail-unlogged-user-with-registerd-email-transport-to-home-cash-on-delivery');
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderDetailDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
     });
 
-    it('should create order as unlogged user (transport to home, cash on delivery) and check it in order detail', () => {
+    it('should create order as unlogged user (transport to home, cash on delivery) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-unlogged-user-transport-to-home-cash-on-delivery');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
-
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-
-        takeSnapshotAndCompare('order-detail-unlogged-user-transport-to-home-cash-on-delivery');
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderDetailDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
     });
 
-    it('should create order as unlogged user (personal collection, cash) and check it in order detail', () => {
+    it('should create order as unlogged user (personal collection, cash) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
         cy.preselectPaymentForTest(payment.cash.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visitAndWaitForStableDOM(url.order.contactInformation);
-        cy.url().should('contain', url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-unlogged-user-personal-collection-cash');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
-
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-
-        takeSnapshotAndCompare('order-detail-unlogged-user-personal-collection-cash');
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderDetailDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
     });
 
-    it('should create order as unlogged user (PPL, credit cart) and check it in order detail', () => {
+    it('should create order as unlogged user (PPL, credit cart) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visitAndWaitForStableDOM(url.order.contactInformation);
-        cy.url().should('contain', url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-unlogged-user-ppl-credit-card');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
-
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-
-        takeSnapshotAndCompare('order-detail-unlogged-user-ppl-credit-card');
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderDetailDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
     });
 
-    it('should create order with promo code and check it in order detail', () => {
+    it('should create order with promo code and check it in order detail', function () {
         cy.addPromoCodeToCartForTest(promoCode);
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visit(url.order.contactInformation);
         fillEmailInThirdStep(customer1.email);
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-with-promo-code');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
-
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-
-        takeSnapshotAndCompare('order-detail-with-promo-code');
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderDetailDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
     });
 
-    it('should register after order completion, and check that the just created order is in customer orders', () => {
+    it('should register after order completion, and check that the just created order is in customer orders', function () {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visit(url.order.contactInformation);
         fillEmailInThirdStep('after-order-registration@shopsys.com');
         fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-and-register-afterwards');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnregistredCustomer();
         fillRegistrationInfoAfterOrder(password);
-        cy.getByTID([TIDs.registration_after_order_submit_button]).click();
-
+        submitRegistrationFormAfterOrder();
         checkAndHideSuccessToast('Your account has been created and you are logged in now');
+        cy.waitForStableAndInteractiveDOM();
         checkUrl('/');
+
         goToMyOrdersFromHeader();
-        cy.getByTID([[TIDs.my_orders_link_, 0]]).click();
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.breadcrumbs_tail, orderDetail.number);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-        takeSnapshotAndCompare('my-orders-after-registration-after-order-creation');
+        goToOrderDetailFromOrderList();
+        changeOrderDetailDynamicPartsToStaticDemodata(true);
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
 
         goToEditProfileFromHeader();
-        takeSnapshotAndCompare('customer-edit-page-after-registration-after-order-creation');
+        takeSnapshotAndCompare(this.test?.title, 'customer edit page');
     });
 
-    it('should create order as logged-in user (transport to home, cash on delivery) and check it in order detail', () => {
+    it('should create order as logged-in user (transport to home, cash on delivery) and check it in order detail', function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'create-order-as-logged-in-user@shopsys.com'),
-            true,
         );
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        cy.visitAndWaitForStableDOM(url.order.contactInformation);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
+        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('create-order-logged-in-user_before-create-order');
         clickOnSendOrderButton();
+        cy.waitForStableAndInteractiveDOM();
+        changeOrderConfirmationDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
 
-        checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration();
         clickOnOrderDetailButtonOnThankYouPage();
-
-        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
-        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
-
-        takeSnapshotAndCompare('create-order-logged-in-user_order-detail');
+        changeOrderDetailDynamicPartsToStaticDemodata();
+        takeSnapshotAndCompare(this.test?.title, 'order detail');
     });
 });

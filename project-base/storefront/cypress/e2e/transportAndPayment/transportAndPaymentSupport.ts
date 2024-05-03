@@ -166,3 +166,11 @@ const getStaticOpeningHoursOfDays = (): TypeOpeningHoursOfDay[] => [
         ],
     },
 ];
+
+export const removePaymentSelectionUsingButton = () => {
+    cy.getByTID([TIDs.reset_payment_button]).click();
+};
+
+export const removeTransportSelectionUsingButton = () => {
+    cy.getByTID([TIDs.reset_transport_button]).click();
+};

@@ -53,7 +53,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     return (
         <div
             className="relative flex flex-row flex-wrap items-center gap-4 border-b border-greyLighter py-5 vl:flex-nowrap"
-            tid={TIDs.pages_cart_list_item_ + listIndex}
+            tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
                 <div className="flex h-12 w-24 shrink-0">

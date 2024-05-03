@@ -62,4 +62,7 @@ export enum TIDs {
     repeat_order_dont_merge_carts_button = 'repeat_order_dont_merge_carts_button',
     repeat_order_merge_carts_button = 'repeat_order_merge_carts_button',
     order_detail_repeat_order_button = 'order_detail_repeat_order_button',
+    order_confirmation_page_text_wrapper = 'order_confirmation_page_text_wrapper',
+    header = 'header',
+    banners_slider = 'banners_slider',
 }

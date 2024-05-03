@@ -36,7 +36,7 @@ export const link = {
 
 export const orderNote = 'Just a tiny note in the order.';
 
-export const orderDetail = {
+export const order = {
     number: '1234567890',
     numberHeading: 'Order number 1234567890',
     creationDate: '10/26/1999 10:10 AM',
@@ -89,6 +89,7 @@ export const products = {
     philips32PFL4308: {
         uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
         url: '/philips-32pfl4308',
+        catnum: '9176508',
     },
     lg47LA790VFHD: {
         uuid: '4670eedd-f063-5e1f-9839-1b8dd13cb5b0',
@@ -140,6 +141,7 @@ export const url = {
     customer: {
         index: '/customer',
         orders: '/customer/orders',
+        editProfile: '/customer/edit-profile',
     },
     categoryElectronics: '/electronics',
     productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',

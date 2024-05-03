@@ -1,6 +1,7 @@
+import { repeatOrderFromOrderDetail, repeatOrderFromOrderList } from './orderSupport';
 import { DEFAULT_APP_STORE, transport, payment, url, products } from 'fixtures/demodata';
-import { generateCustomerRegistrationData, generateCreateOrderInput, generateEmail } from 'fixtures/generators';
-import { takeSnapshotAndCompare } from 'support';
+import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
+import { checkUrl, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Order repeat tests as logged-in user from order list', () => {
@@ -10,7 +11,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
         });
     });
 
-    it('should repeat order (pre-fill cart) with initially empty cart', () => {
+    it('should repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
         const email = 'order-repeat-logged-in-with-empty-cart@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -18,14 +19,17 @@ describe('Order repeat tests as logged-in user from order list', () => {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email));
+        cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
 
-        cy.visitAndWaitForStableDOM(url.customer.orders);
-        cy.getByTID([TIDs.order_list_repeat_order_button]).click();
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('order-repeat-logged-in-with-empty-cart_after-repeat');
+        repeatOrderFromOrderList();
+        checkUrl(url.cart);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 
-    it('should repeat order (pre-fill cart) with initially filled cart and allowed merging', () => {
+    it('should repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', function () {
         const email = 'order-repeat-logged-in-with-filled-cart-and-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -33,19 +37,19 @@ describe('Order repeat tests as logged-in user from order list', () => {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email));
-
         cy.addProductToCartForTest(products.philips32PFL4308.uuid, 4);
         cy.addProductToCartForTest(products.lg47LA790VFHD.uuid, 2);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
 
-        cy.visitAndWaitForStableDOM(url.customer.orders);
-        cy.getByTID([TIDs.order_list_repeat_order_button]).click();
-        cy.getByTID([TIDs.repeat_order_merge_carts_button]).click();
-
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('order-repeat-logged-in-with-filled-cart-and-merging_after-repeat');
+        repeatOrderFromOrderList(true);
+        checkUrl(url.cart);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 
-    it('should repeat order (pre-fill cart) with initially non-empty cart and disallowed merging', () => {
+    it('should repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', function () {
         const email = 'order-repeat-logged-in-with-filled-cart-without-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -53,16 +57,16 @@ describe('Order repeat tests as logged-in user from order list', () => {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email));
-
         cy.addProductToCartForTest(products.philips32PFL4308.uuid, 4);
         cy.addProductToCartForTest(products.lg47LA790VFHD.uuid, 2);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
 
-        cy.visitAndWaitForStableDOM(url.customer.orders);
-        cy.getByTID([TIDs.order_list_repeat_order_button]).click();
-        cy.getByTID([TIDs.repeat_order_dont_merge_carts_button]).click();
-
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('order-repeat-logged-in-with-filled-cart-without-merging_after-repeat');
+        repeatOrderFromOrderList(false);
+        checkUrl(url.cart);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 });
 
@@ -73,7 +77,7 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         });
     });
 
-    it('should repeat order (pre-fill cart) with initially empty cart', () => {
+    it('should repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {
         const email = 'order-repeat-unlogged-with-empty-cart@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -82,15 +86,18 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
         cy.createOrder(generateCreateOrderInput(email)).then((order) => {
-            cy.visitAndWaitForStableDOM(url.order.orderDetail + `/${order.urlHash}`);
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.orderDetail + `/${order.urlHash}`);
         });
 
-        cy.getByTID([TIDs.order_detail_repeat_order_button]).click();
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('order-repeat-unlogged-with-empty-cart_after-repeat');
+        repeatOrderFromOrderDetail();
+        checkUrl(url.cart);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 
-    it('should repeat order (pre-fill cart) with initially filled cart and allowed merging', () => {
+    it('should repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', function () {
         const email = 'order-repeat-unlogged-with-filled-cart-and-merging@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -102,17 +109,18 @@ describe('Order repeat tests as unlogged user from order detail', () => {
             cy.addProductToCartForTest(products.philips32PFL4308.uuid, 4);
             cy.addProductToCartForTest(products.lg47LA790VFHD.uuid, 2);
 
-            cy.visitAndWaitForStableDOM(url.order.orderDetail + `/${order.urlHash}`);
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.orderDetail + `/${order.urlHash}`);
         });
 
-        cy.getByTID([TIDs.order_detail_repeat_order_button]).click();
-        cy.getByTID([TIDs.repeat_order_merge_carts_button]).click();
-
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('order-repeat-unlogged-with-filled-cart-and-merging_after-repeat');
+        repeatOrderFromOrderDetail(true);
+        checkUrl(url.cart);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 
-    it('should repeat order (pre-fill cart) with initially non-empty cart and disallowed merging', () => {
+    it('should repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', function () {
         const email = 'order-repeat-unlogged-with-filled-cart-without-merging@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -124,13 +132,14 @@ describe('Order repeat tests as unlogged user from order detail', () => {
             cy.addProductToCartForTest(products.philips32PFL4308.uuid, 4);
             cy.addProductToCartForTest(products.lg47LA790VFHD.uuid, 2);
 
-            cy.visitAndWaitForStableDOM(url.order.orderDetail + `/${order.urlHash}`);
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.orderDetail + `/${order.urlHash}`);
         });
 
-        cy.getByTID([TIDs.order_detail_repeat_order_button]).click();
-        cy.getByTID([TIDs.repeat_order_dont_merge_carts_button]).click();
-
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('order-repeat-unlogged-with-filled-cart-without-merging_after-repeat');
+        repeatOrderFromOrderDetail(false);
+        checkUrl(url.cart);
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 });

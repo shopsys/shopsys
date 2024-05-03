@@ -1,22 +1,27 @@
-import { buttonName, link, placeholder } from 'fixtures/demodata';
+import { buttonName, placeholder } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import { TIDs } from 'tids';
-
-export const checkIfLoginLinkIsVisible = () => {
-    cy.getByTID([TIDs.layout_header_menuiconic_login_link_popup]).should('be.visible');
-};
 
 export const clickOnUserIconInHeader = () => {
     cy.getByTID([TIDs.layout_header_menuiconic_login_link_popup]).click();
 };
 
-export const checkUserIsLoggedIn = () => {
-    cy.getByTID([TIDs.my_account_link]).contains(link.myAccount);
-};
-
 export const goToRegistrationPageFromHeader = () => {
     clickOnUserIconInHeader();
     cy.getByTID([TIDs.login_popup_register_button]).click();
+    cy.waitForStableAndInteractiveDOM();
+};
+
+export const submitRegistrationForm = () => {
+    cy.getByTID([TIDs.registration_submit_button]).click();
+};
+
+export const submitLoginFormOnLoginPage = () => {
+    cy.getByTID([TIDs.pages_login_submit]).click();
+};
+
+export const logoutFromCustomerPage = () => {
+    cy.getByTID([TIDs.customer_page_logout]).click();
 };
 
 export const loginFromHeader = (email: string | undefined, password: string) => {
@@ -45,10 +50,13 @@ export const fillInEmailAndPasswordOnLoginPage = (email: string, password: strin
     cy.get('#login-form-password').type(password);
 };
 
+export const clearAndFillInRegstrationFormEmail = (email: string) => {
+    cy.get('#registration-form-email').should('have.attr', 'placeholder', placeholder.email).clear().type(email);
+};
+
 export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCustomer', email: string) => {
     const generatedData = generateCustomerRegistrationData(custmerType, email);
 
-    cy.get('#registration-form-email').should('have.attr', 'placeholder', placeholder.email).type(generatedData.email);
     cy.get('#registration-form-firstName')
         .should('have.attr', 'placeholder', placeholder.firstName)
         .type(generatedData.firstName);
@@ -80,13 +88,6 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
         cy.get('[for="registration-formcustomer0"]').click();
     }
 
-    cy.get('#registration-form-passwordFirst')
-        .should('have.attr', 'placeholder', placeholder.password)
-        .type(generatedData.password);
-    cy.get('#registration-form-passwordSecond')
-        .should('have.attr', 'placeholder', placeholder.passwordAgain)
-        .type(generatedData.password);
-
     cy.get('#registration-form-street')
         .should('have.attr', 'placeholder', placeholder.street)
         .type(generatedData.street);
@@ -96,6 +97,17 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
         .type(generatedData.postcode, { force: true });
 
     cy.get('[for="registration-form-gdprAgreement"]').find('div').first().click();
+};
+
+export const clearAndFillInRegistrationFormPasswords = (password: string) => {
+    cy.get('#registration-form-passwordFirst')
+        .should('have.attr', 'placeholder', placeholder.password)
+        .clear()
+        .type(password);
+    cy.get('#registration-form-passwordSecond')
+        .should('have.attr', 'placeholder', placeholder.passwordAgain)
+        .clear()
+        .type(password);
 };
 
 export const checkRegistrationValidationErrorsPopup = () => {

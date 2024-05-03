@@ -2,14 +2,14 @@ import {
     addProductToCartFromPromotedProductsOnHomepage,
     goToCartPageFromHeader,
     goToHomepageFromHeader,
-    checkAndCloseAddToCartPopup,
     loginInThirdOrderStep,
 } from './cartSupport';
-import { checkUserIsLoggedIn, loginFromHeader, logoutFromHeader } from 'e2e/authentication/authenticationSupport';
+import { loginFromHeader, logoutFromHeader } from 'e2e/authentication/authenticationSupport';
 import { fillEmailInThirdStep } from 'e2e/order/orderSupport';
 import { DEFAULT_APP_STORE, password, payment, products, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkAndHideSuccessToast, takeSnapshotAndCompare } from 'support';
+import { checkAndHideInfoToast, checkAndHideSuccessToast, checkPopupIsVisible, takeSnapshotAndCompare } from 'support';
+import { TIDs } from 'tids';
 
 describe('Cart login tests', () => {
     beforeEach(() => {
@@ -18,108 +18,129 @@ describe('Cart login tests', () => {
         });
     });
 
-    it('should log in, add product to cart to an already prefilled cart, and empty cart after log out', () => {
+    it('should log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.addProductToCartForTest(products.philips32PFL4308.uuid).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );
-        cy.visitAndWaitForStableDOM(url.cart);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
 
         loginFromHeader(registrationInput.email, password);
-        checkUserIsLoggedIn();
-        checkAndHideSuccessToast();
-        takeSnapshotAndCompare('cart-login-with-prefilled-cart_after-login');
+        checkAndHideSuccessToast('Successfully logged in');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'cart page after login', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
 
         goToHomepageFromHeader();
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
-        checkAndCloseAddToCartPopup();
+        checkPopupIsVisible(true);
         goToCartPageFromHeader();
-        takeSnapshotAndCompare('cart-login-with-prefilled-cart_after-adding-product-to-cart');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
 
         logoutFromHeader();
         checkAndHideSuccessToast('Successfully logged out');
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('cart-login-with-prefilled-cart_after-logout');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'cart page after logout');
     });
 
-    it('should log in, add product to cart an empty cart, and empty cart after log out', () => {
+    it('should log in, add product to an empty cart, and empty cart after log out', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         loginFromHeader(registrationInput.email, password);
-        checkUserIsLoggedIn();
-        checkAndHideSuccessToast();
+        checkAndHideSuccessToast('Successfully logged in');
 
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
-        checkAndCloseAddToCartPopup();
+        checkPopupIsVisible(true);
         goToCartPageFromHeader();
-        takeSnapshotAndCompare('cart-login-with-empty-cart_after-adding-product-to-cart');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
 
         logoutFromHeader();
         checkAndHideSuccessToast('Successfully logged out');
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('cart-login-with-empty-cart_after-logout');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'cart page after logout');
     });
 
-    it('should repeatedly merge carts when logged in (starting with empty cart)', () => {
+    it('should repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
-        checkAndCloseAddToCartPopup();
+        checkPopupIsVisible(true);
 
         loginFromHeader(registrationInput.email, password);
-        checkUserIsLoggedIn();
-        checkAndHideSuccessToast();
+        checkAndHideSuccessToast('Successfully logged in');
 
         goToCartPageFromHeader();
-        takeSnapshotAndCompare('cart-repeated-login-logout-with-empty-cart_after-adding-product-to-cart');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
 
         logoutFromHeader();
         checkAndHideSuccessToast('Successfully logged out');
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('cart-repeated-login-logout-with-empty-cart_after-logout');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'cart page after logout');
 
         goToHomepageFromHeader();
         addProductToCartFromPromotedProductsOnHomepage(products.lg47LA790VFHD.catnum);
-        checkAndCloseAddToCartPopup();
+        checkPopupIsVisible(true);
         goToCartPageFromHeader();
 
-        takeSnapshotAndCompare('cart-repeated-login-logout-with-empty-cart_after-adding-second-product-to-cart');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after adding second product to cart', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
         loginFromHeader(registrationInput.email, password);
-        checkUserIsLoggedIn();
-        checkAndHideSuccessToast();
+        checkAndHideSuccessToast('Successfully logged in');
+        checkAndHideInfoToast('Your cart has been modified. Please check the changes.');
 
-        takeSnapshotAndCompare('cart-repeated-login-logout-with-empty-cart_after-second-login');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after second login', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
     });
 
-    it("should discard user's previous cart after logging in in order 3rd step", () => {
-        const registrationInput = generateCustomerRegistrationData('commonCustomer');
-        cy.addProductToCartForTest(products.philips32PFL4308.uuid).then((cart) =>
-            cy.storeCartUuidInLocalStorage(cart.uuid),
-        );
-        cy.registerAsNewUser(registrationInput, true);
-        cy.visitAndWaitForStableDOM(url.cart);
+    it("should discard user's previous cart after logging in in order 3rd step", function () {
+        const email = 'discard-user-cart-after-login-in-order-3rd-step@shopsys.com';
+        const registrationInput = generateCustomerRegistrationData('commonCustomer', email);
+        cy.registerAsNewUser(registrationInput);
+        cy.addProductToCartForTest(products.philips32PFL4308.uuid);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
 
-        takeSnapshotAndCompare('cart-login-in-third-step_after-first-login');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after first login', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
 
         logoutFromHeader();
         checkAndHideSuccessToast('Successfully logged out');
-        cy.waitForStableDOM();
-        takeSnapshotAndCompare('cart-login-in-third-step_after-first-logout');
+        cy.waitForStableAndInteractiveDOM();
+        takeSnapshotAndCompare(this.test?.title, 'cart page after first logout');
 
         cy.addProductToCartForTest(products.helloKitty.uuid).then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
-        cy.visitAndWaitForStableDOM(url.order.contactInformation);
-        takeSnapshotAndCompare('cart-login-in-third-step_before-second-login');
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+        takeSnapshotAndCompare(this.test?.title, 'third step before second login', {
+            blackout: [
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
 
-        fillEmailInThirdStep(registrationInput.email);
+        fillEmailInThirdStep(email);
         loginInThirdOrderStep(password);
         checkAndHideSuccessToast('Successfully logged in');
-        takeSnapshotAndCompare('cart-login-in-third-step_after-second-login');
+        takeSnapshotAndCompare(this.test?.title, 'third step after second login', {
+            blackout: [
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
     });
 });

@@ -3,11 +3,13 @@ import {
     changeDayOfWeekInTransportsApiResponse,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
+    removeTransportSelectionUsingButton,
 } from './transportAndPaymentSupport';
-import { continueToTransportAndPaymentSelection, goBackToCartPage } from 'e2e/cart/cartSupport';
-import { DEFAULT_APP_STORE, transport, url } from 'fixtures/demodata';
+import { goToNextOrderStep } from 'e2e/cart/cartSupport';
+import { checkEmptyCartTextIsVisible, checkTransportSelectionIsNotVisible } from 'e2e/order/orderSupport';
+import { DEFAULT_APP_STORE, products, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkLoaderOverlayIsNotVisible, checkUrl, loseFocus, takeSnapshotAndCompare } from 'support';
+import { checkLoaderOverlayIsNotVisibleAfterTimePeriod, checkUrl, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Transport select tests', () => {
@@ -17,105 +19,149 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should select transport to home', () => {
+    it('should select transport to home', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
-
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
-        takeSnapshotAndCompare('transport-to-home');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
     });
 
-    it('should select personal pickup transport', () => {
+    it('should select personal pickup transport', function () {
         changeDayOfWeekInTransportsApiResponse(1);
         changeDayOfWeekInChangeTransportMutationResponse(1);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
-
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
-        takeSnapshotAndCompare('personal-pickup-transport');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
     });
 
-    it('should select a transport, deselect it, and then change the transport option', () => {
+    it('should select a transport, deselect it, and then change the transport option', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         changeSelectionOfTransportByName(transport.ppl.name);
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
-
-        takeSnapshotAndCompare('select-deselect-and-select-transport-again');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after selecting, deselecting, and selecting again', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
     });
 
-    it('should be able to remove transport using repeated clicks', () => {
+    it('should be able to remove transport using repeated clicks', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
-        changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
-
-        takeSnapshotAndCompare('remove-transport-selection-using-repeated-clicks_after-selecting');
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('remove-transport-selection-using-repeated-clicks_after-removing');
+        changeSelectionOfTransportByName(transport.czechPost.name);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after removing', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
     });
 
-    it('should be able to remove transport using reset button', () => {
+    it('should be able to remove transport using reset button', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+
         changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.order_summary_transport_and_payment_image },
+            ],
+        });
 
-        takeSnapshotAndCompare('remove-transport-selection-using-reset-button_after-selecting');
-
-        cy.getByTID([TIDs.reset_transport_button]).click();
-
-        takeSnapshotAndCompare('remove-transport-selection-using-reset-button_after-removing');
+        removeTransportSelectionUsingButton();
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'after removing', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
     });
 
-    it('should redirect to cart page and not display transport options if cart is empty and user is not logged in', () => {
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+    it('should redirect to cart page and not display transport options if cart is empty and user is not logged in', function () {
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
-
-        cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
+        checkTransportSelectionIsNotVisible();
+        checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
-
-        takeSnapshotAndCompare('empty-cart-transport');
+        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page');
     });
 
-    it('should redirect to cart page and not display transport options if cart is empty and user is logged in', () => {
+    it('should redirect to cart page and not display transport options if cart is empty and user is logged in', function () {
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        cy.getByTID([TIDs.pages_order_transport]).should('not.exist');
-
-        cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
+        checkTransportSelectionIsNotVisible();
+        checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
-
-        takeSnapshotAndCompare('empty-cart-transport-logged-in');
+        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page');
     });
 
-    it('should change price for transport when cart is large enough for transport to be free', () => {
+    it('should change price for transport when cart is large enough for transport to be free', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableDOM(url.order.transportAndPayment);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        takeSnapshotAndCompare('free-transport-with-large-cart_before-free-in-cart');
-        goBackToCartPage();
-        cy.getByTID([[TIDs.pages_cart_list_item_, 0], TIDs.spinbox_input]).type('00');
-        loseFocus();
-        checkLoaderOverlayIsNotVisible();
-        takeSnapshotAndCompare('free-transport-with-large-cart_after-free-in-cart');
+        takeSnapshotAndCompare(this.test?.title, 'transport and payment page with too few products', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
 
-        continueToTransportAndPaymentSelection();
+        cy.addProductToCartForTest(products.helloKitty.uuid, 1099);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
+        takeSnapshotAndCompare(this.test?.title, 'cart page with enough products', {
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+        });
+
+        goToNextOrderStep();
         changeSelectionOfTransportByName(transport.ppl.name);
-        takeSnapshotAndCompare('free-transport-with-large-cart_after-free-transport-and-payment');
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(this.test?.title, 'transport and payment page with enough products', {
+            blackout: [
+                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.order_summary_cart_item_image },
+            ],
+        });
     });
 });
