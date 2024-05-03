@@ -142,8 +142,7 @@
         "zalas/phpunit-injector": "^2.0"
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
+        "symfony/symfony": "*"
     },
     "scripts": {
         "pre-install-cmd": [
