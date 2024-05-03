@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { InfoIconInCircle } from 'components/Basic/Icon/InfoIconInCircle';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
@@ -127,18 +128,17 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     >
                         {t('Repeat order')}
                     </Button>
-                    <Button
-                        linkType="order"
+                    <LinkButton
                         size="small"
-                        tagName="a"
                         tid={TIDs.my_orders_link_ + listIndex}
+                        type="order"
                         href={{
                             pathname: customerOrderDetailUrl,
                             query: { orderNumber: order.number },
                         }}
                     >
                         {t('Detail')}
-                    </Button>
+                    </LinkButton>
                 </div>
             </div>
         </div>
