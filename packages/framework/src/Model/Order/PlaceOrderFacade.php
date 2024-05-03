@@ -69,7 +69,7 @@ class PlaceOrderFacade
                 $deliveryAddressUuid,
                 (bool)$orderData->newsletterSubscription,
             );
-        } else {
+        } elseif ($orderData->newsletterSubscription) {
             $this->newsletterFacade->addSubscribedEmailIfNotExists($order->getEmail(), $order->getDomainId());
         }
 
