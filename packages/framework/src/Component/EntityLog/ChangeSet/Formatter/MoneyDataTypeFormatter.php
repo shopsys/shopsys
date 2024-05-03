@@ -14,8 +14,8 @@ class MoneyDataTypeFormatter
      */
     public function formatChanges(array $changes): string
     {
-        $changes['oldReadableValue'] = Money::create($changes['oldReadableValue'])->round(2)->getAmount();
-        $changes['newReadableValue'] = Money::create($changes['newReadableValue'])->round(2)->getAmount();
+        $changes['oldReadableValue'] = $changes['oldReadableValue'] ? Money::create($changes['oldReadableValue'])->round(2)->getAmount() : t('empty value');
+        $changes['newReadableValue'] = $changes['newReadableValue'] ? Money::create($changes['newReadableValue'])->round(2)->getAmount() : t('empty value');
 
         return t('from "oldReadableValue" to "newReadableValue"', $changes);
     }
