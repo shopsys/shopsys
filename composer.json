@@ -210,8 +210,7 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "friendsofphp/php-cs-fixer": "2.19.0 || >=3.50.0",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
+        "friendsofphp/php-cs-fixer": "2.19.0 || >=3.50.0"
     },
     "scripts": {
         "post-install-cmd": [
