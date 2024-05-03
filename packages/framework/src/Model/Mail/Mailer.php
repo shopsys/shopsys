@@ -79,8 +79,19 @@ class Mailer
 
         foreach ($messageData->attachments as $attachment) {
             try {
-                $email->attachFromPath(
-                    $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment),
+                $attachmentFilepath = $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment);
+                $attachmentContent = file_get_contents($attachmentFilepath);
+
+                if ($attachmentContent === false) {
+                    $this->logger->error('Attachment could not be added - reading the file content failed.', [
+                        'attachment' => $attachment,
+                        'attachmentFilepath' => $attachmentFilepath,
+                    ]);
+
+                    continue;
+                }
+                $email->attach(
+                    $attachmentContent,
                     $attachment->getNameWithExtension(),
                 );
             } catch (FilesystemOperationFailed $exception) {

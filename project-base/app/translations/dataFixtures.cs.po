@@ -697,6 +697,9 @@ msgstr "Kreditní kartou"
 msgid "Crevice nozzle VP-4290"
 msgstr "Hubice štěrbinová VP-4290"
 
+msgid "Customer activation"
+msgstr "Aktivace zákazníka"
+
 msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
 msgstr "Cyklocomputer - cyklonavigace s předinstalovanými mapami silnic a cyklotras, barevný dotykový displej 3\"."
 
@@ -1521,9 +1524,6 @@ msgstr "Reflexní páska pro bezpečný pohyb na cestě"
 
 msgid "Registration completed"
 msgstr "Registrace byla dokončena"
-
-msgid "Registration completion"
-msgstr "Dokončení registrace"
 
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
 msgstr "Náhradní textilní sáček pro vysavače CONCEPT Sprinter - VP9070. Balení: 1 ks"

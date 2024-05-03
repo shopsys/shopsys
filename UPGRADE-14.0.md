@@ -1523,6 +1523,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   you can use GTM for this purpose, see [our docs](docs/integration/third-party-scripts.md) for more information
     -   see #project-base-diff to update your project
 
+-   fix sending emails with attachments ([#3146](https://github.com/shopsys/shopsys/pull/3146))
+
+    -   see #project-base-diff to update your project
+
 ### Storefront
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))

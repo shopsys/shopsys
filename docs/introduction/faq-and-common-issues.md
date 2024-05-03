@@ -128,19 +128,20 @@ Yes we have, you can easily use [`maildev/maildev`](https://github.com/maildev/m
 
 ```diff
 smtp-server:
--        image: namshi/smtp:latest
+-        image: ixdotai/smtp:latest
 +        image: maildev/maildev
          container_name: shopsys-framework-smtp-server
 +        ports:
-+            - "8025:80"
++            - "1080:1080"
++            - "1025:1025"
 ```
 
 -   Run `docker-compose up -d`
--   add `?verify_peer=false` at the end of the `MAILER_DSN` environment variable value:
+-   change the port in `MAILER_DSN` environment variable value (you can redefine the value in your `.env.local` file):
 
 ```diff
-- MAILER_DSN=smtp://smtp-server:25
-+ MAILER_DSN=smtp://smtp-server:25?verify_peer=false
+- MAILER_DSN=smtp://smtp-server:25?verify_peer=false
++ MAILER_DSN=smtp://smtp-server:1025?verify_peer=false
 ```
 
 -   Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).

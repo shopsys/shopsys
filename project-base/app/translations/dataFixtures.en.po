@@ -697,6 +697,9 @@ msgstr ""
 msgid "Crevice nozzle VP-4290"
 msgstr ""
 
+msgid "Customer activation"
+msgstr ""
+
 msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", training programmes, WiFi"
 msgstr ""
 
@@ -1520,9 +1523,6 @@ msgid "Reflective tape for safe movement on the road"
 msgstr ""
 
 msgid "Registration completed"
-msgstr ""
-
-msgid "Registration completion"
 msgstr ""
 
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
