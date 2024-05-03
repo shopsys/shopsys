@@ -962,3 +962,20 @@ During new project implementation phase it is important for a developer who is a
 #### removed duplicated price display on product detail ([#3150](https://github.com/shopsys/shopsys/pull/3150))
 
 #### cookies store smarter init ([#3145](https://github.com/shopsys/shopsys/pull/3145))
+
+#### cypress tests extra scenarios ([#3052](https://github.com/shopsys/shopsys/pull/3052))
+
+-   you should rewrite all `it()` blocks within your test suites from arrow syntax `() => {}` to function syntax `function () {}` as you need to be able to access the `this` keyword
+-   `takeSnapshotAndCompare` now accepts the title of the test plus a suffix
+
+```ts
+takeSnapshotAndCompare(this.test?.title, 'something to add');
+```
+
+-   if the `this.test?.title` is equal to, let's say, `My great test`, this results in the snapshot file being named `My great test (something to add).png`
+-   if you use our Docker setup for cypress tests, you should remove setting of the device pixel ratio using `cypress-set-device-pixel-ratio`, as it is not necessary (you can also remove the package)
+-   you should not use `waitForStableDOM` in your tests, but rather use `waitForStableAndInteractiveDOM`, as this also checks for skeletons and the NProgress bar
+-   `visitAndWaitForStableDOM` was renamed to `visitAndWaitForStableAndInteractiveDOM` and now uses `waitForStableAndInteractiveDOM` internally
+-   `reloadAndWaitForStableDOM`was renamed to `reloadAndWaitForStableAndInteractiveDOM` and now uses `waitForStableAndInteractiveDOM` internally
+-   you should regenerate your cypress screenshots
+-   you should read the updated cypress documentation in our docs in order to understand all the new changes and be able to take advantage of them
