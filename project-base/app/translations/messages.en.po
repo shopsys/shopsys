@@ -325,6 +325,9 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
+msgid "Customer activation"
+msgstr ""
+
 msgid "Customer not found."
 msgstr ""
 
@@ -1112,9 +1115,6 @@ msgid "Redirect type"
 msgstr ""
 
 msgid "Registration"
-msgstr ""
-
-msgid "Registration completion"
 msgstr ""
 
 msgid "Related products"
