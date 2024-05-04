@@ -11,5 +11,10 @@ front_export_personal_data:
         _controller: App\Controller\Front\PersonalDataController::exportXmlAction
         type: ~
     path: /personal-overview-export/xml/{hash}
+
 front_homepage:
     path: /
+
+front_social_network_login:
+    defaults: { _controller: Shopsys\FrameworkBundle\Controller\Front\SocialNetworkController::loginAction }
+    path: /social-network/login/{type}

@@ -109,6 +109,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
+        "hybridauth/hybridauth": "^3.11",
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^2.6.1",
         "jms/serializer-bundle": "^4.0.2",

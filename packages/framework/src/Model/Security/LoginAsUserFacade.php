@@ -89,4 +89,18 @@ class LoginAsUserFacade
 
         return $this->administratorFacade->findByUuid($administratorUuid);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return array{accessToken: string, refreshToken: string}
+     */
+    public function loginAndReturnAccessAndRefreshToken(CustomerUser $customerUser): array
+    {
+        $deviceId = Uuid::uuid4()->toString();
+
+        return [
+            'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+        ];
+    }
 }

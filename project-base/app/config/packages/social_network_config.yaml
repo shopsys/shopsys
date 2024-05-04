@@ -1,0 +1,20 @@
+parameters:
+    social_network_login_config:
+        providers:
+            Google:
+                enabled: true
+                keys:
+                    id: '%env(GOOGLE_CLIENT_ID)%'
+                    secret: '%env(GOOGLE_CLIENT_SECRET)%'
+            Facebook:
+                enabled: true
+                keys:
+                    id: '%env(FACEBOOK_CLIENT_ID)%'
+                    secret: '%env(FACEBOOK_CLIENT_SECRET)%'
+            Seznam:
+                enabled: true
+                keys:
+                    id: '%env(SEZNAM_CLIENT_ID)%'
+                    secret: '%env(SEZNAM_CLIENT_SECRET)%'
+                scope: 'identity'
+                adapter: Shopsys\FrameworkBundle\Component\SocialNetwork\Seznam

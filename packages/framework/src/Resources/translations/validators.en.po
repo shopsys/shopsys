@@ -43,6 +43,12 @@ msgstr ""
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Email is not filled"
+msgstr ""
+
+msgid "Email is not valid"
+msgstr ""
+
 msgid "Email subject cannot be longer than {{ limit }} characters"
 msgstr ""
 

@@ -933,6 +933,14 @@ services:
     Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory
 
+    Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
+        arguments:
+            $socialNetworkLoginConfig: '%social_network_login_config%'
+
+    Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkFacade:
+        arguments:
+            $logger: '@monolog.logger.socialNetwork'
+
     Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter: ~
 
     Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory:

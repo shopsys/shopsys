@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory as BaseR
 
 /**
  * @method \App\Model\Customer\User\RegistrationData createForDomainId(int $domainId)
+ * @method \App\Model\Customer\User\RegistrationData createFromSocialNetworkProfile(\Hybridauth\User\Profile $profile)
  */
 class RegistrationDataFactory extends BaseRegistrationDataFactory
 {
