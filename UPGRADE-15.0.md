@@ -954,3 +954,5 @@ During new project implementation phase it is important for a developer who is a
 -   The best set of steps for you to apply these changes is to read the documentation at `docs/storefront/component-deferring.md` and decide if you want to implement this logic
     -   If you do, then apply it to the already implemented places and use the documentation to pinpoint any other possible places
     -   If you do not, then you can completely omit these changes, as they are not necessary for any future implementation
+
+#### removed duplicated price display on product detail ([#3150](https://github.com/shopsys/shopsys/pull/3150))
