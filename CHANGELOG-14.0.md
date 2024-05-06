@@ -35,6 +35,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 <!-- Add generated changelog below this line -->
 <!-- Release notes generated using configuration in .github/release.yml at 14.0 -->
 
+## [v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0) (2024-05-06)
+
 ### :sparkles: Enhancements and features
 
 -   [project-base] repeat order improvements by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2876
