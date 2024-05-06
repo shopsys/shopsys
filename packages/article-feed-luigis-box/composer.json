@@ -28,10 +28,10 @@
         "doctrine/doctrine-bundle": "^2.5.7",
         "doctrine/orm": "^2.11.2",
         "doctrine/persistence": "^2.4",
-        "shopsys/form-types-bundle": "14.0.0",
-        "shopsys/framework": "14.0.0",
-        "shopsys/migrations": "14.0.0",
-        "shopsys/plugin-interface": "14.0.0",
+        "shopsys/form-types-bundle": "14.0.x-dev",
+        "shopsys/framework": "14.0.x-dev",
+        "shopsys/migrations": "14.0.x-dev",
+        "shopsys/plugin-interface": "14.0.x-dev",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/form": "^5.4",
@@ -41,7 +41,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "14.0.0"
+        "shopsys/coding-standards": "14.0.x-dev"
     },
     "config": {
         "allow-plugins": {
