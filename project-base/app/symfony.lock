@@ -669,6 +669,15 @@
             "config/packages/sentry.yaml"
         ]
     },
+    "shopsys/article-feed-luigis-box": {
+        "version": "v14.0.0"
+    },
+    "shopsys/brand-feed-luigis-box": {
+        "version": "v14.0.0"
+    },
+    "shopsys/category-feed-luigis-box": {
+        "version": "v14.0.0"
+    },
     "shopsys/coding-standards": {
         "version": "v9.1.1"
     },
@@ -690,6 +699,9 @@
     "shopsys/jsformvalidator-bundle": {
         "version": "1.7.0"
     },
+    "shopsys/luigis-box": {
+        "version": "v14.0.0"
+    },
     "shopsys/migrations": {
         "version": "v9.1.1"
     },
@@ -707,6 +719,9 @@
     },
     "shopsys/product-feed-heureka-delivery": {
         "version": "v9.1.1"
+    },
+    "shopsys/product-feed-luigis-box": {
+        "version": "v14.0.0"
     },
     "shopsys/product-feed-zbozi": {
         "version": "v9.1.1"
