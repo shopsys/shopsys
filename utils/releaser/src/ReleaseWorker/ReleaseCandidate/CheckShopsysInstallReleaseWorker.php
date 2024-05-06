@@ -58,7 +58,10 @@ docker rmi --force $(docker images -q)
 # install the application following the corresponding installation guide
 
 # run the test suites including acceptance tests:
-docker compose exec php-fpm php phing tests tests-acceptance',
+docker compose exec php-fpm php phing tests tests-acceptance
+
+# run the cypress tests:
+make run-acceptance-tests-actual',
             $branchName,
             $version->getVersionString(),
         ));
