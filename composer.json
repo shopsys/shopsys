@@ -128,7 +128,7 @@
         "overblog/dataloader-bundle": "^0.6.0",
         "overblog/graphiql-bundle": "^0.3",
         "overblog/graphql-bundle": "^1.0",
-        "phing/phing": "3.0.0-rc6",
+        "phing/phing": "^3.0.0",
         "phpdocumentor/reflection-docblock": "^5.3.0",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable": "^3.3.0",
@@ -142,7 +142,7 @@
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/deployment": "~2.1.0",
+        "shopsys/deployment": "^2.1.2",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/ordered-form": "^5.2",
         "snc/redis-bundle": "^4.4.1",
@@ -210,8 +210,7 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "friendsofphp/php-cs-fixer": "2.19.0 || >=3.50.0",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
+        "friendsofphp/php-cs-fixer": "2.19.0 || >=3.50.0"
     },
     "scripts": {
         "post-install-cmd": [
