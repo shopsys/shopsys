@@ -10,7 +10,6 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckShopsysInstallReleaseWorker
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnableMergingReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureReleaseHighlightsPostIsReleasedReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\AfterRelease\MeasurePerformanceReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureRoadmapIsUpdatedReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\PostInfoToSlackReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\RemoveLockFilesReleaseWorker;
@@ -38,7 +37,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SetPhpImageVersionInDockerfileReleaseWorker::class);
     $services->set(EnableMergingReleaseWorker::class);
     $services->set(CheckShopsysInstallReleaseWorker::class);
-    $services->set(MeasurePerformanceReleaseWorker::class);
     $services->set(EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class);
     $services->set(PostInfoToSlackReleaseWorker::class);
     $services->set(CheckDocsReleaseWorker::class);
