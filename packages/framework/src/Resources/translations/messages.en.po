@@ -1000,9 +1000,6 @@ msgstr ""
 msgid "E-shop URL address"
 msgstr ""
 
-msgid "E-shop attributes settings modified"
-msgstr ""
-
 msgid "E-shop domains"
 msgstr ""
 
@@ -2164,9 +2161,6 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-msgid "Phone availability"
-msgstr ""
-
 msgid "Please check following information:"
 msgstr ""
 
@@ -2315,9 +2309,6 @@ msgid "Promo codes"
 msgstr ""
 
 msgid "Promo codes - generated batches"
-msgstr ""
-
-msgid "Published data"
 msgstr ""
 
 msgid "Quick product search"
@@ -2726,9 +2717,6 @@ msgid "Tax number"
 msgstr ""
 
 msgid "Telephone"
-msgstr ""
-
-msgid "Telephone number"
 msgstr ""
 
 msgid "Terms and conditions"

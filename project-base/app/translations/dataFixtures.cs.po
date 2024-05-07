@@ -13,12 +13,6 @@ msgstr "%brandName% SEO Titulek"
 msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
 msgstr ""
 
-msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
-msgstr "(po-pá, 10:00 - 16:00)"
-
-msgid "+1-234-567-8989"
-msgstr "+420123456789"
-
 msgid "1 kg"
 msgstr "1 kg"
 
@@ -2100,9 +2094,6 @@ msgstr "kov"
 
 msgid "m³"
 msgstr "m³"
-
-msgid "no-reply@shopsys.com"
-msgstr "no-reply@shopsys.cz"
 
 msgid "one-slotted"
 msgstr "jednořádkový"

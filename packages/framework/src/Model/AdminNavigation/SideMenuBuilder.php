@@ -356,10 +356,6 @@ class SideMenuBuilder
                 ['route' => 'admin_domain_edit', 'label' => t('Editing domain'), 'display' => false],
             );
         }
-        $identificationMenu->addChild(
-            'shop_info',
-            ['route' => 'admin_shopinfo_setting', 'label' => t('Operator information')],
-        );
 
         $legalMenu = $menu->addChild('legal', ['label' => t('Legal conditions')]);
         $legalMenu->addChild(

@@ -810,6 +810,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ```
 
+#### remove unused operator info ([#3133](https://github.com/shopsys/shopsys/pull/3133))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

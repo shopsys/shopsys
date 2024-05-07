@@ -1018,7 +1018,7 @@ msgstr ""
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
-msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
+msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr ""
 
 msgid "Position of image"

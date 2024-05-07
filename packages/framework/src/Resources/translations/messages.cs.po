@@ -1000,9 +1000,6 @@ msgstr "E-maily jsou odesílány na adresy, které vyhovují alespoň jednomu re
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
 
-msgid "E-shop attributes settings modified"
-msgstr "Nastavení e-shopu atributů bylo upraveno"
-
 msgid "E-shop domains"
 msgstr "Domény eshopu"
 
@@ -2164,9 +2161,6 @@ msgstr "Osobní odběr"
 msgid "Phone"
 msgstr "Telefon"
 
-msgid "Phone availability"
-msgstr "Dostupnost telefonu"
-
 msgid "Please check following information:"
 msgstr "Prosím překontrolujte následující informace:"
 
@@ -2316,9 +2310,6 @@ msgstr "Slevové kupóny"
 
 msgid "Promo codes - generated batches"
 msgstr "Slevoé kupóny - vygenerované dávky"
-
-msgid "Published data"
-msgstr "Zveřejněné údaje"
 
 msgid "Quick product search"
 msgstr "Rychlé vyhledávání v produktech"
@@ -2727,9 +2718,6 @@ msgstr "DIČ"
 
 msgid "Telephone"
 msgstr "Telefon"
-
-msgid "Telephone number"
-msgstr "Tel. číslo"
 
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"

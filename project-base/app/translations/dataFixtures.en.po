@@ -13,12 +13,6 @@ msgstr ""
 msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
 msgstr ""
 
-msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
-msgstr ""
-
-msgid "+1-234-567-8989"
-msgstr ""
-
 msgid "1 kg"
 msgstr ""
 
@@ -2099,9 +2093,6 @@ msgid "metal"
 msgstr ""
 
 msgid "m³"
-msgstr ""
-
-msgid "no-reply@shopsys.com"
 msgstr ""
 
 msgid "one-slotted"
