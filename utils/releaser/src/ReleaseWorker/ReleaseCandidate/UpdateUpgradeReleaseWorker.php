@@ -58,7 +58,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             - check "see #project-base-diff to update your project" is added to the all the upgrade notes and add the line where it is missing (at least to all the Storefront entries)
             - replace all occurrences of #project-base-diff with link to project-base commit of the change
                 - you can find the commit hashes quickly by executing following on the project-base repository:
-                  git log --oneline --format="%%H %%s" | grep -E \'\(#\d+\)$\'',
+                  git log --oneline --format="%%H %%s" | grep -E \'\(#[0-9]+\)$\'',
             $versionString,
         ));
 
