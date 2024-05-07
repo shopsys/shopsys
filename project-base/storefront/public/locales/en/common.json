@@ -133,7 +133,7 @@
     "Found categories": "Found categories",
     "Found products": "Found products",
     "Free": "Free",
-    "FreeTransportAmountLeft": "Add products for <0>{{ amountFormatted }}</0> more, and enjoy <0>free delivery!</0>",
+    "FreeTransportAmountLeft": "Add products for <0>{{ remainingAmountFormatted }}</0> more, and enjoy <0>free delivery!</0>",
     "Friday": "Friday",
     "from": "from",
     "From": "From",

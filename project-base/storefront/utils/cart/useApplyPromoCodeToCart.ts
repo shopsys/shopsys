@@ -8,19 +8,18 @@ import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-type ApplyPromoCodeHandler = (
-    newPromoCode: string,
-    messages: { success: string; error: string },
-) => Promise<TypeCartFragment | undefined | null>;
+export type ApplyPromoCodeToCart = (newPromoCode: string) => Promise<TypeCartFragment | undefined | null>;
 
-export const useApplyPromoCodeToCart = (): [ApplyPromoCodeHandler, boolean] => {
-    const [{ fetching }, applyPromoCodeToCart] = useApplyPromoCodeToCartMutation();
+export const useApplyPromoCodeToCart = (messages: { success: string; error: string }) => {
+    const [{ fetching }, applyPromoCodeToCartMutation] = useApplyPromoCodeToCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
 
-    const applyPromoCodeHandler = useCallback<ApplyPromoCodeHandler>(
-        async (newPromoCode, messages) => {
-            const applyPromoCodeResult = await applyPromoCodeToCart({ input: { promoCode: newPromoCode, cartUuid } });
+    const applyPromoCodeToCart = useCallback<ApplyPromoCodeToCart>(
+        async (newPromoCode) => {
+            const applyPromoCodeResult = await applyPromoCodeToCartMutation({
+                input: { promoCode: newPromoCode, cartUuid },
+            });
 
             // EXTEND PROMO CODE MODIFICATIONS HERE
 
@@ -39,8 +38,8 @@ export const useApplyPromoCodeToCart = (): [ApplyPromoCodeHandler, boolean] => {
 
             return applyPromoCodeResult.data?.ApplyPromoCodeToCart;
         },
-        [applyPromoCodeToCart, cartUuid, t],
+        [applyPromoCodeToCartMutation, cartUuid, t],
     );
 
-    return [applyPromoCodeHandler, fetching];
+    return { applyPromoCodeToCart, isApplyingPromoCodeToCart: fetching };
 };

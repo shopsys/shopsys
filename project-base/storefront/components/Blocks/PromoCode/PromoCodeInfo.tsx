@@ -4,15 +4,11 @@ import useTranslation from 'next-translate/useTranslation';
 
 type PromoCodeInfoProps = {
     promoCode: string;
-    onRemovePromoCodeCallback: (promoCode: string) => void;
+    onRemovePromoCodeCallback: () => void;
 };
 
 export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallback, promoCode }) => {
     const { t } = useTranslation();
-
-    const onRemovePromoCodeHandler = () => {
-        onRemovePromoCodeCallback(promoCode);
-    };
 
     return (
         <div>
@@ -21,7 +17,7 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
                 {promoCode}
                 <CrossIcon
                     className="mr-1 w-4 cursor-pointer text-skyBlue hover:text-primary"
-                    onClick={onRemovePromoCodeHandler}
+                    onClick={onRemovePromoCodeCallback}
                 />
             </div>
             <p>

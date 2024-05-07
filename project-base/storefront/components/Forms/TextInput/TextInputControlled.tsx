@@ -8,7 +8,16 @@ type TextInputControlledProps = {
     render: (input: JSX.Element) => ReactElement<any, any> | null;
     textInputProps: Pick<
         TextInputProps,
-        'disabled' | 'required' | 'onBlur' | 'onKeyDown' | 'onChange' | 'type' | 'label' | 'inputSize' | 'autoComplete'
+        | 'disabled'
+        | 'required'
+        | 'onBlur'
+        | 'onKeyDown'
+        | 'onChange'
+        | 'type'
+        | 'label'
+        | 'inputSize'
+        | 'autoComplete'
+        | 'className'
     >;
     control: Control<any>;
     formName: string;

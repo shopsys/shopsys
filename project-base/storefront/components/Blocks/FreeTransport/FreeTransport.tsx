@@ -7,36 +7,36 @@ export const FreeTransport: FC = () => {
     const { cart } = useCurrentCart();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const amount = cart?.remainingAmountWithVatForFreeTransport;
+    const remainingAmount = cart?.remainingAmountWithVatForFreeTransport;
 
-    if (!cart?.items.length || amount === null || amount === undefined) {
+    if (!cart?.items.length || remainingAmount === null || remainingAmount === undefined) {
         return null;
     }
 
-    const amountFormatted = formatPrice(amount);
+    const remainingAmountFormatted = formatPrice(remainingAmount);
 
-    if (parseInt(amount) > 0) {
+    if (parseInt(remainingAmount) > 0) {
         return (
-            <Wrapper>
+            <RemainingAmountWrapper>
                 <Trans
                     i18nKey="FreeTransportAmountLeft"
-                    values={{ amountFormatted: amountFormatted }}
+                    values={{ remainingAmountFormatted }}
                     components={{
                         0: <strong />,
                     }}
                 />
-            </Wrapper>
+            </RemainingAmountWrapper>
         );
     }
 
     return (
-        <Wrapper>
+        <RemainingAmountWrapper>
             <strong>{t('Your delivery and payment is now free of charge!')}</strong>
-        </Wrapper>
+        </RemainingAmountWrapper>
     );
 };
 
-const Wrapper: FC = ({ children }) => (
+const RemainingAmountWrapper: FC = ({ children }) => (
     <div className="my-2 block rounded bg-primary text-white px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-green">
         {children}
     </div>
