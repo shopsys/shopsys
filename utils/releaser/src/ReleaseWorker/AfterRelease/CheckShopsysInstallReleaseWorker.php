@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractCheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
@@ -33,28 +34,17 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
 
     /**
      * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
      */
-    public function work(
-        Version $version,
-        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
-    ): void {
+    #[Override]
+    protected function writeInstructionsForProjectBasePreparation(Version $version): void
+    {
         $this->symfonyStyle->note(sprintf(
-            'Instructions for installation:
+            'Instructions for project base preparation:
 
 git clone https://github.com/shopsys/project-base.git
-git checkout %1$s
-
-# remove all docker containers
-docker rm $(docker ps -a -q)
-
-# remove all docker images
-docker rmi --force $(docker images -q)
-
-# install the application following the corresponding installation guide',
+git checkout v%s
+',
             $version->getVersionString(),
         ));
-
-        parent::work($version);
     }
 }
