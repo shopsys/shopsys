@@ -15,37 +15,42 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
     const isCartHydrated = useSessionStore((s) => s.isCartHydrated);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-
     const isWithCart = isUserLoggedIn || !!cartUuid;
 
     useEffect(() => {
         updatePageLoadingState({ isCartHydrated: true });
     }, []);
 
-    const [{ data: fetchedCartData, fetching }, fetchCart] = useCartQuery({
+    const [{ data: fetchedCartData, fetching: isFetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
         pause: !isCartHydrated || !isWithCart || authLoading !== null,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
-    const cartData = isWithCart ? fetchedCartData?.cart : null;
+    let cart = undefined;
+    if (isCartHydrated) {
+        if (isWithCart) {
+            cart = fetchedCartData?.cart;
+        } else {
+            cart = null;
+        }
+    }
 
     return {
-        fetchCart,
-        isWithCart,
-        cart: isCartHydrated ? cartData : undefined,
-        transport: cartData?.transport ?? null,
-        pickupPlace: getSelectedPickupPlace(
-            cartData?.transport,
-            cartData?.selectedPickupPlaceIdentifier,
-            packeteryPickupPoint,
-        ),
-        payment: cartData?.payment ?? null,
-        paymentGoPayBankSwift: cartData?.paymentGoPayBankSwift ?? null,
-        promoCode: cartData?.promoCode ?? null,
-        isFetching: fetching,
-        modifications: cartData?.modifications ?? null,
-        roundingPrice: cartData?.roundingPrice ?? null,
+        fetchCart: () => {
+            if (isWithCart) {
+                fetchCart();
+            }
+        },
+        cart,
+        isCartFetchingOrUnavailable: cart === undefined || isFetching || !!authLoading,
+        transport: cart?.transport ?? null,
+        pickupPlace: getSelectedPickupPlace(cart?.transport, cart?.selectedPickupPlaceIdentifier, packeteryPickupPoint),
+        payment: cart?.payment ?? null,
+        paymentGoPayBankSwift: cart?.paymentGoPayBankSwift ?? null,
+        promoCode: cart?.promoCode ?? null,
+        roundingPrice: cart?.roundingPrice ?? null,
+        modifications: cart?.modifications ?? null,
     };
 };
 

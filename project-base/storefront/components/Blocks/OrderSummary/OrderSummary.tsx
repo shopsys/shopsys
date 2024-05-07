@@ -14,9 +14,9 @@ type OrderSummaryProps = {
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
-    const { cart, transport, payment, promoCode, roundingPrice, isFetching } = useCurrentCart();
+    const { cart, transport, payment, promoCode, roundingPrice, isCartFetchingOrUnavailable } = useCurrentCart();
 
-    if (isFetching) {
+    if (isCartFetchingOrUnavailable) {
         return <CartLoading />;
     }
 

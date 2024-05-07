@@ -32,7 +32,7 @@ export type OrderConfirmationQuery = {
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
-    const { fetchCart, isWithCart } = useCurrentCart(false);
+    const { fetchCart } = useCurrentCart(false);
     const { orderUuid, orderPaymentType } = query as OrderConfirmationQuery;
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
@@ -43,9 +43,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     });
 
     useEffect(() => {
-        if (isWithCart) {
-            fetchCart();
-        }
+        fetchCart();
     }, []);
 
     return (

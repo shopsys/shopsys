@@ -9,13 +9,12 @@ import { UseQueryExecute } from 'urql';
 
 export type CurrentCartType = {
     cart: Maybe<TypeCartFragment> | undefined;
-    isWithCart: boolean;
     transport: Maybe<TypeTransportWithAvailablePaymentsAndStoresFragment>;
     pickupPlace: Maybe<TypeListedStoreFragment>;
     payment: Maybe<TypeSimplePaymentFragment>;
     paymentGoPayBankSwift: Maybe<string>;
     promoCode: Maybe<string>;
-    isFetching: boolean;
+    isCartFetchingOrUnavailable: boolean;
     modifications: Maybe<TypeCartModificationsFragment>;
     roundingPrice: Maybe<TypePriceFragment>;
     fetchCart: UseQueryExecute;

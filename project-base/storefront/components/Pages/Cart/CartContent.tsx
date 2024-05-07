@@ -15,9 +15,9 @@ export const CartContent: FC = () => {
     const { t } = useTranslation();
     const { url, isLuigisBoxActive } = useDomainConfig();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
-    const { cart, isFetching } = useCurrentCart();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
 
-    if (cart === undefined || isFetching) {
+    if (isCartFetchingOrUnavailable) {
         return <SkeletonPageCart />;
     }
 

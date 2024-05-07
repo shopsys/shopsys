@@ -7,7 +7,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-information') => {
     const router = useRouter();
-    const { cart, isFetching } = useCurrentCart();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
     const authLoading = usePersistStore((s) => s.authLoading);
     const { url } = useDomainConfig();
     const [canContentBeDisplayed, setCanContentBeDisplayed] = useState<boolean | undefined>(undefined);
@@ -17,8 +17,8 @@ export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-inf
     );
 
     useEffect(() => {
-        if (cart !== undefined && !isFetching && !authLoading) {
-            if (cart === null || !cart.items.length) {
+        if (!isCartFetchingOrUnavailable) {
+            if (cart === null || !cart?.items.length) {
                 setCanContentBeDisplayed(false);
                 router.replace(cartUrl);
             } else if (page === 'contact-information' && (!cart.transport || !cart.payment)) {
@@ -28,7 +28,7 @@ export const useOrderPagesAccess = (page: 'transport-and-payment' | 'contact-inf
                 setCanContentBeDisplayed(true);
             }
         }
-    }, [cart, isFetching, authLoading]);
+    }, [cart, isCartFetchingOrUnavailable, authLoading]);
 
     return canContentBeDisplayed;
 };

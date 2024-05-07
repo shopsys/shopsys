@@ -21,14 +21,14 @@ export const Cart: FC = ({ className }) => {
     const router = useRouter();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { cart, isFetching } = useCurrentCart();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
 
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>
-            {isFetching && (
+            {isCartFetchingOrUnavailable && (
                 <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-graySlate py-2 opacity-50" />
             )}
 
