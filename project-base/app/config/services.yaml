@@ -56,13 +56,6 @@ services:
             $imageUrlPrefix: '%shopsys.image_url_prefix%'
             $cache: '@image_cache'
 
-    App\Component\Redis\RedisFacade:
-        arguments:
-            $allClients: !tagged snc_redis.client
-            $persistentClients:
-                - '@snc_redis.global'
-                - '@snc_redis.blog_article_export_queue'
-
     App\Component\Router\FriendlyUrl\FriendlyUrlFactory: ~
 
     App\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
@@ -243,9 +236,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Image\ImageRepository:
         alias: App\Component\Image\ImageRepository
-
-    Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
-        alias: App\Component\Redis\RedisFacade
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory

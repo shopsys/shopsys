@@ -386,6 +386,7 @@ services:
             $allClients: !tagged snc_redis.client
             $persistentClients:
                 - '@snc_redis.global'
+                - '@snc_redis.blog_article_export_queue'
 
     Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
         arguments:
