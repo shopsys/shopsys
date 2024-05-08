@@ -40,13 +40,14 @@ class PaymentGridFactory implements GridFactoryInterface
         $queryBuilder = $this->paymentRepository->getQueryBuilderForAll()
             ->addSelect('pt')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->setParameter('locale', $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale());
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
             'p.id',
             function ($row) {
                 $payment = $this->paymentRepository->findById($row['p']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($payment);
+                $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
 
                 return $row;
             },
