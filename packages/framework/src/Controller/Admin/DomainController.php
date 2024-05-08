@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSuppor
 use Shopsys\FrameworkBundle\Form\Admin\Domain\DomainFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DomainController extends AdminBaseController
@@ -133,6 +134,25 @@ class DomainController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Domain/edit.html.twig', [
             'form' => $form->createView(),
             'domain' => $domain,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function localeTabsAction(): Response
+    {
+        $domainConfigs = [];
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if (!isset($domainConfigs[$domainConfig->getLocale()])) {
+                $domainConfigs[$domainConfig->getLocale()] = $domainConfig;
+            }
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Inline/Domain/locales.html.twig', [
+            'domainConfigs' => $domainConfigs,
+            'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
     }
 

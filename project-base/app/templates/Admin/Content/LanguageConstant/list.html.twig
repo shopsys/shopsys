@@ -4,7 +4,7 @@
 {% block h1 %}{{ 'List of language constants'|trans }}{% endblock %}
 
 {% block main_content %}
-    {{ render(controller('App\\Controller\\Admin\\DomainController::localeTabsAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::localeTabsAction')) }}
 
     {% if gridView is not null %}
         <div class="in-tab">
