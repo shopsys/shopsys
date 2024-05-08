@@ -131,7 +131,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 
         if ($superadminSettingMenu !== null) {
             $superadminSettingMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
-            $superadminSettingMenu->addChild(t('Clean Storefront Cache'), ['route' => 'admin_redis_show']);
 
             $settingsMenu->removeChild('superadmin');
             $settingsMenu->addChild($superadminSettingMenu);
