@@ -273,6 +273,10 @@ services:
 
     Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor: ~
 
+    Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper:
+        arguments:
+            $disableFields: '%env(bool:DISABLE_FORM_FIELDS_FROM_TRANSFER)%'
+
     Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting: ~
 
     Shopsys\FrameworkBundle\Component\Form\ResizeFormListener:

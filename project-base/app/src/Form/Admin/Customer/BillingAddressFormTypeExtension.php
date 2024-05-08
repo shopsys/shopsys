@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Customer;
 
-use App\Component\Form\FormBuilderHelper;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -18,7 +18,7 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
     private const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(

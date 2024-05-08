@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Product\Parameter;
 
-use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,7 +16,7 @@ class ParameterFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      */
     public function __construct(private FormBuilderHelper $formBuilderHelper)
     {

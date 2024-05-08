@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Product\Flag;
 
-use App\Component\Form\FormBuilderHelper;
 use App\Model\Product\Flag\Flag;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
@@ -23,7 +23,7 @@ class FlagFormType extends AbstractType
     public const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      */
     public function __construct(private FormBuilderHelper $formBuilderHelper)
     {

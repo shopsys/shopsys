@@ -51,10 +51,6 @@ services:
     App\Component\FileUpload\FileUpload:
         arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
 
-    App\Component\Form\FormBuilderHelper:
-        arguments:
-            $disableFields: '%env(bool:DISABLE_FORM_FIELDS_FROM_TRANSFER)%'
-
     App\Component\Image\ImageFacade:
         arguments:
             $imageUrlPrefix: '%shopsys.image_url_prefix%'
