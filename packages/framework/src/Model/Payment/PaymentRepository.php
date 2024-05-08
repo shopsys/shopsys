@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -125,7 +126,8 @@ class PaymentRepository
             ->setParameter('uuid', $uuid)
             ->andWhere('p.deleted = false')
             ->andWhere('pd.enabled = true')
-            ->andWhere('p.hidden = false');
+            ->andWhere('p.hidden = false')
+            ->andWhere('p.hiddenByGoPay = false');
 
         $payment = $queryBuilder->getQuery()->getOneOrNullResult();
 
@@ -143,5 +145,21 @@ class PaymentRepository
     public function getByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): array
     {
         return $this->getPaymentRepository()->findBy(['goPayPaymentMethod' => $goPayPaymentMethod]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Payment\Payment[]
+     */
+    public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig): array
+    {
+        return $this->getQueryBuilderForAll()
+            ->addSelect('pd')
+            ->addSelect('pt')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
+            ->setParameter('locale', $domainConfig->getLocale())
+            ->setParameter('domainId', $domainConfig->getId())
+            ->getQuery()->execute();
     }
 }
