@@ -313,9 +313,6 @@ services:
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository:
         alias: App\Model\Advert\AdvertRepository
 
-    Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator:
-        alias: App\Model\Article\ArticleBreadcrumbGenerator
-
     Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
 
