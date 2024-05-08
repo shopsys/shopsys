@@ -243,7 +243,8 @@ services:
 
     Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
         arguments:
-            - '%shopsys.error_pages_dir%'
+            $errorPagesDir: '%shopsys.error_pages_dir%'
+            $environment: '%kernel.environment%'
 
     Shopsys\FrameworkBundle\Component\Error\ExceptionListener:
         tags:

@@ -48,11 +48,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
-    App\Component\Error\ErrorPagesFacade:
-        arguments:
-            $errorPagesDir: '%shopsys.error_pages_dir%'
-            $environment: '%kernel.environment%'
-
     App\Component\FileUpload\FileUpload:
         arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
 
@@ -243,9 +238,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
-
-    Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
-        alias: App\Component\Error\ErrorPagesFacade
 
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         alias: App\Component\FileUpload\FileUpload
