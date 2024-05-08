@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Front;
+namespace Shopsys\FrameworkBundle\Controller\Front;
 
 use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
@@ -15,8 +15,8 @@ class UploadedFileController
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        private readonly UploadedFileFacade $uploadedFileFacade,
-        private readonly FilesystemOperator $filesystem,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly FilesystemOperator $filesystem,
     ) {
     }
 
