@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Component\UploadedFile;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUploadedFileFacade;
 
@@ -15,15 +14,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
  */
 class UploadedFileFacade extends BaseUploadedFileFacade
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
-    public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile): string
-    {
-        return '/content/uploadedFiles/' . $this->uploadedFileLocator->getRelativeUploadedFileFilepath($uploadedFile);
-    }
-
     /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
