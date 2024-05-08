@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException;
 
@@ -42,7 +43,7 @@ class CountryRepository
             ->join(CountryDomain::class, 'cd', Join::WITH, 'c.id = cd.country AND cd.domainId = :domainId')
             ->join(CountryTranslation::class, 'ct', Join::WITH, 'c.id = ct.translatable AND ct.locale = :locale')
             ->orderBy('cd.priority', 'desc')
-            ->addOrderBy('ct.name', 'asc')
+            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('ct.name', $locale), 'asc')
             ->setParameter('locale', $locale)
             ->setParameter('domainId', $domainId);
     }
