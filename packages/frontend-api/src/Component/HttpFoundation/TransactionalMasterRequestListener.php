@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\HttpFoundation;
+namespace Shopsys\FrontendApiBundle\Component\HttpFoundation;
 
 use GraphQL\Error\SyntaxError;
 use GraphQL\Language\AST\OperationDefinitionNode;
@@ -12,8 +12,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestListener
 {
-    private const GRAPHQL_ENDPOINT_ROUTE = 'overblog_graphql_endpoint';
-    private const QUERY_TYPE = 'query';
+    protected const GRAPHQL_ENDPOINT_ROUTE = 'overblog_graphql_endpoint';
+    protected const QUERY_TYPE = 'query';
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
@@ -32,7 +32,7 @@ class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestL
      */
     protected function isRequestGraphQlQuery(RequestEvent $requestEvent): bool
     {
-        if ($requestEvent->getRequest()->attributes->get('_route') !== self::GRAPHQL_ENDPOINT_ROUTE) {
+        if ($requestEvent->getRequest()->attributes->get('_route') !== static::GRAPHQL_ENDPOINT_ROUTE) {
             return false;
         }
 
@@ -44,18 +44,18 @@ class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestL
 
         $source = json_decode($requestContent, true);
 
-        if (!array_key_exists(self::QUERY_TYPE, $source)) {
+        if (!array_key_exists(static::QUERY_TYPE, $source)) {
             return false;
         }
 
-        $queryString = $source[self::QUERY_TYPE];
+        $queryString = $source[static::QUERY_TYPE];
 
         try {
             $parsed = Parser::parse($queryString);
 
             foreach ($parsed->definitions as $definition) {
                 if ($definition instanceof OperationDefinitionNode) {
-                    return $definition->operation === self::QUERY_TYPE;
+                    return $definition->operation === static::QUERY_TYPE;
                 }
             }
         } catch (SyntaxError) {
