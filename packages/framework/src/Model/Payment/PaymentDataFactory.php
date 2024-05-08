@@ -28,10 +28,7 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function createInstance(): PaymentData
     {
-        $paymentData = new PaymentData();
-        $paymentData->image = $this->imageUploadDataFactory->create();
-
-        return $paymentData;
+        return new PaymentData();
     }
 
     /**
@@ -61,6 +58,8 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
             $paymentData->description[$locale] = null;
             $paymentData->instructions[$locale] = null;
         }
+        $paymentData->image = $this->imageUploadDataFactory->create();
+        $paymentData->hiddenByGoPay = false;
     }
 
     /**
@@ -109,5 +108,8 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
         }
 
         $paymentData->image = $this->imageUploadDataFactory->createFromEntityAndType($payment);
+        $paymentData->type = $payment->getType();
+        $paymentData->goPayPaymentMethod = $payment->getGoPayPaymentMethod();
+        $paymentData->hiddenByGoPay = $payment->isHiddenByGoPay();
     }
 }
