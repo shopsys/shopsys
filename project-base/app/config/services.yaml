@@ -268,9 +268,6 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\AdministratorController:
         class: 'App\Controller\Admin\AdministratorController'
 
-    Shopsys\FrameworkBundle\Controller\Admin\AdvertController:
-        class: App\Controller\Admin\AdvertController
-
     Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
         class: 'App\Controller\Admin\ArticleController'
 

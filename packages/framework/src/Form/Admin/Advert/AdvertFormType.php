@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Advert;
 
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
+use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
-use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertData;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -33,12 +34,12 @@ class AdvertFormType extends AbstractType
     public const SCENARIO_EDIT = 'edit';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        private readonly Domain $domain,
         private readonly AdvertPositionRegistry $advertPositionRegistry,
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -59,24 +60,17 @@ class AdvertFormType extends AbstractType
             'label' => t('Settings'),
         ]);
 
+        $builderSettingsGroup
+            ->add('domain', DisplayOnlyType::class, [
+                'data' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
+                'label' => t('Domain'),
+            ]);
+
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['advert']->getId(),
                     'label' => t('ID'),
-                ])
-                ->add('domain', DisplayOnlyType::class, [
-                    'data' => $this->domain->getDomainConfigById($options['advert']->getDomainId())->getName(),
-                    'label' => t('Domain'),
-                ]);
-        } else {
-            $builderSettingsGroup
-                ->add('domainId', DomainType::class, [
-                    'required' => true,
-                    'constraints' => [
-                        new Constraints\NotBlank(),
-                    ],
-                    'label' => t('Domain'),
                 ]);
         }
 
@@ -116,7 +110,7 @@ class AdvertFormType extends AbstractType
             ])
             ->add('categories', CategoriesType::class, [
                 'required' => false,
-                'domain_id' => $options['data']->domainId,
+                'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
                 'label' => t('Assign to category'),
                 'display_as_row' => true,
             ])
@@ -156,21 +150,49 @@ class AdvertFormType extends AbstractType
                 'label' => t('Link'),
             ]);
 
+        $imageConstraints = [
+            new Constraints\NotBlank([
+                'message' => 'Choose image',
+                'groups' => [self::VALIDATION_GROUP_TYPE_IMAGE],
+            ]),
+        ];
+
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
                 'image_entity_class' => Advert::class,
+                'image_type' => AdvertFacade::IMAGE_TYPE_WEB,
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
                         'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                        'maxSize' => '2M',
+                        'maxSize' => '15M',
                         'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'constraints' => ($options['image_exists'] ? [] : $imageConstraints),
+                'constraints' => ($options['web_image_exists'] ? [] : $imageConstraints),
                 'label' => t('Upload new image'),
+                'entity' => $options['advert'],
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+            ]);
+
+        $builderImageGroup
+            ->add('mobileImage', ImageUploadType::class, [
+                'required' => false,
+                'image_entity_class' => Advert::class,
+                'image_type' => AdvertFacade::IMAGE_TYPE_MOBILE,
+                'file_constraints' => [
+                    new Constraints\Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                        'maxSize' => '15M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'constraints' => ($options['mobile_image_exists'] ? [] : $imageConstraints),
+                'label' => t('Upload image for mobile devices'),
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
@@ -178,6 +200,14 @@ class AdvertFormType extends AbstractType
         $builder
             ->add($builderSettingsGroup)
             ->add($builderImageGroup)
+            ->add('datetimeVisibleFrom', DatePickerType::class, [
+                'required' => false,
+                'label' => t('Display date FROM'),
+            ])
+            ->add('datetimeVisibleTo', DatePickerType::class, [
+                'required' => false,
+                'label' => t('Display date TO'),
+            ])
             ->add('save', SubmitType::class);
     }
 
@@ -187,12 +217,14 @@ class AdvertFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['scenario', 'advert', 'image_exists'])
-            ->setAllowedTypes('image_exists', 'bool')
+            ->setRequired(['scenario', 'advert', 'web_image_exists', 'mobile_image_exists'])
+            ->setAllowedTypes('web_image_exists', 'bool')
+            ->setAllowedTypes('mobile_image_exists', 'bool')
             ->setAllowedValues('scenario', [self::SCENARIO_CREATE, self::SCENARIO_EDIT])
             ->setAllowedTypes('advert', [Advert::class, 'null'])
             ->setDefaults([
-                'image_exists' => false,
+                'web_image_exists' => false,
+                'mobile_image_exists' => false,
                 'data_class' => AdvertData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'validation_groups' => function (FormInterface $form) {
