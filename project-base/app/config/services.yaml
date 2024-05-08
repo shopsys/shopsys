@@ -48,12 +48,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
-    App\Component\EntityExtension\EntityExtensionSubscriber:
-        arguments:
-            $entityExtensionMap: '%shopsys.entity_extension.map%'
-        tags:
-            - { name: doctrine.event_subscriber, priority: -10 }
-
     App\Component\Error\ErrorPagesFacade:
         arguments:
             $errorPagesDir: '%shopsys.error_pages_dir%'
@@ -249,9 +243,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
-        alias: App\Component\EntityExtension\EntityExtensionSubscriber
 
     Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
         alias: App\Component\Error\ErrorPagesFacade
