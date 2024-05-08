@@ -250,9 +250,6 @@ services:
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
 
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository:
-        alias: App\Component\Elasticsearch\IndexRepository
-
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
         alias: App\Component\EntityExtension\EntityExtensionSubscriber
 
