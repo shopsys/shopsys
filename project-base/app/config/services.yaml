@@ -42,8 +42,6 @@ services:
 
     App\Component\DataBridge\Transfer\BridgeImportTransferDependency: ~
 
-    App\Component\Doctrine\NotNullableColumnsFinder: ~
-
     App\Component\Doctrine\QueryBuilderExtender: ~
 
     App\Component\Doctrine\RemoveMappingsSubscriber:
@@ -240,9 +238,6 @@ services:
             -   connect:
                     - '%env(REDIS_HOST)%'
         class: Redis
-
-    Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder:
-        alias: App\Component\Doctrine\NotNullableColumnsFinder
 
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender:
         alias: App\Component\Doctrine\QueryBuilderExtender
