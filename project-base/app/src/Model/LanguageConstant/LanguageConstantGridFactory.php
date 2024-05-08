@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\LanguageConstant;
 
-use App\Component\Grid\ArrayWithPaginationDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 
