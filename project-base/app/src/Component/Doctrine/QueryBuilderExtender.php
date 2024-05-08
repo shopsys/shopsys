@@ -48,21 +48,4 @@ class QueryBuilderExtender extends BaseQueryBuilderExtender
 
         return $queryBuilder;
     }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Doctrine\ORM\Query\Expr\Join[]
-     */
-    protected function getJoinsFromQueryBuilder(QueryBuilder $queryBuilder): array
-    {
-        $rootAlias = $this->getRootAlias($queryBuilder);
-
-        $joinDqlPart = $queryBuilder->getDQLPart('join');
-
-        if (array_key_exists($rootAlias, $joinDqlPart) === true) {
-            return $joinDqlPart[$rootAlias];
-        }
-
-        return [];
-    }
 }
