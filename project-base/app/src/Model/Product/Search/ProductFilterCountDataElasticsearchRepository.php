@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository as BaseProductFilterCountDataElasticsearchRepository;
 
 /**
@@ -19,16 +18,4 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  */
 class ProductFilterCountDataElasticsearchRepository extends BaseProductFilterCountDataElasticsearchRepository
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
-     * @param array $plusParameterNumbers
-     * @param int $parameterId
-     */
-    protected function mergeParameterCountData(
-        ProductFilterCountData $countData,
-        array $plusParameterNumbers,
-        int $parameterId,
-    ): void {
-        $countData->countByParameterIdAndValueId[$parameterId] = $plusParameterNumbers;
-    }
 }
