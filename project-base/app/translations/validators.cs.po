@@ -10,9 +10,6 @@ msgstr "Pole hodnot (\"values\") není podporováno jako vstup pro parametry typ
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
-msgid "Choose image"
-msgstr "Vyberte obrázek"
-
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Název města nesmí být delší než {{ limit }} znaků"
 
