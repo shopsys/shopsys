@@ -37,6 +37,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/changelog-linker',
         'shopsys/monorepo-builder',
         'shopsys/backend-api',
+        'shopsys/read-model',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
@@ -44,6 +45,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/ordered-form',
         'shopsys/changelog-linker',
         'shopsys/jsformvalidator-bundle',
+        // packages outside monorepo
+        'shopsys/deployment',
         // not related packages
         'shopsys/syscart',
         'shopsys/sysconfig',

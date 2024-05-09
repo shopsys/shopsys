@@ -19,7 +19,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
     public const EXCLUDED_PACKAGES = [
         // excluded from the initial tagging as there needs to be another commit with composer.lock and package-lock.json
         // @see https://github.com/shopsys/shopsys/pull/1264
-        'shopsys/deployment',
         'shopsys/shopsys',
         'shopsys/project-base',
     ];
