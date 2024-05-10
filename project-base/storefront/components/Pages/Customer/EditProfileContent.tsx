@@ -1,3 +1,4 @@
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormHeading, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -230,39 +231,47 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
                     <FormBlockWrapper>
                         <FormHeading>{t('Change password')}</FormHeading>
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.oldPassword.name}
-                            passwordInputProps={{
-                                label: formMeta.fields.oldPassword.label,
-                            }}
-                            render={(passwordInput) => (
+                        {currentCustomerUser.hasPasswordSet ? (
+                            <>
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.oldPassword.name}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.oldPassword.label,
+                                    }}
+                                    render={(passwordInput) => (
+                                        <FormColumn>
+                                            <FormLine bottomGap>{passwordInput}</FormLine>
+                                        </FormColumn>
+                                    )}
+                                />
                                 <FormColumn>
-                                    <FormLine bottomGap>{passwordInput}</FormLine>
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.newPassword.name}
+                                        render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.newPassword.label,
+                                        }}
+                                    />
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.newPasswordConfirm.name}
+                                        render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.newPasswordConfirm.label,
+                                        }}
+                                    />
                                 </FormColumn>
-                            )}
-                        />
-                        <FormColumn>
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPassword.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPassword.label,
-                                }}
-                            />
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPasswordConfirm.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPasswordConfirm.label,
-                                }}
-                            />
-                        </FormColumn>
+                            </>
+                        ) : (
+                            <Button size="small" onClick={onResetPasswordHandler}>
+                                {t('Send me a link to set a new password')}
+                            </Button>
+                        )}
                     </FormBlockWrapper>
 
                     {currentCustomerUser.companyCustomer && (

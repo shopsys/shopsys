@@ -1,3 +1,4 @@
+import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 import { IconImage } from 'components/Basic/IconImage/IconImage';
@@ -19,7 +20,7 @@ export const FooterContact: FC = () => {
                     <InstagramIcon className="w-8 text-white" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
-                    <IconImage alt={t('Facebook')} className="w-8" icon="facebook" />
+                    <FacebookIcon className="w-11 text-[#1877f2]" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Youtube">
                     <YoutubeIcon className="w-11 text-[#d93738]" />

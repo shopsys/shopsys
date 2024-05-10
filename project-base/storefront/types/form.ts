@@ -79,3 +79,8 @@ export type UserConsentFormType = Record<keyof GtmConsentInfoType, boolean>;
 export type PromoCodeFormType = {
     promoCode: string;
 };
+
+export type LoginFormType = {
+    email: string;
+    password: string;
+};
