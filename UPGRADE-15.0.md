@@ -861,6 +861,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   ParameterColorValueDataFixture is added to handle assigning hex values to color parameters
 -   see #project-base-diff to update your project
 
+#### remove product stock from calculated sale exclusion calculation ([#3159](https://github.com/shopsys/shopsys/pull/3159))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
