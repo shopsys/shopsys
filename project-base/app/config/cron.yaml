@@ -118,3 +118,9 @@ services:
     Shopsys\FrameworkBundle\Component\Packetery\PacketeryCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: packetery, readableName: 'Sending parcels to the packetery' }
+
+    # Vacuum
+
+    Shopsys\FrameworkBundle\Component\Doctrine\VacuumFullAnalyzeCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '15', instanceName: vacuum, readableName: 'Delete unused temporary data (vacuum) from database.' }

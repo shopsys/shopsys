@@ -97,6 +97,7 @@ function deploy() {
         ["cron-gopay"]='*/5 * * * *'
         ["cron-data-bridge-import"]='*/5 * * * *'
         ["cron-packetery"]='*/5 * * * *'
+        ["cron-vacuum"]='15 3 * * 1' # every monday in 3:15 AM
     )
 
     VARS=(
