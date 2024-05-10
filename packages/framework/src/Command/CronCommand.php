@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use DateTimeZone;
-use NinjaMutex\Lock\LockInterface;
 use NinjaMutex\Mutex;
 use Override;
 use Shopsys\FrameworkBundle\Command\Exception\CronIsLockedException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
+use Shopsys\FrameworkBundle\Component\Cron\CronControlFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
@@ -36,9 +36,9 @@ class CronCommand extends Command
 
     public function __construct(
         protected readonly CronFacade $cronFacade,
+        protected readonly CronControlFacade $cronControlFacade,
         protected readonly MutexFactory $mutexFactory,
         protected readonly ParameterBagInterface $parameterBag,
-        protected readonly LockInterface $lock,
         protected readonly DateTimeHelper $dateTimeHelper,
     ) {
         parent::__construct();
@@ -88,7 +88,7 @@ class CronCommand extends Command
             return Command::SUCCESS;
         }
 
-        if ($this->lock->isLocked(CronLockCommand::CRON_MUTEX_LOCK_NAME)) {
+        if ($this->cronControlFacade->isCronLocked()) {
             $output->writeln('Crons are locked with `deploy:cron:lock` command. Nothing to do.');
 
             return Command::SUCCESS;

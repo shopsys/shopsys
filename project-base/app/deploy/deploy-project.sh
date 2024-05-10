@@ -106,6 +106,7 @@ function deploy() {
         ["cron-data-bridge-import"]='*/5 * * * *'
         ["cron-packetery"]='*/5 * * * *'
         ["cron-watchdog"]='*/10 * * * *'
+        ["cron-vacuum"]='15 3 * * 1' # every monday in 3:15 AM
     )
 
     if [ -n "${SENTRY_DSN}" ]; then

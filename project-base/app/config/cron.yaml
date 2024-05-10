@@ -118,3 +118,9 @@ services:
     Shopsys\FrameworkBundle\Model\Watchdog\WatchdogCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/10', instanceName: watchdog, readableName: 'Sending watchdog emails' }
+
+    # Vacuum
+
+    Shopsys\FrameworkBundle\Component\Doctrine\VacuumFullAnalyzeCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '15', instanceName: vacuum, readableName: 'Delete unused temporary data (vacuum) from database.' }

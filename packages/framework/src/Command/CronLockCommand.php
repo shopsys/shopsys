@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use NinjaMutex\Lock\LockInterface;
 use Override;
+use Shopsys\FrameworkBundle\Component\Cron\CronControlFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,13 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CronLockCommand extends Command
 {
-    public const CRON_MUTEX_LOCK_NAME = 'cronLocker';
-
     protected const SLEEP_TIME = 600;
     protected const MAX_LOCK_TIME = 3600;
 
     public function __construct(
-        protected readonly LockInterface $lock,
+        protected readonly CronControlFacade $cronControlFacade,
     ) {
         parent::__construct();
     }
@@ -34,7 +32,7 @@ class CronLockCommand extends Command
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (!$this->lock->acquireLock(self::CRON_MUTEX_LOCK_NAME, 0)) {
+        if (!$this->cronControlFacade->lockCron()) {
             return Command::FAILURE;
         }
 
@@ -45,7 +43,7 @@ class CronLockCommand extends Command
             sleep(static::SLEEP_TIME);
         }
 
-        $this->lock->releaseLock(self::CRON_MUTEX_LOCK_NAME);
+        $this->cronControlFacade->unlockCron();
         $output->writeln('Cron lock was released due to timeout.');
 
         return Command::SUCCESS;

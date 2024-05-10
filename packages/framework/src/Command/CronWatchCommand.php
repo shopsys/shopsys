@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
-use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
+use Shopsys\FrameworkBundle\Component\Cron\CronControlFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,8 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CronWatchCommand extends Command
 {
     public function __construct(
-        protected readonly CronFacade $cronFacade,
-        protected readonly MutexFactory $mutexFactory,
+        protected readonly CronControlFacade $cronControlFacade,
     ) {
         parent::__construct();
     }
@@ -47,23 +45,7 @@ EOF,
     #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $mutexFactory = $this->mutexFactory;
-        $cronInstanceNames = $this->cronFacade->getInstanceNames();
-
-        $mutexLockByCronInstance = array_map(
-            static fn ($cronInstanceName) => $mutexFactory->getPrefixedCronMutex($cronInstanceName),
-            $cronInstanceNames,
-        );
-
-        do {
-            $isAnyCronRunning = false;
-
-            foreach ($mutexLockByCronInstance as $mutexLock) {
-                if ($mutexLock->isLocked() === true) {
-                    $isAnyCronRunning = true;
-                }
-            }
-        } while ($isAnyCronRunning === true);
+        $this->cronControlFacade->waitUntilCronInstancesAreFinished();
 
         return Command::SUCCESS;
     }
