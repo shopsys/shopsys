@@ -185,6 +185,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
 
+        $productData->id = $product->getId();
         $productData->catnum = $product->getCatnum();
         $productData->partno = $product->getPartno();
         $productData->ean = $product->getEan();

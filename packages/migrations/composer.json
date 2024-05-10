@@ -27,7 +27,7 @@
         "doctrine/migrations": "^3.4.1",
         "doctrine/orm": "^2.5",
         "jdorn/sql-formatter": "^1.2",
-        "psr/log": "^1.0",
+        "psr/log": "^2.0",
         "symfony/config": "^5.4",
         "symfony/console": "^5.4",
         "symfony/dependency-injection": "^5.4",

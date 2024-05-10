@@ -1,0 +1,30 @@
+sonata_admin:
+    assets:
+        extra_javascripts:
+            - bundles/shopsysadmin/js/admin.js
+        extra_stylesheets:
+            - bundles/shopsysadmin/css/admin.css
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+    default_controller: Shopsys\Administration\Controller\CRUDController
+    options:
+        default_group: Orders
+    show_mosaic_button: false
+    title: 'Shopsys Platform admin'
+    title_logo: public/admin/images/logo.svg
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+    http_cache: false
+
+sonata_doctrine_orm_admin:
+    templates:
+        types:
+            list:
+                domain: '@ShopsysAdministration/domain.html.twig'
+
+sonata_form:
+    form_type: standard

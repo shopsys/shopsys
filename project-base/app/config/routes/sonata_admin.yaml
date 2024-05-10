@@ -1,0 +1,12 @@
+
+_sonata_admin:
+    prefix: /%admin_url%-new
+    resource: .
+    type: sonata_admin
+admin_area:
+    prefix: /%admin_url%-new
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+
+sonata_admin:
+    resource: "@ShopsysAdministrationBundle/Controller"
+    type: annotation

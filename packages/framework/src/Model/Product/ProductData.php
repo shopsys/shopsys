@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Shopsys\Administration\Component\Security\AdminIdentifierInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
-class ProductData
+class ProductData implements AdminIdentifierInterface
 {
+    public $id;
+
     /**
      * @var string[]|null[]
      */
@@ -222,5 +225,13 @@ class ProductData
         $this->shortDescriptionUsp5ByDomainId = [];
         $this->saleExclusion = [];
         $this->domainHidden = [];
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 }

@@ -40,6 +40,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
      */
     protected function fillFromAdministrator(AdministratorData $administratorData, Administrator $administrator)
     {
+        $administratorData->id = $administrator->getId();
         $administratorData->email = $administrator->getEmail();
         $administratorData->realName = $administrator->getRealName();
         $administratorData->username = $administrator->getUsername();
