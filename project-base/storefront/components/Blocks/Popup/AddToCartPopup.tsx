@@ -41,7 +41,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     };
 
     return (
-        <Popup key={key} hideCloseButton className="w-full sm:w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
+        <Popup key={key} hideCloseButton className="w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
             <div className="mb-4 flex w-full items-center md:mb-6">
                 <CheckmarkIcon className="mr-4 w-7 text-secondary" />
                 <div className="h2 text-primary">{t('Great choice! We have added your item to the cart')}</div>
@@ -99,15 +99,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
             )}
 
             <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
-                <Button className="mt-2 lg:w-auto lg:justify-start" onClick={() => updatePortalContent(null)}>
+                <Button className="mt-2 w-full md:w-auto" onClick={() => updatePortalContent(null)}>
                     {t('Back to shop')}
                 </Button>
 
-                <Button
-                    className="mt-2 w-full lg:w-auto lg:justify-start"
-                    tid={TIDs.popup_go_to_cart_button}
-                    onClick={navigateToCart}
-                >
+                <Button className="mt-2 w-full md:w-auto" tid={TIDs.popup_go_to_cart_button} onClick={navigateToCart}>
                     {t('To cart')}
                 </Button>
             </div>
