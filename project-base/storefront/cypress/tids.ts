@@ -65,4 +65,9 @@ export enum TIDs {
     order_confirmation_page_text_wrapper = 'order_confirmation_page_text_wrapper',
     header = 'header',
     banners_slider = 'banners_slider',
+    add_to_cart_popup_image = 'add_to_cart_popup_image',
+    cart_list_item_image = 'cart_list_item_image',
+    transport_and_payment_list_item_image = 'transport_and_payment_list_item_image',
+    order_summary_cart_item_image = 'order_summary_cart_item_image',
+    order_summary_transport_and_payment_image = 'order_summary_transport_and_payment_image',
 }

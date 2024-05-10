@@ -55,15 +55,20 @@ export const CartListItem: FC<CartListItemProps> = ({
             className="relative flex flex-row flex-wrap items-center gap-4 border-b border-greyLighter py-5 vl:flex-nowrap"
             tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
-            <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
+            <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0 gap-1">
                 <div className="flex h-12 w-24 shrink-0">
-                    <ExtendedNextLink className="relative h-full w-full" href={productSlug} type="product">
+                    <ExtendedNextLink
+                        className="relative h-full w-full"
+                        href={productSlug}
+                        tid={TIDs.cart_list_item_image}
+                        type="product"
+                    >
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="mx-auto max-h-full w-auto"
-                            height={56}
+                            className="mx-auto h-12 w-auto"
+                            height={48}
                             src={product.mainImage?.url}
-                            width={96}
+                            width={84}
                         />
                     </ExtendedNextLink>
                 </div>

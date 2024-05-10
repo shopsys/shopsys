@@ -49,10 +49,13 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
 
             <div className="mb-4 flex flex-col items-center rounded border border-greyLighter p-3 md:flex-row md:p-4">
                 {!!product.mainImage && (
-                    <div className="mb-4 flex w-24 items-center justify-center md:mb-0">
+                    <div
+                        className="mb-4 flex w-24 h-12 items-center justify-center md:mb-0"
+                        tid={TIDs.add_to_cart_popup_image}
+                    >
                         <Image
                             alt={product.mainImage.name || product.fullName}
-                            className="max-h-20 w-auto"
+                            className="max-h-12 w-auto"
                             height={48}
                             src={product.mainImage.url}
                             width={72}
