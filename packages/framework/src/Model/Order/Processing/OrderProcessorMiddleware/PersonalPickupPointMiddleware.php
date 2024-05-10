@@ -35,12 +35,12 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
     ): OrderProcessingData {
         $pickupPlaceIdentifier = $orderProcessingData->orderInput->findAdditionalData(static::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER);
 
-        if ($pickupPlaceIdentifier === null) {
+        $orderData = $orderProcessingData->orderData;
+        $transport = $orderProcessingData->orderInput->getTransport();
+
+        if ($pickupPlaceIdentifier === null || $transport === null) {
             return $orderProcessingStack->processNext($orderProcessingData);
         }
-
-        $orderData = $orderProcessingData->orderData;
-        $transport = $orderData->transport;
 
         if ($transport->isPersonalPickup()) {
             try {

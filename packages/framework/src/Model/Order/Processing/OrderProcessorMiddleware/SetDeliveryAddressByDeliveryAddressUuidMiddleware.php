@@ -31,11 +31,9 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddleware implements OrderProcesso
         OrderProcessingData $orderProcessingData,
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
-        $orderData = $orderProcessingData->orderData;
-
         $deliveryAddressUuid = $orderProcessingData->orderInput->findAdditionalData(static::DELIVERY_ADDRESS_UUID);
 
-        $customerUser = $orderData->customerUser;
+        $customerUser = $orderProcessingData->orderInput->getCustomerUser();
 
         if ($deliveryAddressUuid === null || $customerUser === null) {
             return $orderProcessingStack->processNext($orderProcessingData);
@@ -47,7 +45,7 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddleware implements OrderProcesso
         );
 
         if ($deliveryAddress !== null) {
-            $this->setOrderDataDeliveryFieldsByDeliveryAddress($deliveryAddress, $orderData);
+            $this->setOrderDataDeliveryFieldsByDeliveryAddress($deliveryAddress, $orderProcessingData->orderData);
         }
 
         return $orderProcessingStack->processNext($orderProcessingData);
