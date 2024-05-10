@@ -1,7 +1,6 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
-import 'cypress-set-device-pixel-ratio';
 import { products } from 'fixtures/demodata';
 
 Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?: number) => {

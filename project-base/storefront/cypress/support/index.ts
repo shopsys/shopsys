@@ -1,7 +1,6 @@
 /// <reference types="cypress-wait-for-stable-dom" />
 import './api';
 import 'cypress-real-events';
-import 'cypress-set-device-pixel-ratio';
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
 import { DEFAULT_APP_STORE } from 'fixtures/demodata';
@@ -136,8 +135,6 @@ export const takeSnapshotAndCompare = (
     if (!testName) {
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
-
-    cy.setDevicePixelRatio(1);
 
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
         cy.wait(optionsWithDefaultValues.wait / 5);

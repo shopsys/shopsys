@@ -161,12 +161,11 @@ it('should do something', function () {
 
 The `takeSnapshotAndCompare` helper method does several things.
 
-1. Change device pixel ratio (this is neccessary to standardize tests across different devices)
-2. Scroll to the bottom of the page and back up (this is done in order to load all images that are lazy-loaded before the actual screenshot, so it is not done for element screenshots)
-3. Black-out (cover) all elements which should not be part of the screenshot
-4. Take the screenshot
-5. Compare the screenshot to the base snapshot
-6. Return all blacked-out elements back (uncover them)
+1. Scroll to the bottom of the page and back up (this is done in order to load all images that are lazy-loaded before the actual screenshot, so it is not done for element screenshots)
+2. Black-out (cover) all elements which should not be part of the screenshot
+3. Take the screenshot
+4. Compare the screenshot to the base snapshot
+5. Return all blacked-out elements back (uncover them)
 
 ```ts
 export type Blackout = { tid: TIDs; zIndex?: number; shouldNotOffset?: boolean };
@@ -191,8 +190,6 @@ export const takeSnapshotAndCompare = (
     if (!testName) {
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
-
-    cy.setDevicePixelRatio(1);
 
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
         cy.wait(optionsWithDefaultValues.wait / 5);
