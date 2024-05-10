@@ -86,7 +86,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     </div>
                 ) : (
                     sliderItems.map((sliderItem, index) => (
-                        <BannersSliderItem key={index} isDesktop={isDesktop} item={sliderItem} />
+                        <BannersSliderItem key={index} isDesktop={isDesktop} isFirst={index === 0} item={sliderItem} />
                     ))
                 )}
             </div>
