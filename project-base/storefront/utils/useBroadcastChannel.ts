@@ -7,7 +7,7 @@ const tabId = uuid();
 
 const broadcastChannelSameTabConfig: Record<BroadcastChannelsType, boolean> = {
     refetchCart: false,
-    reloadPage: true,
+    reloadPage: false,
 };
 
 export const dispatchBroadcastChannel = (name: BroadcastChannelsType, data?: any) => {
