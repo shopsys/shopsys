@@ -960,3 +960,5 @@ During new project implementation phase it is important for a developer who is a
     -   If you do not, then you can completely omit these changes, as they are not necessary for any future implementation
 
 #### removed duplicated price display on product detail ([#3150](https://github.com/shopsys/shopsys/pull/3150))
+
+#### cookies store smarter init ([#3145](https://github.com/shopsys/shopsys/pull/3145))
