@@ -9,7 +9,6 @@ use ReflectionClass;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Admin\Country\CountryFormType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -22,9 +21,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
+use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 class CountryFormTypeTest extends TypeTestCase
 {
+    use SetTranslatorTrait;
+
     private Localization $localization;
 
     private Domain $domain;
@@ -114,9 +116,7 @@ class CountryFormTypeTest extends TypeTestCase
 
     protected function setUp(): void
     {
-        $translator = $this->createMock(Translator::class);
-        $translator->method('staticTrans')->willReturnArgument(0);
-        Translator::injectSelf($translator);
+        $this->setTranslator();
 
         $this->localization = $this->createMock(Localization::class);
         $this->localization->method('getLocalesOfAllDomains')->willReturn(['cs', 'en']);
