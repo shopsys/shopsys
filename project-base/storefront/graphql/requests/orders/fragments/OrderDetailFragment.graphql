@@ -30,7 +30,7 @@ fragment OrderDetailFragment on Order {
         __typename
         name
     }
-    differentDeliveryAddress
+    isDeliveryAddressDifferentFromBilling
     deliveryFirstName
     deliveryLastName
     deliveryCompanyName

@@ -57,12 +57,12 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 then: validateCompanyTaxNumber(t),
                 otherwise: Yup.string(),
             }),
-            differentDeliveryAddress: Yup.boolean(),
-            deliveryFirstName: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            isDeliveryAddressDifferentFromBilling: Yup.boolean(),
+            deliveryFirstName: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                         true,
@@ -70,11 +70,11 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 then: validateFirstName(t),
                 otherwise: Yup.string(),
             }),
-            deliveryLastName: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            deliveryLastName: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                         true,
@@ -83,11 +83,11 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 otherwise: Yup.string(),
             }),
             deliveryCompanyName: Yup.string(),
-            deliveryTelephone: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            deliveryTelephone: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                         true,
@@ -95,44 +95,44 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 then: validateTelephone(t),
                 otherwise: Yup.string(),
             }),
-            deliveryStreet: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            deliveryStreet: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                     ),
                 then: validateStreet(t),
                 otherwise: Yup.string(),
             }),
-            deliveryCity: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            deliveryCity: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                     ),
                 then: validateCity(t),
                 otherwise: Yup.string(),
             }),
-            deliveryPostcode: Yup.string().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            deliveryPostcode: Yup.string().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                     ),
                 then: validatePostcode(t),
                 otherwise: Yup.string(),
             }),
-            deliveryCountry: Yup.object().when(['differentDeliveryAddress', 'deliveryAddressUuid'], {
-                is: (differentDeliveryAddress: boolean, deliveryAddressUuid: string) =>
+            deliveryCountry: Yup.object().when(['isDeliveryAddressDifferentFromBilling', 'deliveryAddressUuid'], {
+                is: (isDeliveryAddressDifferentFromBilling: boolean, deliveryAddressUuid: string) =>
                     shouldValidateDeliveryAddressField(
                         isUserLoggedIn,
-                        differentDeliveryAddress,
+                        isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
                     ),
@@ -155,12 +155,12 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
 
 const shouldValidateDeliveryAddressField = (
     isUserLoggedIn: boolean,
-    differentDeliveryAddress: boolean,
+    isDeliveryAddressDifferentFromBilling: boolean,
     deliveryAddressUuid: string,
     isPickupPlaceSelected?: boolean,
     isRelevantForPickupPlace?: boolean,
 ) => {
-    if (!differentDeliveryAddress || !isRelevantForPickupPlace) {
+    if (!isDeliveryAddressDifferentFromBilling || !isRelevantForPickupPlace) {
         return false;
     }
 
@@ -196,11 +196,11 @@ export const useContactInformationFormMeta = (
     const { pickupPlace } = useCurrentCart();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
 
-    const differentDeliveryAddressFieldName = 'differentDeliveryAddress' as const;
+    const isDeliveryAddressDifferentFromBillingFieldName = 'isDeliveryAddressDifferentFromBilling' as const;
     const customerFieldName = 'customer' as const;
 
-    const [differentDeliveryAddressValue, customerValue] = useWatch({
-        name: [differentDeliveryAddressFieldName, customerFieldName],
+    const [isDeliveryAddressDifferentFromBillingValue, customerValue] = useWatch({
+        name: [isDeliveryAddressDifferentFromBillingFieldName, customerFieldName],
         control: formProviderMethods.control,
     });
 
@@ -278,50 +278,62 @@ export const useContactInformationFormMeta = (
                     label: t('Country'),
                     errorMessage: isEmailValid ? (errors.country as FieldError | undefined)?.message : undefined,
                 },
-                [differentDeliveryAddressFieldName]: {
-                    name: differentDeliveryAddressFieldName,
+                [isDeliveryAddressDifferentFromBillingFieldName]: {
+                    name: isDeliveryAddressDifferentFromBillingFieldName,
                     label: pickupPlace ? t('Enter the delivery information') : t('Enter the delivery address'),
-                    errorMessage: isEmailValid ? errors.differentDeliveryAddress?.message : undefined,
+                    errorMessage: isEmailValid ? errors.isDeliveryAddressDifferentFromBilling?.message : undefined,
                 },
                 deliveryFirstName: {
                     name: 'deliveryFirstName' as const,
                     label: t('First name'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryFirstName?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
+                        ? errors.deliveryFirstName?.message
+                        : undefined,
                 },
                 deliveryLastName: {
                     name: 'deliveryLastName' as const,
                     label: t('Last name'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryLastName?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
+                        ? errors.deliveryLastName?.message
+                        : undefined,
                 },
                 deliveryCompanyName: {
                     name: 'deliveryCompanyName' as const,
                     label: t('Company'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryCompanyName?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
+                        ? errors.deliveryCompanyName?.message
+                        : undefined,
                 },
                 deliveryTelephone: {
                     name: 'deliveryTelephone' as const,
                     label: t('Phone'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryTelephone?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
+                        ? errors.deliveryTelephone?.message
+                        : undefined,
                 },
                 deliveryStreet: {
                     name: 'deliveryStreet' as const,
                     label: t('Street and house no.'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryStreet?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
+                        ? errors.deliveryStreet?.message
+                        : undefined,
                 },
                 deliveryCity: {
                     name: 'deliveryCity' as const,
                     label: t('City'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryCity?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue ? errors.deliveryCity?.message : undefined,
                 },
                 deliveryPostcode: {
                     name: 'deliveryPostcode' as const,
                     label: t('Postcode'),
-                    errorMessage: differentDeliveryAddressValue ? errors.deliveryPostcode?.message : undefined,
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
+                        ? errors.deliveryPostcode?.message
+                        : undefined,
                 },
                 deliveryCountry: {
                     name: 'deliveryCountry' as const,
                     label: t('Country'),
-                    errorMessage: differentDeliveryAddressValue
+                    errorMessage: isDeliveryAddressDifferentFromBillingValue
                         ? (errors.deliveryCountry as FieldError | undefined)?.message
                         : undefined,
                 },
@@ -358,7 +370,7 @@ export const useContactInformationFormMeta = (
             errors.street?.message,
             errors.city?.message,
             errors.postcode?.message,
-            errors.differentDeliveryAddress?.message,
+            errors.isDeliveryAddressDifferentFromBilling?.message,
             errors.deliveryFirstName?.message,
             errors.deliveryLastName?.message,
             errors.deliveryCompanyName?.message,
@@ -374,7 +386,7 @@ export const useContactInformationFormMeta = (
             errors.newsletterSubscription?.message,
             pickupPlace,
             customerValue,
-            differentDeliveryAddressValue,
+            isDeliveryAddressDifferentFromBillingValue,
             isEmailValid,
             t,
         ],

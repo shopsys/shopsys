@@ -1375,7 +1375,7 @@ export type TypeOrder = {
   /** Contact telephone number for delivery */
   deliveryTelephone: Maybe<Scalars['String']['output']>;
   /** Indicates whether the billing address is other than a delivery address */
-  differentDeliveryAddress: Scalars['Boolean']['output'];
+  isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
   /** The customer's email address */
   email: Scalars['String']['output'];
   /** The customer's first name */
@@ -1460,24 +1460,24 @@ export type TypeOrderInput = {
   country: Scalars['String']['input'];
   /** Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.) */
   deliveryAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
-  /** City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
+  /** City name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryCity: InputMaybe<Scalars['String']['input']>;
   /** Company name for delivery */
   deliveryCompanyName: InputMaybe<Scalars['String']['input']>;
-  /** Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
+  /** Country code in ISO 3166-1 alpha-2 for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryCountry: InputMaybe<Scalars['String']['input']>;
-  /** First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
+  /** First name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryFirstName: InputMaybe<Scalars['String']['input']>;
-  /** Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
+  /** Last name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryLastName: InputMaybe<Scalars['String']['input']>;
-  /** Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
+  /** Zip code for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryPostcode: InputMaybe<Scalars['String']['input']>;
-  /** Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null) */
+  /** Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null) */
   deliveryStreet: InputMaybe<Scalars['String']['input']>;
   /** Contact telephone number for delivery */
   deliveryTelephone: InputMaybe<Scalars['String']['input']>;
   /** Determines whether to deliver products to a different address than the billing one */
-  differentDeliveryAddress: Scalars['Boolean']['input'];
+  isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['input'];
   /** The customer's email address */
   email: Scalars['String']['input'];
   /** The customer's first name */

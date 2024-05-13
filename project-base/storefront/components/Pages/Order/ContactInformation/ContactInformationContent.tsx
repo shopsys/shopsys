@@ -69,15 +69,15 @@ export const ContactInformationWrapper: FC = () => {
         setOrderCreating(true);
 
         let deliveryInfo = {
-            deliveryFirstName: formValues.differentDeliveryAddress ? formValues.deliveryFirstName : '',
-            deliveryLastName: formValues.differentDeliveryAddress ? formValues.deliveryLastName : '',
-            deliveryCompanyName: formValues.differentDeliveryAddress ? formValues.deliveryCompanyName : '',
-            deliveryTelephone: formValues.differentDeliveryAddress ? formValues.deliveryTelephone : '',
-            deliveryStreet: formValues.differentDeliveryAddress ? formValues.deliveryStreet : '',
-            deliveryCity: formValues.differentDeliveryAddress ? formValues.deliveryCity : '',
-            deliveryPostcode: formValues.differentDeliveryAddress ? formValues.deliveryPostcode : '',
-            deliveryCountry: formValues.differentDeliveryAddress ? formValues.deliveryCountry.value : '',
-            differentDeliveryAddress: formValues.differentDeliveryAddress,
+            deliveryFirstName: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryFirstName : '',
+            deliveryLastName: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryLastName : '',
+            deliveryCompanyName: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryCompanyName : '',
+            deliveryTelephone: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryTelephone : '',
+            deliveryStreet: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryStreet : '',
+            deliveryCity: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryCity : '',
+            deliveryPostcode: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryPostcode : '',
+            deliveryCountry: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryCountry.value : '',
+            isDeliveryAddressDifferentFromBilling: formValues.isDeliveryAddressDifferentFromBilling,
         };
         const deliveryAddress = user?.deliveryAddresses.find(
             (address) => address.uuid === formValues.deliveryAddressUuid,
@@ -85,21 +85,21 @@ export const ContactInformationWrapper: FC = () => {
 
         if (currentCart.pickupPlace) {
             deliveryInfo = {
-                deliveryFirstName: formValues.differentDeliveryAddress
+                deliveryFirstName: formValues.isDeliveryAddressDifferentFromBilling
                     ? formValues.deliveryFirstName
                     : formValues.firstName,
-                deliveryLastName: formValues.differentDeliveryAddress
+                deliveryLastName: formValues.isDeliveryAddressDifferentFromBilling
                     ? formValues.deliveryLastName
                     : formValues.lastName,
                 deliveryCompanyName: '',
-                deliveryTelephone: formValues.differentDeliveryAddress
+                deliveryTelephone: formValues.isDeliveryAddressDifferentFromBilling
                     ? formValues.deliveryTelephone
                     : formValues.telephone,
                 deliveryStreet: currentCart.pickupPlace.street,
                 deliveryCity: currentCart.pickupPlace.city,
                 deliveryPostcode: currentCart.pickupPlace.postcode,
                 deliveryCountry: currentCart.pickupPlace.country.code,
-                differentDeliveryAddress: true,
+                isDeliveryAddressDifferentFromBilling: true,
             };
         } else if (deliveryAddress) {
             const selectedCountryOption = countriesAsSelectOptions.find(
@@ -116,7 +116,7 @@ export const ContactInformationWrapper: FC = () => {
                     deliveryStreet: deliveryAddress.street,
                     deliveryCity: deliveryAddress.city,
                     deliveryPostcode: deliveryAddress.postcode,
-                    differentDeliveryAddress: true,
+                    isDeliveryAddressDifferentFromBilling: true,
                 };
             }
         }

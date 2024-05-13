@@ -22,7 +22,7 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
 
 class CreateOrderMutation extends AbstractMutation
 {
-    public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS_WITHOUT_PRESELECTED = 'differentDeliveryAddressWithoutPreselected';
+    public const VALIDATION_GROUP_IS_DELIVERY_ADDRESS_DIFFERENT_FROM_BILLING_WITHOUT_PRESELECTED = 'isDeliveryAddressDifferentFromBillingWithoutPreselected';
     public const VALIDATION_GROUP_ON_COMPANY_BEHALF = 'onCompanyBehalf';
 
     /**
@@ -112,8 +112,8 @@ class CreateOrderMutation extends AbstractMutation
             $validationGroups[] = self::VALIDATION_GROUP_ON_COMPANY_BEHALF;
         }
 
-        if ($input['differentDeliveryAddress'] === true && $input['deliveryAddressUuid'] === null) {
-            $validationGroups[] = self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS_WITHOUT_PRESELECTED;
+        if ($input['isDeliveryAddressDifferentFromBilling'] === true && $input['deliveryAddressUuid'] === null) {
+            $validationGroups[] = self::VALIDATION_GROUP_IS_DELIVERY_ADDRESS_DIFFERENT_FROM_BILLING_WITHOUT_PRESELECTED;
         }
 
         return $validationGroups;

@@ -5150,7 +5150,7 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>differentDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -9028,7 +9028,7 @@ Delivery address identifier. Can be used by logged users only. If set, it takes 
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
+City name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9046,7 +9046,7 @@ Company name for delivery
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
+Country code in ISO 3166-1 alpha-2 for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9055,7 +9055,7 @@ Country code in ISO 3166-1 alpha-2 for delivery (required when differentDelivery
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
+First name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9064,7 +9064,7 @@ First name of the contact person for delivery (required when differentDeliveryAd
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
+Last name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9073,7 +9073,7 @@ Last name of the contact person for delivery (required when differentDeliveryAdd
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
+Zip code for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9082,7 +9082,7 @@ Zip code for delivery (required when differentDeliveryAddress is true and delive
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)
+Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)
 
 </td>
 </tr>
@@ -9096,7 +9096,7 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>differentDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 

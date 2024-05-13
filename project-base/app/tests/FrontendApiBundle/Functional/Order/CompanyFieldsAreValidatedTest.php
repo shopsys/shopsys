@@ -64,7 +64,7 @@ class CompanyFieldsAreValidatedTest extends GraphQlTestCase
                         postcode: "12345"
                         country: "CZ"
                         note:"Thank You"
-                        differentDeliveryAddress: true
+                        isDeliveryAddressDifferentFromBilling: true
                         deliveryFirstName: "deliveryFirstName"
                         deliveryLastName: "deliveryLastName"
                         deliveryStreet: "deliveryStreet"
@@ -115,7 +115,7 @@ class CompanyFieldsAreValidatedTest extends GraphQlTestCase
                         country {
                             code
                         }
-                        differentDeliveryAddress
+                        isDeliveryAddressDifferentFromBilling
                         deliveryFirstName
                         deliveryLastName
                         deliveryCompanyName

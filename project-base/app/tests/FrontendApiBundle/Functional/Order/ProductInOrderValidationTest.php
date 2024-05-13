@@ -117,7 +117,7 @@ class ProductInOrderValidationTest extends GraphQlTestCase
                             city: "Springfield"
                             postcode: "12345"
                             country: "CZ"
-                            differentDeliveryAddress: false
+                            isDeliveryAddressDifferentFromBilling: false
                         }
                     ) {
                         order {

@@ -28,7 +28,7 @@ describe('Create order with delivery address tests', () => {
     });
 
     it('should keep filled delivery address after page refresh', function () {
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -58,7 +58,7 @@ describe('Create order with delivery address tests', () => {
     });
 
     it('should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -68,9 +68,9 @@ describe('Create order with delivery address tests', () => {
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form after checking again', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -109,7 +109,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -148,7 +148,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -158,9 +158,9 @@ describe('Delivery address in order tests (logged-in user)', () => {
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form after checking again', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -184,7 +184,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'with default address', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -218,7 +218,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'with default address', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -271,7 +271,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
     });
 
     it('should prefill delivery address from selected pickup point and keep delivery contact after refresh', function () {
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -299,7 +299,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
     });
 
     it('should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', function () {
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -309,9 +309,9 @@ describe('Delivery address in order tests (with pickup point)', () => {
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress);
         loseFocus();
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'after checking again', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -346,7 +346,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -382,7 +382,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -392,9 +392,9 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress);
         loseFocus();
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'after checking again', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },

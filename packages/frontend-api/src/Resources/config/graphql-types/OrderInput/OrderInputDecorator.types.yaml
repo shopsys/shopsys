@@ -131,7 +131,7 @@ OrderInputDecorator:
                             message: "Please choose country"
                     -   \Shopsys\FrameworkBundle\Form\Constraints\Country: ~
 
-            differentDeliveryAddress:
+            isDeliveryAddressDifferentFromBilling:
                 type: "Boolean!"
                 description: "Determines whether to deliver products to a different address than the billing one"
             deliveryAddressUuid:
@@ -140,21 +140,21 @@ OrderInputDecorator:
                 defaultValue: null
             deliveryFirstName:
                 type: "String"
-                description: "First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
+                description: "First name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter first name of contact person"
-                            groups: "differentDeliveryAddressWithoutPreselected"
+                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "First name of contact person cannot be longer than {{ limit }} characters"
             deliveryLastName:
                 type: "String"
-                description: "Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
+                description: "Last name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter last name of contact person"
-                            groups: "differentDeliveryAddressWithoutPreselected"
+                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "Last name of contact person cannot be longer than {{ limit }} characters"
@@ -174,41 +174,41 @@ OrderInputDecorator:
                             maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
             deliveryStreet:
                 type: "String"
-                description: "Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
+                description: "Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter street"
-                            groups: "differentDeliveryAddressWithoutPreselected"
+                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "Street name cannot be longer than {{ limit }} characters"
             deliveryCity:
                 type: "String"
-                description: "City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
+                description: "City name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter city"
-                            groups: "differentDeliveryAddressWithoutPreselected"
+                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
                     -   Length:
                             max: 100
                             maxMessage: "City name cannot be longer than {{ limit }} characters"
             deliveryPostcode:
                 type: "String"
-                description: "Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
+                description: "Zip code for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please enter zip code"
-                            groups: "differentDeliveryAddressWithoutPreselected"
+                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
                     -   Length:
                             max: 30
                             maxMessage: "Zip code cannot be longer than {{ limit }} characters"
             deliveryCountry:
                 type: "String"
-                description: "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
+                description: "Country code in ISO 3166-1 alpha-2 for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
                 validation:
                     -   NotBlank:
                             message: "Please choose country"
-                            groups: "differentDeliveryAddressWithoutPreselected"
+                            groups: "isDeliveryAddressDifferentFromBillingWithoutPreselected"
                     -   Shopsys\FrameworkBundle\Form\Constraints\Country:
 
             note:

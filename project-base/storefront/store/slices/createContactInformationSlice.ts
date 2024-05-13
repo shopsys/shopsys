@@ -15,7 +15,7 @@ export type ContactInformation = {
     companyName: string;
     companyNumber: string;
     companyTaxNumber: string;
-    differentDeliveryAddress: boolean;
+    isDeliveryAddressDifferentFromBilling: boolean;
     deliveryFirstName: string;
     deliveryLastName: string;
     deliveryCompanyName: string;
@@ -43,7 +43,7 @@ const defaultContactInformation: ContactInformation = {
     companyName: '',
     companyNumber: '',
     companyTaxNumber: '',
-    differentDeliveryAddress: false,
+    isDeliveryAddressDifferentFromBilling: false,
     deliveryFirstName: '',
     deliveryLastName: '',
     deliveryCompanyName: '',

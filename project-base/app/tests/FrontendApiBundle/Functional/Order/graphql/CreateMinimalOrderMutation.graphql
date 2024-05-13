@@ -9,7 +9,7 @@ mutation CreateMinimalOrderMutation(
     $postcode: String!,
     $country: String!,
     $onCompanyBehalf: Boolean!,
-    $differentDeliveryAddress: Boolean!,
+    $isDeliveryAddressDifferentFromBilling: Boolean!,
     $deliveryAddressUuid: Uuid,
 ) {
     CreateOrder(
@@ -24,7 +24,7 @@ mutation CreateMinimalOrderMutation(
             postcode: $postcode
             country: $country
             onCompanyBehalf: $onCompanyBehalf
-            differentDeliveryAddress: $differentDeliveryAddress
+            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
             deliveryAddressUuid: $deliveryAddressUuid
         }
     ) {
@@ -70,7 +70,7 @@ mutation CreateMinimalOrderMutation(
             country {
                 code
             }
-            differentDeliveryAddress
+            isDeliveryAddressDifferentFromBilling
             deliveryFirstName
             deliveryLastName
             deliveryCompanyName

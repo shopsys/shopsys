@@ -16,7 +16,7 @@ export const generateCreateOrderInput = (email?: string): TypeCreateOrderMutatio
     city: 'Wondertown',
     postcode: '14234',
     country: 'CZ',
-    differentDeliveryAddress: false,
+    isDeliveryAddressDifferentFromBilling: false,
     deliveryFirstName: null,
     deliveryLastName: null,
     deliveryCompanyName: null,

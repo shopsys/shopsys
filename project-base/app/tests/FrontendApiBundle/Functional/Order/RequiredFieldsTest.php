@@ -22,7 +22,7 @@ class RequiredFieldsTest extends GraphQlTestCase
             6 => 'Field OrderInput.city of required type String! was not provided.',
             7 => 'Field OrderInput.postcode of required type String! was not provided.',
             8 => 'Field OrderInput.country of required type String! was not provided.',
-            9 => 'Field OrderInput.differentDeliveryAddress of required type Boolean! was not provided.',
+            9 => 'Field OrderInput.isDeliveryAddressDifferentFromBilling of required type Boolean! was not provided.',
             10 => 'Field OrderInput.payment of required type PaymentInput! was not provided.',
             11 => 'Field OrderInput.transport of required type TransportInput! was not provided.',
             12 => 'Field OrderInput.products of required type [OrderProductInput!]! was not provided.',
