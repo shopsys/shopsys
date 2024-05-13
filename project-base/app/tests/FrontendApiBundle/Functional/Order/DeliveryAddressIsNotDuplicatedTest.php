@@ -26,7 +26,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
             'city' => 'Springfield',
             'postcode' => '12345',
             'country' => 'CZ',
-            'isDeliveryAddressDifferentFromBilling' => true,
+            'differentDeliveryAddress' => true,
             'deliveryFirstName' => 'deliveryFirstName',
             'deliveryLastName' => 'deliveryLastName',
             'deliveryCompanyName' => null,

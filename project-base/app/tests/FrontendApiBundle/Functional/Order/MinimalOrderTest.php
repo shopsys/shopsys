@@ -43,7 +43,7 @@ class MinimalOrderTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'isDeliveryAddressDifferentFromBilling' => false,
+                'differentDeliveryAddress' => false,
                 'deliveryFirstName' => 'firstName',
                 'deliveryLastName' => 'lastName',
                 'deliveryCompanyName' => null,
@@ -80,7 +80,7 @@ class MinimalOrderTest extends GraphQlTestCase
             'city' => 'Springfield',
             'postcode' => '12345',
             'country' => 'CZ',
-            'isDeliveryAddressDifferentFromBilling' => false,
+            'differentDeliveryAddress' => false,
         ]);
 
         $this->assertSame($expected, $this->getResponseDataForGraphQlType($response, 'CreateOrder'));

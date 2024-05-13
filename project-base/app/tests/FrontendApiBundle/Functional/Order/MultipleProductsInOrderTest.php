@@ -47,7 +47,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                         'country' => [
                             'code' => 'CZ',
                         ],
-                        'isDeliveryAddressDifferentFromBilling' => true,
+                        'differentDeliveryAddress' => true,
                         'deliveryFirstName' => 'deliveryFirstName',
                         'deliveryLastName' => 'deliveryLastName',
                         'deliveryCompanyName' => null,
@@ -141,7 +141,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                             postcode: "12345"
                             country: "CZ"
                             note:"Thank You"
-                            isDeliveryAddressDifferentFromBilling: true
+                            differentDeliveryAddress: true
                             deliveryFirstName: "deliveryFirstName"
                             deliveryLastName: "deliveryLastName"
                             deliveryStreet: "deliveryStreet"
@@ -192,7 +192,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                             country {
                                 code
                             }
-                            isDeliveryAddressDifferentFromBilling
+                            differentDeliveryAddress
                             deliveryFirstName
                             deliveryLastName
                             deliveryCompanyName

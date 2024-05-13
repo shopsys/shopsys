@@ -68,7 +68,7 @@ class DynamicFieldsInOrderTest extends GraphQlTestCase
                             postcode: "12345"
                             country: "CZ"
                             note:"Thank You"
-                            isDeliveryAddressDifferentFromBilling: true
+                            differentDeliveryAddress: true
                             deliveryFirstName: "deliveryFirstName"
                             deliveryLastName: "deliveryLastName"
                             deliveryStreet: "deliveryStreet"

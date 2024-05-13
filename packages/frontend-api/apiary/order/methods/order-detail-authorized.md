@@ -45,7 +45,7 @@ Returns order filtered using UUID and access token
                     city
                     postcode
                     country
-                    IsDeliveryAddressDifferentFromBilling
+                    differentDeliveryAddress
                     note
                 }
             }
@@ -90,7 +90,7 @@ Returns order filtered using UUID and access token
                     "city": "Ostrava",
                     "postcode": "71300",
                     "country": "CZ",
-                    "IsDeliveryAddressDifferentFromBilling": false,
+                    "differentDeliveryAddress": false,
                     "note": null
                 }
             }

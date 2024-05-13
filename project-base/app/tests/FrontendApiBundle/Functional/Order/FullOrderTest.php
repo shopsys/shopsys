@@ -43,7 +43,7 @@ class FullOrderTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'isDeliveryAddressDifferentFromBilling' => true,
+                'differentDeliveryAddress' => true,
                 'deliveryFirstName' => 'deliveryFirstName',
                 'deliveryLastName' => 'deliveryLastName',
                 'deliveryCompanyName' => null,
@@ -97,7 +97,7 @@ class FullOrderTest extends GraphQlTestCase
             'postcode' => '12345',
             'country' => 'CZ',
             'note' => 'Thank You',
-            'isDeliveryAddressDifferentFromBilling' => true,
+            'differentDeliveryAddress' => true,
             'deliveryFirstName' => 'deliveryFirstName',
             'deliveryLastName' => 'deliveryLastName',
             'deliveryStreet' => 'deliveryStreet',

@@ -246,7 +246,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
                                 city: "Springfield"
                                 postcode: "12345"
                                 country: "CZ"
-                                isDeliveryAddressDifferentFromBilling: false
+                                differentDeliveryAddress: false
                             }
                         ) {
                             order {

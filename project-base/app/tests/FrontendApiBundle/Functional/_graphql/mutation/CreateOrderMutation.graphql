@@ -12,7 +12,7 @@ mutation CreateOrder(
     $companyName: String
     $companyNumber: String
     $companyTaxNumber: String
-    $isDeliveryAddressDifferentFromBilling: Boolean!
+    $differentDeliveryAddress: Boolean!
     $deliveryAddressUuid: Uuid
     $deliveryFirstName: String
     $deliveryLastName: String
@@ -40,7 +40,7 @@ mutation CreateOrder(
             city: $city
             postcode: $postcode
             country: $country
-            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
+            differentDeliveryAddress: $differentDeliveryAddress
             deliveryAddressUuid: $deliveryAddressUuid
             deliveryFirstName: $deliveryFirstName
             deliveryLastName: $deliveryLastName
@@ -99,7 +99,7 @@ mutation CreateOrder(
             country {
                 code
             }
-            isDeliveryAddressDifferentFromBilling
+            differentDeliveryAddress
             deliveryFirstName
             deliveryLastName
             deliveryCompanyName

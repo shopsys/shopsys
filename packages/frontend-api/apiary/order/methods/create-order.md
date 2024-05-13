@@ -24,15 +24,15 @@ Creates complete order with products and addresses
         - city (required) - Billing address city name (will be on the tax invoice)
         - postcode (required) - Billing address zip code (will be on the tax invoice)
         - country (required) - Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
-        - IsDeliveryAddressDifferentFromBilling (boolean, required) - Determines whether to deliver products to a different address than the billing one
-        - deliveryFirstName - First name of the contact person for delivery (required when IsDeliveryAddressDifferentFromBilling is true)
-        - deliveryLastName - Last name of the contact person for delivery (required when IsDeliveryAddressDifferentFromBilling is true)
+        - differentDeliveryAddress (boolean, required) - Determines whether to deliver products to a different address than the billing one
+        - deliveryFirstName - First name of the contact person for delivery (required when differentDeliveryAddress is true)
+        - deliveryLastName - Last name of the contact person for delivery (required when differentDeliveryAddress is true)
         - deliveryCompanyName - Company name for delivery
         - deliveryTelephone - Contact telephone number for delivery
-        - deliveryStreet - Street name for delivery (required when IsDeliveryAddressDifferentFromBilling is true)
-        - deliveryCity - City name for delivery (required when IsDeliveryAddressDifferentFromBilling is true)
-        - deliveryPostcode - Zip code for delivery (required when IsDeliveryAddressDifferentFromBilling is true)
-        - deliveryCountry - Country code in ISO 3166-1 alpha-2 for delivery (required when IsDeliveryAddressDifferentFromBilling is true)
+        - deliveryStreet - Street name for delivery (required when differentDeliveryAddress is true)
+        - deliveryCity - City name for delivery (required when differentDeliveryAddress is true)
+        - deliveryPostcode - Zip code for delivery (required when differentDeliveryAddress is true)
+        - deliveryCountry - Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)
         - note - Other information related to the order
         - payment (InputPayment, required) - Payment method applied to the order
         - transport (InputTransport, required) - Transport method applied to the order
@@ -73,7 +73,7 @@ Creates complete order with products and addresses
                                 vatAmount: "0.84"
                             }
                         }
-                        IsDeliveryAddressDifferentFromBilling: true
+                        differentDeliveryAddress: true
                         deliveryFirstName: "deliveryFirstName"
                         deliveryLastName: "deliveryLastName"
                         deliveryStreet: "deliveryStreet"
@@ -132,7 +132,7 @@ Creates complete order with products and addresses
                     city
                     postcode
                     country
-                    IsDeliveryAddressDifferentFromBilling
+                    differentDeliveryAddress
                     deliveryFirstName
                     deliveryLastName
                     deliveryCompanyName
@@ -223,7 +223,7 @@ Creates complete order with products and addresses
                     "city": "Springfield",
                     "postcode": "12345",
                     "country": "CZ",
-                    "IsDeliveryAddressDifferentFromBilling": true,
+                    "differentDeliveryAddress": true,
                     "deliveryFirstName": "deliveryFirstName",
                     "deliveryLastName": "deliveryLastName",
                     "deliveryCompanyName": null,

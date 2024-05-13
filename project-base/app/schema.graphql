@@ -1047,7 +1047,7 @@ type Order {
   "Contact telephone number for delivery"
   deliveryTelephone: String
   "Indicates whether the billing address is other than a delivery address"
-  isDeliveryAddressDifferentFromBilling: Boolean!
+  differentDeliveryAddress: Boolean!
   "The customer's email address"
   email: String!
   "The customer's first name"
@@ -1130,24 +1130,24 @@ input OrderInput {
   country: String!
   "Delivery address identifier. Can be used by logged users only. If set, it takes precedence over the individual delivery address fields (deliveryFirstName, deliveryLastName, etc.)"
   deliveryAddressUuid: Uuid = null
-  "City name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
+  "City name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryCity: String
   "Company name for delivery"
   deliveryCompanyName: String
-  "Country code in ISO 3166-1 alpha-2 for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
+  "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryCountry: String
-  "First name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
+  "First name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryFirstName: String
-  "Last name of the contact person for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
+  "Last name of the contact person for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryLastName: String
-  "Zip code for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
+  "Zip code for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryPostcode: String
-  "Street name for delivery (required when isDeliveryAddressDifferentFromBilling is true and deliveryAddressUuid is null)"
+  "Street name for delivery (required when differentDeliveryAddress is true and deliveryAddressUuid is null)"
   deliveryStreet: String
   "Contact telephone number for delivery"
   deliveryTelephone: String
   "Determines whether to deliver products to a different address than the billing one"
-  isDeliveryAddressDifferentFromBilling: Boolean!
+  differentDeliveryAddress: Boolean!
   "The customer's email address"
   email: String!
   "The customer's first name"

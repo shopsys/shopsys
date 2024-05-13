@@ -24,7 +24,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         'onCompanyBehalf' => false,
     ];
 
-    public function testValidationErrorWhenIsDeliveryAddressDifferentFromBillingIsTrueAndFieldsAreMissing(): void
+    public function testValidationErrorWhenDifferentDeliveryAddressIsTrueAndFieldsAreMissing(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedValidations = [
@@ -70,20 +70,20 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
-            'isDeliveryAddressDifferentFromBilling' => true,
+            'differentDeliveryAddress' => true,
         ]);
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
 
         $this->assertEquals($expectedValidations, $this->getErrorsExtensionValidationFromResponse($response));
     }
 
-    public function testDeliveryFieldsAreNotValidatedWhenIsDeliveryAddressDifferentFromBillingIsFalse(): void
+    public function testDeliveryFieldsAreNotValidatedWhenDifferentDeliveryAddressIsFalse(): void
     {
         $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
-            'isDeliveryAddressDifferentFromBilling' => false,
+            'differentDeliveryAddress' => false,
         ]);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, 'CreateOrder');
     }
@@ -94,7 +94,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
-            'isDeliveryAddressDifferentFromBilling' => true,
+            'differentDeliveryAddress' => true,
             'deliveryAddressUuid' => '00000000-0000-0000-0000-000000000000',
         ]);
 

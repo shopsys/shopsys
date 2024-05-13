@@ -161,7 +161,7 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
             'city' => 'Springfield',
             'postcode' => '12345',
             'country' => 'CZ',
-            'isDeliveryAddressDifferentFromBilling' => false,
+            'differentDeliveryAddress' => false,
         ]);
 
         $orderUuid = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['order']['uuid'];
