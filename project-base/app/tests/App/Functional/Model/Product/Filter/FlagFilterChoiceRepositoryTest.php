@@ -49,7 +49,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
 
         $flagFilterChoices = $this->getChoicesForSearchText('phone');
 
-        $this->assertCount(2, $flagFilterChoices);
+        $this->assertCount(3, $flagFilterChoices);
 
         $ids = array_map(
             static function (Flag $flag) {
@@ -58,7 +58,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             $flagFilterChoices,
         );
 
-        $this->assertContains(2, $ids);
+        $this->assertContains(3, $ids);
     }
 
     public function testGetFlagFilterChoicesForBook(): void

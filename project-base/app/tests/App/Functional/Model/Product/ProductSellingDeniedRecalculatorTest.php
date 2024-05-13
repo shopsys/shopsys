@@ -128,11 +128,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
         /** @var \App\Model\Product\ProductData $variant1ProductData */
         $variant1ProductData = $this->productDataFactory->createFromProduct($variant1);
-        $variant1ProductData->sellingDenied = false;
-
-        foreach ($variant1ProductData->productStockData as $productStockData) {
-            $productStockData->productQuantity = 0;
-        }
+        $variant1ProductData->sellingDenied = true;
 
         $this->productFacade->edit($variant1->getId(), $variant1ProductData);
 
