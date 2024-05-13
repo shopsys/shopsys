@@ -1,7 +1,7 @@
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
-import { GtmProvider } from 'gtm/context/GtmProvider';
 import { LazyMotion } from 'framer-motion';
+import { GtmProvider } from 'gtm/context/GtmProvider';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
 import { AppProps as NextAppProps } from 'next/app';
@@ -63,9 +63,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
                         <GtmProvider>
-                        <LazyMotion features={framerMotionPlugins}>
-                            <AppPageContent Component={Component} pageProps={pageProps} />
-                        </LazyMotion>
+                            <LazyMotion features={framerMotionPlugins}>
+                                <AppPageContent Component={Component} pageProps={pageProps} />
+                            </LazyMotion>
                         </GtmProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>

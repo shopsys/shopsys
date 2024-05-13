@@ -1432,3 +1432,10 @@ On Chrome there was issue when clicking on next/previous button while slider is 
 
 -   privacy policy checbox is required and needs to be checked in order to submit the contact form
 -   the checkbox have replaced the text agreement of the privacy policy by clicking on the submit button
+
+#### restyle orders page ([#3123](https://github.com/shopsys/shopsys/pull/3123))
+
+-   Introduced new CustomerLayout for user section
+-   Introduced new user navigation for user section
+-   Restyle orders page according to the new design
+-   Implement a LinkButton, a link that looks like a button and has props from the Button component, but uses an anchor tag inside
