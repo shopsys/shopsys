@@ -68,7 +68,7 @@ OrderDecorator:
                 type: "String!"
                 description: "Billing address country code"
 
-            differentDeliveryAddress:
+            IsDeliveryAddressDifferentFromBilling:
                 type: "Boolean!"
                 description: "Indicates whether the billing address is other than a delivery address"
 

@@ -13,7 +13,7 @@ mutation CreateFullOrder(
     $postcode: String!,
     $country: String!,
     $note: String!,
-    $differentDeliveryAddress: Boolean!,
+    $isDeliveryAddressDifferentFromBilling: Boolean!,
     $deliveryFirstName: String!,
     $deliveryLastName: String!,
     $deliveryStreet: String!,
@@ -38,7 +38,7 @@ mutation CreateFullOrder(
             postcode: $postcode
             country: $country
             note: $note
-            differentDeliveryAddress: $differentDeliveryAddress
+            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
             deliveryFirstName: $deliveryFirstName
             deliveryLastName: $deliveryLastName
             deliveryStreet: $deliveryStreet
@@ -90,7 +90,7 @@ mutation CreateFullOrder(
             country {
                 code
             }
-            differentDeliveryAddress
+            isDeliveryAddressDifferentFromBilling
             deliveryFirstName
             deliveryLastName
             deliveryCompanyName

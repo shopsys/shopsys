@@ -35,7 +35,7 @@ Returns validation error
                             vatAmount: "0.84"
                         }
                     }
-                    differentDeliveryAddress: true
+                    IsDeliveryAddressDifferentFromBilling: true
                     deliveryFirstName: "deliveryFirstName"
                     deliveryLastName: "deliveryLastName"
                     deliveryStreet: "deliveryStreet"
@@ -94,7 +94,7 @@ Returns validation error
                 city
                 postcode
                 country
-                differentDeliveryAddress
+                IsDeliveryAddressDifferentFromBilling
                 deliveryFirstName
                 deliveryLastName
                 deliveryCompanyName

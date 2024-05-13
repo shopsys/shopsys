@@ -52,7 +52,7 @@ You can read more about Connection specification in [connections article](https:
                             city
                             postcode
                             country
-                            differentDeliveryAddress
+                            IsDeliveryAddressDifferentFromBilling
                             note
                         }
                     }
@@ -103,7 +103,7 @@ You can read more about Connection specification in [connections article](https:
                                 "city": "Ostrava",
                                 "postcode": "71300",
                                 "country": "CZ",
-                                "differentDeliveryAddress": false,
+                                "IsDeliveryAddressDifferentFromBilling": false,
                                 "note": null
                             }
                         },
@@ -144,7 +144,7 @@ You can read more about Connection specification in [connections article](https:
                                 "city": "Ostrava",
                                 "postcode": "71200",
                                 "country": "CZ",
-                                "differentDeliveryAddress": false,
+                                "IsDeliveryAddressDifferentFromBilling": false,
                                 "note": null
                             }
                         }

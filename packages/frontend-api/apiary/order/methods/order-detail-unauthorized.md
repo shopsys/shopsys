@@ -41,7 +41,7 @@ Returns order filtered using url hash
                     city
                     postcode
                     country
-                    differentDeliveryAddress
+                    IsDeliveryAddressDifferentFromBilling
                     note
                 }
             }
@@ -87,7 +87,7 @@ Returns order filtered using url hash
                     "city": "Ostrava",
                     "postcode": "71300",
                     "country": "CZ",
-                    "differentDeliveryAddress": false,
+                    "IsDeliveryAddressDifferentFromBilling": false,
                     "note": null
                 }
             }

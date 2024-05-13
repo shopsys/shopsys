@@ -34,7 +34,7 @@ class OrderResolverMap extends ResolverMap
                 'deliveryCountry' => function (Order $order) {
                     return $order->getDeliveryCountry() === null ? '' : $order->getDeliveryCountry()->getCode();
                 },
-                'differentDeliveryAddress' => function (Order $order) {
+                'IsDeliveryAddressDifferentFromBilling' => function (Order $order) {
                     return !$order->isDeliveryAddressSameAsBillingAddress();
                 },
                 'status' => function (Order $order) {

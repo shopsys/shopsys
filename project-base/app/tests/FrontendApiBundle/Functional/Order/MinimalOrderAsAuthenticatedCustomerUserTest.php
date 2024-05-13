@@ -61,7 +61,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'differentDeliveryAddress' => false,
+                'isDeliveryAddressDifferentFromBilling' => false,
                 'deliveryFirstName' => 'firstName',
                 'deliveryLastName' => 'lastName',
                 'deliveryCompanyName' => null,
@@ -78,7 +78,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
-            'differentDeliveryAddress' => false,
+            'isDeliveryAddressDifferentFromBilling' => false,
         ]);
 
         $this->assertSame($expected, $this->getResponseDataForGraphQlType($response, 'CreateOrder'));
@@ -93,13 +93,13 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateMinimalOrderMutation.graphql', [
             ...self::DEFAULT_INPUT_VALUES,
-            'differentDeliveryAddress' => true,
+            'isDeliveryAddressDifferentFromBilling' => true,
             'deliveryAddressUuid' => $deliveryAddress->getUuid(),
         ]);
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['order'];
 
-        $this->assertTrue($responseData['differentDeliveryAddress']);
+        $this->assertTrue($responseData['isDeliveryAddressDifferentFromBilling']);
         $this->assertSame($deliveryAddress->getFirstName(), $responseData['deliveryFirstName']);
         $this->assertSame($deliveryAddress->getLastName(), $responseData['deliveryLastName']);
         $this->assertSame($deliveryAddress->getCompanyName(), $responseData['deliveryCompanyName']);
