@@ -9,6 +9,12 @@ fragment OrderDetailFragment on Order {
     transport {
         __typename
         name
+        price {
+            ...PriceFragment
+        }
+        mainImage {
+            url
+        }
         isPersonalPickup
         transportType {
             code
@@ -18,6 +24,12 @@ fragment OrderDetailFragment on Order {
         __typename
         name
         type
+        price {
+            ...PriceFragment
+        }
+        mainImage {
+            url
+        }
     }
     status
     firstName

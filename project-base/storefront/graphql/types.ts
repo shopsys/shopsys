@@ -1616,10 +1616,14 @@ export type TypeOrderItem = {
   __typename?: 'OrderItem';
   /** Name of the order item */
   name: Scalars['String']['output'];
+  /** Product of the order item */
+  product: Maybe<TypeProduct>;
   /** Quantity of order items in the order */
   quantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;
+  /** Type of the order item */
+  type: TypeOrderItemTypeEnum;
   /** Unit of measurement used for the order item */
   unit: Maybe<Scalars['String']['output']>;
   /** Order item price per unit */
@@ -1627,6 +1631,15 @@ export type TypeOrderItem = {
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
 };
+
+/** One of possible types of the order item */
+export enum TypeOrderItemTypeEnum {
+  Discount = 'discount',
+  Payment = 'payment',
+  Product = 'product',
+  Rounding = 'rounding',
+  Transport = 'transport'
+}
 
 export type TypeOrderPaymentsConfig = {
   __typename?: 'OrderPaymentsConfig';

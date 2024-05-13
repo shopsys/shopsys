@@ -33,21 +33,25 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
         getIsGoPayBankTransferPayment(payment) &&
         setSelectedPaymentSwiftForChange;
 
+    const isPaymentSelected = selectedPaymentForChange?.uuid === payment.uuid;
+
     return (
         <TransportAndPaymentListItem
             key={payment.uuid}
             className="order-none flex w-auto flex-col"
-            isActive={selectedPaymentForChange?.uuid === payment.uuid}
+            isActive={isPaymentSelected}
         >
             <Radiobutton
-                checked={payment.uuid === selectedPaymentForChange?.uuid}
+                checked={isPaymentSelected}
                 id={payment.uuid}
+                labelWrapperClassName="gap-5"
                 name="payment"
                 value={payment.uuid}
                 label={
                     <TransportAndPaymentSelectItemLabel
                         description={payment.description}
                         image={payment.mainImage}
+                        isSelected={isPaymentSelected}
                         name={payment.name}
                         price={payment.price}
                     />

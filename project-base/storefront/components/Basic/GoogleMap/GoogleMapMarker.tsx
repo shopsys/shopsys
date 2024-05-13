@@ -4,7 +4,7 @@ import { AnyProps, PointFeature } from 'supercluster';
 const ClusterMarker: FC = ({ children }) => (
     <div
         className={`absolute -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-12 h-12
-          bg-white border-8 border-black border-opacity-40 rounded-full font-bold`}
+          bg-background border-8 border-black border-opacity-40 rounded-full font-bold`}
     >
         {children}
     </div>

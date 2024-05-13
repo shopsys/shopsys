@@ -71,6 +71,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         daysUntilDelivery={transportItem.daysUntilDelivery}
                         description={transportItem.description}
                         image={transportItem.mainImage}
+                        isSelected={isActive}
                         name={transportItem.name}
                         pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}
                         price={transportItem.price}
@@ -96,6 +97,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         <TransportAndPaymentSelectItemLabel
                             description={paymentItem.description}
                             image={paymentItem.mainImage}
+                            isSelected={isActive}
                             name={paymentItem.name}
                             price={paymentItem.price}
                         />

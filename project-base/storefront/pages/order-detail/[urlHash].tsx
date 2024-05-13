@@ -1,11 +1,18 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
+    OrderAvailablePaymentsQueryDocument,
+    TypeOrderAvailablePaymentsQueryVariables,
+} from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
+import {
     OrderDetailByHashQueryDocument,
+    TypeOrderDetailByHashQuery,
     TypeOrderDetailByHashQueryVariables,
     useOrderDetailByHashQuery,
 } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
@@ -14,6 +21,8 @@ import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEve
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { OperationResult } from 'urql';
+import { createClient } from 'urql/createClient';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -40,31 +49,70 @@ const OrderDetailByHashPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || isOrderFetching}>
-                <CommonLayout breadcrumbs={breadcrumbs} title={`${t('Order number')} ${orderHash}`}>
-                    {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
+                <CommonLayout
+                    breadcrumbs={breadcrumbs}
+                    title={`${t('Order number')} ${orderData?.order?.number ?? ''}`}
+                >
+                    <Webline>
+                        {!!orderData?.order && (
+                            <>
+                                <h1 className="mt-0 vl:mt-4" tid={TIDs.order_detail_number_heading}>
+                                    {t('Your order')} {orderData.order.number}
+                                </h1>
+                                <OrderDetailContent order={orderData.order} />
+                            </>
+                        )}
+                    </Webline>
                 </CommonLayout>
             </PageGuard>
         </>
     );
 };
 
-export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    if (typeof context.params?.urlHash !== 'string') {
-        return {
-            redirect: {
-                destination: '/',
-                statusCode: 301,
-            },
-        };
-    }
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t, ssrExchange }) =>
+        async (context) => {
+            if (typeof context.params?.urlHash !== 'string') {
+                return {
+                    redirect: {
+                        destination: '/',
+                        statusCode: 301,
+                    },
+                };
+            }
 
-    return initServerSideProps<TypeOrderDetailByHashQueryVariables>({
-        context,
-        prefetchedQueries: [{ query: OrderDetailByHashQueryDocument, variables: { urlHash: context.params.urlHash } }],
-        redisClient,
-        domainConfig,
-        t,
-    });
-});
+            const client = createClient({
+                t,
+                ssrExchange,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                redisClient,
+                context,
+            });
+
+            const orderResponse: OperationResult<TypeOrderDetailByHashQuery, TypeOrderDetailByHashQueryVariables> =
+                await client!
+                    .query(OrderDetailByHashQueryDocument, {
+                        urlHash: context.params.urlHash,
+                    })
+                    .toPromise();
+
+            const orderUuid = orderResponse.data?.order?.uuid;
+
+            return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
+                prefetchedQueries: orderUuid
+                    ? [
+                          {
+                              query: OrderAvailablePaymentsQueryDocument,
+                              variables: { orderUuid: orderUuid },
+                          },
+                      ]
+                    : [],
+                context,
+                client,
+                ssrExchange,
+                domainConfig,
+            });
+        },
+);
 
 export default OrderDetailByHashPage;

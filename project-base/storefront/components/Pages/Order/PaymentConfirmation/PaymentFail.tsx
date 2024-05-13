@@ -31,6 +31,7 @@ export const PaymentFail: FC<PaymentFailProps> = ({
                 <>
                     {lastUsedOrderPaymentType === PaymentTypeEnum.GoPay && (
                         <PaymentsInOrderSelect
+                            className="mt-6"
                             orderUuid={orderUuid}
                             paymentTransactionCount={paymentTransactionCount}
                         />

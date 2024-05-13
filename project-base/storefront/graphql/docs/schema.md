@@ -132,6 +132,7 @@
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [LoginTypeEnum](#logintypeenum)
+    * [OrderItemTypeEnum](#orderitemtypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -5676,6 +5677,15 @@ Name of the order item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>product</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+Product of the order item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -5690,6 +5700,15 @@ Quantity of order items in the order
 <td>
 
 Total price for the quantity of order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#orderitemtypeenum">OrderItemTypeEnum</a>!</td>
+<td>
+
+Type of the order item
 
 </td>
 </tr>
@@ -10315,6 +10334,39 @@ One of the possible methods of the customer user login
 </tr>
 <tr>
 <td valign="top"><strong>web</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemTypeEnum
+
+One of possible types of the order item
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>discount</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>payment</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>product</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>rounding</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>transport</strong></td>
 <td></td>
 </tr>
 </tbody>
