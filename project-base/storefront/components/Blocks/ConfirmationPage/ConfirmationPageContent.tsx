@@ -1,6 +1,7 @@
 import sentCartImage from '/public/images/sent-cart.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { SkeletonPageConfirmation } from 'components/Blocks/Skeleton/SkeletonPageConfirmation';
+import { TIDs } from 'cypress/tids';
 import { ReactElement } from 'react';
 
 type ConfirmationPageContentProps = {
@@ -29,7 +30,11 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                 <div className="h1 mb-3">{heading}</div>
                 {!!content && (
                     <>
-                        <div className="text-center lg:text-left" dangerouslySetInnerHTML={{ __html: content }} />
+                        <div
+                            className="text-center lg:text-left"
+                            dangerouslySetInnerHTML={{ __html: content }}
+                            tid={TIDs.order_confirmation_page_text_wrapper}
+                        />
                         {AdditionalContent}
                     </>
                 )}

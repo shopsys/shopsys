@@ -1,4 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
@@ -12,13 +13,13 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
 
     return (
         <li className="flex items-center border-b border-creamWhite py-3">
-            <div className="mr-4 flex w-14 items-center justify-center">
+            <div className="mr-4 flex w-14 items-center justify-center" tid={TIDs.order_summary_cart_item_image}>
                 <Image
                     alt={item.product.mainImage?.name || item.product.fullName}
-                    className="max-h-14 w-auto"
-                    height={56}
+                    className="max-h-12 w-auto"
+                    height={48}
                     src={item.product.mainImage?.url}
-                    width={56}
+                    width={48}
                 />
             </div>
 

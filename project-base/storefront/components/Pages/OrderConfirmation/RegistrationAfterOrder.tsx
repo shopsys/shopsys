@@ -5,6 +5,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
+import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
@@ -146,6 +147,7 @@ export const RegistrationAfterOrder: FC = () => {
                                 isDisabled={isInvalidRegistrationRef.current}
                                 isWithDisabledLook={!formProviderMethods.formState.isValid}
                                 style={{ width: '100%' }}
+                                tid={TIDs.registration_after_order_submit_button}
                                 variant="primary"
                             >
                                 {t('Create account')}

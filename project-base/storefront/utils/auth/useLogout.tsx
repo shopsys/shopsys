@@ -23,10 +23,9 @@ export const useLogout = () => {
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');
 
+            dispatchBroadcastChannel('reloadPage');
             router.reload();
         }
-
-        dispatchBroadcastChannel('reloadPage');
     };
 
     return logout;

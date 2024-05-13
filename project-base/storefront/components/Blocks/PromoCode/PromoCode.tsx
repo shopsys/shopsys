@@ -9,13 +9,11 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
-import { Transition } from 'react-transition-group';
 import { useSessionStore } from 'store/useSessionStore';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
-import { useCalcElementHeight } from 'utils/ui/useCalcElementHeight';
 
 const ErrorPopup = dynamic(() =>
     import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
@@ -32,11 +30,9 @@ type TransportAndPaymentErrorsType = {
 export const PromoCode: FC = () => {
     const { promoCode } = useCurrentCart();
     const { t } = useTranslation();
-    const [isContentVisible, setIsContentVisible] = useState(false);
     const contentElement = useRef<HTMLDivElement>(null);
-    const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const [elementHeight, calcHeight] = useCalcElementHeight(contentElement);
     const [promoCodeValue, setPromoCodeValue] = useState<string>(promoCode === null ? '' : promoCode);
+    const [isContentVisible, setIsContentVisible] = useState(!!promoCodeValue);
     const [applyPromoCode, fetchingApplyPromoCode] = useApplyPromoCodeToCart();
     const [removePromoCode, fetchingRemovePromoCode] = useRemovePromoCodeFromCart();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -44,7 +40,7 @@ export const PromoCode: FC = () => {
     const promoCodeValidationMessages = useMemo(() => {
         const errors: Partial<TransportAndPaymentErrorsType> = {};
 
-        if (promoCodeValue.length === 0) {
+        if (!promoCodeValue) {
             errors.promoCode = {
                 name: 'promoCode',
                 label: t('Coupon'),
@@ -54,14 +50,6 @@ export const PromoCode: FC = () => {
 
         return errors;
     }, [promoCodeValue, t]);
-
-    const transitionStyles = {
-        entering: { height: elementHeight },
-        entered: { height: elementHeight },
-        exiting: { height: 0 },
-        exited: { height: 0 },
-        unmounted: {},
-    };
 
     const onApplyPromoCodeHandler: MouseEventHandler<HTMLButtonElement> = useCallback(async () => {
         if (hasValidationErrors(promoCodeValidationMessages)) {
@@ -112,44 +100,27 @@ export const PromoCode: FC = () => {
                         <PlusIcon className="mr-3 w-3" />
                         {t('I have a discount coupon')}
                     </button>
-                    <Transition
-                        unmountOnExit
-                        in={isContentVisible}
-                        nodeRef={cssTransitionRef}
-                        timeout={300}
-                        onEnter={calcHeight}
-                        onExit={calcHeight}
-                    >
-                        {(state) => (
-                            <div
-                                className="overflow-hidden transition-all"
-                                ref={cssTransitionRef}
-                                style={{
-                                    ...transitionStyles[state],
-                                }}
+                    {isContentVisible && (
+                        <div className="flex" ref={contentElement}>
+                            <TextInput
+                                className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
+                                id="blocks-promocode-input"
+                                label={t('Coupon')}
+                                type="text"
+                                value={promoCodeValue}
+                                onChange={onChangePromoCodeValueHandler}
+                            />
+                            <SubmitButton
+                                className="!rounded-r !rounded-l-none !px-3"
+                                isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                tid={TIDs.blocks_promocode_apply_button}
+                                onClick={onApplyPromoCodeHandler}
                             >
-                                <div className="flex" ref={contentElement}>
-                                    <TextInput
-                                        className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
-                                        id="blocks-promocode-input"
-                                        label={t('Coupon')}
-                                        type="text"
-                                        value={promoCodeValue}
-                                        onChange={onChangePromoCodeValueHandler}
-                                    />
-                                    <SubmitButton
-                                        className="!rounded-r !rounded-l-none !px-3"
-                                        isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
-                                        tid={TIDs.blocks_promocode_apply_button}
-                                        onClick={onApplyPromoCodeHandler}
-                                    >
-                                        {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}
-                                        {t('Apply')}
-                                    </SubmitButton>
-                                </div>
-                            </div>
-                        )}
-                    </Transition>
+                                {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}
+                                {t('Apply')}
+                            </SubmitButton>
+                        </div>
+                    )}
                 </>
             )}
         </div>

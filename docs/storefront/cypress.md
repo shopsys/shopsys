@@ -18,7 +18,7 @@ You should split your tests into domain-specific subfolders. This helps to balan
 
 ### fixtures folder
 
-Here you can put any static values and demodata you would need. This could be strings to fill in in inputs, things you would expect to find in a page, etc.
+Here you can put any static values and demodata you would need. This could be strings to fill-in in inputs, things you would expect to find in a page, etc.
 
 ### support folder
 
@@ -28,7 +28,7 @@ You can put all commands or support functions related to API (such as manual mut
 
 ### TIDs.ts
 
-Here you should put all data test IDs used in the app. Having them in a single TS file which can be globally referenced is helpful for maintenance and keeping track of used or unused IDs.
+Here you should put all data test IDs (TIDs) used in the app. Having them in a single TS file which can be globally referenced is helpful for maintenance and keeping track of used or unused IDs.
 
 ### cypress.d.ts
 
@@ -36,25 +36,25 @@ Here you should put type definitions for your custom cypress commands which are 
 
 ### snapshots folder
 
-This is where all snapshots created using `takeSnapshotAndCompare` are stored. They are stored under the provided name (the name provided as a function parameter).
+This is where all snapshots created using `takeSnapshotAndCompare` are stored. They are stored under the provided name (the title of the test plus the name provided as a function parameter).
 
 ### videos folder (uncommited)
 
-This is were all videos from your tests are stored.
+This is where all videos from your tests are stored.
 
 ### screenshots folder (uncommited)
 
-This is were all screenshots from your tests are stored. They are not the same as the snapshots, as these are generated even when running your tests in `base` mode. However, they can be used to compare your snapshots with the given test run. They are also the images based on which the snapshot diffs are generated (diffs between `snapshots` and `screenshots`).
+This is where all screenshots from your tests are stored. They are not the same as the snapshots, as these are generated even when running your tests in `base` mode. However, they can be used to compare your snapshots with the given test run. They are also the images based on which the snapshot diffs are generated (diffs between `snapshots` and `screenshots`).
 
 ### snapshotDiffs folder (uncommited)
 
-This is where snapshot diffs are stored if a test fails because of visual regression.F
+This is where snapshot diffs are stored if a test fails because of visual regression. You have to keep in mind that even though only a single snapshot failing in a given test means that all diffs for that suite are saved. This results in potentially multiple _empty_ snapshot diffs. You should always check the cypress test logs to find out exactly which snapshot has failed.
 
 ## How to write tests?
 
 ### General guidelines
 
-Your tests should ideally test a small and isolated part of the application. For example, it is better to split the order process into multiple steps (adding to cart, adding a promo code, choosing transport, choosing payment, filling in personal information) and test each of them separately, rather then as a whole. This is because to test all combinations (adding products from multiple places, choosing different transports, etc.) by testing the entire order, we would have to have a very large amount of tests, where many things would be repeated unnecessarily. However, if we split them and test all variants of a partial step, we test all combinations implicitly.
+Your tests should ideally test a small and isolated part of the application. For example, it is better to split the order process into multiple steps (adding to cart, adding a promo code, choosing transport, choosing payment, filling in personal information) and test each of them separately, rather then as a whole. This is because to test all combinations (adding products from multiple places, choosing different transports, etc.) by testing the entire order, we would have to have a very large amount of tests, where many things would be repeated unnecessarily. However, if we split them and test all variants of a partial step, we test all combinations implicitly. Nevertheless, it is still helpful to write complex tests, especially as regression tests for some recurrent bugs.
 
 To be more specific, you should group all tests for a specific part of the application in a single test suite using the `describe` method as seen below. Name it the same way your file is named.
 
@@ -74,8 +74,33 @@ describe('<Domain Specific Functionality> tests', () => {
         });
     });
 
+    it('should do something', function () {
+        ...
+    });
+});
+```
+
+### Using the `function` keyword for `it()` blocks
+
+In order to be able to use the `this` keyword inside `it()` blocks and thus access the title of the test, you must use the `function` keyword instead of arrow syntax. So, you should do this:
+
+```ts
+describe('Some tests', () => {
+    it('should do something', function () {
+        ...
+        takeSnapshotAndCompare(this.test?.title, ...)
+    });
+});
+```
+
+But not this:
+
+```ts
+describe('Some tests', () => {
     it('should do something', () => {
         ...
+        // 'this' is not available in arrow functions
+        takeSnapshotAndCompare(this.test?.title, ...)
     });
 });
 ```
@@ -84,8 +109,9 @@ describe('<Domain Specific Functionality> tests', () => {
 
 Below are some examples of custom commands. We mention only those, that should be used instead of the default cypress commands.
 
--   `cy.visitAndWaitForStableDOM` (instead of `cy.visit`): Use this command for visiting pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements.
--   `cy.reloadAndWaitForStableDOM` (instead of `cy.reload`): Use this command for reloading pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements.
+-   `waitForStableAndInteractiveDOM` (instead of `cy.waitForStableDOM`): Use this command to wait for the page to be stable and ready for interaction. It first checks that there are no skeletons visible, that the NProgress bar is also not visible (not in the DOM), and then it waits for stable DOM using `cy.waitForStableDOM`. Furthermore, it also triggers the `resize` event, as there were issues that this event was not triggered in certain scenarios and the app did not behave as expected.
+-   `cy.visitAndWaitForStableAndInteractiveDOM` (instead of `cy.visit`): Use this command for visiting pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements. It also ensures there are no skeletons and that the NProgress loading bar is not in the DOM.
+-   `cy.reloadAndWaitForStableAndInteractiveDOM` (instead of `cy.reload`): Use this command for reloading pages. This command makes sure that the tests wait for the DOM to be stable, ensuring that the tests do not click on non-interactive (yet visible) elements. It also ensures there are no skeletons and that the NProgress loading bar is not in the DOM.
 
 #### How to write a custom cypress command
 
@@ -104,47 +130,104 @@ Another thing is that you should modify `cypress.d.ts`, where you should put typ
 
 ### Visual regression tests
 
-Another important part of our cypress tests is visual regression. This allows us to make a full-page screenshot of the application at any point and compare it with a base screenshot every time the tests are run. This way you make sure that the app looks the same and that your changes did not break it visually.
+Another important part of our cypress tests is visual regression. This allows us to take a screenshot of the application at any point and compare it with a base screenshot every time the tests are run. This way you make sure that the app looks the same, and that your changes did not break it visually.
 
 For this purpose, the `takeSnapshotAndCompare` helper method can be used. You can use it multiple times in each test, just remember to provide the screenshot name, which will be used to store the snapshot under `/snapshots`.
 
 ```ts
-it('should do something', () => {
+it('should do something', function () {
     ...
     // do something
     ...
-    takeSnapshotAndCompare('screenshot-name');
+    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
     ...
     // do something else
     ...
-    takeSnapshotAndCompare('another-screenshot-name');
+    takeSnapshotAndCompare(this.test?.title, 'another screenshot name suffix');
 });
 ```
 
 Remember this can be leveraged to make sure that an action does not change the UI by comparing to the same screenshot.
 
 ```ts
-it('should do something', () => {
-    takeSnapshotAndCompare('screenshot-name');
+it('should do something', function () {
+    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
     ...
     // do something that should not change the UI
     ...
-    takeSnapshotAndCompare('screenshot-name');
+    takeSnapshotAndCompare(this.test?.title, 'screenshot name suffix');
 });
 ```
 
-The `takeSnapshotAndCompare` helper method does several things. First it waits for 200ms for the UI to stabilize (animations to finish, etc.), then the device pixel ratio is changed, which is neccessary to standardize tests across different devices, then it takes a screenshot, and in the end it compares the screenshot to the base snapshot.
+The `takeSnapshotAndCompare` helper method does several things.
+
+1. Scroll to the bottom of the page and back up (this is done in order to load all images that are lazy-loaded before the actual screenshot, so it is not done for element screenshots)
+2. Black-out (cover) all elements which should not be part of the screenshot
+3. Take the screenshot
+4. Compare the screenshot to the base snapshot
+5. Return all blacked-out elements back (uncover them)
 
 ```ts
-export const takeSnapshotAndCompare = (snapshotName: string) => {
-    cy.wait(200);
-    cy.setDevicePixelRatio(1);
-    cy.screenshot();
-    cy.compareSnapshot(snapshotName);
+export type Blackout = { tid: TIDs; zIndex?: number; shouldNotOffset?: boolean };
+
+type SnapshotAdditionalOptions = {
+    capture: 'viewport' | 'fullPage' | TIDs;
+    wait: number;
+    blackout: Blackout[];
+};
+
+export const takeSnapshotAndCompare = (
+    testName: string | undefined,
+    snapshotName: string,
+    options: Partial<SnapshotAdditionalOptions> = {},
+) => {
+    const optionsWithDefaultValues = {
+        capture: options.capture ?? 'fullPage',
+        wait: options.wait ?? 1000,
+        blackout: options.blackout ?? [],
+    };
+
+    if (!testName) {
+        throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
+    }
+
+    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
+        cy.wait(optionsWithDefaultValues.wait / 5);
+        cy.scrollTo('bottomLeft', { duration: optionsWithDefaultValues.wait / 5 });
+        cy.wait(optionsWithDefaultValues.wait / 5);
+        cy.scrollTo('topLeft', { duration: optionsWithDefaultValues.wait / 5 });
+        cy.wait(optionsWithDefaultValues.wait / 5);
+    } else {
+        cy.wait(optionsWithDefaultValues.wait);
+    }
+
+    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
+
+    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
+        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
+    } else {
+        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
+    }
+
+    removeBlackoutsAfterScreenshot();
 };
 ```
 
-You can set up the snapshot to take a full-page, runner, or a viewport screenshot. The most robust version is to test the full page, because then you know that the entire page is unchanged.
+#### Sizes of screenshots (`capture` parameter)
+
+You can set up the snapshot to take a full-page screenshot, viewport screenshot, or a screenshot of an element with a specific TID. The most robust version is to test the full page, because then you know that the entire page is unchanged.
+
+#### Give the application more time to prepare before the screenshot (`wait` parameter)
+
+By specifying the `wait` parameter, you tell the application how much time it has to prepare itself for the screenshot. If the screenshot is a full-page or a viewport screenshot, it uses this time to wait for a fraction of that time, scroll down, wait again, scroll back up, and wait for the last time. The specified time is equally split between those 5 actions. If it is a component screenshot, the time is only used to wait. This approach has proven to be the best for test stability and robustness.
+
+#### Hiding/covering parts of the application for the screenshot (`blackout` parameter)
+
+It is also possible to hide/cover parts of the UI with a blackout box (simple `div` element over the element with a specified TID). This is helpful if your UI contains element which change randomly or change with time (using timers). You can also specify the blacked-out element's `z-index` using the `zIndex` parameter, as you might need to render it above or below various other DOM elements.
+
+This mechanism works based on placing a absolutely positioned `div` above the target element, so it depends if the element needs additional offset, or not. For this, the `shouldNotOffset` is used. If you omit it, the blackout div will be offset by 15px to the right (scrollbar width). If you find out that your element does not need this offset (can happen for relatively placed elements, or for viewport screenshots in general), you can omit the offset by specifying `{ shouldNotOffset: true }`.
+
+#### Screenshots error threshold
 
 You can also set the comparison threshold. For example, the `0.02` threshold seen below means that 2% of the image pixels can change without the tests failing. This can be modified in any way necessary, but remember to keep a balance. The higher the threshold, the less false positives you will get, but the more differences and bugs can stay unnoticed. For example, if you have a page with order detail, where only the total price is wrong, if the page is large enough, the mistake in the price might be less than, for example, 2%. On the other hand, if you do not allow any differences (`errorThreshold: 0`), you might get some false positives, because of unnoticable differences.
 
@@ -261,3 +344,5 @@ export const changeElementText = (selector: TIDs, newText: string, isRightAfterS
     });
 };
 ```
+
+You can also just hide the element using the [`blackout` parameter](#hidingcovering-parts-of-the-application-for-the-screenshot-blackout-parameter).

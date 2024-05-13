@@ -9,6 +9,7 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
@@ -114,7 +115,7 @@ export const LoginPopup: FC<LoginPopupProps> = ({ defaultEmail, shouldOverwriteC
                         {t('Your addresses prefilled and you can check your order history.')}
                     </p>
 
-                    <Link isButton href={registrationUrl}>
+                    <Link isButton href={registrationUrl} tid={TIDs.login_popup_register_button}>
                         {t('Register')}
                     </Link>
                 </div>

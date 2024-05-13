@@ -24,7 +24,7 @@ const linkPlaceholderTwClassSegments = [
 
 export const linkPlaceholderTwClass = linkPlaceholderTwClassSegments.join(' ');
 
-export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel, target, className }) => {
+export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel, target, className, tid }) => {
     const classNameTwClass = twMergeCustom(
         linkPlaceholderTwClassSegments[0],
         isButton ? 'no-underline hover:no-underline' : linkPlaceholderTwClassSegments[1],
@@ -35,7 +35,7 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
         href: isExternal ? href : undefined,
         rel,
         target,
-        tid: TIDs.basic_link,
+        tid: tid ?? TIDs.basic_link,
     };
 
     const content = isButton ? <Button className={className}>{children}</Button> : children;

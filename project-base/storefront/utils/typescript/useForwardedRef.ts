@@ -1,7 +1,7 @@
 import { ForwardedRef, MutableRefObject, useEffect, useRef } from 'react';
 
-export const useForwardedRef = (ref: ForwardedRef<any>): MutableRefObject<any> => {
-    const innerRef = useRef(null);
+export const useForwardedRef = <T>(ref: ForwardedRef<T>): MutableRefObject<T | null> => {
+    const innerRef = useRef<T>(null);
     useEffect(() => {
         if (!ref) {
             return;

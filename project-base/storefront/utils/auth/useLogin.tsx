@@ -43,13 +43,12 @@ export const useLogin = () => {
                 loginResult.data.Login.showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading',
             );
 
+            dispatchBroadcastChannel('reloadPage');
             if (rewriteUrl) {
                 router.replace(rewriteUrl).then(() => router.reload());
             } else {
                 router.reload();
             }
-
-            dispatchBroadcastChannel('reloadPage');
         }
 
         return loginResult;

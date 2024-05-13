@@ -18,11 +18,10 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
 
     return (
         <>
-            <div className="group">
+            <div className="group" tid={TIDs.my_account_link}>
                 <MenuIconicItemLink
                     className="rounded-t p-3 group-hover:bg-white group-hover:text-dark max-lg:hidden"
                     href={customerUrl}
-                    tid={TIDs.my_account_link}
                 >
                     <UserIcon className="w-5 lg:w-4 text-white group-hover:text-dark" />
                     {t('My account')}
@@ -30,12 +29,14 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
 
                 <ul className="pointer-events-none absolute top-full right-0 z-cart block min-w-[150px] origin-top-right scale-50 rounded rounded-tr-none bg-white opacity-0 shadow-lg transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
                     <li className="block">
-                        <MenuIconicSubItemLink href={customerOrdersUrl} type="orders">
+                        <MenuIconicSubItemLink href={customerOrdersUrl} tid={TIDs.header_my_orders_link} type="orders">
                             {t('My orders')}
                         </MenuIconicSubItemLink>
                     </li>
                     <li className="block border-t border-border">
-                        <MenuIconicSubItemLink href={customerEditProfileUrl}>{t('Edit profile')}</MenuIconicSubItemLink>
+                        <MenuIconicSubItemLink href={customerEditProfileUrl} tid={TIDs.header_edit_profile_link}>
+                            {t('Edit profile')}
+                        </MenuIconicSubItemLink>
                     </li>
                     <li className="block border-t border-border">
                         <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>

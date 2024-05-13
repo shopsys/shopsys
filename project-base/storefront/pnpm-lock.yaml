@@ -101,9 +101,6 @@ importers:
       react-toastify:
         specifier: ~10.0.4
         version: 10.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react-transition-group:
-        specifier: ~4.4.5
-        version: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       redis:
         specifier: ~4.6.12
         version: 4.6.13
@@ -171,9 +168,6 @@ importers:
       '@types/react-dom':
         specifier: ~18.2.18
         version: 18.2.18
-      '@types/react-transition-group':
-        specifier: ~4.4.10
-        version: 4.4.10
       '@types/tinycolor2':
         specifier: ~1.4.6
         version: 1.4.6

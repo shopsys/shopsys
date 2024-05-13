@@ -8,65 +8,65 @@ describe('Repeated page visits tests (for defer testing)', () => {
     });
 
     it('5 homepage visits with wait', () => {
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
         cy.wait(1000);
     });
 
     it('5 homepage visits without wait', () => {
-        cy.visitAndWaitForStableDOM('/');
-        cy.visitAndWaitForStableDOM('/');
-        cy.visitAndWaitForStableDOM('/');
-        cy.visitAndWaitForStableDOM('/');
-        cy.visitAndWaitForStableDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
+        cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
     it('5 product detail page visits with wait', () => {
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
         cy.wait(1000);
     });
 
     it('5 product detail page visits without wait', () => {
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
-        cy.visitAndWaitForStableDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
     });
 
     it('5 category detail page visits with wait', () => {
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         cy.wait(1000);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         cy.wait(1000);
     });
 
     it('5 category detail page visits without wait', () => {
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
-        cy.visitAndWaitForStableDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
     });
 });

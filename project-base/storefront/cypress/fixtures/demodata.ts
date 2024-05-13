@@ -4,6 +4,8 @@ export const buttonName = {
     login: 'Login',
 };
 
+export const password = 'user123';
+
 export const customer1 = {
     email: 'no-reply123@shopsys.com',
     emailRegistered: 'no-reply@shopsys.com',
@@ -13,7 +15,7 @@ export const customer1 = {
     billingStreet: 'fakturační ulice 1/15a',
     billingCity: 'fakturační město',
     billingPostCode: '70200',
-    password: 'user123',
+    password,
 };
 
 export const deliveryAddress = {
@@ -34,7 +36,8 @@ export const link = {
 
 export const orderNote = 'Just a tiny note in the order.';
 
-export const orderDetail = {
+export const order = {
+    number: '1234567890',
     numberHeading: 'Order number 1234567890',
     creationDate: '10/26/1999 10:10 AM',
 };
@@ -69,6 +72,10 @@ export const placeholder = {
     coupone: 'Coupon',
     note: 'Note',
     company: 'Company',
+    companyName: 'Company name',
+    companyNumber: 'Company number',
+    companyTaxNumber: 'Tax number',
+    passwordAgain: 'Password again',
 };
 
 export const products = {
@@ -76,20 +83,26 @@ export const products = {
         uuid: '55bb22ab-bb88-5459-a464-005b948d8c78',
         name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
         fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
-        catnum: 9177759,
+        catnum: '9177759',
         url: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
     },
     philips32PFL4308: {
         uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
         url: '/philips-32pfl4308',
+        catnum: '9176508',
+    },
+    lg47LA790VFHD: {
+        uuid: '4670eedd-f063-5e1f-9839-1b8dd13cb5b0',
+        catnum: '5965879P',
     },
     philips54CRT: {
+        uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb	',
         name: '54" Philips CRT 32PFL4308',
-        catnum: 9176588,
+        catnum: '9176588',
     },
 } as const;
 
-export const quantityUnit = 'pc';
+export const promoCode = 'test';
 
 export const transport = {
     personalCollection: {
@@ -125,9 +138,14 @@ export const url = {
     },
     login: '/login',
     loginWithCustomerRedirect: '/login?r=customer',
-    customer: '/customer',
+    customer: {
+        index: '/customer',
+        orders: '/customer/orders',
+        editProfile: '/customer/edit-profile',
+    },
     categoryElectronics: '/electronics',
     productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
+    registration: '/registration',
 } as const;
 
 export const DEFAULT_APP_STORE = {

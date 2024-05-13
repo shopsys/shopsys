@@ -32,7 +32,11 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                         {t('Order number')} {order.number}
                     </h1>
                     <div className="flex items-center justify-end lg:w-1/5">
-                        <Button className="lg:px-2 lg:py-1" onClick={() => addOrderItemsToEmptyCart(order.uuid)}>
+                        <Button
+                            className="lg:px-2 lg:py-1"
+                            tid={TIDs.order_detail_repeat_order_button}
+                            onClick={() => addOrderItemsToEmptyCart(order.uuid)}
+                        >
                             {t('Repeat order')}
                         </Button>
                     </div>
