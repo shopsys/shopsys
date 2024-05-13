@@ -814,6 +814,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### run VACUUM FULL ANALYZE once a week ([#3160](https://github.com/shopsys/shopsys/pull/3160))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

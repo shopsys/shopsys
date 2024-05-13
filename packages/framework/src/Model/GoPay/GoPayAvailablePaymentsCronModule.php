@@ -50,6 +50,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
             $this->em->commit();
         } catch (GoPayNotConfiguredException $exception) {
             $this->logger->alert('GoPay configuration is not set.');
+            $this->em->rollback();
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);
             $this->em->rollback();

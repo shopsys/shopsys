@@ -65,4 +65,12 @@
         </exec>
     </target>
 
+    <target name="cron-vacuum" description="Runs VACUUM background job. Should be executed periodically by system Cron once a week.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=vacuum" />
+        </exec>
+    </target>
+
 </project>
