@@ -8,7 +8,7 @@ import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
-const ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS = ['#newsletter-form-privacyPolicy', TIDs.simple_header_contact];
+const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = ['#newsletter-form-privacyPolicy', TIDs.simple_header_contact];
 
 Cypress.Commands.add(
     'getByTID',
@@ -142,7 +142,7 @@ export const takeSnapshotAndCompare = (
 
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
-    removePointerEventsBeforeScreenshot(ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS);
+    removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
 
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
         cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
