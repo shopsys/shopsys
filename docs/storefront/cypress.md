@@ -163,9 +163,11 @@ The `takeSnapshotAndCompare` helper method does several things.
 
 1. Scroll to the bottom of the page and back up (this is done in order to load all images that are lazy-loaded before the actual screenshot, so it is not done for element screenshots)
 2. Black-out (cover) all elements which should not be part of the screenshot
-3. Take the screenshot
-4. Compare the screenshot to the base snapshot
-5. Return all blacked-out elements back (uncover them)
+3. Remove pointer events from elements which have hover or active states that could break the screenshots
+4. Take the screenshot
+5. Compare the screenshot to the base snapshot
+6. Return all blacked-out elements back (uncover them)
+7. Reset pointer events of the previously blocked elements (point 3.)
 
 ```ts
 export type Blackout = { tid: TIDs; zIndex?: number; shouldNotOffset?: boolean };
@@ -174,6 +176,7 @@ type SnapshotAdditionalOptions = {
     capture: 'viewport' | 'fullPage' | TIDs;
     wait: number;
     blackout: Blackout[];
+    removePointerEvents: (TIDs | string)[];
 };
 
 export const takeSnapshotAndCompare = (
@@ -185,23 +188,16 @@ export const takeSnapshotAndCompare = (
         capture: options.capture ?? 'fullPage',
         wait: options.wait ?? 1000,
         blackout: options.blackout ?? [],
+        removePointerEvents: options.removePointerEvents ?? [],
     };
 
     if (!testName) {
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
 
-    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
-        cy.wait(optionsWithDefaultValues.wait / 5);
-        cy.scrollTo('bottomLeft', { duration: optionsWithDefaultValues.wait / 5 });
-        cy.wait(optionsWithDefaultValues.wait / 5);
-        cy.scrollTo('topLeft', { duration: optionsWithDefaultValues.wait / 5 });
-        cy.wait(optionsWithDefaultValues.wait / 5);
-    } else {
-        cy.wait(optionsWithDefaultValues.wait);
-    }
-
+    scrollPageBeforeScreenshot(optionsWithDefaultValues);
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
+    removePointerEventsBeforeScreenshot(ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS);
 
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
         cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
@@ -210,6 +206,7 @@ export const takeSnapshotAndCompare = (
     }
 
     removeBlackoutsAfterScreenshot();
+    resetPointerEventsAfterScreenshot();
 };
 ```
 
@@ -226,6 +223,16 @@ By specifying the `wait` parameter, you tell the application how much time it ha
 It is also possible to hide/cover parts of the UI with a blackout box (simple `div` element over the element with a specified TID). This is helpful if your UI contains element which change randomly or change with time (using timers). You can also specify the blacked-out element's `z-index` using the `zIndex` parameter, as you might need to render it above or below various other DOM elements.
 
 This mechanism works based on placing a absolutely positioned `div` above the target element, so it depends if the element needs additional offset, or not. For this, the `shouldNotOffset` is used. If you omit it, the blackout div will be offset by 15px to the right (scrollbar width). If you find out that your element does not need this offset (can happen for relatively placed elements, or for viewport screenshots in general), you can omit the offset by specifying `{ shouldNotOffset: true }`.
+
+#### Removing pointer-events (`ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS` config)
+
+It can happen that your screenshots contain some elements in active or hovered state. This is a cypress issue, which is sometimes hard to track. If you do not face any problems with this, you can ignore it, including the config for fixing this (`ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS`). However, if it happens that your tests fail from time to time, because sometimes some elements are hovered, and sometimes not, you can stabilize your tests by extending this config with such elements. By doing that, those elements will not have any pointer events for the duration of taking a screenshot (`pointer-events: none !important`). The config accepts both a CSS selector (`#my-id`, `.my-class`) or a TID.
+
+```ts
+const ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS = ['#newsletter-form-privacyPolicy', TIDs.simple_header_contact];
+```
+
+There is one important consideration. If you specify an element which has to be hovered or clicked during a screenshot, it will not work.
 
 #### Screenshots error threshold
 

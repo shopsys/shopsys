@@ -6,7 +6,6 @@ import {
     clickOnSendOrderButton,
     clickOnOrderDetailButtonOnThankYouPage,
     fillRegistrationInfoAfterOrder,
-    goToMyOrdersFromHeader,
     changeOrderDetailDynamicPartsToStaticDemodata,
     changeOrderConfirmationDynamicPartsToStaticDemodata,
     submitRegistrationFormAfterOrder,
@@ -196,7 +195,7 @@ describe('Create order tests', () => {
         cy.waitForStableAndInteractiveDOM();
         checkUrl('/');
 
-        goToMyOrdersFromHeader();
+        cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
         goToOrderDetailFromOrderList();
         changeOrderDetailDynamicPartsToStaticDemodata(true);
         takeSnapshotAndCompare(this.test?.title, 'order detail');

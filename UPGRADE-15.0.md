@@ -991,3 +991,8 @@ takeSnapshotAndCompare(this.test?.title, 'something to add');
 -   `reloadAndWaitForStableDOM`was renamed to `reloadAndWaitForStableAndInteractiveDOM` and now uses `waitForStableAndInteractiveDOM` internally
 -   you should regenerate your cypress screenshots
 -   you should read the updated cypress documentation in our docs in order to understand all the new changes and be able to take advantage of them
+
+#### minor improvements to cypress tests ([#3163](https://github.com/shopsys/shopsys/pull/3163))
+
+-   it is now possible to remove pointer events from elements during cypress screenshots, so you should use this if you have problems with failing screenshots because of different hover/active states
+-   as always, read the docs regarding our cypress tests to learn more

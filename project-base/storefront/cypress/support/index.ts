@@ -8,6 +8,8 @@ import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
+const ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS = ['#newsletter-form-privacyPolicy', TIDs.simple_header_contact];
+
 Cypress.Commands.add(
     'getByTID',
     (
@@ -119,6 +121,7 @@ type SnapshotAdditionalOptions = {
     capture: 'viewport' | 'fullPage' | TIDs;
     wait: number;
     blackout: Blackout[];
+    removePointerEvents: (TIDs | string)[];
 };
 
 export const takeSnapshotAndCompare = (
@@ -130,12 +133,28 @@ export const takeSnapshotAndCompare = (
         capture: options.capture ?? 'fullPage',
         wait: options.wait ?? 1000,
         blackout: options.blackout ?? [],
+        removePointerEvents: options.removePointerEvents ?? [],
     };
 
     if (!testName) {
         throw new Error(`Could not resolve test name. Snapshot name was '${snapshotName}'`);
     }
 
+    scrollPageBeforeScreenshot(optionsWithDefaultValues);
+    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
+    removePointerEventsBeforeScreenshot(ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS);
+
+    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
+        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
+    } else {
+        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
+    }
+
+    removeBlackoutsAfterScreenshot();
+    resetPointerEventsAfterScreenshot();
+};
+
+const scrollPageBeforeScreenshot = (optionsWithDefaultValues: SnapshotAdditionalOptions) => {
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
         cy.wait(optionsWithDefaultValues.wait / 5);
         cy.scrollTo('bottomLeft', { duration: optionsWithDefaultValues.wait / 5 });
@@ -145,16 +164,6 @@ export const takeSnapshotAndCompare = (
     } else {
         cy.wait(optionsWithDefaultValues.wait);
     }
-
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
-
-    if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
-        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
-    } else {
-        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
-    }
-
-    removeBlackoutsAfterScreenshot();
 };
 
 const blackoutBeforeScreenshot = (blackout: Blackout[], capture: 'viewport' | 'fullPage' | TIDs) => {
@@ -187,6 +196,34 @@ const removeBlackoutsAfterScreenshot = () => {
             $body.find('.blackout').each(function () {
                 this.remove();
             });
+        }
+    });
+};
+
+const removePointerEventsBeforeScreenshot = (removePointerEvents: (TIDs | string)[]) => {
+    cy.document().then((doc) => {
+        const style = doc.createElement('style');
+        style.setAttribute('id', 'disable-pointer-events');
+        doc.head.appendChild(style);
+
+        const selectors = removePointerEvents.map((selector) => {
+            if (Object.values<any>(TIDs).includes(selector)) {
+                return `[tid='${selector}']`;
+            }
+            return selector;
+        });
+
+        const selectorString = selectors.join(', ');
+
+        style.innerHTML = `${selectorString} { pointer-events: none !important; }`;
+    });
+};
+
+const resetPointerEventsAfterScreenshot = () => {
+    cy.document().then((doc) => {
+        const style = doc.getElementById('disable-pointer-events');
+        if (style) {
+            doc.head.removeChild(style);
         }
     });
 };
