@@ -1,4 +1,5 @@
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
+import { TIDs } from 'cypress/tids';
 
 // TODO PRG
 const dummyData = {
@@ -16,6 +17,7 @@ export const HeaderContact: FC = () => {
                     <a
                         className="font-bold text-creamWhite no-underline hover:text-creamWhite"
                         href={'tel:' + dummyData.phone}
+                        tid={TIDs.simple_header_contact}
                     >
                         {dummyData.phone}
                     </a>
