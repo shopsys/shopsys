@@ -832,6 +832,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `getAllOfferedProducts()` method was removed, use `getAllOfferedProductsPaginated()` instead
 -   see #project-base-diff to update your project
 
+#### rename variable differentDeliveryAddress into isDeliveryAddressDifferentFromBilling ([#3161](https://github.com/shopsys/shopsys/pull/3161))
+
+-   FE API: `OrderDecorator.types.yaml` and `OrderInputDecorator.types.yaml`: differentDeliveryAddress was renamed into more suitable isDeliveryAddressDifferentFromBilling
+-   `Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS_WITHOUT_PRESELECTED` constant was renamed to `VALIDATION_GROUP_IS_DELIVERY_ADDRESS_DIFFERENT_FROM_BILLING_WITHOUT_PRESELECTED`
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
@@ -1006,3 +1012,8 @@ takeSnapshotAndCompare(this.test?.title, 'something to add');
 #### implement new base design + product page ([#3132](https://github.com/shopsys/shopsys/pull/3132))
 
 We want to implement more usable UI design which will be better base for upcoming projects. These changes are about new design for basic stuff like colors and base elements + design for whole product page.
+
+#### rename variable differentDeliveryAddress into isDeliveryAddressDifferentFromBilling ([#3161](https://github.com/shopsys/shopsys/pull/3161))
+
+-   bool variable differentDeliveryAddress was renamed into more suitable isDeliveryAddressDifferentFromBilling across the project
+-   see #project-base-diff to update your project
