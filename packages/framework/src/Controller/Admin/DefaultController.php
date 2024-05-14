@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
@@ -42,6 +43,7 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly StatisticsFacade $statisticsFacade,
@@ -56,6 +58,7 @@ class DefaultController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly TransferIssueFacade $transferIssueFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -159,6 +162,38 @@ class DefaultController extends AdminBaseController
                     'url' => $this->generateUrl('admin_unit_list'),
                 ],
             );
+        }
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
+                $this->addErrorFlashTwig(
+                    t('<a href="{{ url }}">Terms and conditions article for domain {{ domainName }} is not set.</a>'),
+                    [
+                        'url' => $this->generateUrl('admin_legalconditions_termsandconditions'),
+                        'domainName' => $domainConfig->getName(),
+                    ],
+                );
+            }
+
+            if ($this->setting->getForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
+                $this->addErrorFlashTwig(
+                    t('<a href="{{ url }}">Privacy policy article for domain {{ domainName }} is not set.</a>'),
+                    [
+                        'url' => $this->generateUrl('admin_legalconditions_privacypolicy'),
+                        'domainName' => $domainConfig->getName(),
+                    ],
+                );
+            }
+
+            if ($this->setting->getForDomain(Setting::COOKIES_ARTICLE_ID, $domainConfig->getId()) === null) {
+                $this->addErrorFlashTwig(
+                    t('<a href="{{ url }}">Cookies information article for domain {{ domainName }} is not set.</a>'),
+                    [
+                        'url' => $this->generateUrl('admin_cookies_setting'),
+                        'domainName' => $domainConfig->getName(),
+                    ],
+                );
+            }
         }
     }
 

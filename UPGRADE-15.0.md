@@ -814,6 +814,18 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### display error messages in admin if legal conditions articles are not set ([#3128](https://github.com/shopsys/shopsys/pull/3128))
+
+-   `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::__construct` interface has changed:
+
+    ```diff
+        public function __construct(
+            // ...
+    +       protected readonly Domain $domain,
+    ```
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
