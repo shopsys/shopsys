@@ -5,7 +5,7 @@ AdvertPositionDecorator:
         fields:
             description:
                 type: "String!"
-                description: "Desription of advert position"
+                description: "Description of advert position"
             positionName:
                 type: "String!"
                 description: "Position of advert"

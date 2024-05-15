@@ -1823,7 +1823,7 @@ UUID
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Desription of advert position
+Description of advert position
 
 </td>
 </tr>

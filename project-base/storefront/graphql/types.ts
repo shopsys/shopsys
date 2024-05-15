@@ -117,7 +117,7 @@ export type TypeAdvertImageMainImageArgs = {
 
 export type TypeAdvertPosition = {
   __typename?: 'AdvertPosition';
-  /** Desription of advert position */
+  /** Description of advert position */
   description: Scalars['String']['output'];
   /** Position of advert */
   positionName: Scalars['String']['output'];
