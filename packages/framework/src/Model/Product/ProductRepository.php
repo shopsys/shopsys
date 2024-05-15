@@ -451,11 +451,21 @@ class ProductRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return array
+     * @param int $offset
+     * @param int $limit
+     * @return \App\Model\Product\Product[]
      */
-    public function getAllOfferedProducts(int $domainId, PricingGroup $pricingGroup): array
-    {
-        return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
+    public function getAllOfferedProductsPaginated(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        int $offset,
+        int $limit,
+    ): array {
+        return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

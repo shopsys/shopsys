@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ImageSitemapFacade
 {
+    protected const int PRODUCTS_BATCH_SIZE = 100;
+
     /**
      * @param string $sitemapsDir
      * @param string $sitemapsUrlPrefix
@@ -63,25 +65,38 @@ class ImageSitemapFacade
         $imageSitemapItems = [];
         $domainId = $domainConfig->getId();
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product[] $products */
-        $products = $this->productRepository->getAllOfferedProducts($domainId, $pricingGroup);
 
-        foreach ($products as $product) {
-            try {
-                $imageUrl = $this->imageFacade->getImageUrl($domainConfig, $product);
-                $imageSitemapItem = new ImageSitemapItem();
-                $imageSitemapItem->loc = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainConfig->getId(), 'front_product_detail', $product->getId());
+        $offset = 0;
 
-                $sitemapImage = new ImageSitemapItemImage();
-                $sitemapImage->loc = $imageUrl;
-                $sitemapImage->title = $product->getName($domainConfig->getLocale());
-                $imageSitemapItem->images[] = $sitemapImage;
+        do {
+            $products = $this->productRepository->getAllOfferedProductsPaginated($domainId, $pricingGroup, $offset, self::PRODUCTS_BATCH_SIZE);
 
-                $imageSitemapItems[] = $imageSitemapItem;
-            } catch (ImageNotFoundException $imageNotFoundException) {
-                continue;
+            foreach ($products as $product) {
+                $productName = $product->getName($domainConfig->getLocale());
+
+                if ($productName === null) {
+                    continue;
+                }
+
+                try {
+                    $imageUrl = $this->imageFacade->getImageUrl($domainConfig, $product);
+                    $imageSitemapItem = new ImageSitemapItem();
+                    $imageSitemapItem->loc = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainConfig->getId(), 'front_product_detail', $product->getId());
+
+                    $sitemapImage = new ImageSitemapItemImage();
+                    $sitemapImage->loc = $imageUrl;
+                    $sitemapImage->title = $productName;
+                    $imageSitemapItem->images[] = $sitemapImage;
+
+                    $imageSitemapItems[] = $imageSitemapItem;
+                } catch (ImageNotFoundException $imageNotFoundException) {
+                    continue;
+                }
             }
-        }
+            $this->entityManager->clear();
+            $productsCount = count($products);
+            $offset += $productsCount;
+        } while ($productsCount > 0);
 
         return $imageSitemapItems;
     }
