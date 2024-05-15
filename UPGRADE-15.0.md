@@ -861,6 +861,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   ParameterColorValueDataFixture is added to handle assigning hex values to color parameters
 -   see #project-base-diff to update your project
 
+#### refactor the place order process ([#3084](https://github.com/shopsys/shopsys/pull/3084))
+
+-   see the specialized upgrade note in [upgrade-order-processing.md](./upgrade-order-processing.md)
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

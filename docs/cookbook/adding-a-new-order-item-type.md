@@ -551,3 +551,5 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
 In this cookbook, we've successfully integrated a new order item type, an additional service, into the Shopsys Platform.
 By following these steps, we not only added a new order item type but also ensured it integrates seamlessly with the existing order processing workflow.
 This approach allows for further customizations and extensions, providing a robust foundation for managing additional services within the Shopsys Platform.
+
+For more general information about the order processing system, see the [Order Processing](../introduction/order-processing.md) article.

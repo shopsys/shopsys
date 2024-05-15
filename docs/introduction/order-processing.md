@@ -10,12 +10,12 @@ Below, we provide a comprehensive guide on how the order processing system works
 
 ## Key components
 
--   `OrderData`
+-   `Shopsys\FrameworkBundle\Model\Order\OrderData`
     -   This object holds all the data related to an order, including customer details, product information, pricing, and more.
--   `OrderInput`
+-   `Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput`
     -   This object contains input information provided by the customer such as selected transport, payment methods, promo codes, and other preferences.
--   `OrderProcessor`
-    -   The central engine that drives the order processing workflow by passing `OrderData` through configured middleware.
+-   `Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor`
+    -   The central engine that drives the order processing workflow by passing `Shopsys\FrameworkBundle\Model\Order\OrderData` through configured middleware.
 
 ### Middlewares
 
@@ -35,6 +35,13 @@ Each middleware must implement the `OrderProcessorMiddlewareInterface`, which is
 The interface requires the middleware to have a `handle` method with the following signature:
 
 ```php
+/**
+ * Method is responsible for updating the OrderProcessingData object and call the next middleware in the stack
+ *
+ * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
+ * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack $orderProcessingStack
+ * @return \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData
+ */
 public function handle(
     OrderProcessingData $orderProcessingData,
     OrderProcessingStack $orderProcessingStack,
@@ -135,7 +142,7 @@ Usually this data is used by custom middlewares.
 $orderInput->addAdditionalData(MyCustomMiddleware::DATA_KEY, $value);
 ```
 
-The data may be retrieved in the middleware from the `OrderInput` object using the `getAdditionalData()` method.
+The data may be retrieved in the middleware from the `OrderInput` object using the `findAdditionalData()` method.
 
 ```php
 $value = $orderProcessingData->orderInput->findAdditionalData(MyCustomMiddleware::DATA_KEY);
@@ -175,7 +182,7 @@ $this->placeOrderFacade->placeOrder($orderData);
 
 !!! note
 
-    You may also call the `PlaceOrderFacade::createOrder` method.<br>
+    You may also call the `PlaceOrderFacade::createOrderOnly` method.<br>
     This method bypass some steps during the normal place order process, like sending emails, dispatching amqp messages, etc.<br>
     It is useful when you need to create an order without side effects - for example in tests, during imports, etc.
 
@@ -183,3 +190,5 @@ $this->placeOrderFacade->placeOrder($orderData);
 
 The order processing system in Shopsys Platform is designed to be robust and adaptable, suitable for handling various e-commerce scenarios.
 By leveraging a middleware approach, the platform ensures that each aspect of the order can be independently managed and updated as business needs evolve.
+
+For more detailed instructions on adding a new order item type and integrating it with the order processing system, please refer to the [Adding a New Order Item Type cookbook](../cookbook/adding-a-new-order-item-type.md).
