@@ -62,7 +62,7 @@ class ImageFactory implements ImageFactoryInterface
         array $temporaryFilenames,
         ?string $type,
     ): array {
-        if (!$imageEntityConfig->isMultiple($type)) {
+        if (!$imageEntityConfig->isMultiple($type) && count($temporaryFilenames) > 1) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
                 . ' is not allowed to have multiple images for type ' . ($type ?: 'NULL');
 

@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException;
-use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
@@ -31,7 +30,7 @@ class ImageFactoryTest extends TestCase
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
 
         $this->expectException(EntityMultipleImageException::class);
-        $imageFactory->createMultiple($imageEntityConfig, 1, [], [], 'type');
+        $imageFactory->createMultiple($imageEntityConfig, 1, ['test1.png', 'test2.png'], ['test1_tmp.png', 'test2_tmp.png'], 'type');
     }
 
     public function testCreateMultiple(): void

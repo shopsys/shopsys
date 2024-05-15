@@ -65,62 +65,25 @@ class ImageFacade
         $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
         $uploadedFiles = $imageUploadData->uploadedFiles;
         $orderedImages = $imageUploadData->orderedImages;
+        $imagesToDelete = $imageUploadData->imagesToDelete;
 
         if ($imageEntityConfig->isMultiple($type) === false) {
+            if (count($uploadedFiles) > 0) {
+                $imagesToDelete = $orderedImages;
+            }
+
             if (count($orderedImages) > 1) {
                 array_shift($orderedImages);
-                $this->deleteImages($entity, $orderedImages);
-            }
-            $this->uploadImage($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
-
-            if (count($uploadedFiles) === 0) {
-                $this->saveImagesPathnames($imageUploadData);
+                $imagesToDelete = $orderedImages;
             }
         } else {
             $this->saveImageOrdering($orderedImages);
-            $this->saveImagesPathnames($imageUploadData);
-            $this->uploadImages($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
         }
 
-        $this->deleteImages($entity, $imageUploadData->imagesToDelete);
-    }
+        $this->saveImagesPathnames($imageUploadData);
+        $this->uploadImages($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
 
-    /**
-     * @param object $entity
-     * @param array<int, array<string,string>> $namesIndexedByImageIdAndLocale
-     * @param array<int, string> $temporaryFilenamesIndexedByImageId
-     * @param string|null $type
-     */
-    protected function uploadImage(
-        object $entity,
-        array $namesIndexedByImageIdAndLocale,
-        array $temporaryFilenamesIndexedByImageId,
-        ?string $type,
-    ): void {
-        if (count($temporaryFilenamesIndexedByImageId) > 0) {
-            $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
-            $entityId = $this->getEntityId($entity);
-            $oldImage = $this->imageRepository->findImageByEntity(
-                $imageEntityConfig->getEntityName(),
-                $entityId,
-                $type,
-            );
-
-            if ($oldImage !== null) {
-                $this->em->remove($oldImage);
-            }
-
-            $newImage = $this->imageFactory->create(
-                $imageEntityConfig->getEntityName(),
-                $entityId,
-                array_pop($namesIndexedByImageIdAndLocale),
-                array_pop($temporaryFilenamesIndexedByImageId),
-                $type,
-            );
-            $this->em->persist($newImage);
-
-            $this->em->flush();
-        }
+        $this->deleteImages($entity, $imagesToDelete);
     }
 
     /**
