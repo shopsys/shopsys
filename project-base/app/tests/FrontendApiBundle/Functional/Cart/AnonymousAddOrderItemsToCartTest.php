@@ -219,7 +219,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
 
         $expectedNotAddedProducts = [
             [
-                'name' => t('D-Link', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                'name' => t('MIO Cyclo 100, bicycle computer, 1,8"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ],
         ];
 

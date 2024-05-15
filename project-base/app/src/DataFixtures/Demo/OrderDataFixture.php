@@ -262,7 +262,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '8' => 1,
-                ProductDataFixture::PRODUCT_PREFIX . '12' => 2,
+                ProductDataFixture::PRODUCT_PREFIX . '34' => 2,
             ],
         );
 
