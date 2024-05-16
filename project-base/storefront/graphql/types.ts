@@ -1374,14 +1374,14 @@ export type TypeOrder = {
   deliveryStreet: Maybe<Scalars['String']['output']>;
   /** Contact telephone number for delivery */
   deliveryTelephone: Maybe<Scalars['String']['output']>;
-  /** Indicates whether the billing address is other than a delivery address */
-  isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
   /** The customer's email address */
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
   /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
   heurekaAgreement: Scalars['Boolean']['output'];
+  /** Indicates whether the billing address is other than a delivery address */
+  isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['output'];
   /** Indicates whether the order is paid successfully with GoPay payment type */
   isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
@@ -1476,14 +1476,14 @@ export type TypeOrderInput = {
   deliveryStreet: InputMaybe<Scalars['String']['input']>;
   /** Contact telephone number for delivery */
   deliveryTelephone: InputMaybe<Scalars['String']['input']>;
-  /** Determines whether to deliver products to a different address than the billing one */
-  isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['input'];
   /** The customer's email address */
   email: Scalars['String']['input'];
   /** The customer's first name */
   firstName: Scalars['String']['input'];
   /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */
   heurekaAgreement: Scalars['Boolean']['input'];
+  /** Determines whether to deliver products to a different address than the billing one */
+  isDeliveryAddressDifferentFromBilling: Scalars['Boolean']['input'];
   /** The customer's last name */
   lastName: Scalars['String']['input'];
   /** Allows user to subscribe/unsubscribe newsletter. */

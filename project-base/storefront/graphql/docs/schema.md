@@ -5150,15 +5150,6 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Indicates whether the billing address is other than a delivery address
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -5182,6 +5173,15 @@ The customer's first name
 <td>
 
 Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the billing address is other than a delivery address
 
 </td>
 </tr>
@@ -9096,15 +9096,6 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Determines whether to deliver products to a different address than the billing one
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -9128,6 +9119,15 @@ The customer's first name
 <td>
 
 Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Determines whether to deliver products to a different address than the billing one
 
 </td>
 </tr>

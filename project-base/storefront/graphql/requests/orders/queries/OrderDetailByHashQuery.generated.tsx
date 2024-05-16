@@ -91,7 +91,7 @@ export type TypeOrderDetailByHashQuery = { __typename?: 'Query', order: { __type
   }
 };
       export default result;
-
+    
 
 export const OrderDetailByHashQueryDocument = gql`
     query OrderDetailByHashQuery($urlHash: String) {

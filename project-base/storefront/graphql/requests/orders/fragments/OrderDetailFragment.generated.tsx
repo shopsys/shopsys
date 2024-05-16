@@ -85,7 +85,7 @@ export type TypeOrderDetailFragment = { __typename: 'Order', uuid: string, numbe
   }
 };
       export default result;
-
+    
 export const OrderDetailFragment = gql`
     fragment OrderDetailFragment on Order {
   __typename

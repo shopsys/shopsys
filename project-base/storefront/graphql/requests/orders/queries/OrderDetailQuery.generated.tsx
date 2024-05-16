@@ -91,7 +91,7 @@ export type TypeOrderDetailQuery = { __typename?: 'Query', order: { __typename: 
   }
 };
       export default result;
-
+    
 
 export const OrderDetailQueryDocument = gql`
     query OrderDetailQuery($orderNumber: String) {
