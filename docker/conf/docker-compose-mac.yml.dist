@@ -90,6 +90,12 @@ services:
             - source-code:/var/www/html
             - ./.git/:/var/www/html/.git:delegated
             - ~/.gitconfig:/home/www-data/.gitconfig
+        # Uncomment the following lines and fill values to enable Blackfire
+        #environment:
+        #    BLACKFIRE_SERVER_ID:
+        #    BLACKFIRE_SERVER_TOKEN:
+        #    BLACKFIRE_CLIENT_ID:
+        #    BLACKFIRE_CLIENT_TOKEN:
         ports:
             - "35729:35729"
 

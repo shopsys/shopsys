@@ -21,5 +21,6 @@ arrange:
     - autocompletion-for-phing-targets.md
     - required-php-configuration.md
     - shopsys-framework-on-docker.md
+    - blackfire-profiling.md
     - monorepo.md
     - faq-and-common-issues.md
