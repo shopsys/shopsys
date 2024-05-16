@@ -78,7 +78,7 @@ type AdvertImage implements Advert {
 }
 
 type AdvertPosition {
-  "Desription of advert position"
+  "Description of advert position"
   description: String!
   "Position of advert"
   positionName: String!
