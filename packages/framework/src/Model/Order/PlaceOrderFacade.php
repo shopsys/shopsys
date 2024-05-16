@@ -58,7 +58,7 @@ class PlaceOrderFacade
             $discount->promoCode->decreaseRemainingUses();
         }
 
-        $order = $this->createOrder($orderData);
+        $order = $this->createOrderOnly($orderData);
 
         $customerUser = $order->getCustomerUser();
 
@@ -83,7 +83,7 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(OrderData $orderData): Order
+    public function createOrderOnly(OrderData $orderData): Order
     {
         if ($orderData->status === null) {
             $status = $this->orderStatusRepository->getDefault();
