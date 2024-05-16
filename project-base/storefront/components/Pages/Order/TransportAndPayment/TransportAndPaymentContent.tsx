@@ -1,42 +1,24 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
-import { getTransportAndPaymentValidationMessages, useLoadTransportAndPaymentFromLastOrder } from './utils';
+import {
+    getTransportAndPaymentValidationMessages,
+    useLoadTransportAndPaymentFromLastOrder,
+    useTransportAndPaymentPageNavigation,
+} from './utils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
-import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTransportsQuery } from 'graphql/requests/transports/queries/TransportsQuery.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
-import { useSessionStore } from 'store/useSessionStore';
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-
-const ErrorPopup = dynamic(
-    () => import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
-    {
-        ssr: false,
-    },
-);
 
 export const TransportAndPaymentContent: FC = () => {
-    const router = useRouter();
-    const { url } = useDomainConfig();
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-    const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
-        ['/cart', '/order/contact-information'],
-        url,
-    );
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
@@ -49,9 +31,6 @@ export const TransportAndPaymentContent: FC = () => {
         changeTransportInCart,
         changePaymentInCart,
     );
-
-    const isLoading = isLoadingTransportAndPaymentFromLastOrder || areTransportsLoading;
-
     const validationMessages = getTransportAndPaymentValidationMessages(
         transport,
         pickupPlace,
@@ -59,61 +38,43 @@ export const TransportAndPaymentContent: FC = () => {
         paymentGoPayBankSwift,
         t,
     );
-
-    const onSelectTransportAndPaymentHandler = () => {
-        if (hasValidationErrors(validationMessages)) {
-            updatePortalContent(
-                <ErrorPopup
-                    fields={validationMessages}
-                    gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
-                />,
-            );
-
-            return;
-        }
-
-        router.push(contactInformationUrl);
-    };
-
-    const canContentBeDisplayed = useOrderPagesAccess('transport-and-payment');
+    const { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage } =
+        useTransportAndPaymentPageNavigation(validationMessages);
 
     return (
-        <OrderLayout>
-            {!isLoading && canContentBeDisplayed ? (
-                <OrderContentWrapper
-                    activeStep={2}
-                    isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
-                >
-                    {!!transportsData?.transports.length && (
-                        <TransportAndPaymentSelect
-                            changePaymentInCart={changePaymentInCart}
-                            changeTransportInCart={changeTransportInCart}
-                            isTransportSelectionLoading={isTransportSelectionLoading}
-                            lastOrderPickupPlace={lastOrderPickupPlace}
-                            transports={transportsData.transports}
-                        />
-                    )}
-
-                    <OrderAction
-                        withGapBottom
-                        withGapTop
-                        buttonBack={t('Back')}
-                        buttonBackLink={cartUrl}
-                        buttonNext={t('Contact information')}
-                        nextStepClickHandler={onSelectTransportAndPaymentHandler}
-                        hasDisabledLook={
-                            hasValidationErrors(validationMessages) ||
-                            isTransportSelectionLoading ||
-                            isPaymentSelectionLoading
-                        }
-                        isLoading={
-                            (isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment
-                        }
+        <OrderLayout
+            isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsLoading}
+            page="transport-and-payment"
+        >
+            <OrderContentWrapper
+                activeStep={2}
+                isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
+            >
+                {!!transportsData?.transports.length && (
+                    <TransportAndPaymentSelect
+                        changePaymentInCart={changePaymentInCart}
+                        changeTransportInCart={changeTransportInCart}
+                        isTransportSelectionLoading={isTransportSelectionLoading}
+                        lastOrderPickupPlace={lastOrderPickupPlace}
+                        transports={transportsData.transports}
                     />
-                </OrderContentWrapper>
-            ) : (
-                <SkeletonOrderContent />
-            )}
+                )}
+
+                <OrderAction
+                    withGapBottom
+                    withGapTop
+                    backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
+                    buttonBack={t('Back')}
+                    buttonNext={t('Contact information')}
+                    isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
+                    nextStepClickHandler={goToNextStepFromTransportAndPaymentPage}
+                    hasDisabledLook={
+                        hasValidationErrors(validationMessages) ||
+                        isTransportSelectionLoading ||
+                        isPaymentSelectionLoading
+                    }
+                />
+            </OrderContentWrapper>
         </OrderLayout>
     );
 };

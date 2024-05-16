@@ -1,21 +1,24 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { ContactInformationWrapper } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import { CountriesQueryDocument } from 'graphql/requests/countries/queries/CountriesQuery.generated';
-import { useOrderPagesAccess } from 'utils/cart/useOrderPagesAccess';
+import { GtmPageType } from 'gtm/enums/GtmPageType';
+import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
+import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
-    const canContentBeDisplayed = useOrderPagesAccess('contact-information');
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
+    useGtmPageViewEvent(gtmStaticPageViewEvent);
+    useGtmContactInformationPageViewEvent(gtmStaticPageViewEvent);
 
     return (
         <>
             <MetaRobots content="noindex" />
-
-            <OrderLayout>
-                {canContentBeDisplayed ? <ContactInformationWrapper /> : <SkeletonOrderContent />}
+            <OrderLayout page="contact-information">
+                <ContactInformationWrapper />
             </OrderLayout>
         </>
     );

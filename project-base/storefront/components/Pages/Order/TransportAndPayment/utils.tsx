@@ -14,11 +14,13 @@ import {
 } from 'graphql/requests/stores/queries/StoreQuery.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { Maybe } from 'graphql/types';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmPickupPlaceFromLastOrder } from 'gtm/mappers/getGtmPickupPlaceFromLastOrder';
 import { getGtmPickupPlaceFromStore } from 'gtm/mappers/getGtmPickupPlaceFromStore';
 import { Translate } from 'next-translate';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
@@ -27,11 +29,20 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const PickupPlacePopup = dynamic(
     () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
+    {
+        ssr: false,
+    },
+);
+
+const ErrorPopup = dynamic(
+    () => import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
     {
         ssr: false,
     },
@@ -331,4 +342,38 @@ export const useLoadTransportAndPaymentFromLastOrder = (
     }, [!cart]);
 
     return [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace];
+};
+
+export const useTransportAndPaymentPageNavigation = (validationMessages: Partial<TransportAndPaymentErrorsType>) => {
+    const { url } = useDomainConfig();
+    const router = useRouter();
+    const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
+        ['/cart', '/order/contact-information'],
+        url,
+    );
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+
+    const goToPreviousStepFromTransportAndPaymentPage = () => {
+        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'cart' });
+        router.push(cartUrl);
+    };
+
+    const goToNextStepFromTransportAndPaymentPage = () => {
+        if (hasValidationErrors(validationMessages)) {
+            updatePortalContent(
+                <ErrorPopup
+                    fields={validationMessages}
+                    gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                />,
+            );
+
+            return;
+        }
+
+        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'contact-information' });
+        router.push(contactInformationUrl);
+    };
+
+    return { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage };
 };

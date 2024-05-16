@@ -6,7 +6,6 @@ import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
@@ -42,12 +41,6 @@ export const ContactInformationEmail: FC = () => {
     const openLoginPopup = () => {
         updatePortalContent(<LoginPopup shouldOverwriteCustomerUserCart defaultEmail={emailValue} />);
     };
-
-    useEffect(() => {
-        if (isUserLoggedIn) {
-            updatePortalContent(null);
-        }
-    }, [isUserLoggedIn]);
 
     return (
         <>

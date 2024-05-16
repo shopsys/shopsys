@@ -9,6 +9,10 @@ const CUSTOM_PAGE_TYPES = [
     'orders',
     'order',
     'productMainVariant',
+    'transport-and-payment',
+    'contact-information',
+    'cart',
+    'order-confirmation',
 ] as const;
 
 export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];

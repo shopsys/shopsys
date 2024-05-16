@@ -38,7 +38,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData, fetching }] = useOrderSentPageContentQuery({
+    const [{ data: orderSentPageContentData, fetching: isFetching }] = useOrderSentPageContentQuery({
         variables: { orderUuid: orderUuid! },
     });
 
@@ -50,12 +50,15 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <CommonLayout title={t('Thank you for your order')}>
+            <CommonLayout
+                isFetchingData={isFetching}
+                pageTypeOverride="order-confirmation"
+                title={t('Thank you for your order')}
+            >
                 <Webline tid={TIDs.pages_orderconfirmation}>
                     <ConfirmationPageContent
                         content={orderSentPageContentData?.orderSentPageContent}
                         heading={t('Your order was created')}
-                        isFetching={fetching}
                         AdditionalContent={
                             orderPaymentType === PaymentTypeEnum.GoPay ? (
                                 <GoPayGateway orderUuid={orderUuid!} />

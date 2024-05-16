@@ -2,9 +2,9 @@ import { ContactInformationFormContent } from './ContactInformationFormContent';
 import { ContactInformationEmail } from './FormBlocks/ContactInformationEmail';
 import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformationSendOrderButton';
 import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
+import { useContactInformationPageNavigation, useShouldDisplayContactInformationForm } from './utils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
-import { SkeletonPageConfirmation } from 'components/Blocks/Skeleton/SkeletonPageConfirmation';
 import { Form } from 'components/Forms/Form/Form';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
@@ -12,19 +12,14 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { useCreateOrderMutation } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
-import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
 import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
-import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
-import { useState } from 'react';
-import { useWatch, SubmitHandler, FormProvider } from 'react-hook-form';
+import { SubmitHandler, FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -41,11 +36,7 @@ export const ContactInformationWrapper: FC = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
-    const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
-        ['/order/transport-and-payment', '/order-confirmation'],
-        domainConfig.url,
-    );
-    const [orderCreating, setOrderCreating] = useState(false);
+    const [orderConfirmationUrl] = getInternationalizedStaticUrls(['/order-confirmation'], domainConfig.url);
     const currentCart = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();
     const { t } = useTranslation();
@@ -53,21 +44,15 @@ export const ContactInformationWrapper: FC = () => {
     const [formProviderMethods, defaultValues] = useContactInformationForm();
 
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const user = useCurrentCustomerData();
     const userContactInformation = useCurrentUserContactInformation();
-    const isEmailFilledCorrectly = !!emailValue && !formProviderMethods.formState.errors.email;
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
-
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
-    useGtmPageViewEvent(gtmStaticPageViewEvent);
-    useGtmContactInformationPageViewEvent(gtmStaticPageViewEvent);
+    const shouldDisplayContactInformationForm = useShouldDisplayContactInformationForm(formProviderMethods, formMeta);
+    const { goToPreviousStepFromContactInformationPage } = useContactInformationPageNavigation();
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.contact_information_page);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
-        setOrderCreating(true);
-
         let deliveryInfo = {
             deliveryFirstName: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryFirstName : '',
             deliveryLastName: formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryLastName : '',
@@ -197,8 +182,6 @@ export const ContactInformationWrapper: FC = () => {
             return;
         }
 
-        setOrderCreating(false);
-
         if (
             createOrderResult.data &&
             !createOrderResult.data.CreateOrder.orderCreated &&
@@ -217,10 +200,6 @@ export const ContactInformationWrapper: FC = () => {
         );
     };
 
-    if (orderCreating) {
-        return <SkeletonPageConfirmation />;
-    }
-
     return (
         <OrderContentWrapper activeStep={3}>
             <FormProvider {...formProviderMethods}>
@@ -228,15 +207,16 @@ export const ContactInformationWrapper: FC = () => {
                     tid={TIDs.contact_information_form}
                     onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}
                 >
-                    <>
-                        <ContactInformationEmail />
-                        {isEmailFilledCorrectly && <ContactInformationFormContent />}
-                        <ContactInformationSendOrderButton />
-                    </>
+                    <ContactInformationEmail />
+
+                    {shouldDisplayContactInformationForm && <ContactInformationFormContent />}
+
+                    <ContactInformationSendOrderButton />
+
                     <OrderAction
                         withGapBottom
+                        backStepClickHandler={goToPreviousStepFromContactInformationPage}
                         buttonBack={t('Back')}
-                        buttonBackLink={transportAndPaymentUrl}
                         buttonNext={t('Submit order')}
                         hasDisabledLook={!formProviderMethods.formState.isValid}
                         isLoading={fetching}
