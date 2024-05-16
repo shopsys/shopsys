@@ -48,7 +48,7 @@ class LoginAsUserFacade
      * @param int $customerUserId
      * @return array{accessToken: string, refreshToken: string}
      */
-    public function loginAsCustomerUserAndGetAccessAndRefreshToken(int $customerUserId): array
+    public function loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken(int $customerUserId): array
     {
         if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
             throw new LoginAsRememberedUserException('Access denied');
