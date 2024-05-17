@@ -13,12 +13,12 @@ use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 
 class FileThumbnailExtensionTest extends TestCase
 {
-    public function testGetFileThumbnailInfoByTemporaryFilenameBrokenImage()
+    public function testGetFileThumbnailInfoByTemporaryFilenameBrokenImage(): void
     {
         $temporaryFilename = 'filename.jpg';
 
         $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->setMethods(['getTemporaryFilepath'])
+            ->onlyMethods(['getTemporaryFilepath'])
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
@@ -27,7 +27,7 @@ class FileThumbnailExtensionTest extends TestCase
 
         $exception = new FileIsNotSupportedImageException($temporaryFilename);
         $imageThumbnailFactoryMock = $this->getMockBuilder(ImageThumbnailFactory::class)
-            ->setMethods(['getImageThumbnail'])
+            ->onlyMethods(['getImageThumbnail'])
             ->disableOriginalConstructor()
             ->getMock();
         $imageThumbnailFactoryMock->expects($this->once())->method('getImageThumbnail')->willThrowException(
@@ -41,13 +41,13 @@ class FileThumbnailExtensionTest extends TestCase
         $this->assertNull($fileThumbnailInfo->getImageUri());
     }
 
-    public function testGetFileThumbnailInfoByTemporaryFilenameImage()
+    public function testGetFileThumbnailInfoByTemporaryFilenameImage(): void
     {
         $temporaryFilename = 'filename.jpg';
         $encodedData = 'encodedData';
 
         $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->setMethods(['getTemporaryFilepath'])
+            ->onlyMethods(['getTemporaryFilepath'])
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
@@ -56,14 +56,15 @@ class FileThumbnailExtensionTest extends TestCase
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Intervention\Image\Image $imageMock */
         $imageMock = $this->getMockBuilder(Image::class)
-            ->setMethods(['encode'])
+            ->onlyMethods(['encode', '__call'])
             ->disableOriginalConstructor()
             ->getMock();
         $imageMock->expects($this->once())->method('encode')->willReturnSelf();
+        $imageMock->expects($this->once())->method('__call')->with('destroy');
         $imageMock->setEncoded($encodedData);
 
         $imageThumbnailMock = $this->getMockBuilder(ImageThumbnailFactory::class)
-            ->setMethods(['getImageThumbnail'])
+            ->onlyMethods(['getImageThumbnail'])
             ->disableOriginalConstructor()
             ->getMock();
         $imageThumbnailMock->expects($this->once())->method('getImageThumbnail')->willReturn($imageMock);
@@ -75,12 +76,12 @@ class FileThumbnailExtensionTest extends TestCase
         $this->assertSame($encodedData, $fileThumbnailInfo->getImageUri());
     }
 
-    public function testGetFileThumbnailInfoByTemporaryFilenameImageDocument()
+    public function testGetFileThumbnailInfoByTemporaryFilenameImageDocument(): void
     {
         $temporaryFilename = 'filename.doc';
 
         $fileUploadMock = $this->getMockBuilder(FileUpload::class)
-            ->setMethods(['getTemporaryFilepath'])
+            ->onlyMethods(['getTemporaryFilepath'])
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
@@ -89,7 +90,7 @@ class FileThumbnailExtensionTest extends TestCase
 
         $exception = new FileIsNotSupportedImageException($temporaryFilename);
         $imageThumbnailFactoryMock = $this->getMockBuilder(ImageThumbnailFactory::class)
-            ->setMethods(['getImageThumbnail'])
+            ->onlyMethods(['getImageThumbnail'])
             ->disableOriginalConstructor()
             ->getMock();
         $imageThumbnailFactoryMock->expects($this->once())->method('getImageThumbnail')->willThrowException(

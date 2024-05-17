@@ -12,9 +12,9 @@ use Symfony\Bridge\Monolog\Logger;
 
 class DomainIconResizer
 {
-    protected const DOMAIN_ICON_WIDTH = 46;
-    protected const DOMAIN_ICON_HEIGHT = 26;
-    protected const DOMAIN_ICON_CROP = false;
+    protected const int DOMAIN_ICON_WIDTH = 46;
+    protected const int DOMAIN_ICON_HEIGHT = 26;
+    protected const bool DOMAIN_ICON_CROP = false;
 
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
@@ -33,8 +33,11 @@ class DomainIconResizer
      * @param string $filepath
      * @param string $domainImagesDirectory
      */
-    public function convertToDomainIconFormatAndSave($domainId, $filepath, $domainImagesDirectory)
-    {
+    public function convertToDomainIconFormatAndSave(
+        int $domainId,
+        string $filepath,
+        string $domainImagesDirectory,
+    ): void {
         $resizedImage = $this->imageProcessor->resize(
             $this->imageProcessor->createInterventionImage($filepath),
             static::DOMAIN_ICON_WIDTH,
@@ -48,6 +51,7 @@ class DomainIconResizer
         try {
             $this->filesystem->delete($targetFilePath);
             $this->filesystem->write($targetFilePath, $resizedImage->getEncoded());
+            $resizedImage->destroy();
         } catch (Exception $ex) {
             $message = 'Move file from temporary directory to domain directory failed';
             $moveToFolderFailedException = new MoveToFolderFailedException(
