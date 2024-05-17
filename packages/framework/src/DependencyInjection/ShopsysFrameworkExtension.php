@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
@@ -65,6 +66,9 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
             $config['order']['processing_middlewares'],
             $container,
         );
+
+        $container->registerForAutoconfiguration(TransactionalMasterRequestConditionProviderInterface::class)
+            ->addTag('shopsys.transactional_master_request_condition_provider');
     }
 
     /**

@@ -299,6 +299,8 @@ services:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
+        arguments:
+            $transactionalMasterRequestConditionProviders: !tagged shopsys.transactional_master_request_condition_provider
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

@@ -104,7 +104,6 @@
         "symfony/polyfill-php80": "^1.24.0",
         "tracy/tracy": "^2.4.13",
         "twig/twig": "^3.5.0 <3.10.0",
-        "webonyx/graphql-php": "^15.6",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {

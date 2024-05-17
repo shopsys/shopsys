@@ -957,6 +957,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
                 // ...
         +       protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         ```
+-   `Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        +       protected readonly Traversable $transactionalMasterRequestConditionProviders,
+                protected readonly EntityManagerInterface $em,
+        ```
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
     -   `FormBuilderHelper` class
     -   `ArrayWithPaginationDataSource` class
