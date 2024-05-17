@@ -22,7 +22,7 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export type OrderConfirmationQuery = {
+export type OrderConfirmationUrlQuery = {
     orderUuid: string | undefined;
     orderEmail: string | undefined;
     orderPaymentType: string | undefined;
@@ -33,7 +33,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
     const { fetchCart } = useCurrentCart(false);
-    const { orderUuid, orderPaymentType } = query as OrderConfirmationQuery;
+    const { orderUuid, orderPaymentType } = query as OrderConfirmationUrlQuery;
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -73,7 +73,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    const { orderUuid, orderEmail } = context.query as OrderConfirmationQuery;
+    const { orderUuid, orderEmail } = context.query as OrderConfirmationUrlQuery;
 
     if (!orderUuid || !orderEmail) {
         return {

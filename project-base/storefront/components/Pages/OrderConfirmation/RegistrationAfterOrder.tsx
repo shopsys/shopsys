@@ -11,7 +11,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { OrderConfirmationQuery } from 'pages/order-confirmation';
+import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -30,7 +30,7 @@ export const RegistrationAfterOrder: FC = () => {
     const register = useRegistration();
     const isInvalidRegistrationRef = useRef(false);
     const { query } = useRouter();
-    const { orderUuid, orderEmail, registrationData } = query as OrderConfirmationQuery;
+    const { orderUuid, orderEmail, registrationData } = query as OrderConfirmationUrlQuery;
     const isUserLoggedIn = useIsUserLoggedIn();
     const parsedRegistrationData = useRef<ContactInformation | undefined>(
         registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
