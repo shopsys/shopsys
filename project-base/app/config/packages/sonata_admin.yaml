@@ -11,6 +11,8 @@ sonata_admin:
     options:
         default_group: Orders
     show_mosaic_button: false
+    templates:
+        list: '@ShopsysAdministration/CRUD/list.html.twig'
     title: 'Shopsys Platform admin'
     title_logo: public/admin/images/logo.svg
 

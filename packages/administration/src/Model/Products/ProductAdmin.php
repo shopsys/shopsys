@@ -35,7 +35,14 @@ class ProductAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list->addIdentifier('id');
-        $list->add('name');
+        $list->add(
+            'name',
+            null,
+            [
+                'label_icon' => 'fas fa-thumbs-up',
+                'help' => 'This is a name of the product... duh!',
+            ],
+        );
         $list->add('catnum');
         $list->add('sellingDenied');
 
