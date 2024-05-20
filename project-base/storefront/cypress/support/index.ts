@@ -8,7 +8,10 @@ import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
-const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = ['#newsletter-form-privacyPolicy', TIDs.simple_header_contact];
+const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
+    '[for="newsletter-form-privacyPolicy"]',
+    TIDs.simple_header_contact,
+];
 
 Cypress.Commands.add(
     'getByTID',
