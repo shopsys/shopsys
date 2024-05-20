@@ -37,7 +37,7 @@ class AdministratorAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form->with('Basic Information', ['class' => 'col-md-9'])
-                ->add('username', TextType::class)
+            ->add('username', TextType::class)
             ->add('realName')
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
@@ -46,7 +46,7 @@ class AdministratorAdmin extends AbstractAdmin
                 'required' => $this->isCurrentRoute('create'),
             ])
             ->end()
-        ->with('Security', ['class' => 'col-md-3'])
+            ->with('Security', ['class' => 'col-md-3'])
             ->add('roleGroup', ChoiceFieldMaskType::class, [
                 'choices' => $this->administratorRoleGroupFacade->getAll(),
                 'required' => false,
@@ -66,7 +66,7 @@ class AdministratorAdmin extends AbstractAdmin
                 'required' => false,
                 'multiple' => true,
             ])
-        ->end();
+            ->end();
     }
 
     /**
@@ -89,6 +89,9 @@ class AdministratorAdmin extends AbstractAdmin
         $list->add(ListMapper::NAME_ACTIONS, null, [
             'actions' => [
                 'edit' => [],
+                'clone' => [
+                    'template' => '@ShopsysAdministration/Administrator/clone_button.html.twig',
+                ],
                 'delete' => [],
             ],
         ]);
@@ -100,6 +103,7 @@ class AdministratorAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->remove('show');
+        $collection->add('clone', $this->getRouterIdParameter() . '/clone');
     }
 
     /**
