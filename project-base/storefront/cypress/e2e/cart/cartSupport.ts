@@ -1,5 +1,6 @@
 import { fillInEmailAndPasswordInLoginPopup } from 'e2e/authentication/authenticationSupport';
-import { buttonName } from 'fixtures/demodata';
+import { buttonName, url } from 'fixtures/demodata';
+import { checkUrl } from 'support';
 import { TIDs } from 'tids';
 
 export const increaseCartItemQuantityWithSpinbox = (catnum: string) => {
@@ -50,11 +51,13 @@ export const searchProductByNameWithAutocomplete = (productName: string) => {
 
 export const goToCartPageFromHeader = () => {
     cy.getByTID([TIDs.header_cart_link]).click();
+    checkUrl(url.cart);
     cy.waitForStableAndInteractiveDOM();
 };
 
 export const goToHomepageFromHeader = () => {
     cy.getByTID([TIDs.header_homepage_link]).click();
+    checkUrl('/');
     cy.waitForStableAndInteractiveDOM();
 };
 

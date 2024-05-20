@@ -1,5 +1,6 @@
-import { buttonName, placeholder } from 'fixtures/demodata';
+import { buttonName, placeholder, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
+import { checkUrl } from 'support';
 import { TIDs } from 'tids';
 
 export const clickOnUserIconInHeader = () => {
@@ -9,6 +10,7 @@ export const clickOnUserIconInHeader = () => {
 export const goToRegistrationPageFromHeader = () => {
     clickOnUserIconInHeader();
     cy.getByTID([TIDs.login_popup_register_button]).click();
+    checkUrl(url.registration);
     cy.waitForStableAndInteractiveDOM();
 };
 

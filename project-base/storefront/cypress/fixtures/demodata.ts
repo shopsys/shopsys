@@ -134,7 +134,7 @@ export const url = {
         transportAndPayment: '/order/transport-and-payment',
         contactInformation: '/order/contact-information',
         orderConfirmation: '/order-confirmation',
-        orderDetail: '/order-detail/',
+        orderDetail: '/order-detail',
     },
     login: '/login',
     loginWithCustomerRedirect: '/login?r=customer',
