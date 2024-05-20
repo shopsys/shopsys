@@ -1279,3 +1279,24 @@ On Chrome there was issue when clicking on next/previous button while slider is 
 
 -   INTERNAL_ENDPOINT env variable is defined with trailing slash, so any usage of it should not include slash at the beginning of the path
 -   update your usages in a similar way as in the PR
+
+#### order process refactoring ([#3155](https://github.com/shopsys/shopsys/pull/3155))
+
+-   `useCurrentCart` hook now returns `isCartFetchingOrUnavailable` instead of `isFetching`, which is also based on auth loading and cart not being `undefined`, so you should use this boolean pointer instead
+    -   this means you also do not have to check for auth loading and cart being `undefined`, as this is already part of the pointer
+-   `isWithCart` is not returned from `useCurrentCart` anymore, as it was only necessary inside the hook
+    -   if you need this pointer, you should keep it
+-   order actions (back and next) are now both buttons and always accept callbacks/handlers, instead of links
+-   `SkeletonManager` now accepts `pageTypeOverride`, which can be used to set the page loading type even for the first render
+    -   this is helpful for pagers where we want to display skeletons even for the first load (cart page, order process pages)
+    -   with these changes, you can apply `SkeletonManager` anywhere in the app
+-   `OrderLayout` now also contains `SkeletonManager`, so you can add a page type for all order process pages
+    -   if you have any other layout, you can add `SkeletonManager` there as well
+-   contact information page's logic was moved outside from the components (into utils)
+-   delivery address UUID is now `new-delivery-address` if the user wants to fill a new delivery address, so you should change any conditions you might have where you check for it being an empty string
+-   cypress `goTo` actions should have a check for the URL to which the test navigated, so make sure your `goTo` actions contain it
+-   if your tests fill in a delivery address and then check that it is correctly changed, you should use `deliveryAddress2` from the demodata for the second (changed) delivery address in order to better check that everything works as expected
+-   you should rename all `fetching`, `isFetching`, `loading`, and `isLoading` variables to more descriptive names, such as `isProductFetching`
+-   you should rename all `result`, `response`, and `data` variables to more descriptive names, such as `productDetailData`
+-   you should rename all mutation fetching states to names that describe what is happening, e.g. from `isCreateOrderMutationFetching` to `isCreatingOrder`
+-   you should rename all your `utils.ts` and `utils.tsx` files to more descriptive names, such as `lastVisitedProductsUtils.ts`
