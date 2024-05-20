@@ -29,6 +29,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     });
     const showAddressSelection = !!user?.deliveryAddresses.length && !pickupPlace;
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
+    const isNewDeliveryAddressSelected = deliveryAddressUuid === 'new-delivery-address';
 
     if (!countriesAsSelectOptions.length) {
         return null;
@@ -86,7 +87,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         <strong>{t('Different delivery address')}</strong>
                                                     </p>
                                                 ),
-                                                value: '',
+                                                value: 'new-delivery-address',
                                                 id: '-new-delivery-address',
                                             },
                                         ]}
@@ -105,7 +106,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                 </div>
                             </FormLine>
                         )}
-                        {(!user?.deliveryAddresses.length || deliveryAddressUuid === '' || !!pickupPlace) && (
+                        {(!user?.deliveryAddresses.length || isNewDeliveryAddressSelected || !!pickupPlace) && (
                             <>
                                 <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                     <TextInputControlled
