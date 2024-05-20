@@ -29,6 +29,17 @@ export const deliveryAddress = {
     country: 'CZ',
 };
 
+export const deliveryAddress2 = {
+    firstName: 'Tomáš',
+    lastName: 'Marný',
+    company: 'Márnice s.r.o',
+    phone: '283918439',
+    street: 'Marné Město 153/13b',
+    city: 'Marné Město',
+    postCode: '73963',
+    country: 'CZ',
+};
+
 export const link = {
     orderDetail: 'Track',
     myAccount: 'My account',
