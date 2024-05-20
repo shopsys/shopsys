@@ -1002,3 +1002,7 @@ takeSnapshotAndCompare(this.test?.title, 'something to add');
 
 -   it is now possible to remove pointer events from elements during cypress screenshots, so you should use this if you have problems with failing screenshots because of different hover/active states
 -   as always, read the docs regarding our cypress tests to learn more
+
+#### implement new base design + product page ([#3132](https://github.com/shopsys/shopsys/pull/3132))
+
+We want to implement more usable UI design which will be better base for upcoming projects. These changes are about new design for basic stuff like colors and base elements + design for whole product page.

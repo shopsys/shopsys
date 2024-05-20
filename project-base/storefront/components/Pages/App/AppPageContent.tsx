@@ -1,5 +1,5 @@
 import { DeferredLoaders } from './DeferredLoaders';
-import { Fonts } from './Fonts';
+import { Fonts, ralewayFont } from './Fonts';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { DeferredSymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/DeferredSymfonyDebugToolbar';
 import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserConsent';
@@ -31,14 +31,17 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     }
 
     return (
-        <GtmProvider>
-            <Fonts />
-            <DeferredLoaders />
-            <DeferredGtmHeadScript />
-            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-            <Component {...pageProps} />
-            <DeferredSymfonyDebugToolbar />
-            <DeferredUserConsent url={pageProps.domainConfig.url} /> <Portal />
-        </GtmProvider>
+        <div className={ralewayFont.variable}>
+            <GtmProvider>
+                <Fonts />
+                <DeferredLoaders />
+                <DeferredGtmHeadScript />
+                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+                <Component {...pageProps} />
+                <DeferredSymfonyDebugToolbar />
+                <DeferredUserConsent url={pageProps.domainConfig.url} />
+                <Portal />
+            </GtmProvider>
+        </div>
     );
 };

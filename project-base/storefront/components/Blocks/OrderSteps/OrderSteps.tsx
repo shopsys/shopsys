@@ -16,7 +16,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     );
 
     return (
-        <ul className="mb-6 flex justify-between border-b border-greyLighter p-0 lg:mb-3">
+        <ul className="mb-6 flex justify-between border-b border-graySlate p-0 lg:mb-3">
             <OrderStepsListItem>
                 {activeStep > 1 ? (
                     <OrderStepsListItemLink isClickable href={cartUrl} isActive={false}>
@@ -64,5 +64,11 @@ const OrderStepsListItemLink: FC<OrderStepsListItemLinkProps> = ({ children, isA
         </span>
     );
 
-    return href ? <ExtendedNextLink href={href}>{Component}</ExtendedNextLink> : Component;
+    return href ? (
+        <ExtendedNextLink className="no-underline" href={href}>
+            {Component}
+        </ExtendedNextLink>
+    ) : (
+        Component
+    );
 };

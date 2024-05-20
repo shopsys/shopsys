@@ -122,7 +122,7 @@ export const ContactContent: FC = () => {
                                 }}
                             />
                         </div>
-                        <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid} variant="primary">
+                        <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
                             {t('Send message')}
                         </SubmitButton>
                     </Form>

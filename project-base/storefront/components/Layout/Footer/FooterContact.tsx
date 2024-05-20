@@ -8,9 +8,9 @@ export const FooterContact: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3 text-center uppercase text-white">{t('Follow Us')}</div>
+            <div className="h4 mb-3 text-center uppercase text-white">{t('Follow Us')}</div>
 
-            <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-greyLight">
+            <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-graySlate">
                 <FooterContactSocialsItem href="#" title="Instagram">
                     <InstagramIcon className="w-8 text-white" />
                 </FooterContactSocialsItem>
@@ -41,8 +41,8 @@ const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ childre
 );
 
 const FooterContactLangsItem: FC<{ href: string; text: string }> = ({ children, href, text }) => (
-    <a className="flex items-center hover:text-greyLight hover:no-underline" href={href}>
+    <a className="flex items-center hover:text-graySlate hover:no-underline" href={href}>
         {children}
-        <span className="ml-2 text-sm text-greyLight">{text}</span>
+        <span className="ml-2 text-sm text-graySlate">{text}</span>
     </a>
 );

@@ -79,7 +79,7 @@ export const AutocompleteSearch: FC = () => {
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
-                    className="w-full border-2 border-white max-vl:border-primaryLight"
+                    className="w-full border-2 border-white"
                     isLoading={isFetchingSearchData}
                     label={t("Type what you're looking for")}
                     value={searchQueryValue}
@@ -90,7 +90,7 @@ export const AutocompleteSearch: FC = () => {
 
                 <div
                     className={twJoin(
-                        'absolute left-0 -bottom-3 z-aboveOverlay flex w-full origin-top translate-y-full scale-y-90 flex-col gap-6 rounded bg-creamWhite p-5 px-7 pb-6 shadow-md transition-all lg:rounded',
+                        'absolute left-0 -bottom-3 z-aboveOverlay flex w-full origin-top translate-y-full scale-y-90 flex-col gap-6 rounded bg-white p-5 px-7 pb-6 shadow-md transition-all lg:rounded',
                         isSearchResultsPopupVisible
                             ? 'pointer-events-auto scale-y-100 opacity-100'
                             : 'pointer-events-none opacity-0',

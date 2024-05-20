@@ -38,16 +38,16 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     inputType === 'text-input' &&
                         'top-2 text-xs peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        'absolute left-3 z-[2] block text-sm text-grey transition-all',
+                        'absolute left-3 z-[2] block text-sm text-skyBlue transition-all',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         (selectBoxLabelIsFloated === undefined || selectBoxLabelIsFloated === true) &&
                         'transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:transform-none',
                     (inputType === 'checkbox' || inputType === 'radio') && [
                         'group relative flex w-full cursor-pointer items-center gap-3 text-base text-dark',
-                        disabled && 'cursor-no-drop text-grey opacity-60',
+                        disabled && 'cursor-no-drop text-skyBlue opacity-60',
                     ],
                     inputType === 'checkbox' && [
-                        '[&>a]:text-dark [&>a]:hover:text-orange [&>a]:focus:text-orange [&>a]:active:text-orange',
+                        '[&>a]:text-dark [&>a]:hover:text-secondary [&>a]:focus:text-secondary [&>a]:active:text-secondary',
                     ],
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',
@@ -55,19 +55,19 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     ],
                     inputType === 'textarea' &&
                         'top-2 text-xs peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs',
-                    disabled && 'text-grey',
+                    disabled && 'text-skyBlue',
                     className,
                 )}
             >
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <div
                         className={twMergeCustom(
-                            'flex h-5 w-5 border border-greyDark bg-white p-[3px] text-white transition group-hover:border-orange group-active:border-orange',
-                            inputType === 'checkbox' ? 'rounded' : 'rounded-full p-1',
+                            'flex w-5 border border-skyBlue bg-white p-[3px] text-white transition group-hover:border-primary group-active:border-primary',
+                            inputType === 'checkbox' ? 'rounded h-5' : 'rounded-full p-1 h-[19px]',
                             'group-active:outline group-active:outline-1 group-active:outline-blue',
-                            checked && 'border-orange bg-orange',
+                            checked && 'border-primary bg-primary',
                             disabled &&
-                                'border-grey outline-0 group-hover:border-grey group-active:border-grey group-active:outline-0',
+                                'border-skyBlue outline-0 group-hover:border-skyBlue group-active:border-skyBlue group-active:outline-0',
                         )}
                     >
                         {inputType === 'checkbox' ? (
@@ -75,7 +75,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                                 className={twMergeCustom(
                                     'h-full opacity-0 transition',
                                     checked && 'opacity-100',
-                                    disabled && 'text-grey',
+                                    disabled && 'text-skyBlue',
                                 )}
                             />
                         ) : (
@@ -83,7 +83,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                                 className={twMergeCustom(
                                     'h-full w-full rounded-full bg-white opacity-0 transition',
                                     checked && 'opacity-100',
-                                    disabled && 'border- bg-grey',
+                                    disabled && 'border- bg-skyBlue',
                                 )}
                             />
                         )}

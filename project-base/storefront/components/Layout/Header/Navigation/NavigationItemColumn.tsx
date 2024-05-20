@@ -14,7 +14,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                     <li key={columnCategoryIndex}>
                         <ExtendedNextLink
-                            className="mb-4 flex justify-center rounded bg-dark bg-opacity-5 p-2"
+                            className="mb-4 flex justify-center rounded bg-whiteSnow p-2"
                             href={columnCategory.slug}
                             type="category"
                             onClick={onLinkClick}

@@ -14,7 +14,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
             {items.map((item) => (
                 <li key={item.uuid}>
                     <ExtendedNextLink
-                        className="block text-sm text-greyLight no-underline hover:text-greyLight"
+                        className="block text-sm text-graySlate no-underline hover:text-graySlate"
                         href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                         target={item.external ? '_blank' : undefined}

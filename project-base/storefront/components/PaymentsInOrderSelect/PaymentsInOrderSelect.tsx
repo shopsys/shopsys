@@ -104,7 +104,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                         ))}
                     </ul>
                     <div className="flex flex-col items-center gap-2">
-                        <span className="flex items-center gap-2 text-sm text-greyLight vl:text-base">
+                        <span className="flex items-center gap-2 text-sm text-graySlate vl:text-base">
                             {t('The price of your order may change by the price of the payment')}
                             <InfoIcon />
                         </span>

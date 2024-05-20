@@ -148,7 +148,6 @@ export const RegistrationAfterOrder: FC = () => {
                                 isWithDisabledLook={!formProviderMethods.formState.isValid}
                                 style={{ width: '100%' }}
                                 tid={TIDs.registration_after_order_submit_button}
-                                variant="primary"
                             >
                                 {t('Create account')}
                             </SubmitButton>

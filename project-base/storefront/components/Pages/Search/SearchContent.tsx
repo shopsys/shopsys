@@ -28,21 +28,21 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults }) => {
             )} "${getStringFromUrlQuery(router.query.q)}"`}</h1>
             {!!searchResults.articlesSearch.length && (
                 <div className="mt-6">
-                    <div className="h3 mb-3">{t('Found articles')}</div>
+                    <div className="h4 mb-3">{t('Found articles')}</div>
                     <SimpleNavigation listedItems={searchResults.articlesSearch} />
                 </div>
             )}
 
             {!!searchResults.brandSearch.length && (
                 <div className="mt-6">
-                    <div className="h3 mb-3">{t('Found brands')}</div>
+                    <div className="h4 mb-3">{t('Found brands')}</div>
                     <SimpleNavigation listedItems={searchResults.brandSearch} />
                 </div>
             )}
 
             {!!mappedCategoriesSearchResults?.length && (
                 <div className="mt-6">
-                    <div className="h3 mb-3">{t('Found categories')}</div>
+                    <div className="h4 mb-3">{t('Found categories')}</div>
                     <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
                 </div>
             )}

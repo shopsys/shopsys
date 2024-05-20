@@ -39,5 +39,5 @@ export const SelectedParametersName: FC = ({ children }) => <p className="py-2 t
 export const SelectedParametersList: FC = ({ children }) => <ul className="flex flex-wrap gap-2">{children}</ul>;
 
 export const SelectedParametersListItem: FC = ({ children }) => (
-    <li className="rounded bg-creamWhite p-2 text-sm text-dark">{children}</li>
+    <li className="rounded bg-whiteSnow p-2 text-sm text-dark">{children}</li>
 );

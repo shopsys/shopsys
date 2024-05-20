@@ -15,10 +15,10 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
     }, [responsesRefs]);
 
     return (
-        <div className="max-h-[40vh] overflow-y-scroll bg-creamWhite">
+        <div className="max-h-[40vh] overflow-y-scroll bg-whiteSnow">
             <table>
                 <thead>
-                    <tr className="border-b border-greyDark">
+                    <tr className="border-b border-skyBlue">
                         <TableHeaderCell>#</TableHeaderCell>
                         <TableHeaderCell>Profile</TableHeaderCell>
                         <TableHeaderCell>Type</TableHeaderCell>
@@ -28,7 +28,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
                 </thead>
                 <tbody>
                     {responses.map((response, index) => (
-                        <tr key={index} className="border-b border-greyDark" ref={responsesRefs[index]}>
+                        <tr key={index} className="border-b border-skyBlue" ref={responsesRefs[index]}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>
                                 <TableLink href={response.profiler}>{response.token}</TableLink>
@@ -45,13 +45,13 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
 };
 
 const TableHeaderCell: FC = ({ children }) => (
-    <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-greyDark">{children}</th>
+    <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-skyBlue">{children}</th>
 );
 
 const TableCell: FC = ({ children }) => <td className="truncate px-5 py-2">{children}</td>;
 
 const TableLink: FC<{ href: string }> = ({ children, href }) => (
-    <a className="hover:text-primaryDarker" href={href} rel="noreferrer" target="_blank">
+    <a className="hover:text-primaryDark" href={href} rel="noreferrer" target="_blank">
         {children}
     </a>
 );

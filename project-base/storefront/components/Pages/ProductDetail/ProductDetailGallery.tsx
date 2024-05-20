@@ -71,7 +71,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                 <li
                                     key={index}
                                     className={twJoin(
-                                        'flex max-h-16 w-1/5 cursor-pointer items-center justify-center sm:h-20 vl:w-auto',
+                                        'flex max-h-16 w-1/5 cursor-pointer items-center justify-center sm:h-20 vl:w-auto hover:outline outline-secondary rounded-lg outline-1',
                                         (isWithAdditionalImages || isVideo) && 'relative',
                                     )}
                                     onClick={() => setSelectedGalleryItemIndex(index + 1)}
@@ -79,7 +79,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                     {isImage && (
                                         <Image
                                             alt={galleryItem.name || `${productName}-${index}`}
-                                            className="aspect-square max-h-full object-contain"
+                                            className="bg-grayLight aspect-square max-h-full object-contain mix-blend-multiply p-1 rounded-md"
                                             height={90}
                                             src={galleryItemThumbnail?.url}
                                             width={90}

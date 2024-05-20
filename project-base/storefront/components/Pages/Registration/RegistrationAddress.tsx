@@ -29,7 +29,7 @@ export const RegistrationAddress: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{t('Billing address')}</div>
+            <div className="h4 mb-3">{t('Billing address')}</div>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}

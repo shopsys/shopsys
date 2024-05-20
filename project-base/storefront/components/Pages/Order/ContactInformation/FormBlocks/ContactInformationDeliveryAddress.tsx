@@ -36,7 +36,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{t('Delivery address')}</div>
+            <div className="h4 mb-3">{t('Delivery address')}</div>
 
             <CheckboxControlled
                 control={formProviderMethods.control}
@@ -91,7 +91,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         render={(radiobutton, key) => (
                                             <div
                                                 key={key}
-                                                className="relative mt-4 flex w-full flex-wrap rounded border-2 border-border p-5"
+                                                className="relative mt-4 flex w-full flex-wrap rounded border-2 border-skyBlue p-5"
                                             >
                                                 {radiobutton}
                                             </div>

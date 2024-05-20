@@ -18,7 +18,7 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
     );
 
     return (
-        <ul className="relative mb-6 border-greyLighter lg:mb-8">
+        <ul className="relative mb-6 border-graySlate lg:mb-8">
             {(isRemovingItem || isChangingCartsItem) && <LoaderWithOverlay className="w-16" />}
             {cartItems.map((cartItem, listIndex) => (
                 <CartListItem

@@ -29,7 +29,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         </div>
                     )}
 
-                    <div className="mb-2 text-left text-xs font-semibold text-grey">
+                    <div className="mb-2 text-left text-xs font-semibold text-skyBlue">
                         {formatDate(blogArticle.publishDate, 'l')}
                     </div>
 

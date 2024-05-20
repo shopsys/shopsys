@@ -1,6 +1,7 @@
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 
@@ -106,7 +107,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
-                    className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-dark outline-none"
+                    className="h-full min-w-0 flex-1 border-0 p-0 text-center text-base font-bold text-dark outline-none"
                     defaultValue={defaultValue}
                     max={max}
                     min={min}
@@ -130,16 +131,13 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             </>
         );
 
-        if (size === 'small') {
-            return (
-                <div className="inline-flex w-20 overflow-hidden rounded border-2 border-border bg-white [&>button]:translate-y-0 [&>button]:text-xs">
-                    {content}
-                </div>
-            );
-        }
-
         return (
-            <div className="inline-flex h-12 w-32 overflow-hidden rounded border-2 border-border bg-white">
+            <div
+                className={twJoin(
+                    'inline-flex overflow-hidden rounded border-[3px] border-graySlate bg-white',
+                    size === 'small' ? 'w-20 [&>button]:translate-y-0 [&>button]:text-2xl' : 'h-12 w-32',
+                )}
+            >
                 {content}
             </div>
         );
@@ -160,7 +158,7 @@ type SpinboxButtonProps = {
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, ...props }) => (
     <button
         className={twMergeCustom([
-            'flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-dark outline-none',
+            'flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-graySlate outline-none',
             disabled && 'pointer-events-none text-greyLight',
         ])}
         {...props}

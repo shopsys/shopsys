@@ -1,5 +1,5 @@
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailPrefix, ProductDetailHeading, ProductDetailCode } from './ProductDetailElements';
+import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
@@ -60,9 +60,9 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                         {product.name} {product.nameSuffix}
                     </ProductDetailHeading>
 
-                    <ProductDetailCode>
+                    <div>
                         {t('Code')}: {product.catalogNumber}
-                    </ProductDetailCode>
+                    </div>
                 </div>
 
                 <ProductVariantsTable isSellingDenied={product.isSellingDenied} variants={product.variants} />

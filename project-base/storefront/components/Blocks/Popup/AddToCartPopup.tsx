@@ -43,11 +43,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     return (
         <Popup key={key} hideCloseButton className="w-full sm:w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
             <div className="mb-4 flex w-full items-center md:mb-6">
-                <CheckmarkIcon className="mr-4 w-7 text-greenDark" />
+                <CheckmarkIcon className="mr-4 w-7 text-secondary" />
                 <div className="h2 text-primary">{t('Great choice! We have added your item to the cart')}</div>
             </div>
 
-            <div className="mb-4 flex flex-col items-center rounded border border-greyLighter p-3 md:flex-row md:p-4">
+            <div className="mb-4 flex flex-col items-center rounded border border-graySlate p-3 md:flex-row md:p-4">
                 {!!product.mainImage && (
                     <div
                         className="mb-4 flex w-24 h-12 items-center justify-center md:mb-0"

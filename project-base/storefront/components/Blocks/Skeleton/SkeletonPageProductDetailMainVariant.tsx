@@ -23,7 +23,7 @@ export const SkeletonPageProductDetailMainVariant: FC = () => (
 
         <Skeleton className="mt-8 h-14 w-[460px]" containerClassName="flex vl:order-2 w-full" />
 
-        <div className="mt-8 grid grid-cols-1 gap-2 divide-greyLighter md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
+        <div className="mt-8 grid grid-cols-1 gap-2 divide-graySlate md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
             {createEmptyArray(8).map((_, index) => (
                 <Skeleton key={index} className="h-96 w-full lg:h-16" containerClassName="p-2" />
             ))}

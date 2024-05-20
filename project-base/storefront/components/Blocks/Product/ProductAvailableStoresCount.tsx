@@ -16,7 +16,7 @@ export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> =
     }
 
     return (
-        <div className="text-sm  text-inStock">
+        <div className="text-sm  text-secondary">
             {t('This item is available immediately in {{ count }} stores', { count: availableStoresCount })}
         </div>
     );

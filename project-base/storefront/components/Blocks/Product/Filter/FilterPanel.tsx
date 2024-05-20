@@ -32,9 +32,9 @@ export const FilterPanel: FC<FilterPanelProps> = ({
     const { t } = useTranslation();
 
     return (
-        <div className="z-aboveOverlay flex h-full flex-col bg-blueLight pb-1 vl:z-above vl:h-auto vl:rounded">
-            <div className="border-b-2 border-greyLight px-5 vl:border-none">
-                <div className="flex items-center justify-between bg-blueLight py-5 text-2xl vl:hidden">
+        <div className="z-aboveOverlay flex h-full flex-col bg-whiteSnow pb-1 vl:z-above vl:h-auto vl:rounded">
+            <div className="border-b-2 border-graySlate px-5 vl:border-none">
+                <div className="flex items-center justify-between bg-graySlate py-5 text-2xl vl:hidden">
                     {t('Product filter')}
                     <span
                         className="relative inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-primary"
@@ -47,7 +47,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 <FilterSelectedParameters filterOptions={filterOptions} />
             </div>
 
-            <div className="h-full divide-y divide-border overflow-y-scroll px-5 vl:static vl:overflow-visible">
+            <div className="h-full divide-y divide-skyBlue overflow-y-scroll px-5 vl:static vl:overflow-visible">
                 <FilterGroupPrice
                     initialMaxPrice={filterOptions.maximalPrice}
                     initialMinPrice={filterOptions.minimalPrice}
@@ -87,7 +87,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 ))}
             </div>
 
-            <div className="flex items-center justify-end border-t-2 border-greyLight p-5 vl:hidden">
+            <div className="flex items-center justify-end border-t-2 border-graySlate p-5 vl:hidden">
                 <Button
                     className="inline-block lowercase first-letter:uppercase"
                     size="small"

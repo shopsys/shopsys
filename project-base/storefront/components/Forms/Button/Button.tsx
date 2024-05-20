@@ -12,7 +12,7 @@ export type ButtonProps = NativeButtonProps & {
 
 export const Button: FC<ButtonProps> = forwardRef(
     (
-        { children, tid, className, isDisabled, isWithDisabledLook, size, variant, ...props },
+        { children, tid, className, isDisabled, isWithDisabledLook, size, variant = 'primary', ...props },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _,
     ) => {
@@ -21,12 +21,14 @@ export const Button: FC<ButtonProps> = forwardRef(
                 tid={tid}
                 type="button"
                 className={twMergeCustom(
-                    'inline-flex w-auto cursor-pointer items-center justify-center gap-2 rounded text-center font-bold uppercase outline-none transition-all hover:no-underline',
-                    size === 'small' ? 'py-1 px-4 text-sm' : 'py-3 px-4 text-base vl:px-8',
-                    !variant && 'bg-orange text-white hover:bg-orangeDarker hover:text-white',
-                    variant === 'primary' && 'bg-primary text-white hover:bg-primaryDarker hover:text-white',
-                    variant === 'secondary' && 'bg-orangeLight text-black hover:bg-white hover:text-black',
-                    (isDisabled || isWithDisabledLook) && 'cursor-no-drop opacity-50',
+                    'inline-flex w-auto cursor-pointer items-center justify-center gap-2 rounded text-center font-bold uppercase outline-none transition-all hover:no-underline border-2 hover:text-white max-vl:active:scale-105 font-secondary',
+                    size === 'small' ? 'py-1 px-4 text-sm' : 'py-2.5 px-8',
+                    variant === 'primary' &&
+                        'border-secondary bg-secondary text-white hover:bg-secondaryLight hover:border-secondaryLight',
+                    variant === 'secondary' &&
+                        'border-secondary border-2 text-secondary hover:border-secondaryLight hover:text-secondaryLight',
+                    (isDisabled || isWithDisabledLook) &&
+                        'cursor-no-drop bg-secondarySlate border-secondarySlate text-skyBlue',
                     isDisabled && 'pointer-events-none',
                     className,
                 )}

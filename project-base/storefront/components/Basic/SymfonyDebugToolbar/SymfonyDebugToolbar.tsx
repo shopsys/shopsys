@@ -27,7 +27,7 @@ export const SymfonyDebugToolbar: FC<SymfonyDebugToolbarProps> = ({
 
     return (
         <div
-            className="fixed right-2 bottom-2 z-maximum flex flex-col items-end gap-2 rounded bg-primaryDarker p-3"
+            className="fixed right-2 bottom-2 z-maximum flex flex-col items-end gap-2 rounded bg-primary p-3"
             onMouseEnter={() => setIsTableDisplayed(true)}
             onMouseLeave={() => setIsTableDisplayed(false)}
         >
@@ -39,8 +39,8 @@ export const SymfonyDebugToolbar: FC<SymfonyDebugToolbarProps> = ({
             </div>
 
             {!!responses.length && isTableDisplayed && (
-                <div className="order-1 flex-col items-center justify-center gap-2 bg-primaryDarker">
-                    <div className="flex items-center justify-between bg-primaryLight p-3 text-greyDark">
+                <div className="order-1 flex-col items-center justify-center gap-2 bg-primary">
+                    <div className="flex items-center justify-between bg-secondaryLight p-3 text-skyBlue">
                         <div className="text-lg font-bold">Number of requests: {responses.length}</div>
 
                         <Button size="small" onClick={() => reset()}>

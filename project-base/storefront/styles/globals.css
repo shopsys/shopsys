@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    @apply min-h-full;
+    @apply min-h-full [font-feature-settings:'lnum'_1];
 }
 
 body,
@@ -35,31 +35,45 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 .h1,
 .h2,
 .h3,
-.h4 {
-    @apply font-bold;
+.h4,
+.h5,
+.h6 {
+    @apply font-secondary font-semibold;
 }
 
 h1,
 .h1 {
-    @apply text-2xl lg:text-3xl;
+    @apply text-3xl/tight tracking-tight lg:text-4xl/tight;
 }
 
 h2,
 .h2 {
-    @apply text-xl lg:text-2xl;
+    @apply text-2xl/tight lg:text-3xl/tight;
 }
 
 h3,
 .h3 {
-    @apply text-base lg:text-lg;
+    @apply text-xl/tight lg:text-2xl/normal;
 }
 
 h4,
 .h4 {
-    @apply text-sm lg:text-base;
+    @apply text-lg/normal lg:text-xl/normal;
+}
+
+h5,
+.h5 {
+    @apply text-[17px]/normal lg:text-lg/normal;
+}
+
+h6,
+.h6 {
+    @apply text-sm/normal lg:text-xs/normal;
 }
 
 td,
@@ -84,7 +98,7 @@ p {
 }
 
 a {
-    @apply cursor-pointer text-greyDark underline outline-none hover:text-primary hover:underline;
+    @apply cursor-pointer text-primaryDark underline outline-none hover:text-primary hover:underline;
 }
 
 b,
@@ -113,7 +127,7 @@ input[type='number'] {
 }
 
 .select__control {
-    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded !border-2 !border-border !shadow-none hover:!border-2 hover:!border-border;
+    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded !border-2 !border-skyBlue !shadow-none hover:!border-2 hover:!border-skyBlue;
 }
 
 .select__indicator {
@@ -121,24 +135,24 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !z-[3] !m-0 !overflow-hidden !rounded-b !border-2 !border-t-0 !border-border !shadow-none;
+    @apply !z-[3] !m-0 !overflow-hidden !rounded-b !border-2 !border-t-0 !border-skyBlue !shadow-none;
 }
 
 .select__menu-list {
-    @apply [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-[5px] [&::-webkit-scrollbar-track]:bg-greyVeryLight [&::-webkit-scrollbar-thumb]:bg-greyLight [&::-webkit-scrollbar-thumb]:hover:bg-grey;
+    @apply [&::-webkit-scrollbar-thumb]:bg-graySlate [&::-webkit-scrollbar-thumb]:hover:bg-skyBlue [&::-webkit-scrollbar-track]:bg-whiteSnow [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-[5px];
 }
 
 .select__option {
-    @apply !cursor-pointer !p-3 !text-dark active:!bg-blueLight;
+    @apply !cursor-pointer !p-3 !text-dark active:!bg-graySlate;
 }
 
 .select__option--is-selected,
 .select__option--is-focused {
-    @apply !bg-blueLight;
+    @apply !bg-graySlate;
 }
 
 .select__control--menu-is-open {
-    @apply !items-end !rounded-b-none [&.select__indicator]:!rotate-180 [&.select__indicator>svg]:!text-primary;
+    @apply !items-end !rounded-b-none [&.select__indicator>svg]:!text-primary [&.select__indicator]:!rotate-180;
 }
 
 /* Toastify styling */
@@ -163,47 +177,24 @@ input[type='number'] {
     }
 }
 
+.Toastify__toast--info {
+    @apply !bg-orange;
+}
+
+.Toastify__toast--success {
+    @apply !bg-secondary text-white;
+}
+
+.Toastify__toast--error {
+    @apply !bg-red;
+}
+
+.Toastify__progress-bar-theme--colored {
+    @apply !bg-black bg-opacity-20;
+}
+
 .Toastify__close-button {
     @apply !self-center !text-dark !opacity-100;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--info {
-    @apply !border !border-primary !bg-[#f2f2ff];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--info .Toastify__toast-icon {
-    @apply !text-primary;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--info
-    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--info {
-    @apply !bg-primaryLight;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--success {
-    @apply !border !border-green !bg-[#ddf9f5];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--success .Toastify__toast-icon {
-    @apply !text-green;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--success
-    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--success {
-    @apply !bg-greenLight;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--error {
-    @apply !border !border-red !bg-[#ffc4c4];
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--error .Toastify__toast-icon {
-    @apply !text-red;
-}
-
-.Toastify__toast-theme--colored.Toastify__toast--error
-    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
-    @apply !bg-redLight;
 }
 
 /* CSS Transition styles */

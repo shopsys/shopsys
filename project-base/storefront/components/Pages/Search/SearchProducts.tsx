@@ -51,7 +51,7 @@ export const SearchProducts: FC = () => {
     return (
         <>
             <div className="mt-6">
-                <div className="h3 mb-3">{t('Found products')}</div>
+                <div className="h4 mb-3">{t('Found products')}</div>
             </div>
 
             <div className="relative mb-8 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-12">

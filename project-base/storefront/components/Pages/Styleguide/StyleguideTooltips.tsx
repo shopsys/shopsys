@@ -25,6 +25,6 @@ export const StyleguideTooltips: FC = () => {
 
 const TooltipBox: FC<{ label: string; placement?: Placement }> = ({ label, placement, children }) => (
     <Tooltip label={label} placement={placement}>
-        <div className="p-5 bg-border cursor-pointer">{children}</div>
+        <div className="p-5 bg-skyBlue cursor-pointer">{children}</div>
     </Tooltip>
 );

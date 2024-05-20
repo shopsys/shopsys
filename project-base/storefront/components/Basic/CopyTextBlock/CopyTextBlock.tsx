@@ -17,8 +17,8 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy }) => {
     };
 
     return (
-        <div className="rounded bg-greyLighter">
-            <div className="flex justify-end rounded bg-greyDark px-3 py-2">
+        <div className="rounded bg-graySlate">
+            <div className="flex justify-end rounded bg-skyBlue px-3 py-2">
                 <button className="text-white" onClick={handleCopy}>
                     {copyButtonText}
                 </button>

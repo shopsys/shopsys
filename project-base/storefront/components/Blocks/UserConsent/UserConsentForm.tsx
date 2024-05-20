@@ -90,7 +90,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             />
 
             <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
-                <Button size="small" variant="primary" onClick={saveCookieChoices}>
+                <Button size="small" onClick={saveCookieChoices}>
                     {t('Save choices')}
                 </Button>
 
@@ -107,7 +107,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 };
 
 const ToggleContent: FC<{ name: string; toggleSwitch: JSX.Element }> = ({ toggleSwitch, name }) => (
-    <div className="my-2 flex justify-between border-b border-greyLight">
+    <div className="my-2 flex justify-between border-b border-graySlate">
         <span className="text-xl">{name}</span>
         {toggleSwitch}
     </div>

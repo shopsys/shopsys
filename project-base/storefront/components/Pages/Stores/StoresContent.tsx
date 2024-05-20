@@ -56,7 +56,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                                 markers={markers}
                             />
                         </div>
-                        <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-greyLighter p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
+                        <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-graySlate p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
                             <div className="relative">
                                 <span className="absolute right-[10%] bottom-3 z-above inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-[linear-gradient(180deg,#ffcf09,#ffb235)] text-xl font-medium text-white sm:h-14 sm:w-14 sm:text-2xl">
                                     {mappedStores.length}x
@@ -87,12 +87,12 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                             mappedStores.map((store) => (
                                 <ExtendedNextLink
                                     key={store.slug}
-                                    className="mb-4 flex w-full items-center justify-between rounded border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
+                                    className="mb-4 flex w-full items-center justify-between rounded border border-graySlate py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
                                     href={store.slug}
                                     type="store"
                                 >
                                     <div className="flex flex-row items-center text-lg text-primary">
-                                        <MarkerIcon className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
+                                        <MarkerIcon className="mr-3 w-6 text-2xl text-primary xl:mr-5" />
                                         <StoreButton>{store.name}</StoreButton>
                                     </div>
 

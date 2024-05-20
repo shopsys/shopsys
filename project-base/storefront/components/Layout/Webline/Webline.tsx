@@ -18,9 +18,9 @@ export const Webline: FC<WeblineProps> = ({ children, tid, type, className }) =>
         return (
             <div
                 className={twJoin(
-                    type === 'colored' && 'bg-primary',
-                    type === 'dark' && 'bg-greyDark',
-                    type === 'light' && 'bg-orangeLight',
+                    type === 'colored' && 'bg-primaryDark',
+                    type === 'dark' && 'bg-dark',
+                    type === 'light' && 'bg-secondaryLight',
                     type === 'blog' && 'bg-[url("/images/blog-background.webp")] bg-cover bg-center bg-no-repeat',
                 )}
             >

@@ -16,7 +16,7 @@ export const ContactInformationCustomer: FC = () => {
 
     return (
         <>
-            <div className="h3 mb-3">{formMeta.fields.customer.label}</div>
+            <div className="h4 mb-3">{formMeta.fields.customer.label}</div>
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <RadiobuttonGroup
                     control={formProviderMethods.control}

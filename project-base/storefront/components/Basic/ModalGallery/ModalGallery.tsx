@@ -97,7 +97,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 </div>
 
                 {isImage && selectedGalleryItem.name && (
-                    <div className="mt-2 text-center text-greyDarker">{selectedGalleryItem.name}</div>
+                    <div className="mt-2 text-center text-skyBlue">{selectedGalleryItem.name}</div>
                 )}
 
                 <div className="mt-4 flex items-center justify-center gap-8">

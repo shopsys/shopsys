@@ -1,13 +1,16 @@
+import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
+
 type ProductDetailUspsProps = {
     usps: string[];
 };
 
 export const ProductDetailUsps: FC<ProductDetailUspsProps> = ({ usps }) => {
     return (
-        <ul className="grid grid-cols-2 gap-y-1 gap-x-8 pl-4">
+        <ul className="flex flex-col gap-3">
             {usps.map((usp, index) => (
-                <li key={index} className="list-outside list-disc">
-                    {usp}
+                <li key={index} className="flex items-center gap-3 text-sm">
+                    <CheckmarkBadgeIcon className="w-5" />
+                    <span>{usp}</span>
                 </li>
             ))}
         </ul>

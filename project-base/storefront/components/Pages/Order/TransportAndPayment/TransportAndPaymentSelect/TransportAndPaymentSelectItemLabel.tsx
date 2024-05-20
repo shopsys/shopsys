@@ -37,14 +37,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 <div>
                     <div tid={TIDs.pages_order_selectitem_label_name}>{name}</div>
 
-                    {description && <div className="text-greyLight">{description}</div>}
+                    {description && <div className="text-graySlate">{description}</div>}
                 </div>
 
                 {pickupPlaceDetail && (
                     <div>
-                        <div className="text-greyLight">{pickupPlaceDetail.name}</div>
+                        <div className="text-graySlate">{pickupPlaceDetail.name}</div>
 
-                        <div className="text-greyLight">
+                        <div className="text-graySlate">
                             {pickupPlaceDetail.street +
                                 ', ' +
                                 pickupPlaceDetail.postcode +
@@ -52,14 +52,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                 pickupPlaceDetail.city}
                         </div>
 
-                        <div className="my-1 text-greyLight">{t('Open') + ': '}</div>
+                        <div className="my-1 text-graySlate">{t('Open') + ': '}</div>
 
                         <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
                     </div>
                 )}
 
                 {daysUntilDelivery !== undefined && (
-                    <div className="text-sm text-inStock lg:ml-auto lg:basis-36 lg:text-right">
+                    <div className="text-sm text-secondary lg:ml-auto lg:basis-36 lg:text-right">
                         {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                     </div>
                 )}

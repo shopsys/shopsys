@@ -33,14 +33,14 @@ export const Tabs: TabFC<Partial<TabsProps>> = ({ children, className, ...props 
 );
 
 export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
-    <TabList className="z-above hidden flex-row border-b border-border lg:flex">{children}</TabList>
+    <TabList className="z-above hidden flex-row lg:flex lg:gap-4">{children}</TabList>
 );
 
 export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
     <Tab
         selectedClassName="isActive"
         className={twJoin(
-            'relative bottom-0 cursor-pointer px-6 py-1 text-black no-underline before:absolute before:left-0 before:right-0 before:hidden before:bg-primary before:content-[""] hover:no-underline [&.isActive]:text-primary [&.isActive]:before:block',
+            'cursor-pointer select-none px-3 bg-grayLight rounded-2xl text-sm font-semibold py-2 [&.isActive]:outline outline-secondary outline-1',
             className,
         )}
         {...props}
@@ -65,11 +65,13 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             {...props}
         >
             <h3
-                className="flex w-full cursor-pointer items-center justify-between rounded bg-blueLight py-4 px-5 font-bold lg:hidden"
+                className="flex w-full cursor-pointer items-center justify-between rounded bg-grayLight py-4 px-5 font-bold lg:hidden"
                 onClick={mobileTab}
             >
                 {headingTextMobile}
-                <ArrowIcon className={twJoin('w-4 rotate-0 transition', isActiveOnMobile && '-rotate-180 ')} />
+                <ArrowIcon
+                    className={twJoin('w-4 rotate-0 transition text-skyBlue', isActiveOnMobile && '-rotate-180 ')}
+                />
             </h3>
             <div className={twJoin('w-full py-5', isActiveOnMobile ? 'block' : 'hidden lg:block')}>{children}</div>
         </TabPanel>

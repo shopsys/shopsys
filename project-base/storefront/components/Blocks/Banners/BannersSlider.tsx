@@ -94,7 +94,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                 {sliderItems.map((sliderItem, index) => (
                     <button
                         key={sliderItem.uuid}
-                        className="group relative block h-2 w-3 cursor-pointer rounded border-none border-blueLight bg-greyLight font-bold outline-none transition active:bg-none disabled:bg-primary vl:mx-0 vl:h-auto vl:w-full vl:border-2 vl:border-solid vl:bg-blueLight vl:py-4 vl:px-8 vl:text-left vl:hover:border-blue vl:hover:bg-blue vl:disabled:border-primary vl:disabled:bg-creamWhite"
+                        className="group relative block h-2 w-3 cursor-pointer rounded border-none border-graySlate bg-graySlate font-bold outline-none transition active:bg-none disabled:bg-secondary vl:mx-0 vl:h-auto vl:w-full vl:border-2 vl:border-solid vl:border-primary vl:bg-whiteSnow vl:py-4 vl:px-8 vl:text-left vl:hover:border-primaryDark vl:disabled:border-secondary vl:disabled:bg-whiteSnow"
                         disabled={index === currentSlide % sliderItems.length}
                         onClick={() => onMoveToSlideHandler(index)}
                     >
