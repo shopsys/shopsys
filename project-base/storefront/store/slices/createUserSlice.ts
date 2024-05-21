@@ -6,20 +6,26 @@ type ProductListStoreValue = Partial<{
     [key in TypeProductListTypeEnum]: string;
 }>;
 
-export type UserSlice = {
+type UserState = {
     cartUuid: string | null;
     productListUuids: ProductListStoreValue;
     userConsent: UserConsentFormType | null;
+};
 
+export type UserSlice = UserState & {
     updateCartUuid: (value: string | null) => void;
     updateProductListUuids: (value: ProductListStoreValue) => void;
     updateUserConsent: (userConsent: UserConsentFormType) => void;
 };
 
-export const createUserSlice: StateCreator<UserSlice> = (set) => ({
+export const defaultUserState: UserState = {
     cartUuid: null,
     productListUuids: {},
     userConsent: null,
+};
+
+export const createUserSlice: StateCreator<UserSlice> = (set) => ({
+    ...defaultUserState,
 
     updateCartUuid: (cartUuid) => {
         set({ cartUuid });

@@ -150,9 +150,14 @@ export const url = {
 
 export const DEFAULT_APP_STORE = {
     state: {
-        loginLoading: null,
-        cartUuid: null as string | null,
-        comparisonUuid: null,
+        authLoading: null,
+        cartUuid: null,
+        productListUuids: {},
+        userConsent: {
+            statistics: false,
+            marketing: false,
+            preferences: false,
+        },
         contactInformation: {
             email: '',
             telephone: '',
@@ -180,12 +185,6 @@ export const DEFAULT_APP_STORE = {
             isWithoutHeurekaAgreement: false,
         },
         packeteryPickupPoint: null,
-        userConsent: {
-            statistics: false,
-            marketing: false,
-            preferences: false,
-        },
-        wishlistUuid: null,
     },
-    version: 0,
+    version: 1,
 };
