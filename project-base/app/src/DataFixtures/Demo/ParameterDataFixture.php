@@ -97,6 +97,9 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PARAM_WEIGHT_KG = 'weight_kg';
     public const string PARAM_WIFI = 'wifi';
 
+    /**
+     * @var array<string, array<string, string|\App\DataFixtures\Demo\ParameterDataFixtureData>>
+     */
     private static array $parameterNameCacheByLocale = [];
 
     /**
@@ -135,10 +138,9 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         return $parameterNames[$referenceName] instanceof ParameterDataFixtureData ? $parameterNames[$referenceName]->name : $parameterNames[$referenceName];
     }
 
-
     /**
      * @param string $locale
-     * @return array<string, string|ParameterDataFixtureData>
+     * @return array<string, string|\App\DataFixtures\Demo\ParameterDataFixtureData>
      */
     private function getParameterData(string $locale): array
     {
@@ -286,6 +288,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         foreach ($parameters as $parameterDataKey => $parameterDataValue) {
             $parameterNamesByLocale = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $parameterNamesByLocale[$locale] = $this->getParameterNameByReferenceName($parameterDataKey, $locale);
             }
@@ -395,11 +398,13 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $existingCategoryParameter = $this->entityManager->getRepository(CategoryParameter::class)
                 ->findOneBy(['category' => $category, 'parameter' => $parameter]);
 
-            if ($existingCategoryParameter === null) {
-                $categoryParameter = $this->categoryParameterFactory->create($category, $parameter, false, $counter);
-                $this->entityManager->persist($categoryParameter);
-                $counter++;
+            if ($existingCategoryParameter !== null) {
+                continue;
             }
+
+            $categoryParameter = $this->categoryParameterFactory->create($category, $parameter, false, $counter);
+            $this->entityManager->persist($categoryParameter);
+            $counter++;
         }
         $this->entityManager->flush();
 

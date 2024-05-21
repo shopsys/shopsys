@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use Override;
 use Ramsey\Uuid\UuidFactory as BaseUuidFactory;
 use Ramsey\Uuid\UuidInterface;
 
@@ -11,7 +12,10 @@ class UuidFactory extends BaseUuidFactory
 {
     private int $counter = 0;
 
-    #[\Override]
+    /**
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    #[Override]
     public function uuid4(): UuidInterface
     {
         $this->counter++;

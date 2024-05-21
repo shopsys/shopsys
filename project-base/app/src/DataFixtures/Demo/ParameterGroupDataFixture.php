@@ -20,6 +20,12 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     public const string PARAM_GROUP_CONNECTION_METHOD = 'param_group_connection_method';
     public const string PARAM_GROUP_MAIN_INFORMATION_MOUSE = 'param_group_main_information_mouse';
 
+    /**
+     * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
+     * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
+     * @param \Faker\Generator $faker
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
     public function __construct(
         private readonly ParameterGroupFacade $parameterGroupFacade,
         private readonly ParameterGroupDataFactory $parameterGroupDataFactory,
@@ -43,7 +49,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
         ];
     }
 
-        /**
+    /**
      * @param string $referenceName
      * @param string $locale
      * @return string
@@ -64,6 +70,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
 
         foreach ($parameterGroupKeys as $parameterGroupKey) {
             $parameterGroupNamesByLocale = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $parameterGroupNamesByLocale[$locale] = self::getParameterGroupNameByReferenceName($parameterGroupKey, $locale);
             }
