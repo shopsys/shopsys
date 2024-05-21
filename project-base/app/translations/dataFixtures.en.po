@@ -67,9 +67,6 @@ msgstr ""
 msgid "2 litre coffeemakers in sale"
 msgstr ""
 
-msgid "2.0"
-msgstr ""
-
 msgid "2000 DPI"
 msgstr ""
 
@@ -820,9 +817,6 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-msgid "Display Size"
-msgstr ""
-
 msgid "Display size"
 msgstr ""
 
@@ -1037,6 +1031,9 @@ msgid "Have you ever experienced an accident and didn't know how to react? Or ar
 msgstr ""
 
 msgid "Heading"
+msgstr ""
+
+msgid "Height"
 msgstr ""
 
 msgid "Hello Kitty TV"
@@ -1973,6 +1970,9 @@ msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr ""
 
 msgid "Zero rate"
+msgstr ""
+
+msgid "Zoom"
 msgstr ""
 
 msgid "battery"

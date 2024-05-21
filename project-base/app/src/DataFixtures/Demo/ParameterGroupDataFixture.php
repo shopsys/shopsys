@@ -40,12 +40,10 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
      */
     private static function getParameterGroupNames(string $locale): array
     {
-        $translationDomain = Translator::DATA_FIXTURES_TRANSLATION_DOMAIN;
-
         return [
-            self::PARAM_GROUP_MAIN_INFORMATION => t('Main information', [], $translationDomain, $locale),
-            self::PARAM_GROUP_CONNECTION_METHOD => t('Connection method', [], $translationDomain, $locale),
-            self::PARAM_GROUP_MAIN_INFORMATION_MOUSE => t('Main information mouse', [], $translationDomain, $locale),
+            self::PARAM_GROUP_MAIN_INFORMATION => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GROUP_CONNECTION_METHOD => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GROUP_MAIN_INFORMATION_MOUSE => t('Main information mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
     }
 

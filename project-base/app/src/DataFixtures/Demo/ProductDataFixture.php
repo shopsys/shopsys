@@ -233,7 +233,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_GAMING_MOUSE => t('Yes"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_GAMING_MOUSE => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ERGONOMICS => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SUPPORTED_OS => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -279,12 +279,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone - Apple A7 with 64-bit architecture, 4" Retina Touch display 1136x640, 32GB internal memory, WiFi 802.11a/b/g/n, Bluetooth 4.0, 8 Mpx camera with LED flash, GPS, Fingerprint sensor, iOS 7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT_KG => t('0.12', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT_KG => '0.12',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('123.8x58.6 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MEMORY_CARD_SUPPORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RAM => t('1024 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NUMBER_OF_COLORS => t('16mil.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => t('1.7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '1.7',
                 ParameterDataFixture::PARAM_NUMBER_OF_PROCESSOR_CORES => t('2', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_BLUETOOTH => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NFC => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -410,7 +410,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_POWER_SUPPLY => t('battery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('1800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
                 ParameterDataFixture::PARAM_WEIGHT => t('580 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
@@ -760,7 +760,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Sleek and compact stereo speakers in combination of black and metallic surface.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SYSTEM_TYPE => t('2.0', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SYSTEM_TYPE => '2.0',
                 ParameterDataFixture::PARAM_ACTIVE_PASSIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('2W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
@@ -839,7 +839,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SYSTEM_TYPE => t('2.0', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SYSTEM_TYPE => '2.0',
                 ParameterDataFixture::PARAM_ACTIVE_PASSIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('2W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
@@ -1265,12 +1265,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.7" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT_KG => t('0.15', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT_KG => '0.15',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('123.8x58.6 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MEMORY_CARD_SUPPORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RAM => t('1024 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NUMBER_OF_COLORS => t('16mil.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => t('1.8', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '1.8',
                 ParameterDataFixture::PARAM_NUMBER_OF_PROCESSOR_CORES => t('2', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_BLUETOOTH => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_NFC => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -1310,7 +1310,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Modern stereo speakers in a stylish black design, with an output of 2.3 W, suitable only for desktops and laptops, but also for CD or MP3 players.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_SYSTEM_TYPE => t('2.0', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_SYSTEM_TYPE => '2.0',
                 ParameterDataFixture::PARAM_ACTIVE_PASSIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_OVERALL_PERFORMANCE => t('2W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
@@ -1965,8 +1965,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.6 "1280x720, Qualcomm MSM8960Pro 1.7 GHz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT_KG => t('0.54', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => t('2.4', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT_KG => '0.54',
+                ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '2.4',
             ]);
         }
 
