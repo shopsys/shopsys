@@ -33,6 +33,8 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
  * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $offset, int $limit)
+ * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  */
 class ProductRepository extends BaseProductRepository
 {
