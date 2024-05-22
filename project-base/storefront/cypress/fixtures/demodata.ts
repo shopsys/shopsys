@@ -165,7 +165,7 @@ export const DEFAULT_APP_STORE = {
             companyName: '',
             companyNumber: '',
             companyTaxNumber: '',
-            differentDeliveryAddress: false,
+            isDeliveryAddressDifferentFromBilling: false,
             deliveryFirstName: '',
             deliveryLastName: '',
             deliveryCompanyName: '',

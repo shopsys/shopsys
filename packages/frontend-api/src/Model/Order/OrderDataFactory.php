@@ -58,7 +58,7 @@ class OrderDataFactory
 
         $orderData->domainId = $this->domain->getId();
         $orderData->origin = static::ORDER_ORIGIN_GRAPHQL;
-        $orderData->deliveryAddressSameAsBillingAddress = !$input['differentDeliveryAddress'];
+        $orderData->deliveryAddressSameAsBillingAddress = !$input['isDeliveryAddressDifferentFromBilling'];
         $orderData->isCompanyCustomer = $input['onCompanyBehalf'];
 
         $orderData = $this->withResolvedFields($input, $orderData);
@@ -79,7 +79,7 @@ class OrderDataFactory
 
         $cloneOrderData->country = $this->countryFacade->findByCode($input['country']);
 
-        if ($input['differentDeliveryAddress'] && array_key_exists('deliveryCountry', $input)) {
+        if ($input['isDeliveryAddressDifferentFromBilling'] && array_key_exists('deliveryCountry', $input)) {
             $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
         }
 

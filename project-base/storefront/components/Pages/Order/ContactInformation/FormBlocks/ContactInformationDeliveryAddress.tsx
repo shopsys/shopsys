@@ -23,8 +23,8 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const user = useCurrentCustomerData();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const [isDifferentDeliveryAddress, deliveryAddressUuid] = useWatch({
-        name: [formMeta.fields.differentDeliveryAddress.name, formMeta.fields.deliveryAddressUuid.name],
+    const [isDeliveryAddressDifferentFromBilling, deliveryAddressUuid] = useWatch({
+        name: [formMeta.fields.isDeliveryAddressDifferentFromBilling.name, formMeta.fields.deliveryAddressUuid.name],
         control: formProviderMethods.control,
     });
     const showAddressSelection = !!user?.deliveryAddresses.length && !pickupPlace;
@@ -41,20 +41,22 @@ export const ContactInformationDeliveryAddress: FC = () => {
             <CheckboxControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
-                name={formMeta.fields.differentDeliveryAddress.name}
+                name={formMeta.fields.isDeliveryAddressDifferentFromBilling.name}
                 checkboxProps={{
-                    label: formMeta.fields.differentDeliveryAddress.label,
+                    label: formMeta.fields.isDeliveryAddressDifferentFromBilling.label,
                 }}
                 render={(checkbox) => (
                     <FormLine className="flex-none lg:w-[65%]">
                         <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                     </FormLine>
                 )}
-                onChange={(event) => updateContactInformation({ differentDeliveryAddress: event.target.checked })}
+                onChange={(event) =>
+                    updateContactInformation({ isDeliveryAddressDifferentFromBilling: event.target.checked })
+                }
             />
 
             <div className="pb-10">
-                {isDifferentDeliveryAddress && (
+                {isDeliveryAddressDifferentFromBilling && (
                     <div>
                         {showAddressSelection && (
                             <FormLine bottomGap className="flex-none lg:w-[65%]">

@@ -68,7 +68,7 @@ class NewsletterSubscribeFromOrderLoggedInTest extends GraphQlWithLoginTestCase
             'city' => 'Springfield',
             'postcode' => '12345',
             'country' => 'CZ',
-            'differentDeliveryAddress' => false,
+            'isDeliveryAddressDifferentFromBilling' => false,
             'newsletterSubscription' => $newsletterSubscription,
         ];
 

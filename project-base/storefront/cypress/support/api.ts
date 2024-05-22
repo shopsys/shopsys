@@ -20,12 +20,12 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
                 url: 'graphql/',
                 body: JSON.stringify({
                     operationName: 'AddToCartMutation',
-                    query: `mutation AddToCartMutation($input: AddToCartInput!) { 
-                    AddToCart(input: $input) { 
-                        cart { 
-                            uuid 
-                        } 
-                    } 
+                    query: `mutation AddToCartMutation($input: AddToCartInput!) {
+                    AddToCart(input: $input) {
+                        cart {
+                            uuid
+                        }
+                    }
                 }`,
                     variables: {
                         input: {
@@ -109,14 +109,14 @@ Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickup
                 url: 'graphql/',
                 body: JSON.stringify({
                     operationName: 'ChangeTransportInCartMutation',
-                    query: `mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) { 
-                    ChangeTransportInCart(input: $input) { 
-                        uuid, 
-                        transport { 
-                            uuid 
-                        }, 
-                        selectedPickupPlaceIdentifier 
-                    } 
+                    query: `mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) {
+                    ChangeTransportInCart(input: $input) {
+                        uuid,
+                        transport {
+                            uuid
+                        },
+                        selectedPickupPlaceIdentifier
+                    }
                 }`,
                     variables: {
                         input: {
@@ -164,13 +164,13 @@ Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
                 url: 'graphql/',
                 body: JSON.stringify({
                     operationName: 'ChangePaymentInCartMutation',
-                    query: `mutation ChangePaymentInCartMutation($input: ChangePaymentInCartInput!) { 
-                    ChangePaymentInCart(input: $input) { 
-                        uuid, 
-                        payment { 
-                            uuid 
-                        } 
-                    } 
+                    query: `mutation ChangePaymentInCartMutation($input: ChangePaymentInCartInput!) {
+                    ChangePaymentInCart(input: $input) {
+                        uuid,
+                        payment {
+                            uuid
+                        }
+                    }
                 }`,
                     variables: {
                         input: {
@@ -299,7 +299,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                     $city: String!
                     $postcode: String!
                     $country: String!
-                    $differentDeliveryAddress: Boolean!
+                    $isDeliveryAddressDifferentFromBilling: Boolean!
                     $deliveryFirstName: String
                     $deliveryLastName: String
                     $deliveryCompanyName: String
@@ -328,7 +328,7 @@ Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutati
                             city: $city
                             postcode: $postcode
                             country: $country
-                            differentDeliveryAddress: $differentDeliveryAddress
+                            isDeliveryAddressDifferentFromBilling: $isDeliveryAddressDifferentFromBilling
                             deliveryFirstName: $deliveryFirstName
                             deliveryLastName: $deliveryLastName
                             deliveryCompanyName: $deliveryCompanyName

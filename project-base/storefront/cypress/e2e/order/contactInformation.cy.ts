@@ -127,7 +127,7 @@ describe('Contact information page tests', () => {
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clickOnLabel('contact-information-form-differentDeliveryAddress');
+        clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
         takeSnapshotAndCompare(this.test?.title, 'filled contact information form before logout', {

@@ -139,7 +139,7 @@ export const registerAndCreateOrderForDeliveryAddressTests = (
     cy.preselectPaymentForTest(payment.onDelivery.uuid);
     cy.createOrder({
         ...generateCreateOrderInput(email),
-        differentDeliveryAddress: true,
+        isDeliveryAddressDifferentFromBilling: true,
         deliveryFirstName: deliveryAddress.firstName,
         deliveryLastName: deliveryAddress.lastName,
         deliveryCompanyName: deliveryAddress.company,
