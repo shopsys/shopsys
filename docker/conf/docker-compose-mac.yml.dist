@@ -1,6 +1,20 @@
 version: "3.7"
 
+x-variables:
+    blackfire_environments: &blackfire_environments
+        BLACKFIRE_SERVER_ID:
+        BLACKFIRE_SERVER_TOKEN:
+        BLACKFIRE_CLIENT_ID:
+        BLACKFIRE_CLIENT_TOKEN:
+
 services:
+    # Uncomment the following lines and fill values in x-variables section to enable Blackfire
+    #blackfire:
+    #    image: blackfire/blackfire:2
+    #    ports: ["8307"]
+    #    environment:
+    #        <<: *blackfire_environments
+
     postgres:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
@@ -90,12 +104,8 @@ services:
             - source-code:/var/www/html
             - ./.git/:/var/www/html/.git:delegated
             - ~/.gitconfig:/home/www-data/.gitconfig
-        # Uncomment the following lines and fill values to enable Blackfire
-        #environment:
-        #    BLACKFIRE_SERVER_ID:
-        #    BLACKFIRE_SERVER_TOKEN:
-        #    BLACKFIRE_CLIENT_ID:
-        #    BLACKFIRE_CLIENT_TOKEN:
+        environment:
+            <<: *blackfire_environments
         ports:
             - "35729:35729"
 

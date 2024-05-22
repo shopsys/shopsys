@@ -18,28 +18,27 @@ Before you can start using Blackfire in the Shopsys Platform, you need to have t
 ## Configuration
 
 Edit the `docker-compose.yml` file in your Shopsys Platform project to include the Blackfire credentials.
-Uncomment the environment variables for Blackfire and fill in the values with your actual Blackfire credentials.
+Uncomment the blackfire container definition and fill in variables with your actual Blackfire credentials.
 
 ```yaml
-php-fpm:
-    build:
-        context: .
-        dockerfile: project-base/app/docker/php-fpm/Dockerfile
-        target: development
-        args:
-            www_data_uid: 1000
-            www_data_gid: 1000
-            project_root: project-base/app
-    container_name: shopsys-framework-php-fpm
-    volumes:
-        - ~/.gitconfig:/home/www-data/.gitconfig
-        - .:/var/www/html
-    # Uncomment the following lines and fill values to enable Blackfire
-    environment:
+version: "3.7"
+
+x-variables:
+    blackfire_environments: &blackfire_environments
         BLACKFIRE_SERVER_ID: your_server_id
         BLACKFIRE_SERVER_TOKEN: your_server_token
         BLACKFIRE_CLIENT_ID: your_client_id
         BLACKFIRE_CLIENT_TOKEN: your_client_token
+
+services:
+    # Uncomment the following lines and fill values in x-variables section to enable Blackfire
+    blackfire:
+        image: blackfire/blackfire:2
+        ports: ["8307"]
+        environment:
+            <<: *blackire_environments
+
+# ...
 ```
 
 Replace `your_client_id`, `your_client_token`, `your_server_id`, and `your_server_token` with your actual Blackfire credentials.
@@ -47,7 +46,7 @@ Replace `your_client_id`, `your_client_token`, `your_server_id`, and `your_serve
 After updating the `docker-compose.yml` file, restart your Docker containers to apply the changes.
 
 ```bash
-docker compose up -d --force-recreate php-fpm
+docker compose up -d --force-recreate
 ```
 
 ## Profiling CLI Scripts
