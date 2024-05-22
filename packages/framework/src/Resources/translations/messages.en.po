@@ -1246,6 +1246,9 @@ msgstr ""
 msgid "Excl. VAT"
 msgstr ""
 
+msgid "Exclude from sale on domains"
+msgstr ""
+
 msgid "Exclude from sale on whole eshop"
 msgstr ""
 

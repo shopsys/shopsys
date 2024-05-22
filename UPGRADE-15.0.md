@@ -838,6 +838,18 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   `Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS_WITHOUT_PRESELECTED` constant was renamed to `VALIDATION_GROUP_IS_DELIVERY_ADDRESS_DIFFERENT_FROM_BILLING_WITHOUT_PRESELECTED`
 -   see #project-base-diff to update your project
 
+#### include domain sale exclusion in product querying more appropriately ([#3141](https://github.com/shopsys/shopsys/pull/3141))
+
+-   `Shopsys\FrameworkBundle\Model\Product\ProductRepository::__construct` interface has changed:
+
+    ```diff
+        public function __construct(
+            // ...
+    +       protected readonly QueryBuilderExtender $queryBuilderExtender,
+    ```
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

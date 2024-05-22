@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 
 /**
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository, \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender)
  * @method \App\Model\Product\Product|null findById(int $id)
  * @method \Doctrine\ORM\QueryBuilder getListableInCategoryQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilder(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
@@ -159,20 +159,5 @@ class ProductRepository extends BaseProductRepository
         $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
 
         return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllSellableQueryBuilder($domainId, PricingGroup $pricingGroup): QueryBuilder
-    {
-        return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)
-            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
-            ->andWhere('p.variantType != :variantTypeMain')
-            ->andWhere('pd.saleExclusion = false')
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->setParameter('domainId', $domainId);
     }
 }

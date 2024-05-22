@@ -505,12 +505,6 @@ msgstr ""
 msgid "Error messages"
 msgstr ""
 
-msgid "Exclude from sale on domains"
-msgstr ""
-
-msgid "Exclude from sale on whole eshop"
-msgstr ""
-
 msgid "Extended SEO categories"
 msgstr ""
 
@@ -1067,9 +1061,6 @@ msgid "Products - view"
 msgstr ""
 
 msgid "Products accessories transfer"
-msgstr ""
-
-msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr ""
 
 msgid "Products flags transfer"

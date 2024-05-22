@@ -1246,6 +1246,9 @@ msgstr "Kurz"
 msgid "Excl. VAT"
 msgstr "Bez DPH"
 
+msgid "Exclude from sale on domains"
+msgstr "Vyřazení z prodeje dle domén"
+
 msgid "Exclude from sale on whole eshop"
 msgstr "Vyřadit z prodeje na celém e-shopu"
 
