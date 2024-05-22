@@ -91,7 +91,7 @@ describe('Registration tests (repeated tries)', () => {
         takeSnapshotAndCompare(this.test?.title, 'after valid try', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider }],
+            blackout: [{ tid: TIDs.banners_slider }, { tid: TIDs.simple_navigation_image }],
         });
     });
 
@@ -113,7 +113,7 @@ describe('Registration tests (repeated tries)', () => {
         takeSnapshotAndCompare(this.test?.title, 'after valid try', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider }],
+            blackout: [{ tid: TIDs.banners_slider }, { tid: TIDs.simple_navigation_image }],
         });
     });
 });

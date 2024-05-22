@@ -71,4 +71,5 @@ export enum TIDs {
     order_summary_cart_item_image = 'order_summary_cart_item_image',
     order_summary_transport_and_payment_image = 'order_summary_transport_and_payment_image',
     simple_header_contact = 'simple_header_contact',
+    simple_navigation_image = 'simple_navigation_image',
 }
