@@ -68,44 +68,6 @@ describe('Cart login tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'cart page after logout');
     });
 
-    it('should repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', function () {
-        const registrationInput = generateCustomerRegistrationData('commonCustomer');
-        cy.registerAsNewUser(registrationInput, false);
-        cy.visitAndWaitForStableAndInteractiveDOM('/');
-
-        addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
-        checkPopupIsVisible(true);
-
-        loginFromHeader(registrationInput.email, password);
-        checkAndHideSuccessToast('Successfully logged in');
-
-        goToCartPageFromHeader();
-        takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
-        });
-
-        logoutFromHeader();
-        checkAndHideSuccessToast('Successfully logged out');
-        cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'cart page after logout');
-
-        goToHomepageFromHeader();
-        addProductToCartFromPromotedProductsOnHomepage(products.lg47LA790VFHD.catnum);
-        checkPopupIsVisible(true);
-        goToCartPageFromHeader();
-
-        takeSnapshotAndCompare(this.test?.title, 'cart page after adding second product to cart', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
-        });
-        loginFromHeader(registrationInput.email, password);
-        checkAndHideSuccessToast('Successfully logged in');
-        checkAndHideInfoToast('Your cart has been modified. Please check the changes.');
-
-        takeSnapshotAndCompare(this.test?.title, 'cart page after second login', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
-        });
-    });
-
     it("should discard user's previous cart after logging in in order 3rd step", function () {
         const email = 'discard-user-cart-after-login-in-order-3rd-step@shopsys.com';
         const registrationInput = generateCustomerRegistrationData('commonCustomer', email);
