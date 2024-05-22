@@ -1029,3 +1029,8 @@ We want to implement more usable UI design which will be better base for upcomin
 
 -   bool variable differentDeliveryAddress was renamed into more suitable isDeliveryAddressDifferentFromBilling across the project
 -   see #project-base-diff to update your project
+
+#### simple navigation images are now blacked-out during cypress tests ([#3174](https://github.com/shopsys/shopsys/pull/3174))
+
+-   simple navgation images are now blacked-out during cypress tests
+-   make sure you add the blackout everywhere where your snapshots contain simple navigation with images

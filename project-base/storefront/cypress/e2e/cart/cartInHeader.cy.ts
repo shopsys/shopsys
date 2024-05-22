@@ -22,7 +22,7 @@ describe('Cart in header tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after first remove', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }],
+            blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }, { tid: TIDs.simple_navigation_image }],
         });
 
         openHeaderCartByHovering();
@@ -31,7 +31,7 @@ describe('Cart in header tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after second remove', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }],
+            blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }, { tid: TIDs.simple_navigation_image }],
         });
     });
 });

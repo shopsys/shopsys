@@ -1,6 +1,7 @@
 import { getLinkType } from './utils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -34,7 +35,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 )}
             >
                 {itemImage && (
-                    <div className="h-12 w-16 shrink-0">
+                    <div className="h-12 w-16 shrink-0" tid={TIDs.simple_navigation_image}>
                         <Image
                             alt={itemImage.name || listedItem.name}
                             className="mx-auto max-h-full w-auto mix-blend-multiply"

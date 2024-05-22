@@ -26,7 +26,7 @@ describe('Login tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after login', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider }],
+            blackout: [{ tid: TIDs.banners_slider }, { tid: TIDs.simple_navigation_image }],
         });
 
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.index);
@@ -46,7 +46,7 @@ describe('Login tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after login', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider }],
+            blackout: [{ tid: TIDs.banners_slider }, { tid: TIDs.simple_navigation_image }],
         });
 
         logoutFromHeader();
@@ -56,7 +56,7 @@ describe('Login tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after logout', {
             capture: 'viewport',
             wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider }],
+            blackout: [{ tid: TIDs.banners_slider }, { tid: TIDs.simple_navigation_image }],
         });
     });
 });

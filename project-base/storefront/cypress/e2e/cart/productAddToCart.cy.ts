@@ -59,7 +59,10 @@ describe('Product add to cart tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
             capture: 'viewport',
-            blackout: [{ tid: TIDs.add_to_cart_popup_image, zIndex: 20000 }],
+            blackout: [
+                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
+                { tid: TIDs.simple_navigation_image, zIndex: 9999 },
+            ],
         });
         checkPopupIsVisible(true);
     });
@@ -78,7 +81,10 @@ describe('Product add to cart tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
             capture: 'viewport',
-            blackout: [{ tid: TIDs.add_to_cart_popup_image, zIndex: 20000 }],
+            blackout: [
+                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
+                { tid: TIDs.simple_navigation_image, zIndex: 9999 },
+            ],
         });
         checkPopupIsVisible(true);
     });
@@ -92,7 +98,10 @@ describe('Product add to cart tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
             capture: 'viewport',
-            blackout: [{ tid: TIDs.add_to_cart_popup_image, zIndex: 20000 }],
+            blackout: [
+                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
+                { tid: TIDs.simple_navigation_image, zIndex: 9999 },
+            ],
         });
         checkPopupIsVisible(true);
     });
@@ -118,6 +127,7 @@ describe('Product add to cart tests', () => {
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
                 { tid: TIDs.banners_slider, zIndex: 9999 },
+                { tid: TIDs.simple_navigation_image, zIndex: 9999 },
             ],
         });
         checkPopupIsVisible(true);
