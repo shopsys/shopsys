@@ -10,9 +10,9 @@ import { createUserSlice, defaultUserState, UserSlice } from './slices/createUse
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type PersistStore = AuthLoadingSlice & UserSlice & ContactInformationSlice & PacketerySlice;
+export type PersistStore = AuthLoadingSlice & UserSlice & ContactInformationSlice & PacketerySlice;
 
-const STORE_NAME = 'shopsys-platform-persist-store';
+const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
 
 export const usePersistStore = create<PersistStore>()(
     persist(
@@ -23,10 +23,10 @@ export const usePersistStore = create<PersistStore>()(
                 ...createContactInformationSlice(...store),
                 ...createPacketerySlice(...store),
             }),
-            STORE_NAME,
+            PERSIST_STORE_NAME,
         ),
         {
-            name: STORE_NAME,
+            name: PERSIST_STORE_NAME,
             version: 1,
             migrate: (persistedState, version) => {
                 let migratedPersistedState = { ...(persistedState as object) };
@@ -39,6 +39,7 @@ export const usePersistStore = create<PersistStore>()(
                         ...defaultPacketeryState,
                     };
                 }
+
                 return migratedPersistedState as PersistStore;
             },
         },

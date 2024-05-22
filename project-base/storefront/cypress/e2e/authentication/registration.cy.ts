@@ -6,7 +6,7 @@ import {
     clearAndFillInRegstrationFormEmail,
     clearAndFillInRegistrationFormPasswords,
 } from './authenticationSupport';
-import { DEFAULT_APP_STORE, password, url } from 'fixtures/demodata';
+import { password, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkAndHideErrorToast,
@@ -14,6 +14,7 @@ import {
     checkPopupIsVisible,
     checkUrl,
     goToEditProfileFromHeader,
+    initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
     takeSnapshotAndCompare,
 } from 'support';
@@ -21,9 +22,7 @@ import { TIDs } from 'tids';
 
 describe('Registration tests (basic)', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
@@ -49,9 +48,7 @@ describe('Registration tests (basic)', () => {
 
 describe('Registration tests (repeated tries)', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM(url.registration);
     });
 

@@ -1,6 +1,5 @@
 import { fillInEmailAndPasswordInLoginPopup } from 'e2e/authentication/authenticationSupport';
 import { buttonName } from 'fixtures/demodata';
-import { Blackout, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 export const increaseCartItemQuantityWithSpinbox = (catnum: string) => {

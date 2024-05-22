@@ -1,10 +1,10 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
-import { products } from 'fixtures/demodata';
+import { PERSIST_STORE_NAME, products } from 'fixtures/demodata';
 
 Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?: number) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
 
     return cy.getCookie('accessToken').then((cookie) => {
         const accessToken = cookie?.value;
@@ -45,7 +45,7 @@ Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?
 });
 
 Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
 
     return cy.getCookie('accessToken').then((cookie) => {
         const accessToken = cookie?.value;
@@ -88,7 +88,7 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
 });
 
 Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickupPlaceIdentifier?: string) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
     if (!currentAppStoreAsString) {
         throw new Error(
             'Could not load app store from local storage. This is an issue with tests, not with the application.',
@@ -143,7 +143,7 @@ Cypress.Commands.add('preselectTransportForTest', (transportUuid: string, pickup
 });
 
 Cypress.Commands.add('preselectPaymentForTest', (paymentUuid: string) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
     if (!currentAppStoreAsString) {
         throw new Error(
             'Could not load app store from local storage. This is an issue with tests, not with the application.',
@@ -230,7 +230,7 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
 });
 
 Cypress.Commands.add('logout', () => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
     if (!currentAppStoreAsString) {
         throw new Error(
             'Could not load app store from local storage. This is an issue with tests, not with the application.',
@@ -265,7 +265,7 @@ Cypress.Commands.add('logout', () => {
 });
 
 Cypress.Commands.add('createOrder', (createOrderVariables: TypeCreateOrderMutationVariables) => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
     if (!currentAppStoreAsString) {
         throw new Error(
             'Could not load app store from local storage. This is an issue with tests, not with the application.',

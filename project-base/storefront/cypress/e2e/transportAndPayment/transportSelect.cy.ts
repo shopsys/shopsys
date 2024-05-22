@@ -7,16 +7,19 @@ import {
 } from './transportAndPaymentSupport';
 import { goToNextOrderStep } from 'e2e/cart/cartSupport';
 import { checkEmptyCartTextIsVisible, checkTransportSelectionIsNotVisible } from 'e2e/order/orderSupport';
-import { DEFAULT_APP_STORE, products, transport, url } from 'fixtures/demodata';
+import { products, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkLoaderOverlayIsNotVisibleAfterTimePeriod, checkUrl, takeSnapshotAndCompare } from 'support';
+import {
+    checkLoaderOverlayIsNotVisibleAfterTimePeriod,
+    checkUrl,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
 
 describe('Transport select tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should select transport to home', function () {

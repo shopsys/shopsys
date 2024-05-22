@@ -1,14 +1,16 @@
 import { changeSelectionOfPaymentByName, changeSelectionOfTransportByName } from './transportAndPaymentSupport';
-import { DEFAULT_APP_STORE, payment, transport, url } from 'fixtures/demodata';
+import { payment, transport, url } from 'fixtures/demodata';
 import { generateCreateOrderInput, generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkLoaderOverlayIsNotVisibleAfterTimePeriod, takeSnapshotAndCompare } from 'support';
+import {
+    checkLoaderOverlayIsNotVisibleAfterTimePeriod,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
 
 describe('Last order transport and payment select tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
 
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput);

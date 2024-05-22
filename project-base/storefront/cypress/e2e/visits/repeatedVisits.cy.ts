@@ -1,10 +1,9 @@
-import { DEFAULT_APP_STORE, url } from 'fixtures/demodata';
+import { url } from 'fixtures/demodata';
+import { initializePersistStoreInLocalStorageToDefaultValues } from 'support';
 
 describe('Repeated page visits tests (for defer testing)', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('5 homepage visits with wait', () => {

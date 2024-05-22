@@ -7,21 +7,20 @@ import {
     increaseProductListQuantityWithSpinbox,
     searchProductByNameWithAutocomplete,
 } from './cartSupport';
-import { DEFAULT_APP_STORE, products, url } from 'fixtures/demodata';
+import { products, url } from 'fixtures/demodata';
 import {
     changeProductListItemQuantityWithSpinboxInput,
     checkPopupIsVisible,
     checkUrl,
     goToPageThroughSimpleNavigation,
+    initializePersistStoreInLocalStorageToDefaultValues,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
 
 describe('Product add to cart tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should add product to cart from brand page', function () {

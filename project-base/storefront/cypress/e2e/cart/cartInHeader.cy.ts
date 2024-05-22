@@ -1,13 +1,11 @@
 import { openHeaderCartByHovering, removeFirstProductFromHeaderCart } from './cartSupport';
-import { DEFAULT_APP_STORE, products } from 'fixtures/demodata';
-import { takeSnapshotAndCompare } from 'support';
+import { products } from 'fixtures/demodata';
+import { initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Cart in header tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
         cy.addProductToCartForTest(products.helloKitty.uuid, 2).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );

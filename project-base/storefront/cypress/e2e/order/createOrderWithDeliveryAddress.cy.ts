@@ -8,16 +8,19 @@ import {
     changeOrderConfirmationDynamicPartsToStaticDemodata,
     changeOrderDetailDynamicPartsToStaticDemodata,
 } from './orderSupport';
-import { DEFAULT_APP_STORE, deliveryAddress, payment, transport, url } from 'fixtures/demodata';
+import { deliveryAddress, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { clickOnLabel, loseFocus, takeSnapshotAndCompare } from 'support';
+import {
+    clickOnLabel,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    loseFocus,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
 
 describe('Create order with delivery address tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
 
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
@@ -92,9 +95,7 @@ describe('Create order with delivery address tests', () => {
 
 describe('Delivery address in order tests (logged-in user)', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should keep filled delivery address for logged-in user after page refresh', function () {
@@ -258,9 +259,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
 
 describe('Delivery address in order tests (with pickup point)', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
 
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
@@ -332,9 +331,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
 
 describe('Delivery address in order tests (with pickup point, logged-in user)', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', function () {
