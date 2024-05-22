@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Twig\FileThumbnail;
 
-use Intervention\Image\Image;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
-use Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 
 class FileThumbnailExtensionTest extends TestCase
@@ -26,15 +25,15 @@ class FileThumbnailExtensionTest extends TestCase
         );
 
         $exception = new FileIsNotSupportedImageException($temporaryFilename);
-        $imageThumbnailFactoryMock = $this->getMockBuilder(ImageThumbnailFactory::class)
-            ->onlyMethods(['getImageThumbnail'])
+        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
+            ->onlyMethods(['getEncodedImageUri'])
             ->disableOriginalConstructor()
             ->getMock();
-        $imageThumbnailFactoryMock->expects($this->once())->method('getImageThumbnail')->willThrowException(
+        $imageProcessorMock->expects($this->once())->method('getEncodedImageUri')->willThrowException(
             $exception,
         );
 
-        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageThumbnailFactoryMock);
+        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageProcessorMock);
         $fileThumbnailInfo = $fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
 
         $this->assertSame(FileThumbnailExtension::DEFAULT_ICON_TYPE, $fileThumbnailInfo->getIconType());
@@ -54,22 +53,15 @@ class FileThumbnailExtensionTest extends TestCase
             'dir/' . $temporaryFilename,
         );
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Intervention\Image\Image $imageMock */
-        $imageMock = $this->getMockBuilder(Image::class)
-            ->onlyMethods(['encode', '__call'])
+        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
+            ->onlyMethods(['getEncodedImageUri'])
             ->disableOriginalConstructor()
             ->getMock();
-        $imageMock->expects($this->once())->method('encode')->willReturnSelf();
-        $imageMock->expects($this->once())->method('__call')->with('destroy');
-        $imageMock->setEncoded($encodedData);
+        $imageProcessorMock->expects($this->once())->method('getEncodedImageUri')->willReturn(
+            $encodedData,
+        );
 
-        $imageThumbnailMock = $this->getMockBuilder(ImageThumbnailFactory::class)
-            ->onlyMethods(['getImageThumbnail'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $imageThumbnailMock->expects($this->once())->method('getImageThumbnail')->willReturn($imageMock);
-
-        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageThumbnailMock);
+        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageProcessorMock);
         $fileThumbnailInfo = $fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
 
         $this->assertNull($fileThumbnailInfo->getIconType());
@@ -89,15 +81,15 @@ class FileThumbnailExtensionTest extends TestCase
         );
 
         $exception = new FileIsNotSupportedImageException($temporaryFilename);
-        $imageThumbnailFactoryMock = $this->getMockBuilder(ImageThumbnailFactory::class)
-            ->onlyMethods(['getImageThumbnail'])
+        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
+            ->onlyMethods(['getEncodedImageUri'])
             ->disableOriginalConstructor()
             ->getMock();
-        $imageThumbnailFactoryMock->expects($this->once())->method('getImageThumbnail')->willThrowException(
+        $imageProcessorMock->expects($this->once())->method('getEncodedImageUri')->willThrowException(
             $exception,
         );
 
-        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageThumbnailFactoryMock);
+        $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageProcessorMock);
         $fileThumbnailInfo = $fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
 
         $this->assertSame('word', $fileThumbnailInfo->getIconType());

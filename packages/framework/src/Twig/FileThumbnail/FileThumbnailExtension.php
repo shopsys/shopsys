@@ -6,14 +6,13 @@ namespace Shopsys\FrameworkBundle\Twig\FileThumbnail;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
-use Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory;
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class FileThumbnailExtension extends AbstractExtension
 {
     public const string DEFAULT_ICON_TYPE = 'all';
-    protected const int IMAGE_THUMBNAIL_QUALITY = 80;
 
     /**
      * @var string[]
@@ -22,11 +21,11 @@ class FileThumbnailExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory $imageThumbnailFactory
+     * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      */
     public function __construct(
         protected readonly FileUpload $fileUpload,
-        protected readonly ImageThumbnailFactory $imageThumbnailFactory,
+        protected readonly ImageProcessor $imageProcessor,
     ) {
         $this->iconsByExtension = [
             'csv' => 'excel',
@@ -95,12 +94,7 @@ class FileThumbnailExtension extends AbstractExtension
      */
     protected function getImageThumbnailInfo(string $filepath): FileThumbnailInfo
     {
-        $image = $this->imageThumbnailFactory->getImageThumbnail($filepath);
-
-        $imageUri = $image->encode('data-url', static::IMAGE_THUMBNAIL_QUALITY)->getEncoded();
-        $image->destroy();
-
-        return new FileThumbnailInfo(null, $imageUri);
+        return new FileThumbnailInfo(null, $this->imageProcessor->getEncodedImageUri($filepath));
     }
 
     /**

@@ -49,11 +49,7 @@ class ImageProcessor
      */
     public function createInterventionImage(string $filepath): Image
     {
-        $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-
-        if (!in_array($extension, $this->supportedImageExtensions, true)) {
-            throw new FileIsNotSupportedImageException($filepath);
-        }
+        $this->getExtensionThrowExceptionIfNotSupported($filepath);
 
         try {
             if ($this->filesystem->has($filepath)) {
@@ -72,15 +68,47 @@ class ImageProcessor
      * @param string $filepath
      * @return string
      */
-    public function convertToShopFormatAndGetNewFilename(string $filepath): string
+    protected function getExtensionThrowExceptionIfNotSupported(string $filepath): string
     {
-        $filename = pathinfo($filepath, PATHINFO_FILENAME);
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-        $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $filename . '.';
 
         if (!in_array($extension, $this->supportedImageExtensions, true)) {
             throw new FileIsNotSupportedImageException($filepath);
         }
+
+        return $extension;
+    }
+
+    /**
+     * @param string $filepath
+     * @return string
+     */
+    public function getEncodedImageUri(string $filepath): string
+    {
+        $this->getExtensionThrowExceptionIfNotSupported($filepath);
+
+        try {
+            $mimeType = $this->filesystem->mimeType($filepath);
+        } catch (FilesystemException) {
+            $mimeType = 'image/png';
+        }
+
+        return sprintf(
+            'data:%s;base64,%s',
+            $mimeType,
+            base64_encode($this->filesystem->read($filepath)),
+        );
+    }
+
+    /**
+     * @param string $filepath
+     * @return string
+     */
+    public function convertToShopFormatAndGetNewFilename(string $filepath): string
+    {
+        $filename = pathinfo($filepath, PATHINFO_FILENAME);
+        $extension = $this->getExtensionThrowExceptionIfNotSupported($filepath);
+        $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $filename . '.';
 
         $newFilepath .= $extension;
 
