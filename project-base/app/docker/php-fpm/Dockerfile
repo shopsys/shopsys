@@ -13,6 +13,18 @@ FROM base as development
 
 USER root
 
+# install Blackfire probe
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION.(PHP_ZTS ? '-zts' : '');") \
+    && architecture=$(uname -m) \
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s "https://blackfire.io/api/v1/releases/probe/php/linux/$architecture/$version" \
+    && mkdir -p /tmp/blackfire \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
+    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > "$PHP_INI_DIR/conf.d/blackfire.ini" \
+    && curl -A "Docker" -L "https://blackfire.io/api/v1/releases/cli/linux/$architecture" | tar zxp -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
+    && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
+
 # allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
 # if the GID is already in use, we will assign GID 33 instead (33 is the standard uid/gid for "www-data" in Debian)
 ARG www_data_uid
