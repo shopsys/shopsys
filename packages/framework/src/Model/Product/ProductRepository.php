@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use App\Component\Doctrine\QueryBuilderExtender;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -19,7 +19,7 @@ class ProductRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
-     * @param \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -465,7 +465,7 @@ class ProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $offset
      * @param int $limit
-     * @return \App\Model\Product\Product[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAllOfferedProductsPaginated(
         int $domainId,
