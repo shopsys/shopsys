@@ -78,7 +78,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9177759';
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
-        $this->set0rderingPriority($productData, 1);
+        $this->setOrderingPriority($productData, 1);
         $productData->weight = 3000;
 
         $parameterValues = [];
@@ -2769,7 +2769,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176544MS';
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
-        $this->set0rderingPriority($productData, 2);
+        $this->setOrderingPriority($productData, 2);
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
@@ -2888,7 +2888,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176578';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
-        $this->set0rderingPriority($productData, 1);
+        $this->setOrderingPriority($productData, 1);
 
         $parameterValues = [];
 
@@ -2971,7 +2971,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '7700769';
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245931';
-        $this->set0rderingPriority($productData, 1);
+        $this->setOrderingPriority($productData, 1);
 
         $parameterValues = [];
 
@@ -3087,7 +3087,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981537';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245939';
-        $this->set0rderingPriority($productData, 1);
+        $this->setOrderingPriority($productData, 1);
 
         $parameterValues = [];
 
@@ -3129,7 +3129,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981538';
         $productData->partno = 'T27D590EZ';
         $productData->ean = '8845781245940';
-        $this->set0rderingPriority($productData, 1);
+        $this->setOrderingPriority($productData, 1);
 
         $parameterValues = [];
 
@@ -5781,7 +5781,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param int $orderingPriority
      */
-    private function set0rderingPriority(ProductData $productData, int $orderingPriority): void
+    private function setOrderingPriority(ProductData $productData, int $orderingPriority): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $productData->orderingPriorityByDomainId[$domainId] = $orderingPriority;
