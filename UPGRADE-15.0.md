@@ -1170,3 +1170,12 @@ We want to implement more usable UI design which will be better base for upcomin
 #### removed invalid cache invalidation when adding to product list ([#3172](https://github.com/shopsys/shopsys/pull/3172))
 
 #### bump versions of SF packages to fix security issues([#3191](https://github.com/shopsys/shopsys/pull/3191))
+
+#### useContext refactoring ([#3176](https://github.com/shopsys/shopsys/pull/3176))
+
+-   move your contexts as high in the component tree as it makes sense (especially with regards to optimizations), in order to maximally avoid unavailable contexts, but to also not kill the performance of you app with unnecessary rerenders
+    -   in our case it meant having all context providers in `_app.tsx`, which means less headaches, but might not be feasible for you
+    -   we were only able to do this because we use all our contexts globally, so if you have a local context, do not move it to the root, as that will cause unnecessary rerenders
+-   we now throw errors if contexts are used outside of providers, which is good if you want to discover bugs as soon as possible, but might not be the right choice for you
+    -   if you can and want provide default state instead of throwing errors, you can do that as well
+-   we never use `useContext` directly, but provide a wrapper which takes care of extra actions, such as throwing errors if used outside of a provider
