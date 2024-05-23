@@ -1,0 +1,21 @@
+{% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+    {% set current_position = object.position %}
+    {% set last_position = 4 %}
+    {% set enable_top_bottom_buttons = field_description.options.actions.move.enable_top_bottom_buttons ?? true %}
+
+    <span class="btn btn-sm btn-default js-sortable-move" data-current-position="{{ current_position }}" data-url="{{ admin.generateObjectUrl('move', object, {'position': 'NEW_POSITION'}) }}">
+        <i class="fa fa-arrows"></i>
+    </span>
+
+    {% if enable_top_bottom_buttons and current_position < last_position %}
+        <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('move', object, {'position': 'bottom'}) }}" title="{{ 'move_to_bottom'|trans }}">
+            <i class="fa fa-angle-double-down"></i>
+        </a>
+    {% endif %}
+
+    {% if enable_top_bottom_buttons and current_position > 0 %}
+        <a class="btn btn-sm btn-default" href="{{ admin.generateObjectUrl('move', object, {'position': 'top'}) }}" title="{{ 'move_to_top'|trans }}">
+            <i class="fa fa-angle-double-up"></i>
+        </a>
+    {% endif %}
+{% endif %}

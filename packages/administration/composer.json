@@ -26,6 +26,7 @@
         "cweagans/composer-patches": "^1.7",
         "sonata-project/admin-bundle": "^4.30",
         "sonata-project/doctrine-orm-admin-bundle": "^4.9",
+        "runroom-packages/sortable-behavior-bundle": "^0.17.2",
         "twig/twig": "^3.0"
     },
     "require-dev": {

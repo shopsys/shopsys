@@ -521,6 +521,9 @@
     "roave/signature": {
         "version": "1.0.0"
     },
+    "runroom-packages/sortable-behavior-bundle": {
+        "version": "0.17.2"
+    },
     "scheb/2fa-bundle": {
         "version": "5.13",
         "recipe": {

@@ -27,6 +27,7 @@ use Sonata\AdminBundle\Model\ModelManagerInterface;
 use Sonata\AdminBundle\Model\ProxyResolverInterface;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 use function array_key_exists;
 use function get_class;
 use function is_callable;
@@ -44,16 +45,26 @@ abstract class AbstractDtoManager implements ModelManagerInterface, ProxyResolve
      */
     protected array $cache = [];
 
+    protected readonly EntityNameResolver $entityNameResolver;
+
+    protected readonly ManagerRegistry $registry;
+
+    protected readonly PropertyAccessorInterface $propertyAccessor;
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      * @param \Doctrine\Persistence\ManagerRegistry $registry
      * @param \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor
      */
-    public function __construct(
-        protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly ManagerRegistry $registry,
-        protected readonly PropertyAccessorInterface $propertyAccessor,
-    ) {
+    #[Required]
+    public function injectDependencies(
+        EntityNameResolver $entityNameResolver,
+        ManagerRegistry $registry,
+        PropertyAccessorInterface $propertyAccessor,
+    ): void {
+        $this->propertyAccessor = $propertyAccessor;
+        $this->registry = $registry;
+        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**
@@ -96,10 +107,24 @@ abstract class AbstractDtoManager implements ModelManagerInterface, ProxyResolve
         $entityName = $this->entityNameResolver->resolve($this->getSubjectClass());
 
         if ($dataObject === true) {
-            return $entityName . 'Data';
+            return $this->resolveDataObjectClass();
         }
 
         return $entityName;
+    }
+
+    /**
+     * @return class-string
+     */
+    protected function resolveDataObjectClass(): string
+    {
+        $dataObjectClassNameCandidate = $this->entityNameResolver->resolve($this->getSubjectClass()) . 'Data';
+
+        if (class_exists($dataObjectClassNameCandidate)) {
+            return $dataObjectClassNameCandidate;
+        }
+
+        return $this->getSubjectClass() . 'Data';
     }
 
     /**

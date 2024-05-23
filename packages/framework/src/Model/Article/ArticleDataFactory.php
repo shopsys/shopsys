@@ -59,6 +59,8 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
      */
     protected function fillFromArticle(ArticleData $articleData, Article $article)
     {
+        $articleData->id = $article->getId();
+        $articleData->position = $article->getPosition();
         $articleData->name = $article->getName();
         $articleData->text = $article->getText();
         $articleData->seoTitle = $article->getSeoTitle();
