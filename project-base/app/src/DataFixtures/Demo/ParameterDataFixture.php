@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Category\Category;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroup;
-use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Product\Parameter\ParameterValue;
-use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Unit\Unit;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -28,10 +24,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 {
     private const string UUID_NAMESPACE = 'b048837f-32d5-4a11-ab10-f7e77af02c60';
 
-    public const PARAMETER_PREFIX = 'parameter_';
-    public const PARAMETER_SLIDER_WARRANTY = 'parameter_slider_warranty';
-
-    public const string PARAM_ACTIVE = 'active';
     public const string PARAM_ACTIVE_PASSIVE = 'active_passive';
     public const string PARAM_ANNUAL_ENERGY_CONSUMPTION = 'annual_energy_consumption';
     public const string PARAM_BLUETOOTH = 'bluetooth';
@@ -52,11 +44,11 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PARAM_ENERGY_EFFICIENCY_CLASS = 'energy_efficiency_class';
     public const string PARAM_ENTER = 'enter';
     public const string PARAM_ERGONOMICS = 'ergonomics';
-    public const string PARAM_FOLD = 'fold';
     public const string PARAM_FOLD_UP = 'fold_up';
     public const string PARAM_GPS_MODULE = 'gps_module';
     public const string PARAM_GAMING_MOUSE = 'gaming_mouse';
     public const string PARAM_HDMI = 'hdmi';
+    public const string PARAM_HEIGHT = 'height';
     public const string PARAM_INTERFACE = 'interface';
     public const string PARAM_LCD = 'lcd';
     public const string PARAM_LOCALIZATION = 'localization';
@@ -96,6 +88,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PARAM_WEIGHT = 'weight';
     public const string PARAM_WEIGHT_KG = 'weight_kg';
     public const string PARAM_WIFI = 'wifi';
+    public const string PARAM_ZOOM = 'zoom';
 
     /**
      * @var array<string, array<string, string|\App\DataFixtures\Demo\ParameterDataFixtureData>>
@@ -105,8 +98,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
@@ -114,8 +105,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public function __construct(
         private readonly ParameterDataFactory $parameterDataFactory,
         private readonly ParameterFacade $parameterFacade,
-        private readonly ParameterValueDataFactory $parameterValueDataFactory,
-        private readonly ParameterRepository $parameterRepository,
         private readonly EntityManagerDecorator $entityManager,
         private readonly Domain $domain,
         private readonly CategoryParameterFactory $categoryParameterFactory,
@@ -148,22 +137,99 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             return self::$parameterNameCacheByLocale[$locale];
         }
 
-        /** @var \App\Model\Product\Parameter\ParameterGroup $mainInformationParameterGroup */
-        $mainInformationParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION);
-        /** @var \App\Model\Product\Parameter\ParameterGroup $connectionMethodParameterGroup */
-        $connectionMethodParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_CONNECTION_METHOD);
-        /** @var \App\Model\Product\Parameter\ParameterGroup $mouseParameterGroup */
-        $mouseParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION_MOUSE);
-        /** @var \App\Model\Product\Unit\Unit $unitInch */
-        $unitInch = $this->getReference(UnitDataFixture::UNIT_INCH);
+        $mainInformationParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION, ParameterGroup::class);
+        $connectionMethodParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_CONNECTION_METHOD, ParameterGroup::class);
+        $mouseParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION_MOUSE, ParameterGroup::class);
+        $unitInch = $this->getReference(UnitDataFixture::UNIT_INCH, Unit::class);
 
         $data = [
-            self::PARAM_ACTIVE => t('Active', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ACTIVE_PASSIVE => t('Active/Passive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('Annual energy consumption', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_SCREEN_SIZE => new ParameterDataFixtureData(
+                t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $mainInformationParameterGroup,
+                unit: $unitInch,
+            ),
+            self::PARAM_TECHNOLOGY => new ParameterDataFixtureData(
+                t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $mainInformationParameterGroup,
+            ),
+            self::PARAM_RESOLUTION => new ParameterDataFixtureData(
+                t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $mainInformationParameterGroup,
+            ),
+            self::PARAM_USB => new ParameterDataFixtureData(
+                t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $connectionMethodParameterGroup,
+            ),
+            self::PARAM_HDMI => new ParameterDataFixtureData(
+                t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $connectionMethodParameterGroup,
+            ),
+            self::PARAM_GAMING_MOUSE => new ParameterDataFixtureData(
+                t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $mouseParameterGroup,
+            ),
+            self::PARAM_ERGONOMICS => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_SUPPORTED_OS => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_NUMBER_OF_BUTTONS => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_WEIGHT_KG => new ParameterDataFixtureData(
+                t('Weight (kg)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+            ),
+            self::PARAM_DIMENSIONS => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MEMORY_CARD_SUPPORT => t('Memory card support', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_RAM => t('RAM', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_NUMBER_OF_COLORS => t('Number of colors', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PROCESSOR_FREQUENCY_GHZ => new ParameterDataFixtureData(
+                t('Processor frequency (GHz)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+            ),
+            self::PARAM_NUMBER_OF_PROCESSOR_CORES => t('Number of processor cores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_BLUETOOTH => t('Bluetooth', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_NFC => t('NFC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GPS_MODULE => t('GPS module', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_DISPLAY => t('Display', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PARALLEL_PORT => t('Parallel port', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ZOOM => t('Zoom', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_CAMERA_TYPE => t('Camera type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_POWER_SUPPLY => t('Power supply', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_VIEWFINDER_TYPE => t('Viewfinder type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_SENSITIVITY_ISO => t('Sensitivity (ISO)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_HEIGHT => t('Height', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_WEIGHT => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PRINT_TECHNOLOGY => t('Print technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MAXIMUM_SIZE => t('Maximum size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_LCD => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PRINT_RESOLUTION => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_COLOR_PRINTING => t('Color printing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_WIFI => t('WiFi', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MEDIA_TYPE => t('Media type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_CAPACITY => t('Capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_OVERALL_PERFORMANCE => t('Overall performance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PRESSURE => t('Pressure', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_WATER_RESERVOIR_CAPACITY => t('Water reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MILK_RESERVOIR_CAPACITY => t('Milk reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => t('Magazine capacity for beans', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_INTERFACE => t('Interface', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_SYSTEM_TYPE => t('System type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ACTIVE_PASSIVE => t('Active/Passive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_LOCALIZATION => t('Localization', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ELEMENT_ARRANGEMENT => t('Element arrangement', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ENTER => t('Enter', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_DISPLAY_SIZE => t('Display size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_DISPLAY_TYPE => t('Display type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_RESOLUTION_OF_REAR_CAMERA => t('Resolution of rear camera', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PAGES_COUNT => t('Pages count', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_COVER => t('Cover', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ANNUAL_ENERGY_CONSUMPTION => t('Annual energy consumption', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_ENERGY_EFFICIENCY_CLASS => t('Energy efficiency class', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_TUNER => t('Tuner', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_RECORDING_ON => t('Recording on', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_MULTIMEDIA => t('Multimedia', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_EAR_COUPLING => t('Ear Coupling', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_CONSTRUCTION => t('Construction', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_FOLD_UP => t('Fold-up', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_DETERMINATION => t('Determination', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_CONNECTORS => t('Connectors', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_COLOR => new ParameterDataFixtureData(
                 t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_COLOR,
@@ -173,35 +239,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 ],
                 Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
             ),
-            self::PARAM_COLOR_PRINTING => t('Color printing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_CONNECTORS => t('Connectors', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_CONSTRUCTION => t('Construction', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_COVER => t('Cover', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DETERMINATION => t('Determination', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DIMENSIONS => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DISPLAY => t('Display', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DISPLAY_SIZE => t('Display Size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_DISPLAY_TYPE => t('Display type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_EAR_COUPLING => t('Ear Coupling', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ELEMENT_ARRANGEMENT => t('Element arrangement', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ENERGY_EFFICIENCY_CLASS => t('Energy efficiency class', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ENTER => t('Enter', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_ERGONOMICS => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_FOLD => t('Fold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_FOLD_UP => t('Fold-up', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_GPS_MODULE => t('GPS module', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_GAMING_MOUSE => new ParameterDataFixtureData(
-                t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                parameterGroup: $mouseParameterGroup,
-            ),
-            self::PARAM_HDMI => new ParameterDataFixtureData(
-                t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                parameterGroup: $connectionMethodParameterGroup,
-            ),
-            self::PARAM_INTERFACE => t('Interface', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_LCD => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_LOCALIZATION => t('Localization', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => t('Magazine capacity for beans', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_MATERIAL => new ParameterDataFixtureData(
                 t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 asFilterInCategories: [
@@ -210,51 +247,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 ],
                 akeneoType: Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
             ),
-            self::PARAM_MAXIMUM_SIZE => t('Maximum size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MEDIA_TYPE => t('Media type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MEMORY_CARD_SUPPORT => t('Memory card support', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MILK_RESERVOIR_CAPACITY => t('Milk reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MULTIMEDIA => t('Multimedia', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_NFC => t('NFC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_NUMBER_OF_BUTTONS => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_NUMBER_OF_COLORS => t('Number of colors', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_NUMBER_OF_PROCESSOR_CORES => t('Number of processor cores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_OVERALL_PERFORMANCE => t('Overall performance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PAGES_COUNT => t('Pages count', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PARALLEL_PORT => t('Parallel port', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_POWER_SUPPLY => t('Power supply', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PRESSURE => t('Pressure', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PRINT_RESOLUTION => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PRINT_TECHNOLOGY => t('Print technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PROCESSOR_FREQUENCY_GHZ => new ParameterDataFixtureData(
-                t('Processor frequency (GHz)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                Parameter::PARAMETER_TYPE_SLIDER,
-            ),
-            self::PARAM_RAM => t('RAM', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_RECORDING_ON => t('Recording on', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_RESOLUTION => new ParameterDataFixtureData(
-                t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                parameterGroup: $mainInformationParameterGroup,
-            ),
-            self::PARAM_RESOLUTION_OF_REAR_CAMERA => t('Resolution of rear camera', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_SCREEN_SIZE => new ParameterDataFixtureData(
-                t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                parameterGroup: $mainInformationParameterGroup,
-                unit: $unitInch,
-            ),
-            self::PARAM_SENSITIVITY_ISO => t('Sensitivity (ISO)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_SUPPORTED_OS => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_SYSTEM_TYPE => t('System type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_TECHNOLOGY => new ParameterDataFixtureData(
-                t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                parameterGroup: $mainInformationParameterGroup,
-            ),
-            self::PARAM_TUNER => t('Tuner', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_USB => new ParameterDataFixtureData(
-                t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                parameterGroup: $connectionMethodParameterGroup,
-            ),
-            self::PARAM_VIEWFINDER_TYPE => t('Viewfinder type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_WARRANTY_IN_YEARS => new ParameterDataFixtureData(
                 t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_SLIDER,
@@ -262,13 +254,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                     $this->getReference(CategoryDataFixture::CATEGORY_PC),
                 ],
             ),
-            self::PARAM_WATER_RESERVOIR_CAPACITY => t('Water reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_WEIGHT => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_WEIGHT_KG => new ParameterDataFixtureData(
-                t('Weight (kg)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                Parameter::PARAMETER_TYPE_SLIDER,
-            ),
-            self::PARAM_WIFI => t('WiFi', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
 
         self::$parameterNameCacheByLocale[$locale] = $data;
@@ -309,43 +294,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             }
 
             $this->addReference($parameterDataKey, $parameter);
-        }
-
-        $parameterColorNamesByLocale = [];
-        $parameterMaterialNamesByLocale = [];
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterColorNamesByLocale[$locale] = t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $parameterMaterialNamesByLocale[$locale] = t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        }
-
-        $this->createParameter(
-            'color',
-            $parameterColorNamesByLocale,
-            [
-                $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
-            ],
-            Parameter::PARAMETER_TYPE_COLOR,
-            Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
-        );
-
-        $this->createParameter(
-            'material',
-            $parameterMaterialNamesByLocale,
-            [
-                $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
-                $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
-            ],
-            null,
-            Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
-        );
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $this->findOrCreateParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
-            $this->findOrCreateParameterValue($locale, t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#000000');
-            $this->findOrCreateParameterValue($locale, t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->findOrCreateParameterValue($locale, t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->findOrCreateParameterValue($locale, t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
         }
     }
 
@@ -407,24 +355,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $this->entityManager->flush();
 
         return $parameter;
-    }
-
-    /**
-     * @param string $locale
-     * @param string $text
-     * @param string|null $rgbHex
-     * @return \App\Model\Product\Parameter\ParameterValue
-     */
-    private function findOrCreateParameterValue(string $locale, string $text, ?string $rgbHex = null): ParameterValue
-    {
-        $parameterValueData = $this->parameterValueDataFactory->create();
-        $parameterValueData->locale = $locale;
-        $parameterValueData->rgbHex = $rgbHex;
-        $parameterValueData->text = $text;
-
-        return $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
-            $parameterValueData,
-        );
     }
 
     /**
