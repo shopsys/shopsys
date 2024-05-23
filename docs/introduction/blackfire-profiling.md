@@ -21,7 +21,7 @@ Edit the `docker-compose.yml` file in your Shopsys Platform project to include t
 Uncomment the blackfire container definition and fill in variables with your actual Blackfire credentials.
 
 ```yaml
-version: "3.7"
+version: '3.7'
 
 x-variables:
     blackfire_environments: &blackfire_environments
@@ -34,10 +34,9 @@ services:
     # Uncomment the following lines and fill values in x-variables section to enable Blackfire
     blackfire:
         image: blackfire/blackfire:2
-        ports: ["8307"]
+        ports: ['8307']
         environment:
             <<: *blackfire_environments
-
 # ...
 ```
 
