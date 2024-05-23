@@ -1,5 +1,5 @@
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { useGtmContext } from 'gtm/context/useGtmContext';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import { getGtmAutocompleteResultsViewEvent } from 'gtm/factories/getGtmAutocompleteResultsViewEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { useEffect, useRef } from 'react';

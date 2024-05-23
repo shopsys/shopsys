@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useState, createContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 export type GtmContextType = {
     didPageViewRun: boolean;
@@ -8,18 +9,11 @@ export type GtmContextType = {
     setIsScriptLoaded: (newState: boolean) => void;
 };
 
-const defaultState: GtmContextType = {
-    didPageViewRun: false,
-    setDidPageViewRun: () => undefined,
-    isScriptLoaded: false,
-    setIsScriptLoaded: () => undefined,
-};
-
-export const GtmContext = createContext(defaultState);
+export const GtmContext = createContext<GtmContextType | null>(null);
 
 export const GtmProvider: FC = ({ children }) => {
-    const [didPageViewRun, setDidPageViewRun] = useState(defaultState.didPageViewRun);
-    const [isScriptLoaded, setIsScriptLoaded] = useState(defaultState.isScriptLoaded);
+    const [didPageViewRun, setDidPageViewRun] = useState(false);
+    const [isScriptLoaded, setIsScriptLoaded] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -39,4 +33,14 @@ export const GtmProvider: FC = ({ children }) => {
             {children}
         </GtmContext.Provider>
     );
+};
+
+export const useGtmContext = (): GtmContextType => {
+    const context = useContext(GtmContext);
+
+    if (!context) {
+        throw new Error('useGtmContext must be used within a GtmProvider');
+    }
+
+    return context;
 };

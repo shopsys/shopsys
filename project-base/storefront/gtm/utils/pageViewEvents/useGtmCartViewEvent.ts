@@ -1,4 +1,4 @@
-import { useGtmContext } from 'gtm/context/useGtmContext';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import { getGtmCartViewEvent } from 'gtm/factories/getGtmCartViewEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';

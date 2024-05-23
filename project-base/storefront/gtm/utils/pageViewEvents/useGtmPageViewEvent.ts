@@ -1,4 +1,4 @@
-import { useGtmContext } from 'gtm/context/useGtmContext';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { useRouter } from 'next/router';

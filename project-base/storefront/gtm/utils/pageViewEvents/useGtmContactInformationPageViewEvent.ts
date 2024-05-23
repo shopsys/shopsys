@@ -1,4 +1,4 @@
-import { useGtmContext } from 'gtm/context/useGtmContext';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import { getGtmContactInformationPageViewEvent } from 'gtm/factories/getGtmContactInformationPageViewEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';

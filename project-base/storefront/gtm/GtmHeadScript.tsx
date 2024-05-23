@@ -1,4 +1,4 @@
-import { useGtmContext } from './context/useGtmContext';
+import { useGtmContext } from './context/GtmProvider';
 import Script from 'next/script';
 import { getDomainConfig } from 'utils/domain/domainConfig';
 import { isClient } from 'utils/isClient';
