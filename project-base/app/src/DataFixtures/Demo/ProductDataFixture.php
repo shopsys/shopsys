@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
+use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -49,6 +50,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
+     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
@@ -61,6 +63,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly PriceConverter $priceConverter,
         private readonly StockRepository $stockRepository,
         private readonly ProductStockDataFactory $productStockDataFactory,
+        private readonly ParameterRepository $parameterRepository,
         private readonly EntityManagerInterface $em,
     ) {
     }
@@ -103,6 +106,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_MATERIAL => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Hello Kitty approved', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -155,6 +160,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_COLOR => t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_MATERIAL => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
 
@@ -197,6 +204,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_RESOLUTION => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_MATERIAL => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
 
@@ -236,7 +245,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_GAMING_MOUSE => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ERGONOMICS => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SUPPORTED_OS => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS => '5',
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '1',
+                ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_MATERIAL => t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
 
             $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Seamless Control', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -458,6 +470,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => t('5.4 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -549,6 +562,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR => t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_CAPACITY => t('210 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '2',
             ]);
         }
 
@@ -724,6 +738,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_TECHNOLOGY => t('Optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_INTERFACE => t('Wired', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
             ]);
         }
 
@@ -803,6 +818,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_LOCALIZATION => t('Czech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ELEMENT_ARRANGEMENT => t('classic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_ENTER => t('one-slotted', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -1459,6 +1475,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WIFI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('426x306x145 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
 
@@ -2051,12 +2068,20 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '1005WH';
         $productData->ean = '8845781245948';
 
+        $parameterValues = [];
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('YENKEE YSP 1005WH white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+
+            $this->addParameterValues($parameterValues, $locale, [
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '5',
+            ]);
         }
+
+        $this->setProductParameterValues($productData, $parameterValues);
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '189.3');
@@ -5447,6 +5472,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_RESOLUTION => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_HDMI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_COLOR => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
 
@@ -5469,6 +5495,28 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createProduct($productData);
 
         $this->createVariants();
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
+            $locale = $domain->getLocale();
+
+            $parameterValueData = $this->parameterValueDataFactory->create();
+            $parameterValueData->locale = $locale;
+            $parameterValueData->text = t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $parameterValueData->rgbHex = '#000000';
+            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
+
+            $parameterValueData = $this->parameterValueDataFactory->create();
+            $parameterValueData->locale = $locale;
+            $parameterValueData->text = t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $parameterValueData->rgbHex = '#FFFFFF';
+            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
+
+            $parameterValueData = $this->parameterValueDataFactory->create();
+            $parameterValueData->locale = $locale;
+            $parameterValueData->text = t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $parameterValueData->rgbHex = '#ff0000';
+            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
+        }
     }
 
     /**
