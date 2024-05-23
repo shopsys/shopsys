@@ -854,6 +854,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### parameter data fixture refactoring ([#3170](https://github.com/shopsys/shopsys/pull/3170))
+
+-   parameter and product parameter value definition in demo data is now simpler and more readable
+-   demo data parameters are now created exclusively in ParameterDataFixture, and it is no longer possible to ad hoc create not existing parameter in ProductDataFixture when defining product parameter values
+-   ParameterColorValueDataFixture is added to handle assigning hex values to color parameters
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
