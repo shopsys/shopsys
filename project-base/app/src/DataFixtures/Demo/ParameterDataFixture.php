@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -116,7 +117,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string $locale
      * @return string
      */
-    public function getParameterNameByReferenceName(string $referenceName, string $locale): string
+    private function getParameterNameByReferenceName(string $referenceName, string $locale): string
     {
         $parameterNames = $this->getParameterData($locale);
 
@@ -234,16 +235,16 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_COLOR,
                 [
-                    $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-                    $this->getReference(CategoryDataFixture::CATEGORY_TV),
+                    $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
+                    $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
                 ],
                 Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
             ),
             self::PARAM_MATERIAL => new ParameterDataFixtureData(
                 t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 asFilterInCategories: [
-                    $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-                    $this->getReference(CategoryDataFixture::CATEGORY_TV),
+                    $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
+                    $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
                 ],
                 akeneoType: Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
             ),
@@ -251,7 +252,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_SLIDER,
                 [
-                    $this->getReference(CategoryDataFixture::CATEGORY_PC),
+                    $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class),
                 ],
             ),
         ];

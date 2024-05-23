@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Filter;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\ParameterDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\Model\Category\Category;
+use App\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository;
@@ -38,14 +40,14 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
 
         $ids = array_keys($parameterFilterChoices);
 
-        $this->assertContains(51, $ids);
-        $this->assertContains(52, $ids);
-        $this->assertContains(28, $ids);
+        $this->assertContains($this->getReference(ParameterDataFixture::PARAM_PAGES_COUNT, Parameter::class)->getId(), $ids);
+        $this->assertContains($this->getReference(ParameterDataFixture::PARAM_COVER, Parameter::class)->getId(), $ids);
+        $this->assertContains($this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId(), $ids);
 
         $parameterParameterValuePair = [
-            52 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')],
-            51 => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain('48'), $this->getParameterValueIdForFirstDomain('50'), $this->getParameterValueIdForFirstDomain('55')],
-            28 => [$this->getParameterValueIdForFirstDomain('150 g'), $this->getParameterValueIdForFirstDomain('250 g'), $this->getParameterValueIdForFirstDomain('50 g')],
+            $this->getReference(ParameterDataFixture::PARAM_COVER, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')],
+            $this->getReference(ParameterDataFixture::PARAM_PAGES_COUNT, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain('48'), $this->getParameterValueIdForFirstDomain('50'), $this->getParameterValueIdForFirstDomain('55')],
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [$this->getParameterValueIdForFirstDomain('150 g'), $this->getParameterValueIdForFirstDomain('250 g'), $this->getParameterValueIdForFirstDomain('50 g')],
         ];
 
         foreach ($parameterParameterValuePair as $parameterId => $parameterValues) {

@@ -8,11 +8,13 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use App\DataFixtures\Demo\ParameterDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Filter\ParameterFilterData;
 use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -137,48 +139,48 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
 
         $countData->countInStock = 7;
         $countData->countByBrandId = [
-            2 => 4,
-            14 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 4,
+            $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [
-            3 => 2,
-            2 => 2,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 2,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 2,
         ];
         $countData->countByParameterIdAndValueId = [
-            33 => [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 7,
             ],
-            11 => [
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('449x304x152 mm') => 5,
                 $this->getParameterValueIdForFirstDomain('426x306x145 mm') => 2,
             ],
-            31 => [
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
                 $this->getParameterValueIdForFirstDomain('No') => 3,
             ],
-            30 => [
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('A3') => 5,
                 $this->getParameterValueIdForFirstDomain('A4') => 2,
             ],
-            32 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('4800x1200') => 2,
                 $this->getParameterValueIdForFirstDomain('2400x600') => 5,
             ],
-            29 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('inkjet') => 7,
             ],
-            4 => [
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 7,
             ],
-            28 => [
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
                 $this->getParameterValueIdForFirstDomain('3.5 kg') => 6,
             ],
-            34 => [
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 5,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
-            65 => [
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
@@ -203,42 +205,42 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
 
         $countData->countInStock = 2;
         $countData->countByBrandId = [
-            2 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [
         ];
         $countData->countByParameterIdAndValueId = [
-            33 => [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 2,
             ],
-            11 => [
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('449x304x152 mm') => 1,
                 $this->getParameterValueIdForFirstDomain('426x306x145 mm') => 1,
             ],
-            31 => [
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 2,
             ],
-            30 => [
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('A3') => 2,
             ],
-            32 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('4800x1200') => 2,
             ],
-            29 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('inkjet') => 2,
             ],
-            4 => [
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 2,
             ],
-            28 => [
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
                 $this->getParameterValueIdForFirstDomain('3.5 kg') => 1,
             ],
-            34 => [
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 1,
                 $this->getParameterValueIdForFirstDomain('No') => 1,
             ],
-            65 => [
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
@@ -274,49 +276,48 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
 
         $countData->countInStock = 6;
         $countData->countByBrandId = [
-            2 => 3,
-            14 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 3,
+            $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [
-            3 => 2,
-            2 => 2,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 2,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 2,
         ];
         $countData->countByParameterIdAndValueId = [
-            33 => [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 6,
             ],
-            11 => [
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('449x304x152 mm') => 4,
                 $this->getParameterValueIdForFirstDomain('426x306x145 mm') => 2,
-
             ],
-            31 => [
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
-            30 => [
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('A3') => 5,
                 $this->getParameterValueIdForFirstDomain('A4') => 1,
             ],
-            32 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('4800x1200') => 2,
                 $this->getParameterValueIdForFirstDomain('2400x600') => 4,
             ],
-            29 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('inkjet') => 6,
             ],
-            4 => [
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 6,
             ],
-            28 => [
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('3.5 kg') => 5,
                 $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
             ],
-            34 => [
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
-            65 => [
+            $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
@@ -362,7 +363,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData->countByBrandId = [];
         $countData->countByFlagId = [];
         $countData->countByParameterIdAndValueId = [
-            28 => [
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
             ],
         ];
@@ -404,42 +405,40 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
 
         $countData->countInStock = 4;
         $countData->countByBrandId = [
-            2 => 3,
-            14 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 3,
+            $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,
         ];
-        $countData->countByFlagId = [
-
-        ];
+        $countData->countByFlagId = [];
         $countData->countByParameterIdAndValueId = [
-            33 => [
+            $this->getReference(ParameterDataFixture::PARAM_COLOR_PRINTING, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
             ],
-            11 => [
+            $this->getReference(ParameterDataFixture::PARAM_DIMENSIONS, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('449x304x152 mm') => 4,
                 $this->getParameterValueIdForFirstDomain('426x306x145 mm') => 2,
             ],
-            31 => [
+            $this->getReference(ParameterDataFixture::PARAM_LCD, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 2,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
-            30 => [
+            $this->getReference(ParameterDataFixture::PARAM_MAXIMUM_SIZE, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('A3') => 2,
                 $this->getParameterValueIdForFirstDomain('A4') => 2,
             ],
-            32 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_RESOLUTION, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('2400x600') => 4,
             ],
-            29 => [
+            $this->getReference(ParameterDataFixture::PARAM_PRINT_TECHNOLOGY, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('inkjet') => 4,
             ],
-            4 => [
+            $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
             ],
-            28 => [
+            $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('3.5 kg') => 4,
                 $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
             ],
-            34 => [
+            $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
             ],
         ];
@@ -498,12 +497,12 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData = new ProductFilterCountData();
         $countData->countInStock = 5;
         $countData->countByBrandId = [
-            2 => 4,
-            14 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 4,
+            $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [
-            2 => 1,
-            3 => 1,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 1,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 1,
         ];
 
         return [
@@ -523,7 +522,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData = new ProductFilterCountData();
         $countData->countInStock = 1;
         $countData->countByBrandId = [
-            2 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [];
 
@@ -545,11 +544,11 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
 
         $countData->countInStock = 4;
         $countData->countByBrandId = [
-            14 => 1,
+            $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [
-            2 => 1,
-            3 => 1,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 1,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 1,
         ];
 
         return [
@@ -579,7 +578,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData = new ProductFilterCountData();
         $countData->countInStock = 2;
         $countData->countByBrandId = [
-            2 => 2,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 2,
         ];
         $countData->countByFlagId = [];
 
@@ -600,12 +599,12 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData = new ProductFilterCountData();
         $countData->countInStock = 5;
         $countData->countByBrandId = [
-            2 => 4,
-            14 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 4,
+            $this->getReference(BrandDataFixture::BRAND_HP, Brand::class)->getId() => 1,
         ];
         $countData->countByFlagId = [
-            2 => 1,
-            3 => 1,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class)->getId() => 1,
+            $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class)->getId() => 1,
         ];
 
         return [
@@ -637,7 +636,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData = new ProductFilterCountData();
         $countData->countInStock = 0;
         $countData->countByBrandId = [
-            2 => 1,
+            $this->getReference(BrandDataFixture::BRAND_CANON, Brand::class)->getId() => 1,
         ];
 
         return [

@@ -17,8 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductsFilteringTest extends ProductsGraphQlTestCase
 {
-    private const PARAMETER_NUMBER_OF_BUTTONS_ID = 9;
-
     private string $firstDomainLocale;
 
     public function setUp(): void
@@ -163,7 +161,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
         $parameterFacade = self::getContainer()->get(ParameterFacade::class);
-        $parameter = $parameterFacade->getById(self::PARAMETER_NUMBER_OF_BUTTONS_ID);
+        $parameter = $parameterFacade->getById($this->getReference(ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS, Parameter::class)->getId());
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
             t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
