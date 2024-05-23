@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -50,7 +49,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
@@ -63,7 +61,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly PriceConverter $priceConverter,
         private readonly StockRepository $stockRepository,
         private readonly ProductStockDataFactory $productStockDataFactory,
-        private readonly ParameterRepository $parameterRepository,
         private readonly EntityManagerInterface $em,
     ) {
     }
@@ -5493,28 +5490,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createProduct($productData);
 
         $this->createVariants();
-
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $locale = $domain->getLocale();
-
-            $parameterValueData = $this->parameterValueDataFactory->create();
-            $parameterValueData->locale = $locale;
-            $parameterValueData->text = t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $parameterValueData->rgbHex = '#000000';
-            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
-
-            $parameterValueData = $this->parameterValueDataFactory->create();
-            $parameterValueData->locale = $locale;
-            $parameterValueData->text = t('white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $parameterValueData->rgbHex = '#FFFFFF';
-            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
-
-            $parameterValueData = $this->parameterValueDataFactory->create();
-            $parameterValueData->locale = $locale;
-            $parameterValueData->text = t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $parameterValueData->rgbHex = '#ff0000';
-            $this->parameterRepository->findOrCreateParameterValueByParameterValueData($parameterValueData);
-        }
     }
 
     /**

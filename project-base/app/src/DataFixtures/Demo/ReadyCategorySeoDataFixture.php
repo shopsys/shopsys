@@ -245,8 +245,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of TV, audio plasma with HDMI seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
-        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
+        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
         $usbParameter = $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class);
         $choseCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
