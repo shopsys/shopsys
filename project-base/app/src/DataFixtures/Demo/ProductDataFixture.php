@@ -73,8 +73,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     public function load(ObjectManager $manager): void
     {
-        Uuid::setFactory(new UuidFactory());
-
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         /** @var \App\Model\Product\ProductData $productData */
