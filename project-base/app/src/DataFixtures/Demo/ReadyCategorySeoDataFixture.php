@@ -9,6 +9,7 @@ use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -159,7 +160,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'Colour' => 'black'
-            22 => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
+            63 => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
@@ -226,8 +227,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $choseCategorySeoMixCombinationArray['flagId'] = null;
-        $technologyParameter = $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY);
-        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAM_HDMI);
+        $technologyParameter = $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class);
+        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class);
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
             $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
@@ -246,7 +247,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
 
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
-        $usbParameter = $this->getReference(ParameterDataFixture::PARAM_USB);
+        $usbParameter = $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class);
         $choseCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryPc->getId(),
