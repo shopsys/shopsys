@@ -19,6 +19,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ChoiceFieldMaskType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\NumberFilter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -152,6 +153,7 @@ class OrderAdmin extends AbstractAdmin
         ]);
         $filter->add('number');
         $filter->add('email');
+        $filter->add('createdAt', DateRangeFilter::class);
         $filter->add('totalPriceWithVat', NumberFilter::class);
         $filter->add('status', null, [
             'field_type' => EntityType::class,

@@ -92,7 +92,9 @@ class AdministratorAdmin extends AbstractAdmin
                 'clone' => [
                     'template' => '@ShopsysAdministration/Administrator/clone_button.html.twig',
                 ],
-                'delete' => [],
+                'delete' => [
+                    'template' => '@ShopsysAdministration/Administrator/list__action_delete.html.twig',
+                ],
             ],
         ]);
     }
