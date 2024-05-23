@@ -274,6 +274,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     ],
                 ],
             ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterSliderFilterOption',
+                'unit' => null,
+            ],
         ];
 
         $response = $this->getResponseContentForQuery($query);
@@ -573,6 +579,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     ],
                 ],
             ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterSliderFilterOption',
+                'unit' => null,
+            ],
         ];
 
         $result = $this->getResponseContentForQuery($query);
@@ -711,7 +723,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testSliderParameterFilterOptions(): void
     {
-        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
+        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
@@ -739,7 +751,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
      */
     public function testIsSliderSelectable(bool $isSliderSelectable, array $filter): void
     {
-        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
+        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());

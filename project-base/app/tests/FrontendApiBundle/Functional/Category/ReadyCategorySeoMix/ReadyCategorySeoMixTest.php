@@ -323,7 +323,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     private function assertSelectedParameterCheckboxFilterOptions(array $parameters): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
-        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
+        $usbParameter = $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class);
         $yesValue = t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
 
         foreach ($parameters as $parameterData) {
@@ -368,7 +368,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $firstDomainLocale = $this->getFirstDomainLocale();
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
         $flagNew = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
-        $parameterUsb = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), Parameter::class);
+        $parameterUsb = $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class);
         $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextAndLocale(
             t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

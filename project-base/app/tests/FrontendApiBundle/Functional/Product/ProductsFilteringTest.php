@@ -211,7 +211,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
     public function testFilterBySliderParameter(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
-        $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
+        $parameterSlider = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
 
         $query = '
             query {
