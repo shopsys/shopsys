@@ -13,7 +13,7 @@ services:
     #    image: blackfire/blackfire:2
     #    ports: ["8307"]
     #    environment:
-    #        <<: *blackire_environments
+    #        <<: *blackfire_environments
 
     postgres:
         image: postgres:12.1-alpine
@@ -109,7 +109,7 @@ services:
             - ~/.gitconfig:/home/www-data/.gitconfig
             - .:/var/www/html
         environment:
-            <<: *blackire_environments
+            <<: *blackfire_environments
         ports:
             - "35729:35729"
 

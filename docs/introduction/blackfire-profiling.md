@@ -36,7 +36,7 @@ services:
         image: blackfire/blackfire:2
         ports: ["8307"]
         environment:
-            <<: *blackire_environments
+            <<: *blackfire_environments
 
 # ...
 ```
