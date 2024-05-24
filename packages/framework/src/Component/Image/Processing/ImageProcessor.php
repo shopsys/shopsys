@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Image\Processing;
 
-use Intervention\Image\Constraint;
-use Intervention\Image\Exception\NotReadableException;
-use Intervention\Image\Image;
-use Intervention\Image\ImageManager;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
@@ -28,11 +24,9 @@ class ImageProcessor
     protected array $supportedImageExtensions;
 
     /**
-     * @param \Intervention\Image\ImageManager $imageManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        protected readonly ImageManager $imageManager,
         protected readonly FilesystemOperator $filesystem,
     ) {
         $this->supportedImageExtensions = [
@@ -41,27 +35,6 @@ class ImageProcessor
             self::EXTENSION_GIF,
             self::EXTENSION_PNG,
         ];
-    }
-
-    /**
-     * @param string $filepath
-     * @return \Intervention\Image\Image
-     */
-    public function createInterventionImage(string $filepath): Image
-    {
-        $this->getExtensionThrowExceptionIfNotSupported($filepath);
-
-        try {
-            if ($this->filesystem->has($filepath)) {
-                $file = $this->filesystem->read($filepath);
-
-                return $this->imageManager->make($file);
-            }
-
-            throw new ImageNotFoundException('File ' . $filepath . ' not found.');
-        } catch (NotReadableException $ex) {
-            throw new FileIsNotSupportedImageException($filepath, $ex);
-        }
     }
 
     /**
@@ -121,29 +94,5 @@ class ImageProcessor
         } catch (FilesystemException) {
             throw new ImageNotFoundException('File ' . $filepath . ' not found.');
         }
-    }
-
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param int|null $width
-     * @param int|null $height
-     * @param bool $crop
-     * @return \Intervention\Image\Image
-     */
-    public function resize(Image $image, ?int $width, ?int $height, bool $crop = false): Image
-    {
-        if ($crop) {
-            $image->fit($width, $height, function (Constraint $constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-        } else {
-            $image->resize($width, $height, function (Constraint $constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-        }
-
-        return $image;
     }
 }
