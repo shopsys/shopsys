@@ -7,15 +7,12 @@ namespace Shopsys\FrameworkBundle\Component\Domain;
 use Exception;
 use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
+use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Symfony\Bridge\Monolog\Logger;
 
-class DomainIconResizer
+class DomainIconProcessor
 {
-    protected const int DOMAIN_ICON_WIDTH = 46;
-    protected const int DOMAIN_ICON_HEIGHT = 26;
-    protected const bool DOMAIN_ICON_CROP = false;
-
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
@@ -33,25 +30,22 @@ class DomainIconResizer
      * @param string $filepath
      * @param string $domainImagesDirectory
      */
-    public function convertToDomainIconFormatAndSave(
+    public function saveIcon(
         int $domainId,
         string $filepath,
         string $domainImagesDirectory,
     ): void {
-        $resizedImage = $this->imageProcessor->resize(
-            $this->imageProcessor->createInterventionImage($filepath),
-            static::DOMAIN_ICON_WIDTH,
-            static::DOMAIN_ICON_HEIGHT,
-            static::DOMAIN_ICON_CROP,
-        );
-        $resizedImage->encode(ImageProcessor::EXTENSION_PNG);
-
         $targetFilePath = $domainImagesDirectory . '/' . $domainId . '.' . ImageProcessor::EXTENSION_PNG;
 
         try {
+            $mimeType = $this->filesystem->mimeType($filepath);
+
+            if ($mimeType !== 'image/png') {
+                throw new FileIsNotSupportedImageException('Only PNG images are supported');
+            }
+            $file = $this->filesystem->read($filepath);
             $this->filesystem->delete($targetFilePath);
-            $this->filesystem->write($targetFilePath, $resizedImage->getEncoded());
-            $resizedImage->destroy();
+            $this->filesystem->write($targetFilePath, $file);
         } catch (Exception $ex) {
             $message = 'Move file from temporary directory to domain directory failed';
             $moveToFolderFailedException = new MoveToFolderFailedException(
