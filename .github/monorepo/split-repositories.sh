@@ -34,11 +34,28 @@ for PACKAGE in $(get_all_packages); do
     echo -e "${BLUE}Start processing ${GREEN}\"${PACKAGE}\"${NC}"
 
     mkdir -p ${WORKSPACE}/split/${PACKAGE}
-    git clone --bare .git ${WORKSPACE}/split/${PACKAGE}
+    git clone .git ${WORKSPACE}/split/${PACKAGE}
     cd ${WORKSPACE}/split/${PACKAGE}
 
     echo -e "${BLUE}Rewriting history of ${GREEN}\"${PACKAGE}\"${NC}"
     git filter-repo --subdirectory-filter $(get_package_subdirectory "$PACKAGE")
+
+    if [[ "$FORCE" == true ]]; then
+        if [[ "$PACKAGE" == "project-base" ]]; then
+            COMPOSER_JSON_FILE="app/composer.json"
+        else
+            COMPOSER_JSON_FILE="composer.json"
+        fi
+
+        if [ -f "$COMPOSER_JSON_FILE" ]; then
+            sed -r -i 's_("shopsys/[a-zA-Z0-9-]+")\s*:\s*"([0-9\.]+\.x-dev)"_\1: "dev-'"${SPLIT_BRANCH}"' as \2"_' ${COMPOSER_JSON_FILE}
+            git config --global user.name 'ShopsysBot'
+            git config --global user.email 'shopsysbot@users.noreply.github.com'
+            if ! git diff --quiet; then
+                git commit -am "Ensure ${SPLIT_BRANCH} branch dependencies in composer.json"
+            fi
+        fi
+    fi
 
     echo -e "${BLUE}Check if branch ${GREEN}\"${SPLIT_BRANCH}\" ${BLUE}can be pushed to remote package ${GREEN}\"${PACKAGE}\"${NC}"
     git push "${REMOTE_TEMPLATE}${PACKAGE}.git" ${SPLIT_BRANCH} --dry-run ${PUSH_OPTS} --verbose
