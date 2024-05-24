@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\DataFixtures\Demo\DataObject\ParameterDataFixtureData;
 use App\Model\Category\Category;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
@@ -92,7 +93,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PARAM_ZOOM = 'zoom';
 
     /**
-     * @var array<string, array<string, string|\App\DataFixtures\Demo\ParameterDataFixtureData>>
+     * @var array<string, array<string, string|\App\DataFixtures\Demo\DataObject\ParameterDataFixtureData>>
      */
     private static array $parameterNameCacheByLocale = [];
 
@@ -130,7 +131,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param string $locale
-     * @return array<string, string|\App\DataFixtures\Demo\ParameterDataFixtureData>
+     * @return array<string, string|\App\DataFixtures\Demo\DataObject\ParameterDataFixtureData>
      */
     private function getParameterData(string $locale): array
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DataFixtures\Demo;
+namespace App\DataFixtures\Demo\DataObject;
 
 use App\Model\Product\Parameter\ParameterGroup;
 use App\Model\Product\Unit\Unit;
