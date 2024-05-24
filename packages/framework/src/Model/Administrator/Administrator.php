@@ -469,4 +469,12 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     {
         $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return t('Administrator') . ' ' . $this->getUsername();
+    }
 }

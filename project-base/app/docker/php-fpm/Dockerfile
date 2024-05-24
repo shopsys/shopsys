@@ -68,7 +68,7 @@ RUN curl -L \
       -H "X-GitHub-Api-Version: 2022-11-28" \
       https://api.github.com/rate_limit
 
-RUN composer install --optimize-autoloader --no-interaction --no-progress --dev -vvv
+RUN composer install --optimize-autoloader --no-interaction --no-progress --dev
 
 RUN php phing build-deploy-part-1-db-independent
 

@@ -1,0 +1,53 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Shopsys\Administration\:
+        resource: '../../**/*{Authenticator,Factory,Manager}.php'
+
+    Shopsys\Administration\Component\FieldDescription\FieldDescriptionFactory:
+        arguments:
+            $registry: '@doctrine'
+
+    Shopsys\Administration\Controller\:
+        public: true
+        resource: '../../Controller/'
+
+    Shopsys\Administration\Controller\CRUDController:
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        public: true
+        tags:
+            - 'container.service_subscriber'
+
+    admin.administrator:
+        calls:
+            - [ setModelManager, [ '@Shopsys\Administration\Model\Administrator\AdministratorManager' ] ]
+        class: Shopsys\Administration\Model\Administrator\AdministratorAdmin
+        tags:
+            - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Administrator\Administrator, manager_type: orm, label: Administrator, group: 'Admin', on_top: true }
+
+    admin.order:
+        calls:
+            - [ setModelManager, [ '@Shopsys\Administration\Model\Order\OrderManager' ]]
+        class: Shopsys\Administration\Model\Order\OrderAdmin
+        tags:
+            - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Order\Order, manager_type: orm, label: Order, on_top: true }
+
+    admin.product:
+        calls:
+            - [ setModelManager, [ '@Shopsys\Administration\Model\Products\ProductManager' ] ]
+        class: Shopsys\Administration\Model\Products\ProductAdmin
+        tags:
+            - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Product\Product, manager_type: orm, label: Products, group: 'Products', on_top: true }
+
+    sonata.admin.field_description_factory.orm:
+        arguments:
+            $registry: '@doctrine'
+        class: Shopsys\Administration\Component\FieldDescription\FieldDescriptionFactory
+
+    sonata.admin.request.fetcher:
+        class: Sonata\AdminBundle\Request\AdminFetcher
+        public: true

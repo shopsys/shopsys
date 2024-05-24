@@ -78,18 +78,6 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function clear($objectName = null): void
-    {
-        if ($objectName !== null) {
-            $objectName = $this->entityNameResolver->resolve($objectName);
-        }
-
-        parent::clear($objectName);
-    }
-
-    /**
      * @param string $className
      */
     public function refreshLoadedEntitiesByClassName(string $className): void

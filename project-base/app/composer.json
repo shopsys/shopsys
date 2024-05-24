@@ -72,6 +72,7 @@
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry-symfony": "^4.2.8",
+        "shopsys/administration": "15.0.x-dev",
         "shopsys/deployment": "~2.1.0",
         "shopsys/form-types-bundle": "15.0.x-dev",
         "shopsys/framework": "15.0.x-dev",
@@ -195,6 +196,13 @@
             "allow-contrib": true,
             "require": "^5.4",
             "docker": false
+        },
+        "enable-patching": true,
+        "patches": {
+            "composer-exit-on-patch-failure": true,
+            "twig/twig": {
+                "Hotfix for issue https://github.com/sonata-project/SonataAdminBundle/issues/8181": "src/Twig/sonata.patch"
+            }
         }
     }
 }

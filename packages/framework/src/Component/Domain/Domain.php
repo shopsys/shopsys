@@ -207,4 +207,18 @@ class Domain implements DomainIdsProviderInterface
     {
         return $this->getCurrentDomainConfig()->getDateTimeZone();
     }
+
+    /**
+     * @return array<string, int>
+     */
+    public function getAllDomainsAsChoices(): array
+    {
+        $choices = [];
+
+        foreach ($this->getAll() as $domainConfig) {
+            $choices[$domainConfig->getName()] = $domainConfig->getId();
+        }
+
+        return $choices;
+    }
 }

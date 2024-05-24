@@ -1,0 +1,42 @@
+{
+    "name": "shopsys/administration",
+    "type": "library",
+    "description": "Shopsys Platform administration",
+    "keywords": ["administration", "Shopsys Platform", "SSFW", "SSP"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shopsys\\Administration\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Administration\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "ext-json": "*",
+        "cweagans/composer-patches": "^1.7",
+        "sonata-project/admin-bundle": "^4.30",
+        "sonata-project/doctrine-orm-admin-bundle": "^4.9",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.20",
+        "shopsys/coding-standards": "15.0.x-dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "cweagans/composer-patches": true
+        }
+    }
+}
