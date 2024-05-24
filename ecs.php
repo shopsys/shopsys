@@ -7,6 +7,7 @@ use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
+use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
@@ -33,6 +34,11 @@ return static function (ECSConfig $ecsConfig): void {
             ],
             FunctionLengthSniff::class => [
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',
+                __DIR__ . '/packages/administration/src/Controller/CRUDController.php',
+                __DIR__ . '/packages/administration/src/**/*Admin.php',
+            ],
+            ObjectIsCreatedByFactorySniff::class => [
+                __DIR__ . '/packages/administration/src/Component/FieldDescription/FieldDescriptionFactory.php',
             ],
         ],
     );

@@ -34,6 +34,9 @@ msgstr ""
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Full name cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -103,6 +106,9 @@ msgstr ""
 msgid "Please enter flag name in all languages"
 msgstr ""
 
+msgid "Please enter full name"
+msgstr ""
+
 msgid "Please enter identification number"
 msgstr ""
 
@@ -137,6 +143,9 @@ msgid "Please enter telephone number"
 msgstr ""
 
 msgid "Please enter the message"
+msgstr ""
+
+msgid "Please enter username"
 msgstr ""
 
 msgid "Please enter valid email"
@@ -215,6 +224,9 @@ msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an 
 msgstr ""
 
 msgid "User with provided email address does not exist."
+msgstr ""
+
+msgid "Username cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Variable {{ needle }} is required"

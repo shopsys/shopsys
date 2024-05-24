@@ -890,4 +890,12 @@ class Product extends AbstractTranslatableEntity
     {
         return $this->weight;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return t('Product') . ' - ' . $this->getName();
+    }
 }

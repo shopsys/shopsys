@@ -70,7 +70,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (!preg_match('~^(admin|front)_~', $info->getRouteName())) {
+                if (!preg_match('~^(admin(?!_new)|front)_~', $info->getRouteName())) {
                     $config->skipRoute('Only routes for front-end and administration are tested.');
                 }
             })

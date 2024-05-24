@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-class OrderData
+use Shopsys\Administration\Component\Security\AdminIdentifierInterface;
+
+class OrderData implements AdminIdentifierInterface
 {
+    /**
+     * @var int|null
+     */
+    public $id;
+
     public const NEW_ITEM_PREFIX = 'new_';
 
     /**
@@ -230,6 +237,14 @@ class OrderData
         $this->paymentTransactionRefunds = [];
         $this->heurekaAgreement = false;
         $this->isCompanyCustomer = false;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**

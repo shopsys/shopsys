@@ -235,7 +235,7 @@ class TransferredProductProcessor
         $this->filesystem->write($tempFileName, $mediaFileResponse->getBody()->getContents());
         $createdImage = $this->imageFacade->uploadAndReturnImage($product, [$akeneoMediaFileName], null, false);
 
-        $this->em->clear(Image::class);
+        $this->em->clear();
 
         $image = $this->imageFacade->getById($createdImage->getId());
         $image->setAkeneoCode($akeneoMediaFileName);

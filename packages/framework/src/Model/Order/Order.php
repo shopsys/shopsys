@@ -1125,4 +1125,12 @@ class Order
             OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
         ]);
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return t('Order Nr.') . ' ' . $this->number;
+    }
 }

@@ -34,6 +34,9 @@ msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, n
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr "Název příznaku nemůže být delší než {{ limit }} znaků"
 
+msgid "Full name cannot be longer than {{ limit }} characters"
+msgstr "Celé jméno nemůže být delší než {{ limit }} znaků"
+
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČ nesmí být delší než {{ limit }} znaků"
 
@@ -103,6 +106,9 @@ msgstr "Vyplňte prosím barvu příznaku"
 msgid "Please enter flag name in all languages"
 msgstr "Prosím zadejte název příznaku ve všech jazycích"
 
+msgid "Please enter full name"
+msgstr "Vyplňte prosím celé jméno"
+
 msgid "Please enter identification number"
 msgstr "Prosím vyplňte IČ"
 
@@ -138,6 +144,9 @@ msgstr "Vyplňte prosím telefonní číslo"
 
 msgid "Please enter the message"
 msgstr "Vyplňte prosím zprávu"
+
+msgid "Please enter username"
+msgstr "Vyplňte prosím uživatelské jméno"
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
@@ -216,6 +225,9 @@ msgstr "Uploadovaný obrázek je příliš velký ({{ size }} {{ suffix }}). Max
 
 msgid "User with provided email address does not exist."
 msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
+
+msgid "Username cannot be longer than {{ limit }} characters"
+msgstr "Uživatelské jméno nesmí být delší než {{ limit }} znaků"
 
 msgid "Variable {{ needle }} is required"
 msgstr "Proměnná {{ needle }} je povinná"

@@ -50,6 +50,7 @@ If you are interested, you can read more about the monorepo approach here - http
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
 -   [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
+-   [shopsys/administration](https://github.com/shopsys/administration)
 
 !!! note
 

@@ -1,0 +1,41 @@
+From 4e07748eb6d427688221e2c7b6dc8872c6d9065c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Toma=CC=81s=CC=8C=20Ludvik?= <tomas.ludvik@shopsys.com>
+Date: Mon, 13 May 2024 12:49:02 +0200
+Subject: [PATCH] hotfix for
+ https://github.com/sonata-project/SonataAdminBundle/issues/8181
+
+---
+ composer.json    | 1 +
+ src/Template.php | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/composer.json b/composer.json
+index 57ba92964..f707eae5a 100644
+--- a/composer.json
++++ b/composer.json
+@@ -24,6 +24,7 @@
+         }
+     ],
+     "require": {
++        "ext-json": "*",
+         "php": ">=7.2.5",
+         "symfony/polyfill-php80": "^1.22",
+         "symfony/deprecation-contracts": "^2.5|^3",
+diff --git a/src/Template.php b/src/Template.php
+index e08837737..6a2b9eba8 100644
+--- a/src/Template.php
++++ b/src/Template.php
+@@ -429,7 +429,12 @@ public function yieldBlock($name, array $context, array $blocks = [], $useBlocks
+ 
+                 foreach ($template->$block($context, $blocks) as $data) {
+                     if (ob_get_length()) {
+-                        $data = ob_get_clean().$data;
++                        if (is_string($data) || $data instanceof \JsonSerializable) {
++                            $data = ob_get_clean() . $data;
++                        } else {
++                            $data = ob_get_clean();
++                        }
++
+                         ob_start();
+                     }
+ 
