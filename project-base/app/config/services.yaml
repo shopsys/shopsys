@@ -5,6 +5,7 @@ imports:
     - { resource: cron.yaml }
     - { resource: services_frontend_api.yaml}
     - { resource: feed.yaml }
+    - { resource: administration.yaml }
 
 services:
     _defaults:

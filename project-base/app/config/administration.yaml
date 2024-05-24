@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    admin.article:
+        calls:
+            - [ setModelManager, [ '@Shopsys\Administration\Model\Article\ArticleManager' ] ]
+        class: App\Administration\Model\Article\ArticleAdmin
+        tags:
+            - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Article\Article, manager_type: orm, label: Articles, group: 'Articles', on_top: true }
