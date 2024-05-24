@@ -106,8 +106,9 @@ class AdministratorRepository
     public function getAllListableQueryBuilder()
     {
         return $this->getAdministratorRepository()->createQueryBuilder('a')
-            ->join('a.roles', 'ar')
+            ->leftJoin('a.roles', 'ar')
             ->where('ar.role = :role')
+            ->orWhere('a.roleGroup is not NULL')
             ->setParameter('role', Roles::ROLE_ADMIN);
     }
 
@@ -119,5 +120,33 @@ class AdministratorRepository
         return (int)($this->getAllListableQueryBuilder()
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult());
+    }
+
+    /**
+     * @param int $roleGroupId
+     * @return string[]
+     */
+    public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
+    {
+        $administrators = $this->getAdministratorRepository()
+            ->createQueryBuilder('a')
+            ->select('a.realName')
+            ->where('a.roleGroup = :roleGroupId')
+            ->setParameter('roleGroupId', $roleGroupId)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_map(function ($item) {
+            return $item['realName'];
+        }, $administrators);
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     */
+    public function findByUuid(string $uuid): ?Administrator
+    {
+        return $this->getAdministratorRepository()->findOneBy(['uuid' => $uuid]);
     }
 }

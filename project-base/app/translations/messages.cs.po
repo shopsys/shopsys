@@ -298,9 +298,6 @@ msgstr "Vlastní"
 msgid "Customer activation"
 msgstr "Aktivace zákazníka"
 
-msgid "Customer not found."
-msgstr "Zákazník nenalezen."
-
 msgid "Customers - full"
 msgstr "Zákazníci - vše"
 

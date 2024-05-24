@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Form\Admin\Type\RolesType;
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class MailTemplateFacade
 {
@@ -19,6 +20,7 @@ class MailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -28,6 +30,7 @@ class MailTemplateFacade
         protected readonly MailTemplateFactoryInterface $mailTemplateFactory,
         protected readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
         protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider,
+        protected readonly MailTemplateBuilder $mailTemplateBuilder,
     ) {
     }
 
@@ -38,7 +41,14 @@ class MailTemplateFacade
      */
     public function get($templateName, $domainId)
     {
-        return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
+        $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
+
+        if ($mailTemplate !== null) {
+            $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($domainId, $mailTemplate->getBody()));
+            $this->em->detach($mailTemplate);
+        }
+
+        return $mailTemplate;
     }
 
     /**
@@ -96,5 +106,40 @@ class MailTemplateFacade
     public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
+     */
+    public function delete(MailTemplate $mailTemplate): void
+    {
+        if ($mailTemplate->getName() !== MailTemplate::ORDER_STATUS_NAME) {
+            throw new Exception\DeleteMailTemplateException();
+        }
+
+        $this->em->remove($mailTemplate);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
+     */
+    public function getOrderStatusTemplatesByOrder(Order $order): array
+    {
+        $mailTemplates = [];
+        $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
+            $order->getDomainId(),
+            $order->getStatus(),
+        );
+
+        if ($mailTemplate !== null) {
+            $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($order->getDomainId(), $mailTemplate->getBody()));
+            $this->em->detach($mailTemplate);
+
+            $mailTemplates[] = $mailTemplate;
+        }
+
+        return $mailTemplates;
     }
 }

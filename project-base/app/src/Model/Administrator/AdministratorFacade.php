@@ -18,24 +18,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade as BaseAdmin
  * @property \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Administrator\AdministratorRepository $administratorRepository, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory, \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage)
  * @method setAdministratorTransferIssuesLastSeenDateTime(\App\Model\Administrator\Administrator $administrator)
+ * @method \App\Model\Administrator\Administrator|null findByUuid(string $uuid)
  */
 class AdministratorFacade extends BaseAdministratorFacade
 {
-    /**
-     * @param int $roleGroupId
-     * @return string[]
-     */
-    public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
-    {
-        return $this->administratorRepository->findAdministratorNamesWithRoleGroup($roleGroupId);
-    }
-
-    /**
-     * @param string $uuid
-     * @return \App\Model\Administrator\Administrator|null
-     */
-    public function findByUuid(string $uuid): ?Administrator
-    {
-        return $this->administratorRepository->findByUuid($uuid);
-    }
 }

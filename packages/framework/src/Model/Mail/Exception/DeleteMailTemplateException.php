@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Mail\Exception;
+namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
 use Exception;
 

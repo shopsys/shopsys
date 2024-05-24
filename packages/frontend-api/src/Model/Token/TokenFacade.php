@@ -18,6 +18,7 @@ use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageException;
@@ -50,13 +51,20 @@ class TokenFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $deviceId
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
      * @return string
      */
-    public function createAccessTokenAsString(CustomerUser $customerUser, string $deviceId): string
-    {
+    public function createAccessTokenAsString(
+        CustomerUser $customerUser,
+        string $deviceId,
+        ?Administrator $administrator = null,
+    ): string {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::ACCESS_TOKEN_EXPIRATION);
-
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
+        $tokenBuilder->withClaim(
+            FrontendApiUser::CLAIM_ADMINISTRATOR_UUID,
+            $administrator !== null ? $administrator->getUuid() : null,
+        );
 
         foreach (TokenCustomerUserTransformer::transform($customerUser) as $key => $value) {
             $tokenBuilder->withClaim($key, $value);
@@ -70,15 +78,18 @@ class TokenFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $secretChain
+     * @param string $deviceId
      * @return \Lcobucci\JWT\UnencryptedToken
      */
-    public function generateRefreshTokenByCustomerUserAndSecretChain(
+    public function generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId(
         CustomerUser $customerUser,
         string $secretChain,
+        string $deviceId,
     ): UnencryptedToken {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);
+        $tokenBuilder->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
 
         return $tokenBuilder->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
     }
@@ -149,17 +160,22 @@ class TokenFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $deviceId
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
      * @return string
      */
-    public function createRefreshTokenAsString(CustomerUser $customerUser, string $deviceId): string
-    {
+    public function createRefreshTokenAsString(
+        CustomerUser $customerUser,
+        string $deviceId,
+        ?Administrator $administrator = null,
+    ): string {
         $randomChain = sha1(random_bytes(static::SECRET_CHAIN_LENGTH));
-        $refreshToken = $this->generateRefreshTokenByCustomerUserAndSecretChain($customerUser, $randomChain);
+        $refreshToken = $this->generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId($customerUser, $randomChain, $deviceId);
         $this->customerUserFacade->addRefreshTokenChain(
             $customerUser,
             $randomChain,
             $deviceId,
             DateTime::createFromImmutable($refreshToken->claims()->get('exp')),
+            $administrator,
         );
 
         return $refreshToken->toString();

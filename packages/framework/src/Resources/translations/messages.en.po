@@ -736,6 +736,9 @@ msgstr ""
 msgid "Customer name"
 msgstr ""
 
+msgid "Customer not found."
+msgstr ""
+
 msgid "Customer orders"
 msgstr ""
 

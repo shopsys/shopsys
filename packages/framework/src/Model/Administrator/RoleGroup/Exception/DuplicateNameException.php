@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Administrator\RoleGroup\Exception;
+namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception;
 
 use Exception;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorException;

@@ -276,6 +276,9 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository:
         alias: App\Model\Administrator\AdministratorRepository
 
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade:
+        class: App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade
+
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
 
@@ -338,6 +341,9 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressRepository:
         alias: App\Model\Customer\DeliveryAddressRepository
 
+    Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail:
+        alias: App\Model\Customer\Mail\CustomerActivationMail
+
     Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade:
         alias: App\Model\Customer\Mail\CustomerMailFacade
 
@@ -373,6 +379,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory
+
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder:
+        class: App\Model\Mail\MailTemplateBuilder
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration:
         class: App\Model\Mail\MailTemplateConfiguration

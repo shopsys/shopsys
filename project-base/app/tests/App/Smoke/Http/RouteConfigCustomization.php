@@ -190,10 +190,6 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setExpectedStatusCode(302);
             })
-            ->customizeByRouteName('admin_customer_loginasuser', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Obsolete route')
-                    ->setExpectedStatusCode(403);
-            })
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
                     ->setExpectedStatusCode(403);

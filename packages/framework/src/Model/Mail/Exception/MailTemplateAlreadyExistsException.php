@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Mail\Exception;
+namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
 use App\Model\Mail\MailTemplate;
 use Exception;
@@ -14,7 +14,7 @@ class MailTemplateAlreadyExistsException extends Exception
      * @param \App\Model\Mail\MailTemplate $mailTemplate
      * @param \Throwable|null $previous
      */
-    public function __construct(private MailTemplate $mailTemplate, ?Throwable $previous = null)
+    public function __construct(protected MailTemplate $mailTemplate, ?Throwable $previous = null)
     {
         $message = sprintf(
             'Mail template already exists (name=`%s`, domainId=`%s`, orderStatus=`%s`)',

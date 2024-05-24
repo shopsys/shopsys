@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Administrator\RoleGroup;
+namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
 class AdministratorRoleGroupData
 {
     /**
      * @var string|null
      */
-    public ?string $name;
+    public $name;
 
     /**
      * @var string[]
@@ -17,7 +17,7 @@ class AdministratorRoleGroupData
     public $roles = [];
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
      */
     public function fillFromEntity(AdministratorRoleGroup $administratorRoleGroup): void
     {

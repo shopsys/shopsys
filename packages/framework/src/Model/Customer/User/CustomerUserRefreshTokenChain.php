@@ -46,6 +46,13 @@ class CustomerUserRefreshTokenChain
     protected $expiredAt;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $administrator;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData
      */
     public function __construct(CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData)
@@ -55,6 +62,7 @@ class CustomerUserRefreshTokenChain
         $this->tokenChain = $customerUserRefreshTokenChainData->tokenChain;
         $this->deviceId = $customerUserRefreshTokenChainData->deviceId;
         $this->expiredAt = $customerUserRefreshTokenChainData->expiredAt;
+        $this->administrator = $customerUserRefreshTokenChainData->administrator;
     }
 
     /**
@@ -71,5 +79,13 @@ class CustomerUserRefreshTokenChain
     public function getDeviceId()
     {
         return $this->deviceId;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     */
+    public function getAdministrator()
+    {
+        return $this->administrator;
     }
 }

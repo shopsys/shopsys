@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 class TokenAuthenticator extends AbstractAuthenticator
 {
-    protected const HEADER_AUTHORIZATION = 'Authorization';
+    protected const HEADER_AUTHORIZATION = 'X-Auth-Token';
     protected const BEARER = 'Bearer ';
 
     /**
@@ -105,10 +105,28 @@ class TokenAuthenticator extends AbstractAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+        $formattedError = FormattedError::createFromException($exception);
+        $formattedError['extensions']['userCode'] = 'invalid-token';
+
         $responseData = [
-            'errors' => [FormattedError::createFromException($exception)],
+            'errors' => [$formattedError],
         ];
 
         return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return string|null
+     */
+    public function getCredentials(Request $request): ?string
+    {
+        $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
+
+        if ($authorizationHeader === null) {
+            return null;
+        }
+
+        return substr($authorizationHeader, strlen(static::BEARER));
     }
 }

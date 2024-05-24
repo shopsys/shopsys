@@ -5,16 +5,22 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class MailTemplateRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly Localization $localization,
+    ) {
     }
 
     /**
@@ -109,5 +115,37 @@ class MailTemplateRepository
             ->getSingleScalarResult();
 
         return $countOfEmptyTemplates > 0;
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createGridQueryBuilder(int $domainId): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder($domainId);
+        $queryBuilder
+            ->addSelect('ost.name as orderStatusName')
+            ->leftJoin('mt.orderStatus', 'os')
+            ->leftJoin('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
+            ->setParameter('locale', $this->localization->getAdminLocale());
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
+     */
+    public function findOrderStatusMailTemplate(
+        int $domainId,
+        OrderStatus $orderStatus,
+    ): ?MailTemplate {
+        return $this->getMailTemplateRepository()->findOneBy([
+            'name' => MailTemplate::ORDER_STATUS_NAME,
+            'domainId' => $domainId,
+            'orderStatus' => $orderStatus,
+        ]);
     }
 }

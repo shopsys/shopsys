@@ -2,21 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Administrator\RoleGroup;
+namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
-use App\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 
 class AdministratorRoleGroupFacade
 {
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository $administratorRoleGroupRepository
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository $administratorRoleGroupRepository
      * @param \Doctrine\ORM\EntityManager $entityManager
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFactory $administratorRoleGroupFactory
      */
     public function __construct(
-        private readonly AdministratorRoleGroupRepository $administratorRoleGroupRepository,
-        private readonly EntityManagerInterface $entityManager,
+        protected readonly AdministratorRoleGroupRepository $administratorRoleGroupRepository,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly AdministratorRoleGroupFactory $administratorRoleGroupFactory,
     ) {
     }
 
@@ -29,8 +31,8 @@ class AdministratorRoleGroupFacade
     }
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $roleGroupData
-     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $roleGroupData
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
      */
     public function create(AdministratorRoleGroupData $roleGroupData): AdministratorRoleGroup
     {
@@ -39,7 +41,7 @@ class AdministratorRoleGroupFacade
         if ($administratorRoleGroupByName !== null) {
             throw new DuplicateNameException($administratorRoleGroupByName->getName());
         }
-        $administratorRoleGroup = new AdministratorRoleGroup($roleGroupData);
+        $administratorRoleGroup = $this->administratorRoleGroupFactory->create($roleGroupData);
 
         $this->entityManager->persist($administratorRoleGroup);
         $this->entityManager->flush();
@@ -49,7 +51,7 @@ class AdministratorRoleGroupFacade
 
     /**
      * @param int $id
-     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
      */
     public function getById(int $id): AdministratorRoleGroup
     {
@@ -57,8 +59,8 @@ class AdministratorRoleGroupFacade
     }
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
      */
     public function edit(
         AdministratorRoleGroup $administratorRoleGroup,
@@ -70,10 +72,10 @@ class AdministratorRoleGroupFacade
     }
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
      * @param string $name
      */
-    private function checkUniqueName(AdministratorRoleGroup $administratorRoleGroup, string $name): void
+    protected function checkUniqueName(AdministratorRoleGroup $administratorRoleGroup, string $name): void
     {
         $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($name);
 
@@ -97,7 +99,7 @@ class AdministratorRoleGroupFacade
     }
 
     /**
-     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup[]
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup[]
      */
     public function getAll(): array
     {

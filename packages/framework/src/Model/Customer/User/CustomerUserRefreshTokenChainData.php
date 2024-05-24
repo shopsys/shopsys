@@ -30,4 +30,9 @@ class CustomerUserRefreshTokenChainData
      * @var \DateTime|null
      */
     public $expiredAt;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     */
+    public $administrator;
 }

@@ -298,9 +298,6 @@ msgstr ""
 msgid "Customer activation"
 msgstr ""
 
-msgid "Customer not found."
-msgstr ""
-
 msgid "Customers - full"
 msgstr ""
 

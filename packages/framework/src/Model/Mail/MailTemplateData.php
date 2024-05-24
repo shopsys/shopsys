@@ -36,6 +36,18 @@ class MailTemplateData
      */
     public $attachments;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     */
+    public $orderStatus;
+
+    /**
+     * It's used only for creating by administrator, not for editing!
+     *
+     * @var int|null
+     */
+    public $domainId;
+
     public function __construct()
     {
         $this->sendMail = false;

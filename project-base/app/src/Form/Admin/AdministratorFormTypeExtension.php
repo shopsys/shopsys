@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Administrator\Administrator;
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroup;
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -22,7 +22,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \Symfony\Component\Security\Core\Security $security
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
     public function __construct(
         private readonly Security $security,

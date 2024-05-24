@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Model\Administrator\Administrator;
-use App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade;
 use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Controller\Admin\AdministratorController as BaseAdministratorController;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\Form\Extension\Core\Type\FormType;

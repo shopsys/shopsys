@@ -59,4 +59,22 @@ class DeliveryAddressRepository
             ],
         );
     }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+     */
+    public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress
+    {
+        $deliveryAddress = $this->findByUuidAndCustomer($uuid, $customer);
+
+        if ($deliveryAddress === null) {
+            throw new DeliveryAddressNotFoundException(
+                'Delivery address with UUID ' . $uuid . ' not found.',
+            );
+        }
+
+        return $deliveryAddress;
+    }
 }

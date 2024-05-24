@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Administrator\RoleGroup;
+namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
-use App\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 
 class AdministratorRoleGroupRepository
 {
@@ -21,7 +21,7 @@ class AdministratorRoleGroupRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getAdministratorRoleGroupRepository(): EntityRepository
+    protected function getAdministratorRoleGroupRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(AdministratorRoleGroup::class);
     }
@@ -36,7 +36,7 @@ class AdministratorRoleGroupRepository
 
     /**
      * @param int $id
-     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup
      */
     public function getById(int $id): AdministratorRoleGroup
     {
@@ -50,7 +50,7 @@ class AdministratorRoleGroupRepository
     }
 
     /**
-     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup[]
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup[]
      */
     public function getAll(): array
     {
@@ -59,7 +59,7 @@ class AdministratorRoleGroupRepository
 
     /**
      * @param string $name
-     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
      */
     public function findByName(string $name): ?AdministratorRoleGroup
     {

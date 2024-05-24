@@ -8,5 +8,4 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData as BaseDeliveryAd
 
 class DeliveryAddressData extends BaseDeliveryAddressData
 {
-    public ?string $uuid = null;
 }

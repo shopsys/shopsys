@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\String\HashGenerator;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
@@ -18,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserFacade
@@ -37,6 +40,8 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -53,6 +58,8 @@ class CustomerUserFacade
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
         protected readonly DeliveryAddressFactory $deliveryAddressFactory,
         protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly HashGenerator $hashGenerator,
     ) {
     }
 
@@ -189,6 +196,12 @@ class CustomerUserFacade
             $customerUserUpdateData->billingAddressData,
         );
 
+        if ($customerUser->isNewsletterSubscription()) {
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
+        } else {
+            $this->newsletterFacade->deleteSubscribedEmailIfExists($customerUser->getEmail(), $customerUser->getDomainId());
+        }
+
         return $customerUser;
     }
 
@@ -301,18 +314,21 @@ class CustomerUserFacade
      * @param string $refreshTokenChain
      * @param string $deviceId
      * @param \DateTime $tokenExpiration
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator
      */
     public function addRefreshTokenChain(
         CustomerUser $customerUser,
         string $refreshTokenChain,
         string $deviceId,
         DateTime $tokenExpiration,
+        ?Administrator $administrator,
     ): void {
         $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
             $customerUser,
             $refreshTokenChain,
             $deviceId,
             $tokenExpiration,
+            $administrator,
         );
         $customerUser->addRefreshTokenChain($refreshTokenChain);
         $this->em->flush();
@@ -394,5 +410,17 @@ class CustomerUserFacade
         $deliveryAddressData->customer = $order->getCustomerUser()?->getCustomer();
 
         return $this->deliveryAddressFactory->create($deliveryAddressData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function sendActivationMail(CustomerUser $customerUser): void
+    {
+        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+        $customerUser->setResetPasswordHash($resetPasswordHash);
+        $this->em->flush();
+
+        $this->customerMailFacade->sendActivationMail($customerUser);
     }
 }

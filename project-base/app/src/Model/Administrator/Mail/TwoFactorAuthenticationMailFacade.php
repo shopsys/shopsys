@@ -31,6 +31,7 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
      */
     public function sendAuthCode(TwoFactorInterface $administrator): void
     {
+        /** @var \App\Model\Mail\MailTemplate $mailTemplate */
         $mailTemplate = $this->mailTemplateFacade->get(
             TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE,
             $this->domain->getId(),

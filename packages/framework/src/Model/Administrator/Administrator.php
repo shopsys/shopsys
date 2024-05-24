@@ -7,6 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
+use Ramsey\Uuid\Uuid;
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -24,8 +28,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *   }
  * )
  */
-class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface
+class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface, EmailTwoFactorInterface, GoogleTwoFactorInterface
 {
+    public const string TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL = 'email';
+    public const string TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH = 'google_auth';
+
+    public const array TWO_FACTOR_AUTHENTICATION_TYPES = [
+        self::TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL,
+        self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH,
+    ];
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -121,6 +133,37 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $transferIssuesLastSeenDateTime;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    protected $twoFactorAuthenticationType;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    protected $emailAuthenticationCode;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $googleAuthenticatorSecret;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup")
+     * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=true)
+     */
+    protected $roleGroup;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      */
     public function __construct(AdministratorData $administratorData)
@@ -132,6 +175,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->multidomainLoginTokenExpiration = new DateTime();
         $this->roles = new ArrayCollection();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
+        $this->uuid = Uuid::uuid4()->toString();
         $this->setData($administratorData);
     }
 
@@ -151,6 +195,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->email = $administratorData->email;
         $this->realName = $administratorData->realName;
         $this->username = $administratorData->username;
+        $this->roleGroup = $administratorData->roleGroup;
     }
 
     /**
@@ -370,6 +415,12 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      */
     public function getRoles(): array
     {
+        if ($this->roleGroup !== null) {
+            $roles = $this->roleGroup->getRoles();
+
+            return array_merge($roles, [Roles::ROLE_ADMIN]);
+        }
+
         $roles = [];
 
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
@@ -469,5 +520,130 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function setTransferIssuesLastSeenDateTime($transferIssuesLastSeenDateTime): void
     {
         $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmailAuthEnabled(): bool
+    {
+        return $this->twoFactorAuthenticationType === self::TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailAuthRecipient(): string
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailAuthCode(): string
+    {
+        if ($this->emailAuthenticationCode === null) {
+            throw new LogicException(sprintf(
+                "You should not call '%s' when 2FA by email is not enabled. Maybe it is a bug.",
+                __METHOD__,
+            ));
+        }
+
+        return $this->emailAuthenticationCode;
+    }
+
+    /**
+     * @param string $authCode
+     */
+    public function setEmailAuthCode(string $authCode): void
+    {
+        $this->emailAuthenticationCode = $authCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return $this->twoFactorAuthenticationType === self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->getUsername();
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleAuthenticatorSecret(): string
+    {
+        if ($this->googleAuthenticatorSecret === null) {
+            throw new LogicException(sprintf(
+                "You should not call '%s' when 2FA by Google Authenticator is not enabled. Maybe it is a bug.",
+                __METHOD__,
+            ));
+        }
+
+        return $this->googleAuthenticatorSecret;
+    }
+
+    /**
+     * @param string|null $googleAuthenticatorSecret
+     */
+    public function setGoogleAuthenticatorSecret($googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasGeneratedGoogleAuthenticatorSecret(): bool
+    {
+        return $this->googleAuthenticatorSecret !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabledTwoFactorAuth(): bool
+    {
+        return in_array($this->twoFactorAuthenticationType, self::TWO_FACTOR_AUTHENTICATION_TYPES, true);
+    }
+
+    public function enableEmailAuth(): void
+    {
+        $this->twoFactorAuthenticationType = self::TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL;
+    }
+
+    public function enableGoogleAuthenticator(): void
+    {
+        $this->twoFactorAuthenticationType = self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH;
+    }
+
+    public function disableTwoFactorAuth(): void
+    {
+        $this->twoFactorAuthenticationType = null;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
+     */
+    public function getRoleGroup()
+    {
+        return $this->roleGroup;
     }
 }

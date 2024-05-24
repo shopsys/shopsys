@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Administrator\RoleGroup;
+namespace Shopsys\FrameworkBundle\Model\Administrator\RoleGroup;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -14,25 +14,27 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 class AdministratorRoleGroup
 {
     /**
+     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private int $id;
+    protected $id;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=100, unique = true)
      */
-    private string $name;
+    protected $name;
 
     /**
      * @var string[]
      * @ORM\Column(type="json")
      */
-    private array $roles;
+    protected $roles;
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
      */
     public function __construct(AdministratorRoleGroupData $administratorRoleGroupData)
     {
@@ -41,7 +43,7 @@ class AdministratorRoleGroup
     }
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
      */
     public function edit(AdministratorRoleGroupData $administratorRoleGroupData): void
     {
@@ -49,9 +51,9 @@ class AdministratorRoleGroup
     }
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
      */
-    private function setData(AdministratorRoleGroupData $administratorRoleGroupData): void
+    protected function setData(AdministratorRoleGroupData $administratorRoleGroupData): void
     {
         $this->name = $administratorRoleGroupData->name;
         $this->roles = $administratorRoleGroupData->roles;
@@ -60,7 +62,7 @@ class AdministratorRoleGroup
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -68,7 +70,7 @@ class AdministratorRoleGroup
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -76,7 +78,7 @@ class AdministratorRoleGroup
     /**
      * @return string[]
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = $this->roles;
         $roles[] = Roles::ROLE_ADMIN;

@@ -182,4 +182,22 @@ class AdministratorFacade
         $administrator->setTransferIssuesLastSeenDateTime(new DateTime());
         $this->em->flush();
     }
+
+    /**
+     * @param int $roleGroupId
+     * @return string[]
+     */
+    public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
+    {
+        return $this->administratorRepository->findAdministratorNamesWithRoleGroup($roleGroupId);
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     */
+    public function findByUuid(string $uuid): ?Administrator
+    {
+        return $this->administratorRepository->findByUuid($uuid);
+    }
 }

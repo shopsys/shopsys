@@ -23,8 +23,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -224,19 +226,23 @@ class CustomerController extends AdminBaseController
 
     /**
      * @param int $customerUserId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/customer/login-as-user/{customerUserId}/', requirements: ['id' => '\d+'])]
-    public function loginAsUserAction($customerUserId)
+    #[Route(path: '/customer/login-as-user/{customerUserId}/')]
+    public function loginAsCustomerUserAction(int $customerUserId): Response
     {
-        $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
+        try {
+            return $this->render('@ShopsysFramework/Admin/Content/Login/loginAsCustomerUser.html.twig', [
+                'tokens' => $this->loginAsUserFacade->loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken($customerUserId),
+                'url' => $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            ]);
+        } catch (CustomerUserNotFoundException $e) {
+            $this->addErrorFlash(t('Customer not found.'));
 
-        if ($this->domain->getId() !== $customerUser->getDomainId()) {
-            return $this->redirectToRoute('admin_customer_edit', ['id' => $customerUserId]);
+            return $this->redirectToRoute('admin_customer_list');
+        } catch (LoginAsRememberedUserException $e) {
+            throw $this->createAccessDeniedException('Access denied', $e);
         }
-
-        $this->loginAsUserFacade->rememberLoginAsUser($customerUser);
-
-        return $this->redirectToRoute('front_customer_login_as_remembered_user');
     }
 
     /**
@@ -247,7 +253,7 @@ class CustomerController extends AdminBaseController
     {
         $customerDomainRouter = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
         $loginAsUserUrl = $customerDomainRouter->generate(
-            'admin_customer_loginasuser',
+            'admin_customer_loginascustomeruser',
             [
                 'customerUserId' => $customerUser->getId(),
             ],

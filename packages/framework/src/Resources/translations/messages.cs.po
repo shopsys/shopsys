@@ -736,6 +736,9 @@ msgstr "Příjmení zákazníka"
 msgid "Customer name"
 msgstr "Jméno zákazníka"
 
+msgid "Customer not found."
+msgstr "Zákazník nenalezen."
+
 msgid "Customer orders"
 msgstr "Objednávky zákazníka"
 

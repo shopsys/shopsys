@@ -643,6 +643,8 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
 
+    Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail: ~
+
     Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail: ~
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~

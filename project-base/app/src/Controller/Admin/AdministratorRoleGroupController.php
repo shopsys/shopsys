@@ -6,14 +6,14 @@ namespace App\Controller\Admin;
 
 use App\Form\Admin\AdministratorRoleGroupFormType;
 use App\Model\Administrator\AdministratorFacade;
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
-use App\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
-use App\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdministratorRoleGroupController extends AdminBaseController
 {
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
