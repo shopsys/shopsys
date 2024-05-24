@@ -9,6 +9,7 @@ use Runroom\SortableBehaviorBundle\Admin\SortableAdminTrait;
 use Shopsys\Administration\Component\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -47,7 +48,12 @@ class ArticleAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list->addIdentifier('id');
-        $list->add('name');
+        $list->add('name', FieldDescriptionInterface::TYPE_URL, [
+            'route' => [
+                'name' => 'admin_new_article_edit',
+                'identifier_parameter_name' => 'id',
+            ],
+        ]);
 
         $list->add(ListMapper::NAME_ACTIONS, null, [
             'actions' => [
