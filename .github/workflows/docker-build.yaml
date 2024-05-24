@@ -754,6 +754,12 @@ jobs:
                     sed -i "s#GOPAY_CLIENTSECRET#${{ secrets.GOPAY_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
                     sed -i "s#PACKETERY_API_KEY_VALUE#${{ secrets.PACKETERY_API_KEY }}#" "${BRANCH_NAME}/docker-compose.yml"
                     sed -i "s#PACKETERY_API_PASSWORD_VALUE#${{ secrets.PACKETERY_API_PASSWORD }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#FACEBOOK_CLIENTID#${{ secrets.FACEBOOK_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#FACEBOOK_CLIENTSECRET#${{ secrets.FACEBOOK_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#GOOGLE_CLIENTID#${{ secrets.GOOGLE_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#GOOGLE_CLIENTSECRET#${{ secrets.GOOGLE_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#SEZNAM_CLIENTID#${{ secrets.SEZNAM_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#SEZNAM_CLIENTSECRET#${{ secrets.SEZNAM_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
             -   name: Start project
                 run: |
                     cd ${BRANCH_NAME}

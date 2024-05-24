@@ -47,6 +47,12 @@ services:
             PACKETERY_SENDER: ~
             FORCE_ELASTIC_LIMITS: 1
             MESSENGER_TRANSPORT_VHOST: ${COMPOSE_PROJECT_NAME}
+            FACEBOOK_CLIENT_ID: ~
+            FACEBOOK_CLIENT_SECRET: ~
+            GOOGLE_CLIENT_ID: ~
+            GOOGLE_CLIENT_SECRET: ~
+            SEZNAM_CLIENT_ID: ~
+            SEZNAM_CLIENT_SECRET: ~
         labels:
             - traefik.enable=false
         networks:
@@ -69,6 +75,12 @@ services:
             PACKETERY_SENDER: ~
             FORCE_ELASTIC_LIMITS: 1
             MESSENGER_TRANSPORT_VHOST: ${COMPOSE_PROJECT_NAME}
+            FACEBOOK_CLIENT_ID: ~
+            FACEBOOK_CLIENT_SECRET: ~
+            GOOGLE_CLIENT_ID: ~
+            GOOGLE_CLIENT_SECRET: ~
+            SEZNAM_CLIENT_ID: ~
+            SEZNAM_CLIENT_SECRET: ~
         networks:
             - default
             - services-network
