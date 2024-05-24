@@ -49,6 +49,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2.2",
         "doctrine/orm": "^2.11.2",
         "doctrine/persistence": "^2.4",
+        "endroid/qr-code": "^3.9.6",
         "enlightn/security-checker": "^1.5",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
