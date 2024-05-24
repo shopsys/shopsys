@@ -108,7 +108,6 @@
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
-        "intervention/image": "^2.3.14",
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^2.6.1",
         "jms/serializer-bundle": "^4.0.2",

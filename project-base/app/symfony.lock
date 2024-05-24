@@ -280,9 +280,6 @@
     "http-interop/http-factory-guzzle": {
         "version": "1.0.0"
     },
-    "intervention/image": {
-        "version": "2.5.1"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
