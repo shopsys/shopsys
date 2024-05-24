@@ -106,6 +106,9 @@ msgstr ""
 msgid "Image can be only in JPG, GIF or PNG format"
 msgstr ""
 
+msgid "Image can be only in PNG format"
+msgstr ""
+
 msgid "Invalid whitelist pattern."
 msgstr ""
 

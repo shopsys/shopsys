@@ -340,9 +340,6 @@ msgstr "Zákazníci - zobrazení"
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
 
-msgid "Delete"
-msgstr "Smazat"
-
 msgid "Delete category with SEO mix"
 msgstr "Smazat kategorii i seo mix"
 
@@ -631,9 +628,6 @@ msgstr "Domovská stránka"
 msgid "Image"
 msgstr "Obrázek"
 
-msgid "Image will be deleted after saving."
-msgstr "Obrázek bude smazán po uložení."
-
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zanoření kategorií. Prosím přejděte na kartu kategorie nebo na přehled kategorií všech domén."
 
@@ -760,9 +754,6 @@ msgstr "Šablony e-mailů - zobrazení"
 msgid "Main URL"
 msgstr "Hlavní URL"
 
-msgid "Main image"
-msgstr "Hlavní obrázek"
-
 msgid "Measurement units"
 msgstr "Měrné jednotky"
 
@@ -771,9 +762,6 @@ msgstr "Přehled měrných jednotek"
 
 msgid "Meta description"
 msgstr "Meta popis"
-
-msgid "Move"
-msgstr "Posunout"
 
 msgid "Name"
 msgstr "Název"
@@ -1110,9 +1098,6 @@ msgstr "Registrace"
 
 msgid "Related products"
 msgstr "Související produkty"
-
-msgid "Return back"
-msgstr "Vrátit zpět"
 
 msgid "Right"
 msgstr "Vpravo"
