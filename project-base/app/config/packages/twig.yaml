@@ -31,7 +31,6 @@ twig:
         - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
         - 'Admin/Form/grapesJsMailType.html.twig'
         - 'Admin/Form/grapesJsType.html.twig'
-        - 'Admin/Form/imageuploadFields.html.twig'
         - 'Admin/Form/languageConstantFormTheme.html.twig'
         - 'Admin/Form/productDetailFormTheme.html.twig'
         - 'Admin/Form/productVideoValue.html.twig'
