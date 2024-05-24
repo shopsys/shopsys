@@ -171,6 +171,10 @@ class OrderAdmin extends AbstractAdmin
     {
         $list->addIdentifier('id');
         $list->remove('id');
+        $list->add('preview', 'string', [
+            'template' => '@ShopsysAdministration/Order/preview.html.twig',
+            'virtual_field' => true,
+        ]);
         $list->add('number', null, [
             'label' => 'Order number',
         ]);
