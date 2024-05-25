@@ -23,5 +23,5 @@ Besides the Next.js structure, our Storefront consists of these parts:
 -   **store** - for state management, we use Zustand, this folder is a place for all the stores used in Storefront, docs [here](./store-management.md)
 -   **styles** - no rocket science, just a simple place for storing CSS files
 -   **types** - this can sometimes be on the edge with rocket science since you can wonder whether to put a type here or on a component level, but in this folder, only shared types used in multiple places multiple should be put
--   **urql** - URQL is a GraphQL client which we use for GraphQL requests, here you can find all related files from the`createClient` function to all the different kinds of exchanges. Docs for GraphQL are [here](./graphql.md), docs for caching [here](./caching.md)
+-   **urql** - URQL is a GraphQL client which we use for GraphQL requests, here you can find all related files from the`createClient` function to all the different kinds of exchanges. Docs for GraphQL are [here](./graphql.md), docs for caching [here](./caching/index.md)
 -   **vitest** - for unit testing, we use Vitest, this folder is for all kinds of tests, docs [here](./unit-tests.md)

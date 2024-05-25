@@ -1,10 +1,10 @@
 # Application Configuration
 
-The application is configurable by [Symfony configuration files](https://symfony.com/doc/4.4/configuration.html#configuration-parameters) or via [environment variables](https://symfony.com/doc/4.4/configuration.html#configuration-environments) which allows you to overwrite them.
+The application is configurable by [Symfony configuration files](https://symfony.com/doc/4.4/configuration.html#configuration-parameters) or via [environment variables](https://symfony.com/doc/5.4/configuration.html#configuration-environments) which allows you to overwrite them.
 
 ## Configuration parameters
 
-For operating Shopsys Platform it is needed to have correctly set connections to external services via ENV variables.
+For operating Shopsys Platform, it is needed to have correctly set connections to external services via ENV variables.
 
 !!! note
 
@@ -16,7 +16,7 @@ For operating Shopsys Platform it is needed to have correctly set connections to
 
 Environment variables are really handy to configure the right setting in the desired application environment.
 You may want to set some settings in a different way (such as production, test, or CI servers).
-[Setting environment variables](/introduction/setting-environment-variables) depends on environment of your application.
+[Setting environment variables](../introduction/setting-environment-variables.md) depends on environment of your application.
 
 !!! tip
 

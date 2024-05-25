@@ -46,4 +46,4 @@ To be able to install, develop and run Shopsys Platform, the system should have 
 
 !!! tip
 
-    Windows installation can be skipped in favor of [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) where the tools will be installed like on [Linux / macOS / WSL](#linux--macos--wsl) so all the tools and services can be up-to-date.
+    Windows installation can be skipped in favor of [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) where the tools will be installed like on [Linux / macOS / WSL](#linux-macos-wsl) so all the tools and services can be up-to-date.

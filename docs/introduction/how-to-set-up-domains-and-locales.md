@@ -68,7 +68,7 @@ Set the url address for the domain in `config/domains_urls.yaml`.
 
 !!! note
 
-    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#21-enable-second-domain-optional)
 
 #### 2.3 Locale settings
 
@@ -226,7 +226,7 @@ Change the url address in the configuration of the domain in `config/domains_url
 
 !!! note
 
-    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
+    When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#21-enable-second-domain-optional)
 
 #### 4.2 Replace the old url address
 
@@ -250,7 +250,7 @@ If you need to change the locale of a specific domain to another locale that is 
 #### 5.2 Change the locale to the locale that is not yet used by another domain
 
 If you need to change the locale of a specific domain to another locale that is not yet already used by another domain, add new temporary domain with this new locale and follow the instructions of [How to add a new domain](#2-how-to-add-a-new-domain).
-The following procedure is the same as in the case with [Change the locale to the locale that is already used by another domain](#change-the-locale-to-the-locale-that-is-already-used-by-another-domain).
+The following procedure is the same as in the case with [Change the locale to the locale that is already used by another domain](#51-change-the-locale-to-the-locale-that-is-already-used-by-another-domain).
 
 ### 6. Change domains appearance
 

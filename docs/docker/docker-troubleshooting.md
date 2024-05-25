@@ -9,7 +9,7 @@
 1. [Application is slow on Mac](#application-is-slow-on-mac)
 1. [A Docker container is not running](#a-docker-container-is-not-running)
 1. [Composer dependencies installation fails on memory limit](#composer-dependencies-installation-fails-on-memory-limit)
-1. [Starting up the Docker containers fails due to invalid reference format](#starting-up-the-docker-containers-fails-due-to-invalid-reference-format)
+1. [Starting up the Docker containers fails due to invalid reference format](#starting-up-the-docker-containers-fails-due-to-an-invalid-reference-format)
 
 If you are developing on Shopsys Platform using Docker, you might run into some problems during the process.
 
