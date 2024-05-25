@@ -14,7 +14,7 @@
             {%- set navlevel = navlevel + 1 %}
             {%- set children = nav_item.children[1:] %}
             {%- for nav_item in children %}
-                <li class="{% if navlevel > 2 %}toctree-l{{ navlevel }}{% endif %}{% if nav_item.active%} current{%endif%}">
+                <li class="{% if navlevel >= 2 %}toctree-l{{ navlevel }}{% endif %}{% if nav_item.active%} current{%endif%}">
                     {% include 'nav.html' %}
                 </li>
             {%- endfor %}

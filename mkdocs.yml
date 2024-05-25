@@ -17,6 +17,7 @@ site_name: Shopsys Platform Docs
 
 theme:
     custom_dir: "docs/_theme"
+    hljs_style: vs2015
     hljs_languages:
         - dockerfile
         - less
