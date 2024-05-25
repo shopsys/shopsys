@@ -8,7 +8,7 @@ To know the basic technologies we use for frontend implementation, you can read 
 ### Scenario 1 - I want to use red color for links on my 2nd domain
 
 This is very easy as there are already prepared `less` files for the second domain in `domain2` folder
-that is configured for usage by `styles_directory` parameter in [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml).
+that is configured for usage by `styles_directory` parameter in [`domains.yaml`]({{github.link}}/project-base/config/domains.yaml).
 
 Edit `assets/styles/frontend/domain2/core/variables.less`:
 
@@ -30,7 +30,7 @@ Edit `assets/styles/frontend/domain2/core/variables.less`:
 In the footer, among other things, are on the right side contact phone number and email, a list of articles and a link to the contact page.
 Let us say we want to change the elements so the list of articles goes first, then the link to the contact page, and the phone number and email are last.
 
-Open [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml) and set `design_id` parameter for your 2nd domain.
+Open [`domains.yaml`]({{github.link}}/project-base/config/domains.yaml) and set `design_id` parameter for your 2nd domain.
 
 ```diff
    domains:
@@ -45,7 +45,7 @@ Open [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-bas
 +          design_id: my-design
 ```
 
-Duplicate [`footer.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Layout/footer.html.twig)
+Duplicate [`footer.html.twig`]({{github.link}}/project-base/templates/Front/Layout/footer.html.twig)
 and name the new file `footer.my-design.html.twig`. The new file must be in the same folder as the original one.
 
 In your new `footer.my-design.html.twig`, re-order the elements in the div element with class `footer__bottom__articles`:

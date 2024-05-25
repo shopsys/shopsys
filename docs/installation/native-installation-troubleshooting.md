@@ -82,7 +82,7 @@ npm install --global <path-to-package.json>
 
 ## There are no logs during installation or use of application
 
-Monolog is configured to log into streams in [`config/packages/monolog.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/monolog.yaml) or `config/packages/{dev|prod|test}/monolog.yaml` for specific environment.
+Monolog is configured to log into streams in [`config/packages/monolog.yaml`]({{github.link}}/project-base/config/packages/monolog.yaml) or `config/packages/{dev|prod|test}/monolog.yaml` for specific environment.
 If you want to log into a file change the configuration of handlers like this:
 
 ```yaml

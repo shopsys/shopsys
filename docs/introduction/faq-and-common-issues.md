@@ -14,7 +14,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (e.g., with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (e.g., with configured domains and an existing database structure), see [`build.xml`]({{github.link}}/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -97,9 +97,9 @@ because Symfony forms need setters for all fields and we don't want to mess enti
 
 ## What is the configuration file `services_test.yaml` good for?
 
-[`services_test.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services_test.yaml)
+[`services_test.yaml`]({{github.link}}/project-base/config/services_test.yaml)
 is a service configuration file that is loaded in TEST environment in addition to
-the standard configuration defined in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml) as sometimes the configuration differs from the standard one and we need to override it.
+the standard configuration defined in [`services.yaml`]({{github.link}}/project-base/config/services.yaml) as sometimes the configuration differs from the standard one and we need to override it.
 E.g., by default, all our services are defined as private. However, in tests, we are retrieving some services directly from the container hence we need to have them public in TEST environment.
 
 ## How to change the behavior of the product search on the front-end?

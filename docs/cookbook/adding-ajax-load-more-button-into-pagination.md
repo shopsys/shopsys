@@ -187,7 +187,7 @@ public function listAction(Request $request)
 
 By default, the "load more" button displays general text - "Load next X item(s)".
 The option `buttonTextCallback` is available for `Shopsys.AjaxMoreLoader` javascript component that you can use to customize the displayed text to fit your use case.
-You can see the usage of the option in [`productList.js`](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend/product/productList.js).
+You can see the usage of the option in [`productList.js`]({{github.link}}/project-base/assets/js/frontend/product/productList.js).
 
 ## Integration of Paginated Brand List
 

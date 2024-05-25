@@ -40,7 +40,7 @@ php phing build-demo-dev
 
 !!! note
 
-    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 After the build is completed, a singledomain application is created.
 
@@ -211,8 +211,8 @@ An example for domain that uses English language:
 In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g., `Product::getName()` and you get the proper translation.
 However, sometimes, there is no request (i.e. in CLI commands) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
-To change the default application locale, set `locale` parameter to you desired locale (e.g., `es` for Spanish) in your [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
-The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/translation.yaml) config).
+To change the default application locale, set `locale` parameter to you desired locale (e.g., `es` for Spanish) in your [`parameters_common.yaml`]({{github.link}}/project-base/config/parameters_common.yaml).
+The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`]({{github.link}}/project-base/config/packages/translation.yaml) config).
 
 !!! note
 

@@ -25,7 +25,7 @@ using forms.
 
 For this case, you can use `FormExtensions` in the namespace `App/Form/Admin` that extends `Symfony\Component\Form\AbstractTypeExtension`, which has a function called `getExtendedType()`.
 Implement this function and return `class` of `ProductFormType` and add your fields into the form.
-If you create new extension you need to register it in [`config/forms.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/forms.yaml)
+If you create new extension you need to register it in [`config/forms.yaml`]({{github.link}}/project-base/config/forms.yaml)
 
 ## Changing rendering of already existing form type
 
@@ -36,7 +36,7 @@ change with your own file in `twig/form_themes` in `config/packages/twig.yaml` f
 
 Remember that files you copy into your project cannot be automatically upgraded with newer versions of Shopsys Platform.
 
-If you want to change the whole style of rendering forms in administration, you need to copy the whole [`theme.html.twig`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) which defines the style of
+If you want to change the whole style of rendering forms in administration, you need to copy the whole [`theme.html.twig`]({{github.link}}/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) which defines the style of
 rendering default Symfony rows.
 You can read more about `theme.html.twig` below.
 
@@ -64,7 +64,7 @@ rendering of `MyAmazingFormType` your `form_widget` and `form_row` should be nam
 ## `theme.html.twig`
 
 This template is used for custom rendering of forms and form fields and it extends `form_div_layout.html.twig` from Symfony.
-There are two `theme.html.twig` files as one is used for [administration](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Form/theme.html.twig).
+There are two `theme.html.twig` files as one is used for [administration]({{github.link}}/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end]({{github.link}}/project-base/templates/Front/Form/theme.html.twig).
 It contains a definition of blocks that are used for rendering forms.
 
 -   `form_start` - renders the start tag of the form
@@ -76,7 +76,7 @@ It contains a definition of blocks that are used for rendering forms.
 
 and blocks of custom form widgets for various [FormTypes](../introduction/using-form-types.md) e.g.:
 
--   `date_picker_widget` is rendered as `form_widget` for [`DatePickerType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
+-   `date_picker_widget` is rendered as `form_widget` for [`DatePickerType`]({{github.link}}/packages/framework/src/Form/DatePickerType.php)
 
 ## Changing order of groups and fields
 

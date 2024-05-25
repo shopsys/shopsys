@@ -1,10 +1,10 @@
 # Grid Data Sources
 
-As a data source, the [Grid Component](./grid.md) requires an implementation of [`DataSourceInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/DataSourceInterface.php).
+As a data source, the [Grid Component](./grid.md) requires an implementation of [`DataSourceInterface`]({{github.link}}/packages/framework/src/Component/Grid/DataSourceInterface.php).
 
 You can find 4 implementations of the interface in Shopsys Platform.
 
-## [`QueryBuilderDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
+## [`QueryBuilderDataSource`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
 
 The most commonly used data source is created from Doctrine Query Builder.
 
@@ -21,7 +21,7 @@ $queryBuilder->select('p')
 $dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id');
 ```
 
-## [`QueryBuilderWithRowManipulatorDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
+## [`QueryBuilderWithRowManipulatorDataSource`]({{github.link}}/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
 
 This data source is created from query builder as well, and on top of it, it allows to define a callback that is applied on each row so additional data can be set this way,
 e.g., you can add some calculated price into the data set.
@@ -48,7 +48,7 @@ $dataSource = new QueryBuilderWithRowManipulatorDataSource(
 );
 ```
 
-## [`ArrayDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/ArrayDataSource.php)
+## [`ArrayDataSource`]({{github.link}}/packages/framework/src/Component/Grid/ArrayDataSource.php)
 
 Data source that is created from an array. It is suitable when you need to display data that are not stored in the database.
 
@@ -70,7 +70,7 @@ foreach ($domain->getAll() as $domainConfig) {
 $dataSource = new ArrayDataSource($domainData, 'id');
 ```
 
-## [`MoneyConvertingDataSourceDecorator`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
+## [`MoneyConvertingDataSourceDecorator`]({{github.link}}/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
 
 A decorator that can be applied to any of the data sources described above. It converts monetary values in a data set to [`Money` value object](../model/how-to-work-with-money.md#money-class).
 

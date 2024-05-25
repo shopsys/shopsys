@@ -173,7 +173,7 @@ When `composer install` or `composer update` fails on an error with exceeding th
 
 !!! note
 
-    Composer dependencies contain 3-rd party software with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    Composer dependencies contain 3-rd party software with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Starting up the Docker containers fails due to an invalid reference format
 

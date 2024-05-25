@@ -79,14 +79,14 @@ ie. you can upgrade them independently via `composer update`.
 
 !!! note
 
-    During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Platform with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Platform with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### Project base
 
 There is no automated way of upgrading the project base.
 If you wanted to upgrade your project base, you would need to [cherry-pick](https://git-scm.com/docs/git-cherry-pick) or [merge](https://git-scm.com/docs/git-merge) modifications from the original repository manually.
 We try to ease you the process as much as possible by maintaining clear GIT history,
-keeping up-to-date [changelog](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md) and [upgrading instructions](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md),
+keeping up-to-date [changelog]({{github.link}}/CHANGELOG.md) and [upgrading instructions]({{github.link}}/UPGRADE.md),
 and writing [understandable commit messages](../contributing/guidelines-for-creating-commits.md).
 
 ## Conclusion

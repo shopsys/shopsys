@@ -14,7 +14,7 @@ as well as a list of customizations that are not (and will not be) possible at a
     -   [Extending particular forms](form-extension.md) without the need of the template overriding
 -   [Customizing database migrations](../introduction/database-migrations.md)
     -   Adding a new migration as well as skipping and reordering the existing ones
--   Configuring the smoke tests (see [`RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php) class)
+-   Configuring the smoke tests (see [`RouteConfigCustomization`]({{github.link}}/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php) class)
     -   _Note: This is now achievable as the configuration class is located in the open box project-base.
         However, that makes upgrading the component harder, so the configuration is planned to be re-worked._
 -   [Implementing custom product feed or modifying an existing one](../model/product-feeds.md)
@@ -231,7 +231,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 ### Problem 3
 
 One kind of problem is not fixed automatically and needs to be addressed manually.
-Shopsys Platform uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
+Shopsys Platform uses a kind of magic for working with extended entities (see [`EntityNameResolver` class]({{github.link}}/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
 and static analysis tools are not aware of that fact.
 Imagine the following situation:
 

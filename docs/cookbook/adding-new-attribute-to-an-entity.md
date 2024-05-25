@@ -164,7 +164,7 @@ class ProductDataFactory extends BaseProductDataFactory
 }
 ```
 
-Your `ProductDataFactory` is already registered in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml)
+Your `ProductDataFactory` is already registered in [`services.yaml`]({{github.link}}/project-base/config/services.yaml)
 as an alias for the original class.
 
 ```yaml
@@ -269,7 +269,7 @@ class ProductDataFactory extends BaseProductDataFactory
 ## Front-end
 
 To display your new attribute on a front-end page, you can modify the corresponding template directly
-as it is a part of your open-box, e.g., [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig).
+as it is a part of your open-box, e.g., [`detail.html.twig`]({{github.link}}/project-base/templates/Front/Content/Product/detail.html.twig).
 
 ```twig
 {{ product.extId }}
@@ -281,7 +281,7 @@ You can modify data fixtures in `src/DataFixtures/` of your project.
 
 ### Random `extId`
 
-If you want to add a unique random `extId` for products from data fixtures, you can add it in the `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you want to add a unique random `extId` for products from data fixtures, you can add it in the `createProduct` method of [`ProductDataFixture.php`]({{github.link}}/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random numbers like this:
 
 ```diff
@@ -354,7 +354,7 @@ You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random num
 
 ### Specific `extId`
 
-If you need to add specific `extId` to products in the data fixture, you will have to update the creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you need to add specific `extId` to products in the data fixture, you will have to update the creation of products in [`ProductDataFixture::load`]({{github.link}}/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 
 ```diff
 

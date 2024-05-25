@@ -59,7 +59,7 @@ The definition of volumes, example:
 
 -   **shopsys-framework-sync** : name of the volume
 -   **external: true** : flag, which indicates, that volume is already defined external
-    (in this case in [docker-sync.yml](https://github.com/shopsys/shopsys/blob/master/project-base/docker-sync.yml))
+    (in this case in [docker-sync.yml]({{github.link}}/project-base/docker-sync.yml))
 
 #### 3.2 docker-sync.yml
 

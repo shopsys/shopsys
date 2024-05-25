@@ -40,7 +40,7 @@ This means the `project-base` should run with any higher minor version of Shopsy
 Changes to the `project-base` may contain new features for the front-end or examples of newly implemented features and configuration options.
 You can follow the changes in the repository to see how working with Shopsys Platform changes between the versions and to keep in touch with best practices and recommendations.
 
-During an upgrade to the next major version, you must make the changes yourself according to the advice in [UPGRADE.md](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md).
+During an upgrade to the next major version, you must make the changes yourself according to the advice in [UPGRADE.md]({{github.link}}/UPGRADE.md).
 
 !!! note
 
@@ -119,7 +119,7 @@ Routes may be changed or removed only in a `MAJOR` release.
 
 The configuration of containers and orchestration is mostly in the `project-base` repository, which means that [it's excluded from the BC promise](#project-base-repository).
 
-The changes should always be described in [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) (in the _Infrastructure_ section).
+The changes should always be described in [upgrade notes]({{github.link}}/UPGRADE.md) (in the _Infrastructure_ section).
 
 ### Twig
 
@@ -133,7 +133,7 @@ Twig blocks, functions, filters, macros, and macros imports in templates can be 
 Backward-compatible changes and additions to the HTML structure may be introduced in any release.
 
 Significant changes of the HTML structure should be avoided in the `MINOR` and `PATCH` releases.
-They may be introduced in a `MAJOR` release, and they must always be described in detail in [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) (in the _Application_ section).
+They may be introduced in a `MAJOR` release, and they must always be described in detail in [upgrade notes]({{github.link}}/UPGRADE.md) (in the _Application_ section).
 
 The front-end templates are in the `project-base` repository, which means that [they're excluded from the BC promise](#project-base-repository).
 
@@ -161,8 +161,8 @@ The behavior of elements with classes prefixed with `.js-` should be changed onl
 -   we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
 -   all higher `MINOR` and `PATCH` releases should be compatible with your project
 -   use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (e.g., `^7.0.0`)
--   when upgrading to a new major release, read the [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
--   watch for changes marked as `BC-BREAK` in the [changelog](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md)
+-   when upgrading to a new major release, read the [upgrade notes]({{github.link}}/UPGRADE.md)
+-   watch for changes marked as `BC-BREAK` in the [changelog]({{github.link}}/CHANGELOG.md)
 -   don't forget to execute new DB migrations via `./phing db-migrations` during upgrades
 -   we recommend to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
 -   read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
@@ -176,5 +176,5 @@ The behavior of elements with classes prefixed with `.js-` should be changed onl
 -   read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
 -   test changes using an older version of `project-base`, it shouldn't cause any issues
 -   never change [translation message IDs](#translation-messages) except in `MAJOR` releases
--   take your time when [explaining](./guidelines-for-writing-upgrade.md) how to upgrade to a BC-breaking change in [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
+-   take your time when [explaining](./guidelines-for-writing-upgrade.md) how to upgrade to a BC-breaking change in [upgrade notes]({{github.link}}/UPGRADE.md)
 -   test new [database migrations](#database-migrations) thoroughly

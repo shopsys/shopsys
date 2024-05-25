@@ -59,10 +59,10 @@ Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
 
 ## How to implement a custom product feed?
 
-The heart of a product feed plugin is a service implementing the [`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.feed` tag.
+The heart of a product feed plugin is a service implementing the [`FeedInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.feed` tag.
 Tags `hours` and `minutes` are mandatory and define when the feed should be generated.
 
-The annotations in the feed interfaces ([`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
+The annotations in the feed interfaces ([`FeedInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`]({{github.link}}/packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
 When in doubt, you can take a look at the [already implemented product feeds](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) for inspiration.
 
 ## How to extend an existing product feed?
@@ -72,9 +72,9 @@ When in doubt, you can take a look at the [already implemented product feeds](ht
 -   to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
     or you can extend the service tagged as `shopsys.feed` and override the `getTemplateFilepath` method in it
 -   you can use a different `FeedItemInterface` implementation by extending its factory service
-    (e.g., [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
+    (e.g., [GoogleFeedItemFactory]({{github.link}}/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
 -   you can even change the way the underlying Product entities are fetched from the database by extending the feed's product repository
-    (e.g., [GoogleProductRepository](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
+    (e.g., [GoogleProductRepository]({{github.link}}/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
 -   when a more complicated customization is needed, extending feed item facade service and overwriting the `getItems` is the way to go
-    (e.g., [GoogleFeedItemFacade](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
+    (e.g., [GoogleFeedItemFacade]({{github.link}}/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
     it should allow you to provide your own way of getting the right items for your feed

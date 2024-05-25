@@ -49,7 +49,7 @@ This can be set to create FormTypes that can be used in other FormTypes like the
 We created some form types which can help you with creating your own form types.
 Here you can find an information about what they do and what options they have.
 
-### [GroupType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/GroupType.php)
+### [GroupType]({{github.link}}/packages/framework/src/Form/GroupType.php)
 
 `GroupType` is used for creating groups of containers.
 It is not mapped onto any property and it inherits data into group so you can work with forms in this group the same way as you were before.
@@ -60,33 +60,33 @@ It is not mapped onto any property and it inherits data into group so you can wo
 
 This option is used for displaying heading of section, for example, in `CustomerFormType` all user data like name, last name or email address are all in section with label `Personal Data`.
 
-### [DisplayOnlyCustomerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DisplayOnlyCustomerType.php)
+### [DisplayOnlyCustomerType]({{github.link}}/packages/framework/src/Form/DisplayOnlyCustomerType.php)
 
 Displays name of a registered customer along with a link to his/her detail.
 If there is no customer set, `unregistered customer` text will be displayed instead.
 
-### [DisplayOnlyType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DisplayOnlyType.php)
+### [DisplayOnlyType]({{github.link}}/packages/framework/src/Form/DisplayOnlyType.php)
 
 Sometimes form needs to only display information but does not need to change and persist this data, for this usages
 there is `DisplayOnlyType` which does not map property onto `entity` and let you to display your own data.
 
-### [DisplayOnlyUrlType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DisplayOnlyUrlType.php)
+### [DisplayOnlyUrlType]({{github.link}}/packages/framework/src/Form/DisplayOnlyUrlType.php)
 
 Displays custom URL based on routing system.
 
-### [LocalizedFullWidthType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/LocalizedFullWidthType.php)
+### [LocalizedFullWidthType]({{github.link}}/packages/framework/src/Form/LocalizedFullWidthType.php)
 
 Displays localized field in vertical order of full-width label and inputs.
 
-### [OrderItemsType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/OrderItemsType.php)
+### [OrderItemsType]({{github.link}}/packages/framework/src/Form/OrderItemsType.php)
 
 Displays editable table of `OrderItems` from provided `Order`.
 
-### [WarningMessageType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/WarningMessageType.php)
+### [WarningMessageType]({{github.link}}/packages/framework/src/Form/WarningMessageType.php)
 
 Displays highlighted message with warning icon.
 
-### [LocalizedType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/Locale/LocalizedType.php)
+### [LocalizedType]({{github.link}}/packages/framework/src/Form/Locale/LocalizedType.php)
 
 Compound type that renders one form of given type for each locale.
 Returns array indexed by locale.
@@ -104,7 +104,7 @@ An array of options that is used for every inner form.
 
 An array of constraints that is used for field with the same locale as administration.
 
-### [CategoriesType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/CategoriesType.php)
+### [CategoriesType]({{github.link}}/packages/framework/src/Form/CategoriesType.php)
 
 Displays a tree of all categories for given `domain_id` with checkboxes for each category created by `CategoryCheckBoxType` and returns array indexed by checked category ids.
 
@@ -112,7 +112,7 @@ Displays a tree of all categories for given `domain_id` with checkboxes for each
 
 Required option that defines for what domain should the categories be listed.
 
-### [CategoryCheckboxType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/CategoryCheckboxType.php)
+### [CategoryCheckboxType]({{github.link}}/packages/framework/src/Form/CategoryCheckboxType.php)
 
 Creates checkbox and label with category name if name of the form is the same as category id.
 Adds `visible`, `category_name`, `has_children` and `level` vars from category on domain for given `domain_id` to `FormView` so you can easily work with the checkbox.
@@ -121,11 +121,11 @@ Adds `visible`, `category_name`, `has_children` and `level` vars from category o
 
 Required option that defines from what domain should the category be listed.
 
-### [ColorPickerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ColorPickerType.php)
+### [ColorPickerType]({{github.link}}/packages/framework/src/Form/ColorPickerType.php)
 
 Displays text field with box of given color that shows color picker when clicked.
 
-### [DatePickerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
+### [DatePickerType]({{github.link}}/packages/framework/src/Form/DatePickerType.php)
 
 Displays field that shows date picker when clicked.  
 Value is internally converted from [admin display timezone](./working-with-date-time-values.md) to UTC, so it have to be persisted in database also as `DateTime` to avoid possible date shifting.
@@ -139,7 +139,7 @@ DatePickerType has 2 constants that can be used:
 -   FORMAT_PHP = 'dd.MM.yyyy'
 -   FORMAT_JS = 'dd.mm.yy'
 
-### [DateTimeType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DateTimeType.php)
+### [DateTimeType]({{github.link}}/packages/framework/src/Form/DateTimeType.php)
 
 Displays a text field that allows to set date and time.  
 Value is internally converted from [admin display time zone](./working-with-date-time-values.md) to UTC.
@@ -152,15 +152,15 @@ DatePickerType has constant that can be used:
 
 -   FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss'
 
-### [DisplayOnlyDomainIconType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DisplayOnlyDomainIconType.php)
+### [DisplayOnlyDomainIconType]({{github.link}}/packages/framework/src/Form/DisplayOnlyDomainIconType.php)
 
 Displays domain icon with the domains name for given domain ID in `data` option.
 
-### [DomainsType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DomainsType.php)
+### [DomainsType]({{github.link}}/packages/framework/src/Form/DomainsType.php)
 
 Displays list of non-required checkboxes for every domain with the domain name as label.
 
-### [DomainType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DomainType.php)
+### [DomainType]({{github.link}}/packages/framework/src/Form/DomainType.php)
 
 Displays select box with all domain names or domain URLs.
 
@@ -169,7 +169,7 @@ Displays select box with all domain names or domain URLs.
 Defaults to `false`.  
 If you set this option to `true`, domain url will be shown instead of domain name.
 
-### [FileUploadType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/FileUploadType.php)
+### [FileUploadType]({{github.link}}/packages/framework/src/Form/FileUploadType.php)
 
 Uses `AbstractFileUploadType` to display a widget for files upload and to work with them (similar as `ImageUploadType`).
 After a file or files are uploaded it shows box for every file and lets you to downloads, order or delete files.
@@ -180,11 +180,11 @@ An array of constraints that should be applied for the uploaded file.
 
 #### file_entity_class
 
-Defines which entity class (defined in [uploaded_files.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/uploaded_files.yaml)) should the files be assigned to.
+Defines which entity class (defined in [uploaded_files.yaml]({{github.link}}/project-base/config/uploaded_files.yaml)) should the files be assigned to.
 
 #### file_type
 
-Defines which type of file (defined in [uploaded_files.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/uploaded_files.yaml)) should the files be assigned to.
+Defines which type of file (defined in [uploaded_files.yaml]({{github.link}}/project-base/config/uploaded_files.yaml)) should the files be assigned to.
 
 #### info_text
 
@@ -214,12 +214,12 @@ Allows to input custom filenames for uploaded files.
 
 Extends `BasicFileUploadType` with additional support for translated file names.
 
-### [FriendlyUrlType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/FriendlyUrlType.php)
+### [FriendlyUrlType]({{github.link}}/packages/framework/src/Form/FriendlyUrlType.php)
 
 Displays a select box with domain urls and text field that lets you to create friendly url on selected domain with your valid slug.
 Uses `DomainType` to display select box with domain urls.
 
-### [UrlListType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/UrlListType.php)
+### [UrlListType]({{github.link}}/packages/framework/src/Form/UrlListType.php)
 
 Uses `FriendlyUrlType` to display a list of friendly URLs for each domain that lets you delete and create friendly URLs with unique slugs and select which URL should be the main for the domain.
 
@@ -231,7 +231,7 @@ Defines which route should the URLs go into.
 
 Defines what is the entity ID that the URLs are assigned to.
 
-### [ImageUploadType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ImageUploadType.php)
+### [ImageUploadType]({{github.link}}/packages/framework/src/Form/ImageUploadType.php)
 
 Uses `AbstractFileUploadType` to display a widget for images upload and to work with them (same as `FileUploadType`).
 
@@ -239,7 +239,7 @@ Uses `AbstractFileUploadType` to display a widget for images upload and to work 
 
 Defines which entity should the images be assigned to.
 
-### [OrderListType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/OrderListType.php)
+### [OrderListType]({{github.link}}/packages/framework/src/Form/OrderListType.php)
 
 Displays a list of orders for given `user`.
 The list contains `order number`, `created on`, `billing address`, `delivery address`, `total price including VAT`, `status` and a link to order detail.
@@ -249,13 +249,13 @@ Displays text `Customer has no orders so far.` if User doesn't have any orders.
 
 Required option that defines for what user should the orders be listed.
 
-### [PriceTableType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/PriceTableType.php)
+### [PriceTableType]({{github.link}}/packages/framework/src/Form/PriceTableType.php)
 
 Displays a table with prices for each currency that lets you to add input price without Vat.
 After saving widget the price that you added (which you can edit) and final prices with and without Vat (that you cannot edit) are updated.
 Price without Vat is not the same as you added so the final price with Vat can be an integer.
 
-### [ProductCalculatedPricesType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ProductCalculatedPricesType.php)
+### [ProductCalculatedPricesType]({{github.link}}/packages/framework/src/Form/ProductCalculatedPricesType.php)
 
 Adds a widget that shows a table with prices of `product` that are calculated for every pricing group and every domain.
 If `product` is null, it shows table with every pricing group for every domain.
@@ -264,7 +264,7 @@ If `product` is null, it shows table with every pricing group for every domain.
 
 Required option that defines for what product should the prices be listed.
 
-### [ProductsType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ProductsType.php)
+### [ProductsType]({{github.link}}/packages/framework/src/Form/ProductsType.php)
 
 Displays a list of products.
 The widget adds button that after clicking opens a popup window that lets you to search and to pick products except for `main_product`.
@@ -298,7 +298,7 @@ Option that defines for what product are you picking products. `main_product` ca
 
 Option that defines text of button for adding products.
 
-### [ProductType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ProductType.php)
+### [ProductType]({{github.link}}/packages/framework/src/Form/ProductType.php)
 
 Displays a widget that lets you to pick one product.
 It has one `input` with `placeholder` or name of picked product and a `button` that after clicking opens a popup window that lets you to search and to pick a product.
@@ -319,11 +319,11 @@ Boolean option that defines if main variants can be picked.
 
 Boolean option that defines if variants can be picked.
 
-### [SingleCheckboxChoiceType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/SingleCheckboxChoiceType.php)
+### [SingleCheckboxChoiceType]({{github.link}}/packages/framework/src/Form/SingleCheckboxChoiceType.php)
 
 Displays a list of choices shown as checkboxes.
 
-### [SortableValuesType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/SortableValuesType.php)
+### [SortableValuesType]({{github.link}}/packages/framework/src/Form/SortableValuesType.php)
 
 Displays a list of values that lets you add values from a select box, remove them form the list or sort them as you like.
 Returns array with sorted IDs that have been picked and sorted.
@@ -336,7 +336,7 @@ Boolean option that defines if products can be added to the list.
 
 Boolean option that defines if products can be removed from the list.
 
-### [MultidomainType](https://github.com/shopsys/shopsys/blob/master/packages/form-types-bundle/src/MultidomainType.php)
+### [MultidomainType]({{github.link}}/packages/form-types-bundle/src/MultidomainType.php)
 
 Compound type that renders one form of given type for each domain.
 The data of the inner forms are returned as an array indexed by the domain ID.
@@ -357,7 +357,7 @@ Defaults to `[]`.
 The options of the inner forms based on the domain ID.
 Provide arrays indexed by the domain ID, values are merged with the `entry_options`.
 
-### [YesNoType](https://github.com/shopsys/shopsys/blob/master/packages/form-types-bundle/src/YesNoType.php)
+### [YesNoType]({{github.link}}/packages/form-types-bundle/src/YesNoType.php)
 
 Natural looking choice type for boolean value inputs.
 A boolean value is accepted/returned as data.

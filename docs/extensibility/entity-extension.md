@@ -48,7 +48,7 @@ Shopsys\FrameworkBundle\Model\Product\ProductDataFactory:
 ### OrderItem
 
 `OrderItem` is a bit of a unique entity because it is not created from `OrderItemData`. It is created from different sources, like from product itself.
-All creations are done by [`Order`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Order/Order.php) entity only, where you can check that it really makes sense to not create the `OrderItem` from a data object.
+All creations are done by [`Order`]({{github.link}}/packages/framework/src/Model/Order/Order.php) entity only, where you can check that it really makes sense to not create the `OrderItem` from a data object.
 
 If you need to extend the `OrderItem` by a new field, for example, an ID from an external system, you'll have to fill this field after the `Order` is created by a new public method on `Order` class.
 And then, if you'll need to be able to edit this field from the administration, you'll have to override the `edit` method of the `Order` entity and solve setting this new field there.
@@ -137,7 +137,7 @@ The various capabilities of this resolver are best described in its unit test `\
 
 Entities are created by factories. If any part of the framework creates an entity, it uses a factory.
 So, in the project, we can change the factory to produce extended entities instead of the original, and the whole system will create extended entities.
-We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`](https://github.com/shopsys/shopsys/blob/master/packages/coding-standards/src/Sniffs/ObjectIsCreatedByFactorySniff.php).
+We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`]({{github.link}}/packages/coding-standards/src/Sniffs/ObjectIsCreatedByFactorySniff.php).
 
 The only exceptions are [translation entities](../model/entities.md#translation-entity) (named `*Translation`) and [domain entities](../model/entities.md#domain-entity) (named `*Domain`).
 They are created by their owner entity.

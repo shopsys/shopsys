@@ -16,7 +16,7 @@ They can also be nested into deeper directory such as `App\Model\Product\Search`
     For example, if you want to add a new functionality that works with product, your class should be created in `App\Model\Product`.
 -   Main parts of a model such as `Facade` or `Repository` are grouped by a model they are responsible for, not by their type.  
     E.g., classes `Product`, `ProductRepository`, and `ProductFacade` should all be inside the `App\Model\Product` namespace together.
--   All exceptions in a model should be in in a `App\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), e.g., [ProductException](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/Exception/ProductException.php).
+-   All exceptions in a model should be in in a `App\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), e.g., [ProductException]({{github.link}}/packages/framework/src/Model/Product/Exception/ProductException.php).
 -   All DQL and SQL operations related to a model should be in a model repository.
 -   Integration code is not a part of the model.  
     For example, forms or controllers should be outside the `Model` namespace.

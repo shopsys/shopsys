@@ -54,7 +54,7 @@ If you are interested, you can read more about the monorepo approach here - http
 
 !!! note
 
-    The list of these packages is maintained in the function `get_all_packages` in [`.github/monorepo/monorepo_functions.sh`](https://github.com/shopsys/shopsys/blob/HEAD/.github/monorepo/monorepo_functions.sh).<br>
+    The list of these packages is maintained in the function `get_all_packages` in [`.github/monorepo/monorepo_functions.sh`]({{github.link}}/.github/monorepo/monorepo_functions.sh).<br>
     It is used for automated splitting of the monorepo and needs to be updated when a package is added or removed.
 
 ## Infrastructure

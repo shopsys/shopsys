@@ -52,7 +52,7 @@ Target `build-deploy-part-1-db-independent` also executes subset of Phing target
 
 !!! note
 
-    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 Let us move a little deeper and take a look at the first one, `clean`:
 
@@ -285,7 +285,7 @@ Runs performance tests on a newly built test database with performance data.
 
 It may take a few hours as the generation of performance data is very time-consuming. Should be executed on CI server only.
 
-The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
+The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yaml`]({{github.link}}/project-base/config/parameters_common.yaml).
 You can easily override the default values in your `parameters.yaml` configuration file.
 
 ### Other

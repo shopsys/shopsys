@@ -3,7 +3,7 @@
 Welcome to Shopsys Platform Knowledge Base!
 On these pages, you can find everything you need to know when you want to build your own e-commerce site based on the framework.
 
-If you want to know more about Shopsys Platform, you can look at our [README.md](https://github.com/shopsys/shopsys/blob/HEAD/README.md).
+If you want to know more about Shopsys Platform, you can look at our [README.md]({{github.link}}/README.md).
 
 ## Need help?
 
@@ -20,7 +20,7 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 ## What is new and how to upgrade
 
 * On the [Releases on GitHub](https://github.com/shopsys/shopsys/releases) you can find the list of all important changes in released versions in all repositories maintained in [shopsys/shopsys monorepo](https://github.com/shopsys/shopsys/)
-* For step-by-step upgrade instructions, see [UPGRADE.md](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
+* For step-by-step upgrade instructions, see [UPGRADE.md]({{github.link}}/UPGRADE.md)
 * Thanks to our [Backward Compatibility Promise](./contributing/backward-compatibility-promise.md), it should be clear to which versions you can upgrade safely and how we plan to maintain the code in the future
 
 ## Table of Contents
