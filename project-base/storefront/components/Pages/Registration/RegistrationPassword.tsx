@@ -1,3 +1,4 @@
+import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -12,36 +13,28 @@ export const RegistrationPassword: FC = () => {
     const formMeta = useRegistrationFormMeta(formProviderMethods);
 
     return (
-        <>
-            <div className="h4 mb-3">{t('Create a password')}</div>
-            <FormColumn>
+        <FormBlockWrapper>
+            <FormHeading>{t('Password')}</FormHeading>
+            <FormColumn className="gap-3">
                 <PasswordInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.passwordFirst.name}
+                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                     passwordInputProps={{
                         label: formMeta.fields.passwordFirst.label,
                     }}
-                    render={(passwordInput) => (
-                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                            {passwordInput}
-                        </FormLine>
-                    )}
                 />
                 <PasswordInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.passwordSecond.name}
+                    render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                     passwordInputProps={{
                         label: formMeta.fields.passwordSecond.label,
                     }}
-                    render={(passwordInput) => (
-                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                            {passwordInput}
-                        </FormLine>
-                    )}
                 />
             </FormColumn>
-        </>
+        </FormBlockWrapper>
     );
 };

@@ -1,10 +1,10 @@
 import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { usePersonalDataRequestMutation } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
 import { TypePersonalDataAccessRequestTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -49,31 +49,39 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     );
 
     return (
-        <SimpleLayout heading={t('Personal Data Overview')}>
-            {contentSiteText !== undefined && (
-                <div className="[&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
+        <Webline className="flex flex-col items-center">
+            <h1 className="max-w-3xl w-full">{t('Personal data overview')}</h1>
+            {contentSiteText && (
+                <div className="max-w-3xl [&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
                     <UserText htmlContent={contentSiteText} />
                 </div>
             )}
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
-                    <TextInputControlled
-                        control={formProviderMethods.control}
-                        formName={formMeta.formName}
-                        name={formMeta.fields.email.name}
-                        render={(textInput) => <FormLine>{textInput}</FormLine>}
-                        textInputProps={{
-                            label: formMeta.fields.email.label,
-                            required: true,
-                            type: 'email',
-                            autoComplete: 'email',
-                        }}
-                    />
-                    <div className="mt-8 flex w-full justify-center">
-                        <SubmitButton>{t('Send')}</SubmitButton>
-                    </div>
+                <Form
+                    className="w-full flex justify-center"
+                    onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}
+                >
+                    <FormContentWrapper>
+                        <FormBlockWrapper>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
+                            />
+                            <FormButtonWrapper>
+                                <SubmitButton>{t('Send')}</SubmitButton>
+                            </FormButtonWrapper>
+                        </FormBlockWrapper>
+                    </FormContentWrapper>
                 </Form>
             </FormProvider>
-        </SimpleLayout>
+        </Webline>
     );
 };

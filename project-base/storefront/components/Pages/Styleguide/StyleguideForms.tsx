@@ -1,7 +1,7 @@
 import { StyleguideSection } from './StyleguideElements';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form } from 'components/Forms/Form/Form';
+import { Form, FormButtonWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Translate } from 'next-translate';
@@ -59,9 +59,9 @@ export const StyleguideFormExample: FC = () => {
                         type: 'text',
                     }}
                 />
-                <div className="mt-3">
+                <FormButtonWrapper>
                     <SubmitButton>Submit form</SubmitButton>
-                </div>
+                </FormButtonWrapper>
             </Form>
         </FormProvider>
     );

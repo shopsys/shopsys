@@ -13,10 +13,14 @@ export type RadiobuttonProps = NativeProps & {
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
     label: ReactNode;
     onClick?: (newValue: string | null) => void;
+    labelWrapperClassName?: string;
 };
 
 export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
-    ({ label, onChange, id, name, checked, value, disabled, onBlur, onClick }, radiobuttonForwardedRef) => {
+    (
+        { label, onChange, id, name, checked, value, disabled, onBlur, onClick, labelWrapperClassName },
+        radiobuttonForwardedRef,
+    ) => {
         const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
             if (!onClick) {
                 return;
@@ -30,7 +34,14 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
         };
 
         return (
-            <LabelWrapper checked={checked} disabled={disabled} htmlFor={id} inputType="radio" label={label}>
+            <LabelWrapper
+                checked={checked}
+                className={labelWrapperClassName}
+                disabled={disabled}
+                htmlFor={id}
+                inputType="radio"
+                label={label}
+            >
                 <input
                     checked={checked}
                     className="peer sr-only"

@@ -25,7 +25,7 @@ export const ContactInformationSendOrderButton: FC = () => {
     const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
 
     return (
-        <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
+        <div className={twJoin('mt-4', !isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
             <p className="mb-4">
                 <Trans
                     defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
@@ -44,7 +44,17 @@ export const ContactInformationSendOrderButton: FC = () => {
                     }}
                 />
             </p>
-
+            {settingsData?.settings?.heurekaEnabled && (
+                <CheckboxControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.isWithoutHeurekaAgreement.name}
+                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                    checkboxProps={{
+                        label: formMeta.fields.isWithoutHeurekaAgreement.label,
+                    }}
+                />
+            )}
             <CheckboxControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}

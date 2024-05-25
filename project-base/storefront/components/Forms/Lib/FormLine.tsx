@@ -6,10 +6,28 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type FormLineProps = NativeProps & {
     bottomGap?: boolean;
+    isHalfWidthInput?: boolean;
+    isSmallInput?: boolean;
 };
 
-export const FormLine: FC<FormLineProps> = ({ bottomGap, children, className, ...props }) => (
-    <div className={twMergeCustom('flex-1', bottomGap && 'pb-3', className, 'form-line')} {...props}>
+export const FormLine: FC<FormLineProps> = ({
+    bottomGap,
+    children,
+    className,
+    isHalfWidthInput,
+    isSmallInput,
+    ...props
+}) => (
+    <div
+        className={twMergeCustom(
+            'flex-1',
+            bottomGap && 'pb-3',
+            isHalfWidthInput && 'vl:w-1/2 vl:pr-1.5',
+            isSmallInput && 'w-[150px] flex-none vl:w-[220px]',
+            className,
+        )}
+        {...props}
+    >
         {children}
     </div>
 );

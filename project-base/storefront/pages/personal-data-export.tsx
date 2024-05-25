@@ -20,7 +20,7 @@ const PersonalDataExportPage: FC = () => {
     const { url } = useDomainConfig();
     const [personalDataExportUrl] = getInternationalizedStaticUrls(['/personal-data-export'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Personal Data Export'), slug: personalDataExportUrl },
+        { __typename: 'Link', name: t('Personal data export'), slug: personalDataExportUrl },
     ];
     const [personalDataPageTextResult] = usePersonalDataPageTextQuery();
 
@@ -30,7 +30,7 @@ const PersonalDataExportPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal Data Export')}>
+            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal data export')}>
                 <PersonalDataExportContent
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
                 />

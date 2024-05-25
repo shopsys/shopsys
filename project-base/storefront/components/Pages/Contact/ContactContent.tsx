@@ -1,9 +1,8 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
@@ -62,72 +61,60 @@ export const ContactContent: FC = () => {
                 )}
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
-                        <TextInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.name.name}
-                            render={(textInput) => (
-                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                    <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                        {textInput}
-                                    </FormLine>
-                                </FormColumn>
-                            )}
-                            textInputProps={{
-                                label: formMeta.fields.name.label,
-                                required: true,
-                                type: 'text',
-                                autoComplete: 'name',
-                            }}
-                        />
-                        <TextInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.email.name}
-                            render={(textInput) => (
-                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                    <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                        {textInput}
-                                    </FormLine>
-                                </FormColumn>
-                            )}
-                            textInputProps={{
-                                label: formMeta.fields.email.label,
-                                required: true,
-                                type: 'email',
-                                autoComplete: 'email',
-                            }}
-                        />
-                        <TextareaControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.message.name}
-                            render={(textarea) => (
-                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                    <FormLine bottomGap className="w-full">
-                                        {textarea}
-                                    </FormLine>
-                                </FormColumn>
-                            )}
-                            textareaProps={{
-                                label: formMeta.fields.message.label,
-                                required: true,
-                                rows: 4,
-                            }}
-                        />
-                        <CheckboxControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.privacyPolicy.name}
-                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                            checkboxProps={{
-                                label: formMeta.fields.privacyPolicy.label,
-                                required: true,
-                            }}
-                        />
-                        <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
-                            {t('Send message')}
-                        </SubmitButton>
+                        <FormContentWrapper>
+                            <FormBlockWrapper>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.name.name}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.name.label,
+                                        required: true,
+                                        type: 'text',
+                                        autoComplete: 'name',
+                                    }}
+                                />
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.email.name}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.email.label,
+                                        required: true,
+                                        type: 'email',
+                                        autoComplete: 'email',
+                                    }}
+                                />
+                                <TextareaControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.message.name}
+                                    render={(textarea) => <FormLine bottomGap>{textarea}</FormLine>}
+                                    textareaProps={{
+                                        label: formMeta.fields.message.label,
+                                        required: true,
+                                        rows: 4,
+                                    }}
+                                />
+                                <CheckboxControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.privacyPolicy.name}
+                                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                    checkboxProps={{
+                                        label: formMeta.fields.privacyPolicy.label,
+                                        required: true,
+                                    }}
+                                />
+                                <FormButtonWrapper>
+                                    <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
+                                        {t('Send message')}
+                                    </SubmitButton>
+                                </FormButtonWrapper>
+                            </FormBlockWrapper>
+                        </FormContentWrapper>
                     </Form>
                 </FormProvider>
             </Webline>

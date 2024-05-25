@@ -43,7 +43,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         (selectBoxLabelIsFloated === undefined || selectBoxLabelIsFloated === true) &&
                         'transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:transform-none',
                     (inputType === 'checkbox' || inputType === 'radio') && [
-                        'group relative flex w-full cursor-pointer items-center gap-3 text-base text-dark',
+                        'group relative flex w-full cursor-pointer items-center gap-2 text-base text-dark',
                         disabled && 'cursor-no-drop text-skyBlue opacity-60',
                     ],
                     inputType === 'checkbox' && [
@@ -62,12 +62,15 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <div
                         className={twMergeCustom(
-                            'flex w-5 border border-skyBlue bg-white p-[3px] text-white transition group-hover:border-primary group-active:border-primary',
-                            inputType === 'checkbox' ? 'rounded h-5' : 'rounded-full p-1 h-[19px]',
-                            'group-active:outline group-active:outline-1 group-active:outline-blue',
-                            checked && 'border-primary bg-primary',
+                            'flex w-5 h-5 min-w-5 border border-black bg-white p-[3px] text-white transition',
+                            inputType === 'checkbox' ? 'rounded' : 'rounded-full p-[5px]',
+                            'active:scale-90',
+                            checked
+                                ? 'border-primary bg-primary group-hover:bg-primaryDark group-hover:border-primaryDark'
+                                : 'group-hover:border-primary group-active:border-primary group-hover:bg-whiteSnow',
                             disabled &&
-                                'border-skyBlue outline-0 group-hover:border-skyBlue group-active:border-skyBlue group-active:outline-0',
+                                'border-skyBlue outline-0 group-hover:border-skyBlue group-hover:bg-none group-active:border-skyBlue group-active:outline-0 active:scale-100',
+                            disabled && checked && 'bg-skyBlue group-hover:bg-skyBlue',
                         )}
                     >
                         {inputType === 'checkbox' ? (
@@ -83,7 +86,6 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                                 className={twMergeCustom(
                                     'h-full w-full rounded-full bg-white opacity-0 transition',
                                     checked && 'opacity-100',
-                                    disabled && 'border- bg-skyBlue',
                                 )}
                             />
                         )}

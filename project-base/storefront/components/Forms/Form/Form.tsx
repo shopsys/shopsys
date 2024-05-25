@@ -1,6 +1,7 @@
 import { FormEvent, FormHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<FormHTMLAttributes<HTMLFormElement>, never, 'onSubmit' | 'style'>;
 
@@ -23,4 +24,28 @@ export const Form: FC<FormProps> = ({ onSubmit, style, children, className, tid 
             {children}
         </form>
     );
+};
+
+export const FormContentWrapper: FC = ({ children, className }) => {
+    return (
+        <div className={twMergeCustom('bg-grayLight px-5 vl:px-20 rounded-xl max-w-3xl w-full', className)}>
+            {children}
+        </div>
+    );
+};
+
+export const FormBlockWrapper: FC = ({ children, className }) => {
+    return (
+        <div className={twMergeCustom('py-4 vl:py-6 border-b border-b-graySlate last:border-b-0', className)}>
+            {children}
+        </div>
+    );
+};
+
+export const FormButtonWrapper: FC = ({ children, className }) => {
+    return <div className={twMergeCustom('mt-6 flex justify-center', className)}>{children}</div>;
+};
+
+export const FormHeading: FC = ({ children, className }) => {
+    return <h4 className={twMergeCustom('mb-3', className)}>{children}</h4>;
 };

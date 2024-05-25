@@ -1,4 +1,5 @@
 import { Button } from 'components/Forms/Button/Button';
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -43,16 +44,13 @@ export const ContactInformationEmail: FC = () => {
     };
 
     return (
-        <>
+        <FormBlockWrapper>
+            <FormHeading>{t('Customer information')}</FormHeading>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.email.name}
-                render={(textInput) => (
-                    <FormLine bottomGap className="flex-none lg:w-[65%]">
-                        {textInput}
-                    </FormLine>
-                )}
+                render={(textInput) => <FormLine>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
@@ -62,16 +60,19 @@ export const ContactInformationEmail: FC = () => {
                 }}
             />
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <Button
-                    className="mb-5"
-                    size="small"
-                    tid={TIDs.login_in_order_button}
-                    type="button"
-                    onClick={openLoginPopup}
-                >
-                    {t('User with this email is already registered. Do you want to sign in')}
-                </Button>
+                <div className="flex flex-col gap-2 mt-4">
+                    <span>{t('User with this email is already registered')}</span>
+                    <Button
+                        className="w-fit"
+                        size="small"
+                        tid={TIDs.login_in_order_button}
+                        type="button"
+                        onClick={openLoginPopup}
+                    >
+                        {t('Sign in')}
+                    </Button>
+                </div>
             )}
-        </>
+        </FormBlockWrapper>
     );
 };

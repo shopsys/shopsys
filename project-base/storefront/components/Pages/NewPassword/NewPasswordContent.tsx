@@ -1,10 +1,11 @@
 import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './recoveryPasswordFormMeta';
 import { Link } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecoverPasswordMutation } from 'graphql/requests/passwordRecovery/mutations/RecoverPasswordMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -101,34 +102,44 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     }
 
     return (
-        <SimpleLayout heading={t('Set new password')}>
+        <Webline className="flex flex-col items-center">
+            <h1 className="max-w-3xl w-full">{t('Login')}</h1>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>
-                    <PasswordInputControlled
-                        control={formProviderMethods.control}
-                        formName={formMeta.formName}
-                        name={formMeta.fields.newPassword.name}
-                        render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                        passwordInputProps={{
-                            label: formMeta.fields.newPassword.label,
-                        }}
-                    />
-                    <PasswordInputControlled
-                        control={formProviderMethods.control}
-                        formName={formMeta.formName}
-                        name={formMeta.fields.newPasswordAgain.name}
-                        render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                        passwordInputProps={{
-                            label: formMeta.fields.newPasswordAgain.label,
-                        }}
-                    />
-                    <div className="mt-8 flex w-full justify-between">
-                        <SubmitButton isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}>
-                            {t('Set new password')}
-                        </SubmitButton>
-                    </div>
+                <Form
+                    className="w-full flex justify-center"
+                    onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}
+                >
+                    <FormContentWrapper>
+                        <FormBlockWrapper>
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.newPassword.name}
+                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.newPassword.label,
+                                }}
+                            />
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.newPasswordAgain.name}
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: formMeta.fields.newPasswordAgain.label,
+                                }}
+                            />
+                            <FormButtonWrapper>
+                                <SubmitButton
+                                    isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
+                                >
+                                    {t('Set new password')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
+                        </FormBlockWrapper>
+                    </FormContentWrapper>
                 </Form>
             </FormProvider>
-        </SimpleLayout>
+        </Webline>
     );
 };

@@ -7,7 +7,7 @@ type FormColumnProps = {
 
 export const FormColumn: FC<FormColumnProps> = ({ width, className, children }) => (
     <div
-        className={twMergeCustom('-ml-3 flex flex-wrap [&>.form-line]:pl-3', className)}
+        className={twMergeCustom('flex flex-col vl:flex-row vl:flex-wrap vl:gap-3', className)}
         style={{
             ...(width !== undefined ? { width } : {}),
         }}

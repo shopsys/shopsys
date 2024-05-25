@@ -1,3 +1,4 @@
+import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
@@ -14,7 +15,8 @@ export const RegistrationUser: FC = () => {
     const formMeta = useRegistrationFormMeta(formProviderMethods);
 
     return (
-        <>
+        <FormBlockWrapper>
+            <FormHeading>{t('Personal data')}</FormHeading>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
@@ -27,30 +29,32 @@ export const RegistrationUser: FC = () => {
                     autoComplete: 'email',
                 }}
             />
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.firstName.name}
-                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                textInputProps={{
-                    label: formMeta.fields.firstName.label,
-                    required: true,
-                    type: 'text',
-                    autoComplete: 'given-name',
-                }}
-            />
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.lastName.name}
-                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                textInputProps={{
-                    label: formMeta.fields.lastName.label,
-                    required: true,
-                    type: 'text',
-                    autoComplete: 'family-name',
-                }}
-            />
+            <FormColumn>
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.firstName.name}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    textInputProps={{
+                        label: formMeta.fields.firstName.label,
+                        required: true,
+                        type: 'text',
+                        autoComplete: 'given-name',
+                    }}
+                />
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.lastName.name}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    textInputProps={{
+                        label: formMeta.fields.lastName.label,
+                        required: true,
+                        type: 'text',
+                        autoComplete: 'family-name',
+                    }}
+                />
+            </FormColumn>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
@@ -63,11 +67,12 @@ export const RegistrationUser: FC = () => {
                     autoComplete: 'tel',
                 }}
             />
-            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+            <FormColumn className="gap-2 vl:gap-0">
                 <RadiobuttonGroup
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.customer.name}
+                    render={(radiobutton, key) => <FormLine key={key}>{radiobutton}</FormLine>}
                     radiobuttons={[
                         {
                             label: t('Private person'),
@@ -78,13 +83,8 @@ export const RegistrationUser: FC = () => {
                             value: CustomerTypeEnum.CompanyCustomer,
                         },
                     ]}
-                    render={(radiobutton, key) => (
-                        <FormLine key={key} bottomGap className="w-full flex-none lg:w-1/2">
-                            {radiobutton}
-                        </FormLine>
-                    )}
                 />
             </FormColumn>
-        </>
+        </FormBlockWrapper>
     );
 };
