@@ -29,6 +29,13 @@ services:
         tags:
             - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Administrator\Administrator, manager_type: orm, label: Administrator, group: 'Admin', on_top: true }
 
+    admin.category:
+        calls:
+            - [ setModelManager, [ '@Shopsys\Administration\Model\Category\CategoryManager' ] ]
+        class: Shopsys\Administration\Model\Category\CategoryAdmin
+        tags:
+            - { name: sonata.admin, controller: Shopsys\Administration\Controller\CategoryController, model_class: Shopsys\FrameworkBundle\Model\Category\Category, manager_type: orm, label: Categories, group: 'Categories', on_top: true }
+
     admin.order:
         calls:
             - [ setModelManager, [ '@Shopsys\Administration\Model\Order\OrderManager' ]]

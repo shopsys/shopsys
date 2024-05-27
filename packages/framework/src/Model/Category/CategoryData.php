@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category;
 
+use Shopsys\Administration\Component\Security\AdminIdentifierInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
-class CategoryData
+class CategoryData implements AdminIdentifierInterface
 {
+    /**
+     * @var int|null
+     */
+    public $id;
+
     /**
      * @var string[]|null[]
      */
@@ -73,5 +79,13 @@ class CategoryData
         $this->enabled = [];
         $this->urls = new UrlListData();
         $this->pluginData = [];
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 }

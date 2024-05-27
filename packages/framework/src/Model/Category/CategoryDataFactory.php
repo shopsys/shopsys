@@ -83,6 +83,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
      */
     protected function fillFromCategory(CategoryData $categoryData, Category $category): void
     {
+        $categoryData->id = $category->getId();
         $categoryData->name = $category->getNames();
         $categoryData->parent = $category->getParent();
 
