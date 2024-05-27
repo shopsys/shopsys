@@ -2,7 +2,7 @@
 
 Translating is a process of extracting locale-specific texts from your application and converting them into a target language.
 
-We use standard [Symfony translation](https://symfony.com/doc/current/translation.html) so you can use all standard features.
+We use standard [Symfony translation](https://symfony.com/doc/current/translation.html), so you can use all standard features.
 In this article, we describe tools and recommendations for translations.
 
 ## Usage
@@ -15,8 +15,8 @@ In this article, we describe tools and recommendations for translations.
    For more information about phing targets in general, see the [separate article](./console-commands-for-application-management-phing-targets.md).
 
 1. Now you have to translate the newly extracted texts.
-   The `*.po` files are text files so you can make translations in a text editor or you can use specialized software.
-   It is a good practice to version the files along with source codes so they are a part of your project history.
+   The `*.po` files are text files, so you can make translations in a text editor, or you can use specialized software.
+   It is a good practice to version the files along with source codes, so they are a part of your project history.
    If you need more information about the `*.po` format, please read more in the [documentation](https://docs.transifex.com/formats/gettext).
 
 1. Once you create new translations in the `*.po` files, the application will use these translations immediately.
@@ -35,7 +35,7 @@ We use the original English form as the ID. So in the case of
 
 the message ID is `You still have to purchase products for <strong> %price% </strong> for <strong> free </strong> shipping and payment.`.
 
-We replace multiple spaces in message ID to a single one. So in case of
+We replace multiple spaces in message ID to a single one. So in the case of
 
 ```twig
 {% trans %}
@@ -63,7 +63,7 @@ We do this because in Czech, the noun is translated as _"objednávka"_ and the v
 
 ## Translatable texts
 
-When `php phing translations-dump` command is run, texts are extracted from following places:
+When `php phing translations-dump` command is run, texts are extracted from the following places:
 
 ### PHP
 
@@ -136,7 +136,7 @@ Translator.trans('Please enter promo code.');
 Translator.transChoice('{1}Load next item|]1,Inf[Load next items', loadNextCount);
 ```
 
-JavaScript translations are extracted and translated during compilation of JavaScript.
+JavaScript's translations are extracted and translated during compilation of JavaScript.
 
 ## Possible ways of changing translations
 
@@ -151,5 +151,5 @@ JavaScript translations are extracted and translated during compilation of JavaS
 ## Localized routes
 
 On Shopsys Platform, you can translate URLs of your routes.
-See ["Frontend routes" section in "How to Set Up Domains and Locales" article](./how-to-set-up-domains-and-locales.md#32-frontend-routes) for more information.
+See ["Frontend routes" section in "How to Set Up Domains and Locales" article](../configuration/how-to-set-up-domains-and-locales.md#32-frontend-routes) for more information.
 You can see the list of all translated URLs in administration page `admin/superadmin/urls/` (you must be logged in as a superadmin).

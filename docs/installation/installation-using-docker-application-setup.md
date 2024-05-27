@@ -1,13 +1,13 @@
-# Installation Using Docker - application setup
+# Installation Using Docker - Application Setup
 
 This guide expects that you have already set up your Docker environment.
-If you have not already done that check the [Installation using Docker](./installation-guide.md#installation-using-docker).
+If you have not already done that, check the [Installation using Docker](./index.md#installation-using-docker).
 
 ## 1. Set up Shopsys Platform application
 
-Now that the Docker environment is prepared we can setup the application itself.
+Now that the Docker environment is prepared, we can set up the application itself.
 
-### 1.1. Connect into terminal of the Docker container
+### 1.1. Connect into the terminal of the Docker container
 
 ```sh
 docker compose exec php-fpm bash
@@ -57,9 +57,15 @@ You can also manage the application database using [Adminer](https://www.adminer
 and Redis storage using [Redis commander](https://github.com/joeferner/redis-commander) by going to [http://127.0.0.1:1600](http://127.0.0.1:1600).
 
 Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).
-You can use [Kibana](https://www.elastic.co/downloads/kibana) for Elasticseacrh management, it is available on [http://127.0.0.1:5601](http://127.0.0.1:5601).
+You can use [Kibana](https://www.elastic.co/downloads/kibana) for Elasticsearch management, it is available on [http://127.0.0.1:5601](http://127.0.0.1:5601).
+
+RabbitMQ message broker management console is available on [http://127.0.0.1:15672](http://127.0.0.1:15672).
+
+!!! note
+
+    To see all available services, you can examine the `docker-compose.yml` file.
 
 If you need to inspect your application logs, use `docker compose logs` command.
-For more information about logging see [the separate article](../introduction/logging.md).
+For more information about logging, see [the separate article](../introduction/logging.md).
 
-_And now you can [start building your application](../introduction/start-building-your-application.md)._
+And now you are ready to [start building your application](../introduction/start-building-your-application.md).

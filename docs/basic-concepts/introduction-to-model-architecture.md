@@ -1,6 +1,6 @@
 # Introduction to Model Architecture
 
-In this article you will learn about the model, its dependencies, [entities](#entity), [facades](#facade), [repositories](#repository) and their mutual relations.
+In this article, you will learn about the model, its dependencies, [entities](#entity), [facades](#facade), [repositories](#repository) and their mutual relations.
 
 ## Definition of a model
 
@@ -17,14 +17,14 @@ The domain of Shopsys Platform is e-commerce.
 
 Each domain has its logic which is the higher level rules for how objects of the domain model interact with one another.
 
-Domain model of Shopsys Platform is located in [`Shopsys\FrameworkBundle\Model`](https://github.com/shopsys/framework/tree/master/src/Model).
-Its concept is to separate behavior and properties of objects from its persistence.
-This separation is suitable for code reusability, easier testing and it fulfills the Single Responsibility Principle.
+Domain model of Shopsys Platform is located in [`Shopsys\FrameworkBundle\Model`]({{github.link}}/packages/framework/src/Model).
+Its concept is to separate the behavior and properties of objects from its persistence.
+This separation is suitable for code reusability, easier testing, and it fulfills the Single Responsibility Principle.
 
 Code belonging to the same feature is grouped together (e.g., `Cart` and `CartItem`).
 Names of classes and methods are based on real world vocabulary to be more intuitive (e.g., `OrderHashGenerator` or `getSellableProductsInCategory()`).
 
-Model is mostly divided into three parts: Entity, Repository and Facade.
+The model is mostly divided into three parts: Entity, Repository and Facade.
 
 ![model architecture schema](./img/model-architecture.png 'model architecture schema')
 
@@ -32,16 +32,16 @@ Model is mostly divided into three parts: Entity, Repository and Facade.
 
 Entity is a class encapsulating data.
 All entities are persisted by Doctrine ORM.
-One entity class usually represents one table in the database and one instance of the entity represents one row in the table.
+One entity class usually represents one table in the database, and one instance of the entity represents one row in the table.
 The entity is composed of fields, which can be mapped to columns in the table.
 Doctrine ORM annotations are used to define the details about the database mapping (types of columns, relations, etc.).
 
 Entities are inspired by Rich Domain Model. That means entity is usually the place where domain logic belongs (e.g., `Product::changeVat()` sets vat and marks product for price recalculation).
 However, the rule applies only to the situations where there is no external dependency required. In other words, entities should deal with their own data only and must not be dependent on any other services,
-i.e. they must not require the services in constructor nor as arguments of their methods.
+i.e., they must not require the services in constructor nor as arguments of their methods.
 When there is a need for a service in a given scenario, [`Facade`](#facade) is used to provide the desired use case.
 
-Entities can be used by all layers of the model and even outside of model (e.g., controller or templates).
+Entities can be used by all layers of the model and even outside a model (e.g., controller or templates).
 
 You'll find more about our entities specialities in a [detailed article](entities.md).
 
@@ -90,15 +90,15 @@ class Product
 
 ## Repository
 
-Is a class used to provide access to all entities of its scope.
+It is a class used to provide access to all entities of its scope.
 Repository enables code reuse of retrieving logic.
 Thanks to repositories, there is no need to use DQL/SQL in controllers or facades.
 
-Repository methods have easily readable names and clear return types so IDE auto-completion works great.
+Repository methods have easily readable names and clear return types, so IDE auto-completion works great.
 
 In Shopsys Platform repository is mostly used to retrieve entities from the database using Doctrine but can be used to access any other data storage.
 
-Repositories should be used only by facade so you should avoid using them in any other part of the application.
+Repositories should be used only by facade, so you should avoid using them in any other part of the application.
 
 ### Example
 
@@ -182,7 +182,7 @@ That means you can use the same method in your controller, CLI command, REST API
 All methods in facade should have single responsibility without any complex logic.
 Every method has a single use case and does not contain any complex business logic, only a sequence of calls of entities, repositories, and other specialized services.
 
-Facades as entry-point of the model can be used anywhere outside of the model.
+Facades as entry-point of the model can be used anywhere outside the model.
 
 Facades represent all available use-cases for specific model.
 
@@ -230,7 +230,12 @@ class CartFacade
             }
         }
         $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
-        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPriceWithVat());
+        $newCartItem = $this->cartItemFactory->create(
+            $cart,
+            $product,
+            $quantity,
+            $productPrice->getPriceWithVat()
+        );
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 
@@ -271,6 +276,6 @@ Other parts cannot be extended because PHP does not support multiple class inher
 
 ## Model Rules
 
-There are some model-specific rules that help up maintain easier usage of the model.
+There are some model-specific rules that help maintain easier usage of the model.
 They also help which classes should be a part of the `Model` namespace and which shouldn't.
 You can read more about them in [Model Rules](./model-rules.md).

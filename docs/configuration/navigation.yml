@@ -1,0 +1,6 @@
+arrange:
+    - index.md
+    - application-configuration.md
+    - setting-environment-variables.md
+    - how-to-set-up-domains-and-locales.md
+    - required-php-configuration.md

@@ -52,8 +52,10 @@ If you want to use already created tests for your specific configuration, you ma
 
 !!! note "Notes"
 
-    - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration. Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.
-    - Some functional tests (e.g., the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`. Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
+    - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration.
+      Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.
+    - Some functional tests (e.g., the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`.
+      Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
 
 ### 2. How to add a new domain
 
@@ -74,7 +76,7 @@ Set the url address for the domain in `config/domains_urls.yaml`.
 
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
-#### 2.4 Create multidomains data
+#### 2.4 Create multidomain data
 
 !!! note
 
@@ -90,9 +92,9 @@ php phing domains-data-create
 This command performs multiple actions:
 
 -   multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
--   if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
+-   if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilingual attributes
 -   pricing group with the name Default is created for every new domain
--   the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
+-   the last step of this command is the start of automatic recalculations (e.g., prices, availabilities, and product visibilities).
 
 !!! note
 
@@ -102,10 +104,10 @@ This command performs multiple actions:
     2. Enter product names and prices
     3. Recalculate product prices and visibilities
 
-#### 2.5 Multilang attributes
+#### 2.5 Multilingual attributes
 
 Demo data of Shopsys Platform are translated only for `en` and `cs` locales.
-If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
+If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory, and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 2.6 Generate assets for the new domain
 
@@ -122,7 +124,7 @@ By default, the configurations for the domain 1 and 2 are already parts of a pro
 Configuration for elasticsearch can be found in `src/Resources/definition/`.
 If you add a new domain, you need to create an elasticsearch configuration for this new domain.
 
-After you create the configuration, you have to create the index in elasticsearch and fill it by data
+After you create the configuration, you have to create the index in elasticsearch and fill it with data
 
 ```sh
 php phing elasticsearch-index-recreate
@@ -170,18 +172,18 @@ Regenerate database functions by running a phing target
 php phing domains-db-functions-create
 ```
 
-#### 3.5 Multilang attributes
+#### 3.5 Multilingual attributes
 
 Demo data of Shopsys Platform are prepared only for `en` and `cs` locales.
-If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
+If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory, and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 3.6 Locale in administration
 
 Administration is by default in `en` locale.
-This means that for example, product list in administration tries to display translations of product names in `en` locale.
-If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration to desired locale.
-However, the selected locale has to be one of registered domains locale.
-When you change admin locale, you have to update acceptance tests, to have administration use cases tested properly.
+This means that for example, a product list in administration tries to display translations of product names in `en` locale.
+If you want to switch it to another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration to desired locale.
+However, the selected locale has to be one of registered domain locales.
+When you change admin locale, you have to update acceptance tests to have administration use cases tested properly.
 
 You can change administration translations by adding messages into your `translations/messages.xx.po`.
 
@@ -208,8 +210,8 @@ An example for domain that uses English language:
 
 #### 3.8 Default application locale
 
-In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g., `Product::getName()` and you get the proper translation.
-However, sometimes, there is no request (i.e. in CLI commands) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
+In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request, so you can use e.g., `Product::getName()` and you get the proper translation.
+However, sometimes, there is no request (i.e., in CLI commands) so you need to tell your application, which locale should be used; either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
 To change the default application locale, set `locale` parameter to you desired locale (e.g., `es` for Spanish) in your [`parameters_common.yaml`]({{github.link}}/project-base/config/parameters_common.yaml).
 The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`]({{github.link}}/project-base/config/packages/translation.yaml) config).
@@ -240,16 +242,16 @@ Running this command will ensure replacing all occurrences of the old url addres
 
 ### 5. Change the locale for an existing domain
 
-This scenario is not supported by default because of the fact, that change of the locale within an already running eshop almost never happens.
+This scenario is not supported by default because change of the locale within an already running eshop almost never happens.
 However, there is workaround even for this scenario.
 
 #### 5.1 Change the locale to the locale that is already used by another domain
 
-If you need to change the locale of a specific domain to another locale that is already used by another domain, just set the required locale for this domain in the `config/domains.yaml`.
+If you need to change the locale of a specific domain to another locale that is already used by another domain, set the required locale for this domain in the `config/domains.yaml`.
 
 #### 5.2 Change the locale to the locale that is not yet used by another domain
 
-If you need to change the locale of a specific domain to another locale that is not yet already used by another domain, add new temporary domain with this new locale and follow the instructions of [How to add a new domain](#2-how-to-add-a-new-domain).
+If you need to change the locale of a specific domain to another, not yet used, locale, add a new temporary domain with this new locale and follow the instructions of [How to add a new domain](#2-how-to-add-a-new-domain).
 The following procedure is the same as in the case with [Change the locale to the locale that is already used by another domain](#51-change-the-locale-to-the-locale-that-is-already-used-by-another-domain).
 
 ### 6. Change domains appearance

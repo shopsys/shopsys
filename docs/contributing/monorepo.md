@@ -6,21 +6,21 @@ If you want to contribute to Shopsys Platform or to any of its packages,
 clone this monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
 
 If you want to build your project on Shopsys Platform,
-use composer to create project from [shopsys/project-base](https://github.com/shopsys/project-base).
+use composer to create a project from [shopsys/project-base](https://github.com/shopsys/project-base).
 
 ## Problem
 
-Due to the growing number of new repositories, there were many situations when a developer had to reflect the same change
-into more than one package. It meant, that the developer had to implement this in the separated repositories of each package.
-This approach was inefficient and repeated process always brought increased errors rate.
+Due to the growing number of new repositories, there were many situations when a developer had to reflect the same change into more than one package.
+It meant that the developer had to implement this in the separated repositories of each package.
+This approach was inefficient and a repeated process always brought increased error rate.
 
 ## Solution
 
 Monorepo approach provides a single development environment for management of all parts of Shopsys Platform.
-We use [Monorepo tool](https://github.com/shopsys/monorepo-tools) that splits code in appropriate repositories
-after some changes are made in monorepo. This splitting is initiated automatically once a day.
+We use [Monorepo tool](https://github.com/shopsys/monorepo-tools) that splits code in appropriate repositories after some changes are made in monorepo.
+This splitting is initiated automatically once a day.
 
-If you are interested, you can read more about the monorepo approach here - https://gomonorepo.org
+If you are interested, you can read more about the monorepo approach on [https://gomonorepo.org](https://gomonorepo.org)
 
 ## Repositories maintained by monorepo
 
@@ -59,7 +59,8 @@ If you are interested, you can read more about the monorepo approach here - http
 
 ## Infrastructure
 
-Monorepo can be installed and used as standard application. This requires some additional infrastructure:
+Monorepo can be installed and used as a standard application.
+This requires some additional infrastructure:
 
 -   **docker/** - templates for configuration of docker in monorepo.
 
@@ -76,7 +77,7 @@ Monorepo can be installed and used as standard application. This requires some a
 
 ## Installation of monorepo
 
-Installation of Shopsys Platform is almost the same as is described in [Installation Using Docker](../installation/installation-guide.md#installation-using-docker),
+Installation of Shopsys Platform is almost the same as is described in [Installation Using Docker](../installation/index.md#installation-using-docker),
 but instead of creating a new project based on `project-base` repository, you have to clone [`shopsys/shopsys`](https://github.com/shopsys/shopsys).
 
 Please keep in mind that all commands have to be executed from the monorepo root directory.
@@ -87,10 +88,9 @@ Also, templates of a configuration files should be copied from `docker/` folder 
 During the development in monorepo, it is necessary to ensure that the changes made in specific package
 preserve the functionality of the package even outside the monorepo.
 
-Keep in mind that the file structure of project based on Shopsys Platform (standardly located in the root of the project) is in monorepo
-located in the directory `project-base/`.
+Keep in mind that the file structure of a project based on Shopsys Platform (by default located in the root of the project) is in monorepo located in the directory `project-base/`.
 
 ## Troubleshooting
 
--   Package is functional in monorepo but broken outside of monorepo - ensure that every parameter required by package
+-   Package is functional in monorepo but broken outside monorepo - ensure that every parameter required by package
     is available even outside the monorepo

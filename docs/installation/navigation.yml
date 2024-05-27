@@ -1,4 +1,8 @@
 arrange:
     - index.md
-    - ...
-    - native-installation-troubleshooting.md
+    - installation-using-docker-linux.md
+    - installation-using-docker-macos.md
+    - installation-using-docker-windows-10.md
+    - installation-using-docker-application-setup.md
+    - native-installation
+    - installation-using-docker-on-production-server.md

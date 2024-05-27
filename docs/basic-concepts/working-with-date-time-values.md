@@ -15,7 +15,7 @@ Default implementation `DisplayTimeZoneProvider` takes into account domain timez
 
 ### In the admin
 
-All date values should be presented to the admin from Twig templates, where are three filters at your hand
+All date values should be presented to the admin from Twig templates, where there are three filters at your disposal:
 
 -   `formatDate`
 -   `formatTime`
@@ -43,15 +43,15 @@ Both of them are aware of `DisplayTimeZoneProvider` and convert the values to th
 
 **Even when you need to store only the date, it should be persisted as a `DateTime` in the database.**
 
-> Consider following. User in Phoenix (UTC-7) creates an article and set the date of creation to some date.
+> Consider the following. User in Phoenix (UTC-7) creates an article and sets the date of creation to some date.
 > This date should be visible near the article.  
 > Due to limitations of PHP, the value is in variable of the `DateTime` type with zero time (midnight).
-> Presenting such date back to the user results into date shift (one day back), because this "midnight DateTime" is converted to the display timezone.
+> Presenting such a date back to the user results into date shift (one day back), because this "midnight DateTime" is converted to the display timezone.
 > Storing the dates in the database as a DateTime type prevents it.
 
 ## Filling the dates programmatically
 
-When storing dates in different way than using application forms (e.g., from 3rd party application), it is necessary to convert them into UTC timezone.
+When storing dates in different ways than using application forms (e.g., from third party application), it is necessary to convert them into UTC timezone.
 This can be done like this:
 
 ```php

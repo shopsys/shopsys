@@ -1,8 +1,9 @@
 # Contributing
 
+-   [Monorepo](./monorepo.md)
 -   [Backward Compatibility Promise](./backward-compatibility-promise.md)
--   [Code Quality Principles](./code-quality-principles.md)
 -   [Coding Standards](./coding-standards.md)
+-   [Code Quality Principles](./code-quality-principles.md)
 -   [Guidelines for Creating Commits](./guidelines-for-creating-commits.md)
 -   [Guidelines for Dependencies](./guidelines-for-dependencies.md)
 -   [Guidelines for Phing Targets](./guidelines-for-phing-targets.md)

@@ -3,6 +3,7 @@
 **Expected installation time:** less than 1 hour.
 
 This guide covers building new projects based on Shopsys Platform.
+
 In case you want to contribute to Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
@@ -26,7 +27,7 @@ In [Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.
 Select `Debian GNU/Linux` distribution in step 6.
 
 After installation open `Debian` application.
-You will be prompted to create new user.
+You will be prompted to create a new user.
 
 ### Install Docker Desktop
 
@@ -46,23 +47,27 @@ You will be prompted to create new user.
 
 ### Install dependencies, Docker and docker compose in Debian
 
-We have prepared installation script for Debian dependencies in order to speed up the installation process.
+We have a prepared installation script for Debian dependencies to speed up the installation process.
+
 In `Debian` application run these commands:
 
--   `sudo apt update`
--   `sudo apt install -y --no-install-recommends wget`
--   `wget --no-check-certificate https://raw.githubusercontent.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh`
--   `sudo bash install-docker-wsl-debian.sh`
--   You can delete the downloaded file at the end of installation using `rm install-docker-wsl-debian.sh` command.
--   To ensure everything is working alright, restart `Docker Desktop` and `Debian` applications.
+```sh
+sudo apt update
+sudo apt install -y --no-install-recommends wget
+wget --no-check-certificate https://raw.githubusercontent.com/shopsys/shopsys/HEAD/project-base/scripts/install-docker-wsl-debian.sh
+sudo bash install-docker-wsl-debian.sh
+```
+
+You can delete the downloaded file at the end of installation using `rm install-docker-wsl-debian.sh` command.  
+To ensure everything is working alright, restart `Docker Desktop` and `Debian` applications.
 
 !!! note
 
-    If you prefer to know more about what is happening during installation, open [install-docker-wsl-debian.sh](https://github.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh) script and run all commands manually.
+    If you prefer to know more about what is happening during installation, open [install-docker-wsl-debian.sh]({{github.link}}/project-base/scripts/install-docker-wsl-debian.sh) script and run all commands manually.
 
 ## Installation of Shopsys Platform
 
-### 1. Create new project from Shopsys Platform sources
+### 1. Create a new project from Shopsys Platform sources
 
 Open `Debian` application.
 
@@ -72,7 +77,7 @@ Change your current directory to your home directory (`/home/<your-linux-user-na
 cd ~/
 ```
 
-Install project with composer
+Install a project with composer
 
 ```sh
 composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
@@ -95,13 +100,13 @@ Now, you have two options:
 
 #### Option 1
 
-In the case you want to start demo of the application as fast as possible, you can simply execute the installation script and that is all:
+In case you want to start a demo of the application as fast as possible, you can execute the installation script, and that is all:
 
 ```
 ./scripts/install.sh
 ```
 
-Select `Linux or Windows with WSL 2` from list of operating systems as you are installing it in `Debian`.
+Select `Linux or Windows with WSL 2` from the list of operating systems as you are installing it in `Debian`.
 
 After the script is finished with installing the application, you can skip all the other steps and see [the last chapter of Application Setup Guide](./installation-using-docker-application-setup.md#2-see-it-in-your-browser) to get all the important information you might need right after the installation.
 
@@ -135,6 +140,6 @@ docker compose up -d
 
     During installation there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights]({{github.link}}/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
-#### 2.3 Setup the application
+#### 2.3 Set up the application
 
 [Application setup guide](installation-using-docker-application-setup.md)

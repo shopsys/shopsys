@@ -5,3 +5,4 @@ arrange:
     - entity-extension-vs-entity-generation.md
     - extending-form-from-plugin.md
     - form-extension.md
+    - override-admin-styles.md

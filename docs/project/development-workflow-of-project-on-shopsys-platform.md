@@ -2,12 +2,12 @@
 
 ## Requirements
 
--   Shopsys Platform [installed](../installation/installation-guide.md)
+-   Shopsys Platform [installed](../installation/index.md)
 -   [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Platform [project-base](https://github.com/shopsys/project-base/)
 
 ## How to develop a new feature
 
-1.  Create a new branch from `master` branch e.g., `my-new-feature`
+1.  Create a new branch from `main` branch e.g., `my-new-feature`
 
 1.  Develop your feature
 
@@ -26,7 +26,7 @@
 
         We suggest you running acceptance tests on your Continuous Integration server because it takes several minutes to run them.
 
-1.  [Create commit](https://git-scm.com/docs/git-commit) with descriptive commit message about changes you have made.
+1.  [Create commit](https://git-scm.com/docs/git-commit) with a descriptive commit message about changes you have made.
 
     !!! tip
 
@@ -43,12 +43,12 @@
         Apart from automatic testing and coding standards checks at least one of the colleagues reviews your code and another colleague tests changes whether they are working properly.<br>
         We found this practices very important and we suggest them to you as part of your development process.
 
-1.  [Rebase](https://git-scm.com/docs/git-rebase) your branch on the current version of `master` branch
+1.  [Rebase](https://git-scm.com/docs/git-rebase) your branch on the current version of `main` branch
 
     !!! note
 
         This leads to [clean GIT history](https://blog.shopsys.com/keep-your-git-history-clean-with-minimum-effort-4b86b5619b1).
 
-1.  [Merge](https://git-scm.com/docs/git-merge) your branch (e.g., `my-new-feature`) into `master` branch.
+1.  [Merge](https://git-scm.com/docs/git-merge) your branch (e.g., `my-new-feature`) into `main` branch.
 
-1.  Push `master` branch
+1.  Push `main` branch

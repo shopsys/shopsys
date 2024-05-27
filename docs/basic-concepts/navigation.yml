@@ -1,0 +1,11 @@
+arrange:
+    - index.md
+    - basics-about-package-architecture.md
+    - domain-multidomain-multilanguage.md
+    - introduction-to-model-architecture.md
+    - model-rules.md
+    - components.md
+    - entities.md
+    - directories.md
+    - translations.md
+    - working-with-date-time-values.md

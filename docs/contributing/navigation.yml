@@ -1,0 +1,14 @@
+arrange:
+    - index.md
+    - monorepo.md
+    - backward-compatibility-promise.md
+    - coding-standards.md
+    - code-quality-principles.md
+    - guidelines-for-creating-commits.md
+    - guidelines-for-dependencies.md
+    - guidelines-for-phing-targets.md
+    - guidelines-for-pull-request.md
+    - guidelines-for-writing-documentation.md
+    - guidelines-for-writing-upgrade.md
+    - merging-on-github.md
+    - releasing-a-new-version-of-shopsys-platform.md

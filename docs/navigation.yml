@@ -1,16 +1,12 @@
 arrange:
     - index.md
     - installation
-    - introduction
-    - model
-    - cookbook
+    - project
+    - configuration
+    - basic-concepts
     - functional
-    - frontend
-    - administration
-    - frontend-api
-    - storefront
     - extensibility
-    - integration
-    - asynchronous-processing
+    - storefront
     - automated-testing
+    - integrations
     - contributing

@@ -1,0 +1,16 @@
+arrange:
+    - index.md
+    - installation
+    - introduction
+    - model
+    - cookbook
+    - functional
+    - frontend
+    - administration
+    - frontend-api
+    - storefront
+    - extensibility
+    - integration
+    - asynchronous-processing
+    - automated-testing
+    - contributing
