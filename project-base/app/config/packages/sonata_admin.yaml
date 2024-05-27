@@ -6,7 +6,15 @@ sonata_admin:
             - bundles/shopsysadmin/css/admin.css
     dashboard:
         blocks:
-            - { type: sonata.admin.block.admin_list, position: left }
+            -
+                type: sonata.admin.block.admin_list
+                position: left
+            -
+                type: sonata.block.service.template
+                position: bottom
+                class: col-xs-12
+                settings:
+                    template: '@ShopsysAdministration/Blocks/dashboard.html.twig'
     default_controller: Shopsys\Administration\Controller\CRUDController
     options:
         default_group: Orders

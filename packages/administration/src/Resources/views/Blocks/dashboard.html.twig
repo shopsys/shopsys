@@ -1,0 +1,5 @@
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    {{ render(controller('Shopsys\\Administration\\Controller\\DashboardController::dashboardAction')) }}
+{% endblock %}
