@@ -619,10 +619,6 @@ services:
     Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory
 
-    Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade:
-        arguments:
-            - '%kernel.environment%'
-
     Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
 

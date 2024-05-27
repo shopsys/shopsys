@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const FREE_TRANSPORT_AND_PAYMENT_LIMIT = 10000;
+    public const int FREE_TRANSPORT_AND_PAYMENT_LIMIT = 10000;
 
     /**
      * @param \App\Component\Setting\Setting $setting
@@ -42,7 +42,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
@@ -69,8 +69,8 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $privacyPolicy = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId, Article::class);
             $this->setting->setForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $privacyPolicy->getId(), $domainId);
 
-            $cookies = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, $domainId, Article::class);
-            $this->setting->setForDomain(Setting::COOKIES_ARTICLE_ID, $cookies->getId(), $domainId);
+            $userConsentPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::USER_CONSENT_POLICY_ARTICLE, $domainId, Article::class);
+            $this->setting->setForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $userConsentPolicyArticle->getId(), $domainId);
 
             $personalDataDisplaySiteContent = t(
                 'By entering an email below, you can view your personal information that we register in our online store.
@@ -165,7 +165,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ArticleDataFixture::class,

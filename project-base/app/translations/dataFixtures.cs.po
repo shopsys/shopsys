@@ -1081,9 +1081,6 @@ msgstr "Rozlišení, co tě vtáhne"
 msgid "In Progress"
 msgstr "Vyřizuje se"
 
-msgid "Information about cookies"
-msgstr "Informace o cookies"
-
 msgid "Innovative Technology"
 msgstr "Inovativní technologie"
 
@@ -1875,6 +1872,9 @@ msgstr "Nezapomenutelné příběhy"
 
 msgid "Unleash Your Gaming Potential"
 msgstr "Povol otěže hraní"
+
+msgid "User consent policy"
+msgstr "Správa osobních údajů"
 
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr "Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty."

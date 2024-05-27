@@ -2056,8 +2056,6 @@ export type TypeQuery = {
   categoriesSearch: TypeCategoryConnection;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<TypeCategory>;
-  /** Returns information about cookies article */
-  cookiesArticle: Maybe<TypeArticleSite>;
   /** Returns available countries */
   countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
@@ -2131,6 +2129,8 @@ export type TypeQuery = {
   transport: Maybe<TypeTransport>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TypeTransport>;
+  /** Returns User consent policy article */
+  userConsentPolicyArticle: Maybe<TypeArticleSite>;
 };
 
 

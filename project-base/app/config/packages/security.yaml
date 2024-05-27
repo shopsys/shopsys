@@ -33,7 +33,7 @@ security:
             - ROLE_LEGAL_CONDITIONS_FULL
             - ROLE_PRIVACY_POLICY_FULL
             - ROLE_PERSONAL_DATA_FULL
-            - ROLE_COOKIES_FULL
+            - ROLE_USER_CONSENT_POLICY_FULL
             - ROLE_ADMINISTRATOR_FULL
             - ROLE_DOMAIN_FULL
             - ROLE_SHOP_INFO_FULL
@@ -82,7 +82,7 @@ security:
             - ROLE_LEGAL_CONDITIONS_VIEW
             - ROLE_PRIVACY_POLICY_VIEW
             - ROLE_PERSONAL_DATA_VIEW
-            - ROLE_COOKIES_VIEW
+            - ROLE_USER_CONSENT_POLICY_VIEW
             - ROLE_ADMINISTRATOR_VIEW
             - ROLE_DOMAIN_VIEW
             - ROLE_SHOP_INFO_VIEW
@@ -130,7 +130,7 @@ security:
         ROLE_LEGAL_CONDITIONS_FULL: [ROLE_LEGAL_CONDITIONS_VIEW]
         ROLE_PRIVACY_POLICY_FULL: [ROLE_PRIVACY_POLICY_VIEW]
         ROLE_PERSONAL_DATA_FULL: [ROLE_PERSONAL_DATA_VIEW]
-        ROLE_COOKIES_FULL: [ROLE_COOKIES_VIEW]
+        ROLE_USER_CONSENT_POLICY_FULL: [ROLE_USER_CONSENT_POLICY_VIEW]
         ROLE_ADMINISTRATOR_FULL: [ROLE_ADMINISTRATOR_VIEW]
         ROLE_DOMAIN_FULL: [ROLE_DOMAIN_VIEW]
         ROLE_SHOP_INFO_FULL: [ROLE_SHOP_INFO_VIEW]
@@ -323,9 +323,9 @@ security:
         # personal data access setting
         - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_VIEW, methods: [GET] }
         - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_FULL, methods: [POST] }
-        # cookies article setting
-        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_VIEW, methods: [GET] }
-        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_FULL, methods: [POST] }
+        # user consent policy article setting
+        - { path: ^/%admin_url%/user-consent-policy/setting, roles: ROLE_USER_CONSENT_POLICY_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/user-consent-policy/setting, roles: ROLE_USER_CONSENT_POLICY_FULL, methods: [POST] }
         # administrators
         - { path: ^/%admin_url%/administrator/new, roles: ROLE_ADMINISTRATOR_FULL }
         - { path: ^/%admin_url%/administrator/delete, roles: ROLE_ADMINISTRATOR_FULL }

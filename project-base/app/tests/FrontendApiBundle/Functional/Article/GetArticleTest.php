@@ -132,7 +132,7 @@ class GetArticleTest extends GraphQlTestCase
     {
         $termsAndConditionsArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, 1, Article::class);
         $privacyPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, 1, Article::class);
-        $cookiesArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, 1, Article::class);
+        $userConsentPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::USER_CONSENT_POLICY_ARTICLE, 1, Article::class);
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
@@ -184,10 +184,10 @@ class GetArticleTest extends GraphQlTestCase
                 ],
             ],
             [
-                'cookiesArticle',
+                'userConsentPolicyArticle',
                 [
-                    'name' => t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+                    'name' => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
                     'placement' => Article::PLACEMENT_NONE,
                     'text' => t(
                         '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',
@@ -200,8 +200,8 @@ class GetArticleTest extends GraphQlTestCase
                     'seoMetaDescription' => null,
                     'breadcrumb' => [
                         [
-                            'name' => t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $cookiesArticle->getId()]),
+                            'name' => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $userConsentPolicyArticle->getId()]),
                         ],
                     ],
                 ],

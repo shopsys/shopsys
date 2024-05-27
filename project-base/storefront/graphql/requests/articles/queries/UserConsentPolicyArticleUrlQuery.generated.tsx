@@ -3,10 +3,10 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeCookiesArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeUserConsentPolicyArticleUrlQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeCookiesArticleUrlQuery = { __typename?: 'Query', cookiesArticle: { __typename?: 'ArticleSite', slug: string } | null };
+export type TypeUserConsentPolicyArticleUrlQuery = { __typename?: 'Query', userConsentPolicyArticle: { __typename?: 'ArticleSite', slug: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -90,14 +90,14 @@ export type TypeCookiesArticleUrlQuery = { __typename?: 'Query', cookiesArticle:
       export default result;
     
 
-export const CookiesArticleUrlQueryDocument = gql`
-    query CookiesArticleUrlQuery {
-  cookiesArticle {
+export const UserConsentPolicyArticleUrlQueryDocument = gql`
+    query UserConsentPolicyArticleUrlQuery {
+  userConsentPolicyArticle {
     slug
   }
 }
     `;
 
-export function useCookiesArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<TypeCookiesArticleUrlQueryVariables>, 'query'>) {
-  return Urql.useQuery<TypeCookiesArticleUrlQuery, TypeCookiesArticleUrlQueryVariables>({ query: CookiesArticleUrlQueryDocument, ...options });
+export function useUserConsentPolicyArticleUrlQuery(options?: Omit<Urql.UseQueryArgs<TypeUserConsentPolicyArticleUrlQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeUserConsentPolicyArticleUrlQuery, TypeUserConsentPolicyArticleUrlQueryVariables>({ query: UserConsentPolicyArticleUrlQueryDocument, ...options });
 };

@@ -1,7 +1,7 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
-import { useCookiesArticleUrlQuery } from 'graphql/requests/articles/queries/CookiesArticleUrlQuery.generated';
+import { useUserConsentPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/UserConsentPolicyArticleUrlQuery.generated';
 import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
@@ -18,8 +18,8 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const { t } = useTranslation();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
-    const [{ data: cookiesArticleUrlData }] = useCookiesArticleUrlQuery();
-    const cookiesArticleUrl = cookiesArticleUrlData?.cookiesArticle?.slug;
+    const [{ data: userConsentPolicyArticleUrlData }] = useUserConsentPolicyArticleUrlQuery();
+    const userConsentPolicyArticleUrl = userConsentPolicyArticleUrlData?.userConsentPolicyArticle?.slug;
     const userConsent = usePersistStore((store) => store.userConsent);
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
 
@@ -59,8 +59,8 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     i18nKey="cookiePolicyLink"
                     components={{
                         link:
-                            cookiesArticleUrl !== undefined ? (
-                                <a href={cookiesArticleUrl} rel="noreferrer" target="_blank" />
+                            userConsentPolicyArticleUrl !== undefined ? (
+                                <a href={userConsentPolicyArticleUrl} rel="noreferrer" target="_blank" />
                             ) : (
                                 <span />
                             ),

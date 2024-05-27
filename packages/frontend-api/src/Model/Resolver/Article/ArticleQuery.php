@@ -68,9 +68,9 @@ class ArticleQuery extends AbstractQuery
     /**
      * @return array
      */
-    public function cookiesArticleQuery(): array
+    public function userConsentPolicyArticleQuery(): array
     {
-        return $this->getSpecialArticle(Setting::COOKIES_ARTICLE_ID, 'cookies');
+        return $this->getSpecialArticle(Setting::USER_CONSENT_POLICY_ARTICLE_ID, 'user-consent-policy');
     }
 
     /**

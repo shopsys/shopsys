@@ -15,7 +15,7 @@ class Setting
     public const DEFAULT_PRICING_GROUP = 'defaultPricingGroupId';
     public const TERMS_AND_CONDITIONS_ARTICLE_ID = 'termsAndConditionsArticleId';
     public const PRIVACY_POLICY_ARTICLE_ID = 'privacyPolicyArticleId';
-    public const COOKIES_ARTICLE_ID = 'cookiesArticleId';
+    public const USER_CONSENT_POLICY_ARTICLE_ID = 'userConsentPolicyArticleId';
     public const DOMAIN_DATA_CREATED = 'domainDataCreated';
     public const FEED_HASH = 'feedHash';
     public const DEFAULT_UNIT = 'defaultUnitId';

@@ -864,6 +864,24 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### refactor the place order process ([#3084](https://github.com/shopsys/shopsys/pull/3084))
 
 -   see the specialized upgrade note in [upgrade-order-processing.md](./upgrade-order-processing.md)
+
+#### rename user-consent related code accordingly ([#3181](https://github.com/shopsys/shopsys/pull/3181))
+
+-   setting values in DB was renamed from `cookiesArticleId` to `userConsentPolicyArticleId` (via migration `Version20240527121326`)
+-   controller `Shopsys\FrameworkBundle\Controller\Admin\CookiesController` was renamed to `Shopsys\FrameworkBundle\Controller\Admin\UserConsentPolicyController`
+    -   route `/cookies/setting/` (`admin_cookies_setting`) was changed to `/user-consent-policy/setting/` (`admin_userconsentpolicy_setting`)
+    -   template `@ShopsysFramework/Admin/Content/Cookies/setting.html.twig` was moved to `@ShopsysFramework/Admin/Content/UserConsentPolicy/setting.html.twig`
+-   form type `Shopsys\FrameworkBundle\Form\Admin\Cookies\CookiesSettingFormType` was renamed to `Shopsys\FrameworkBundle\Form\Admin\UserConsentPolicy\UserConsentPolicySettingFormType`
+-   constant `Shopsys\FrameworkBundle\Component\Setting\Setting::COOKIES_ARTICLE_ID` was renamed to `Shopsys\FrameworkBundle\Component\Setting\Setting::USER_CONSENT_POLICY_ARTICLE_ID`
+-   class `Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade` was renamed to `Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade`
+    -   class no longer accepts `$environment` as a first argument in constructor
+    -   method `isCookiesConsentGiven()` was removed without a replacement
+    -   class is now strictly typed
+-   class `Shopsys\FrameworkBundle\Twig\CookiesExtension` was removed
+-   administrator roles `ROLE_COOKIES_FULL` and `ROLE_COOKIES_VIEW` were renamed to `ROLE_USER_CONSENT_POLICY_FULL` and `ROLE_USER_CONSENT_POLICY_VIEW`
+    -   roles are renamed in migration `Version20240527121326`
+-   graphql query `cookiesArticleQuery` was renamed to `userConsentPolicyArticleQuery`
+    -   method `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery::cookiesArticleQuery` was renamed to `userConsentPolicyArticleQuery`
 -   see #project-base-diff to update your project
 
 #### fix search testing blog article demo data ([#3182](https://github.com/shopsys/shopsys/pull/3182))

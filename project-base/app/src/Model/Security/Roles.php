@@ -86,8 +86,8 @@ class Roles extends BaseRoles
     public const ROLE_PERSONAL_DATA_FULL = 'ROLE_PERSONAL_DATA_FULL';
     public const ROLE_PERSONAL_DATA_VIEW = 'ROLE_PERSONAL_DATA_VIEW';
 
-    public const ROLE_COOKIES_FULL = 'ROLE_COOKIES_FULL';
-    public const ROLE_COOKIES_VIEW = 'ROLE_COOKIES_VIEW';
+    public const ROLE_USER_CONSENT_POLICY_FULL = 'ROLE_USER_CONSENT_POLICY_FULL';
+    public const ROLE_USER_CONSENT_POLICY_VIEW = 'ROLE_USER_CONSENT_POLICY_VIEW';
 
     public const ROLE_ADMINISTRATOR_FULL = 'ROLE_ADMINISTRATOR_FULL';
     public const ROLE_ADMINISTRATOR_VIEW = 'ROLE_ADMINISTRATOR_VIEW';
@@ -272,8 +272,8 @@ class Roles extends BaseRoles
                 self::ROLE_PERSONAL_DATA_VIEW => t('Personal data access pages setting - view'),
             ],
             [
-                self::ROLE_COOKIES_FULL => t('Cookies article setting - full'),
-                self::ROLE_COOKIES_VIEW => t('Cookies article setting - view'),
+                self::ROLE_USER_CONSENT_POLICY_FULL => t('User consent policy article setting - full'),
+                self::ROLE_USER_CONSENT_POLICY_VIEW => t('User consent policy article setting - view'),
             ],
             [
                 self::ROLE_ADMINISTRATOR_FULL => t('Administrators - full'),

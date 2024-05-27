@@ -271,15 +271,6 @@ msgstr "Hlavička Content-Security-Policy byla nastavena."
 msgid "Content-Security-Policy header setting"
 msgstr "Nastavení hlavičky Content-Security-Policy"
 
-msgid "Cookies article setting - full"
-msgstr "Informace o cookies - vše"
-
-msgid "Cookies article setting - view"
-msgstr "Informace o cookies - zobrazení"
-
-msgid "Cookies information"
-msgstr "Informace o cookies"
-
 msgid "Copy administrator role group"
 msgstr "Zkopírovat skupinu práv administrátora"
 
@@ -1335,6 +1326,15 @@ msgstr "Nahrát obrázek pro mobilní zařízení"
 
 msgid "Upload new image"
 msgstr "Nahrát nový obrázek"
+
+msgid "User consent policy"
+msgstr "Správa osobních údajů"
+
+msgid "User consent policy article setting - full"
+msgstr "Správa osobních údajů (nastavení článku) - vše"
+
+msgid "User consent policy article setting - view"
+msgstr "Správa osobních údajů (nastavení článku) - zobrazení"
 
 msgid "User translation"
 msgstr "Uživatelský překlad"

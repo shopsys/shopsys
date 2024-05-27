@@ -146,10 +146,10 @@ QueryDecorator:
                 type: 'ArticleSite'
                 resolve: "@=query('privacyPolicyArticleQuery')"
                 description: "Returns privacy policy article"
-            cookiesArticle:
+            userConsentPolicyArticle:
                 type: 'ArticleSite'
-                resolve: "@=query('cookiesArticleQuery')"
-                description: "Returns information about cookies article"
+                resolve: "@=query('userConsentPolicyArticleQuery')"
+                description: "Returns User consent policy article"
             ArticleSite:
                 type: "ArticleSite"
             ArticleLink:
