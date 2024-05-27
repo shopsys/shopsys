@@ -34,15 +34,6 @@ class ParameterGroupFacade
     }
 
     /**
-     * @param string[] $names
-     * @return \App\Model\Product\Parameter\ParameterGroup|null
-     */
-    public function findParameterGroupByNames(array $names): ?ParameterGroup
-    {
-        return $this->parameterRepository->findParameterGroupByNames($names);
-    }
-
-    /**
      * @param string $akeneoCode
      * @return \App\Model\Product\Parameter\ParameterGroup|null
      */

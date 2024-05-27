@@ -16,7 +16,7 @@ class ParameterFilterValidationTest extends GraphQlTestCase
 {
     public function testValuesNotSupportedForSliderType(): void
     {
-        $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY, Parameter::class);
+        $parameterSlider = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
@@ -44,7 +44,7 @@ class ParameterFilterValidationTest extends GraphQlTestCase
 
     public function testMinMaxNotSupportedForNonSliderType(): void
     {
-        $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), Parameter::class);
+        $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class);
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $slug = TransformString::stringToFriendlyUrlSlug($translatedName);

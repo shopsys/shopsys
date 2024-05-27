@@ -67,9 +67,6 @@ msgstr "2 l"
 msgid "2 litre coffeemakers in sale"
 msgstr "2 litrové kávovary v akci"
 
-msgid "2.0"
-msgstr "2.0"
-
 msgid "2000 DPI"
 msgstr "2000 DPI"
 
@@ -820,9 +817,6 @@ msgstr "Máte již za sebou první krůčky s digitálním fotoaparátem? Chcete
 msgid "Display"
 msgstr "Displej"
 
-msgid "Display Size"
-msgstr "Úhlopříčka displeje"
-
 msgid "Display size"
 msgstr "Velikost displeje"
 
@@ -1038,6 +1032,9 @@ msgstr "Karta je vyrobena z odolného materiálu a obsahuje přehledný návod n
 
 msgid "Heading"
 msgstr "Nadpis"
+
+msgid "Height"
+msgstr "Výška"
 
 msgid "Hello Kitty TV"
 msgstr "Hello Kitty TV"
@@ -1974,6 +1971,9 @@ msgstr "ZN-8009 napařovací žehlička Ferratte nerez 2200 W modrá"
 
 msgid "Zero rate"
 msgstr "Nulová sazba"
+
+msgid "Zoom"
+msgstr "Zoom"
 
 msgid "battery"
 msgstr "akumulátor"

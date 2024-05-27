@@ -146,35 +146,6 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
-     * @param string[] $namesByLocale
-     * @return \App\Model\Product\Parameter\ParameterGroup|null
-     */
-    public function findParameterGroupByNames(array $namesByLocale): ?ParameterGroup
-    {
-        $queryBuilder = $this->getParameterGroupRepository()->createQueryBuilder('pg');
-        $index = 0;
-
-        foreach ($namesByLocale as $locale => $name) {
-            $alias = 'pgt' . $index;
-            $localeParameterName = 'locale' . $index;
-            $nameParameterName = 'name' . $index;
-            $queryBuilder->join(
-                'pg.translations',
-                $alias,
-                Join::WITH,
-                'pg = ' . $alias . '.translatable
-                    AND ' . $alias . '.locale = :' . $localeParameterName . '
-                    AND ' . $alias . '.name = :' . $nameParameterName,
-            );
-            $queryBuilder->setParameter($localeParameterName, $locale);
-            $queryBuilder->setParameter($nameParameterName, $name);
-            $index++;
-        }
-
-        return $queryBuilder->getQuery()->getOneOrNullResult();
-    }
-
-    /**
      * @param string $akeneoCode
      * @return \App\Model\Product\Parameter\ParameterGroup|null
      */
