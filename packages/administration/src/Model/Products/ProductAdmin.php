@@ -6,6 +6,7 @@ namespace Shopsys\Administration\Model\Products;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\Administration\Component\Admin\AbstractAdmin;
+use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
@@ -20,6 +21,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Validator\Constraints\Image;
 
 class ProductAdmin extends AbstractAdmin
@@ -62,6 +64,13 @@ class ProductAdmin extends AbstractAdmin
                 ->add('name', LocalizedFullWidthType::class)
                 ->add('catnum')
                 ->add('ean')
+            ->add('orderingPriorityByDomainId', MultidomainType::class, [
+                'entry_type' => PercentType::class,
+                'entry_options' => [
+                    'required' => true,
+                ],
+                'label' => t('Sorting priority'),
+            ])
                 ->add('sellingDenied', YesNoType::class)
             ->end()
             ->with('Parameters')
