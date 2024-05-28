@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
@@ -11,7 +12,6 @@ use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
-use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\Unit\Unit;
 use DateTime;
@@ -47,7 +47,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \App\Model\Product\ProductDataFactory $productDataFactory
+     * @param \App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory $productDemoDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
@@ -59,7 +59,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly ProductFacade $productFacade,
         private readonly Domain $domain,
         private readonly PricingGroupFacade $pricingGroupFacade,
-        private readonly ProductDataFactory $productDataFactory,
+        private readonly ProductDemoDataFactory $productDemoDataFactory,
         private readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
         private readonly ParameterValueDataFactory $parameterValueDataFactory,
         private readonly PriceConverter $priceConverter,
@@ -76,8 +76,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
-        /** @var \App\Model\Product\ProductData $productData */
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9177759';
         $productData->partno = 'SLE 22F46DM4';
@@ -118,14 +117,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2891.7');
 
         $this->setSellingFrom($productData, '16.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 300);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
@@ -134,12 +130,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SENCOR);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176508';
         $productData->partno = '32PFL4308H';
@@ -166,23 +161,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '8173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5965879P';
         $productData->partno = '47LA790V';
@@ -210,23 +201,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '17843');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 800);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960453';
         $productData->partno = 'X-710BK';
@@ -259,23 +246,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '263.6');
 
         $this->setSellingFrom($productData, '9.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_A4TECH);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9510261';
         $productData->partno = 'ME440CS';
@@ -311,23 +294,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19000');
 
         $this->setSellingFrom($productData, '11.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_APPLE);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5966179';
         $productData->partno = 'PTH300';
@@ -349,14 +328,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1295');
 
         $this->setSellingFrom($productData, '25.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_PC]);
 
         $productData->sellingDenied = true;
@@ -364,7 +340,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '532564';
         $productData->partno = '6758B001';
@@ -385,23 +361,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
         $this->setSellingFrom($productData, '3.8.1999');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5964034';
         $productData->partno = '8596B047';
@@ -433,19 +405,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '24990');
 
         $this->setSellingFrom($productData, '3.2.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9184535';
         $productData->partno = '8331B006';
@@ -475,26 +444,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1314.1');
 
         $this->setSellingFrom($productData, '24.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9184449';
         $productData->partno = '8328B006';
@@ -523,26 +488,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '818');
 
         $this->setSellingFrom($productData, '22.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 0);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960105';
         $productData->partno = '43266';
@@ -567,23 +528,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5');
 
         $this->setSellingFrom($productData, '6.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_VERBATIM);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '176948';
         $productData->partno = 'DNS-327L';
@@ -596,22 +553,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2891.7');
 
         $this->setSellingFrom($productData, '4.1.2000');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_DLINK);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5990008';
         $productData->partno = '65480';
@@ -633,26 +586,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '98.3');
 
         $this->setSellingFrom($productData, '31.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_DEFENDER);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9771339';
         $productData->partno = 'ECAM 44.660 B';
@@ -676,23 +625,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19743.6');
 
         $this->setSellingFrom($productData, '20.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_DELONGHI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5962199';
         $productData->partno = '';
@@ -705,13 +650,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('This pot holder is used to hold pots. No more burnt kitchen tables!', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3');
 
         $this->setSellingFrom($productData, '13.2.2014');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
@@ -720,7 +662,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960139';
         $productData->partno = '31011039100';
@@ -743,23 +685,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '90.1');
 
         $this->setSellingFrom($productData, '10.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960550';
         $productData->partno = '31730946108';
@@ -782,24 +720,20 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '164.5');
 
         $this->setSellingFrom($productData, '1.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960549';
         $productData->partno = '31340021118';
@@ -823,23 +757,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '437.2');
 
         $this->setSellingFrom($productData, '11.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8456655';
         $productData->partno = '31730992101';
@@ -862,26 +792,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '180');
 
         $this->setSellingFrom($productData, '2.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960598';
         $productData->partno = 'GK-KM7580';
@@ -904,14 +830,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '429.8');
 
         $this->setSellingFrom($productData, '12.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -920,7 +843,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '718253';
         $productData->partno = 'B2L57C';
@@ -949,23 +872,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1238');
 
         $this->setSellingFrom($productData, '23.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 0);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HP);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9511043';
         $productData->partno = '99HZS017';
@@ -988,23 +907,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '8421.5');
 
         $this->setSellingFrom($productData, '10.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 0);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HTC);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9772572';
         $productData->partno = 'JURA Impressa J9 TFT Carbon';
@@ -1028,22 +943,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '49587.5');
 
         $this->setSellingFrom($productData, '19.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE, CategoryDataFixture::CATEGORY_PC]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_JURA);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '2565636';
         $productData->partno = '0';
@@ -1056,23 +967,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('A cable HDMI - HDMI AM / M 2 m gold-plated connector High Speed HDMI Cable with Ethernet 1.4 support 1080p FULL HD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '98');
 
         $this->setSellingFrom($productData, '5.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9890478';
         $productData->partno = '9788025117125';
@@ -1095,14 +1002,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '37');
 
         $this->setSellingFrom($productData, '27.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
@@ -1110,12 +1014,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9831504';
         $productData->partno = '9788072267361';
@@ -1138,22 +1041,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '37');
 
         $this->setSellingFrom($productData, '28.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9890274';
         $productData->partno = '9788025107805';
@@ -1176,23 +1075,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '44');
 
         $this->setSellingFrom($productData, '29.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9197872';
         $productData->partno = '9788000026336';
@@ -1221,22 +1116,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '56');
 
         $this->setSellingFrom($productData, '30.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9198277';
         $productData->partno = '9788025133484';
@@ -1249,23 +1140,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Have you ever experienced an accident and didn\'t know how to react? Or are you going to? This book is just for you!', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '28');
 
         $this->setSellingFrom($productData, '26.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981018';
         $productData->partno = '8808992086758';
@@ -1295,22 +1182,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1644');
 
         $this->setSellingFrom($productData, '6.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 440);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9680315';
         $productData->partno = '980-000010';
@@ -1333,26 +1216,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '263.6');
 
         $this->setSellingFrom($productData, '4.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LOGITECH);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960072';
         $productData->partno = 'P58-00059';
@@ -1376,14 +1255,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '231.5');
 
         $this->setSellingFrom($productData, '8.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -1392,7 +1268,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5961383';
         $productData->partno = '6932011296018';
@@ -1405,23 +1281,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Toilet paper with Euro pictures. Even you can feel rich now!', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '10');
 
         $this->setSellingFrom($productData, '14.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 1);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5961384';
         $productData->partno = '';
@@ -1434,23 +1306,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Cyklocomputer – cyklonavigation with preset maps, color display 3", training programmes, WiFi', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '0');
 
         $this->setSellingFrom($productData, '2.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8980681';
         $productData->partno = '1318206';
@@ -1480,23 +1348,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '67771.9');
 
         $this->setSellingFrom($productData, '21.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '539888';
         $productData->partno = 'V4571510E000';
@@ -1509,14 +1373,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery lif.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1268.7');
 
         $this->setSellingFrom($productData, '1.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -1525,7 +1386,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5402881';
         $productData->partno = 'V108060WE000';
@@ -1553,23 +1414,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
         $this->setSellingFrom($productData, '1.1.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_OLYMPUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5965907';
         $productData->partno = 'DMC FT5EP-K';
@@ -1601,19 +1458,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '8385');
 
         $this->setSellingFrom($productData, '1.2.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5960585';
         $productData->partno = 'PC-AD23DGLASS';
@@ -1626,23 +1480,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Red and green paper glasses for watching ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '15.7');
 
         $this->setSellingFrom($productData, '13.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9624190';
         $productData->partno = '8595159809694';
@@ -1655,23 +1505,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('This luminiscent tape might prevent you from dying.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2');
 
         $this->setSellingFrom($productData, '12.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '4125523';
         $productData->partno = 'ROC-11-710';
@@ -1695,22 +1541,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1562');
 
         $this->setSellingFrom($productData, '7.1.2000');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981612';
         $productData->partno = 'SM-G355HZKNETL';
@@ -1735,23 +1577,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4124');
 
         $this->setSellingFrom($productData, '8.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 0);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981055';
         $productData->partno = 'G3500ZWAETL';
@@ -1776,22 +1614,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3876');
 
         $this->setSellingFrom($productData, '7.2.2014');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9773676';
         $productData->partno = 'UE75HU7500';
@@ -1814,23 +1648,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '140486.8');
 
         $this->setSellingFrom($productData, '18.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9178302';
         $productData->partno = '4002M4';
@@ -1854,23 +1684,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '577.7');
 
         $this->setSellingFrom($productData, '17.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SENCOR);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5963470';
         $productData->partno = '';
@@ -1894,22 +1720,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '14537');
 
         $this->setSellingFrom($productData, '5.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9142035';
         $productData->partno = '561392';
@@ -1922,13 +1744,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Cap with air conditioning, convenient for hot days.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '136.9');
 
         $this->setSellingFrom($productData, '16.2.2014');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
@@ -1937,7 +1756,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5964356';
         $productData->partno = 'DSCRX100.CEE8';
@@ -1950,23 +1769,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Digital Camera CMOS Exmor R1 20.2 megapixel, 3.6x zoom', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '12989');
 
         $this->setSellingFrom($productData, '2.6.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SONY);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9882324P';
         $productData->partno = '1272-2537';
@@ -1988,23 +1803,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4371.9');
 
         $this->setSellingFrom($productData, '9.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SONY);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5961201';
         $productData->partno = '';
@@ -2017,22 +1828,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Fluorescent green laces. Visible at any condition.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '15');
 
         $this->setSellingFrom($productData, '15.2.2014');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '4122531';
         $productData->partno = '53082';
@@ -2045,23 +1852,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('This product is not an independently functional unit and may require professional installation.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1268.7');
 
         $this->setSellingFrom($productData, '3.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 140);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_VERBATIM);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9771195';
         $productData->partno = '1005WH';
@@ -2082,22 +1885,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '189.3');
 
         $this->setSellingFrom($productData, '3.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176544';
         $productData->partno = '32PFL4308I';
@@ -2125,23 +1924,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176588';
         $productData->partno = '32PFL4308J';
@@ -2167,23 +1962,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '10173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5965879B';
         $productData->partno = '47LA790W';
@@ -2208,23 +1999,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19843');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 80);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9774523';
         $productData->partno = 'LT-823 C82B';
@@ -2237,14 +2024,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6490');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -2253,7 +2037,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700667';
         $productData->partno = '22MT44D';
@@ -2278,14 +2062,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -2294,7 +2075,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700668';
         $productData->partno = '22MT44E';
@@ -2319,23 +2100,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981435';
         $productData->partno = 'LT27D590EW';
@@ -2360,23 +2137,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5199');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981438';
         $productData->partno = 'LT27D590EX';
@@ -2401,23 +2174,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5399');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9510540';
         $productData->partno = 'UMNP000883';
@@ -2430,23 +2199,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Xtreamer SW4 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2390');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5965879C';
         $productData->partno = '58LA790W';
@@ -2459,14 +2224,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '20159');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 80);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -2475,7 +2237,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9774524';
         $productData->partno = 'LT-823 C82C';
@@ -2488,23 +2250,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '7290');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_ORAVA);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700677';
         $productData->partno = '22MT44A';
@@ -2530,23 +2288,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4899');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700669';
         $productData->partno = '22MT44F';
@@ -2572,23 +2326,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5999');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981437';
         $productData->partno = 'LT27D590EY';
@@ -2601,23 +2351,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6199');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '18981438';
         $productData->partno = 'LT27D590EZ';
@@ -2630,23 +2376,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6399');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9510541';
         $productData->partno = 'UMNP000884';
@@ -2659,23 +2401,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Xtreamer SW5 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2490');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176544M';
         $productData->partno = '32PFL4308';
@@ -2688,22 +2426,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176544MF';
         $productData->partno = 'FLO242-PRI';
@@ -2728,19 +2462,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '8.3');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10000000);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176544MG';
         $productData->partno = 'FLO242-PRJ';
@@ -2752,23 +2483,20 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Aquila Aquagym non-carbonated spring water, description.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '12.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 75);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_CUBIC_METERS);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176544MS';
         $productData->partno = 'TIC100';
@@ -2792,23 +2520,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('No Obligations', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '100');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100000);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176544M3';
         $productData->partno = 'CAB-13';
@@ -2834,19 +2558,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '61.9');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100000);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176554';
         $productData->partno = '32PFL4360';
@@ -2871,23 +2592,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176578';
         $productData->partno = 'T27D590EY';
@@ -2913,23 +2630,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700768';
         $productData->partno = 'T27D590EY';
@@ -2954,14 +2667,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -2970,7 +2680,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700769';
         $productData->partno = '22MT44D';
@@ -2996,23 +2706,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700777';
         $productData->partno = '22HD44D';
@@ -3033,14 +2739,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4899');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
@@ -3049,7 +2752,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700769Z';
         $productData->partno = '22HD44D';
@@ -3070,23 +2773,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5999');
 
         $this->setSellingFrom($productData, '16.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981537';
         $productData->partno = 'T27D590EY';
@@ -3112,23 +2811,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6199');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8981538';
         $productData->partno = 'T27D590EZ';
@@ -3154,23 +2849,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6399');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '32PFL4400';
         $productData->partno = '32PFL4400';
@@ -3183,22 +2874,18 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '9.1.2000');
-        $this->setSellingTo($productData, null);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '7700769XCX';
         $productData->partno = '22HD44D';
@@ -3211,23 +2898,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5999');
 
         $this->setSellingFrom($productData, '16.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '532565';
         $productData->partno = '6758B001';
@@ -3240,14 +2923,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
         $this->setSellingFrom($productData, '11.2.2320');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
@@ -3255,12 +2935,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5964035';
         $productData->partno = '8596B047';
@@ -3295,7 +2974,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setSellingTo($productData, '25.1.2015');
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
@@ -3303,12 +2981,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5402880';
         $productData->partno = 'V108060WE000';
@@ -3336,23 +3013,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
         $this->setSellingFrom($productData, '3.8.1999');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '5965908';
         $productData->partno = 'DMC FT5EP-K';
@@ -3384,19 +3057,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '2000');
 
         $this->setSellingFrom($productData, '3.2.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 500);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '1532564';
         $productData->partno = '6758B001';
@@ -3417,23 +3087,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
         $this->setSellingFrom($productData, '3.8.1999');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '15964035';
         $productData->partno = '8596B047';
@@ -3465,19 +3131,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllPricingGroups($productData, '24990');
 
         $this->setSellingFrom($productData, '3.2.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 100);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '15402889';
         $productData->partno = 'V108060WE000';
@@ -3505,23 +3168,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
         $this->setSellingFrom($productData, '1.1.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_DE]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_OLYMPUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '16402880';
         $productData->partno = 'V108060WE111';
@@ -3549,23 +3208,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
         $this->setSellingFrom($productData, '3.8.1999');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'tk9710';
         $productData->partno = '8594049730544';
@@ -3578,23 +3233,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '449');
 
         $this->setSellingFrom($productData, '24.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 5050);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ns9020';
         $productData->partno = '8594049730575';
@@ -3607,23 +3258,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Limpio VP 9020/21', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '119');
 
         $this->setSellingFrom($productData, '22.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 5335);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ns9030';
         $productData->partno = '8594049730568';
@@ -3636,23 +3283,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '119');
 
         $this->setSellingFrom($productData, '6.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 878);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ns9040';
         $productData->partno = '8594049730551';
@@ -3665,23 +3308,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Jumbo VP 9', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '149');
 
         $this->setSellingFrom($productData, '4.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 9877);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ns9710';
         $productData->partno = '8594049730582';
@@ -3694,23 +3333,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Prominent VP 9711/12/13', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '159');
 
         $this->setSellingFrom($productData, '31.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 65444);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290043';
         $productData->partno = '';
@@ -3721,23 +3356,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Winch throttle silver VP-9711/12', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '32');
 
         $this->setSellingFrom($productData, '20.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 798);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290047';
         $productData->partno = '';
@@ -3750,23 +3381,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Tube type: Universal. Diameter: 32mm.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
         $this->setSellingFrom($productData, '13.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 54);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290050';
         $productData->partno = '8594049731732';
@@ -3777,23 +3404,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter VP-9711/12', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '269');
 
         $this->setSellingFrom($productData, '10.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 78);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44291501';
         $productData->partno = '';
@@ -3804,23 +3427,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Reducing the diameter of 35 mm to 32 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '85');
 
         $this->setSellingFrom($productData, '23.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 48);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'opv3260';
         $productData->partno = '8594049735587';
@@ -3833,23 +3452,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t(' The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3290');
 
         $this->setSellingFrom($productData, '10.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 48);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'opp2060';
         $productData->partno = '8594049735594';
@@ -3862,23 +3477,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The minimum space requirements excels sub-mounting range hood OPP-2060th', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2990');
 
         $this->setSellingFrom($productData, '19.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 48);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990002';
         $productData->partno = '8594049737383';
@@ -3891,23 +3502,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('295 x 240 x 15 mm <br /> cartridge with active carbon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
         $this->setSellingFrom($productData, '5.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 489);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'POScook_book_CZ';
         $productData->partno = 'POScook_book_CZ';
@@ -3920,23 +3527,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
         $this->setSellingFrom($productData, '27.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 48);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990003';
         $productData->partno = '8594049737390';
@@ -3949,23 +3552,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('240 x 205 x 15 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
         $this->setSellingFrom($productData, '28.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 4894);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990004';
         $productData->partno = '8594049737437';
@@ -3978,23 +3577,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('310 x 285 x 15 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '349');
 
         $this->setSellingFrom($productData, '29.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 878);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990006';
         $productData->partno = '8594049737444';
@@ -4007,23 +3602,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('220 x 250 x 9 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '599');
 
         $this->setSellingFrom($productData, '30.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 9877);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990007';
         $productData->partno = '8594049737451';
@@ -4036,23 +3627,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('320 x 300 x 10 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '399');
 
         $this->setSellingFrom($productData, '26.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 65444);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990008';
         $productData->partno = '8594049737468';
@@ -4065,23 +3652,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('495 x 200 x 8 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
         $this->setSellingFrom($productData, '6.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 798);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990013';
         $productData->partno = '';
@@ -4092,23 +3675,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Reduction Avg. OPK OPO 150/120 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '382');
 
         $this->setSellingFrom($productData, '4.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 54);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'sdv3460';
         $productData->partno = '8594049735754';
@@ -4120,23 +3699,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6990');
 
         $this->setSellingFrom($productData, '8.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 78);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '62790165';
         $productData->partno = '';
@@ -4147,23 +3722,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Side mount plates - few ETV-2860', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
         $this->setSellingFrom($productData, '14.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 8878);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '62790168';
         $productData->partno = '';
@@ -4176,23 +3747,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('440 x 345 x 40 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
         $this->setSellingFrom($productData, '2.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 54);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '62790149';
         $productData->partno = '';
@@ -4203,23 +3770,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Slicer Pizza ETV-2860', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '49');
 
         $this->setSellingFrom($productData, '21.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 648);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290821';
         $productData->partno = '8594049736577';
@@ -4230,23 +3793,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter SF-9161 / SF-8210', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
         $this->setSellingFrom($productData, '1.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 8744);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290820';
         $productData->partno = '';
@@ -4257,23 +3816,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Filter input VP-9161 / SF-9162 / SF-8210', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '29');
 
         $this->setSellingFrom($productData, '1.1.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 648);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44291504';
         $productData->partno = '';
@@ -4284,23 +3839,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Floor nozzle metal yellow VP-9141ye', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
         $this->setSellingFrom($productData, '1.2.2013');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 86);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'sdv3360';
         $productData->partno = '8594049736201';
@@ -4313,23 +3864,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Enjoy quick cooking with special cooking HI-LIGHT zones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5990');
 
         $this->setSellingFrom($productData, '13.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 78);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'opp1060';
         $productData->partno = '8594049736270';
@@ -4341,23 +3888,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<h2> Specifications: </h2> <ul> <li> Height: 140 mm </li> <li> Width: 600 mm </li> <li> Depth: 470 mm </li> <li> Accessories: backflow preventer </li> <li> White execution </li> <li> Top towing - the possibility of recirculation </li> <li> Controls - slider slider </li> <li> 3 levels of performance </li> <li> Max. Performance: 185 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> Textile grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 1x textile filter 61990026, 1x carbon filter 61990028 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Net weight: 4 , 5 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 1.5 m </li> </ul>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1290');
 
         $this->setSellingFrom($productData, '12.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 878);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '42390452';
         $productData->partno = '8594049736386';
@@ -4368,23 +3911,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Coarse grater blade RM-3240/3250', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '179');
 
         $this->setSellingFrom($productData, '7.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 787);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '42390453';
         $productData->partno = '8594049736362';
@@ -4395,23 +3934,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Knife potato RM-3240/3250', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '259');
 
         $this->setSellingFrom($productData, '8.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 77);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990047';
         $productData->partno = '8594049737581';
@@ -4423,23 +3958,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('255 x 255 x 15', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '369');
 
         $this->setSellingFrom($productData, '7.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 7);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44291567';
         $productData->partno = '';
@@ -4450,23 +3981,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Hose VP-9310', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '289');
 
         $this->setSellingFrom($productData, '18.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 9);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44291569';
         $productData->partno = '';
@@ -4477,23 +4004,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Floor nozzle metal VP-9310', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
         $this->setSellingFrom($productData, '17.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 78);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '42390545';
         $productData->partno = '';
@@ -4504,23 +4027,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Extension rod plastic TM-4610', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '149');
 
         $this->setSellingFrom($productData, '5.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 54);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'zn8009';
         $productData->partno = '8594049735839';
@@ -4532,23 +4051,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<h2>Steam iron Concept ZN8009 wattage 2200 Watt security system AUTO - SHUT OFF lets much easier and more convenient ironing. </h2> Its other advantage is easy operation and many other practical functions and features, such as 3 m long supply cable through which you will not have to move ironing. Specifications: <ul> <li> Stainless steel soleplate </li><li> Even steam dosage: 20 g / min </li><li> Auto-off function AUTO SHUT-OFF Audible : turn off after 30 seconds in horizontal position and after 8 minutes in the vertical position irons </li><li> The water tank: 300 ml </li><li> Airbrush </li><li> The anti-drip ANTI-DRIP </li><li> Self-cleaning function Self Clean </li><li> The descaling function ANTI-CALC </li><li> Vertical steam </li><li> Notification light </li><li> Thermostat </li><li> 3 m power cable (with swivel 360 °) </li><li> Color: blue + silver </li><li> Power consumption: 2200 W </li><li> Voltage: 230 V </li> </ul> <br/>Accessories: container to refill their water', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '999');
 
         $this->setSellingFrom($productData, '16.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 12);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990022';
         $productData->partno = '8594049737499';
@@ -4561,23 +4076,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('480 x 310 x 10 mm. The filter is a need to adjust the scissors to cover the entire surface of the grease filter.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '399');
 
         $this->setSellingFrom($productData, '2.6.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 351);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ts9080';
         $productData->partno = '';
@@ -4590,23 +4101,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '89');
 
         $this->setSellingFrom($productData, '9.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 654);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990028';
         $productData->partno = '8594049737529';
@@ -4619,23 +4126,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('310 x 480 x 10', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '399');
 
         $this->setSellingFrom($productData, '15.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 83);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'SprejNerez';
         $productData->partno = '4039286802721';
@@ -4647,23 +4150,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
         $this->setSellingFrom($productData, '3.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 78);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'SprejSklo';
         $productData->partno = '4019786908147';
@@ -4675,23 +4174,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<p> A perfectly clean glass ceramic cooktop without leaving stains and does not endanger the environment. </p><br /> <ul> <li> <strong> remove </strong> leftover food, grease, nicotine coating and many other impurities </li><li> <strong> does not harm </strong> rubber and plastics </li><li> <strong> does not </strong> AOX - Adsorbable organic halogens </li><li> biologically <strong> degradable </strong> by OECD </li></ul><br />', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
         $this->setSellingFrom($productData, '3.2.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 8);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '61990030';
         $productData->partno = '8594049737543';
@@ -4703,23 +4198,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('295 x 245 x 15 mm <br /> cartridge with active carbon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '369');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 9);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290823';
         $productData->partno = '8594049736584';
@@ -4730,23 +4221,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter VP-9241', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 879);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44291542';
         $productData->partno = '';
@@ -4757,23 +4244,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Crevice nozzle VP-4290', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '89');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 98);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44291543';
         $productData->partno = '';
@@ -4784,23 +4267,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Nozzle with brush VP-4290', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '138');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 654);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290845';
         $productData->partno = '';
@@ -4811,23 +4290,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Hose VP-9241', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '289');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 3524);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290872';
         $productData->partno = '';
@@ -4838,23 +4313,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Telescopic metal pipes VP-9161', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 78);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ts9170';
         $productData->partno = '';
@@ -4865,23 +4336,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('TS-9170 replacement bag for textile VP-9171', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '169');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 789);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290851';
         $productData->partno = '8594049736591';
@@ -4892,23 +4359,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter CN-9240 (VP-9241)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 564);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'ns9310';
         $productData->partno = '8594049736645';
@@ -4921,23 +4384,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT INFANT VP 9310th Package: 5 pieces of bags + 2.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '119');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 456);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = 'sms9170';
         $productData->partno = '8594049736638';
@@ -4950,23 +4409,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('fits into VP812x VP9520', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
         }
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '149');
 
         $this->setSellingFrom($productData, '14.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 456);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290852';
         $productData->partno = '8594049736639';
@@ -4995,23 +4450,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19990');
 
         $this->setSellingFrom($productData, '14.1.2001');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 457);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '44290853';
         $productData->partno = '8594049736639';
@@ -5040,23 +4491,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19990');
 
         $this->setSellingFrom($productData, '14.1.2001');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 457);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9184536';
         $productData->partno = '8331B006';
@@ -5085,26 +4532,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1314.1');
 
         $this->setSellingFrom($productData, '24.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 0);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9184440';
         $productData->partno = '8328B006';
@@ -5133,26 +4576,22 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '818');
 
         $this->setSellingFrom($productData, '22.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 459);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '718254';
         $productData->partno = 'B2L57C';
@@ -5181,23 +4620,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1238');
 
         $this->setSellingFrom($productData, '23.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 460);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HP);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '8980686';
         $productData->partno = '1318206';
@@ -5226,23 +4661,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '67771.9');
 
         $this->setSellingFrom($productData, '21.1.2014');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 200);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, null);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '9176522';
         $productData->partno = '32PFL4308J';
@@ -5268,23 +4699,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '30173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '917652236';
         $productData->partno = '32PFL4308J';
@@ -5310,23 +4737,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '30173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '917652254';
         $productData->partno = '32PFL4308J';
@@ -5352,23 +4775,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '40173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '91765223';
         $productData->partno = '32PFL4308J';
@@ -5394,23 +4813,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '30173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '91765542';
         $productData->partno = '32PFL4360';
@@ -5435,23 +4850,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDataFactory->create();
+        $productData = $this->productDemoDataFactory->createDefaultData();
 
         $productData->catnum = '91765782';
         $productData->partno = 'T27D590EY';
@@ -5477,18 +4888,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
         $this->setSellingFrom($productData, '15.1.2000');
-        $this->setSellingTo($productData, null);
         $this->setStocksQuantity($productData, 10);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
