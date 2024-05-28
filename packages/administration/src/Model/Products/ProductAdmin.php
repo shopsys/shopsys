@@ -22,6 +22,7 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Image;
 
 class ProductAdmin extends AbstractAdmin
@@ -62,7 +63,12 @@ class ProductAdmin extends AbstractAdmin
         $product = $this->getSubject();
         $form->with('Basic information')
                 ->add('name', LocalizedFullWidthType::class)
-                ->add('catnum')
+                ->add('catnum', TextType::class, [
+                    'attr' => [
+                        'icon' => true,
+                        'iconTitle' => t('Whatever man'),
+                    ],
+                ])
                 ->add('ean')
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
                 'entry_type' => PercentType::class,

@@ -11,6 +11,7 @@ sonata_admin:
     templates:
         layout: '@ShopsysAdministration/standard_layout.html.twig'
         form_theme:
+            - '@ShopsysFramework/Admin/Form/theme.html.twig'
             - '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
 
 sonata_block:
