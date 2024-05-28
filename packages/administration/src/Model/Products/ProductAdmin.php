@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFo
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -95,6 +96,14 @@ class ProductAdmin extends AbstractAdmin
                 'entity' => $product,
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
                 'label' => t('Images'),
+            ])
+            ->end()
+            ->with('accessories')
+            ->add('accessories', ProductsType::class, [
+                'required' => false,
+                'main_product' => $product,
+                'sortable' => true,
+                'label' => t('Accessories'),
             ])
             ->end();
 
