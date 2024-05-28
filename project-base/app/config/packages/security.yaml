@@ -179,6 +179,9 @@ security:
             guard:
                 authenticators:
                     - Shopsys\Administration\Component\Security\AdminLoginAuthenticator
+            two_factor:
+                auth_form_path: 2fa_login_new   # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check_new  # The route name you have used in the routes.yaml
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
             pattern: ^/(%admin_url%/|efconnect|elfinder)
@@ -217,6 +220,9 @@ security:
                 - App\FrontendApi\Model\Token\TokenAuthenticator
 
     access_control:
+        - { path: ^/%admin_url%-new/logout, role: PUBLIC_ACCESS }
+        # This ensures that the form can only be accessed when two-factor authentication is in progress.
+        - { path: ^/%admin_url%-new/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: ^/%admin_url%-new/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%-new/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%-new/, role: [ ROLE_ADMIN, ROLE_SONATA_ADMIN ] }

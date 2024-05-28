@@ -5,3 +5,11 @@
 
 2fa_login_check:
     path: /%admin_url%/2fa_check
+
+2fa_login_new:
+    path: /%admin_url%-new/2fa
+    defaults:
+        _controller: "scheb_two_factor.form_controller::form"
+
+2fa_login_check_new:
+    path: /%admin_url%-new/2fa_check

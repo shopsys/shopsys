@@ -24,6 +24,7 @@
         - ./packages/framework/assets/node_modules/*
         - ./project-base/app/config/cron.yaml
         - ./project-base/app/config/packages/security.yaml
+        - ./project-base/app/config/routes/scheb_2fa.yaml
         - ./project-base/app/node_modules/*
         - ./project-base/app/var/*
         - ./project-base/storefront/*

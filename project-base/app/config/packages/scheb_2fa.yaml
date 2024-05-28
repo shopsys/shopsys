@@ -16,3 +16,4 @@ scheb_two_factor:
         window: 1
     security_tokens:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+        - Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken
