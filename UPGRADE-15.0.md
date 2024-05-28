@@ -1037,6 +1037,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### product data fixture refactoring ([#3187](https://github.com/shopsys/shopsys/pull/3187))
+
+-   There was some unnecessary repeating in product data fixtures - it is now simplified in places where it made sense for project base purposes.
+-   `ProductDemoDataFactory` class was added as a foundation for creating demo data templates for certain groups of products that has a lot of common data which is not very applicable for project base demo data but could be in real projects.
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
