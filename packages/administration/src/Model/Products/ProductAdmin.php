@@ -9,14 +9,17 @@ use Shopsys\Administration\Component\Admin\AbstractAdmin;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ProductAdmin extends AbstractAdmin
 {
@@ -52,6 +55,8 @@ class ProductAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $form): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
+        $product = $this->getSubject();
         $form->with('Basic information')
                 ->add('name', LocalizedFullWidthType::class)
                 ->add('catnum')
@@ -73,6 +78,24 @@ class ProductAdmin extends AbstractAdmin
                     'edit' => 'inline',
                     'inline' => 'table',
                 ])
+            ->end()
+            ->with('images')
+            ->add('images', ImageUploadType::class, [
+                'required' => false,
+                'image_entity_class' => Product::class,
+                'file_constraints' => [
+                    new Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'entity' => $product,
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'label' => t('Images'),
+            ])
             ->end();
 
         $form

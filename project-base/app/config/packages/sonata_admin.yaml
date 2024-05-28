@@ -1,9 +1,4 @@
 sonata_admin:
-    assets:
-        extra_javascripts:
-            - bundles/shopsysadmin/js/admin.js
-        extra_stylesheets:
-            - bundles/shopsysadmin/css/admin.css
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
@@ -13,6 +8,10 @@ sonata_admin:
     show_mosaic_button: false
     title: 'Shopsys Platform admin'
     title_logo: public/admin/images/logo.svg
+    templates:
+        layout: '@ShopsysAdministration/standard_layout.html.twig'
+        form_theme:
+            - '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
 
 sonata_block:
     blocks:
