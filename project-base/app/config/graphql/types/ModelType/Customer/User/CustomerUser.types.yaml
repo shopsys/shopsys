@@ -8,13 +8,13 @@ CustomerUser:
     config:
         fields:
             street:
-                type: "String!"
+                type: "String"
                 description: "Billing address street name"
             city:
-                type: "String!"
+                type: "String"
                 description: "Billing address city name"
             postcode:
-                type: "String!"
+                type: "String"
                 description: "Billing address zip code"
             country:
                 type: "Country!"

@@ -82,22 +82,25 @@ const mapCurrentCustomerContactInformationApiData = (
 
     return {
         ...apiCurrentCustomerUserData,
+        firstName: apiCurrentCustomerUserData.firstName ?? '',
+        lastName: apiCurrentCustomerUserData.lastName ?? '',
+        street: apiCurrentCustomerUserData.street ?? '',
+        city: apiCurrentCustomerUserData.city ?? '',
+        postcode: apiCurrentCustomerUserData.postcode ?? '',
         companyName:
-            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.companyName !== null
+            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerUserData.companyName
                 ? apiCurrentCustomerUserData.companyName
                 : '',
         companyNumber:
-            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.companyNumber !== null
+            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerUserData.companyNumber
                 ? apiCurrentCustomerUserData.companyNumber
                 : '',
         companyTaxNumber:
             apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.companyTaxNumber !== null
+            apiCurrentCustomerUserData.companyTaxNumber
                 ? apiCurrentCustomerUserData.companyTaxNumber
                 : '',
-        telephone: apiCurrentCustomerUserData.telephone !== null ? apiCurrentCustomerUserData.telephone : '',
+        telephone: apiCurrentCustomerUserData.telephone ?? '',
         country: {
             value: apiCurrentCustomerUserData.country.code,
             label: apiCurrentCustomerUserData.country.name,

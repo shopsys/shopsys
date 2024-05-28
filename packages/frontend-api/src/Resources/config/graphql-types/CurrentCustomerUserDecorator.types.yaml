@@ -8,10 +8,10 @@ CurrentCustomerUserDecorator:
                 type: "Uuid!"
                 description: "UUID"
             firstName:
-                type: "String!"
+                type: "String"
                 description: "First name"
             lastName:
-                type: "String!"
+                type: "String"
                 description: "Last name"
             email:
                 type: "String!"
