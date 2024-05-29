@@ -1168,3 +1168,5 @@ We want to implement more usable UI design which will be better base for upcomin
 -   make sure you add the blackout everywhere where your snapshots contain simple navigation with images
 
 #### removed invalid cache invalidation when adding to product list ([#3172](https://github.com/shopsys/shopsys/pull/3172))
+
+#### bump versions of SF packages to fix security issues([#3191](https://github.com/shopsys/shopsys/pull/3191))
