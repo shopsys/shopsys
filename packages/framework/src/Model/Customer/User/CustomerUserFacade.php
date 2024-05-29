@@ -162,7 +162,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    protected function edit(
+    public function edit(
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
         ?DeliveryAddress $deliveryAddress = null,

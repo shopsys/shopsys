@@ -119,13 +119,7 @@ services:
 
     App\Model\Customer\User\RegistrationDataFactory: ~
 
-    App\Model\Customer\User\RegistrationDataFactoryInterface:
-        alias: App\Model\Customer\User\RegistrationDataFactory
-
     App\Model\Customer\User\RegistrationFacade: ~
-
-    App\Model\Customer\User\RegistrationFacadeInterface:
-        alias: App\Model\Customer\User\RegistrationFacade
 
     App\Model\LanguageConstant\LanguageConstantFacade:
         arguments:
@@ -370,6 +364,12 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
         alias: App\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory:
+        alias: App\Model\Customer\User\RegistrationDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade:
+        alias: App\Model\Customer\User\RegistrationFacade
 
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade

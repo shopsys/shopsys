@@ -110,10 +110,15 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
             $order,
             $billingAddress,
         );
-        $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
-            $order,
-            $deliveryAddress,
-        );
+
+        $transport = $order->getTransport();
+
+        if (!$transport->isPersonalPickup()) {
+            $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
+                $order,
+                $deliveryAddress,
+            );
+        }
 
         return $customerUserUpdateData;
     }
@@ -128,7 +133,6 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 
         if ($billingAddress->getStreet() === null) {
-            $billingAddressData->companyCustomer = $order->getCompanyNumber() !== null;
             $billingAddressData->companyName = $order->getCompanyName();
             $billingAddressData->companyNumber = $order->getCompanyNumber();
             $billingAddressData->companyTaxNumber = $order->getCompanyTaxNumber();
@@ -168,5 +172,39 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         }
 
         return $deliveryAddressData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationData $registrationData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     */
+    public function createFromRegistrationData(RegistrationData $registrationData): CustomerUserUpdateData
+    {
+        $billingAddressData = $this->billingAddressDataFactory->create();
+        $billingAddressData->city = $registrationData->city;
+        $billingAddressData->street = $registrationData->street;
+        $billingAddressData->postcode = $registrationData->postcode;
+        $billingAddressData->country = $registrationData->country;
+        $billingAddressData->companyCustomer = $registrationData->companyCustomer;
+        $billingAddressData->companyName = $registrationData->companyName;
+        $billingAddressData->companyNumber = $registrationData->companyNumber;
+        $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
+        $billingAddressData->activated = $registrationData->activated;
+
+        $customerUserData = $this->customerUserDataFactory->createForDomainId($registrationData->domainId);
+        $customerUserData->createdAt = $registrationData->createdAt;
+        $customerUserData->email = $registrationData->email;
+        $customerUserData->lastName = $registrationData->lastName;
+        $customerUserData->password = $registrationData->password;
+        $customerUserData->firstName = $registrationData->firstName;
+        $customerUserData->telephone = $registrationData->telephone;
+        $customerUserData->newsletterSubscription = $registrationData->newsletterSubscription;
+
+        $customerUserUpdateData = $this->create();
+        $customerUserUpdateData->billingAddressData = $billingAddressData;
+        $customerUserUpdateData->customerUserData = $customerUserData;
+        $customerUserUpdateData->sendRegistrationMail = $registrationData->activated;
+
+        return $customerUserUpdateData;
     }
 }

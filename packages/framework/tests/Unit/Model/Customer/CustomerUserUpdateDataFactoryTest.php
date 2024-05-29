@@ -43,6 +43,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             'companyNumber',
             'companyTaxNumber',
         );
+        $order->addItem(TestOrderProvider::createOrderTransport($order));
 
         $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder(
             $customerUser,
@@ -80,6 +81,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
             'companyNumber',
             'companyTaxNumber',
         );
+        $order->addItem(TestOrderProvider::createOrderTransport($order));
 
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->addressFilled = true;

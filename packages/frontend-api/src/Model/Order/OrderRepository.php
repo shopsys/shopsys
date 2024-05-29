@@ -6,8 +6,8 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 
 class OrderRepository
 {
@@ -70,7 +70,7 @@ class OrderRepository
         $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);
 
         if ($order === null) {
-            throw new OrderNotFoundException(sprintf(
+            throw new OrderNotFoundUserError(sprintf(
                 'Order with UUID \'%s\' not found.',
                 $uuid,
             ));
@@ -111,5 +111,37 @@ class OrderRepository
             ->setParameter('customerUser', $customerUser)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @param string $orderNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
+    {
+        $order = $this->findByOrderNumberAndCustomerUser($orderNumber, $customerUser);
+
+        if ($order === null) {
+            throw new OrderNotFoundUserError(sprintf(
+                'Order with order number \'%s\' not found.',
+                $orderNumber,
+            ));
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param string $orderNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
+     */
+    protected function findByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): ?Order
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.number = :orderNumber')->setParameter(':orderNumber', $orderNumber)
+            ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
+            ->getQuery()->getOneOrNullResult();
     }
 }
