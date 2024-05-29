@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-class CustomerUserData
+use Shopsys\Administration\Component\Security\AdminIdentifierInterface;
+
+class CustomerUserData implements AdminIdentifierInterface
 {
+    /**
+     * @var int|null
+     */
+    public $id;
+
     /**
      * @var string|null
      */
@@ -68,5 +75,18 @@ class CustomerUserData
 
     public function __construct()
     {
+    }
+
+    public function getFullName()
+    {
+        return trim($this->firstName . ' ' . $this->lastName);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 }

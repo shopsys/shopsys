@@ -86,6 +86,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser)
     {
+        $customerUserData->id = $customerUser->getId();
         $customerUserData->domainId = $customerUser->getDomainId();
         $customerUserData->firstName = $customerUser->getFirstName();
         $customerUserData->lastName = $customerUser->getLastName();

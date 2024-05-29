@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade as BaseLoginAsUserF
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method rememberLoginAsUser(\App\Model\Customer\User\CustomerUser $customerUser)
@@ -54,11 +55,14 @@ class LoginAsUserFacade extends BaseLoginAsUserFacade
 
     /**
      * @param int $customerUserId
+     * @param \Symfony\Component\Security\Core\User\UserInterface|null $administrator
      * @return array{accessToken: string, refreshToken: string}
      */
-    public function loginAsCustomerUserAndGetAccessAndRefreshToken(int $customerUserId): array
-    {
-        if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
+    public function loginAsCustomerUserAndGetAccessAndRefreshToken(
+        int $customerUserId,
+        ?UserInterface $administrator = null,
+    ): array {
+        if ($administrator === null && !$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
             throw new LoginAsRememberedUserException('Access denied');
         }
 
@@ -66,7 +70,7 @@ class LoginAsUserFacade extends BaseLoginAsUserFacade
         /** @var \App\Model\Customer\User\CustomerUser $user */
         $user = $this->customerUserRepository->getCustomerUserById($customerUserId);
         /** @var \App\Model\Administrator\Administrator $administrator */
-        $administrator = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
+        $administrator = $administrator ?? $this->administratorFrontSecurityFacade->getCurrentAdministrator();
 
         return [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId, $administrator),
