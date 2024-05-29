@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\Administration\Model\Products;
 
 use Doctrine\ORM\Query\Expr\Join;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\Administration\Component\Admin\AbstractAdmin;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
+use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -70,6 +72,11 @@ class ProductAdmin extends AbstractAdmin
                     ],
                 ])
                 ->add('ean')
+            ->add('descriptions', MultidomainType::class, [
+                'entry_type' => CKEditorType::class,
+                'required' => false,
+                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+            ])
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
                 'entry_type' => PercentType::class,
                 'entry_options' => [

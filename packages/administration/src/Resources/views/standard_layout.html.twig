@@ -7,5 +7,6 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('admin') }}
+    {{ ckeditor_init() }}
     {{ parent() }}
 {% endblock %}
