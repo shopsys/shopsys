@@ -1,0 +1,7 @@
+{% extends '@SonataAdmin/CRUD/base_edit.html.twig' %}
+
+{% block sonata_tab_content %}
+    {{ parent() }}
+
+    {{ render(controller('Shopsys\\Administration\\Controller\\OrderLogController::tableAction', { orderId: objectId })) }}
+{% endblock %}

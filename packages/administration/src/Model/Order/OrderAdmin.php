@@ -37,6 +37,14 @@ class OrderAdmin extends AbstractAdmin
     }
 
     /**
+     * @inheritDoc
+     */
+    #[\Override] protected function configure(): void
+    {
+        $this->setTemplate('edit', '@ShopsysAdministration/Order/edit.html.twig');
+    }
+
+    /**
      * @param \Sonata\AdminBundle\Route\RouteCollectionInterface $collection
      */
     protected function configureRoutes(RouteCollectionInterface $collection): void
