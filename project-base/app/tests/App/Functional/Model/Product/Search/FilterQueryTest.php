@@ -59,7 +59,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             ->filterByFlags([3])
             ->applyDefaultOrdering();
 
-        $this->assertIdWithFilter($filter, [25, 27, 29, 9, 13, 14, 19, 31, 35, 44]);
+        $this->assertIdWithFilter($filter, [25, 27, 29, 9, 144, 10, 13, 14, 50, 19, 21, 22, 31, 35, 42, 44]);
     }
 
     public function testFlagBrand(): void
@@ -138,19 +138,19 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             ->filterByCategory([9])
             ->applyDefaultOrdering();
 
-        $this->assertIdWithFilter($filter, [72, 25, 27, 29, 28, 26, 33, 39, 40], 'top');
+        $this->assertIdWithFilter($filter, [72, 25, 27, 29, 28, 26, 50, 33, 39, 40], 'top');
 
         $nameAscFilter = $filter->applyOrdering(ProductListOrderingConfig::ORDER_BY_NAME_ASC, $pricingGroup);
-        $this->assertIdWithFilter($nameAscFilter, [72, 25, 27, 29, 28, 26, 33, 39, 40], 'name asc');
+        $this->assertIdWithFilter($nameAscFilter, [72, 25, 27, 29, 28, 26, 33, 39, 40, 50], 'name asc');
 
         $nameDescFilter = $filter->applyOrdering(ProductListOrderingConfig::ORDER_BY_NAME_DESC, $pricingGroup);
-        $this->assertIdWithFilter($nameDescFilter, [40, 39, 33, 26, 28, 29, 27, 25, 72], 'name desc');
+        $this->assertIdWithFilter($nameDescFilter, [40, 39, 33, 26, 28, 29, 27, 25, 72, 50], 'name desc');
 
         $priceAscFilter = $filter->applyOrdering(ProductListOrderingConfig::ORDER_BY_PRICE_ASC, $pricingGroup);
-        $this->assertIdWithFilter($priceAscFilter, [40, 33, 39, 29, 25, 26, 27, 28, 72], 'price asc');
+        $this->assertIdWithFilter($priceAscFilter, [40, 33, 39, 29, 25, 26, 27, 28, 72, 50], 'price asc');
 
         $priceDescFilter = $filter->applyOrdering(ProductListOrderingConfig::ORDER_BY_PRICE_DESC, $pricingGroup);
-        $this->assertIdWithFilter($priceDescFilter, [72, 28, 27, 25, 26, 29, 39, 33, 40], 'price desc');
+        $this->assertIdWithFilter($priceDescFilter, [72, 28, 27, 25, 26, 29, 39, 33, 40, 50], 'price desc');
     }
 
     public function testMatchQuery(): void
@@ -174,7 +174,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             ->filterByCategory([9])
             ->applyDefaultOrdering();
 
-        $this->assertIdWithFilter($filter, [72, 25, 27, 29, 28, 26, 33, 39, 40]);
+        $this->assertIdWithFilter($filter, [72, 25, 27, 29, 28, 26, 50, 33, 39, 40]);
 
         $limit5Filter = $filter->setLimit(5);
         $this->assertIdWithFilter($limit5Filter, [72, 25, 27, 29, 28]);
@@ -184,11 +184,11 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
         $limit4Page2Filter = $filter->setLimit(4)
             ->setPage(2);
-        $this->assertIdWithFilter($limit4Page2Filter, [28, 26, 33, 39]);
+        $this->assertIdWithFilter($limit4Page2Filter, [28, 26, 50, 33]);
 
         $limit4Page3Filter = $filter->setLimit(4)
             ->setPage(3);
-        $this->assertIdWithFilter($limit4Page3Filter, [40]);
+        $this->assertIdWithFilter($limit4Page3Filter, [39, 40]);
 
         $limit4Page4Filter = $filter->setLimit(4)
             ->setPage(4);

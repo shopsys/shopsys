@@ -59,25 +59,27 @@ export const AddToCart: FC<AddToCartProps> = ({
 
     return (
         <div className={twMergeCustom('flex items-stretch justify-between gap-2', className)}>
-            <Spinbox
-                defaultValue={1}
-                id={productUuid}
-                max={maxQuantity}
-                min={minQuantity}
-                ref={spinboxRef}
-                size="small"
-                step={1}
-            />
+            {maxQuantity > 0 && (
+                <Spinbox
+                    defaultValue={1}
+                    id={productUuid}
+                    max={maxQuantity}
+                    min={minQuantity}
+                    ref={spinboxRef}
+                    size="small"
+                    step={1}
+                />
+            )}
             <Button
-                className="py-2"
-                isDisabled={fetching}
+                className={`py-2 ${maxQuantity <= 0 ? 'w-full' : ''}`}
+                isDisabled={fetching || maxQuantity <= 0}
                 name="add-to-cart"
                 size="small"
                 tid={TIDs.blocks_product_addtocart}
                 onClick={onAddToCartHandler}
             >
                 {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}
-                <span>{t('Add to cart')}</span>
+                <span>{maxQuantity <= 0 ? t('Currently unavailable') : t('Add to cart')}</span>
             </Button>
         </div>
     );

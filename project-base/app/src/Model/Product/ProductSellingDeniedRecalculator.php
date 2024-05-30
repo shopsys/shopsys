@@ -64,18 +64,6 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                         OR
                         pd.domain_hidden = TRUE
                         OR (
-                            p.variant_type != :variantTypeMain
-                            AND
-                            NOT EXISTS(
-                                SELECT 1
-                                FROM product_stocks as ps
-                                JOIN stocks as s ON s.id = ps.stock_id
-                                JOIN stock_domains sd ON s.id = sd.stock_id AND sd.domain_id = :domainId
-                                WHERE ps.product_id = p.id AND sd.is_enabled = TRUE
-                                HAVING SUM(ps.product_quantity) > 0
-                            )
-                        )
-                        OR (
                             pd.sale_exclusion = TRUE
                             AND                        
                             p.variant_type = :variantTypeMain

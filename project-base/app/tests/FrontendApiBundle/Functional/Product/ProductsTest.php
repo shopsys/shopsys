@@ -263,7 +263,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $productName = t(
-            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+            'Samsung Galaxy Core Plus (SM-G350) - white',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $firstDomainLocale,
