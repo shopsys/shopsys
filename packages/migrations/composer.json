@@ -38,12 +38,6 @@
         "symfony/yaml": "^5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "15.0.x-dev"
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+        "phpunit/phpunit": "^9.5.20"
     }
 }

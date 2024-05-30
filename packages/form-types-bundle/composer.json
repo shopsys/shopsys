@@ -24,13 +24,5 @@
         "symfony/http-kernel": "^5.4",
         "symfony/options-resolver": "^5.4",
         "symfony/translation": "^5.4"
-    },
-    "require-dev": {
-        "shopsys/coding-standards": "15.0.x-dev"
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
     }
 }

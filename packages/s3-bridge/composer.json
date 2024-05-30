@@ -29,13 +29,11 @@
         "symfony/http-kernel": "^5.4"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.6.8",
-        "shopsys/coding-standards": "15.0.x-dev"
+        "phpstan/phpstan": "^1.6.8"
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "symfony/flex": true
         }
     }
 }
