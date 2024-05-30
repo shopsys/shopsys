@@ -12,6 +12,7 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
+use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -65,6 +66,9 @@ class ProductAdmin extends AbstractAdmin
         $product = $this->getSubject();
         $form->with('Basic information')
                 ->add('name', LocalizedFullWidthType::class)
+                ->add('text', GrapesJsType::class, [
+                    'mapped' => false,
+                ])
                 ->add('catnum', TextType::class, [
                     'attr' => [
                         'icon' => true,

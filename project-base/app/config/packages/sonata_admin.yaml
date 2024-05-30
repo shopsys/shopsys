@@ -13,6 +13,7 @@ sonata_admin:
         form_theme:
             - '@ShopsysFramework/Admin/Form/theme.html.twig'
             - '@ShopsysFramework/Admin/Form/imageuploadFields.html.twig'
+            - 'Admin/Form/grapesJsType.html.twig'
 
 sonata_block:
     blocks:

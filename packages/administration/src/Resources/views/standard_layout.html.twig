@@ -9,4 +9,12 @@
     {{ encore_entry_script_tags('admin') }}
     {{ ckeditor_init() }}
     {{ parent() }}
+    <script>
+        (function($) {
+            $.fn.jsFormValidator = function() {
+                // Empty function to hotfix window.$(...).jsFormValidator is not a function
+                return this;
+            };
+        })(jQuery);
+    </script>
 {% endblock %}
