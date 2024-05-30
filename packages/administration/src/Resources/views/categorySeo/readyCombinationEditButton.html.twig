@@ -1,0 +1,8 @@
+<a title="{{ 'Edit'|trans }}" class="in-icon seo-icon--{{ existsReadyCategorySeoMix ? '' : 'in' }}active svg svg-pencil" href="{{ url(
+    'admin_categoryseo_readycombination',
+    {
+        'categoryId': categoryId,
+        'categorySeoFilterFormTypeAllQueries': categorySeoFilterFormTypeAllQueries,
+        'choseCategorySeoMixCombinationJson': choseCategorySeoMixCombinationJson
+    }
+) }}"></a>

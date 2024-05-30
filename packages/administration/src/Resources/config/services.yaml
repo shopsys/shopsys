@@ -43,6 +43,13 @@ services:
         tags:
             - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Product\Product, manager_type: orm, label: Products, group: 'Products', on_top: true }
 
+    admin.seo_category:
+        calls:
+            - [ setModelManager, [ '@Shopsys\Administration\Model\SeoCategory\SeoCategoryManager' ] ]
+        class: Shopsys\Administration\Model\SeoCategory\SeoCategoryAdmin
+        tags:
+            - { name: sonata.admin, controller: Shopsys\Administration\Controller\SeoCategoryController, model_class: App\Model\CategorySeo\ReadyCategorySeoMix, manager_type: orm, label: Seo categories, group: 'Seo categories', on_top: true }
+
     sonata.admin.field_description_factory.orm:
         arguments:
             $registry: '@doctrine'

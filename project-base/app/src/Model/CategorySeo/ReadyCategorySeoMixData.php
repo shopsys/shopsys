@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use Shopsys\Administration\Component\Security\AdminIdentifierInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Symfony\Component\Validator\Constraints as Assert;
 
-class ReadyCategorySeoMixData
+class ReadyCategorySeoMixData implements AdminIdentifierInterface
 {
     /**
      * @var int|null
@@ -41,6 +43,7 @@ class ReadyCategorySeoMixData
     /**
      * @var string|null
      */
+    #[Assert\NotBlank(message: 'Please enter H1')]
     public $h1;
 
     /**
@@ -76,4 +79,9 @@ class ReadyCategorySeoMixData
     public UrlListData $urls;
 
     public ?string $categorySeoFilterFormTypeAllQueriesJson = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 }

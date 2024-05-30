@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\Administration\Controller;
 
 use App\Form\Admin\CategorySeoFilterFormType;
 use App\Form\Admin\ReadyCategorySeoCombinationFormType;
@@ -21,16 +21,19 @@ use App\Model\CategorySeo\ReadyCategorySeoMixGridFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategorySeoController extends AdminBaseController
+class SeoCategoryController extends CRUDController
 {
+    use FlashMessageTrait;
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -51,31 +54,32 @@ class CategorySeoController extends AdminBaseController
         private readonly FlagFacade $flagFacade,
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         private readonly ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory,
-        private readonly Domain $domain,
+        private readonly Domain $domain, private readonly SeoSettingFacade $seoSettingFacade,
     ) {
     }
 
+//    /**
+//     * @param \Symfony\Component\HttpFoundation\Request $request
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+//     */
+//    public function listAction(Request $request): Response
+//    {
+//        $grid = $this->readyCategorySeoMixGridFactory->create(
+//            $this->adminDomainTabsFacade->getSelectedDomainId(),
+//            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
+//        );
+//
+//        return $this->render('@ShopsysAdministration/categorySeo/list.html.twig', [
+//            'gridView' => $grid->createView(),
+//        ]);
+//    }
+
     /**
-     * @Route("/seo/category/")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): Response
-    {
-        $grid = $this->readyCategorySeoMixGridFactory->create(
-            $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
-        );
-
-        return $this->render('Admin/Content/CategorySeo/list.html.twig', [
-            'gridView' => $grid->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/seo/category/new/category")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function newCategoryAction(): Response
+    public function newAction(Request $request): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
 
@@ -84,18 +88,20 @@ class CategorySeoController extends AdminBaseController
             $locale,
         );
 
-        return $this->render('Admin/Content/CategorySeo/newCategory.html.twig', [
+        return $this->render('@ShopsysAdministration/categorySeo/newCategory.html.twig', [
+            'action' => 'create',
+            'objectId' => null,
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'locale' => $locale,
         ]);
     }
 
     /**
-     * @Route("/seo/category/new/filters/category/{categoryId}", requirements={"categoryId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route('/%admin_url%-new/seo/category/new/filters/category/{categoryId}', name: 'admin_new_categoryseo_newfilters', requirements: ['categoryId' => '\d+'])]
     public function newFiltersAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -109,15 +115,18 @@ class CategorySeoController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid() && $request->get('is_for_backlink', false) === false) {
             return $this->redirect(
                 $this->getUrlWithCategoryIdAndAllQueryParameters(
-                    'admin_categoryseo_newcombinations',
+                    'admin_new_categoryseo_newcombinations',
                     $categoryId,
                     $request->query->all(),
                     false,
-                ),
+                )
             );
         }
 
-        return $this->render('Admin/Content/CategorySeo/newFilters.html.twig', [
+        return $this->render('@ShopsysAdministration/categorySeo/newFilters.html.twig', [
+            'action' => 'newFilters',
+            'objectId' => null,
+            'object' => null,
             'category' => $category,
             'form' => $form->createView(),
             'locale' => $locale,
@@ -125,11 +134,11 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/new/combinations/category/{categoryId}", requirements={"categoryId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route('/%admin_url%-new/seo/category/new/combinations/category/{categoryId}', name: 'admin_new_categoryseo_newcombinations', requirements: ['categoryId' => '\d+'])]
     public function newCombinationsAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -147,7 +156,7 @@ class CategorySeoController extends AdminBaseController
             $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
         );
 
-        return $this->render('Admin/Content/CategorySeo/newCombinations.html.twig', [
+        return $this->render('@ShopsysAdministration/categorySeo/newCombinations.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
             'categorySeoMixes' => $categorySeoMixes,
@@ -165,13 +174,16 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/new/ready-combination/category/{categoryId}", requirements={"categoryId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route('/%admin_url%-new/seo/category/new/ready-combination/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     public function readyCombinationAction(Request $request, int $categoryId): Response
     {
+//        $this->readyCategorySeoMixFacade->getById($categoryId);
+
+
         $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
 
         $choseCategorySeoMixCombination = ChoseCategorySeoMixCombination::createFromJson(
@@ -248,7 +260,7 @@ class CategorySeoController extends AdminBaseController
             }
         }
 
-        return $this->render('Admin/Content/CategorySeo/readyCombination.html.twig', [
+        return $this->render('@ShopsysAdministration/categorySeo/readyCombination.html.twig', [
             'form' => $readyCategorySeoCombinationFormType->createView(),
             'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
             'newCombinationsUrl' => $newCombinationsUrl,
@@ -272,7 +284,7 @@ class CategorySeoController extends AdminBaseController
         array $categorySeoFilterFormTypeAllQueries,
         ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): Response {
-        return $this->render('Admin/Content/CategorySeo/readyCombinationEditButton.html.twig', [
+        return $this->render('@ShopsysAdministration/categorySeo/readyCombinationEditButton.html.twig', [
             'existsReadyCategorySeoMix' => $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination) !== null,
             'categoryId' => $categoryId,
             'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
@@ -281,32 +293,36 @@ class CategorySeoController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/seo/category/ready-combination/delete/{id}", requirements={"id" = "\d+"})
-     * @CsrfProtection
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteAction(int $id): Response
-    {
-        try {
-            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($id);
-            $this->readyCategorySeoMixFacade->delete($readyCategorySeoMix);
-            $this->addSuccessFlashTwig(
-                t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed', [
-                    '{{ ReadyCategorySeoMixId }}' => $id,
-                ]),
-            );
-        } catch (ReadyCategorySeoMixNotFoundException $readyCategorySeoMixNotFoundException) {
-            $this->addSuccessFlashTwig(
-                t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found', [
-                    '{{ ReadyCategorySeoMixId }}' => $id,
-                ]),
-            );
-        }
-
-        return $this->redirectToRoute('admin_categoryseo_list');
-    }
+//    /**
+//     * @CsrfProtection
+//     * @param \Symfony\Component\HttpFoundation\Request $request
+//     * @param int $id
+//     * @return \Symfony\Component\HttpFoundation\Response
+//     */
+//    #[Route('/%admin_url%-new/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]
+//    public function deleteAction(Request $request): Response
+//    {
+//        $existingObject = $this->assertObjectExists($request, true);
+//        $id = (int)$this->admin->getNormalizedIdentifier($existingObject);
+//
+//        try {
+//            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($id);
+//            $this->readyCategorySeoMixFacade->delete($readyCategorySeoMix);
+//            $this->addSuccessFlashTwig(
+//                t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed', [
+//                    '{{ ReadyCategorySeoMixId }}' => $id,
+//                ]),
+//            );
+//        } catch (ReadyCategorySeoMixNotFoundException $readyCategorySeoMixNotFoundException) {
+//            $this->addSuccessFlashTwig(
+//                t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found', [
+//                    '{{ ReadyCategorySeoMixId }}' => $id,
+//                ]),
+//            );
+//        }
+//
+//        return $this->redirectToRoute('admin_categoryseo_list');
+//    }
 
     /**
      * @param \App\Model\Category\Category $category
@@ -343,6 +359,7 @@ class CategorySeoController extends AdminBaseController
                 ['categoryId' => $categoryId],
                 $categorySeoFilterFormTypeAllQueries,
                 ['is_for_backlink' => $isForBackLink],
+                ['_sonata_admin' => 'admin.seo_category'],
             ),
         );
     }

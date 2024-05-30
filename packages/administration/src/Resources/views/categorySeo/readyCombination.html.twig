@@ -1,0 +1,44 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% set title = 'Extended SEO category - editing the combination with SEO values'|trans %}
+
+{% block title %}- {{ title }}{% endblock %}
+{% block h1 %}{{ title }}{% endblock %}
+
+{% block main_content %}
+
+    {{ _self.infoLine('Flag'|trans, flagName) }}
+    {{ _self.infoLine('Ordering'|trans, getOrderingNameByOrderingId(choseCategorySeoMixCombination.ordering)) }}
+
+    {% for parameterName, parameterValueName in parameterValueNamesIndexedByParameterNames %}
+        {{ _self.infoLine(parameterName, parameterValueName) }}
+    {% endfor %}
+
+    {{ _self.infoLine('Domain'|trans, choseCategorySeoMixCombinationDomainConfig.name) }}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ newCombinationsUrl }}" class="btn-link-style">{{ 'Back to overview of available combinations'|trans }}</a>
+            {{ form_widget(form.save, { attr: { class: 'margin-top-20 margin-bottom-20' } })  }}
+        {% endblock %}
+    {% endembed %}
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% macro infoLine(label, value) %}
+    <div class="form-line">
+        <label class="form-line__label" for="ready_category_seo_combination_form_h1">
+            {{ label }}:
+        </label>
+        <div class="form-line__side">
+            <div class="form-line__item">
+                <input type="text" class="input" value="{{ value }}" disabled>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

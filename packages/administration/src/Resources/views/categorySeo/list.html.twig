@@ -1,0 +1,10 @@
+{% extends base_template %}
+
+{% block list_table %}
+    <a href="{{ url('admin_categoryseo_newcategory') }}" class="btn btn--plus wrap-bar__btn">
+        <i class="btn__icon">+</i>{{ 'Create'|trans }}
+    </a>
+
+    {{ gridView.render() }}
+
+{% endblock %}

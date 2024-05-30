@@ -281,6 +281,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         ?string $metaDescription = null,
     ): void {
         $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData(
+            null,
             $choseCategorySeoMixCombination,
         );
         $readyCategorySeoMixData->h1 = $h1;

@@ -1,0 +1,16 @@
+{% extends '@!SonataAdmin/CRUD/base_edit.html.twig' %}
+{% import _self as self %}
+
+{% set title = 'Extended SEO category %categoryName% - filters'|trans({'%categoryName%': category.name(locale)}) %}
+
+{% block title %}- {{ title }}{% endblock %}
+{% block navbar_title %}{{ title }}{% endblock %}
+
+{% block formactions %}{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}

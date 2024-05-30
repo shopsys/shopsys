@@ -1,0 +1,36 @@
+{% extends '@!SonataAdmin/CRUD/base_edit.html.twig' %}
+{% import _self as self %}
+
+{% block title %} - {{ 'Extended SEO category - category selection'|trans }}{% endblock %}
+{% block navbar_title %}{{ 'Extended SEO category - category selection'|trans }}{% endblock %}
+
+{% block form %}
+    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, locale) %}
+        {% import _self as self %}
+        <ul class="js-category-tree-items {{ isFirstLevel ? 'form-tree__content' : '' }}">
+            {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
+                <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
+                    <div class="js-category-tree-item-line form-tree__item__drag cursor-default">
+                        <span class="form-tree__item__icon form-tree__item__icon--level sprite sprite-level"></span>
+                        <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name(locale) }}</span>
+                        <span class="js-category-tree-item-icons form-tree__item__controls form-tree__item__controls--indented">
+                            <a href="{{ url('admin_new_categoryseo_newfilters', { categoryId: categoryWithPreloadedChildren.category.id, _sonata_admin: 'admin.seo_category' }) }}">
+                                {{ 'Choose this category and continue'|trans }}
+                            </a>
+                        </span>
+                    </div>
+                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, locale) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endmacro %}
+
+    <div class="wrap-divider">
+        <div class="form-line">
+            <div class="form-tree form-tree--open">
+                {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, locale) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

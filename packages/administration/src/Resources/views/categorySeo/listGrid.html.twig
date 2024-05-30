@@ -1,0 +1,27 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No combinations of SEO categories found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'ready category seo mixes'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_parameters %}
+
+    {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.choseCategorySeoMixCombinationJson) %}
+        {{ parameterNameParameterValuePair }}<br>
+    {% endfor %}
+
+{% endblock %}
+
+
+{% block grid_value_cell_id_ordering %}
+    {{ getOrderingNameByOrderingId(row.ordering) }}
+{% endblock %}
+
+{% block grid_value_cell_id_friendlyUrlSlug %}
+    <a href="{{ getAbsoluteUrlOfReadyCategorySeoMix(row.rcsmId) }}" target="_blank">{{ row.fuSlug }}</a>
+{% endblock %}

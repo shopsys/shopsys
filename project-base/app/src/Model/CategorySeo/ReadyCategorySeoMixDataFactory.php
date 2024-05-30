@@ -37,10 +37,12 @@ class ReadyCategorySeoMixDataFactory
     }
 
     /**
+     * @param int|null $categoryId
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination|null $choseCategorySeoMixCombination
      * @return \App\Model\CategorySeo\ReadyCategorySeoMixData
      */
     public function createReadyCategorySeoMixData(
+        ?int $categoryId,
         ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): ReadyCategorySeoMixData {
         $readyCategorySeoMix = null;
@@ -50,6 +52,7 @@ class ReadyCategorySeoMixDataFactory
         }
 
         $readyCategorySeoMixData = new ReadyCategorySeoMixData();
+        $readyCategorySeoMixData->id = $categoryId;
 
         $readyCategorySeoMixData->urls = new UrlListData();
 
@@ -117,5 +120,27 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixData->title = $readyCategorySeoMix->getTitle();
         $readyCategorySeoMixData->metaDescription = $readyCategorySeoMix->getMetaDescription();
         $readyCategorySeoMixData->showInCategory = $readyCategorySeoMix->showInCategory();
+    }
+
+    /**
+     * @param int $seoCategoryId
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMixData
+     */
+    public function createFromId(int $seoCategoryId): ReadyCategorySeoMixData
+    {
+        $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($seoCategoryId);
+        $readyCategorySeoMixData = $this->create();
+        $readyCategorySeoMixData->id = $readyCategorySeoMix->getId();
+        $this->fillValuesFromReadyCategorySeoMix($readyCategorySeoMixData, $readyCategorySeoMix);
+
+        $readyCategorySeoMixData->urls = new UrlListData();
+        $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+            $readyCategorySeoMix->getDomainId(),
+            'front_category_seo',
+            $readyCategorySeoMix->getId(),
+        );
+        $readyCategorySeoMixData->urls->mainFriendlyUrlsByDomainId[$readyCategorySeoMix->getDomainId()] = $mainFriendlyUrl;
+
+        return $readyCategorySeoMixData;
     }
 }
