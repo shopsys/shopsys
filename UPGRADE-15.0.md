@@ -863,6 +863,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 #### remove product stock from calculated sale exclusion calculation ([#3159](https://github.com/shopsys/shopsys/pull/3159))
 
+-   all the add to cart buttons are now disabled when product quantity is zero or negative
 -   see #project-base-diff to update your project
 
 ### Storefront
@@ -1049,3 +1050,8 @@ We want to implement more usable UI design which will be better base for upcomin
 
 -   simple navgation images are now blacked-out during cypress tests
 -   make sure you add the blackout everywhere where your snapshots contain simple navigation with images
+
+#### remove product stock from calculated sale exclusion calculation ([#3159](https://github.com/shopsys/shopsys/pull/3159))
+
+-   all the add to cart buttons are now disabled when product quantity is zero or negative
+-   see #project-base-diff to update your project
