@@ -38,48 +38,31 @@ class ReadyCategorySeoMixDataFactory
 
     /**
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination|null $choseCategorySeoMixCombination
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMixData
      */
-    public function createReadyCategorySeoMixDataForForm(
+    public function createReadyCategorySeoMixData(
         ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
-    ): ReadyCategorySeoMixDataForForm {
+    ): ReadyCategorySeoMixData {
         $readyCategorySeoMix = null;
 
         if ($choseCategorySeoMixCombination !== null) {
             $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
         }
 
-        $readyCategorySeoMixDataForForm = new ReadyCategorySeoMixDataForForm();
+        $readyCategorySeoMixData = new ReadyCategorySeoMixData();
 
-        $readyCategorySeoMixDataForForm->urls = new UrlListData();
+        $readyCategorySeoMixData->urls = new UrlListData();
 
         if ($readyCategorySeoMix !== null) {
-            $this->fillValuesFromReadyCategorySeoMix($readyCategorySeoMixDataForForm, $readyCategorySeoMix);
+            $this->fillValuesFromReadyCategorySeoMix($readyCategorySeoMixData, $readyCategorySeoMix);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $readyCategorySeoMix->getDomainId(),
                 'front_category_seo',
                 $readyCategorySeoMix->getId(),
             );
-            $readyCategorySeoMixDataForForm->urls->mainFriendlyUrlsByDomainId[$readyCategorySeoMix->getDomainId()] = $mainFriendlyUrl;
+            $readyCategorySeoMixData->urls->mainFriendlyUrlsByDomainId[$readyCategorySeoMix->getDomainId()] = $mainFriendlyUrl;
         }
-
-        return $readyCategorySeoMixDataForForm;
-    }
-
-    /**
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm
-     * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMixData
-     */
-    public function createFromReadyCategorySeoMixDataForFormAndChoseCategorySeoMixCombination(
-        ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
-    ): ReadyCategorySeoMixData {
-        $readyCategorySeoMixData = $this->create();
-
-        $this->fillValuesFromChoseCategorySeoMixCombination($readyCategorySeoMixData, $choseCategorySeoMixCombination);
-        $this->fillValuesFromReadyCategorySeoMixDataForForm($readyCategorySeoMixData, $readyCategorySeoMixDataForForm);
 
         return $readyCategorySeoMixData;
     }
@@ -122,33 +105,17 @@ class ReadyCategorySeoMixDataFactory
 
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm
-     */
-    public function fillValuesFromReadyCategorySeoMixDataForForm(
-        ReadyCategorySeoMixData $readyCategorySeoMixData,
-        ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
-    ): void {
-        $readyCategorySeoMixData->h1 = $readyCategorySeoMixDataForForm->h1;
-        $readyCategorySeoMixData->shortDescription = $readyCategorySeoMixDataForForm->shortDescription;
-        $readyCategorySeoMixData->description = $readyCategorySeoMixDataForForm->description;
-        $readyCategorySeoMixData->title = $readyCategorySeoMixDataForForm->title;
-        $readyCategorySeoMixData->metaDescription = $readyCategorySeoMixDataForForm->metaDescription;
-        $readyCategorySeoMixData->showInCategory = $readyCategorySeoMixDataForForm->showInCategory;
-    }
-
-    /**
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      */
     public function fillValuesFromReadyCategorySeoMix(
-        ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
+        ReadyCategorySeoMixData $readyCategorySeoMixData,
         ReadyCategorySeoMix $readyCategorySeoMix,
     ): void {
-        $readyCategorySeoMixDataForForm->h1 = $readyCategorySeoMix->getH1();
-        $readyCategorySeoMixDataForForm->shortDescription = $readyCategorySeoMix->getShortDescription();
-        $readyCategorySeoMixDataForForm->description = $readyCategorySeoMix->getDescription();
-        $readyCategorySeoMixDataForForm->title = $readyCategorySeoMix->getTitle();
-        $readyCategorySeoMixDataForForm->metaDescription = $readyCategorySeoMix->getMetaDescription();
-        $readyCategorySeoMixDataForForm->showInCategory = $readyCategorySeoMix->showInCategory();
+        $readyCategorySeoMixData->h1 = $readyCategorySeoMix->getH1();
+        $readyCategorySeoMixData->shortDescription = $readyCategorySeoMix->getShortDescription();
+        $readyCategorySeoMixData->description = $readyCategorySeoMix->getDescription();
+        $readyCategorySeoMixData->title = $readyCategorySeoMix->getTitle();
+        $readyCategorySeoMixData->metaDescription = $readyCategorySeoMix->getMetaDescription();
+        $readyCategorySeoMixData->showInCategory = $readyCategorySeoMix->showInCategory();
     }
 }

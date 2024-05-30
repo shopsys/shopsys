@@ -14,8 +14,8 @@ use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
+use App\Model\CategorySeo\ReadyCategorySeoMixData;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
-use App\Model\CategorySeo\ReadyCategorySeoMixDataForForm;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixGridFactory;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -185,11 +185,11 @@ class CategorySeoController extends AdminBaseController
             );
         }
 
-        $readyCategorySeoMixDataForForm = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixDataForForm($choseCategorySeoMixCombination);
+        $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData($choseCategorySeoMixCombination);
 
-        $this->storeJsonsToReadyCategorySeoMixDataForForm($readyCategorySeoMixDataForForm, $categorySeoFilterFormTypeAllQueries, $choseCategorySeoMixCombination);
+        $this->storeJsonsToReadyCategorySeoMixData($readyCategorySeoMixData, $categorySeoFilterFormTypeAllQueries, $choseCategorySeoMixCombination);
 
-        $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixDataForForm, [
+        $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixData, [
             'method' => 'POST',
             'readyCategorySeoMix' => $choseCategorySeoMixCombination !== null ? $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination) : null,
         ]);
@@ -197,9 +197,9 @@ class CategorySeoController extends AdminBaseController
         $readyCategorySeoCombinationFormType->handleRequest($request);
 
         if ($categorySeoFilterFormTypeAllQueries === null
-            && $readyCategorySeoMixDataForForm->categorySeoFilterFormTypeAllQueriesJson !== null
+            && $readyCategorySeoMixData->categorySeoFilterFormTypeAllQueriesJson !== null
         ) {
-            $categorySeoFilterFormTypeAllQueries = json_decode($readyCategorySeoMixDataForForm->categorySeoFilterFormTypeAllQueriesJson, true);
+            $categorySeoFilterFormTypeAllQueries = json_decode($readyCategorySeoMixData->categorySeoFilterFormTypeAllQueriesJson, true);
         }
 
         if ($categorySeoFilterFormTypeAllQueries !== null) {
@@ -214,8 +214,8 @@ class CategorySeoController extends AdminBaseController
         }
 
         if ($readyCategorySeoCombinationFormType->isSubmitted() && $readyCategorySeoCombinationFormType->isValid()) {
-            $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createFromReadyCategorySeoMixDataForFormAndChoseCategorySeoMixCombination(
-                $readyCategorySeoMixDataForForm,
+            $this->readyCategorySeoMixDataFactory->fillValuesFromChoseCategorySeoMixCombination(
+                $readyCategorySeoMixData,
                 $choseCategorySeoMixCombination,
             );
 
@@ -232,7 +232,7 @@ class CategorySeoController extends AdminBaseController
                 $this->readyCategorySeoMixFacade->createOrEdit(
                     $choseCategorySeoMixCombination,
                     $readyCategorySeoMixData,
-                    $readyCategorySeoMixDataForForm->urls,
+                    $readyCategorySeoMixData->urls,
                 );
 
                 $this->addSuccessFlashTwig(
@@ -348,21 +348,21 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
      * @param array|null $categorySeoFilterFormTypeAllQueries
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination|null $choseCategorySeoMixCombination
      */
-    private function storeJsonsToReadyCategorySeoMixDataForForm(
-        ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
+    private function storeJsonsToReadyCategorySeoMixData(
+        ReadyCategorySeoMixData $readyCategorySeoMixData,
         ?array $categorySeoFilterFormTypeAllQueries,
         ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): void {
         if (isset($categorySeoFilterFormTypeAllQueries)) {
-            $readyCategorySeoMixDataForForm->categorySeoFilterFormTypeAllQueriesJson = json_encode($categorySeoFilterFormTypeAllQueries);
+            $readyCategorySeoMixData->categorySeoFilterFormTypeAllQueriesJson = json_encode($categorySeoFilterFormTypeAllQueries);
         }
 
         if (isset($choseCategorySeoMixCombination)) {
-            $readyCategorySeoMixDataForForm->choseCategorySeoMixCombinationJson = $choseCategorySeoMixCombination->getInJson();
+            $readyCategorySeoMixData->choseCategorySeoMixCombinationJson = $choseCategorySeoMixCombination->getInJson();
         }
     }
 }
