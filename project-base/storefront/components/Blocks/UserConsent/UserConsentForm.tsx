@@ -23,7 +23,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const userConsent = usePersistStore((store) => store.userConsent);
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
 
-    const saveCookieChoices = () => {
+    const saveUserConsentChoices = () => {
         const formValues = formProviderMethods.getValues();
         updateUserConsent(formValues);
         onGtmConsentUpdateEventHandler(getGtmConsentInfo(userConsent));
@@ -33,30 +33,30 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
         }
     };
 
-    const acceptAllCookieChoices = () => {
+    const giveFullUserConsent = () => {
         for (const key in formMeta.fields) {
             formProviderMethods.setValue(key as keyof UserConsentFormType, true, { shouldValidate: true });
         }
 
-        saveCookieChoices();
+        saveUserConsentChoices();
     };
 
-    const rejectAllCookieChoices = () => {
+    const rejectUserConsent = () => {
         for (const key in formMeta.fields) {
             formProviderMethods.setValue(key as keyof UserConsentFormType, false, { shouldValidate: true });
         }
 
-        saveCookieChoices();
+        saveUserConsentChoices();
     };
 
     return (
         <FormProvider {...formProviderMethods}>
-            <div className="h2 mb-3">{t('Cookie consent')}</div>
+            <div className="h2 mb-3">{t('User consent')}</div>
 
             <p>
                 <Trans
-                    defaultTrans="To learn more, you can read our <link>cookie policy</link>"
-                    i18nKey="cookiePolicyLink"
+                    defaultTrans="To learn more, you can read our <link>consent and tracking policy</link>"
+                    i18nKey="userConsentPolicyLink"
                     components={{
                         link:
                             userConsentPolicyArticleUrl !== undefined ? (
@@ -90,15 +90,15 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             />
 
             <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
-                <Button size="small" onClick={saveCookieChoices}>
+                <Button size="small" onClick={saveUserConsentChoices}>
                     {t('Save choices')}
                 </Button>
 
-                <Button size="small" onClick={acceptAllCookieChoices}>
+                <Button size="small" onClick={giveFullUserConsent}>
                     {t('Accept all')}
                 </Button>
 
-                <Button size="small" variant="secondary" onClick={rejectAllCookieChoices}>
+                <Button size="small" variant="secondary" onClick={rejectUserConsent}>
                     {t('Reject all')}
                 </Button>
             </div>

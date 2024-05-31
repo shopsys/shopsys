@@ -8,7 +8,7 @@ export const UserConsent: FC<{ url: string }> = ({ url }) => {
     const [isUserConsentVisible, setUserConsentVisibility] = useState(true);
     const userConsent = usePersistStore((store) => store.userConsent);
     const router = useRouter();
-    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
+    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/user-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
 
     const onSetCallback = () => {

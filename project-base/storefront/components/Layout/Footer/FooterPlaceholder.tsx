@@ -9,7 +9,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles, opening, phone }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [cookieConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/cookie-consent', '/contact'], url);
+    const [userConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/user-consent', '/contact'], url);
 
     return (
         <>
@@ -48,9 +48,9 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
             </a>
             <ExtendedNextLink
                 className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline"
-                href={cookieConsentUrl}
+                href={userConsentUrl}
             >
-                {t('Cookie consent update')}
+                {t('User consent update')}
             </ExtendedNextLink>
         </>
     );

@@ -1,5 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { CookieConsentContent } from 'components/Pages/CookieConsent/CookieConsentContent';
+import { UserConsentContent } from 'components/Pages/UserConsent/UserConsentContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -10,19 +10,19 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-const CookieConsentPage: FC<ServerSidePropsType> = () => {
+const UserConsentPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
+    const [userConsentUrl] = getInternationalizedStaticUrls(['/user-consent'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Cookie consent'), slug: cookieConsentUrl },
+        { __typename: 'Link', name: t('User consent'), slug: userConsentUrl },
     ];
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.cookie_consent, breadcrumbs);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.user_consent, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Cookie consent update')}>
-            <CookieConsentContent />
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('User consent update')}>
+            <UserConsentContent />
         </CommonLayout>
     );
 };
@@ -33,4 +33,4 @@ export const getServerSideProps = getServerSidePropsWrapper(
             initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
-export default CookieConsentPage;
+export default UserConsentPage;

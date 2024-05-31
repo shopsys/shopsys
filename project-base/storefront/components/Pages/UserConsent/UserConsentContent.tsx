@@ -5,17 +5,17 @@ import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-export const CookieConsentContent: FC = () => {
+export const UserConsentContent: FC = () => {
     const { t } = useTranslation();
     const { push } = useRouter();
 
     const onSetCallback = useCallback(() => {
-        showSuccessMessage(t('Your cookie preferences have been set.'));
+        showSuccessMessage(t('Your preferences have been set.'));
         push('/');
     }, [push, t]);
 
     return (
-        <SimpleLayout heading={t('Cookie consent')}>
+        <SimpleLayout heading={t('User consent')}>
             <UserConsentForm onSetCallback={onSetCallback} />
         </SimpleLayout>
     );

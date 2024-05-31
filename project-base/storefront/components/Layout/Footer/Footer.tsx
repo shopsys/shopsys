@@ -24,7 +24,7 @@ export type FooterProps =
 export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles, phone, opening }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
+    const [userConsentUrl] = getInternationalizedStaticUrls(['/user-consent'], url);
 
     return (
         <div className="relative mt-auto">
@@ -42,9 +42,9 @@ export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles, phone, o
                 <FooterCopyright />
                 <ExtendedNextLink
                     className="self-center text-graySlate no-underline transition hover:text-whiteSnow hover:no-underline"
-                    href={cookieConsentUrl}
+                    href={userConsentUrl}
                 >
-                    {t('Cookie consent update')}
+                    {t('User consent update')}
                 </ExtendedNextLink>
             </div>
         </div>

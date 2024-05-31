@@ -1208,3 +1208,9 @@ We want to implement more usable UI design which will be better base for upcomin
 -   all persist store slices should now expose default state as a constant
 -   docs regarding store management (`store-management.md`) were improved, so make sure that you implement changes to store based on them
 -   remember to update the `DEFAULT_PERSIST_STORE_STATE` constant in your cypress tests to suit the new version of persist store
+
+#### rename user-consent related code accordingly ([#3181](https://github.com/shopsys/shopsys/pull/3181))
+
+-   route /cookie-consent was renamed to /user-consent
+-   components and translations were also renamed/rewritten
+-   you should follow this naming convention in your app as well
