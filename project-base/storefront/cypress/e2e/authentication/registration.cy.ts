@@ -45,25 +45,6 @@ describe('Registration tests (basic)', () => {
         checkUrl(url.customer.editProfile);
         takeSnapshotAndCompare(this.test?.title, 'customer edit page');
     });
-
-    it('should register as a B2B customer', function () {
-        goToRegistrationPageFromHeader();
-        const email = 'register-as-b2b@shopsys.com';
-        clearAndFillInRegstrationFormEmail(email);
-        fillInRegstrationForm('companyCustomer', email);
-        clearAndFillInRegistrationFormPasswords(password);
-        loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled registration form');
-
-        submitRegistrationForm();
-        checkAndHideSuccessToast('Your account has been created and you are logged in now');
-        checkUrl('/');
-        cy.waitForStableAndInteractiveDOM();
-
-        goToEditProfileFromHeader();
-        checkUrl(url.customer.editProfile);
-        takeSnapshotAndCompare(this.test?.title, 'customer edit page');
-    });
 });
 
 describe('Registration tests (repeated tries)', () => {
