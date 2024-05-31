@@ -353,8 +353,7 @@ class CartWithModificationsResult
             || $this->isPaymentInCartModified()
             || $this->isPromoCodeInCartValid()
             || $this->isSomeCartItemModified()
-            || $this->cartModifications['someProductWasRemovedFromEshop']
-            ;
+            || $this->cartModifications['someProductWasRemovedFromEshop'];
     }
 
     /**
@@ -363,8 +362,7 @@ class CartWithModificationsResult
     protected function isPaymentInCartModified(): bool
     {
         return $this->paymentModifications['paymentPriceChanged']
-            || $this->paymentModifications['paymentUnavailable']
-            ;
+            || $this->paymentModifications['paymentUnavailable'];
     }
 
     /**
@@ -375,8 +373,7 @@ class CartWithModificationsResult
         return $this->transportModifications['transportPriceChanged']
             || $this->transportModifications['transportUnavailable']
             || $this->transportModifications['transportWeightLimitExceeded']
-            || $this->transportModifications['personalPickupStoreUnavailable']
-            ;
+            || $this->transportModifications['personalPickupStoreUnavailable'];
     }
 
     /**
@@ -395,8 +392,7 @@ class CartWithModificationsResult
         return count($this->itemModifications['noLongerListableCartItems']) > 0
             || count($this->itemModifications['cartItemsWithModifiedPrice']) > 0
             || count($this->itemModifications['cartItemsWithChangedQuantity']) > 0
-            || count($this->itemModifications['noLongerAvailableCartItemsDueToQuantity']) > 0
-            ;
+            || count($this->itemModifications['noLongerAvailableCartItemsDueToQuantity']) > 0;
     }
 
     /**

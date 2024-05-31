@@ -103,7 +103,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'isAbsolute' => true,
             ],
             [
-                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale, ),
+                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 'count' => 1,
                 'isAbsolute' => true,
             ],

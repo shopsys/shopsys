@@ -408,6 +408,7 @@ class ProductExportRepository implements ResetInterface
         }
 
         $results = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
             $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);

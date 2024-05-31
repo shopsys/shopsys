@@ -390,7 +390,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             ],
         ]);
 
-        return  $this->getResponseDataForGraphQlType($responseForCategory, 'slug');
+        return $this->getResponseDataForGraphQlType($responseForCategory, 'slug');
     }
 
     public function testCategoryFilterIsCorrectlySetAsSelected(): void

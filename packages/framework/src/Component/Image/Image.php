@@ -301,6 +301,6 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
             $slug = $friendlyUrlSlug . '_';
         }
 
-        return  $slug . $this->id . '.' . $this->extension;
+        return $slug . $this->id . '.' . $this->extension;
     }
 }

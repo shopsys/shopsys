@@ -107,7 +107,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID), );
+        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
         $orderInput->addProduct($product, 1);
         $orderInput->setTransport($transport);
         $orderInput->setPayment($payment);

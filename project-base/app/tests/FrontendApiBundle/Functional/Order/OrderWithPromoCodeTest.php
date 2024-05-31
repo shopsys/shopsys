@@ -250,6 +250,6 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
             'quantity' => 1,
         ]);
 
-        return  $response['data']['AddToCart']['cart']['uuid'];
+        return $response['data']['AddToCart']['cart']['uuid'];
     }
 }

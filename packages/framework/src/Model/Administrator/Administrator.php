@@ -371,6 +371,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function getRoles()
     {
         $roles = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
         foreach ($this->roles->getValues() as $role) {
             $roles[] = $role->getRole();
