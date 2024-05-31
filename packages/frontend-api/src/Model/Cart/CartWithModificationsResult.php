@@ -414,7 +414,7 @@ class CartWithModificationsResult
      */
     public function getRoundingPrice(): ?Price
     {
-        return $this->roundingPrice;
+        return $this->roundingPrice->isZero() ? null : $this->roundingPrice;
     }
 
     /**

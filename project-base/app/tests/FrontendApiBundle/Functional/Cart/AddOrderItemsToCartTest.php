@@ -40,8 +40,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
      */
     public function testOrderItemsAreCorrectlyAddedToCart(bool $shouldMerge, array $expectedProducts): void
     {
-        $response = $this->getResponseContentForQuery($this->createMinimalOrderQuery());
-        $orderUuid = $response['data']['CreateOrder']['order']['uuid'];
+        $orderUuid = $this->createMinimalOrderQuery();
 
         $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
         $addedProductQuantity = 6;
@@ -52,30 +51,16 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
         $this->addProductToCustomerCart($addedProduct2, $addedProductQuantity2);
 
         $cart = $this->findCartOfCurrentCustomer();
-        $cartUuid = $cart->getCartIdentifier();
+        $cartUuid = $cart->getCartIdentifier() !== '' ? $cart->getCartIdentifier() : null;
 
-        $addOrderItemsToCart = 'mutation {
-                AddOrderItemsToCart(input: {
-                    orderUuid: "' . $orderUuid . '"
-                    ' . ($cartUuid !== '' ? 'cartUuid: "' . $cartUuid . '"' : '') . '
-                    shouldMerge: ' . ($shouldMerge ? 'true' : 'false') . '
-                }) {
-                    items {
-                        product {
-                            name
-                        }
-                        quantity
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddOrderItemsToCart.graphql', [
+            'orderUuid' => $orderUuid,
+            'cartUuid' => $cartUuid,
+            'shouldMerge' => $shouldMerge,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
 
-        $response = $this->getResponseDataForGraphQlType(
-            $this->getResponseContentForQuery($addOrderItemsToCart),
-            'AddOrderItemsToCart',
-        );
-
-        foreach ($response['items'] as $key => $item) {
+        foreach ($data['items'] as $key => $item) {
             self::assertEquals(
                 $item['product']['name'],
                 t($expectedProducts[$key]['name'], [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -118,8 +103,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
 
     public function testCannotAddMoreOrderItemsToCartThanOnStock(): void
     {
-        $response = $this->getResponseContentForQuery($this->createMinimalOrderQuery());
-        $orderUuid = $response['data']['CreateOrder']['order']['uuid'];
+        $orderUuid = $this->createMinimalOrderQuery();
 
         $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
         $addedProductQuantity = 6;
@@ -169,9 +153,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
             $response['modifications']['itemModifications']['cartItemsWithChangedQuantity'][0],
         );
 
-        $response = $this->getResponseContentForQuery($this->createMinimalOrderQuery());
-
-        $orderUuid = $response['data']['CreateOrder']['order']['uuid'];
+        $orderUuid = $this->createMinimalOrderQuery();
 
         $addOrderItemsToCart = $this->getOrderRepeatMutation($orderUuid);
 
@@ -220,11 +202,17 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
             'quantity' => 1,
         ]);
 
-        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
+        $data = $this->getResponseDataForGraphQlType($response, 'AddToCart');
+
+        $cartUuid = $data['cart']['uuid'];
+
         $this->addPplTransportToCart($cartUuid);
         $this->addCardPaymentToCart($cartUuid);
 
-        return $this->getMutation($cartUuid);
+        $response = $this->getResponseContentForQuery($this->getMutation($cartUuid));
+        $data = $this->getResponseDataForGraphQlType($response, 'CreateOrder');
+
+        return $data['order']['uuid'];
     }
 
     /**

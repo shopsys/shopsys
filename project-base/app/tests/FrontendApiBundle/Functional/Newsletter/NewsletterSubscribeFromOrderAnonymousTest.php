@@ -22,7 +22,7 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
 
     public function testSubscribeFromOrderAnonymousUser(): void
     {
-        $this->createOrder();
+        $this->createOrder(true);
 
         $subscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(self::ANONYMOUS_USER, $this->domain->getId());
 
@@ -30,7 +30,19 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
         $this->assertEquals(self::ANONYMOUS_USER, $subscriber->getEmail());
     }
 
-    private function createOrder(): void
+    public function testAnonymousUserIsNotSubscribedOnDisagree(): void
+    {
+        $this->createOrder(false);
+
+        $subscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(self::ANONYMOUS_USER, $this->domain->getId());
+
+        $this->assertNull($subscriber);
+    }
+
+    /**
+     * @param bool $agreeNewsletterSubscription
+     */
+    private function createOrder(bool $agreeNewsletterSubscription): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
@@ -65,7 +77,7 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
             'postcode' => '12345',
             'country' => 'CZ',
             'isDeliveryAddressDifferentFromBilling' => false,
-            'newsletterSubscription' => true,
+            'newsletterSubscription' => $agreeNewsletterSubscription,
         ];
 
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);

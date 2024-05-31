@@ -23,12 +23,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem
 {
-    public const string TYPE_PAYMENT = 'payment';
-    public const string TYPE_PRODUCT = 'product';
-    public const string TYPE_TRANSPORT = 'transport';
-    public const string TYPE_DISCOUNT = 'discount';
-    public const string TYPE_ROUNDING = 'rounding';
-
     /**
      * @var int|null
      * @ORM\Column(type="integer")
@@ -61,17 +55,17 @@ class OrderItem
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      * @ORM\Column(type="money", precision=20, scale=6)
      */
-    protected $priceWithoutVat;
+    protected $unitPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      * @ORM\Column(type="money", precision=20, scale=6)
      */
-    protected $priceWithVat;
+    protected $unitPriceWithVat;
 
     /**
      * This property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
@@ -80,7 +74,7 @@ class OrderItem
 
     /**
      * This property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
@@ -154,8 +148,8 @@ class OrderItem
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
-        $this->priceWithoutVat = $price->getPriceWithoutVat();
-        $this->priceWithVat = $price->getPriceWithVat();
+        $this->unitPriceWithoutVat = $price->getPriceWithoutVat();
+        $this->unitPriceWithVat = $price->getPriceWithVat();
         $this->vatPercent = Decimal::create($vatPercent, 6)->innerValue();
         $this->quantity = $quantity;
         $this->type = $type;
@@ -192,17 +186,25 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithoutVat()
+    public function getUnitPriceWithoutVat()
     {
-        return $this->priceWithoutVat;
+        return $this->unitPriceWithoutVat;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithVat()
+    public function getUnitPriceWithVat()
     {
-        return $this->priceWithVat;
+        return $this->unitPriceWithVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getPrice(): Price
+    {
+        return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
     }
 
     /**
@@ -218,14 +220,14 @@ class OrderItem
      */
     public function getTotalPriceWithVat()
     {
-        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
+        return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->unitPriceWithVat->multiply(
             $this->quantity,
         );
     }
 
     /**
      * The total price property can be used when order item has prices that differ from current price calculation implementation.
-     * Otherwise it should be set to NULL (which means it will be calculated automatically).
+     * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $totalPrice
      */
@@ -285,8 +287,8 @@ class OrderItem
     public function edit(OrderItemData $orderItemData)
     {
         $this->name = $orderItemData->name;
-        $this->priceWithoutVat = $orderItemData->priceWithoutVat;
-        $this->priceWithVat = $orderItemData->priceWithVat;
+        $this->unitPriceWithoutVat = $orderItemData->unitPriceWithoutVat;
+        $this->unitPriceWithVat = $orderItemData->unitPriceWithVat;
 
         if ($orderItemData->usePriceCalculation) {
             $this->setTotalPrice(null);
@@ -394,7 +396,7 @@ class OrderItem
      */
     public function isTypeProduct(): bool
     {
-        return $this->isType(self::TYPE_PRODUCT);
+        return $this->isType(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
     /**
@@ -402,7 +404,7 @@ class OrderItem
      */
     public function isTypePayment(): bool
     {
-        return $this->isType(self::TYPE_PAYMENT);
+        return $this->isType(OrderItemTypeEnum::TYPE_PAYMENT);
     }
 
     /**
@@ -410,7 +412,7 @@ class OrderItem
      */
     public function isTypeTransport(): bool
     {
-        return $this->isType(self::TYPE_TRANSPORT);
+        return $this->isType(OrderItemTypeEnum::TYPE_TRANSPORT);
     }
 
     /**
@@ -418,7 +420,7 @@ class OrderItem
      */
     public function isTypeDiscount(): bool
     {
-        return $this->isType(self::TYPE_DISCOUNT);
+        return $this->isType(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
     /**
@@ -426,7 +428,7 @@ class OrderItem
      */
     public function isTypeRounding(): bool
     {
-        return $this->isType(self::TYPE_ROUNDING);
+        return $this->isType(OrderItemTypeEnum::TYPE_ROUNDING);
     }
 
     /**
@@ -441,26 +443,34 @@ class OrderItem
 
     protected function checkTypeTransport(): void
     {
-        $this->checkTypeOf(self::TYPE_TRANSPORT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_TRANSPORT);
     }
 
     protected function checkTypePayment(): void
     {
-        $this->checkTypeOf(self::TYPE_PAYMENT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PAYMENT);
     }
 
     protected function checkTypeProduct(): void
     {
-        $this->checkTypeOf(self::TYPE_PRODUCT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_PRODUCT);
     }
 
     protected function checkTypeDiscount(): void
     {
-        $this->checkTypeOf(self::TYPE_DISCOUNT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
     }
 
     protected function checkTypeRounding(): void
     {
-        $this->checkTypeOf(self::TYPE_DISCOUNT);
+        $this->checkTypeOf(OrderItemTypeEnum::TYPE_DISCOUNT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

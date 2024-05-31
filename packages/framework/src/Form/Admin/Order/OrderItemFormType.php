@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 use Shopsys\FrameworkBundle\Form\Transformers\InverseTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,6 +23,14 @@ use Symfony\Component\Validator\Constraints;
 class OrderItemFormType extends AbstractType
 {
     public const VALIDATION_GROUP_NOT_USING_PRICE_CALCULATION = 'notUsingPriceCalculation';
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     */
+    public function __construct(
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
+    ) {
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -41,14 +51,14 @@ class OrderItemFormType extends AbstractType
                 ],
                 'error_bubbling' => true,
             ])
-            ->add('priceWithVat', MoneyType::class, [
+            ->add('unitPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter unit price with VAT']),
                 ],
                 'error_bubbling' => true,
             ])
-            ->add('priceWithoutVat', MoneyType::class, [
+            ->add('unitPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
                     new Constraints\NotBlank([
@@ -118,6 +128,7 @@ class OrderItemFormType extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 return self::resolveValidationGroups($form);
             },
+            'empty_data' => fn () => $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT),
         ]);
     }
 

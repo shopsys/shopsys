@@ -26,8 +26,9 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,10 +38,6 @@ class OrderDataFixture
     private const PERCENTAGE_OF_ORDERS_BY_REGISTERED_USERS = 25;
 
     private const BATCH_SIZE = 10;
-
-    private int $orderTotalCount;
-
-    private int $orderItemCountPerOrder;
 
     /**
      * @var int[]
@@ -59,29 +56,31 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
+     * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        $orderTotalCount,
-        $orderItemCountPerOrder,
+        private int $orderTotalCount,
+        private int $orderItemCountPerOrder,
         private readonly EntityManagerInterface $em,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly Faker $faker,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
-        private readonly OrderFacade $orderFacade,
-        private readonly OrderPreviewFactory $orderPreviewFactory,
         private readonly ProductFacade $productFacade,
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly OrderDataFactory $orderDataFactory,
+        private readonly OrderInputFactory $orderInputFactory,
+        private readonly OrderProcessor $orderProcessor,
+        private readonly PlaceOrderFacade $placeOrderFacade,
+        private readonly Domain $domain,
     ) {
-        $this->orderTotalCount = $orderTotalCount;
-        $this->orderItemCountPerOrder = $orderItemCountPerOrder;
         $this->performanceProductIds = [];
     }
 
@@ -119,21 +118,31 @@ class OrderDataFixture
         $orderData = $this->createOrderData($customerUser);
         $quantifiedProducts = $this->createQuantifiedProducts();
 
-        $orderPreview = $this->orderPreviewFactory->create(
-            $orderData->currency,
-            $orderData->domainId,
-            $quantifiedProducts,
-            $orderData->transport,
-            $orderData->payment,
-            $customerUser,
-            null,
+        $transport = $this->getRandomTransport();
+        $payment = $this->getRandomPayment();
+
+        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById($orderData->domainId));
+        $orderInput->setTransport($transport);
+        $orderInput->setPayment($payment);
+        $orderInput->setCustomerUser($customerUser);
+
+        foreach ($quantifiedProducts as $quantifiedProduct) {
+            $orderInput->addProduct(
+                $quantifiedProduct->getProduct(),
+                $quantifiedProduct->getQuantity(),
+            );
+        }
+
+        $orderData = $this->orderProcessor->process(
+            $orderInput,
+            $orderData,
         );
 
-        $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
+        $this->placeOrderFacade->createOrderOnly($orderData);
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Order\OrderData
      */
     private function createOrderData(?CustomerUser $customerUser = null)
@@ -168,8 +177,6 @@ class OrderDataFixture
             $orderData->companyTaxNumber = (string)$this->faker->randomNumber(6);
         }
 
-        $orderData->transport = $this->getRandomTransport();
-        $orderData->payment = $this->getRandomPayment();
         $orderData->status = $this->persistentReferenceFacade->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryFirstName = $this->faker->firstName;

@@ -92,8 +92,6 @@ services:
         arguments:
             $routerMatchCommand: '@console.command.router_match'
 
-    Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter: ~
-
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
         arguments: [!tagged shopsys.breadcrumb_generator]
 
@@ -742,6 +740,10 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory
 
+    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor: ~
+
     Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller: ~
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
@@ -757,8 +759,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory
-
-    Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher: ~
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
@@ -811,12 +811,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactory
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
 

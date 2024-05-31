@@ -24,23 +24,21 @@ class OrderItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param string $orderItemType
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    protected function doCreateOrderItem(
+    public function createOrderItem(
         OrderItemData $orderItemData,
         Order $order,
-        string $orderItemType,
     ): OrderItem {
         $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
 
         return new $entityClassName(
             $order,
             $orderItemData->name,
-            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
+            new Price($orderItemData->unitPriceWithoutVat, $orderItemData->unitPriceWithVat),
             $orderItemData->vatPercent,
             $orderItemData->quantity,
-            $orderItemType,
+            $orderItemData->type,
             $orderItemData->unitName,
             $orderItemData->catnum,
         );
@@ -57,10 +55,9 @@ class OrderItemFactory
         Order $order,
         ?Product $product,
     ): OrderItem {
-        $orderItem = $this->doCreateOrderItem(
+        $orderItem = $this->createOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_PRODUCT,
         );
 
         $orderItem->setProduct($product);
@@ -79,10 +76,9 @@ class OrderItemFactory
         Order $order,
         Transport $transport,
     ): OrderItem {
-        $orderItem = $this->doCreateOrderItem(
+        $orderItem = $this->createOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_TRANSPORT,
         );
 
         $orderItem->setTransport($transport);
@@ -101,10 +97,9 @@ class OrderItemFactory
         Order $order,
         Payment $payment,
     ): OrderItem {
-        $orderItem = $this->doCreateOrderItem(
+        $orderItem = $this->createOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_PAYMENT,
         );
 
         $orderItem->setPayment($payment);
@@ -121,10 +116,9 @@ class OrderItemFactory
         OrderItemData $orderItemData,
         Order $order,
     ): OrderItem {
-        return $this->doCreateOrderItem(
+        return $this->createOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_DISCOUNT,
         );
     }
 
@@ -137,10 +131,9 @@ class OrderItemFactory
         OrderItemData $orderItemData,
         Order $order,
     ): OrderItem {
-        return $this->doCreateOrderItem(
+        return $this->createOrderItem(
             $orderItemData,
             $order,
-            OrderItem::TYPE_ROUNDING,
         );
     }
 }

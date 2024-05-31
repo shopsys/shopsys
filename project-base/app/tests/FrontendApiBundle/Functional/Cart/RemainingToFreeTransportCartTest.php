@@ -116,7 +116,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
 
         $newlyCreatedCartUuid = $newlyCreatedCart['uuid'];
         $this->addCardPaymentToCart($newlyCreatedCartUuid);
-        $this->addCzechPostTransportToCart($newlyCreatedCartUuid);
+        $this->addPplTransportToCart($newlyCreatedCartUuid);
 
         $query = '{
             cart(

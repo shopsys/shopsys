@@ -45,7 +45,7 @@ class NewsletterFacadeTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $this->newsletterFacade->addSubscribedEmail('no-reply@shopsys.com', 1);
+        $this->newsletterFacade->addSubscribedEmailIfNotExists('no-reply@shopsys.com', 1);
     }
 
     public function testDeleteSubscribedEmail(): void
@@ -54,7 +54,7 @@ class NewsletterFacadeTest extends TestCase
 
         $this->newsletterRepository
             ->expects($this->any())
-            ->method('getNewsletterSubscriberById')
+            ->method('findNewsletterSubscriberById')
             ->willReturn($newsletterSubscriberInstance);
 
         $this->em
@@ -66,6 +66,6 @@ class NewsletterFacadeTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $this->newsletterFacade->deleteById(1);
+        $this->newsletterFacade->delete($newsletterSubscriberInstance);
     }
 }

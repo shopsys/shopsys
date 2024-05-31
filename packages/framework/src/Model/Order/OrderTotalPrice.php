@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderTotalPrice
 {
@@ -39,6 +40,14 @@ class OrderTotalPrice
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getPrice(): Price
+    {
+        return new Price($this->priceWithoutVat, $this->priceWithVat);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
     public function getProductPriceWithVat(): Money
@@ -52,5 +61,13 @@ class OrderTotalPrice
     public function getProductPriceWithoutVat(): Money
     {
         return $this->productPriceWithoutVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getProductPrice(): Price
+    {
+        return new Price($this->productPriceWithoutVat, $this->productPriceWithVat);
     }
 }

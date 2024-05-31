@@ -32,17 +32,11 @@ class CartWithPromoCodeTest extends GraphQlTestCase
 
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, Domain::FIRST_DOMAIN_ID, PromoCode::class);
 
-        $applyPromoCodeMutation = 'mutation {
-            ApplyPromoCodeToCart(input: {
-                cartUuid: "' . $cartUuid . '"
-                promoCode: "' . $validPromoCode->getCode() . '"
-            }) {
-                uuid
-                promoCode
-            }
-        }';
-
-        $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ApplyPromoCodeToCart.graphql', [
+            'cartUuid' => $cartUuid,
+            'promoCode' => $validPromoCode->getCode(),
+        ]);
+        $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
         $query = 'query{
             cart(cartInput: {

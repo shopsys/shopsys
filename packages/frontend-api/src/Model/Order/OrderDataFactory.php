@@ -6,23 +6,18 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as FrameworkOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
-use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
-use Shopsys\FrontendApiBundle\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
-use Shopsys\FrontendApiBundle\Model\Store\Exception\StoreNotFoundUserError;
 
 class OrderDataFactory
 {
-    protected const ORDER_ORIGIN_GRAPHQL = 'Frontend API';
+    protected const string ORDER_ORIGIN_GRAPHQL = 'Frontend API';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
@@ -92,71 +87,5 @@ class OrderDataFactory
         }
 
         return $cloneOrderData;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
-    public function updateOrderDataFromCart(OrderData $orderData, Cart $cart): void
-    {
-        $orderData->payment = $cart->getPayment();
-        $orderData->transport = $cart->getTransport();
-        $orderData->goPayBankSwift = $cart->getPaymentGoPayBankSwift();
-        $pickupPlaceIdentifier = $cart->getPickupPlaceIdentifier();
-
-        if ($cart->getPickupPlaceIdentifier() === null) {
-            return;
-        }
-
-        if ($orderData->transport->isPersonalPickup()) {
-            try {
-                $store = $this->storeFacade->getByUuidAndDomainId(
-                    $pickupPlaceIdentifier,
-                    $this->domain->getId(),
-                );
-                $this->setOrderDataByStore($orderData, $store);
-            } catch (StoreByUuidNotFoundException $exception) {
-                throw new StoreNotFoundUserError($exception->getMessage());
-            }
-        }
-
-        if (
-            $orderData->transport->isPacketery() &&
-            $this->isPickupPlaceIdentifierIntegerInString($pickupPlaceIdentifier)
-        ) {
-            throw new InvalidPacketeryAddressIdUserError('Wrong packetery address ID');
-        }
-
-        $orderData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     */
-    protected function setOrderDataByStore(OrderData $orderData, Store $store): void
-    {
-        $orderData->personalPickupStore = $store;
-        $orderData->deliveryAddressSameAsBillingAddress = false;
-
-        $orderData->deliveryFirstName = $orderData->deliveryFirstName ?? $orderData->firstName;
-        $orderData->deliveryLastName = $orderData->deliveryLastName ?? $orderData->lastName;
-        $orderData->deliveryCompanyName = $orderData->deliveryCompanyName ?? $orderData->companyName;
-        $orderData->deliveryTelephone = $orderData->deliveryTelephone ?? $orderData->telephone;
-
-        $orderData->deliveryStreet = $store->getStreet();
-        $orderData->deliveryCity = $store->getCity();
-        $orderData->deliveryPostcode = $store->getPostcode();
-        $orderData->deliveryCountry = $store->getCountry();
-    }
-
-    /**
-     * @param string $pickupPlaceIdentifier
-     * @return bool
-     */
-    protected function isPickupPlaceIdentifierIntegerInString(string $pickupPlaceIdentifier): bool
-    {
-        return (string)(int)$pickupPlaceIdentifier !== $pickupPlaceIdentifier;
     }
 }

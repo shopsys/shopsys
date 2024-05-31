@@ -10,9 +10,10 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory
 
 /**
  * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
- * @method __construct(\App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory, \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory)
+ * @method __construct(\App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory, \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum)
  * @method \App\Model\Order\OrderData create()
  * @method \App\Model\Order\OrderData createFromOrder(\App\Model\Order\Order $order)
+ * @method \App\Model\Order\OrderData fillZeroPrices(\App\Model\Order\OrderData $orderData)
  */
 class OrderDataFactory extends BaseOrderDataFactory
 {

@@ -48,11 +48,10 @@ class RegistrationFacade implements RegistrationFacadeInterface
 
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromRegistrationData($registrationData);
 
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 
         if ($customerUser->isNewsletterSubscription()) {
-            $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
         }
 
         return $customerUser;

@@ -34,7 +34,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
             }
 
             foreach ($newsletterSubscribersData as $email) {
-                $this->newsletterFacade->addSubscribedEmail($email, $domainId);
+                $this->newsletterFacade->addSubscribedEmailIfNotExists($email, $domainId);
             }
         }
     }

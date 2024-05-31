@@ -24,11 +24,16 @@ class OrderItemDataFactory
     }
 
     /**
+     * @param string $orderItemType
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
-    public function create(): OrderItemData
+    public function create(string $orderItemType): OrderItemData
     {
-        return $this->createInstance();
+        $orderItemData = $this->createInstance();
+
+        $orderItemData->type = $orderItemType;
+
+        return $orderItemData;
     }
 
     /**
@@ -51,8 +56,8 @@ class OrderItemDataFactory
     protected function fillFromOrderItem(OrderItemData $orderItemData, OrderItem $orderItem)
     {
         $orderItemData->name = $orderItem->getName();
-        $orderItemData->priceWithVat = $orderItem->getPriceWithVat();
-        $orderItemData->priceWithoutVat = $orderItem->getPriceWithoutVat();
+        $orderItemData->unitPriceWithVat = $orderItem->getUnitPriceWithVat();
+        $orderItemData->unitPriceWithoutVat = $orderItem->getUnitPriceWithoutVat();
 
         $orderItemTotalPrice = $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
         $orderItemData->totalPriceWithVat = $orderItemTotalPrice->getPriceWithVat();
@@ -62,6 +67,7 @@ class OrderItemDataFactory
         $orderItemData->quantity = $orderItem->getQuantity();
         $orderItemData->unitName = $orderItem->getUnitName();
         $orderItemData->catnum = $orderItem->getCatnum();
+        $orderItemData->type = $orderItem->getType();
 
         $orderItemData->usePriceCalculation = $this->isUsingPriceCalculation($orderItemData, $orderItem);
     }
@@ -95,7 +101,7 @@ class OrderItemDataFactory
             $orderItem->getOrder()->getDomainId(),
         );
 
-        if (!$orderItemData->priceWithoutVat->equals($calculatedPriceWithoutVat)) {
+        if (!$orderItemData->unitPriceWithoutVat->equals($calculatedPriceWithoutVat)) {
             throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
                 $orderItem,
                 $calculatedPriceWithoutVat,

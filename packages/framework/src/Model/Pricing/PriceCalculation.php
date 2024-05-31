@@ -33,6 +33,20 @@ class PriceCalculation
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
+     * @param float $vatPercent
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getVatAmountByPriceWithVatForVatPercent(Money $priceWithVat, float $vatPercent): Money
+    {
+        $divisor = (string)(1 + $vatPercent / 100);
+
+        $priceWithoutVat = $priceWithVat->divide($divisor, static::PRICE_CALCULATION_MAX_SCALE);
+
+        return $this->rounding->roundVatAmount($priceWithVat->subtract($priceWithoutVat));
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return \Shopsys\FrameworkBundle\Component\Money\Money

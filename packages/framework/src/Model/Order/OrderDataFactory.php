@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
      */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
+        protected readonly OrderItemTypeEnum $orderItemTypeEnum,
     ) {
     }
 
@@ -32,7 +37,9 @@ class OrderDataFactory
      */
     public function create(): OrderData
     {
-        return $this->createInstance();
+        $orderData = $this->createInstance();
+
+        return $this->fillZeroPrices($orderData);
     }
 
     /**
@@ -42,6 +49,8 @@ class OrderDataFactory
     public function createFromOrder(Order $order): OrderData
     {
         $orderData = $this->createInstance();
+        $orderData = $this->fillZeroPrices($orderData);
+
         $this->fillFromOrder($orderData, $order);
 
         return $orderData;
@@ -79,13 +88,11 @@ class OrderDataFactory
             $orderData->deliveryCountry = $order->getDeliveryCountry();
         }
         $orderData->note = $order->getNote();
-        $orderItemsWithoutTransportAndPaymentData = [];
 
-        foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
+        foreach ($order->getItems() as $orderItem) {
             $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
-            $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()] = $orderItemData;
+            $orderData->items[$orderItem->getId()] = $orderItemData;
         }
-        $orderData->itemsWithoutTransportAndPayment = $orderItemsWithoutTransportAndPaymentData;
         $orderData->createdAt = $order->getCreatedAt();
         $orderData->domainId = $order->getDomainId();
         $orderData->currency = $order->getCurrency();
@@ -102,5 +109,18 @@ class OrderDataFactory
 
         $orderData->heurekaAgreement = $order->isHeurekaAgreement();
         $orderData->trackingNumber = $order->getTrackingNumber();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    protected function fillZeroPrices(OrderData $orderData): OrderData
+    {
+        foreach ($this->orderItemTypeEnum->getAllCases() as $type) {
+            $orderData->totalPricesByItemType[$type] = new Price(Money::zero(), Money::zero());
+        }
+
+        return $orderData;
     }
 }

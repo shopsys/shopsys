@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+
 class OrderItemData
 {
     /**
      * @var string|null
      */
     public $name;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public $priceWithVat;
 
     /**
      * If this attribute is set to true, all prices in this data object other that $priceWithVat will be ignored.
@@ -28,7 +25,12 @@ class OrderItemData
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public $priceWithoutVat;
+    public $unitPriceWithVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public $unitPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
@@ -69,4 +71,53 @@ class OrderItemData
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
     public $payment;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public $product;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
+     */
+    public $promoCode;
+
+    /**
+     * @var string|null
+     */
+    public $type;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
+     */
+    public function setUnitPrice(Price $unitPrice): void
+    {
+        $this->unitPriceWithVat = $unitPrice->getPriceWithVat();
+        $this->unitPriceWithoutVat = $unitPrice->getPriceWithoutVat();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     */
+    public function setTotalPrice(Price $totalPrice): void
+    {
+        $this->totalPriceWithVat = $totalPrice->getPriceWithVat();
+        $this->totalPriceWithoutVat = $totalPrice->getPriceWithoutVat();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice(): Price
+    {
+        return new Price($this->totalPriceWithoutVat, $this->totalPriceWithVat);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getUnitPrice(): Price
+    {
+        return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
+    }
 }

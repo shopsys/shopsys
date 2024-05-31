@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -66,7 +67,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\Product $product */
         $product = $this->createMock(Product::class);
         $price = new Price(Money::create(1), Money::create(1));
-        $orderItem = new OrderItem($order, 'test', $price, '1', 1, OrderItem::TYPE_PRODUCT, 'ks', 'cat');
+        $orderItem = new OrderItem($order, 'test', $price, '1', 1, OrderItemTypeEnum::TYPE_PRODUCT, 'ks', 'cat');
         $orderItem->setProduct($product);
         $order->addItem($orderItem);
         $order->setStatus($status);

@@ -19,7 +19,7 @@ class OrderDataTest extends TestCase
             OrderData::NEW_ITEM_PREFIX . '1' => $newOrderItemData,
             1 => $oldOrderItemData,
         ];
-        $orderData->itemsWithoutTransportAndPayment = $items;
+        $orderData->items = $items;
 
         $newItems = $orderData->getNewItemsWithoutTransportAndPayment();
 

@@ -110,23 +110,14 @@ trait OrderTestTrait
         Transport $transport,
         ?string $pickupPlaceIdentifier = null,
     ): void {
-        $pickupPlaceIdentifierLine = '';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'transportUuid' => $transport->getUuid(),
+            'pickupPlaceIdentifier' => $pickupPlaceIdentifier,
 
-        if ($pickupPlaceIdentifier !== null) {
-            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
-        }
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    ' . ($cartUuid !== null ? 'cartUuid: "' . $cartUuid . '"' : '') . '
-                    transportUuid: "' . $transport->getUuid() . '"
-                    ' . $pickupPlaceIdentifierLine . '
-                }) {
-                    uuid
-                }
-            }
-        ';
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        ]);
+
+        $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
     }
 
     /**
@@ -186,17 +177,13 @@ trait OrderTestTrait
      */
     protected function addPaymentToCart(?string $cartUuid, Payment $payment): void
     {
-        $changePaymentInCartMutation = '
-            mutation {
-                ChangePaymentInCart(input:{
-                    ' . ($cartUuid !== null ? 'cartUuid: "' . $cartUuid . '"' : '') . '
-                    paymentUuid: "' . $payment->getUuid() . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-        $this->getResponseContentForQuery($changePaymentInCartMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'paymentUuid' => $payment->getUuid(),
+
+        ]);
+
+        $this->getResponseDataForGraphQlType($response, 'ChangePaymentInCart');
     }
 
     protected function addCardPaymentToDemoCart(): void

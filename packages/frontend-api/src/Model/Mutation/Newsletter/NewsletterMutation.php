@@ -33,7 +33,7 @@ class NewsletterMutation extends AbstractMutation
 
         $input = $argument['input'];
         $email = $input['email'];
-        $this->newsletterFacade->addSubscribedEmail($email, $this->domain->getId());
+        $this->newsletterFacade->addSubscribedEmailIfNotExists($email, $this->domain->getId());
 
         return [
             true,

@@ -31,14 +31,15 @@ class NewsletterRepository
      * @param int $domainId
      * @return bool
      */
-    public function existsSubscribedEmail($email, $domainId)
+    public function existsSubscribedEmail(string $email, int $domainId): bool
     {
-        return $this->getNewsletterSubscriberRepository()->findOneBy(
-            [
+        $count = $this->getNewsletterSubscriberRepository()
+            ->count([
                 'email' => $email,
                 'domainId' => $domainId,
-            ],
-        ) !== null;
+            ]);
+
+        return $count > 0;
     }
 
     /**
@@ -80,9 +81,9 @@ class NewsletterRepository
 
     /**
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
+     * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber|null
      */
-    public function getNewsletterSubscriberById(int $id)
+    public function findNewsletterSubscriberById(int $id): ?NewsletterSubscriber
     {
         return $this->getNewsletterSubscriberRepository()->find($id);
     }

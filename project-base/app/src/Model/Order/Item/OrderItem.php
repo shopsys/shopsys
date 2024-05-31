@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 
 /**
  * @ORM\Table(name="order_items")
@@ -42,7 +43,7 @@ class OrderItem extends BaseOrderItem
      */
     public function setRelatedOrderItem(?self $relatedOrderItem): void
     {
-        if ($this->type !== self::TYPE_PRODUCT) {
+        if ($this->type !== OrderItemTypeEnum::TYPE_PRODUCT) {
             throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
         }
 

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrdere
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -43,8 +44,8 @@ class OrderItemTest extends TestCase
 
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'order item transport';
-        $orderItemData->priceWithVat = Money::zero();
-        $orderItemData->priceWithoutVat = Money::zero();
+        $orderItemData->unitPriceWithVat = Money::zero();
+        $orderItemData->unitPriceWithoutVat = Money::zero();
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
         /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport|\PHPUnit\Framework\MockObject\MockObject $transport */
@@ -77,8 +78,8 @@ class OrderItemTest extends TestCase
 
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'order item payment';
-        $orderItemData->priceWithVat = Money::zero();
-        $orderItemData->priceWithoutVat = Money::zero();
+        $orderItemData->unitPriceWithVat = Money::zero();
+        $orderItemData->unitPriceWithoutVat = Money::zero();
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment|\PHPUnit\Framework\MockObject\MockObject $payment */
@@ -117,8 +118,8 @@ class OrderItemTest extends TestCase
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
-        $orderItemData->priceWithVat = Money::create(20);
-        $orderItemData->priceWithoutVat = Money::create(30);
+        $orderItemData->unitPriceWithVat = Money::create(20);
+        $orderItemData->unitPriceWithoutVat = Money::create(30);
         $orderItemData->quantity = 2;
         $orderItemData->vatPercent = '10';
 
@@ -126,8 +127,8 @@ class OrderItemTest extends TestCase
         $orderItem->edit($orderItemData);
 
         $this->assertSame('newName', $orderItem->getName());
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(20)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(30)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(20)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(30)));
         $this->assertSame(2, $orderItem->getQuantity());
         $this->assertSame('10.000000', $orderItem->getvatPercent());
     }
@@ -136,8 +137,8 @@ class OrderItemTest extends TestCase
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
-        $orderItemData->priceWithVat = Money::create(20);
-        $orderItemData->priceWithoutVat = Money::create(30);
+        $orderItemData->unitPriceWithVat = Money::create(20);
+        $orderItemData->unitPriceWithoutVat = Money::create(30);
         $orderItemData->quantity = 2;
         $orderItemData->vatPercent = '10';
 
@@ -145,8 +146,8 @@ class OrderItemTest extends TestCase
         $orderItem->edit($orderItemData);
 
         $this->assertSame('newName', $orderItem->getName());
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(20)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(30)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(20)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(30)));
         $this->assertSame(2, $orderItem->getQuantity());
         $this->assertSame('10.000000', $orderItem->getvatPercent());
     }
@@ -172,7 +173,7 @@ class OrderItemTest extends TestCase
             new Price(Money::create(10), Money::create(12)),
             '0.2',
             1,
-            OrderItem::TYPE_PAYMENT,
+            OrderItemTypeEnum::TYPE_PAYMENT,
             null,
             null,
         );
@@ -194,7 +195,7 @@ class OrderItemTest extends TestCase
             new Price(Money::create(10), Money::create(12)),
             '0.2',
             1,
-            OrderItem::TYPE_TRANSPORT,
+            OrderItemTypeEnum::TYPE_TRANSPORT,
             null,
             null,
         );
@@ -215,7 +216,7 @@ class OrderItemTest extends TestCase
             new Price(Money::create(10), Money::create(12)),
             '0.2',
             1,
-            OrderItem::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_PRODUCT,
             null,
             null,
         );

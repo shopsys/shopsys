@@ -7,7 +7,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff;
 use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
-use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
@@ -56,7 +55,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Form/Admin/*/*FormType.php',
             __DIR__ . '/src/Migrations/Version*.php',
             __DIR__ . '/src/Model/AdminNavigation/SideMenuBuilder.php',
-            __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
             __DIR__ . '/src/Model/Product/ProductVisibilityRepository.php',
             __DIR__ . '/src/Model/Product/Search/FilterQuery.php',
             __DIR__ . '/src/Controller/Admin/AdministratorController.php',
@@ -100,7 +98,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/*',
             __DIR__ . '/src/Component/Domain/DomainFactoryOverwritingDomainUrl.php',
             __DIR__ . '/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php',
-            __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
             __DIR__ . '/src/Component/EntityExtension/EntityExtensionSubscriber.php',
         ],
         ForbiddenDumpSniff::class => [
@@ -126,6 +123,8 @@ return static function (ECSConfig $ecsConfig): void {
         EmptyStatementSniff::class . '.DetectedCatch' => [
             __DIR__ . '/src/Component/Elasticsearch/Debug/ElasticsearchTracer.php',
             __DIR__ . '/src/DependencyInjection/Compiler/RegisterProjectFrameworkClassExtensionsCompilerPass.php',
+            __DIR__ . '/src/Model/Order/Processing/OrderProcessor.php',
+            __DIR__ . '/src/Model/Order/Processing/OrderProcessorMiddleware/PersonalPickupPointMiddleware.php',
         ],
         ParentCallSpacingSniff::class . '.IncorrectLinesCountBeforeControlStructure' => [
             __DIR__ . '/src/Component/Filesystem/Flysystem/VolumeDriver.php',

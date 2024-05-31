@@ -33,7 +33,7 @@ class OrderPaymentFormType extends AbstractType
                 'choice_value' => 'id',
                 'error_bubbling' => true,
             ])
-            ->add('priceWithVat', MoneyType::class, [
+            ->add('unitPriceWithVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter unit price with VAT']),
@@ -47,7 +47,7 @@ class OrderPaymentFormType extends AbstractType
                 ],
                 'error_bubbling' => true,
             ])
-            ->add('priceWithoutVat', MoneyType::class, [
+            ->add('unitPriceWithoutVat', MoneyType::class, [
                 'scale' => 6,
                 'constraints' => [
                     new Constraints\NotBlank([

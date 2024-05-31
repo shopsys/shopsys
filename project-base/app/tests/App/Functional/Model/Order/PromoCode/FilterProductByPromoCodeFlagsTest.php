@@ -54,7 +54,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode, $this->domain->getId());
         self::assertEquals($productWithActionFlag, $result);
     }
 
@@ -68,7 +68,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithoutFlag, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithoutFlag, $promoCode, $this->domain->getId());
         self::assertEquals($productWithoutFlag, $result);
     }
 
@@ -93,7 +93,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlagNew, $promoCodeFlagMadeInCz, $promoCodeFlagAction]);
 
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithNewAndMadeInCzFlags, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithNewAndMadeInCzFlags, $promoCode, $this->domain->getId());
         self::assertEquals($productWithNewAndMadeInCzFlags, $result);
     }
 
@@ -102,11 +102,11 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         $promoCode = $this->createPromoCodeWithFlags([]);
 
         $productWithoutFlag = $this->getProductWithoutFlag();
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithoutFlag, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithoutFlag, $promoCode, $this->domain->getId());
         self::assertEquals($productWithoutFlag, $result);
 
         $productWithActionFlag = $this->getProductWithActionFlag();
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode, $this->domain->getId());
         self::assertEquals($productWithActionFlag, $result);
     }
 
@@ -120,7 +120,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithoutFlags, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithoutFlags, $promoCode, $this->domain->getId());
         self::assertNull($result);
     }
 
@@ -134,7 +134,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode, $this->domain->getId());
         self::assertNull($result);
     }
 
@@ -154,7 +154,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlagMadeInCz, $promoCodeFlagAction]);
 
-        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode);
+        $result = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productWithActionFlag, $promoCode, $this->domain->getId());
         self::assertNull($result);
     }
 

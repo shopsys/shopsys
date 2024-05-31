@@ -12,6 +12,7 @@ use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -51,16 +52,16 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
+        $orderItemData = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT)[0];
         $orderItemData->quantity = 10;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithVat = Money::create(100);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(1000)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -72,20 +73,20 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
+        $orderItemData = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT)[0];
         $orderItemData->quantity = 10;
         $orderItemData->usePriceCalculation = false;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
-        $orderItemData->priceWithoutVat = Money::create(50);
+        $orderItemData->unitPriceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithoutVat = Money::create(50);
         $orderItemData->totalPriceWithVat = Money::create(950);
         $orderItemData->totalPriceWithoutVat = Money::create(400);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PRODUCT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(950)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(400)));
 
@@ -97,18 +98,18 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = 'new item';
         $orderItemData->quantity = 10;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
-        $orderData->itemsWithoutTransportAndPayment[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
+        $orderItemData->unitPriceWithVat = Money::create(100);
+        $orderData->items[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemByName($this->order, 'new item');
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(1000)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -120,22 +121,22 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     {
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = 'new item';
         $orderItemData->quantity = 10;
         $orderItemData->usePriceCalculation = false;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
-        $orderItemData->priceWithoutVat = Money::create(50);
+        $orderItemData->unitPriceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithoutVat = Money::create(50);
         $orderItemData->totalPriceWithVat = Money::create(950);
         $orderItemData->totalPriceWithoutVat = Money::create(400);
-        $orderData->itemsWithoutTransportAndPayment[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
+        $orderData->items[OrderData::NEW_ITEM_PREFIX . '1'] = $orderItemData;
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemByName($this->order, 'new item');
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(950)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(400)));
 
@@ -149,13 +150,13 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $orderItemData = $orderData->orderTransport;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithVat = Money::create(100);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -170,16 +171,16 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $orderItemData = $orderData->orderTransport;
         $orderItemData->usePriceCalculation = false;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
-        $orderItemData->priceWithoutVat = Money::create(50);
+        $orderItemData->unitPriceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithoutVat = Money::create(50);
         $orderItemData->totalPriceWithVat = Money::create(100);
         $orderItemData->totalPriceWithoutVat = Money::create(50);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::TRANSPORT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
 
@@ -193,13 +194,13 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
         $orderItemData = $orderData->orderPayment;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithVat = Money::create(100);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create('66.67')));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertNull($orderItem->getTotalPriceWithoutVat());
 
@@ -214,16 +215,16 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $orderItemData = $orderData->orderPayment;
         $orderItemData->usePriceCalculation = false;
         $orderItemData->vatPercent = '50.00';
-        $orderItemData->priceWithVat = Money::create(100);
-        $orderItemData->priceWithoutVat = Money::create(50);
+        $orderItemData->unitPriceWithVat = Money::create(100);
+        $orderItemData->unitPriceWithoutVat = Money::create(50);
         $orderItemData->totalPriceWithVat = Money::create(100);
         $orderItemData->totalPriceWithoutVat = Money::create(50);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
 
         $orderItem = $this->getOrderItemById($this->order, self::PAYMENT_ITEM_ID);
-        $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(100)));
-        $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
+        $this->assertThat($orderItem->getUnitPriceWithVat(), new IsMoneyEqual(Money::create(100)));
+        $this->assertThat($orderItem->getUnitPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
         $this->assertThat($orderItem->getTotalPriceWithVat(), new IsMoneyEqual(Money::create(100)));
         $this->assertThat($orderItem->getTotalPriceWithoutVat(), new IsMoneyEqual(Money::create(50)));
 
@@ -274,14 +275,14 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
         $this->order = $this->getReference(OrderDataFixture::ORDER_PREFIX . self::ORDER_ID, Order::class);
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
-        $orderItemData = $orderData->itemsWithoutTransportAndPayment[self::PRODUCT_ITEM_ID];
-        $orderItemData->priceWithVat = Money::create(21590);
+        $orderItemData = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT)[0];
+        $orderItemData->unitPriceWithVat = Money::create(21590);
 
         $orderPayment = $orderData->orderPayment;
-        $orderPayment->priceWithVat = Money::create(100);
+        $orderPayment->unitPriceWithVat = Money::create(100);
 
         $orderTransport = $orderData->orderTransport;
-        $orderTransport->priceWithVat = Money::create(242);
+        $orderTransport->unitPriceWithVat = Money::create(242);
 
         $this->orderFacade->edit(self::ORDER_ID, $orderData);
     }

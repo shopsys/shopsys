@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderResolverMap extends ResolverMap
 {
@@ -39,9 +38,6 @@ class OrderResolverMap extends ResolverMap
                 },
                 'status' => function (Order $order) {
                     return $order->getStatus()->getName($this->domain->getLocale());
-                },
-                'totalPrice' => function (Order $order) {
-                    return new Price($order->getTotalPriceWithoutVat(), $order->getTotalPriceWithVat());
                 },
             ],
         ];

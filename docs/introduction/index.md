@@ -6,6 +6,7 @@
 -   [Database Migrations](./database-migrations.md)
 -   [Components](./components.md)
 -   [Abstract Filesystem](./abstract-filesystem.md)
+-   [Order Processing](./order-processing.md)
 -   [Product Feeds](../model/product-feeds.md)
 -   [Logging](./logging.md)
 -   [Domain, Multidomain, Multilanguage](./domain-multidomain-multilanguage.md)

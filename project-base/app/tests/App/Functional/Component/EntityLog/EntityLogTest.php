@@ -7,9 +7,7 @@ namespace Tests\App\Functional\Component\EntityLog;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
-use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataFactory;
-use App\Model\Order\OrderFacade;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
@@ -18,10 +16,12 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
+use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -38,7 +38,12 @@ class EntityLogTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private OrderPreviewFactory $orderPreviewFactory;
+    private OrderProcessor $orderProcessor;
+
+    /**
+     * @inject
+     */
+    private PlaceOrderFacade $placeOrderFacade;
 
     /**
      * @inject
@@ -69,6 +74,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
      * @inject
      */
     private OrderDataFactory $orderDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderInputFactory $orderInputFactory;
 
     /**
      * @inject
@@ -172,7 +182,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($newStatus->getName(), $log->getChangeSet()['status']['newReadableValue']);
     }
 
-    public function testEditCollectionEntity()
+    public function testEditCollectionEntity(): void
     {
         $productTicketName = '100 Czech crowns ticket';
 
@@ -226,7 +236,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
 
-        foreach ($orderData->itemsWithoutTransportAndPayment as &$itemData) {
+        foreach ($orderData->getItemsWithoutTransportAndPayment() as $itemData) {
             $itemData->name = $expectedName;
             $itemData->quantity = $expectedQuantity;
             $itemData->vatPercent = $expectedVatPercent;
@@ -241,11 +251,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $changeSet = reset($logs)->getChangeSet();
 
         $this->assertArrayHasKey('name', $changeSet);
-        $this->assertArrayHasKey('priceWithoutVat', $changeSet);
+        $this->assertArrayHasKey('unitPriceWithoutVat', $changeSet);
         $this->assertArrayHasKey('vatPercent', $changeSet);
         $this->assertArrayHasKey('quantity', $changeSet);
         $this->assertSame($expectedName, $changeSet['name']['newReadableValue']);
-        $this->assertSame($expectedPriceWithoutVat, $changeSet['priceWithoutVat']['newReadableValue']);
+        $this->assertSame($expectedPriceWithoutVat, $changeSet['unitPriceWithoutVat']['newReadableValue']);
         $this->assertSame($expectedVatPercent, $changeSet['vatPercent']['newReadableValue']);
         $this->assertSame($expectedQuantity, $changeSet['quantity']['newReadableValue']);
     }
@@ -256,15 +266,15 @@ class EntityLogTest extends TransactionFunctionalTestCase
     private function getNewOrder(): Order
     {
         $product = $this->productRepository->getById(1);
-
-        /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportRepository->getById(3);
-        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
-        $orderData = new OrderData();
-        $orderData->transport = $transport;
-        $orderData->payment = $payment;
+        $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+        $orderInput->addProduct($product, 1);
+        $orderInput->setTransport($transport);
+        $orderInput->setPayment($payment);
+
+        $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $orderData->firstName = 'firstName';
         $orderData->lastName = 'lastName';
@@ -290,14 +300,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        $orderPreview = $this->orderPreviewFactory->create(
-            $orderData->currency,
-            $orderData->domainId,
-            [new QuantifiedProduct($product, 1)],
-            $transport,
-            $payment,
+        $orderData = $this->orderProcessor->process(
+            $orderInput,
+            $orderData,
         );
 
-        return $this->orderFacade->createOrder($orderData, $orderPreview, null);
+        return $this->placeOrderFacade->createOrderOnly($orderData);
     }
 }

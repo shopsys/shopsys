@@ -9,14 +9,14 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\LimitNotReachedException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CurrentPromoCodeFacade
 {
@@ -25,18 +25,18 @@ class CurrentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $promoCodeApplicableProductsTotalPriceCalculator
      */
     public function __construct(
         protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly PromoCodeProductRepository $promoCodeProductRepository,
         protected readonly Domain $domain,
         protected readonly ProductPromoCodeFiller $productPromoCodeFiller,
-        protected readonly PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        protected readonly PromoCodeApplicableProductsTotalPriceCalculator $promoCodeApplicableProductsTotalPriceCalculator,
     ) {
     }
 
@@ -79,16 +79,17 @@ class CurrentPromoCodeFacade
     {
         $remainingCodeUses = $promoCode->getRemainingUses();
 
-        if ($remainingCodeUses !== null && $remainingCodeUses === 0) {
+        if ($remainingCodeUses === 0) {
             throw new InvalidPromoCodeException($promoCode->getCode());
         }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return int[]
      */
-    protected function validatePromoCodeByProductsInCart(PromoCode $promoCode, Cart $cart)
+    protected function validatePromoCodeByProductsInCart(PromoCode $promoCode, array $products): array
     {
         $domainId = $this->domain->getId();
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
@@ -97,14 +98,17 @@ class CurrentPromoCodeFacade
         $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
 
         if (count($allowedProductIds) === 0) {
-            //promo code hasn't any relation with products or product from categories or product from brands
-            return;
+            // promo code hasn't any relation with products or product from categories or product from brands
+            return array_map(
+                fn (Product $product) => $product->getId(),
+                $products,
+            );
         }
 
         $isValidPromoCode = false;
 
-        foreach ($cart->getItems() as $cartItem) {
-            if (in_array($cartItem->getProduct()->getId(), $allowedProductIds, true) === true) {
+        foreach ($products as $product) {
+            if (in_array($product->getId(), $allowedProductIds, true) === true) {
                 $isValidPromoCode = true;
 
                 break;
@@ -114,53 +118,55 @@ class CurrentPromoCodeFacade
         if ($isValidPromoCode === false) {
             throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
         }
+
+        return $allowedProductIds;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      */
-    protected function validateLimit(PromoCode $promoCode, Cart $cart): void
+    protected function validateLimit(PromoCode $promoCode, Price $price): void
     {
-        $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
-            $promoCode,
-            $cart->getQuantifiedProducts(),
-        );
-
-        if ($limit === null) {
-            throw new LimitNotReachedException($promoCode);
-        }
+        $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $price);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return int[]
      */
-    protected function validatePromoCodeByFlags(PromoCode $promoCode, Cart $cart): void
+    protected function validatePromoCodeByFlags(PromoCode $promoCode, array $products): array
     {
+        $domainId = $this->domain->getId();
         $isValidPromoCode = false;
 
-        foreach ($cart->getItems() as $cartItem) {
-            $productFromCart = $cartItem->getProduct();
-            $product = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productFromCart, $promoCode);
+        $validProductIds = [];
 
-            if ($product !== null) {
-                $isValidPromoCode = true;
+        foreach ($products as $product) {
+            $filteredProduct = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($product, $promoCode, $domainId);
 
-                break;
+            if ($filteredProduct === null) {
+                continue;
             }
+
+            $isValidPromoCode = true;
+
+            $validProductIds[] = $filteredProduct->getId();
         }
 
         if ($isValidPromoCode === false) {
             throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
         }
+
+        return $validProductIds;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null $promoCode
-     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
      */
     public function getPromoCodePerProductByDomainId(
         array $quantifiedProducts,
@@ -209,17 +215,33 @@ class CurrentPromoCodeFacade
             throw new InvalidPromoCodeException($enteredCode);
         }
 
+        $quantifiedProducts = $cart->getQuantifiedProducts();
+        $totalProductPrice = $this->promoCodeApplicableProductsTotalPriceCalculator->calculateTotalPrice($quantifiedProducts);
+
+        $this->validatePromoCode($promoCode, $totalProductPrice, $cart->getProducts());
+
+        return $promoCode;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductPrice
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @return int[]
+     */
+    public function validatePromoCode(PromoCode $promoCode, Price $totalProductPrice, array $products): array
+    {
         if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
-            throw new AvailableForRegisteredCustomerUserOnly($enteredCode);
+            throw new AvailableForRegisteredCustomerUserOnly($promoCode->getCode());
         }
 
         $this->validatePricingGroup($promoCode);
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainingUses($promoCode);
-        $this->validatePromoCodeByProductsInCart($promoCode, $cart);
-        $this->validatePromoCodeByFlags($promoCode, $cart);
-        $this->validateLimit($promoCode, $cart);
+        $allowedProductIdsByProducts = $this->validatePromoCodeByProductsInCart($promoCode, $products);
+        $allowedProductIdsByFlags = $this->validatePromoCodeByFlags($promoCode, $products);
+        $this->validateLimit($promoCode, $totalProductPrice);
 
-        return $promoCode;
+        return array_intersect($allowedProductIdsByProducts, $allowedProductIdsByFlags);
     }
 }

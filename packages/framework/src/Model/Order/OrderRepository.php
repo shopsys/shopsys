@@ -266,22 +266,6 @@ class OrderRepository
     }
 
     /**
-     * @param string $email
-     * @param int $domainId
-     * @return int
-     */
-    public function getOrdersCountByEmailAndDomainId($email, $domainId)
-    {
-        return $this->getOrderListQueryBuilder()
-            ->select('count(o)')
-            ->andWhere('o.domainId = :domain')
-            ->andWhere('o.email = :email OR cu.email = :email')
-            ->setParameter('email', $email)
-            ->setParameter('domain', $domainId)
-            ->getQuery()->getSingleScalarResult();
-    }
-
-    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getOrderListQueryBuilder()

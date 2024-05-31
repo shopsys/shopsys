@@ -53,10 +53,8 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Form/Admin/ProductFormTypeExtension.php',
             __DIR__ . '/src/Model/Product/ProductVisibilityRepository.php',
             __DIR__ . '/src/Form/Front/Order/PersonalInfoFormType.php',
-            __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
             __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
             __DIR__ . '/tests/App/Functional/Model/Order/OrderFacadeTest.php',
-            __DIR__ . '/tests/App/Functional/Model/Order/Preview/OrderPreviewCalculationTest.php',
             __DIR__ . '/tests/App/Functional/Model/Pricing/InputPriceRecalculationSchedulerTest.php',
             __DIR__ . '/tests/App/Smoke/BackendApiCreateProductTest.php',
             __DIR__ . '/tests/App/Smoke/Http/RouteConfigCustomization.php',
@@ -150,7 +148,6 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         ObjectIsCreatedByFactorySniff::class => [
             __DIR__ . '/tests/*',
-            __DIR__ . '/src/Model/Order/Preview/OrderPreviewCalculation.php',
             __DIR__ . '/src/Model/Product/Filter/Elasticsearch/ProductFilterConfigFactory.php',
         ],
         ForbiddenDumpSniff::class => [

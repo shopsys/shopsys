@@ -182,8 +182,6 @@ services:
 
     App\Model\Product\Listing\RequestToOrderingModeIdConverter: ~
 
-    App\Model\Product\Pricing\QuantifiedProductDiscountCalculation: ~
-
     App\Model\Product\Search\FilterQuery: ~
 
     App\Model\Product\Search\FilterQueryFactory: ~
@@ -486,6 +484,9 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderRepository:
         alias: App\Model\Order\OrderRepository
 
+    Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade:
+        alias: App\Model\Order\PlaceOrderFacade
+
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
         alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
 
@@ -599,9 +600,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade:
         alias: App\Model\Product\Pricing\ProductInputPriceFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation:
-        alias: App\Model\Product\Pricing\QuantifiedProductDiscountCalculation
 
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
         alias: App\Model\Product\ProductBreadcrumbGenerator

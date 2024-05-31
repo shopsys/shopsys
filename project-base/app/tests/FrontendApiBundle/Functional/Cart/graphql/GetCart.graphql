@@ -39,5 +39,15 @@ query GetCart(
                 }
             }
         }
+        roundingPrice {
+            priceWithoutVat
+            priceWithVat
+            vatAmount
+        }
+        totalPrice {
+            priceWithoutVat
+            priceWithVat
+            vatAmount
+        }
     }
 }

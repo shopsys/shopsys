@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+
 class OrderData
 {
-    public const NEW_ITEM_PREFIX = 'new_';
+    public const string NEW_ITEM_PREFIX = 'new_';
 
     /**
      * @var string|null
@@ -141,7 +146,7 @@ class OrderData
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */
-    public $itemsWithoutTransportAndPayment;
+    public $items = [];
 
     /**
      * @var \DateTime|null
@@ -223,13 +228,29 @@ class OrderData
      */
     public $trackingNumber;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public $totalPrice;
+
+    /**
+     * @var array<string, \Shopsys\FrameworkBundle\Model\Pricing\Price>
+     */
+    public $totalPricesByItemType = [];
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public $customerUser;
+
     public function __construct()
     {
-        $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
         $this->paymentTransactionRefunds = [];
         $this->heurekaAgreement = false;
         $this->isCompanyCustomer = false;
+
+        $this->totalPrice = new Price(Money::zero(), Money::zero());
     }
 
     /**
@@ -239,12 +260,100 @@ class OrderData
     {
         $newItemsWithoutTransportAndPayment = [];
 
-        foreach ($this->itemsWithoutTransportAndPayment as $index => $item) {
+        foreach ($this->getItemsWithoutTransportAndPayment() as $index => $item) {
             if (str_starts_with((string)$index, self::NEW_ITEM_PREFIX)) {
                 $newItemsWithoutTransportAndPayment[] = $item;
             }
         }
 
         return $newItemsWithoutTransportAndPayment;
+    }
+
+    /**
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    public function getItemsByType(string $type): array
+    {
+        return array_values(array_filter(
+            $this->items,
+            fn (OrderItemData $item) => $item->type === $type,
+        ));
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToAdd
+     * @param string $type
+     */
+    public function addTotalPrice(Price $priceToAdd, string $type): void
+    {
+        $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToAdd);
+        $this->totalPrice = $this->totalPrice->add($priceToAdd);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $item
+     */
+    public function addItem(OrderItemData $item): void
+    {
+        $this->items[] = $item;
+    }
+
+    /**
+     * @param string[] $itemTypes
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceForItemTypes(array $itemTypes): Price
+    {
+        $totalPrice = new Price(Money::zero(), Money::zero());
+
+        foreach ($itemTypes as $itemType) {
+            $totalPrice = $totalPrice->add($this->totalPricesByItemType[$itemType]);
+        }
+
+        return $totalPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getProductsTotalPriceAfterAppliedDiscounts(): Price
+    {
+        return $this->getTotalPriceForItemTypes([
+            OrderItemTypeEnum::TYPE_PRODUCT,
+            OrderItemTypeEnum::TYPE_DISCOUNT,
+        ]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
+    {
+        return $this->totalPrice
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_PAYMENT])
+            ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_DISCOUNT]);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    public function getItemsWithoutTransportAndPayment(): array
+    {
+        return array_filter(
+            $this->items,
+            fn (OrderItemData $item) => !in_array($item->type, [OrderItemTypeEnum::TYPE_TRANSPORT, OrderItemTypeEnum::TYPE_PAYMENT], true),
+        );
+    }
+
+    /**
+     * Method is used for \Shopsys\FrameworkBundle\Form\OrderItemsType to set items without transport and payment during order edit
+     *
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[] $items
+     */
+    public function setItemsWithoutTransportAndPayment(array $items): void
+    {
+        $this->items = $items;
     }
 }

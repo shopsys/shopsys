@@ -36,9 +36,9 @@ class OrderItemPriceCalculation
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItemData->vatPercent;
         $vat = $this->vatFactory->create($vatData, $domainId);
-        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->priceWithVat, $vat);
+        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->unitPriceWithVat, $vat);
 
-        return $orderItemData->priceWithVat->subtract($vatAmount);
+        return $orderItemData->unitPriceWithVat->subtract($vatAmount);
     }
 
     /**
@@ -56,7 +56,7 @@ class OrderItemPriceCalculation
         $vatData->percent = $orderItem->getVatPercent();
         $vat = $this->vatFactory->create($vatData, $orderItem->getOrder()->getDomainId());
 
-        $totalPriceWithVat = $orderItem->getPriceWithVat()->multiply($orderItem->getQuantity());
+        $totalPriceWithVat = $orderItem->getUnitPriceWithVat()->multiply($orderItem->getQuantity());
         $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat);
         $totalPriceWithoutVat = $totalPriceWithVat->subtract($totalVatAmount);
 
