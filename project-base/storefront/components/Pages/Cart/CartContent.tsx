@@ -1,6 +1,6 @@
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
-import { useCartPageNavigation } from './utils';
+import { useCartPageNavigation } from './cartUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';

@@ -5,10 +5,10 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import {
-    getPickupPlaceDetail,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
-} from 'components/Pages/Order/TransportAndPayment/utils';
+    getPickupPlaceDetail,
+} from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';

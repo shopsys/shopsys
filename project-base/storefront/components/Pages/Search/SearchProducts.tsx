@@ -1,5 +1,5 @@
 import { SearchProductsContent } from './SearchProductsContent';
-import { useSearchProductsData } from './utils';
+import { useSearchProductsData } from './searchUtils';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SkeletonModuleProductsList } from 'components/Blocks/Skeleton/SkeletonModuleProductsList';

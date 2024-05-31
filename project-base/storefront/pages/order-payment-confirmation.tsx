@@ -3,7 +3,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentFail } from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import { PaymentSuccess } from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
-import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/utils';
+import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/paymentConfirmationUtils';
 import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
 import useTranslation from 'next-translate/useTranslation';

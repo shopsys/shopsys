@@ -3,7 +3,7 @@ import {
     getTransportAndPaymentValidationMessages,
     useLoadTransportAndPaymentFromLastOrder,
     useTransportAndPaymentPageNavigation,
-} from './utils';
+} from './transportAndPaymentUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';

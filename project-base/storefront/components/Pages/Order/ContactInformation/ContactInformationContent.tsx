@@ -2,7 +2,11 @@ import { ContactInformationFormContent } from './ContactInformationFormContent';
 import { ContactInformationEmail } from './FormBlocks/ContactInformationEmail';
 import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformationSendOrderButton';
 import { useContactInformationForm, useContactInformationFormMeta } from './contactInformationFormMeta';
-import { useContactInformationPageNavigation, useCreateOrder, useShouldDisplayContactInformationForm } from './utils';
+import {
+    useContactInformationPageNavigation,
+    useCreateOrder,
+    useShouldDisplayContactInformationForm,
+} from './contactInformationUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { Form } from 'components/Forms/Form/Form';
