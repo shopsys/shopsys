@@ -137,7 +137,6 @@ export const cacheUpdates: UpdatesConfig = {
             manuallyUpdateCartQuery(cache, result.RemovePromoCodeFromCart, result.RemovePromoCodeFromCart.uuid);
         },
         AddProductToList(result: TypeAddProductToListMutation, args: TypeAddProductToListMutationVariables, cache) {
-            cache.invalidate('Query');
             manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
         },
         RemoveProductFromList(

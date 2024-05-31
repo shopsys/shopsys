@@ -1045,3 +1045,5 @@ We want to implement more usable UI design which will be better base for upcomin
 
 -   simple navgation images are now blacked-out during cypress tests
 -   make sure you add the blackout everywhere where your snapshots contain simple navigation with images
+
+#### removed invalid cache invalidation when adding to product list ([#3172](https://github.com/shopsys/shopsys/pull/3172))
