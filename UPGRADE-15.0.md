@@ -974,6 +974,14 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `CsrfExtension` class
 -   see #project-base-diff to update your project
 
+#### update easy-coding-standard to version 12.2 ([#3192](https://github.com/shopsys/shopsys/pull/3192))
+
+-   update configuration file to new version
+-   skip rules are now defined in the separate `ecs-skip-rule.php` file
+-   paths to check are now defined directly in the `ecs.php` file
+-   fixer `RedundantMarkDownTrailingSpacesFixer` was removed as markdown files are formatted by prettier
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
