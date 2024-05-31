@@ -10,7 +10,7 @@ type GrapesJsParserProps = {
 
 export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
     const catnums = parseCatnums(text);
-    const [{ data: allProductsResponse, fetching: areProductsFetching }] = useProductsByCatnums({
+    const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
         variables: { catnums },
     });
 
@@ -23,7 +23,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
                     return (
                         <GrapesJsProducts
                             key={index}
-                            allFetchedProducts={allProductsResponse}
+                            allFetchedProducts={productsData}
                             areProductsFetching={areProductsFetching}
                             rawProductPart={part}
                         />

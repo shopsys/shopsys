@@ -275,10 +275,11 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             value={countriesAsSelectOptions.find(
                                                                 (option) => option.value === field.value.value,
                                                             )}
-                                                            onChange={(...data) => {
-                                                                field.onChange(...data);
+                                                            onChange={(...selectOnChangeEventData) => {
+                                                                field.onChange(...selectOnChangeEventData);
                                                                 updateContactInformation({
-                                                                    deliveryCountry: data[0] as SelectOptionType,
+                                                                    deliveryCountry:
+                                                                        selectOnChangeEventData[0] as SelectOptionType,
                                                                 });
                                                             }}
                                                         />

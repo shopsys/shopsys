@@ -46,14 +46,14 @@ export const RegistrationAfterOrder: FC = () => {
             pause: !orderEmail,
         });
 
-    const onRegistrationHandler = async (data: RegistrationAfterOrderFormType) => {
+    const onRegistrationHandler = async (registrationAfterOrderFormData: RegistrationAfterOrderFormType) => {
         if (!parsedRegistrationData.current || !orderUuid) {
             return;
         }
 
         blurInput();
         const registrationError = await register({
-            ...data,
+            ...registrationAfterOrderFormData,
             ...parsedRegistrationData.current,
             country: parsedRegistrationData.current.country.value,
             companyCustomer: parsedRegistrationData.current.customer === 'companyCustomer',

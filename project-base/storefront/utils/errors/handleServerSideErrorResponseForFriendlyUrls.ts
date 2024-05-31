@@ -5,7 +5,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 
 export const handleServerSideErrorResponseForFriendlyUrls = (
     graphQLErrors: GraphQLError[] | undefined,
-    data: unknown,
+    serverSideRequestData: unknown,
     res: ServerResponse<IncomingMessage>,
 ) => {
     if (graphQLErrors?.some((error) => error.extensions.code === 500)) {
@@ -16,7 +16,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
         throw new Error('Internal Server Error');
     }
 
-    if (!data && !(res.statusCode === 503)) {
+    if (!serverSideRequestData && !(res.statusCode === 503)) {
         return {
             notFound: true as const,
         };

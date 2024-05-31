@@ -61,9 +61,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
             return;
         }
 
-        const result = await setDefaultDeliveryAddress({ deliveryAddressUuid });
+        const setDefaultDeliveryAddressResult = await setDefaultDeliveryAddress({ deliveryAddressUuid });
 
-        if (result.error !== undefined) {
+        if (setDefaultDeliveryAddressResult.error !== undefined) {
             showErrorMessage(
                 t('There was an error while setting your delivery address as the default one'),
                 GtmMessageOriginType.other,

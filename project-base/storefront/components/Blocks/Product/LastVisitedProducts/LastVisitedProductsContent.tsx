@@ -8,11 +8,11 @@ type LastVisitedProductsProps = {
 };
 
 export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ productsCatnums }) => {
-    const [{ data: result, fetching: areProductsFetching }] = useProductsByCatnums({
+    const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
         variables: { catnums: productsCatnums },
     });
 
-    const lastVisitedProducts = result?.productsByCatnums;
+    const lastVisitedProducts = productsData?.productsByCatnums;
 
     if (!lastVisitedProducts && !areProductsFetching) {
         return null;

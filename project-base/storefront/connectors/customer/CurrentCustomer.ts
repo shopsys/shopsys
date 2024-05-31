@@ -3,13 +3,13 @@ import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/C
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined => {
-    const [{ data }] = useCurrentCustomerUserQuery();
+    const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
 
-    if (!data?.currentCustomerUser) {
+    if (!currentCustomerUserData?.currentCustomerUser) {
         return undefined;
     }
 
-    const { currentCustomerUser } = data;
+    const { currentCustomerUser } = currentCustomerUserData;
     const isCompanyCustomer = currentCustomerUser.__typename === 'CompanyCustomerUser';
 
     return {

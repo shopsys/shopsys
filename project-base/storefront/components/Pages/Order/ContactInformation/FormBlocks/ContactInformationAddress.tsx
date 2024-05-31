@@ -78,10 +78,10 @@ export const ContactInformationAddress: FC = () => {
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
-                                onChange={(...data) => {
-                                    field.onChange(...data);
+                                onChange={(...selectOnChangeEventData) => {
+                                    field.onChange(...selectOnChangeEventData);
                                     updateContactInformation({
-                                        country: data[0] as SelectOptionType,
+                                        country: selectOnChangeEventData[0] as SelectOptionType,
                                     });
                                 }}
                             />

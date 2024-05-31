@@ -31,10 +31,10 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onPersonalDataExportHandler = useCallback<SubmitHandler<PersonalDataExportFormType>>(
-        async (data) => {
+        async (personalDataExportFormData) => {
             blurInput();
             const personalDataExportResult = await personalDataExport({
-                email: data.email,
+                email: personalDataExportFormData.email,
                 type: TypePersonalDataAccessRequestTypeEnum.Export,
             });
 

@@ -11,7 +11,7 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
-import { FormProvider, useWatch } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { useRegistration } from 'utils/auth/useRegistration';
@@ -29,14 +29,14 @@ export const RegistrationContent: FC = () => {
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
-    const onRegistrationHandler = async (data: RegistrationFormType) => {
+    const onRegistrationHandler: SubmitHandler<RegistrationFormType> = async (registrationFormData) => {
         blurInput();
         const registrationError = await register({
-            ...data,
-            password: data.passwordFirst,
+            ...registrationFormData,
+            password: registrationFormData.passwordFirst,
             cartUuid,
-            country: data.country.value,
-            companyCustomer: data.customer === 'companyCustomer',
+            country: registrationFormData.country.value,
+            companyCustomer: registrationFormData.customer === 'companyCustomer',
             lastOrderUuid: null,
         });
 

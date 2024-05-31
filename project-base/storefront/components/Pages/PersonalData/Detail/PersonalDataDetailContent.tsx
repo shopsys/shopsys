@@ -7,18 +7,18 @@ import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type PersonalDataDetailContentProps = {
-    data: TypePersonalDataDetailQuery;
+    personalDataDetail: TypePersonalDataDetailQuery;
 };
 
-export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ data }) => {
+export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ personalDataDetail }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDate } = useFormatDate();
 
-    const userData = data.accessPersonalData.customerUser;
-    const orders = data.accessPersonalData.orders;
-    const newsLetterSubscriber = data.accessPersonalData.newsletterSubscriber;
-    const exportLink = data.accessPersonalData.exportLink;
+    const userData = personalDataDetail.accessPersonalData.customerUser;
+    const orders = personalDataDetail.accessPersonalData.orders;
+    const newsLetterSubscriber = personalDataDetail.accessPersonalData.newsletterSubscriber;
+    const exportLink = personalDataDetail.accessPersonalData.exportLink;
 
     return (
         <>

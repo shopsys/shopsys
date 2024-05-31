@@ -73,22 +73,22 @@ export const useProductsData = (
             | TypeBrandProductsQueryVariables,
         previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
     ) => {
-        const response = await client
+        const productsResponse = await client
             .query<
                 TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery,
                 typeof variables
             >(queryDocument, variables)
             .toPromise();
 
-        if (!response.data) {
+        if (!productsResponse.data) {
             setProductsData({ products: undefined, hasNextPage: false });
 
             return;
         }
 
         setProductsData({
-            products: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.products.edges),
-            hasNextPage: response.data.products.pageInfo.hasNextPage,
+            products: mergeProductEdges(previouslyQueriedProductsFromCache, productsResponse.data.products.edges),
+            hasNextPage: productsResponse.data.products.pageInfo.hasNextPage,
         });
         stopFetching();
     };

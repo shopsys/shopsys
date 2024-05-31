@@ -49,30 +49,30 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (
-        data,
+        customerChangeProfileFormData,
         event,
     ) => {
         event?.preventDefault();
 
-        onChangeProfileHandler(data);
-        onChangePasswordHandler(data);
+        onChangeProfileHandler(customerChangeProfileFormData);
+        onChangePasswordHandler(customerChangeProfileFormData);
     };
 
-    const onChangeProfileHandler = async (data: CustomerChangeProfileFormType) => {
+    const onChangeProfileHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
         const changeProfileResult = await customerEditProfile({
             input: {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                telephone: data.telephone,
-                street: data.street,
-                city: data.city,
-                country: data.country.value,
-                postcode: data.postcode,
-                companyCustomer: data.companyCustomer,
-                companyName: data.companyName,
-                companyNumber: data.companyNumber,
-                companyTaxNumber: data.companyTaxNumber,
-                newsletterSubscription: data.newsletterSubscription,
+                firstName: customerChangeProfileFormData.firstName,
+                lastName: customerChangeProfileFormData.lastName,
+                telephone: customerChangeProfileFormData.telephone,
+                street: customerChangeProfileFormData.street,
+                city: customerChangeProfileFormData.city,
+                country: customerChangeProfileFormData.country.value,
+                postcode: customerChangeProfileFormData.postcode,
+                companyCustomer: customerChangeProfileFormData.companyCustomer,
+                companyName: customerChangeProfileFormData.companyName,
+                companyNumber: customerChangeProfileFormData.companyNumber,
+                companyTaxNumber: customerChangeProfileFormData.companyTaxNumber,
+                newsletterSubscription: customerChangeProfileFormData.newsletterSubscription,
             },
         });
 
@@ -84,15 +84,15 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         );
     };
 
-    const onChangePasswordHandler = async (data: CustomerChangeProfileFormType) => {
-        if (data.passwordFirst === '' || data.passwordSecond === '') {
+    const onChangePasswordHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
+        if (customerChangeProfileFormData.passwordFirst === '' || customerChangeProfileFormData.passwordSecond === '') {
             return;
         }
 
         const changePasswordResult = await changePassword({
-            email: data.email,
-            oldPassword: data.passwordOld,
-            newPassword: data.passwordFirst,
+            email: customerChangeProfileFormData.email,
+            oldPassword: customerChangeProfileFormData.passwordOld,
+            newPassword: customerChangeProfileFormData.passwordFirst,
         });
 
         handleUpdateResult(

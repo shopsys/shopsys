@@ -7,10 +7,10 @@ type FormatPriceFunctionType = (price: string | number, options?: { explicitZero
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const { t } = useTranslation();
-    const [{ data }] = useSettingsQuery();
+    const [{ data: settingsData }] = useSettingsQuery();
     const { defaultLocale = 'en' } = useDomainConfig();
 
-    const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = data?.settings?.pricing ?? {};
+    const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = settingsData?.settings?.pricing ?? {};
     const getPriceAsFloat = (price: string | number) => (typeof price === 'number' ? price : parseFloat(price));
 
     return (price, options) =>

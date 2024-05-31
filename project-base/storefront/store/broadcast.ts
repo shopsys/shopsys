@@ -33,8 +33,8 @@ const broadcastImpl: BroadcastImpl = (f, name) => (set, get, store) => {
         channel.postMessage(state);
     };
 
-    channel.onmessage = (e) => {
-        if ((e.data as { sync: string }).sync === name) {
+    channel.onmessage = (messageEvent) => {
+        if ((messageEvent.data as { sync: string }).sync === name) {
             // Remove all functions and symbols from the store
             const state = Object.entries(get() as Item).reduce((obj, [key, val]) => {
                 let newObj = { ...obj };
@@ -49,7 +49,7 @@ const broadcastImpl: BroadcastImpl = (f, name) => (set, get, store) => {
             return;
         }
 
-        set(e.data);
+        set(messageEvent.data);
     };
 
     return f(onSet, get, store);

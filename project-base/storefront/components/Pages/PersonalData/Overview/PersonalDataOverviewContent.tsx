@@ -31,10 +31,10 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onPersonalDataOverviewHandler = useCallback<SubmitHandler<PersonalDataOverviewFormType>>(
-        async (data) => {
+        async (personalDataOverviewFormData) => {
             blurInput();
             const personalDataOverviewResult = await personalDataOverview({
-                email: data.email,
+                email: personalDataOverviewFormData.email,
                 type: TypePersonalDataAccessRequestTypeEnum.Display,
             });
 

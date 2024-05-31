@@ -44,19 +44,22 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         variables: TypeSearchProductsQueryVariables,
         previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
     ) => {
-        const response = await client
+        const searchProductsResponse = await client
             .query<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
             .toPromise();
 
-        if (!response.data?.productsSearch) {
+        if (!searchProductsResponse.data?.productsSearch) {
             return;
         }
 
         setSearchProductsData({
-            ...response.data,
+            ...searchProductsResponse.data,
             productsSearch: {
-                ...response.data.productsSearch,
-                edges: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
+                ...searchProductsResponse.data.productsSearch,
+                edges: mergeProductEdges(
+                    previouslyQueriedProductsFromCache,
+                    searchProductsResponse.data.productsSearch.edges,
+                ),
             },
         });
         stopFetching();

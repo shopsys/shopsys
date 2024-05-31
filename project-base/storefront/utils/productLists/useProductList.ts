@@ -14,9 +14,9 @@ export const useProductList = (
     callbacks: {
         removeSuccess: () => void;
         removeError: () => void;
-        addProductSuccess: (result: TypeProductListFragment | null | undefined) => void;
+        addProductSuccess: (updatedProductList: TypeProductListFragment | null | undefined) => void;
         addProductError: () => void;
-        removeProductSuccess: (result: TypeProductListFragment | null | undefined) => void;
+        removeProductSuccess: (updatedProductList: TypeProductListFragment | null | undefined) => void;
         removeProductError: () => void;
     },
 ) => {

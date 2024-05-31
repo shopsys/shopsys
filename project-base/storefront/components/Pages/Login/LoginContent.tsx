@@ -25,7 +25,7 @@ export const LoginContent: FC = () => {
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const login = useLogin();
 
-    const onLoginHandler = async (data: { email: string; password: string }) => {
+    const onLoginHandler = async (loginFormData: { email: string; password: string }) => {
         let redirectUrl = url;
 
         if (typeof router.query.r === 'string') {
@@ -34,8 +34,8 @@ export const LoginContent: FC = () => {
 
         const loginResult = await login(
             {
-                email: data.email,
-                password: data.password,
+                email: loginFormData.email,
+                password: loginFormData.password,
                 previousCartUuid: cartUuid,
             },
             redirectUrl,

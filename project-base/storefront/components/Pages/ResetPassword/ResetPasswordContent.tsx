@@ -32,9 +32,9 @@ export const ResetPasswordContent: FC = () => {
     } = useController({ name: formMeta.fields.email.name, control: formProviderMethods.control });
 
     const onResetPasswordHandler = useCallback<SubmitHandler<PasswordResetFormType>>(
-        async (data) => {
+        async (passwordResetFormData) => {
             blurInput();
-            const resetPasswordResult = await resetPassword(data);
+            const resetPasswordResult = await resetPassword(passwordResetFormData);
 
             if (resetPasswordResult.data?.RequestPasswordRecovery !== undefined) {
                 showSuccessMessage(formMeta.messages.success);

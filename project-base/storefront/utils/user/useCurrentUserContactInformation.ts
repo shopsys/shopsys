@@ -9,10 +9,12 @@ import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const useCurrentUserContactInformation = (): ContactInformation => {
-    const [{ data }] = useCurrentCustomerUserQuery();
+    const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
-    const contactInformationApiData = mapCurrentCustomerContactInformationApiData(data?.currentCustomerUser);
+    const contactInformationApiData = mapCurrentCustomerContactInformationApiData(
+        currentCustomerUserData?.currentCustomerUser,
+    );
     const contactInformationFromStore = usePersistStore((store) => store.contactInformation);
 
     if (!contactInformationApiData) {
