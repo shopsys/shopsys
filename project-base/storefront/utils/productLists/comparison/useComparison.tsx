@@ -16,7 +16,7 @@ export const useComparison = () => {
     const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
+    const { productListData, removeList, isProductInList, toggleProductInList, isProductListFetching } = useProductList(
         TypeProductListTypeEnum.Comparison,
         {
             addProductError: () => showErrorMessage(t('Unable to add product to comparison.')),
@@ -42,7 +42,7 @@ export const useComparison = () => {
 
     return {
         comparison: productListData?.productList,
-        fetching,
+        isProductListFetching,
         isProductInComparison: isProductInList,
         toggleProductInComparison: toggleProductInList,
         removeComparison: removeList,

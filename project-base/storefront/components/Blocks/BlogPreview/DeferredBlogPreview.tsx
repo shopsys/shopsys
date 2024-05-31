@@ -13,10 +13,10 @@ const BlogPreviewPlaceholder = dynamic(() =>
 );
 
 export const DeferredBlogPreview: FC = () => {
-    const [{ data: blogPreviewData, fetching: fetchingArticles }] = useBlogArticlesQuery({
+    const [{ data: blogPreviewData, fetching: areBlogArticlesFetching }] = useBlogArticlesQuery({
         variables: BLOG_PREVIEW_VARIABLES,
     });
-    const [{ data: blogUrlData, fetching: fetchingBlogUrl }] = useBlogUrlQuery();
+    const [{ data: blogUrlData, fetching: isBlogUrlFetching }] = useBlogUrlQuery();
     const blogUrl = blogUrlData?.blogCategories[0].link;
 
     const shouldRender = useDeferredRender('blog_preview');
@@ -25,8 +25,8 @@ export const DeferredBlogPreview: FC = () => {
         <BlogPreview
             blogArticles={blogPreviewData?.blogArticles.edges}
             blogUrl={blogUrl}
-            fetchingArticles={fetchingArticles}
-            fetchingBlogUrl={fetchingBlogUrl}
+            fetchingArticles={areBlogArticlesFetching}
+            fetchingBlogUrl={isBlogUrlFetching}
         />
     ) : (
         <BlogPreviewPlaceholder blogArticles={blogPreviewData?.blogArticles.edges} blogUrl={blogUrl} />

@@ -9,16 +9,16 @@ import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
-    const { wishlist, fetching, removeWishlist: handleRemoveWishlist } = useWishlist();
+    const { wishlist, isProductListFetching, removeWishlist: handleRemoveWishlist } = useWishlist();
     const title = `${t('Wishlist')}${wishlist?.products.length ? ` (${wishlist.products.length})` : ''}`;
 
     return (
         <>
             <h1 className="mb-3">{title}</h1>
 
-            {fetching && <SkeletonModuleWishlist />}
+            {isProductListFetching && <SkeletonModuleWishlist />}
 
-            {wishlist?.products && !fetching && (
+            {wishlist?.products && !isProductListFetching && (
                 <>
                     <div className="flex w-full flex-col items-center justify-between border-b border-graySlate pb-2 lg:flex-row">
                         <div
@@ -34,16 +34,16 @@ export const Wishlist: FC = () => {
 
                     <div>
                         <ProductsList
+                            areProductsFetching={isProductListFetching}
                             gtmMessageOrigin={GtmMessageOriginType.other}
                             gtmProductListName={GtmProductListNameType.wishlist}
-                            isFetching={fetching}
                             products={wishlist.products}
                         />
                     </div>
                 </>
             )}
 
-            {!wishlist?.products && !fetching && (
+            {!wishlist?.products && !isProductListFetching && (
                 <div className="flex items-center">
                     <InfoIcon className="mr-4 w-8" />
                     <div className="h3">{t('There are no products in the wishlist. Add some first.')}</div>

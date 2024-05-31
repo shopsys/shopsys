@@ -13,7 +13,7 @@ type OrderActionProps = {
     withGapTop?: boolean;
     backStepClickHandler?: () => void;
     nextStepClickHandler?: () => void;
-    isLoading?: boolean;
+    shouldShowSpinnerOnNextStepButton?: boolean;
 };
 
 export const OrderAction: FC<OrderActionProps> = ({
@@ -24,7 +24,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     nextStepClickHandler,
     withGapBottom,
     withGapTop,
-    isLoading,
+    shouldShowSpinnerOnNextStepButton,
 }) => {
     return (
         <div
@@ -46,7 +46,7 @@ export const OrderAction: FC<OrderActionProps> = ({
             </div>
             <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
                 <SubmitButton isWithDisabledLook={hasDisabledLook} onClick={nextStepClickHandler}>
-                    {isLoading && <SpinnerIcon className="w-5" />}
+                    {shouldShowSpinnerOnNextStepButton && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
                     <ArrowIcon className="relative top-0 ml-1 -rotate-90" />
                 </SubmitButton>

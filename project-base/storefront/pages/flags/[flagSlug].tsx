@@ -41,7 +41,7 @@ const FlagDetailPage: NextPage = () => {
     const orderingMode = getProductListSortFromUrlQuery(router.query[SORT_QUERY_PARAMETER_NAME]);
     const filter = getMappedProductFilter(router.query[FILTER_QUERY_PARAMETER_NAME]);
 
-    const [{ data: flagDetailData, fetching }] = useFlagDetailQuery({
+    const [{ data: flagDetailData, fetching: isFlagFetching }] = useFlagDetailQuery({
         variables: {
             urlSlug: getSlugFromUrl(router.asPath),
             orderingMode,
@@ -52,14 +52,14 @@ const FlagDetailPage: NextPage = () => {
     const seoTitle = useSeoTitleWithPagination(flagDetailData?.flag?.products.totalCount, flagDetailData?.flag?.name);
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(flagDetailData?.flag);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isFlagFetching);
 
     return (
         <CommonLayout
             breadcrumbs={flagDetailData?.flag?.breadcrumb}
             breadcrumbsType="category"
             hreflangLinks={flagDetailData?.flag?.hreflangLinks}
-            isFetchingData={!filter && fetching && !flagDetailData}
+            isFetchingData={!filter && isFlagFetching && !flagDetailData}
             title={seoTitle}
         >
             {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}

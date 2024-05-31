@@ -37,7 +37,7 @@ export const useProductsData = (
         shouldAbortFetchingProducts: boolean;
         abortedFetchCallback: () => void;
     },
-): [TypeListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
+) => {
     const client = useClient();
     const { asPath } = useRouter();
     const currentPage = useCurrentPageQuery();
@@ -63,8 +63,8 @@ export const useProductsData = (
         ),
     );
 
-    const [fetching, setFetching] = useState(!productsData.products);
-    const [loadMoreFetching, setLoadMoreFetching] = useState(false);
+    const [areProductsFetching, setAreProductsFetching] = useState(!productsData.products);
+    const [isLoadingMoreProducts, setIsLoadingMoreProducts] = useState(false);
 
     const fetchProducts = async (
         variables:
@@ -95,16 +95,16 @@ export const useProductsData = (
 
     const startFetching = () => {
         if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setFetching(true);
+            setAreProductsFetching(true);
         } else {
-            setLoadMoreFetching(true);
+            setIsLoadingMoreProducts(true);
             previousLoadMoreRef.current = currentLoadMore;
         }
     };
 
     const stopFetching = () => {
-        setFetching(false);
-        setLoadMoreFetching(false);
+        setAreProductsFetching(false);
+        setIsLoadingMoreProducts(false);
     };
 
     useEffect(() => {
@@ -159,5 +159,5 @@ export const useProductsData = (
         );
     }, [urlSlug, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
 
-    return [productsData.products, productsData.hasNextPage, fetching, loadMoreFetching];
+    return { ...productsData, areProductsFetching, isLoadingMoreProducts };
 };

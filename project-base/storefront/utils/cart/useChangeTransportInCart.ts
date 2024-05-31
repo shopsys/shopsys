@@ -9,21 +9,21 @@ import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useLatest } from 'utils/ui/useLatest';
 
-export type ChangeTransportHandler = (
+export type ChangeTransportInCart = (
     newTransportUuid: string | null,
     newPickupPlace: TypeListedStoreFragment | null,
 ) => Promise<TypeCartFragment | undefined | null>;
 
-export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] => {
-    const [{ fetching }, changeTransportInCart] = useChangeTransportInCartMutation();
+export const useChangeTransportInCart = () => {
+    const [{ fetching: isChangingTransportInCart }, changeTransportInCartMutation] = useChangeTransportInCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
 
     const gtmCart = useLatest(gtmCartInfo);
 
-    const changeTransportHandler: ChangeTransportHandler = async (newTransportUuid, newPickupPlace) => {
-        const changeTransportResult = await changeTransportInCart(
+    const changeTransportInCart: ChangeTransportInCart = async (newTransportUuid, newPickupPlace) => {
+        const changeTransportResult = await changeTransportInCartMutation(
             {
                 input: {
                     transportUuid: newTransportUuid,
@@ -66,5 +66,5 @@ export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] =>
         return changeTransportResult.data?.ChangeTransportInCart;
     };
 
-    return [changeTransportHandler, fetching];
+    return { changeTransportInCart, isChangingTransportInCart };
 };

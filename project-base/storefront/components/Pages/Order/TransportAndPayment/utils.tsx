@@ -26,8 +26,8 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
-import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
-import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
+import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
+import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
@@ -50,7 +50,7 @@ const ErrorPopup = dynamic(
 
 const { publicRuntimeConfig } = getConfig();
 
-export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentHandler) => {
+export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCart) => {
     const { payment: currentPayment, paymentGoPayBankSwift: currentPaymentGoPayBankSwift } = useCurrentCart();
 
     const changePayment = (updatedPaymentUuid: string | null) =>
@@ -67,8 +67,8 @@ export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentHand
 export const useTransportChangeInSelect = (
     transports: TypeTransportWithAvailablePaymentsAndStoresFragment[] | undefined,
     lastOrderPickupPlace: TypeListedStoreFragment | null,
-    changeTransportHandler: ChangeTransportHandler,
-    changePaymentHandler: ChangePaymentHandler,
+    changeTransportHandler: ChangeTransportInCart,
+    changePaymentHandler: ChangePaymentInCart,
 ) => {
     const { defaultLocale } = useDomainConfig();
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState(lastOrderPickupPlace);
@@ -261,8 +261,8 @@ export const getPickupPlaceDetail = (
         : undefined;
 
 export const useLoadTransportAndPaymentFromLastOrder = (
-    changeTransportInCart: ChangeTransportHandler,
-    changePaymentInCart: ChangePaymentHandler,
+    changeTransportInCart: ChangeTransportInCart,
+    changePaymentInCart: ChangePaymentInCart,
 ): [boolean, TypeListedStoreFragment | null] => {
     const client = useClient();
     const isUserLoggedIn = useIsUserLoggedIn();

@@ -38,7 +38,7 @@ export const ContactInformationWrapper: FC = () => {
                         buttonBack={t('Back')}
                         buttonNext={t('Submit order')}
                         hasDisabledLook={!formProviderMethods.formState.isValid}
-                        isLoading={isCreatingOrder}
+                        shouldShowSpinnerOnNextStepButton={isCreatingOrder}
                         withGapTop={false}
                     />
                 </Form>

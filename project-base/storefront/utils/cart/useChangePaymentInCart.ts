@@ -9,22 +9,22 @@ import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useLatest } from 'utils/ui/useLatest';
 
-export type ChangePaymentHandler = (
+export type ChangePaymentInCart = (
     newPaymentUuid: string | null,
     newGoPayBankSwift: string | null,
 ) => Promise<TypeCartFragment | undefined | null>;
 
-export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
-    const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutation();
+export const useChangePaymentInCart = () => {
+    const [{ fetching: isChangingPaymentInOrder }, changePaymentInCartMutation] = useChangePaymentInCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
 
     const gtmCart = useLatest(gtmCartInfo);
 
-    const changePaymentHandler = useCallback<ChangePaymentHandler>(
+    const changePaymentInCart = useCallback<ChangePaymentInCart>(
         async (newPaymentUuid, newGoPayBankSwift) => {
-            const changePaymentResult = await changePaymentInCart(
+            const changePaymentResult = await changePaymentInCartMutation(
                 {
                     input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
                 },
@@ -60,8 +60,8 @@ export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
 
             return changePaymentResult.data?.ChangePaymentInCart;
         },
-        [cartUuid, changePaymentInCart, gtmCart, t],
+        [cartUuid, changePaymentInCartMutation, gtmCart, t],
     );
 
-    return [changePaymentHandler, fetching];
+    return { changePaymentInCart, isChangingPaymentInOrder };
 };

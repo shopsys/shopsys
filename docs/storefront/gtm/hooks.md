@@ -9,10 +9,10 @@ It is triggered every time the page (and therefore products) change.
 
 ```ts
 export const useGtmPaginatedProductListViewEvent = (
-  paginatedProducts: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
-  gtmProductListName: GtmProductListNameType // name of the viewed paginated list
+    paginatedProducts: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
+    gtmProductListName: GtmProductListNameType, // name of the viewed paginated list
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -23,10 +23,10 @@ It is triggered every time the page, therefore products change.
 
 ```ts
 export const useGtmSliderProductListViewEvent = (
-  products: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
-  gtmProuctListName: GtmProductListNameType // name of the viewed paginated list
+    products: ListedProductFragment[] | undefined, // array of displayed products, if loaded and available
+    gtmProuctListName: GtmProductListNameType, // name of the viewed paginated list
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -36,11 +36,10 @@ Hook used to handle the viewing of autocomplete search results. It is triggered 
 
 ```ts
 export const useGtmAutocompleteResultsViewEvent = (
-  searchResult: AutocompleteSearchQuery | undefined, // object containing all autocomplete search results, if loaded and available
-  keyword: string, // search keyword for which the results were found
-  fetching: boolean // boolean pointer saying if the results are still loading
+    searchResult: AutocompleteSearchQuery | undefined, // object containing all autocomplete search results, if loaded and available
+    keyword: string, // search keyword for which the results were found
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -50,10 +49,10 @@ Basic hook used to handle viewing of a page. It is sometimes accompanied by one 
 
 ```ts
 export const useGtmPageViewEvent = (
-  gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
-  fetching?: boolean // boolean pointer saying if the results are still loading
+    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
+    areDataFetching?: boolean, // boolean pointer saying if the results are still loading
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -63,9 +62,9 @@ Hook used to handle the viewing of the cart page. The parameter used for this ho
 
 ```ts
 export const useGtmCartViewEvent = (
-  gtmPageViewEvent: GtmPageViewEventType // object containing information about the viewed page
+    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -75,9 +74,9 @@ Hook used to handle viewing of the contact information page. The parameter used 
 
 ```ts
 export const useGtmContactInformationPageViewEvent = (
-  gtmPageViewEvent: GtmPageViewEventType // object containing information about the viewed page
+    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -87,9 +86,9 @@ Hook used to handle the viewing of the transport and payment page. The parameter
 
 ```ts
 export const useGtmPaymentAndTransportPageViewEvent = (
-  gtmPageViewEvent: GtmPageViewEventType // object containing information about the viewed page
+    gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```
 
@@ -99,10 +98,10 @@ Hook used to handle the viewing of the product detail page.
 
 ```ts
 export const useGtmProductDetailViewEvent = (
-  productDetailData: ProductDetailFragment | MainVariantDetailFragment, // information about the displayed product
-  slug: string, // slug of the page
-  fetching: boolean // boolean pointer saying if the results are still loading
+    productDetailData: ProductDetailFragment | MainVariantDetailFragment, // information about the displayed product
+    slug: string, // slug of the page
+    isProductFetching: boolean, // boolean pointer saying if the results are still loading
 ): void => {
-  // function body not included in this code block
+    // function body not included in this code block
 };
 ```

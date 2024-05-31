@@ -14,7 +14,7 @@ export const SearchPageContent: FC = () => {
     const searchString = useCurrentSearchStringQuery();
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
-    const [{ data: searchData, fetching }] = useSearchQuery({
+    const [{ data: searchData, fetching: isSearchFetching }] = useSearchQuery({
         variables: {
             search: searchString!,
             isAutocomplete: false,
@@ -34,9 +34,9 @@ export const SearchPageContent: FC = () => {
     return (
         <>
             <Webline>
-                {(fetching || !isClient) && <SkeletonPageSearch />}
+                {(isSearchFetching || !isClient) && <SkeletonPageSearch />}
 
-                {!!searchData && !fetching && <SearchContent searchResults={searchData} />}
+                {!!searchData && !isSearchFetching && <SearchContent searchResults={searchData} />}
 
                 <SearchProducts />
             </Webline>

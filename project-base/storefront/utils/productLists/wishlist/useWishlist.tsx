@@ -9,7 +9,7 @@ export const useWishlist = () => {
     const { t } = useTranslation();
     const updateWishlistUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Wishlist);
 
-    const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
+    const { productListData, removeList, isProductInList, toggleProductInList, isProductListFetching } = useProductList(
         TypeProductListTypeEnum.Wishlist,
         {
             addProductError: () => showErrorMessage(t('Unable to add product to wishlist.')),
@@ -34,7 +34,7 @@ export const useWishlist = () => {
 
     return {
         wishlist: productListData?.productList,
-        fetching,
+        isProductListFetching,
         isProductInWishlist: isProductInList,
         removeWishlist: removeList,
         toggleProductInWishlist: toggleProductInList,

@@ -21,7 +21,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
 }) => {
     const currentPage = useCurrentPageQuery();
 
-    const [{ data, fetching }] = useBlogCategoryArticles({
+    const [{ data, fetching: areBlogCategoryArticlesFetching }] = useBlogCategoryArticles({
         variables: { uuid, endCursor: getEndCursor(currentPage), pageSize: DEFAULT_PAGE_SIZE },
     });
 
@@ -32,7 +32,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
 
     return (
         <>
-            {!!mappedArticles?.length && !fetching ? (
+            {!!mappedArticles?.length && !areBlogCategoryArticlesFetching ? (
                 <BlogArticlesList blogArticles={mappedArticles} />
             ) : (
                 <div className="flex flex-col gap-10">

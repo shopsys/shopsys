@@ -23,21 +23,21 @@ import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
-    const [{ data: articleDetailData, fetching }] = useArticleDetailQuery({
+    const [{ data: articleDetailData, fetching: isArticleDetailFetching }] = useArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const article = articleDetailData?.article?.__typename === 'ArticleSite' ? articleDetailData.article : null;
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(article);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isArticleDetailFetching);
 
     return (
         <CommonLayout
             breadcrumbs={article?.breadcrumb}
             canonicalQueryParams={[]}
             description={article?.seoMetaDescription}
-            isFetchingData={fetching}
+            isFetchingData={isArticleDetailFetching}
             title={article?.seoTitle || article?.articleName}
         >
             {!!article && <ArticleDetailContent article={article} />}

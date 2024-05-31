@@ -12,7 +12,7 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type SearchInputProps = NativeProps & {
     value: string;
     label: string;
-    isLoading: boolean;
+    shouldShowSpinnerInInput: boolean;
     onClear: () => void;
     onSearch?: () => void;
 };
@@ -20,7 +20,7 @@ type SearchInputProps = NativeProps & {
 export const SearchInput: FC<SearchInputProps> = ({
     label,
     value,
-    isLoading,
+    shouldShowSpinnerInInput,
     className,
     onChange,
     onClear,
@@ -52,7 +52,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 onKeyUp={enterKeyPressHandler}
             />
 
-            {isLoading ? (
+            {shouldShowSpinnerInInput ? (
                 <Loader className="absolute right-4 top-1/2 w-5 -translate-y-1/2 text-dark" />
             ) : (
                 <button

@@ -18,10 +18,12 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
     brand,
     paginationScrollTargetRef,
 }) => {
-    const [brandProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
-        BrandProductsQueryDocument,
-        brand.products.totalCount,
-    );
+    const {
+        products: brandProductsData,
+        areProductsFetching,
+        isLoadingMoreProducts,
+        hasNextPage,
+    } = useProductsData(BrandProductsQueryDocument, brand.products.totalCount);
     const listedBrandProducts = getMappedProducts(brandProductsData);
 
     useGtmPaginatedProductListViewEvent(listedBrandProducts, GtmProductListNameType.brand_detail);
@@ -29,10 +31,10 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
     return (
         <>
             <ProductsList
+                areProductsFetching={areProductsFetching}
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.brand_detail}
-                isFetching={fetching}
-                isLoadMoreFetching={loadMoreFetching}
+                isLoadingMoreProducts={isLoadingMoreProducts}
                 products={listedBrandProducts}
             />
             <Pagination

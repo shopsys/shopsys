@@ -36,7 +36,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCartType } from 'types/cart';
 import { CurrentCustomerType } from 'types/customer';
 import { OperationResult } from 'urql';
-import { ChangePaymentHandler, useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
+import { ChangePaymentInCart, useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
@@ -73,7 +73,7 @@ export const useCreateOrder = (
     formMeta: ContactInformationFormMetaType,
 ) => {
     const { t } = useTranslation();
-    const [{ fetching }, createOrderMutation] = useCreateOrderMutation();
+    const [{ fetching: isCreatingOrder }, createOrderMutation] = useCreateOrderMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const currentCart = useCurrentCart(false);
     const user = useCurrentCustomerData();
@@ -81,7 +81,7 @@ export const useCreateOrder = (
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
 
-    const [changePaymentInCart] = useChangePaymentInCart();
+    const { changePaymentInCart } = useChangePaymentInCart();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const router = useRouter();
@@ -112,7 +112,7 @@ export const useCreateOrder = (
         );
     };
 
-    return { createOrder, isCreatingOrder: fetching };
+    return { createOrder, isCreatingOrder };
 };
 
 const getCreateOrderMutationVariables = (
@@ -162,7 +162,7 @@ const handleCreateOrderResult = (
     user: CurrentCustomerType | null | undefined,
     router: NextRouter,
     domainConfig: DomainConfigType,
-    changePaymentInCart: ChangePaymentHandler,
+    changePaymentInCart: ChangePaymentInCart,
     t: Translate,
     userContactInformation: ContactInformation,
     updateCartUuid: (value: string | null) => void,

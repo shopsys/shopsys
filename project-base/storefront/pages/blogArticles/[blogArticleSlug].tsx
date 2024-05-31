@@ -24,12 +24,12 @@ import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initS
 
 const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
-    const [{ data: blogArticleData, fetching }] = useBlogArticleDetailQuery({
+    const [{ data: blogArticleData, fetching: isBlogArticleFetching }] = useBlogArticleDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(blogArticleData?.blogArticle);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isBlogArticleFetching);
 
     return (
         <CommonLayout
@@ -38,7 +38,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             canonicalQueryParams={[]}
             description={blogArticleData?.blogArticle?.seoMetaDescription}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
-            isFetchingData={fetching}
+            isFetchingData={isBlogArticleFetching}
             title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
         >
             {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}

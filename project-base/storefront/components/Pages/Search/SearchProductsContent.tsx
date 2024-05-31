@@ -13,15 +13,15 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { getMappedProducts } from 'utils/mappers/products';
 
 type SearchProductsContentProps = {
-    isFetching: boolean;
-    isLoadMoreFetching: boolean;
+    areSearchProductsFetching: boolean;
+    isLoadingMoreSearchProducts: boolean;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
     searchProductsData: TypeSearchProductsQuery['productsSearch'];
 };
 
 export const SearchProductsContent: FC<SearchProductsContentProps> = ({
-    isFetching,
-    isLoadMoreFetching,
+    areSearchProductsFetching,
+    isLoadingMoreSearchProducts,
     paginationScrollTargetRef,
     searchProductsData,
 }) => {
@@ -33,7 +33,7 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
     const isWithProductsShown = !!searchProductsData.totalCount;
     const noProductsFound = parseFloat(searchProductsData.productFilterOptions.maximalPrice) === 0;
 
-    if (isFetching) {
+    if (areSearchProductsFetching) {
         return (
             <div className="relative mb-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 gap-y-6 pt-6">
                 {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
@@ -49,10 +49,10 @@ export const SearchProductsContent: FC<SearchProductsContentProps> = ({
                 <>
                     {isWithProductsShown && (
                         <ProductsList
+                            areProductsFetching={areSearchProductsFetching}
                             gtmMessageOrigin={GtmMessageOriginType.other}
                             gtmProductListName={GtmProductListNameType.search_results}
-                            isFetching={isFetching}
-                            isLoadMoreFetching={isLoadMoreFetching}
+                            isLoadingMoreProducts={isLoadingMoreSearchProducts}
                             products={searchResultProducts}
                         />
                     )}

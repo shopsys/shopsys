@@ -38,9 +38,11 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData, fetching: isFetching }] = useOrderSentPageContentQuery({
-        variables: { orderUuid: orderUuid! },
-    });
+    const [{ data: orderSentPageContentData, fetching: isOrderSentPageContentFetching }] = useOrderSentPageContentQuery(
+        {
+            variables: { orderUuid: orderUuid! },
+        },
+    );
 
     useEffect(() => {
         fetchCart();
@@ -51,7 +53,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
 
             <CommonLayout
-                isFetchingData={isFetching}
+                isFetchingData={isOrderSentPageContentFetching}
                 pageTypeOverride="order-confirmation"
                 title={t('Thank you for your order')}
             >

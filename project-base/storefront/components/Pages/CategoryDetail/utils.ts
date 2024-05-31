@@ -37,7 +37,7 @@ export const useCategoryDetailData = (
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
     const isInSeoRedirectedCategory = lastSeoCategoryRedirectRef.current === urlSlug;
 
-    const [{ data: categoryDetailData, fetching }] = useCategoryDetailQuery({
+    const [{ data: categoryDetailData, fetching: isCategoryFetching }] = useCategoryDetailQuery({
         variables: {
             urlSlug,
             orderingMode: currentSort,
@@ -48,7 +48,7 @@ export const useCategoryDetailData = (
 
     const hasFetchedWithCurrentUrl = lastUsedUrlRef.current === urlSlug;
     const isFetchingVisible =
-        fetching && !hasFetchedWithCurrentUrl && !wasRedirectedToSeoCategory && !wasRedirectedFromSeoCategory;
+        isCategoryFetching && !hasFetchedWithCurrentUrl && !wasRedirectedToSeoCategory && !wasRedirectedFromSeoCategory;
 
     useEffect(() => {
         if (wasRedirectedToSeoCategory) {

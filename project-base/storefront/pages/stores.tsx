@@ -11,14 +11,14 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const [{ data: storesData, fetching }] = useStoresQuery();
+    const [{ data: storesData, fetching: areStoresFetching }] = useStoresQuery();
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.stores, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={fetching} title={t('Stores')}>
+        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={areStoresFetching} title={t('Stores')}>
             {storesData?.stores && <StoresContent stores={storesData.stores} />}
         </CommonLayout>
     );

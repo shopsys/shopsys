@@ -18,7 +18,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     const { query } = useRouter();
     const hash = getStringFromUrlQuery(query.hash);
 
-    const [{ data, fetching }] = usePersonalDataDetailQuery({ variables: { hash } });
+    const [{ data, fetching: arePersonalDataFetching }] = usePersonalDataDetailQuery({ variables: { hash } });
 
     const content = data ? (
         <PersonalDataDetailContent data={data} />
@@ -28,7 +28,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
         </Webline>
     );
 
-    return <CommonLayout>{fetching ? <SkeletonPagePersonalDataOverview /> : content}</CommonLayout>;
+    return <CommonLayout>{arePersonalDataFetching ? <SkeletonPagePersonalDataOverview /> : content}</CommonLayout>;
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(

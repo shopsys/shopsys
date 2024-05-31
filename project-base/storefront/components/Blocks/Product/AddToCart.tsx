@@ -36,7 +36,7 @@ export const AddToCart: FC<AddToCartProps> = ({
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
-    const [changeCartItemQuantity, fetching] = useAddToCart(gtmMessageOrigin, gtmProductListName);
+    const { addToCart, isAddingToCart } = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const onAddToCartHandler = async () => {
@@ -44,7 +44,7 @@ export const AddToCart: FC<AddToCartProps> = ({
             return;
         }
 
-        const addToCartResult = await changeCartItemQuantity(productUuid, spinboxRef.current.valueAsNumber, listIndex);
+        const addToCartResult = await addToCart(productUuid, spinboxRef.current.valueAsNumber, listIndex);
         spinboxRef.current!.valueAsNumber = 1;
 
         if (addToCartResult) {
@@ -70,13 +70,13 @@ export const AddToCart: FC<AddToCartProps> = ({
             />
             <Button
                 className="py-2"
-                isDisabled={fetching}
+                isDisabled={isAddingToCart}
                 name="add-to-cart"
                 size="small"
                 tid={TIDs.blocks_product_addtocart}
                 onClick={onAddToCartHandler}
             >
-                {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}
+                {isAddingToCart ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}
                 <span>{t('Add to cart')}</span>
             </Button>
         </div>

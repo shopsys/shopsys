@@ -11,22 +11,19 @@ type CartListProps = {
 };
 
 export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
-    const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
-    const [changeCartItemQuantity, isChangingCartsItem] = useAddToCart(
-        GtmMessageOriginType.cart,
-        GtmProductListNameType.cart,
-    );
+    const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
+    const { addToCart, isAddingToCart } = useAddToCart(GtmMessageOriginType.cart, GtmProductListNameType.cart);
 
     return (
         <ul className="relative mb-6 border-graySlate lg:mb-8">
-            {(isRemovingItem || isChangingCartsItem) && <LoaderWithOverlay className="w-16" />}
+            {(isRemovingFromCart || isAddingToCart) && <LoaderWithOverlay className="w-16" />}
             {cartItems.map((cartItem, listIndex) => (
                 <CartListItem
                     key={cartItem.uuid}
                     item={cartItem}
                     listIndex={listIndex}
-                    onItemQuantityChange={changeCartItemQuantity}
-                    onItemRemove={() => removeItemFromCart(cartItem, listIndex)}
+                    onAddToCart={addToCart}
+                    onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
                 />
             ))}
         </ul>

@@ -24,7 +24,7 @@ const AddToCartPopup = dynamic(
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
-    const [changeCartItemQuantity, fetching] = useAddToCart(
+    const { addToCart, isAddingToCart } = useAddToCart(
         GtmMessageOriginType.product_detail_page,
         GtmProductListNameType.product_detail,
     );
@@ -35,7 +35,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
             return;
         }
 
-        const addToCartResult = await changeCartItemQuantity(product.uuid, spinboxRef.current.valueAsNumber);
+        const addToCartResult = await addToCart(product.uuid, spinboxRef.current.valueAsNumber);
         spinboxRef.current!.valueAsNumber = 1;
 
         if (addToCartResult) {
@@ -66,12 +66,11 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                         <div className="ml-2 flex-1">
                             <Button
                                 className="whitespace-nowrap px-4 sm:px-8 w-fit h-12"
-                                isDisabled={fetching}
+                                isDisabled={isAddingToCart}
                                 tid={TIDs.pages_productdetail_addtocart_button}
                                 onClick={onAddToCartHandler}
                             >
-                                {fetching ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
-
+                                {isAddingToCart ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
                                 {t('Add to cart')}
                             </Button>
                         </div>

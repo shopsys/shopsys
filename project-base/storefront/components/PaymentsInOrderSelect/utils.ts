@@ -17,7 +17,7 @@ export const useChangePaymentInOrder = () => {
         url,
     );
 
-    const [{ fetching: isChangePaymentInOrderFetching }, changePaymentInOrder] = useChangePaymentInOrderMutation();
+    const [{ fetching: isChangingPaymentInOrder }, changePaymentInOrder] = useChangePaymentInOrderMutation();
 
     const changePaymentInOrderHandler = async (
         orderUuid: string,
@@ -54,5 +54,5 @@ export const useChangePaymentInOrder = () => {
         return changePaymentInOrderData;
     };
 
-    return { changePaymentInOrderHandler, isChangePaymentInOrderFetching };
+    return { changePaymentInOrderHandler, isChangePaymentInOrderFetching: isChangingPaymentInOrder };
 };

@@ -17,12 +17,12 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type OrdersContentProps = {
-    isLoading: boolean;
+    areOrdersFetching: boolean;
     orders: TypeListedOrderFragment[] | undefined;
     totalCount: number | undefined;
 };
 
-export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, totalCount }) => {
+export const OrdersContent: FC<OrdersContentProps> = ({ areOrdersFetching, orders, totalCount }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
@@ -42,7 +42,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
             <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
                 <Webline>
                     {(() => {
-                        if (isLoading) {
+                        if (areOrdersFetching) {
                             return <SkeletonModuleCustomerOrders />;
                         }
 

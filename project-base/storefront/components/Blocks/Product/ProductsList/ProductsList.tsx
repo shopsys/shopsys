@@ -15,8 +15,8 @@ type ProductsListProps = {
     products: TypeListedProductFragment[] | undefined;
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
-    isFetching?: boolean;
-    isLoadMoreFetching?: boolean;
+    areProductsFetching?: boolean;
+    isLoadingMoreProducts?: boolean;
     category?: TypeCategoryDetailFragment;
 };
 
@@ -25,18 +25,18 @@ const productListTwClass = 'relative mb-5 grid grid-cols-[repeat(auto-fill,minma
 export const ProductsList: FC<ProductsListProps> = ({
     products,
     gtmProductListName,
-    isFetching,
-    isLoadMoreFetching,
+    areProductsFetching,
+    isLoadingMoreProducts,
     category,
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
     const currentLoadMore = useCurrentLoadMoreQuery();
 
-    if (!products?.length && !isFetching) {
+    if (!products?.length && !areProductsFetching) {
         return <CategoryDetailContentMessage />;
     }
 
-    if (!!products?.length && !isFetching) {
+    if (!!products?.length && !areProductsFetching) {
         return (
             <>
                 <ProductsListContent
@@ -55,7 +55,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     )}
                 </ProductsListContent>
 
-                {isLoadMoreFetching &&
+                {isLoadingMoreProducts &&
                     createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
                         <SkeletonModuleProductListItem key={index} />
                     ))}

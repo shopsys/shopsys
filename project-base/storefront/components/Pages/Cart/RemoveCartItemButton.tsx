@@ -5,10 +5,10 @@ import { MouseEventHandler } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
 type RemoveCartItemButtonProps = {
-    onItemRemove: MouseEventHandler<HTMLButtonElement>;
+    onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemove, className }) => {
+export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onRemoveFromCart, className }) => {
     const { t } = useTranslation();
 
     return (
@@ -19,7 +19,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemo
                 'flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none bg-whiteSnow outline-none transition hover:bg-graySlate',
                 className,
             )}
-            onClick={onItemRemove}
+            onClick={onRemoveFromCart}
         >
             <RemoveBoldIcon className="mx-auto w-2" />
         </button>

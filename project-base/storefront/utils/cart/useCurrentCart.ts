@@ -21,7 +21,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         updatePageLoadingState({ isCartHydrated: true });
     }, []);
 
-    const [{ data: fetchedCartData, fetching: isFetching }, fetchCart] = useCartQuery({
+    const [{ data: fetchedCartData, fetching: isCartFetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
         pause: !isCartHydrated || !isWithCart || authLoading !== null,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
@@ -43,7 +43,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             }
         },
         cart,
-        isCartFetchingOrUnavailable: cart === undefined || isFetching || !!authLoading,
+        isCartFetchingOrUnavailable: cart === undefined || isCartFetching || !!authLoading,
         transport: cart?.transport ?? null,
         pickupPlace: getSelectedPickupPlace(cart?.transport, cart?.selectedPickupPlaceIdentifier, packeteryPickupPoint),
         payment: cart?.payment ?? null,

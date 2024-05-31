@@ -20,9 +20,9 @@ export const TransportAndPaymentContent: FC = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
 
-    const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
-    const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
-    const [{ data: transportsData, fetching: areTransportsLoading }] = useTransportsQuery({
+    const { changeTransportInCart, isChangingTransportInCart } = useChangeTransportInCart();
+    const { changePaymentInCart, isChangingPaymentInOrder } = useChangePaymentInCart();
+    const [{ data: transportsData, fetching: areTransportsFetching }] = useTransportsQuery({
         variables: { cartUuid },
         requestPolicy: 'network-only',
     });
@@ -43,18 +43,18 @@ export const TransportAndPaymentContent: FC = () => {
 
     return (
         <OrderLayout
-            isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsLoading}
+            isFetchingData={isLoadingTransportAndPaymentFromLastOrder || areTransportsFetching}
             page="transport-and-payment"
         >
             <OrderContentWrapper
                 activeStep={2}
-                isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
+                isTransportOrPaymentLoading={isChangingTransportInCart || isChangingPaymentInOrder}
             >
                 {!!transportsData?.transports.length && (
                     <TransportAndPaymentSelect
                         changePaymentInCart={changePaymentInCart}
                         changeTransportInCart={changeTransportInCart}
-                        isTransportSelectionLoading={isTransportSelectionLoading}
+                        isTransportSelectionLoading={isChangingTransportInCart}
                         lastOrderPickupPlace={lastOrderPickupPlace}
                         transports={transportsData.transports}
                     />
@@ -66,12 +66,12 @@ export const TransportAndPaymentContent: FC = () => {
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}
-                    isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
                     nextStepClickHandler={goToNextStepFromTransportAndPaymentPage}
                     hasDisabledLook={
-                        hasValidationErrors(validationMessages) ||
-                        isTransportSelectionLoading ||
-                        isPaymentSelectionLoading
+                        hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInOrder
+                    }
+                    shouldShowSpinnerOnNextStepButton={
+                        (isChangingTransportInCart || isChangingPaymentInOrder) && !!transport && !!payment
                     }
                 />
             </OrderContentWrapper>

@@ -26,7 +26,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
 }) => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const { isLuigisBoxActive } = useDomainConfig();
-    const [{ data: recommendedProductsData, fetching: isFetching }] = useRecommendedProductsQuery({
+    const [{ data: recommendedProductsData, fetching: areRecommendedProductsFetching }] = useRecommendedProductsQuery({
         variables: {
             itemUuids,
             userIdentifier,
@@ -37,7 +37,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     });
     const shouldRender = useDeferredRender('recommended_products');
 
-    if (isFetching) {
+    if (areRecommendedProductsFetching) {
         return render(
             <SkeletonModuleProductSlider
                 isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}

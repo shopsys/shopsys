@@ -16,15 +16,15 @@ import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwif
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
-import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
+import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
+import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 type TransportAndPaymentSelectProps = {
     transports: TypeTransportWithAvailablePaymentsAndStoresFragment[];
     lastOrderPickupPlace: TypeListedStoreFragment | null;
-    changeTransportInCart: ChangeTransportHandler;
-    changePaymentInCart: ChangePaymentHandler;
+    changeTransportInCart: ChangeTransportInCart;
+    changePaymentInCart: ChangePaymentInCart;
     isTransportSelectionLoading: boolean;
 };
 

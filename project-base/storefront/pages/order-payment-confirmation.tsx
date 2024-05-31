@@ -20,11 +20,12 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
     const paymentStatusData = useUpdatePaymentStatus(orderUuid, orderPaymentStatusPageValidityHashParam);
 
-    const [{ data: failedContentData, fetching: isFailedContentDataFetching }] = useOrderPaymentFailedContentQuery({
-        variables: { orderUuid },
-        pause: !paymentStatusData || paymentStatusData.UpdatePaymentStatus.isPaid,
-    });
-    const [{ data: successContentData, fetching: isSuccessContentDataFetching }] =
+    const [{ data: failedContentData, fetching: isOrderPaymentFailedContentFetching }] =
+        useOrderPaymentFailedContentQuery({
+            variables: { orderUuid },
+            pause: !paymentStatusData || paymentStatusData.UpdatePaymentStatus.isPaid,
+        });
+    const [{ data: successContentData, fetching: isOrderPaymentSuccessfulContentFetching }] =
         useOrderPaymentSuccessfulContentQuery({
             variables: { orderUuid },
             pause: !paymentStatusData || !paymentStatusData.UpdatePaymentStatus.isPaid,
@@ -34,9 +35,11 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex" />
             <CommonLayout
-                isFetchingData={!paymentStatusData || isFailedContentDataFetching || isSuccessContentDataFetching}
                 pageTypeOverride="order-confirmation"
                 title={t('Order sent')}
+                isFetchingData={
+                    !paymentStatusData || isOrderPaymentFailedContentFetching || isOrderPaymentSuccessfulContentFetching
+                }
             >
                 <Webline>
                     {paymentStatusData?.UpdatePaymentStatus.isPaid

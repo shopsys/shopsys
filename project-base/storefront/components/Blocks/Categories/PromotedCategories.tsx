@@ -3,9 +3,9 @@ import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/Ske
 import { usePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 
 export const PromotedCategories: FC = () => {
-    const [{ data: promotedCategoriesData, fetching }] = usePromotedCategoriesQuery();
+    const [{ data: promotedCategoriesData, fetching: arePromotedCategoriesFetching }] = usePromotedCategoriesQuery();
 
-    if (fetching) {
+    if (arePromotedCategoriesFetching) {
         return <SkeletonModulePromotedCategories />;
     }
 

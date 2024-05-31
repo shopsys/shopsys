@@ -30,7 +30,7 @@ export const useProductList = (
     const [, TypeRemoveProductFromListMutation] = useRemoveProductFromListMutation();
     const [, removeListMutation] = useRemoveProductListMutation();
 
-    const [{ data: productListData, fetching }] = useProductListQuery({
+    const [{ data: productListData, fetching: isProductListFetching }] = useProductListQuery({
         variables: {
             input: {
                 type: productListType,
@@ -108,5 +108,5 @@ export const useProductList = (
         }
     };
 
-    return { productListData, isProductInList, removeList, toggleProductInList, fetching };
+    return { productListData, isProductInList, removeList, toggleProductInList, isProductListFetching };
 };

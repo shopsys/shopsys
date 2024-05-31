@@ -18,10 +18,13 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 
 type ProductDetailMainVariantContentProps = {
     product: TypeMainVariantDetailFragment;
-    fetching: boolean;
+    isProductDetailFetching: boolean;
 };
 
-export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({ product, fetching }) => {
+export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({
+    product,
+    isProductDetailFetching,
+}) => {
     const router = useRouter();
     const { t } = useTranslation();
     const mainVariantImagesWithVariantImages = useMemo(() => {
@@ -37,9 +40,9 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
     }, [product]);
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
     useLastVisitedProductView(product.catalogNumber);
-    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
+    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
         <>

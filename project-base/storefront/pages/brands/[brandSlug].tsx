@@ -44,7 +44,7 @@ const BrandDetailPage: NextPage = () => {
     const currentFilter = useCurrentFilterQuery();
     const currentSort = useCurrentSortQuery();
 
-    const [{ data: brandDetailData, fetching }] = useBrandDetailQuery({
+    const [{ data: brandDetailData, fetching: isBrandFetching }] = useBrandDetailQuery({
         variables: {
             urlSlug: getSlugFromUrl(router.asPath),
             orderingMode: currentSort,
@@ -59,14 +59,14 @@ const BrandDetailPage: NextPage = () => {
     );
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(brandDetailData?.brand);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isBrandFetching);
 
     return (
         <CommonLayout
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
             description={brandDetailData?.brand?.seoMetaDescription}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
-            isFetchingData={!currentFilter && fetching && !brandDetailData}
+            isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
             title={seoTitle}
         >
             {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}

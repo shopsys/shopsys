@@ -12,18 +12,15 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
-export type AddToCartAction = (
+export type AddToCart = (
     productUuid: string,
     quantity: number,
     listIndex?: number,
     isAbsoluteQuantity?: boolean,
 ) => Promise<TypeAddToCartMutation['AddToCart'] | null>;
 
-export const useAddToCart = (
-    gtmMessageOrigin: GtmMessageOriginType,
-    gtmProductListName: GtmProductListNameType,
-): [AddToCartAction, boolean] => {
-    const [{ fetching }, addToCart] = useAddToCartMutation();
+export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductListName: GtmProductListNameType) => {
+    const [{ fetching: isAddingToCart }, addToCartMutation] = useAddToCartMutation();
     const { t } = useTranslation();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { cart } = useCurrentCart();
@@ -31,10 +28,10 @@ export const useAddToCart = (
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
-    const addToCartAction: AddToCartAction = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
+    const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
         const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
         const initialQuantity = itemToBeAdded?.quantity ?? 0;
-        const addToCartActionResult = await addToCart({
+        const addToCartActionResult = await addToCartMutation({
             input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
         });
 
@@ -90,5 +87,5 @@ export const useAddToCart = (
         return addToCartResult;
     };
 
-    return [addToCartAction, fetching];
+    return { addToCart, isAddingToCart };
 };

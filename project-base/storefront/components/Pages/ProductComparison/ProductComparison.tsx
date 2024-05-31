@@ -9,7 +9,7 @@ import { useComparison } from 'utils/productLists/comparison/useComparison';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();
-    const { comparison, fetching } = useComparison();
+    const { comparison, isProductListFetching } = useComparison();
     const title = `${t('Product comparison')}${comparison?.products.length ? ` (${comparison.products.length})` : ''}`;
 
     useGtmSliderProductListViewEvent(comparison?.products, GtmProductListNameType.product_comparison_page);
@@ -18,11 +18,13 @@ export const ProductComparison: FC = () => {
         <Webline>
             <h1 className="mb-8">{title}</h1>
 
-            {fetching && <SkeletonModuleComparison />}
+            {isProductListFetching && <SkeletonModuleComparison />}
 
-            {comparison?.products && !fetching && <ProductComparisonContent comparedProducts={comparison.products} />}
+            {comparison?.products && !isProductListFetching && (
+                <ProductComparisonContent comparedProducts={comparison.products} />
+            )}
 
-            {!comparison?.products && !fetching && (
+            {!comparison?.products && !isProductListFetching && (
                 <div className="flex items-center">
                     <InfoIcon className="mr-4 w-8" />
                     <div className="h3">{t('Comparison does not contain any products yet.')}</div>

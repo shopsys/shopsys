@@ -14,33 +14,19 @@ It is very likely that if your project requires customization of the logic, this
 The hook allows the application to work with cart information mapped according to the GTM requirements. It is a hook wrapper of the underlying `getGtmMappedCart` function, which takes care of the mapping itself. The hook handles the default state where no cart is available.
 
 ```ts
-export const useGtmCartInfo = (): {
-  gtmCartInfo: GtmCartInfoType | null;
-  isCartLoaded: boolean;
-} => {
+export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
   // code omitted for simplification
 
-  return useMemo(
-    () => {
-      if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
-        return { gtmCartInfo: null, isCartLoaded: !isFetching };
-      }
+  return useMemo(() => {
+    if (!cart) {
+      return { gtmCartInfo: null, isCartLoaded: !isCartFetchingOrUnavailable };
+    }
 
-      return {
-        gtmCartInfo: getGtmMappedCart(
-          cart,
-          promoCode,
-          isUserLoggedIn,
-          domain,
-          cartUuid
-        ),
-        isCartLoaded: !isFetching
-      };
-    },
-    [
-      // code omitted for simplification
-    ]
-  );
+    return {
+      gtmCartInfo: getGtmMappedCart(cart, promoCode, isUserLoggedIn, domainConfig, cartUuid),
+      isCartLoaded: !isCartFetchingOrUnavailable,
+    };
+  }, [/* code omitted for simplification */]);
 };
 ```
 
