@@ -29,17 +29,19 @@ class ProductDemoDataFactory
     }
 
     /**
+     * @param string $catnum
      * @return \App\Model\Product\ProductData
      */
-    public function createDefaultData(): ProductData
+    public function createDefaultData(string $catnum): ProductData
     {
         $productData = $this->productDataFactory->create();
+
+        $productData->catnum = $catnum;
+        $productData->sellingDenied = false;
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setSellingTo($productData, null);
-
-        $productData->sellingDenied = false;
 
         return $productData;
     }

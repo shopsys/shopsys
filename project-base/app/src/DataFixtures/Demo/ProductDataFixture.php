@@ -76,9 +76,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9177759');
 
-        $productData->catnum = '9177759';
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
         $this->setOrderingPriority($productData, 1);
@@ -134,9 +133,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176508');
 
-        $productData->catnum = '9176508';
         $productData->partno = '32PFL4308H';
         $productData->ean = '8845781245929';
 
@@ -173,9 +171,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5965879P');
 
-        $productData->catnum = '5965879P';
         $productData->partno = '47LA790V';
         $productData->ean = '8845781245928';
         $productData->weight = 4000;
@@ -207,15 +204,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 800);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960453');
 
-        $productData->catnum = '5960453';
         $productData->partno = 'X-710BK';
         $productData->ean = '8845781245923';
 
@@ -252,15 +246,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_A4TECH);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9510261');
 
-        $productData->catnum = '9510261';
         $productData->partno = 'ME440CS';
         $productData->ean = '8845781245956';
 
@@ -306,9 +297,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5966179');
 
-        $productData->catnum = '5966179';
         $productData->partno = 'PTH300';
         $productData->ean = '8845781245939';
 
@@ -340,9 +330,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('532564');
 
-        $productData->catnum = '532564';
         $productData->partno = '6758B001';
         $productData->ean = '8845781245914';
 
@@ -367,15 +356,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5964034');
 
-        $productData->catnum = '5964034';
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
 
@@ -408,15 +394,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9184535');
 
-        $productData->catnum = '9184535';
         $productData->partno = '8331B006';
         $productData->ean = '8845781245938';
 
@@ -459,9 +442,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9184449');
 
-        $productData->catnum = '9184449';
         $productData->partno = '8328B006';
         $productData->ean = '8845781245936';
 
@@ -503,9 +485,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960105');
 
-        $productData->catnum = '5960105';
         $productData->partno = '43266';
         $productData->ean = '8845781245920';
 
@@ -534,15 +515,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_VERBATIM);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('176948');
 
-        $productData->catnum = '176948';
         $productData->partno = 'DNS-327L';
         $productData->ean = '8845781245918';
 
@@ -558,15 +536,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setSellingFrom($productData, '4.1.2000');
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_DLINK);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5990008');
 
-        $productData->catnum = '5990008';
         $productData->partno = '65480';
         $productData->ean = '8845781245945';
 
@@ -601,9 +576,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9771339');
 
-        $productData->catnum = '9771339';
         $productData->partno = 'ECAM 44.660 B';
         $productData->ean = '8845781245934';
 
@@ -637,9 +611,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5962199');
 
-        $productData->catnum = '5962199';
         $productData->partno = '';
         $productData->ean = '8845781245958';
 
@@ -658,13 +631,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = true;
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960139');
 
-        $productData->catnum = '5960139';
         $productData->partno = '31011039100';
         $productData->ean = '8845781245924';
 
@@ -697,9 +667,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960550');
 
-        $productData->catnum = '5960550';
         $productData->partno = '31730946108';
         $productData->ean = '8845781245946';
 
@@ -733,9 +702,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960549');
 
-        $productData->catnum = '5960549';
         $productData->partno = '31340021118';
         $productData->ean = '8845781245925';
 
@@ -763,15 +731,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8456655');
 
-        $productData->catnum = '8456655';
         $productData->partno = '31730992101';
         $productData->ean = '8845781245947';
 
@@ -807,9 +772,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960598');
 
-        $productData->catnum = '5960598';
         $productData->partno = 'GK-KM7580';
         $productData->ean = '8845781245926';
 
@@ -836,16 +800,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_GIGABYTE);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('718253');
 
-        $productData->catnum = '718253';
         $productData->partno = 'B2L57C';
         $productData->ean = '8845781245937';
 
@@ -884,9 +845,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9511043');
 
-        $productData->catnum = '9511043';
         $productData->partno = '99HZS017';
         $productData->ean = '8845781245955';
 
@@ -919,9 +879,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9772572');
 
-        $productData->catnum = '9772572';
         $productData->partno = 'JURA Impressa J9 TFT Carbon';
         $productData->ean = '8845781245933';
 
@@ -954,9 +913,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('2565636');
 
-        $productData->catnum = '2565636';
         $productData->partno = '0';
         $productData->ean = '8845781245919';
 
@@ -973,15 +931,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9890478');
 
-        $productData->catnum = '9890478';
         $productData->partno = '9788025117125';
         $productData->ean = '8845781245941';
 
@@ -1014,13 +967,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9831504');
 
-        $productData->catnum = '9831504';
         $productData->partno = '9788072267361';
         $productData->ean = '8845781245942';
 
@@ -1048,13 +998,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9890274');
 
-        $productData->catnum = '9890274';
         $productData->partno = '9788025107805';
         $productData->ean = '8845781245943';
 
@@ -1083,13 +1030,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9197872');
 
-        $productData->catnum = '9197872';
         $productData->partno = '9788000026336';
         $productData->ean = '8845781245944';
 
@@ -1123,13 +1067,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9198277');
 
-        $productData->catnum = '9198277';
         $productData->partno = '9788025133484';
         $productData->ean = '8845781245940';
 
@@ -1148,13 +1089,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981018');
 
-        $productData->catnum = '8981018';
         $productData->partno = '8808992086758';
         $productData->ean = '8845781245951';
 
@@ -1193,9 +1131,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9680315');
 
-        $productData->catnum = '9680315';
         $productData->partno = '980-000010';
         $productData->ean = '8845781245949';
 
@@ -1231,9 +1168,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960072');
 
-        $productData->catnum = '5960072';
         $productData->partno = 'P58-00059';
         $productData->ean = '8845781245922';
 
@@ -1261,16 +1197,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_MICROSOFT);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5961383');
 
-        $productData->catnum = '5961383';
         $productData->partno = '6932011296018';
         $productData->ean = '8845781245959';
 
@@ -1289,13 +1222,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5961384');
 
-        $productData->catnum = '5961384';
         $productData->partno = '';
         $productData->ean = '8845781245916';
 
@@ -1312,15 +1242,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8980681');
 
-        $productData->catnum = '8980681';
         $productData->partno = '1318206';
         $productData->ean = '8845781245935';
 
@@ -1356,13 +1281,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('539888');
 
-        $productData->catnum = '539888';
         $productData->partno = 'V4571510E000';
         $productData->ean = '8845781245915';
 
@@ -1379,16 +1301,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_OLYMPUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5402881');
 
-        $productData->catnum = '5402881';
         $productData->partno = 'V108060WE000';
         $productData->ean = '8845781245910';
 
@@ -1420,15 +1339,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_OLYMPUS);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5965907');
 
-        $productData->catnum = '5965907';
         $productData->partno = 'DMC FT5EP-K';
         $productData->ean = '8845781245911';
 
@@ -1461,15 +1377,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5960585');
 
-        $productData->catnum = '5960585';
         $productData->partno = 'PC-AD23DGLASS';
         $productData->ean = '8845781245927';
 
@@ -1488,13 +1399,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9624190');
 
-        $productData->catnum = '9624190';
         $productData->partno = '8595159809694';
         $productData->ean = '8845781245957';
 
@@ -1513,13 +1421,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('4125523');
 
-        $productData->catnum = '4125523';
         $productData->partno = 'ROC-11-710';
         $productData->ean = '8845781245921';
 
@@ -1546,15 +1451,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setSellingFrom($productData, '7.1.2000');
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981612');
 
-        $productData->catnum = '8981612';
         $productData->partno = 'SM-G355HZKNETL';
         $productData->ean = '8845781245953';
 
@@ -1589,9 +1489,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981055');
 
-        $productData->catnum = '8981055';
         $productData->partno = 'G3500ZWAETL';
         $productData->ean = '8845781245952';
 
@@ -1625,9 +1524,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9773676');
 
-        $productData->catnum = '9773676';
         $productData->partno = 'UE75HU7500';
         $productData->ean = '8845781245932';
 
@@ -1660,9 +1558,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9178302');
 
-        $productData->catnum = '9178302';
         $productData->partno = '4002M4';
         $productData->ean = '8845781245931';
 
@@ -1696,9 +1593,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5963470');
 
-        $productData->catnum = '5963470';
         $productData->partno = '';
         $productData->ean = '8845781245950';
 
@@ -1727,13 +1623,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9142035');
 
-        $productData->catnum = '9142035';
         $productData->partno = '561392';
         $productData->ean = '8845781245961';
 
@@ -1752,13 +1645,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = true;
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5964356');
 
-        $productData->catnum = '5964356';
         $productData->partno = 'DSCRX100.CEE8';
         $productData->ean = '8845781245913';
 
@@ -1775,15 +1665,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SONY);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9882324P');
 
-        $productData->catnum = '9882324P';
         $productData->partno = '1272-2537';
         $productData->ean = '8845781245954';
 
@@ -1815,9 +1702,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5961201');
 
-        $productData->catnum = '5961201';
         $productData->partno = '';
         $productData->ean = '8845781245960';
 
@@ -1835,13 +1721,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('4122531');
 
-        $productData->catnum = '4122531';
         $productData->partno = '53082';
         $productData->ean = '8845781245917';
 
@@ -1864,9 +1747,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9771195');
 
-        $productData->catnum = '9771195';
         $productData->partno = '1005WH';
         $productData->ean = '8845781245948';
 
@@ -1892,13 +1774,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176544');
 
-        $productData->catnum = '9176544';
         $productData->partno = '32PFL4308I';
         $productData->ean = '8845781243205';
 
@@ -1936,9 +1815,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176588');
 
-        $productData->catnum = '9176588';
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
 
@@ -1974,9 +1852,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5965879B');
 
-        $productData->catnum = '5965879B';
         $productData->partno = '47LA790W';
         $productData->ean = '8845781245928';
 
@@ -2005,15 +1882,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 80);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9774523');
 
-        $productData->catnum = '9774523';
         $productData->partno = 'LT-823 C82B';
         $productData->ean = '8845781245929';
 
@@ -2030,16 +1904,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_ORAVA);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700667');
 
-        $productData->catnum = '7700667';
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245930';
 
@@ -2068,16 +1939,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700668');
 
-        $productData->catnum = '7700668';
         $productData->partno = '22MT44E';
         $productData->ean = '8845781245931';
 
@@ -2106,15 +1974,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981435');
 
-        $productData->catnum = '8981435';
         $productData->partno = 'LT27D590EW';
         $productData->ean = '8845781245932';
 
@@ -2143,15 +2008,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981438');
 
-        $productData->catnum = '8981438';
         $productData->partno = 'LT27D590EX';
         $productData->ean = '8845781245933';
 
@@ -2180,15 +2042,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9510540');
 
-        $productData->catnum = '9510540';
         $productData->partno = 'UMNP000883';
         $productData->ean = '8845781245934';
 
@@ -2205,15 +2064,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5965879C');
 
-        $productData->catnum = '5965879C';
         $productData->partno = '58LA790W';
         $productData->ean = '8845781245935';
 
@@ -2230,16 +2084,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 80);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9774524');
 
-        $productData->catnum = '9774524';
         $productData->partno = 'LT-823 C82C';
         $productData->ean = '8845781245936';
 
@@ -2262,9 +2113,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700677');
 
-        $productData->catnum = '7700677';
         $productData->partno = '22MT44A';
         $productData->ean = '8845781245937';
 
@@ -2300,9 +2150,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700669');
 
-        $productData->catnum = '7700669';
         $productData->partno = '22MT44F';
         $productData->ean = '8845781245938';
 
@@ -2332,15 +2181,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981437');
 
-        $productData->catnum = '8981437';
         $productData->partno = 'LT27D590EY';
         $productData->ean = '8845781245939';
 
@@ -2357,15 +2203,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('18981438');
 
-        $productData->catnum = '18981438';
         $productData->partno = 'LT27D590EZ';
         $productData->ean = '8845781245940';
 
@@ -2382,15 +2225,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9510541');
 
-        $productData->catnum = '9510541';
         $productData->partno = 'UMNP000884';
         $productData->ean = '8845781245941';
 
@@ -2409,13 +2249,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176544M');
 
-        $productData->catnum = '9176544M';
         $productData->partno = '32PFL4308';
         $productData->ean = '8845781243205';
 
@@ -2437,9 +2274,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176544MF');
 
-        $productData->catnum = '9176544MF';
         $productData->partno = 'FLO242-PRI';
         $productData->ean = '8845781243206';
 
@@ -2467,13 +2303,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176544MG');
 
-        $productData->catnum = '9176544MG';
         $productData->partno = 'FLO242-PRJ';
         $productData->ean = '8845781243277';
 
@@ -2490,15 +2323,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_CUBIC_METERS);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176544MS');
 
-        $productData->catnum = '9176544MS';
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
         $this->setOrderingPriority($productData, 2);
@@ -2526,15 +2354,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100000);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176544M3');
 
-        $productData->catnum = '9176544M3';
         $productData->partno = 'CAB-13';
         $productData->ean = '88457812432071';
 
@@ -2561,15 +2384,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100000);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176554');
 
-        $productData->catnum = '9176554';
         $productData->partno = '32PFL4360';
         $productData->ean = '8845781243205';
 
@@ -2604,9 +2422,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176578');
 
-        $productData->catnum = '9176578';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
         $this->setOrderingPriority($productData, 1);
@@ -2642,9 +2459,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700768');
 
-        $productData->catnum = '7700768';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245930';
 
@@ -2673,16 +2489,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700769');
 
-        $productData->catnum = '7700769';
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245931';
         $this->setOrderingPriority($productData, 1);
@@ -2712,15 +2525,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700777');
 
-        $productData->catnum = '7700777';
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245937';
 
@@ -2745,16 +2555,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $productData->sellingDenied = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700769Z');
 
-        $productData->catnum = '7700769Z';
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
 
@@ -2779,15 +2586,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981537');
 
-        $productData->catnum = '8981537';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245939';
         $this->setOrderingPriority($productData, 1);
@@ -2817,15 +2621,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8981538');
 
-        $productData->catnum = '8981538';
         $productData->partno = 'T27D590EZ';
         $productData->ean = '8845781245940';
         $this->setOrderingPriority($productData, 1);
@@ -2855,15 +2656,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('32PFL4400');
 
-        $productData->catnum = '32PFL4400';
         $productData->partno = '32PFL4400';
         $productData->ean = '8845781243205';
 
@@ -2885,9 +2683,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('7700769XCX');
 
-        $productData->catnum = '7700769XCX';
         $productData->partno = '22HD44D';
         $productData->ean = '8845781245938';
 
@@ -2904,15 +2701,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('532565');
 
-        $productData->catnum = '532565';
         $productData->partno = '6758B001';
         $productData->ean = '8845781245914';
 
@@ -2933,15 +2727,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5964035');
 
-        $productData->catnum = '5964035';
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
 
@@ -2979,15 +2770,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5402880');
 
-        $productData->catnum = '5402880';
         $productData->partno = 'V108060WE000';
         $productData->ean = '8845781245910';
 
@@ -3019,15 +2807,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 200);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('5965908');
 
-        $productData->catnum = '5965908';
         $productData->partno = 'DMC FT5EP-K';
         $productData->ean = '8845781245911';
 
@@ -3060,15 +2845,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 500);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('1532564');
 
-        $productData->catnum = '1532564';
         $productData->partno = '6758B001';
         $productData->ean = '8845781245914';
 
@@ -3093,15 +2875,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('15964035');
 
-        $productData->catnum = '15964035';
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
 
@@ -3134,15 +2913,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('15402889');
 
-        $productData->catnum = '15402889';
         $productData->partno = 'V108060WE000';
         $productData->ean = '8845781245910';
 
@@ -3180,9 +2956,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('16402880');
 
-        $productData->catnum = '16402880';
         $productData->partno = 'V108060WE111';
         $productData->ean = '8845781245910';
 
@@ -3214,15 +2989,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 200);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('tk9710');
 
-        $productData->catnum = 'tk9710';
         $productData->partno = '8594049730544';
         $productData->ean = '8845781245912';
 
@@ -3239,15 +3011,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 5050);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ns9020');
 
-        $productData->catnum = 'ns9020';
         $productData->partno = '8594049730575';
         $productData->ean = '8845781245913';
 
@@ -3264,15 +3031,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 5335);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ns9030');
 
-        $productData->catnum = 'ns9030';
         $productData->partno = '8594049730568';
         $productData->ean = '8845781245914';
 
@@ -3289,15 +3051,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 878);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ns9040');
 
-        $productData->catnum = 'ns9040';
         $productData->partno = '8594049730551';
         $productData->ean = '8845781245915';
 
@@ -3314,15 +3071,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 9877);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ns9710');
 
-        $productData->catnum = 'ns9710';
         $productData->partno = '8594049730582';
         $productData->ean = '8845781245916';
 
@@ -3339,15 +3091,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 65444);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290043');
 
-        $productData->catnum = '44290043';
         $productData->partno = '';
         $productData->ean = '8845781245917';
 
@@ -3362,15 +3109,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 798);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290047');
 
-        $productData->catnum = '44290047';
         $productData->partno = '';
         $productData->ean = '8845781245918';
 
@@ -3387,15 +3129,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 54);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290050');
 
-        $productData->catnum = '44290050';
         $productData->partno = '8594049731732';
         $productData->ean = '8845781245919';
 
@@ -3410,15 +3147,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 78);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44291501');
 
-        $productData->catnum = '44291501';
         $productData->partno = '';
         $productData->ean = '8845781246005';
 
@@ -3433,15 +3165,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 48);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('opv3260');
 
-        $productData->catnum = 'opv3260';
         $productData->partno = '8594049735587';
         $productData->ean = '8845781246006';
 
@@ -3458,15 +3185,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 48);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('opp2060');
 
-        $productData->catnum = 'opp2060';
         $productData->partno = '8594049735594';
         $productData->ean = '8845781246007';
 
@@ -3483,15 +3205,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 48);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990002');
 
-        $productData->catnum = '61990002';
         $productData->partno = '8594049737383';
         $productData->ean = '8845781246008';
 
@@ -3508,15 +3225,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 489);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('POScook_book_CZ');
 
-        $productData->catnum = 'POScook_book_CZ';
         $productData->partno = 'POScook_book_CZ';
         $productData->ean = '8845781246009';
 
@@ -3533,15 +3245,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 48);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990003');
 
-        $productData->catnum = '61990003';
         $productData->partno = '8594049737390';
         $productData->ean = '8845781246010';
 
@@ -3558,15 +3265,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 4894);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990004');
 
-        $productData->catnum = '61990004';
         $productData->partno = '8594049737437';
         $productData->ean = '8845781246011';
 
@@ -3583,15 +3285,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 878);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990006');
 
-        $productData->catnum = '61990006';
         $productData->partno = '8594049737444';
         $productData->ean = '8845781246012';
 
@@ -3608,15 +3305,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 9877);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990007');
 
-        $productData->catnum = '61990007';
         $productData->partno = '8594049737451';
         $productData->ean = '8845781246013';
 
@@ -3633,15 +3325,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 65444);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990008');
 
-        $productData->catnum = '61990008';
         $productData->partno = '8594049737468';
         $productData->ean = '8845781246014';
 
@@ -3658,15 +3345,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 798);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990013');
 
-        $productData->catnum = '61990013';
         $productData->partno = '';
         $productData->ean = '8845781246015';
 
@@ -3681,15 +3363,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 54);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('sdv3460');
 
-        $productData->catnum = 'sdv3460';
         $productData->partno = '8594049735754';
         $productData->ean = '8845781246016';
 
@@ -3705,15 +3382,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 78);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('62790165');
 
-        $productData->catnum = '62790165';
         $productData->partno = '';
         $productData->ean = '8845781246017';
 
@@ -3728,15 +3400,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 8878);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('62790168');
 
-        $productData->catnum = '62790168';
         $productData->partno = '';
         $productData->ean = '8845781246018';
 
@@ -3753,15 +3420,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 54);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('62790149');
 
-        $productData->catnum = '62790149';
         $productData->partno = '';
         $productData->ean = '8845781246019';
 
@@ -3776,15 +3438,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 648);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290821');
 
-        $productData->catnum = '44290821';
         $productData->partno = '8594049736577';
         $productData->ean = '8845781246020';
 
@@ -3799,15 +3456,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 8744);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290820');
 
-        $productData->catnum = '44290820';
         $productData->partno = '';
         $productData->ean = '8845781246021';
 
@@ -3822,15 +3474,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 648);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44291504');
 
-        $productData->catnum = '44291504';
         $productData->partno = '';
         $productData->ean = '8845781246022';
 
@@ -3845,15 +3492,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 86);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('sdv3360');
 
-        $productData->catnum = 'sdv3360';
         $productData->partno = '8594049736201';
         $productData->ean = '8845781246023';
 
@@ -3870,15 +3512,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 78);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('opp1060');
 
-        $productData->catnum = 'opp1060';
         $productData->partno = '8594049736270';
         $productData->ean = '8845781246024';
 
@@ -3894,15 +3531,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 878);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('42390452');
 
-        $productData->catnum = '42390452';
         $productData->partno = '8594049736386';
         $productData->ean = '8845781246025';
 
@@ -3917,15 +3549,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 787);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('42390453');
 
-        $productData->catnum = '42390453';
         $productData->partno = '8594049736362';
         $productData->ean = '8845781246026';
 
@@ -3940,15 +3567,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 77);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990047');
 
-        $productData->catnum = '61990047';
         $productData->partno = '8594049737581';
         $productData->ean = '8845781246027';
 
@@ -3964,15 +3586,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 7);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44291567');
 
-        $productData->catnum = '44291567';
         $productData->partno = '';
         $productData->ean = '8845781246028';
 
@@ -3987,15 +3604,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 9);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44291569');
 
-        $productData->catnum = '44291569';
         $productData->partno = '';
         $productData->ean = '8845781246029';
 
@@ -4010,15 +3622,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 78);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('42390545');
 
-        $productData->catnum = '42390545';
         $productData->partno = '';
         $productData->ean = '8845781246030';
 
@@ -4033,15 +3640,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 54);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('zn8009');
 
-        $productData->catnum = 'zn8009';
         $productData->partno = '8594049735839';
         $productData->ean = '8845781246031';
 
@@ -4057,15 +3659,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 12);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990022');
 
-        $productData->catnum = '61990022';
         $productData->partno = '8594049737499';
         $productData->ean = '8845781246032';
 
@@ -4082,15 +3679,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 351);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ts9080');
 
-        $productData->catnum = 'ts9080';
         $productData->partno = '';
         $productData->ean = '8845781246033';
 
@@ -4107,15 +3699,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 654);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990028');
 
-        $productData->catnum = '61990028';
         $productData->partno = '8594049737529';
         $productData->ean = '8845781246034';
 
@@ -4132,15 +3719,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 83);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('SprejNerez');
 
-        $productData->catnum = 'SprejNerez';
         $productData->partno = '4039286802721';
         $productData->ean = '8845781246035';
 
@@ -4156,15 +3738,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 78);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('SprejSklo');
 
-        $productData->catnum = 'SprejSklo';
         $productData->partno = '4019786908147';
         $productData->ean = '8845781246036';
 
@@ -4180,15 +3757,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 8);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('61990030');
 
-        $productData->catnum = '61990030';
         $productData->partno = '8594049737543';
         $productData->ean = '8845781246037';
 
@@ -4204,15 +3776,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 9);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290823');
 
-        $productData->catnum = '44290823';
         $productData->partno = '8594049736584';
         $productData->ean = '8845781246038';
 
@@ -4227,15 +3794,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 879);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44291542');
 
-        $productData->catnum = '44291542';
         $productData->partno = '';
         $productData->ean = '8845781246039';
 
@@ -4250,15 +3812,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 98);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44291543');
 
-        $productData->catnum = '44291543';
         $productData->partno = '';
         $productData->ean = '8845781246040';
 
@@ -4273,15 +3830,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 654);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290845');
 
-        $productData->catnum = '44290845';
         $productData->partno = '';
         $productData->ean = '8845781246041';
 
@@ -4296,15 +3848,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 3524);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290872');
 
-        $productData->catnum = '44290872';
         $productData->partno = '';
         $productData->ean = '8845781246042';
 
@@ -4319,15 +3866,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 78);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ts9170');
 
-        $productData->catnum = 'ts9170';
         $productData->partno = '';
         $productData->ean = '8845781246043';
 
@@ -4342,15 +3884,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 789);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290851');
 
-        $productData->catnum = '44290851';
         $productData->partno = '8594049736591';
         $productData->ean = '8845781246044';
 
@@ -4365,15 +3902,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 564);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('ns9310');
 
-        $productData->catnum = 'ns9310';
         $productData->partno = '8594049736645';
         $productData->ean = '8845781246045';
 
@@ -4390,15 +3922,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 456);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('sms9170');
 
-        $productData->catnum = 'sms9170';
         $productData->partno = '8594049736638';
         $productData->ean = '8845781246046';
 
@@ -4415,15 +3942,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 456);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290852');
 
-        $productData->catnum = '44290852';
         $productData->partno = '8594049736639';
         $productData->ean = '8845781246047';
 
@@ -4456,15 +3978,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 457);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('44290853');
 
-        $productData->catnum = '44290853';
         $productData->partno = '8594049736639';
         $productData->ean = '8845781246047';
 
@@ -4497,15 +4016,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 457);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9184536');
 
-        $productData->catnum = '9184536';
         $productData->partno = '8331B006';
         $productData->ean = '8845781245938';
 
@@ -4547,9 +4063,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9184440');
 
-        $productData->catnum = '9184440';
         $productData->partno = '8328B006';
         $productData->ean = '8845781245936';
 
@@ -4585,15 +4100,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('718254');
 
-        $productData->catnum = '718254';
         $productData->partno = 'B2L57C';
         $productData->ean = '8845781245937';
 
@@ -4626,15 +4138,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 460);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HP);
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('8980686');
 
-        $productData->catnum = '8980686';
         $productData->partno = '1318206';
         $productData->ean = '8845781245935';
 
@@ -4667,15 +4176,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 200);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
-        $this->setFlags($productData, []);
-
-        $this->setBrand($productData, null);
-
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('9176522');
 
-        $productData->catnum = '9176522';
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
 
@@ -4711,9 +4215,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('917652236');
 
-        $productData->catnum = '917652236';
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
 
@@ -4749,9 +4252,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('917652254');
 
-        $productData->catnum = '917652254';
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
 
@@ -4787,9 +4289,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('91765223');
 
-        $productData->catnum = '91765223';
         $productData->partno = '32PFL4308J';
         $productData->ean = '8845781243205';
 
@@ -4825,9 +4326,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('91765542');
 
-        $productData->catnum = '91765542';
         $productData->partno = '32PFL4360';
         $productData->ean = '8845781243205';
 
@@ -4862,9 +4362,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->createProduct($productData);
 
-        $productData = $this->productDemoDataFactory->createDefaultData();
+        $productData = $this->productDemoDataFactory->createDefaultData('91765782');
 
-        $productData->catnum = '91765782';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
 
