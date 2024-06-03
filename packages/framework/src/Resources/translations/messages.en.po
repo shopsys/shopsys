@@ -2740,6 +2740,9 @@ msgstr ""
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr ""
 
+msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
+msgstr ""
+
 msgid "There is no warehouse on this domain yet."
 msgstr ""
 

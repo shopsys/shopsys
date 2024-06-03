@@ -26,14 +26,14 @@ class DomainFormType extends AbstractType
                 'required' => false,
                 'file_constraints' => [
                     new Constraints\Image([
-                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                        'mimeTypes' => ['image/png'],
+                        'mimeTypesMessage' => 'Image can be only in PNG format',
                         'maxSize' => '2M',
                         'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'info_text' => t('The optimal size of the icon is 46x26 px. Only PNG format is allowed.'),
             ])
             ->add('save', SubmitType::class);
     }

@@ -12,22 +12,22 @@
                         <li class="list-files__item js-file-upload-file" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}">
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file js-file-upload-preview {% if isRemoved %}list-files__item__in--removed{% endif %}">
-                                    {{ image(image, { height: '100', type: image_type }) }}
+                                    {{ image(image, { height: '164', type: image_type }) }}
                                 </div>
                                 {% if multiple %}
                                     <span class="list-files__item__main">
                                         {{ 'Main image'|trans }}
                                     </span>
                                     <span class="js-file-upload-file-handle list-files__item__move" title="{{ 'Move'|trans }}">
-                                        <i class="svg svg-move"></i>
+                                        {{ icon('move') }}
                                     </span>
                                 {% endif %}
                                 {% if not isRemoved %}
                                     <button class="js-file-upload-delete-button btn-no-style list-files__item__remove" type="button" title="{{ 'Delete'|trans }}">
-                                        <i class="svg svg-delete"></i>
+                                        {{ icon('delete') }}
                                     </button>
                                     <button class="btn-no-style js-file-upload-delete-revert-button display-none list-files__item__revert" type="button" title="{{ 'Return back'|trans }}">
-                                        <i class="svg svg-forward-page"></i>
+                                        {{ icon('forward-page') }}
                                     </button>
                                 {% endif %}
                                 <span class="list-files__item__overlay {% if isRemoved %}list-files__item__overlay__show{% endif %} js-file-upload-file-overlay">
@@ -49,7 +49,7 @@
                 </label>
                 <div class="form-line__side">
                     <div class="form-line__item">
-                        {{ image(entity, { height: 100, type: image_type }) }}
+                        {{ image(entity, { height: 100, type: null }) }}
                     </div>
                 </div>
             </div>
@@ -58,7 +58,8 @@
             {{ form_widget(form.imagesToDelete) }}
         </div>
     {% endif %}
-    <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+    {% set disabledField = form.vars.disabled %}
+    <div class="form-line{{ disabledField is same as true ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
         {{ form_widget(form) }}

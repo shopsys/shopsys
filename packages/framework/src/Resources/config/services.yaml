@@ -63,10 +63,6 @@ services:
             - [seed, ['%faker.seed%']]
         factory: [Faker\Factory, create]
 
-    Intervention\Image\ImageManager:
-        arguments:
-            - [driver: 'gd']
-
     Ivory\OrderedForm\Orderer\FormOrderer: ~
 
     Metadata\MetadataFactory:
@@ -177,7 +173,7 @@ services:
         arguments:
             - '%shopsys.domain_images_dir%'
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer:
+    Shopsys\FrameworkBundle\Component\Domain\DomainIconProcessor:
         arguments:
             - '@monolog.logger'
 

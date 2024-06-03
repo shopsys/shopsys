@@ -4,22 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Image\Processing;
 
-use Intervention\Image\Constraint;
-use Intervention\Image\Exception\NotReadableException;
-use Intervention\Image\Image;
-use Intervention\Image\ImageManager;
+use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 
 class ImageProcessor
 {
-    public const EXTENSION_JPEG = 'jpeg';
-    public const EXTENSION_JPG = 'jpg';
-    public const EXTENSION_PNG = 'png';
-    public const EXTENSION_GIF = 'gif';
-    public const SUPPORTED_EXTENSIONS = [self::EXTENSION_JPG, self::EXTENSION_JPEG, self::EXTENSION_GIF, self::EXTENSION_PNG];
-    public const SUPPORTED_IMAGE_MIME_TYPES = 'image/jpeg|image/gif|image/png';
+    public const string EXTENSION_JPEG = 'jpeg';
+    public const string EXTENSION_JPG = 'jpg';
+    public const string EXTENSION_PNG = 'png';
+    public const string EXTENSION_GIF = 'gif';
+    public const array SUPPORTED_EXTENSIONS = [self::EXTENSION_JPG, self::EXTENSION_JPEG, self::EXTENSION_GIF, self::EXTENSION_PNG];
+    public const string SUPPORTED_IMAGE_MIME_TYPES = 'image/jpeg|image/gif|image/png';
 
     /**
      * @var string[]
@@ -27,11 +24,9 @@ class ImageProcessor
     protected array $supportedImageExtensions;
 
     /**
-     * @param \Intervention\Image\ImageManager $imageManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        protected readonly ImageManager $imageManager,
         protected readonly FilesystemOperator $filesystem,
     ) {
         $this->supportedImageExtensions = [
@@ -44,9 +39,9 @@ class ImageProcessor
 
     /**
      * @param string $filepath
-     * @return \Intervention\Image\Image
+     * @return string
      */
-    public function createInterventionImage($filepath)
+    protected function getExtensionThrowExceptionIfNotSupported(string $filepath): string
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
@@ -54,70 +49,50 @@ class ImageProcessor
             throw new FileIsNotSupportedImageException($filepath);
         }
 
-        try {
-            if ($this->filesystem->has($filepath)) {
-                $file = $this->filesystem->read($filepath);
-
-                return $this->imageManager->make($file);
-            }
-
-            throw new ImageNotFoundException('File ' . $filepath . ' not found.');
-        } catch (NotReadableException $ex) {
-            throw new FileIsNotSupportedImageException($filepath, $ex);
-        }
+        return $extension;
     }
 
     /**
      * @param string $filepath
      * @return string
      */
-    public function convertToShopFormatAndGetNewFilename($filepath)
+    public function getEncodedImageUri(string $filepath): string
     {
-        $filename = pathinfo($filepath, PATHINFO_FILENAME);
-        $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-        $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $filename . '.';
+        $this->getExtensionThrowExceptionIfNotSupported($filepath);
 
-        if ($extension === self::EXTENSION_PNG) {
-            $extension = self::EXTENSION_PNG;
-        } elseif (in_array($extension, $this->supportedImageExtensions, true)) {
-            $extension = self::EXTENSION_JPG;
-        } else {
-            throw new FileIsNotSupportedImageException($filepath);
+        try {
+            $mimeType = $this->filesystem->mimeType($filepath);
+        } catch (FilesystemException) {
+            $mimeType = 'image/png';
         }
-        $newFilepath .= $extension;
 
-        $image = $this->createInterventionImage($filepath);
-        $data = $image->encode($extension)->getEncoded();
-
-        $this->filesystem->delete($filepath);
-        $this->filesystem->write($newFilepath, $data);
-
-        $image->destroy();
-
-        return $filename . '.' . $extension;
+        return sprintf(
+            'data:%s;base64,%s',
+            $mimeType,
+            base64_encode($this->filesystem->read($filepath)),
+        );
     }
 
     /**
-     * @param \Intervention\Image\Image $image
-     * @param int|null $width
-     * @param int|null $height
-     * @param bool $crop
-     * @return \Intervention\Image\Image
+     * @param string $filepath
+     * @return string
      */
-    public function resize(Image $image, $width, $height, $crop = false)
+    public function convertToShopFormatAndGetNewFilename(string $filepath): string
     {
-        if ($crop) {
-            $image->fit($width, $height, function (Constraint $constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-        } else {
-            $image->resize($width, $height, function (Constraint $constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-        }
+        $filename = pathinfo($filepath, PATHINFO_FILENAME);
+        $extension = $this->getExtensionThrowExceptionIfNotSupported($filepath);
+        $newFilepath = pathinfo($filepath, PATHINFO_DIRNAME) . '/' . $filename . '.';
 
-        return $image;
+        $newFilepath .= $extension;
+
+        try {
+            $file = $this->filesystem->read($filepath);
+            $this->filesystem->delete($filepath);
+            $this->filesystem->write($newFilepath, $file);
+
+            return $filename . '.' . $extension;
+        } catch (FilesystemException) {
+            throw new ImageNotFoundException('File ' . $filepath . ' not found.');
+        }
     }
 }

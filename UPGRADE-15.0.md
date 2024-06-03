@@ -870,6 +870,61 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### stop processing images by PHP to avoid decreasing quality ([#3169](https://github.com/shopsys/shopsys/pull/3169))
+
+-   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor` class was changed:
+    -   all the methods and constants are now strictly typed
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        -        protected readonly ImageManager $imageManager,
+                 protected readonly FilesystemOperator $filesystem,
+        ```
+    -   `createInterventionImage()` method was removed
+    -   `resize()` method was removed
+-   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory` class was removed
+-   `Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        -        protected readonly ImageThumbnailFactory $imageThumbnailFactory,
+        +        protected readonly ImageProcessor $imageProcessor,
+        ```
+    -   `DEFAULT_ICON_TYPE` constant is now strictly typed
+    -   `IMAGE_THUMBNAIL_QUALITY` constant was removed
+    -   all the methods are now strictly typed
+-   `Shopsys\FrameworkBundle\Component\Domain\DomainFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        -       $domainImagesDirectory,
+        +       protected readonly string $domainImagesDirectory,
+                protected readonly Domain $domain,
+        -       protected readonly DomainIconResizer $domainIconResizer,
+        -       FilesystemOperator $fileSystem,
+        +       protected readonly DomainIconProcessor $domainIconProcessor,
+        +       protected readonly FilesystemOperator $filesystem,
+                protected readonly FileUpload $fileUpload,
+        +       protected readonly ImageProcessor $imageProcessor,
+        ```
+    -   all the methods are now strictly typed
+-   `Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer` class was removed, use `Shopsys\FrameworkBundle\Component\Domain\DomainIconProcessor` instead
+-   `Shopsys\FrameworkBundle\Component\Domain\DomainIconProcessor` class was changed:
+    -   `convertToDomainIconFormatAndSave()` method was renamed to `saveIcon()`
+-   `Shopsys\FrameworkBundle\Component\Image\Processing\Exception\OriginalSizeImageCannotBeGeneratedException` class was removed
+-   `Shopsys\FrameworkBundle\Twig\ImageExtension` class was changed:
+    -   `getImageUrl()` method changed its interface:
+        ```diff
+            public function getImageUrl(
+                $imageOrEntity,
+        -       ?string $type = null
+        +       array $attributes
+        ```
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
+    -   `imageuploadFields.html.twig` Twig template extension
+    -   `Advert/listGrid.html.twig` Twig template extension
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

@@ -2740,6 +2740,9 @@ msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v soubor
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."
 
+msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
+msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
+
 msgid "There is no warehouse on this domain yet."
 msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
 

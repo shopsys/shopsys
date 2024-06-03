@@ -11,8 +11,9 @@ ARG DEBIAN_VERSION
 # bash-completion for Phing target completion
 # ca-certificates to ensure certificates are up to date
 # cron to be able to schedule and automate recurring tasks and jobs
-# gnupg and g++ for gd extension
+# g++ for gd extension
 # git for computing diffs and for npm to download packages
+# gnupg for adding keys to apt
 # htop for quick monitoring
 # libfreetype6-dev needed by "gd" extension
 # libicu-dev for intl extension
