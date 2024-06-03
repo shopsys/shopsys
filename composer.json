@@ -80,7 +80,7 @@
         "ext-tokenizer": "*",
         "ext-xml": "*",
         "akeneo/api-php-client": "^11.0",
-        "arvenil/ninja-mutex": "^0.4.1",
+        "arvenil/ninja-mutex": "^0.6",
         "aws/aws-sdk-php": "^3.220.0",
         "barryvdh/elfinder-flysystem-driver": "^0.4.3",
         "commerceguys/intl": "^1.0.0",

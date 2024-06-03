@@ -37,7 +37,7 @@
         "ext-pdo_pgsql": "*",
         "ext-redis": "*",
         "ext-xml": "*",
-        "arvenil/ninja-mutex": "^0.4.1",
+        "arvenil/ninja-mutex": "^0.6",
         "barryvdh/elfinder-flysystem-driver": "^0.4.3",
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^2.2.12",

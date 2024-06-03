@@ -39,7 +39,7 @@
         "ext-redis": "*",
         "ext-xml": "*",
         "akeneo/api-php-client": "^11.0",
-        "arvenil/ninja-mutex": "^0.4.1",
+        "arvenil/ninja-mutex": "^0.6",
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^2.2.12",
         "doctrine/annotations": "^1.6.0",
