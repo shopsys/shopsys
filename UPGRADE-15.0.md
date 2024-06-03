@@ -866,6 +866,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   see the specialized upgrade note in [upgrade-order-processing.md](./upgrade-order-processing.md)
 -   see #project-base-diff to update your project
 
+#### fix search testing blog article demo data ([#3182](https://github.com/shopsys/shopsys/pull/3182))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

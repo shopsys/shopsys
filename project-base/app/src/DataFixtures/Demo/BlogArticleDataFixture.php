@@ -222,7 +222,12 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->descriptions[$locale] = t('Article text for search testing, the search phrase is &#34;Dina&#34;.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->descriptions[$locale] = t(
+                '<div class="gjs-text-ckeditor">Article text for search testing, the search phrase is &#34;Dina&#34;.</div>',
+                [],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $locale,
+            );
             $blogArticleData->perexes[$locale] = t('perex', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
