@@ -456,6 +456,42 @@
         <phingcall target="twig-lint"/>
     </target>
 
+    <target name="upgrade-generate" description="Creates empty file(s) for upgrade notes.">
+        <input message="Which one?" propertyName="upgradeType" validArgs="backend,storefront,both"/>
+        <if>
+            <or>
+                <equals arg1="${upgradeType}" arg2="backend"/>
+                <equals arg1="${upgradeType}" arg2="both"/>
+            </or>
+            <then>
+                <exec executable="php">
+                    <arg value="-r"/>
+                    <arg value="copy('upgrade-notes/_template.md', 'upgrade-notes/backend_' . date('Ymd_His') . '.md');"/>
+                </exec>
+            </then>
+        </if>
+        <if>
+            <or>
+                <equals arg1="${upgradeType}" arg2="storefront"/>
+                <equals arg1="${upgradeType}" arg2="both"/>
+            </or>
+            <then>
+                <exec executable="php">
+                    <arg value="-r"/>
+                    <arg value="copy('upgrade-notes/_template.md', 'upgrade-notes/storefront_' . date('Ymd_His') . '.md');"/>
+                </exec>
+            </then>
+        </if>
+    </target>
+
+    <target name="upgrade-merge" description="Merges all upgrade notes into UPGRADE-{X.X}.md according to structure specified in upgrade-notes/_layout.md.">
+        <input message="Enter version to merge upgrade notes for:" propertyName="version"/>
+        <exec executable="sh">
+            <arg value="-c"/>
+            <arg value="upgrade-notes/upgrade_notes.sh ${version}"/>
+        </exec>
+    </target>
+
     <target name="yaml-lint" description="Checks syntax of Yaml files in the whole monorepo." hidden="true">
         <phingcall target="shopsys_framework.yaml-lint"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
