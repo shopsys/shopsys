@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter;
 use App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
@@ -13,7 +14,6 @@ use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Unit\Unit;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,6 +54,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter $productDemoDataSetter
      */
     public function __construct(
         private readonly ProductFacade $productFacade,
@@ -66,6 +67,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly StockRepository $stockRepository,
         private readonly ProductStockDataFactory $productStockDataFactory,
         private readonly EntityManagerInterface $em,
+        private readonly ProductDemoDataSetter $productDemoDataSetter,
     ) {
     }
 
@@ -128,7 +130,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SENCOR);
 
         $this->createProduct($productData);
@@ -166,7 +167,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -292,7 +292,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_APPLE);
 
         $this->createProduct($productData);
@@ -387,7 +386,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_ZERO);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setPriceForAllPricingGroups($productData, '24990');
 
         $this->setSellingFrom($productData, '3.2.2013');
@@ -437,7 +436,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
@@ -480,7 +478,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
@@ -571,7 +568,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_DEFENDER);
 
         $this->createProduct($productData);
@@ -606,7 +602,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_DELONGHI);
 
         $this->createProduct($productData);
@@ -662,7 +657,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
@@ -697,7 +691,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
@@ -767,7 +760,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_GENIUS);
 
         $this->createProduct($productData);
@@ -840,7 +832,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HP);
 
         $this->createProduct($productData);
@@ -874,7 +865,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HTC);
 
         $this->createProduct($productData);
@@ -908,7 +898,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 10);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE, CategoryDataFixture::CATEGORY_PC]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_JURA);
 
         $this->createProduct($productData);
@@ -1126,7 +1115,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setStocksQuantity($productData, 440);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
@@ -1163,7 +1151,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LOGITECH);
 
         $this->createProduct($productData);
@@ -1370,7 +1357,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_LOW);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setPriceForAllPricingGroups($productData, '8385');
 
         $this->setSellingFrom($productData, '1.2.2013');
@@ -1484,7 +1471,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
@@ -1519,7 +1505,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
@@ -1553,7 +1538,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
@@ -1588,7 +1572,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SENCOR);
 
         $this->createProduct($productData);
@@ -1697,7 +1680,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_SONY);
 
         $this->createProduct($productData);
@@ -1742,7 +1724,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_VERBATIM);
 
         $this->createProduct($productData);
@@ -1810,7 +1791,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -1847,7 +1827,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -2108,7 +2087,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_ORAVA);
 
         $this->createProduct($productData);
@@ -2145,7 +2123,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
@@ -2269,7 +2246,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -2294,7 +2270,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_LOW);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setPriceForAllPricingGroups($productData, '8.3');
 
         $this->setSellingFrom($productData, '15.1.2000');
@@ -2321,7 +2297,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setStocksQuantity($productData, 75);
 
-        $this->setUnit($productData, UnitDataFixture::UNIT_CUBIC_METERS);
+        $this->productDemoDataSetter->setUnit($productData, UnitDataFixture::UNIT_CUBIC_METERS);
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
         $this->createProduct($productData);
 
@@ -2377,7 +2353,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_SECOND_LOW);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_SECOND_LOW);
         $this->setPriceForAllPricingGroups($productData, '61.9');
 
         $this->setSellingFrom($productData, '15.1.2000');
@@ -2417,7 +2393,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
@@ -2454,7 +2429,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
@@ -2678,7 +2652,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
@@ -2726,7 +2699,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
@@ -2758,18 +2730,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_ZERO);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setPriceForAllPricingGroups($productData, '24990');
 
         $this->setSellingFrom($productData, '25.1.2014');
-        $this->setSellingTo($productData, '25.1.2015');
+        $this->productDemoDataSetter->setSellingTo($productData, '25.1.2015');
         $this->setStocksQuantity($productData, 100);
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_NIKON);
 
         $this->createProduct($productData);
@@ -2838,7 +2809,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_LOW);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setPriceForAllPricingGroups($productData, '2000');
 
         $this->setSellingFrom($productData, '3.2.2013');
@@ -2906,7 +2877,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setProductParameterValues($productData, $parameterValues);
 
-        $this->setVat($productData, VatDataFixture::VAT_ZERO);
+        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setPriceForAllPricingGroups($productData, '24990');
 
         $this->setSellingFrom($productData, '3.2.2013');
@@ -2951,7 +2922,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_DE]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_OLYMPUS);
 
         $this->createProduct($productData);
@@ -4058,7 +4028,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
 
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
@@ -4099,7 +4068,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_CANON);
 
         $this->createProduct($productData);
@@ -4210,7 +4178,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -4247,7 +4214,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -4284,7 +4250,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -4321,7 +4286,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_PHILIPS);
 
         $this->createProduct($productData);
@@ -4357,7 +4321,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
@@ -4394,7 +4357,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
-
         $this->setBrand($productData, BrandDataFixture::BRAND_HYUNDAI);
 
         $this->createProduct($productData);
@@ -4553,29 +4515,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param string $unitReference
-     */
-    private function setUnit(ProductData $productData, string $unitReference): void
-    {
-        $productData->unit = $this->persistentReferenceFacade->getReference($unitReference, Unit::class);
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
      * @param string|null $date
      */
     private function setSellingFrom(ProductData $productData, ?string $date): void
     {
         $productData->sellingFrom = $date === null ? null : new DateTime($date);
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string|null $date
-     */
-    private function setSellingTo(ProductData $productData, ?string $date): void
-    {
-        $productData->sellingTo = $date === null ? null : new DateTime($date);
     }
 
     /**
@@ -4587,22 +4531,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         /** @var \App\Model\Product\Brand\Brand|null $brand */
         $brand = $brandReference === null ? null : $this->persistentReferenceFacade->getReference($brandReference, Brand::class);
         $productData->brand = $brand;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string|null $vatReference
-     */
-    private function setVat(ProductData $productData, ?string $vatReference): void
-    {
-        $productVatsIndexedByDomainId = [];
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            if ($vatReference !== null) {
-                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, Domain::FIRST_DOMAIN_ID, Vat::class);
-            }
-        }
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 
     /**
