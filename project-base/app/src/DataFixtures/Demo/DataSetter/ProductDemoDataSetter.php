@@ -33,7 +33,7 @@ class ProductDemoDataSetter
 
         foreach ($this->domain->getAllIds() as $domainId) {
             if ($vatReference !== null) {
-                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, Domain::FIRST_DOMAIN_ID, Vat::class);
+                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
             }
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
