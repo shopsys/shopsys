@@ -25,7 +25,6 @@ class ProductInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator $productInputPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
@@ -33,7 +32,6 @@ class ProductInputPriceFacade
         protected readonly PricingSetting $pricingSetting,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
-        protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
