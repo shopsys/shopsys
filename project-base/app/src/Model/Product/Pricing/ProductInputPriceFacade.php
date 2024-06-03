@@ -14,39 +14,4 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade as Bas
  */
 class ProductInputPriceFacade extends BaseProductInputPriceFacade
 {
-    /**
-     * @return bool
-     */
-    public function replaceBatchVatAndRecalculateInputPrices(): bool
-    {
-        if ($this->productRowsIterator === null) {
-            $this->productRowsIterator = $this->productRepository->getProductIteratorForReplaceVat();
-        }
-
-        for ($count = 0; $count < static::BATCH_SIZE; $count++) {
-            $row = $this->productRowsIterator->next();
-
-            if ($row === false) {
-                $this->em->flush();
-                $this->em->clear();
-
-                return false;
-            }
-
-            /** @var \App\Model\Product\Product $product */
-            $product = $row[0];
-
-            foreach ($product->getProductDomains() as $productDomain) {
-                $domainId = $productDomain->getDomainId();
-                $newVat = $product->getVatForDomain($domainId)->getReplaceWith();
-                $product->changeVatForDomain($newVat, $domainId);
-                $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
-            }
-        }
-
-        $this->em->flush();
-        $this->em->clear();
-
-        return true;
-    }
 }
