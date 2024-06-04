@@ -40,13 +40,17 @@ class BytesHelper
         }
 
         switch (substr(rtrim($memoryLimit, 'b'), -1)) {
-            case 't': $max *= 1024;
-            // no break
-            case 'g': $max *= 1024;
-            // no break
-            case 'm': $max *= 1024;
-            // no break
-            case 'k': $max *= 1024;
+            case 't':
+                $max *= 1024;
+                // no break
+            case 'g':
+                $max *= 1024;
+                // no break
+            case 'm':
+                $max *= 1024;
+                // no break
+            case 'k':
+                $max *= 1024;
         }
 
         return $max;

@@ -613,20 +613,12 @@
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
-            <arg path="${path.app}"/>
-            <arg path="${path.src}"/>
-            <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
-            <arg path="${path.root}/docs"/>
         </exec>
     </target>
 
     <target name="ecs-diff" description="Checks coding standards in changed files by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
-            <arg path="${path.app}"/>
-            <arg path="${path.src}"/>
-            <arg path="${path.tests}"/>
         </exec>
     </target>
 
@@ -635,9 +627,6 @@
             <arg value="check"/>
             <arg value="--clear-cache"/>
             <arg value="--fix"/>
-            <arg path="${path.app}"/>
-            <arg path="${path.src}"/>
-            <arg path="${path.tests}"/>
         </exec>
     </target>
 
@@ -645,11 +634,6 @@
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--fix"/>
-            <arg path="${path.app}"/>
-            <arg path="${path.src}"/>
-            <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
-            <arg path="${path.root}/docs"/>
         </exec>
     </target>
 

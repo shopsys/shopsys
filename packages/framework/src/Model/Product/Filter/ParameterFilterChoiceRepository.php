@@ -100,6 +100,7 @@ class ParameterFilterChoiceRepository
         $parameters = $parametersQueryBuilder->getQuery()->execute();
 
         $parametersIndexedById = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter */
         foreach ($parameters as $parameter) {
             $parametersIndexedById[$parameter->getId()] = $parameter;
@@ -161,6 +162,7 @@ class ParameterFilterChoiceRepository
         $values = $valuesQueryBuilder->getQuery()->execute();
 
         $valuesIndexedById = [];
+
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $value */
         foreach ($values as $value) {
             $valuesIndexedById[$value->getId()] = $value;

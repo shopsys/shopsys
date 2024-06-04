@@ -65,18 +65,6 @@ class FilterQuery extends BaseFilterQuery
             ],
         ];
 
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.full_with_diacritic^60';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.full_without_diacritic^50';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix^45';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.edge_ngram_with_diacritic^40';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_prefix.edge_ngram_without_diacritic^35';
-//
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.full_with_diacritic^60';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.full_without_diacritic^50';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix^45';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_with_diacritic^40';
-//        $clonedQuery->match['multi_match']['fields'][] = 'name_sufix.edge_ngram_without_diacritic^35';
-
         $clonedQuery->match['multi_match']['operator'] = 'and';
 
         return $clonedQuery;

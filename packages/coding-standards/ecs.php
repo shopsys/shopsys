@@ -42,7 +42,6 @@ use PhpCsFixer\Fixer\Alias\NoMixedEchoPrintFixer;
 use PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer;
 use PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer;
 use PhpCsFixer\Fixer\ArrayNotation\NormalizeIndexBraceFixer;
-use PhpCsFixer\Fixer\ArrayNotation\NoTrailingCommaInSinglelineArrayFixer;
 use PhpCsFixer\Fixer\ArrayNotation\TrimArraySpacesFixer;
 use PhpCsFixer\Fixer\Basic\NonPrintableCharacterFixer;
 use PhpCsFixer\Fixer\Casing\NativeFunctionCasingFixer;
@@ -55,17 +54,14 @@ use PhpCsFixer\Fixer\ClassNotation\SelfAccessorFixer;
 use PhpCsFixer\Fixer\Comment\NoEmptyCommentFixer;
 use PhpCsFixer\Fixer\Comment\SingleLineCommentStyleFixer;
 use PhpCsFixer\Fixer\ControlStructure\IncludeFixer;
-use PhpCsFixer\Fixer\ControlStructure\NoTrailingCommaInListCallFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
-use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use PhpCsFixer\Fixer\LanguageConstruct\CombineConsecutiveUnsetsFixer;
 use PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer;
 use PhpCsFixer\Fixer\NamespaceNotation\NoLeadingNamespaceWhitespaceFixer;
-use PhpCsFixer\Fixer\NamespaceNotation\SingleBlankLineBeforeNamespaceFixer;
 use PhpCsFixer\Fixer\Operator\ObjectOperatorWithoutWhitespaceFixer;
 use PhpCsFixer\Fixer\Operator\StandardizeNotEqualsFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoBlankLinesAfterPhpdocFixer;
@@ -89,14 +85,11 @@ use PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer;
 use PhpCsFixer\Fixer\Semicolon\NoEmptyStatementFixer;
 use PhpCsFixer\Fixer\Semicolon\SemicolonAfterInstructionFixer;
 use PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer;
-use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use PhpCsFixer\Fixer\Strict\StrictParamFixer;
 use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
-use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
-use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
@@ -104,11 +97,7 @@ use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
-use Shopsys\CodingStandards\CsFixer\RedundantMarkDownTrailingSpacesFixer;
-use Shopsys\CodingStandards\Finder\FileFinder;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
-use Shopsys\CodingStandards\Helper\FqnNameResolver;
-use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
@@ -120,6 +109,7 @@ use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\RequireConstructorPropertyPromotionSniff;
+use SlevomatCodingStandard\Sniffs\Classes\RequireMultiLineMethodSignatureSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DisallowCommentAfterCodeSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
@@ -140,18 +130,14 @@ use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
-use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
+use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
-/**
- * @param Symplify\EasyCodingStandard\Config\ECSConfig $ecsConfig
- */
-return static function (ECSConfig $ecsConfig): void {
-    $ecsConfig->parallel();
-    $ecsConfig->lineEnding('\n');
-
-    $ecsConfig->sets([
+return ECSConfig::configure()
+    ->withParallel()
+    ->withSpacing(indentation: Option::INDENTATION_SPACES, lineEnding: PHP_EOL)
+    ->withSets([
         SetList::PSR_12,
         SetList::CLEAN_CODE,
         SetList::ARRAY,
@@ -159,161 +145,155 @@ return static function (ECSConfig $ecsConfig): void {
         SetList::CONTROL_STRUCTURES,
         SetList::DOCBLOCK,
         SetList::NAMESPACES,
-    ]);
-
-    // helper services
-    $services = $ecsConfig->services();
-    $services->defaults()->autowire();
-    $services->set(FunctionsAnalyzer::class);
-    $services->set(PhpToDocTypeTransformer::class);
-    $services->set(FqnNameResolver::class);
-    $services->set(NamespaceUsesAnalyzer::class);
-    $services->set(IndentDetector::class);
-    $services->set(FileFinder::class);
-
-    // Slevomat Checkers
-    $ecsConfig->rule(InlineDocCommentDeclarationSniff::class);
-    $ecsConfig->rule(NullableTypeForNullDefaultValueSniff::class);
-    $ecsConfig->rule(ReturnTypeHintSpacingSniff::class);
-    $ecsConfig->ruleWithConfiguration(ForbiddenClassesSniff::class, [
+    ])
+    ->withRules([
+        InlineDocCommentDeclarationSniff::class,
+        NullableTypeForNullDefaultValueSniff::class,
+        ReturnTypeHintSpacingSniff::class,
+    ])
+    ->withConfiguredRule(
+        ForbiddenClassesSniff::class, [
         'forbiddenClasses' => [
             'Overblog\GraphQLBundle\Error\UserError' => null,
             'GraphQL\Error\UserError' => null,
         ],
-    ]);
-
-    // Shopsys Checkers
-    $ecsConfig->rule(InheritDocFormatFixer::class);
-    $ecsConfig->rule(ForbiddenDumpFixer::class);
-    $ecsConfig->rule(MissingButtonTypeFixer::class);
-    $ecsConfig->rule(OrmJoinColumnRequireNullableFixer::class);
-    $ecsConfig->rule(RedundantMarkDownTrailingSpacesFixer::class);
-    $ecsConfig->rule(ObjectIsCreatedByFactorySniff::class);
-    $ecsConfig->rule(ForbiddenDumpSniff::class);
-    $ecsConfig->rule(ForbiddenExitSniff::class);
-    $ecsConfig->rule(ForbiddenSuperGlobalSniff::class);
-    $ecsConfig->rule(ForbiddenDoctrineInheritanceSniff::class);
-    $ecsConfig->rule(ForbiddenDoctrineDefaultValueSniff::class);
-    // method arguments and variables should be $camelCase
-    $ecsConfig->rule(ValidVariableNameSniff::class);
-    // add all @param, @return and @var annotations, in FQN
-    $ecsConfig->rule(MissingParamAnnotationsFixer::class);
-    $ecsConfig->rule(MissingReturnAnnotationFixer::class);
-    $ecsConfig->rule(OrderedParamAnnotationsFixer::class);
-    $ecsConfig->rule(FullyQualifiedClassNameInAnnotationSniff::class);
-
-    // Custom Shopsys standards
-    $ecsConfig->rule(EmptyStatementSniff::class);
-    $ecsConfig->rule(ForLoopShouldBeWhileLoopSniff::class);
-    $ecsConfig->rule(ForLoopWithTestFunctionCallSniff::class);
-    $ecsConfig->rule(JumbledIncrementerSniff::class);
-    $ecsConfig->rule(UnconditionalIfStatementSniff::class);
-    $ecsConfig->rule(TodoSniff::class);
-    $ecsConfig->rule(FixmeSniff::class);
-    $ecsConfig->rule(NoSpaceAfterCastSniff::class);
-    $ecsConfig->rule(CallTimePassByReferenceSniff::class);
-    $ecsConfig->ruleWithConfiguration(CyclomaticComplexitySniff::class, [
+    ])
+    ->withRules([
+        InheritDocFormatFixer::class,
+        ForbiddenDumpFixer::class,
+        MissingButtonTypeFixer::class,
+        OrmJoinColumnRequireNullableFixer::class,
+        ObjectIsCreatedByFactorySniff::class,
+        ForbiddenDumpSniff::class,
+        ForbiddenExitSniff::class,
+        ForbiddenSuperGlobalSniff::class,
+        ForbiddenDoctrineInheritanceSniff::class,
+        ForbiddenDoctrineDefaultValueSniff::class,
+        // method arguments and variables should be $camelCase
+        ValidVariableNameSniff::class,
+        // add all @param, @return and @var annotations, in FQN
+        MissingParamAnnotationsFixer::class,
+        MissingReturnAnnotationFixer::class,
+        OrderedParamAnnotationsFixer::class,
+        FullyQualifiedClassNameInAnnotationSniff::class,
+        EmptyStatementSniff::class,
+        ForLoopShouldBeWhileLoopSniff::class,
+        ForLoopWithTestFunctionCallSniff::class,
+        JumbledIncrementerSniff::class,
+        UnconditionalIfStatementSniff::class,
+        TodoSniff::class,
+        FixmeSniff::class,
+        NoSpaceAfterCastSniff::class,
+        CallTimePassByReferenceSniff::class,
+        CamelCapsFunctionNameSniff::class,
+        DiscourageGotoSniff::class,
+        NoSilencedErrorsSniff::class,
+        GetRequestDataSniff::class,
+        InlineCommentSniff::class,
+        ValidClassNameSniff::class,
+        CamelCapsMethodNameSniff::class,
+        PhpCsValidVariableNameSniff::class,
+        DisallowMultipleAssignmentsSniff::class,
+        DisallowSizeFunctionsInLoopsSniff::class,
+        EvalSniff::class,
+        GlobalKeywordSniff::class,
+        InnerFunctionsSniff::class,
+        LowercasePHPFunctionsSniff::class,
+        NonExecutableCodeSniff::class,
+        StaticThisUsageSniff::class,
+        DoubleQuoteUsageSniff::class,
+        CastSpacingSniff::class,
+        LanguageConstructSpacingSniff::class,
+        LogicalOperatorSpacingSniff::class,
+        CombineConsecutiveUnsetsFixer::class,
+        EregToPregFixer::class,
+        IncludeFixer::class,
+        LinebreakAfterOpeningTagFixer::class,
+        NativeFunctionCasingFixer::class,
+        NoAliasFunctionsFixer::class,
+        NoBlankLinesAfterPhpdocFixer::class,
+        NoEmptyCommentFixer::class,
+        NoEmptyPhpdocFixer::class,
+        NoEmptyStatementFixer::class,
+        NoLeadingNamespaceWhitespaceFixer::class,
+        NoMixedEchoPrintFixer::class,
+        NoMultilineWhitespaceAroundDoubleArrowFixer::class,
+        NoPhp4ConstructorFixer::class,
+        NoShortBoolCastFixer::class,
+        NoSpacesAroundOffsetFixer::class,
+        NoUnneededControlParenthesesFixer::class,
+        NoUnusedImportsFixer::class,
+        NoUselessReturnFixer::class,
+        NoWhitespaceInBlankLineFixer::class,
+        NonPrintableCharacterFixer::class,
+        NormalizeIndexBraceFixer::class,
+        ObjectOperatorWithoutWhitespaceFixer::class,
+        PhpdocAnnotationWithoutDotFixer::class,
+        PhpdocIndentFixer::class,
+        PhpdocNoUselessInheritdocFixer::class,
+        PhpdocNoAliasTagFixer::class,
+        PhpdocNoEmptyReturnFixer::class,
+        PhpdocNoAccessFixer::class,
+        PhpdocNoPackageFixer::class,
+        PhpdocOrderFixer::class,
+        PhpdocScalarFixer::class,
+        PhpdocSingleLineVarSpacingFixer::class,
+        PhpdocTrimFixer::class,
+        ProtectedToPrivateFixer::class,
+        SelfAccessorFixer::class,
+        SemicolonAfterInstructionFixer::class,
+        SpaceAfterSemicolonFixer::class,
+        SingleQuoteFixer::class,
+        StandardizeNotEqualsFixer::class,
+        StrictParamFixer::class,
+        TrimArraySpacesFixer::class,
+        RequireTrailingCommaInDeclarationSniff::class,
+        RequireTrailingCommaInClosureUseSniff::class,
+        RequireTrailingCommaInCallSniff::class,
+        TrailingArrayCommaSniff::class,
+        RequireConstructorPropertyPromotionSniff::class,
+        PropertyTypeHintSniff::class,
+        DisallowEqualOperatorsSniff::class,
+        NoUselessElseFixer::class,
+        AssignmentInConditionSniff::class,
+        DisallowEmptySniff::class,
+        ParentCallSpacingSniff::class,
+        UselessIfConditionWithReturnSniff::class,
+    ])
+    ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
-    ]);
-    $ecsConfig->rule(CamelCapsFunctionNameSniff::class);
-    $ecsConfig->rule(DiscourageGotoSniff::class);
-    $ecsConfig->rule(NoSilencedErrorsSniff::class);
-    $ecsConfig->rule(GetRequestDataSniff::class);
-    $ecsConfig->rule(InlineCommentSniff::class);
-    $ecsConfig->rule(ValidClassNameSniff::class);
-    $ecsConfig->rule(CamelCapsMethodNameSniff::class);
-    $ecsConfig->rule(PhpCsValidVariableNameSniff::class);
-    $ecsConfig->rule(DisallowMultipleAssignmentsSniff::class);
-    $ecsConfig->rule(DisallowSizeFunctionsInLoopsSniff::class);
-    $ecsConfig->rule(EvalSniff::class);
-    $ecsConfig->rule(GlobalKeywordSniff::class);
-    $ecsConfig->rule(InnerFunctionsSniff::class);
-    $ecsConfig->rule(LowercasePHPFunctionsSniff::class);
-    $ecsConfig->rule(NonExecutableCodeSniff::class);
-    $ecsConfig->rule(StaticThisUsageSniff::class);
-    $ecsConfig->rule(DoubleQuoteUsageSniff::class);
-    $ecsConfig->rule(CastSpacingSniff::class);
-    $ecsConfig->rule(LanguageConstructSpacingSniff::class);
-    $ecsConfig->rule(LogicalOperatorSpacingSniff::class);
-    $ecsConfig->ruleWithConfiguration(ArraySyntaxFixer::class, [
+    ])
+    ->withConfiguredRule(ArraySyntaxFixer::class, [
         'syntax' => 'short',
-    ]);
-    $ecsConfig->rule(CombineConsecutiveUnsetsFixer::class);
-    $ecsConfig->rule(EregToPregFixer::class);
-    $ecsConfig->ruleWithConfiguration(FunctionDeclarationArgumentSpacingSniff::class, [
+    ])
+    ->withConfiguredRule(FunctionDeclarationArgumentSpacingSniff::class, [
         'equalsSpacing' => 1,
-    ]);
-    $ecsConfig->rule(IncludeFixer::class);
-    $ecsConfig->ruleWithConfiguration(YodaStyleFixer::class, [
+    ])
+    ->withConfiguredRule(YodaStyleFixer::class, [
         'equal' => false,
         'identical' => false,
-    ]);
-    $ecsConfig->rule(LinebreakAfterOpeningTagFixer::class);
-    $ecsConfig->rule(NativeFunctionCasingFixer::class);
-    $ecsConfig->rule(NoAliasFunctionsFixer::class);
-    $ecsConfig->rule(NoBlankLinesAfterPhpdocFixer::class);
-    $ecsConfig->rule(NoEmptyCommentFixer::class);
-    $ecsConfig->rule(NoEmptyPhpdocFixer::class);
-    $ecsConfig->rule(NoEmptyStatementFixer::class);
-    $ecsConfig->rule(NoLeadingNamespaceWhitespaceFixer::class);
-    $ecsConfig->rule(NoMixedEchoPrintFixer::class);
-    $ecsConfig->rule(NoMultilineWhitespaceAroundDoubleArrowFixer::class);
-    $ecsConfig->rule(NoPhp4ConstructorFixer::class);
-    $ecsConfig->rule(NoShortBoolCastFixer::class);
-    $ecsConfig->rule(NoSpacesAroundOffsetFixer::class);
-    $ecsConfig->rule(NoTrailingCommaInListCallFixer::class);
-    $ecsConfig->rule(NoTrailingCommaInSinglelineArrayFixer::class);
-    $ecsConfig->rule(NoUnneededControlParenthesesFixer::class);
-    $ecsConfig->rule(NoUnusedImportsFixer::class);
-    $ecsConfig->rule(NoUselessReturnFixer::class);
-    $ecsConfig->rule(NoWhitespaceInBlankLineFixer::class);
-    $ecsConfig->rule(NonPrintableCharacterFixer::class);
-    $ecsConfig->rule(NormalizeIndexBraceFixer::class);
-    $ecsConfig->rule(ObjectOperatorWithoutWhitespaceFixer::class);
-    $ecsConfig->ruleWithConfiguration(OrderedImportsFixer::class, [
+    ])
+    ->withConfiguredRule(OrderedImportsFixer::class, [
         'sort_algorithm' => 'alpha',
         'imports_order' => [
             'class',
             'function',
             'const',
         ],
-    ]);
-    $ecsConfig->rule(PhpdocAnnotationWithoutDotFixer::class);
-    $ecsConfig->rule(PhpdocIndentFixer::class);
-    $ecsConfig->rule(PhpdocNoUselessInheritdocFixer::class);
-    $ecsConfig->rule(PhpdocNoAliasTagFixer::class);
-    $ecsConfig->rule(PhpdocNoEmptyReturnFixer::class);
-    $ecsConfig->rule(PhpdocNoAccessFixer::class);
-    $ecsConfig->rule(PhpdocNoPackageFixer::class);
-    $ecsConfig->rule(PhpdocOrderFixer::class);
-    $ecsConfig->rule(PhpdocScalarFixer::class);
-    $ecsConfig->rule(PhpdocSingleLineVarSpacingFixer::class);
-    $ecsConfig->rule(PhpdocTrimFixer::class);
-    $ecsConfig->rule(PhpdocVarWithoutNameFixer::class);
-    $ecsConfig->rule(ProtectedToPrivateFixer::class);
-    $ecsConfig->rule(SelfAccessorFixer::class);
-    $ecsConfig->rule(SemicolonAfterInstructionFixer::class);
-    $ecsConfig->rule(SingleBlankLineBeforeNamespaceFixer::class);
-    $ecsConfig->rule(SpaceAfterSemicolonFixer::class);
-    $ecsConfig->rule(SingleQuoteFixer::class);
-    $ecsConfig->ruleWithConfiguration(SingleLineCommentStyleFixer::class, [
+    ])
+    ->withConfiguredRule(SingleLineCommentStyleFixer::class, [
         'comment_types' => ['hash'],
-    ]);
-    $ecsConfig->rule(StandardizeNotEqualsFixer::class);
-    $ecsConfig->rule(StrictParamFixer::class);
-    $ecsConfig->rule(TrimArraySpacesFixer::class);
+    ])
     // keep 1 empty line between constants, properties and methods
     // keep 0 empty lines after class open bracket {
     // keep 0 empty lines before class end bracket }
-    $ecsConfig->ruleWithConfiguration(ClassAttributesSeparationFixer::class, [
+    ->withConfiguredRule(ClassAttributesSeparationFixer::class, [
         'elements' => [
             'property' => ClassAttributesSeparationFixer::SPACING_ONE,
             'method' => ClassAttributesSeparationFixer::SPACING_ONE,
         ],
-    ]);
-
-    // Slevomat standards
-    $ecsConfig->ruleWithConfiguration(BlankLineBeforeStatementFixer::class, [
+    ])
+    ->withConfiguredRule(BlankLineBeforeStatementFixer::class, [
         'statements' => [
             'break',
             'continue',
@@ -329,63 +309,41 @@ return static function (ECSConfig $ecsConfig): void {
             'while',
             'yield',
         ],
-    ]);
-    // Slevomat Coding Standards
-    $ecsConfig->ruleWithConfiguration(\SlevomatCodingStandard\Sniffs\Classes\RequireMultiLineMethodSignatureSniff::class, [
+    ])
+    ->withConfiguredRule(RequireMultiLineMethodSignatureSniff::class, [
         'minLineLength' => 120,
-    ]);
-    $ecsConfig->ruleWithConfiguration(DeclareStrictTypesSniff::class, [
+    ])
+    ->withConfiguredRule(DeclareStrictTypesSniff::class, [
         'spacesCountAroundEqualsSign' => 0,
-    ]);
-    $ecsConfig->rule(RequireTrailingCommaInDeclarationSniff::class);
-    $ecsConfig->rule(RequireTrailingCommaInClosureUseSniff::class);
-    $ecsConfig->rule(RequireTrailingCommaInCallSniff::class);
-    $ecsConfig->rule(TrailingArrayCommaSniff::class);
-    $ecsConfig->rule(RequireConstructorPropertyPromotionSniff::class);
-    $ecsConfig->rule(PropertyTypeHintSniff::class);
-    $ecsConfig->rule(DisallowEqualOperatorsSniff::class);
-    $ecsConfig->rule(ValidClassNameSniff::class);
-    $ecsConfig->rule(NoUselessElseFixer::class);
-    $ecsConfig->rule(AssignmentInConditionSniff::class);
-    $ecsConfig->rule(DisallowEmptySniff::class);
-    $ecsConfig->ruleWithConfiguration(EarlyExitSniff::class, [
+    ])
+    ->withConfiguredRule(EarlyExitSniff::class, [
         'ignoreStandaloneIfInScope' => true,
         'ignoreOneLineTrailingIf' => true,
         'ignoreTrailingIfWithOneInstruction' => true,
-    ]);
-    $ecsConfig->rule(ParentCallSpacingSniff::class);
-    $ecsConfig->ruleWithConfiguration(ReferenceUsedNamesOnlySniff::class, [
+    ])
+    ->withConfiguredRule(ReferenceUsedNamesOnlySniff::class, [
         'allowPartialUses' => true,
-    ]);
-    $ecsConfig->ruleWithConfiguration(DocCommentSpacingSniff::class, [
+    ])
+    ->withConfiguredRule(DocCommentSpacingSniff::class, [
         'linesCountBetweenDifferentAnnotationsTypes' => 0,
-    ]);
-    $ecsConfig->rule(UselessIfConditionWithReturnSniff::class);
-
-    // Code Metrics
-    $ecsConfig->ruleWithConfiguration(ClassLengthSniff::class, [
+    ])
+    ->withConfiguredRule(ClassLengthSniff::class, [
         'maxLinesLength' => 550,
-    ]);
-    $ecsConfig->ruleWithConfiguration(FunctionLengthSniff::class, [
+    ])
+    ->withConfiguredRule(FunctionLengthSniff::class, [
         'maxLinesLength' => 60,
-    ]);
-
-    $ecsConfig->skip([
-        __DIR__ . '/tests/Unit/**/wrong/*',
-        __DIR__ . '/tests/Unit/**/Wrong/*',
-        __DIR__ . '/tests/Unit/**/correct/*',
-        __DIR__ . '/tests/Unit/**/Correct/*',
-        __DIR__ . '/tests/Unit/**/fixed/*',
+    ])
+    ->withSkip([
         // private properties should not start with "_"
-        PhpCsValidVariableNameSniff::class . '.PrivateNoUnderscore' => null,
+        PhpCsValidVariableNameSniff::class . '.PrivateNoUnderscore',
         // it is not necessary to have blank line after control structure
-        ControlStructureSpacingSniff::class . '.NoLineAfterClose' => null,
+        ControlStructureSpacingSniff::class . '.NoLineAfterClose',
         // allow empty "catch (Exception $exception) { }"
-        EmptyStatementSniff::class . '.DetectedCatch' => null,
-        FunctionCallSignatureSniff::class . '.Indent' => null,
-        ArrayOpenerAndCloserNewlineFixer::class => null,
-        ArrayListItemNewlineFixer::class => null,
-        DisallowCommentAfterCodeSniff::class . '.DisallowedCommentAfterCode' => null,
+        EmptyStatementSniff::class . '.DetectedCatch',
+        FunctionCallSignatureSniff::class . '.Indent',
+        ArrayOpenerAndCloserNewlineFixer::class,
+        ArrayListItemNewlineFixer::class,
+        DisallowCommentAfterCodeSniff::class . '.DisallowedCommentAfterCode',
         // rule is applied via `clean-code` set, but we do not want to use it for now
         // some variables exist just because of the right annotation
         ReturnAssignmentFixer::class => null,
@@ -400,11 +358,4 @@ return static function (ECSConfig $ecsConfig): void {
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
-        PropertyTypeHintSniff::class => [
-            '**Data.php',
-        ],
-        PhpdocToPropertyTypeFixer::class => [
-            __DIR__ . '/src/*',
-        ],
     ]);
-};

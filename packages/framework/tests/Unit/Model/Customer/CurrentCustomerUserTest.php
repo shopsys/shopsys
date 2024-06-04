@@ -86,11 +86,11 @@ class CurrentCustomerUserTest extends TestCase
          * The function getUserIdentifier() is included in the interface only with annotation and therefore cannot be mocked using the phpunit tool.
          * Since version 6 of symfony, this function is then integrated into the interface. It is possible to remove the manual implementation of the mocked class.
          */
-//        $tokenMock = $this->getMockBuilder(TokenMock::class)
-//            ->setMethods(['getUser'])
-//            ->getMockForAbstractClass();
-//        $tokenMock->method('getUser')->willReturn($customerUser);
-//        $tokenMock->expects($this->any())->method('getUserIdentifier')->willReturn($customerUser->getEmail());
+        // $tokenMock = $this->getMockBuilder(TokenMock::class)
+        //     ->setMethods(['getUser'])
+        //     ->getMockForAbstractClass();
+        // $tokenMock->method('getUser')->willReturn($customerUser);
+        // $tokenMock->expects($this->any())->method('getUserIdentifier')->willReturn($customerUser->getEmail());
 
         $tokenMock = new TokenMock($customerUser);
 

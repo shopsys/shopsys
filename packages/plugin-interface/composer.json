@@ -18,13 +18,5 @@
     "require": {
         "php": "^8.3",
         "symfony/monolog-bridge": "^5.4.0"
-    },
-    "require-dev": {
-        "shopsys/coding-standards": "15.0.x-dev"
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
     }
 }
