@@ -1214,3 +1214,9 @@ We want to implement more usable UI design which will be better base for upcomin
 -   route /cookie-consent was renamed to /user-consent
 -   components and translations were also renamed/rewritten
 -   you should follow this naming convention in your app as well
+-   if you have any other special articles (other than t&c, privacy policy, user consent), you should correctly handle their error user codes
+-   if you want to use a different approach to non existent special articles (other than the one described in commit messages), be sure to modify the logic, as now
+    -   if special articles are not found, error is now not thrown
+    -   if t&c and privacy policy articles are not found, the text where they are used are the same, but without the link
+    -   if user consent article is not found, we do not display the footer link to the user consent update page, the consent update bar (`UserConsent.tsx`), and the consent update page returns 404
+    -   `article-not-found` error user code now displays a better message (not unknown error)

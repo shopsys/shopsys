@@ -26,6 +26,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'wishlist-product-list-not-found': t('Wishlist not found.'),
         'wishlist-product-already-in-list': t('Product in wishlist already exists.'),
         'wishlist-product-not-in-list': t('Product in wishlist not found.'),
+        'article-not-found': t('Article not found.'),
     };
 
     return ERROR_MESSAGES[errorCode];
