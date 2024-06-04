@@ -17,8 +17,9 @@ class Version20240318162418 extends AbstractMigration
         $postgresqlVersion = $this->sql('SELECT version();')->fetchOne();
         $postgresqlVersion = substr($postgresqlVersion, 11, 2);
         $existsNormalizeFunction = $this->sql('SELECT 1 FROM pg_proc WHERE proname = \'normalize\'')->fetchOne();
+        $existsNormalizedFunction = $this->sql('SELECT 1 FROM pg_proc WHERE proname = \'normalized\'')->fetchOne();
 
-        if ($postgresqlVersion > 12 || $existsNormalizeFunction !== 1) {
+        if ($existsNormalizedFunction === 1 || $postgresqlVersion > 12 || $existsNormalizeFunction !== 1) {
             return;
         }
 
