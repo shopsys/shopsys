@@ -42,43 +42,19 @@ services:
 
     App\Component\DataBridge\Transfer\BridgeImportTransferDependency: ~
 
-    App\Component\Doctrine\NotNullableColumnsFinder: ~
-
     App\Component\Doctrine\QueryBuilderExtender: ~
 
     App\Component\Doctrine\RemoveMappingsSubscriber:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
-    App\Component\EntityExtension\EntityExtensionSubscriber:
-        arguments:
-            $entityExtensionMap: '%shopsys.entity_extension.map%'
-        tags:
-            - { name: doctrine.event_subscriber, priority: -10 }
-
-    App\Component\Error\ErrorPagesFacade:
-        arguments:
-            $errorPagesDir: '%shopsys.error_pages_dir%'
-            $environment: '%kernel.environment%'
-
     App\Component\FileUpload\FileUpload:
         arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
-
-    App\Component\Form\FormBuilderHelper:
-        arguments:
-            $disableFields: '%env(bool:DISABLE_FORM_FIELDS_FROM_TRANSFER)%'
 
     App\Component\Image\ImageFacade:
         arguments:
             $imageUrlPrefix: '%shopsys.image_url_prefix%'
             $cache: '@image_cache'
-
-    App\Component\Redis\RedisFacade:
-        arguments:
-            $allClients: !tagged snc_redis.client
-            $persistentClients:
-                - '@snc_redis.global'
-                - '@snc_redis.blog_article_export_queue'
 
     App\Component\Router\FriendlyUrl\FriendlyUrlFactory: ~
 
@@ -210,10 +186,6 @@ services:
         arguments:
             $domainImagesUrlPrefix: '%shopsys.domain_images_url_prefix%'
 
-    App\Twig\LocalizationExtension:
-        arguments:
-            $webDir: '%shopsys.web_dir%'
-
     Endroid\QrCode\Writer\PngWriter: ~
 
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface:
@@ -241,9 +213,6 @@ services:
                     - '%env(REDIS_HOST)%'
         class: Redis
 
-    Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder:
-        alias: App\Component\Doctrine\NotNullableColumnsFinder
-
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender:
         alias: App\Component\Doctrine\QueryBuilderExtender
 
@@ -255,33 +224,14 @@ services:
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
 
-    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository:
-        alias: App\Component\Elasticsearch\IndexRepository
-
-    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
-        alias: App\Component\EntityExtension\EntityExtensionSubscriber
-
-    Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
-        alias: App\Component\Error\ErrorPagesFacade
-
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         alias: App\Component\FileUpload\FileUpload
-
-    Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
-        class: App\Component\HttpFoundation\TransactionalMasterRequestListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         alias: App\Component\Image\ImageFacade
 
     Shopsys\FrameworkBundle\Component\Image\ImageRepository:
         alias: App\Component\Image\ImageRepository
-
-    Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
-        alias: App\Component\Redis\RedisFacade
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
@@ -313,12 +263,6 @@ services:
 
     Shopsys\FrameworkBundle\Controller\Admin\AdministratorController:
         class: 'App\Controller\Admin\AdministratorController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\AdvertController:
-        class: App\Controller\Admin\AdvertController
-
-    Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
-        class: 'App\Controller\Admin\ArticleController'
 
     Shopsys\FrameworkBundle\Controller\Admin\CategoryController:
         class: 'App\Controller\Admin\CategoryController'
@@ -364,9 +308,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository:
         alias: App\Model\Advert\AdvertRepository
-
-    Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator:
-        alias: App\Model\Article\ArticleBreadcrumbGenerator
 
     Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
@@ -693,9 +634,6 @@ services:
 
     Shopsys\FrameworkBundle\Twig\DomainExtension:
         alias: App\Twig\DomainExtension
-
-    Shopsys\FrameworkBundle\Twig\LocalizationExtension:
-        alias: App\Twig\LocalizationExtension
 
     Shopsys\FrontendApiBundle\Model\Category\CategoryRepository:
         alias: App\FrontendApi\Model\Category\CategoryRepository

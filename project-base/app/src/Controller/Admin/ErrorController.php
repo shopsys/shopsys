@@ -23,7 +23,7 @@ class ErrorController extends AbstractController
     /**
      * @param bool $debug
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
-     * @param \App\Component\Error\ErrorPagesFacade $errorPagesFacade
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string $environment
      * @param string|null $overwriteDomainUrl

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Navigation;
 
-use App\Component\Locale\LocaleHelper;
 use App\Model\Category\CategoryFacade;
 use App\Model\Navigation\NavigationItem;
 use App\Model\Navigation\NavigationItemData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Locale\LocaleHelper;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;

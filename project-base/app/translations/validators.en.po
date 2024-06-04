@@ -10,9 +10,6 @@ msgstr ""
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Choose image"
-msgstr ""
-
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr ""
 

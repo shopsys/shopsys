@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Twig;
+namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -40,7 +40,7 @@ class CsrfExtension extends AbstractExtension
      * @param bool $schemeRelative
      * @return string
      */
-    public function protectedUrl(string $name, $parameters = [], $schemeRelative = false): string
+    public function protectedUrl(string $name, array $parameters = [], bool $schemeRelative = false): string
     {
         $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(
             $name,

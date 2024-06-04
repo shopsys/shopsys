@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -24,6 +25,7 @@ class PriceExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
      * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         protected readonly CurrencyFacade $currencyFacade,
@@ -31,6 +33,7 @@ class PriceExtension extends AbstractExtension
         protected readonly Localization $localization,
         protected readonly CurrencyRepositoryInterface $intlCurrencyRepository,
         protected readonly CurrencyFormatterFactory $currencyFormatterFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -73,6 +76,10 @@ class PriceExtension extends AbstractExtension
                 'priceWithCurrencyByCurrencyId',
                 [$this, 'priceWithCurrencyByCurrencyIdFilter'],
                 ['is_safe' => ['html']],
+            ),
+            new TwigFilter(
+                'priceFromDecimalStringWithCurrencyAdmin',
+                [$this, 'priceFromDecimalStringWithCurrencyAdmin'],
             ),
         ];
     }
@@ -280,6 +287,18 @@ class PriceExtension extends AbstractExtension
         $locale = $this->localization->getLocale();
 
         return $this->getCurrencySymbolByCurrencyIdAndLocale($currencyId, $locale);
+    }
+
+    /**
+     * @param string $priceDecimal
+     * @return string
+     */
+    public function priceFromDecimalStringWithCurrencyAdmin(string $priceDecimal): string
+    {
+        $money = Money::create($priceDecimal);
+        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+
+        return $this->priceWithCurrencyByDomainIdFilter($money, $domainId);
     }
 
     /**

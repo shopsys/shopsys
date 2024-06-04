@@ -469,6 +469,9 @@ msgstr "Název zvolené dopravy"
 msgid "City"
 msgstr "Město"
 
+msgid "Clean Storefront Cache"
+msgstr "Vymazat Storefront cache"
+
 msgid "Click to go to product section"
 msgstr "Kliknutím přejdete k výběru produktu"
 
@@ -864,6 +867,12 @@ msgstr "Zobrazit"
 
 msgid "Display and availability"
 msgstr "Zobrazení a dostupnost"
+
+msgid "Display date FROM"
+msgstr "Datum zobrazení OD"
+
+msgid "Display date TO"
+msgstr "Datum zobrazení DO"
 
 msgid "Display on"
 msgstr "Zobrazovat na"
@@ -2692,6 +2701,9 @@ msgstr "Prodejna neexistuje"
 msgid "Store list"
 msgstr "Seznam prodejen"
 
+msgid "Storefront queries cache has been cleaned."
+msgstr "Cache s dotazy na FE byla smazána."
+
 msgid "Street"
 msgstr "Ulice"
 
@@ -2919,6 +2931,9 @@ msgstr "Nahrát ikonu"
 
 msgid "Upload image"
 msgstr "Nahrát obrázek"
+
+msgid "Upload image for mobile devices"
+msgstr "Nahrát obrázek pro mobilní zařízení"
 
 msgid "Upload new image"
 msgstr "Nahrát nový obrázek"

@@ -24,13 +24,14 @@ class IndependentPaymentVisibilityCalculation
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
+        /** @var string|null $paymentName */
         $paymentName = $payment->getName($locale);
 
         if ($paymentName === '' || $paymentName === null) {
             return false;
         }
 
-        if ($payment->isHidden() || $payment->isDeleted()) {
+        if ($payment->isHidden() || $payment->isDeleted() || $payment->isHiddenByGoPay()) {
             return false;
         }
 

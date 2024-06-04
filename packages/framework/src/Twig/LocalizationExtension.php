@@ -36,28 +36,42 @@ class LocalizationExtension extends AbstractExtension
     /**
      * @param string $locale
      * @param bool $showTitle
+     * @param int $width
+     * @param int $height
      * @return string
      */
-    public function getLocaleFlagHtml($locale, $showTitle = true)
-    {
-        $filepath = 'public/admin/images/flags/' . $locale . '.png';
-        $src = $this->assetPackages->getUrl($filepath);
+    public function getLocaleFlagHtml(
+        string $locale,
+        bool $showTitle = true,
+        int $width = 16,
+        int $height = 11,
+    ): string {
+        $filepath = sprintf('public/admin/images/flags/%s.png', $locale);
 
-        if (file_exists($this->webDir . '/' . $filepath) === false) {
+        if (file_exists(sprintf('%s/%s', $this->webDir, $filepath)) === false) {
             return strtoupper($locale);
         }
 
+        $src = $this->assetPackages->getUrl($filepath);
+
         if ($showTitle) {
-            $title = $this->getTitle($locale);
-            $html = '<img src="' . htmlspecialchars($src, ENT_QUOTES)
-                . '" alt="' . htmlspecialchars($locale, ENT_QUOTES)
-                . '" title="' . htmlspecialchars($title, ENT_QUOTES) . '" width="16" height="11" />';
-        } else {
-            $html = '<img src="' . htmlspecialchars($src, ENT_QUOTES)
-                . '" alt="' . htmlspecialchars($locale, ENT_QUOTES) . '" width="16" height="11" />';
+            return sprintf(
+                '<img src="%s" alt="%s" title="%s" width="%d" height="%d" />',
+                htmlspecialchars($src, ENT_QUOTES),
+                htmlspecialchars($locale, ENT_QUOTES),
+                htmlspecialchars($this->getTitle($locale), ENT_QUOTES),
+                $width,
+                $height,
+            );
         }
 
-        return $html;
+        return sprintf(
+            '<img src="%s" alt="%s" width="%d" height="%d" />',
+            htmlspecialchars($src, ENT_QUOTES),
+            htmlspecialchars($locale, ENT_QUOTES),
+            $width,
+            $height,
+        );
     }
 
     /**

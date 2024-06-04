@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Component\Form\FormBuilderHelper;
 use App\Form\Constraints\UniqueProductCatnum;
 use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -26,7 +26,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(

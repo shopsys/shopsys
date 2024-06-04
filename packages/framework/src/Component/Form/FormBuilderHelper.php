@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Form;
+namespace Shopsys\FrameworkBundle\Component\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -11,8 +11,9 @@ class FormBuilderHelper
     /**
      * @param bool $disableFields
      */
-    public function __construct(private bool $disableFields)
-    {
+    public function __construct(
+        protected readonly bool $disableFields,
+    ) {
     }
 
     /**
@@ -31,7 +32,7 @@ class FormBuilderHelper
      * @param array $elements
      * @param array $disabledFields
      */
-    private function trackFormElements(array $elements, array $disabledFields): void
+    protected function trackFormElements(array $elements, array $disabledFields): void
     {
         foreach ($elements as $element) {
             /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $element */

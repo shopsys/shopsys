@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Grid;
+namespace Shopsys\FrameworkBundle\Component\Grid;
 
-use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayWithPaginationDataSource extends ArrayDataSource

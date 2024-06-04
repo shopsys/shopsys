@@ -61,7 +61,8 @@ class AdvertController extends AdminBaseController
         $advertData = $this->advertDataFactory->createFromAdvert($advert);
 
         $form = $this->createForm(AdvertFormType::class, $advertData, [
-            'image_exists' => $this->imageExtension->imageExists($advert),
+            'web_image_exists' => $this->imageExtension->imageExists($advert, AdvertFacade::IMAGE_TYPE_WEB),
+            'mobile_image_exists' => $this->imageExtension->imageExists($advert, AdvertFacade::IMAGE_TYPE_MOBILE),
             'scenario' => AdvertFormType::SCENARIO_EDIT,
             'advert' => $advert,
         ]);

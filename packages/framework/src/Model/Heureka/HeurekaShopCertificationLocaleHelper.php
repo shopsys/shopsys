@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Heureka;
 
 use Heureka\ShopCertification;
+use Shopsys\FrameworkBundle\Component\Locale\LocaleHelper;
 use Shopsys\FrameworkBundle\Model\Heureka\Exception\LocaleNotSupportedException;
 
 class HeurekaShopCertificationLocaleHelper
@@ -31,8 +32,8 @@ class HeurekaShopCertificationLocaleHelper
     public function getLanguageIdByLocale($locale)
     {
         $supportedLanguagesByLocale = [
-            'cs' => ShopCertification::HEUREKA_CZ,
-            'sk' => ShopCertification::HEUREKA_SK,
+            LocaleHelper::LOCALE_CS => ShopCertification::HEUREKA_CZ,
+            LocaleHelper::LOCALE_SK => ShopCertification::HEUREKA_SK,
         ];
 
         if (array_key_exists($locale, $supportedLanguagesByLocale)) {
@@ -50,11 +51,11 @@ class HeurekaShopCertificationLocaleHelper
      */
     public function getServerNameByLocale($locale)
     {
-        if ($locale === 'cs') {
+        if ($locale === LocaleHelper::LOCALE_CS) {
             return 'Heureka.cz';
         }
 
-        if ($locale === 'sk') {
+        if ($locale === LocaleHelper::LOCALE_SK) {
             return 'Heureka.sk';
         }
 

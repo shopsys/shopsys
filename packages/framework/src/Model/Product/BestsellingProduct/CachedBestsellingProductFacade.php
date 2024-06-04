@@ -31,13 +31,16 @@ class CachedBestsellingProductFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @return int[]
      */
-    public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup)
-    {
+    public function getAllOfferedBestsellingProductIds(
+        int $domainId,
+        Category $category,
+        PricingGroup $pricingGroup,
+    ): array {
         $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
 
-        $bestsellingProductIds = $this->cache->get(
+        return $this->cache->get(
             $cacheId,
             function () use ($domainId, $category, $pricingGroup) {
                 $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
@@ -47,15 +50,13 @@ class CachedBestsellingProductFacade
                 );
 
                 return array_map(
-                    static function (Product $product) {
+                    static function (Product $product): int {
                         return $product->getId();
                     },
                     $bestsellingProducts,
                 );
             },
         );
-
-        return $this->getSortedProducts($domainId, $pricingGroup, $bestsellingProductIds);
     }
 
     /**
@@ -70,17 +71,6 @@ class CachedBestsellingProductFacade
             $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
             $this->cache->delete($cacheId);
         }
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int[] $sortedProductIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    protected function getSortedProducts($domainId, PricingGroup $pricingGroup, array $sortedProductIds)
-    {
-        return $this->productRepository->getOfferedByIds($domainId, $pricingGroup, $sortedProductIds);
     }
 
     /**

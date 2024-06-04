@@ -28,6 +28,7 @@ class ErrorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      * @param \League\Flysystem\FilesystemOperator $mainFilesystem
+     * @param string $environment
      */
     public function __construct(
         protected readonly string $errorPagesDir,
@@ -35,6 +36,7 @@ class ErrorPagesFacade
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly ErrorIdProvider $errorIdProvider,
         protected readonly FilesystemOperator $mainFilesystem,
+        protected readonly string $environment = EnvironmentType::PRODUCTION,
     ) {
     }
 
@@ -127,7 +129,7 @@ class ErrorPagesFacade
      */
     protected function getErrorPageFilename(int $domainId, int $statusCode): string
     {
-        return $this->errorPagesDir . $statusCode . '_' . $domainId . '.html';
+        return $this->errorPagesDir . $this->environment . '/' . $statusCode . '_' . $domainId . '.html';
     }
 
     /**
@@ -137,7 +139,7 @@ class ErrorPagesFacade
      */
     protected function getUrlContent(string $errorPageUrl, int $expectedStatusCode): string
     {
-        $errorPageKernel = new Kernel(EnvironmentType::PRODUCTION, false);
+        $errorPageKernel = new Kernel($this->environment, false);
 
         $errorPageFakeRequest = Request::create($errorPageUrl);
 

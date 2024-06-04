@@ -925,6 +925,55 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Advert/listGrid.html.twig` Twig template extension
 -   see #project-base-diff to update your project
 
+#### a little spring cleanup ([#3157](https://github.com/shopsys/shopsys/pull/3157))
+
+-   `Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+        +       protected readonly string $environment = EnvironmentType::PRODUCTION,
+        ```
+-   `Shopsys\FrameworkBundle\Controller\Admin\ArticleController` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+        +       protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        ```
+-   `Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade` class was changed:
+    -   `getAllOfferedBestsellingProducts()` method was removed, use `CachedBestsellingProductFacade::getAllOfferedBestsellingProductIds()` instead
+    -   `getSortedProducts()` method was removed without replacement
+-   `Shopsys\FrameworkBundle\Twig\LocalizationExtension` class was changed:
+    -   `getLocaleFlagHtml()` method changed its interface:
+        ```diff
+        -   getLocaleFlagHtml($locale, $showTitle = true)
+        +   getLocaleFlagHtml(string $locale, bool $showTitle = true, int $width = 16, int $height = 11): string
+        ```
+-   `Shopsys\FrameworkBundle\Twig\PriceExtension` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+        +       protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        ```
+-   `Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        +       protected readonly Traversable $transactionalMasterRequestConditionProviders,
+                protected readonly EntityManagerInterface $em,
+        ```
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
+    -   `FormBuilderHelper` class
+    -   `ArrayWithPaginationDataSource` class
+    -   `LocaleHelper` class
+    -   `DomainController::localeTabsAction()` method
+    -   `RedisController` class
+    -   `UploadedFileController` class
+    -   `CsrfExtension` class
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

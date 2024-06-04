@@ -70,9 +70,6 @@ msgstr "Přehled administrátorů"
 msgid "Advanced SEO categories"
 msgstr "Extended SEO categories"
 
-msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
-msgstr "Reklama <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> byla upravena"
-
 msgid "Adverts - full"
 msgstr "Reklamní systém - vše"
 
@@ -102,9 +99,6 @@ msgstr "Články - vše"
 
 msgid "Articles - view"
 msgstr "Články - zobrazení"
-
-msgid "Assign to category"
-msgstr "Přiřazení do kategorie"
 
 msgid "Authentication code"
 msgstr "Ověřovací kód"
@@ -238,9 +232,6 @@ msgstr "Název vybrané dopravy"
 msgid "City"
 msgstr "Město"
 
-msgid "Clean Storefront Cache"
-msgstr "Vymazat Storefront cache"
-
 msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
@@ -316,9 +307,6 @@ msgstr "Vytvořit nový banner"
 msgid "Create new item"
 msgstr "Vytvořit novou položku"
 
-msgid "Create new order status"
-msgstr "Vytvořit nový stav objednávky"
-
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
 
@@ -391,12 +379,6 @@ msgstr "Opravdu si přejete odebrat tento parametr? Smazáním parametru dojde i
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
 msgstr "Opravdu chcete odebrat tento parametr? Smazáním parametru dojde k odebrání tohoto parametru u zboží a případné landing stránky rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!"
 
-msgid "Do you really want to remove this payment?"
-msgstr "Opravdu si přejete odebrat tuto platbu?"
-
-msgid "Do you really want to remove this shipping?"
-msgstr "Opravdu si přejete odebrat tuto dopravu?"
-
 msgid "Domain"
 msgstr "Doména"
 
@@ -429,9 +411,6 @@ msgstr "Editace skupiny práv pro administrátora"
 
 msgid "Editing administrator role group - %name%"
 msgstr "Editace skupiny práv pro administrátora - %name%"
-
-msgid "Editing advertising - %name%"
-msgstr "Editace reklamy - %name%"
 
 msgid "Editing banner"
 msgstr "Upravit banner"
@@ -847,9 +826,6 @@ msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
 msgid "No group"
 msgstr "Nezařazeno"
 
-msgid "No orders status found."
-msgstr "Nebyly nalezeny žádné stavy objednávek."
-
 msgid "No page found."
 msgstr "Nebyla nalezena žádná stránka."
 
@@ -1011,9 +987,6 @@ msgstr "Zarovnání odkazu"
 
 msgid "Postcode"
 msgstr "PSČ"
-
-msgid "Price"
-msgstr "Cena"
 
 msgid "Price hit"
 msgstr "Cenový hit"
@@ -1207,9 +1180,6 @@ msgstr "Skladovost"
 msgid "Store"
 msgstr "Prodejna"
 
-msgid "Storefront queries cache has been cleaned."
-msgstr "Cache s dotazy na FE byla smazána."
-
 msgid "Stores"
 msgstr "Prodejny"
 
@@ -1254,15 +1224,6 @@ msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
 
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
-msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
-msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které byly úspěšně vyřízeny."
-
-msgid "This status can't be deleted. This is automatically assigned status to all new orders."
-msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým objednávkám."
 
 msgid "TikTok URL"
 msgstr "TikTok URL"
@@ -1461,9 +1422,6 @@ msgstr "od nejdražšího"
 
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
-
-msgid "order statuses"
-msgstr "stavy objednávek"
 
 msgid "parameter values"
 msgstr "hodnot parametrů"

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 
-class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
+class ArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
@@ -26,6 +26,18 @@ class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         return [
             new BreadcrumbItem($article->getName()),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBreadcrumbItemsOnDomain(
+        int $domainId,
+        string $routeName,
+        array $routeParameters = [],
+        ?string $locale = null,
+    ): array {
+        return $this->getBreadcrumbItems($routeName, $routeParameters);
     }
 
     /**

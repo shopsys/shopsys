@@ -11,18 +11,6 @@ class UploadedFileRepository extends BaseUploadedFileRepository
 {
     /**
      * @param string $entityName
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
-     */
-    public function getAllUploadedFilesByEntityName(string $entityName): array
-    {
-        return $this->getUploadedFileRepository()->createQueryBuilder('uf', 'uf.entityId')
-            ->where('uf.entityName = :entityName')
-            ->setParameter(':entityName', $entityName)
-            ->getQuery()->execute();
-    }
-
-    /**
-     * @param string $entityName
      * @param int $entityId
      * @param string $type
      * @return int

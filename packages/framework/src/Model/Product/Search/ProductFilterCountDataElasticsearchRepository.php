@@ -226,8 +226,6 @@ class ProductFilterCountDataElasticsearchRepository
     }
 
     /**
-     * Plus numbers are not replaced as expected, they are "added" to meet the original SQL implementation
-     *
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
      * @param array $plusParameterNumbers
      * @param int $parameterId
@@ -237,10 +235,6 @@ class ProductFilterCountDataElasticsearchRepository
         array $plusParameterNumbers,
         int $parameterId,
     ): void {
-        if (isset($countData->countByParameterIdAndValueId[$parameterId])) {
-            $countData->countByParameterIdAndValueId[$parameterId] += $plusParameterNumbers;
-        } else {
-            $countData->countByParameterIdAndValueId[$parameterId] = $plusParameterNumbers;
-        }
+        $countData->countByParameterIdAndValueId[$parameterId] = $plusParameterNumbers;
     }
 }

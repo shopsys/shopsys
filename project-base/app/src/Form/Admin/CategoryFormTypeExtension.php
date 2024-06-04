@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Component\Form\FormBuilderHelper;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
@@ -25,7 +25,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer

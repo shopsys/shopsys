@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Component\Form\FormBuilderHelper;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -15,7 +15,7 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
     private const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      */
     public function __construct(private FormBuilderHelper $formBuilderHelper)
     {

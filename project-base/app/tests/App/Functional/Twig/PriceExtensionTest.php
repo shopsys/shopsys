@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Twig;
 
 use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -42,6 +43,11 @@ class PriceExtensionTest extends FunctionalTestCase
      * @inject
      */
     private CurrencyDataFactoryInterface $currencyDataFactory;
+
+    /**
+     * @inject
+     */
+    private AdminDomainTabsFacade $adminDomainTabsFacade;
 
     protected function setUp(): void
     {
@@ -173,6 +179,7 @@ class PriceExtensionTest extends FunctionalTestCase
             $localization,
             $this->intlCurrencyRepository,
             $this->currencyFormatterFactory,
+            $this->adminDomainTabsFacade,
         );
     }
 }

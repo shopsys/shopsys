@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Traversable;
 
 class TransactionalMasterRequestListener
 {
@@ -16,9 +17,11 @@ class TransactionalMasterRequestListener
     protected static bool $isManuallyRollbacked = false;
 
     /**
+     * @param \Traversable<int, \Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface> $transactionalMasterRequestConditionProviders
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
+        protected readonly Traversable $transactionalMasterRequestConditionProviders,
         protected readonly EntityManagerInterface $em,
     ) {
     }
@@ -33,7 +36,7 @@ class TransactionalMasterRequestListener
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMainRequest() && !$this->inTransaction) {
+        if (!$this->inTransaction && $this->shouldBeginTransaction($event)) {
             $this->em->beginTransaction();
             $this->inTransaction = true;
         }
@@ -44,7 +47,7 @@ class TransactionalMasterRequestListener
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($event->isMainRequest() && $this->inTransaction && !static::$isManuallyRollbacked) {
+        if ($this->inTransaction && !static::$isManuallyRollbacked) {
             $this->em->commit();
             $this->inTransaction = false;
         }
@@ -55,9 +58,24 @@ class TransactionalMasterRequestListener
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($event->isMainRequest() && $this->inTransaction) {
+        if ($this->inTransaction) {
             $this->em->rollback();
             $this->inTransaction = false;
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+     * @return bool
+     */
+    protected function shouldBeginTransaction(RequestEvent $event): bool
+    {
+        foreach ($this->transactionalMasterRequestConditionProviders as $transactionalMasterRequestConditionProvider) {
+            if (!$transactionalMasterRequestConditionProvider->shouldBeginTransaction($event)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

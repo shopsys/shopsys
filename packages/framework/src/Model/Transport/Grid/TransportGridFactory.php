@@ -38,15 +38,16 @@ class TransportGridFactory implements GridFactoryInterface
     public function create()
     {
         $queryBuilder = $this->transportRepository->getQueryBuilderForAll()
-            ->addSelect('tt')
+            ->addSelect('tt.name')
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->setParameter('locale', $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale());
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
             't.id',
             function ($row) {
                 $transport = $this->transportRepository->findById($row['t']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($transport);
+                $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
 
                 return $row;
             },
