@@ -17,6 +17,7 @@ class Version20240604152553 extends AbstractMigration
         $this->isAppMigrationNotInstalledRemoveIfExists('Version20200617101511');
 
         $this->sql('DROP TABLE IF EXISTS advert_category');
+        $this->sql('DROP TABLE IF EXISTS entity');
     }
 
     /**
