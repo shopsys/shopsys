@@ -1378,6 +1378,12 @@ msgstr ""
 msgid "PRIMECOOLER PC-AD2 3D glasses"
 msgstr ""
 
+msgid "Packeta"
+msgstr ""
+
+msgid "Packeta delivery company"
+msgstr ""
+
 msgid "Pages count"
 msgstr ""
 
@@ -1460,6 +1466,9 @@ msgid "Printers"
 msgstr ""
 
 msgid "Privacy policy"
+msgstr ""
+
+msgid "Probably best value for your money"
 msgstr ""
 
 msgid "Processor frequency (GHz)"
