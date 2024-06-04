@@ -238,7 +238,7 @@
         <phingcall target="db-migrations"/>
         <phingcall target="domains-data-create"/>
         <phingcall target="frontend-api-generate-new-keys"/>
-        <phingcall target="elasticsearch-index-migrate"/>
+        <phingcall target="elasticsearch-index-recreate"/>
         <phingcall target="elasticsearch-export"/>
         <phingcall target="error-pages-generate"/>
         <phingcall target="warmup"/>
