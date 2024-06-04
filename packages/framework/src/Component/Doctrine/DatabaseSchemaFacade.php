@@ -57,4 +57,14 @@ class DatabaseSchemaFacade
         }
         fclose($handle);
     }
+
+    public function dropTables(): void
+    {
+        $connection = $this->em->getConnection();
+        $tableNames = $connection->fetchAllAssociative('SELECT tablename FROM pg_tables WHERE schemaname = \'public\'');
+
+        foreach ($tableNames as $tableName) {
+            $connection->executeQuery('DROP TABLE IF EXISTS ' . $tableName['tablename'] . ' CASCADE');
+        }
+    }
 }
