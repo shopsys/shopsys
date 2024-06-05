@@ -8,6 +8,7 @@ class SelfWithMethodsAndVariables
 {
     public const A = 'value';
     protected const B = 'value';
+    protected const string TYPED_B = 'typed_value';
     private const C = 'value';
 
     public static $publicProperty;
@@ -47,6 +48,8 @@ class SelfWithMethodsAndVariables
         echo static::$publicProperty;
         echo static::$protectedProperty;
         echo static::$privateProperty;
+
+        echo self::TYPED_B;
     }
 
     public static function publicStaticMethod()
