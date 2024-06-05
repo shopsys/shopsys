@@ -1183,3 +1183,10 @@ We want to implement more usable UI design which will be better base for upcomin
 #### minor array keys fix ([#3178](https://github.com/shopsys/shopsys/pull/3178))
 
 #### fixed translation on customer's edit profile page ([#3179](https://github.com/shopsys/shopsys/pull/3179))
+
+#### added option to migrate persist store ([#3171](https://github.com/shopsys/shopsys/pull/3171))
+
+-   persist store can now be migrated (read docs in `store-management.md`)
+-   all persist store slices should now expose default state as a constant
+-   docs regarding store management (`store-management.md`) were improved, so make sure that you implement changes to store based on them
+-   remember to update the `DEFAULT_PERSIST_STORE_STATE` constant in your cypress tests to suit the new version of persist store

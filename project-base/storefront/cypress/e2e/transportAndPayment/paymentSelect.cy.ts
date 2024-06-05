@@ -5,20 +5,19 @@ import {
     removeTransportSelectionUsingButton,
 } from './transportAndPaymentSupport';
 import { goToNextOrderStep } from 'e2e/cart/cartSupport';
-import { DEFAULT_APP_STORE, payment, transport, url } from 'fixtures/demodata';
+import { payment, transport, url } from 'fixtures/demodata';
 import {
     checkCanGoToNextOrderStep,
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
+    initializePersistStoreInLocalStorageToDefaultValues,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
 
 describe('Payment select tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
 
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.ppl.uuid);

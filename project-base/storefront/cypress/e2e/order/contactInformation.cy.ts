@@ -12,16 +12,20 @@ import {
     checkTransportSelectionIsVisible,
     checkContactInformationFormIsNotVisible,
 } from './orderSupport';
-import { DEFAULT_APP_STORE, transport, payment, customer1, orderNote, deliveryAddress, url } from 'fixtures/demodata';
+import { transport, payment, customer1, orderNote, deliveryAddress, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkUrl, takeSnapshotAndCompare, loseFocus, clickOnLabel } from 'support';
+import {
+    checkUrl,
+    takeSnapshotAndCompare,
+    loseFocus,
+    clickOnLabel,
+    initializePersistStoreInLocalStorageToDefaultValues,
+} from 'support';
 import { TIDs } from 'tids';
 
 describe('Contact information page tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should redirect to cart page and not display contact information form if cart is empty and user is not logged in', function () {

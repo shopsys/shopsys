@@ -14,7 +14,7 @@ import {
 } from './cartSupport';
 import { checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import { changeSelectionOfTransportByName } from 'e2e/transportAndPayment/transportAndPaymentSupport';
-import { DEFAULT_APP_STORE, products, transport, url } from 'fixtures/demodata';
+import { products, transport, url } from 'fixtures/demodata';
 import {
     changeCartItemQuantityWithSpinboxInput,
     checkAndHideInfoToast,
@@ -22,15 +22,14 @@ import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkNumberOfApiRequestsTriggeredByActions,
     checkUrl,
+    initializePersistStoreInLocalStorageToDefaultValues,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
 
 describe('Cart page tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
         cy.addProductToCartForTest(products.helloKitty.uuid, 2).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
         );

@@ -5,15 +5,18 @@ import {
     submitLoginFormOnLoginPage,
     logoutFromCustomerPage,
 } from './authenticationSupport';
-import { customer1, DEFAULT_APP_STORE, password, url } from 'fixtures/demodata';
-import { checkAndHideSuccessToast, checkUrl, takeSnapshotAndCompare } from 'support';
+import { customer1, password, url } from 'fixtures/demodata';
+import {
+    checkAndHideSuccessToast,
+    checkUrl,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
 
 describe('Login tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should login from login page and then log out', function () {

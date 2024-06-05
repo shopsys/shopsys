@@ -1,14 +1,12 @@
 import { repeatOrderFromOrderDetail, repeatOrderFromOrderList } from './orderSupport';
-import { DEFAULT_APP_STORE, transport, payment, url, products } from 'fixtures/demodata';
+import { transport, payment, url, products } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
-import { checkUrl, takeSnapshotAndCompare } from 'support';
+import { checkUrl, initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Order repeat tests as logged-in user from order list', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
@@ -72,9 +70,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
 
 describe('Order repeat tests as unlogged user from order detail', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {

@@ -3,7 +3,7 @@ import './api';
 import 'cypress-real-events';
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
-import { DEFAULT_APP_STORE } from 'fixtures/demodata';
+import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
@@ -32,14 +32,14 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('storeCartUuidInLocalStorage', (cartUuid: string) => {
     return cy.then(() => {
-        const currentAppStoreAsString = window.localStorage.getItem('app-store');
-        let currentAppStore = DEFAULT_APP_STORE;
+        const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
+        let currentAppStore = DEFAULT_PERSIST_STORE_STATE;
         if (currentAppStoreAsString) {
             currentAppStore = JSON.parse(currentAppStoreAsString);
         }
         currentAppStore.state.cartUuid = cartUuid;
 
-        window.localStorage.setItem('app-store', JSON.stringify(currentAppStore));
+        window.localStorage.setItem(PERSIST_STORE_NAME, JSON.stringify(currentAppStore));
     });
 });
 
@@ -69,6 +69,12 @@ Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
 compareSnapshotCommand({
     capture: 'fullPage',
 });
+
+export const initializePersistStoreInLocalStorageToDefaultValues = () => {
+    cy.window().then((win) => {
+        win.localStorage.setItem(PERSIST_STORE_NAME, JSON.stringify(DEFAULT_PERSIST_STORE_STATE));
+    });
+};
 
 export const checkAndHideSuccessToast = (text?: string) => {
     if (text) {

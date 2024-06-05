@@ -17,6 +17,7 @@ import {
     checkAndHideSuccessToast,
     checkUrl,
     goToEditProfileFromHeader,
+    initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
     takeSnapshotAndCompare,
 } from 'support';
@@ -24,6 +25,7 @@ import { TIDs } from 'tids';
 
 describe('Create order tests', () => {
     beforeEach(() => {
+        initializePersistStoreInLocalStorageToDefaultValues();
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
     });
 

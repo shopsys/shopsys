@@ -1,5 +1,6 @@
 import {
-    DEFAULT_APP_STORE,
+    DEFAULT_PERSIST_STORE_STATE,
+    PERSIST_STORE_NAME,
     customer1,
     deliveryAddress,
     link,
@@ -161,14 +162,14 @@ export const fillBillingInfoForDeliveryAddressTests = () => {
 };
 
 export const checkThatContactInformationWasRemovedFromLocalStorage = () => {
-    const currentAppStoreAsString = window.localStorage.getItem('app-store');
+    const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
     if (!currentAppStoreAsString) {
         throw new Error(
             'Could not load app store from local storage. This is an issue with tests, not with the application.',
         );
     }
 
-    expect(currentAppStoreAsString).to.equal(JSON.stringify(DEFAULT_APP_STORE));
+    expect(currentAppStoreAsString).to.equal(JSON.stringify(DEFAULT_PERSIST_STORE_STATE));
 };
 
 export const checkTransportSelectionIsNotVisible = () => {

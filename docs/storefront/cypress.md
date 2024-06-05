@@ -64,14 +64,12 @@ Each test should be named in a way to describe what the test and the application
 -   Should not be allowed to see transport options if cart is empty
 -   Should login from header and then log out
 
-In the `beforeEach` hook, you can run various preparation logic. There are also other hooks, which you can find in the cypress documentation. One of the specific things you might want to do is to reset the zustand storage by setting `app-store` as visible below. Another thing could be to visit a specific page, such as the cart page if all your tests only focus on that page.
+In the `beforeEach` hook, you can run various preparation logic. There are also other hooks, which you can find in the cypress documentation. One of the specific things you might want to do is to reset the zustand storage as visible below. Another thing could be to visit a specific page, such as the cart page if all your tests only focus on that page.
 
 ```ts
 describe('<Domain Specific Functionality> tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should do something', function () {

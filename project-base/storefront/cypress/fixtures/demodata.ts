@@ -148,11 +148,18 @@ export const url = {
     registration: '/registration',
 } as const;
 
-export const DEFAULT_APP_STORE = {
+export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
+
+export const DEFAULT_PERSIST_STORE_STATE = {
     state: {
-        loginLoading: null,
+        authLoading: null,
         cartUuid: null as string | null,
-        comparisonUuid: null,
+        productListUuids: {},
+        userConsent: {
+            statistics: false,
+            marketing: false,
+            preferences: false,
+        },
         contactInformation: {
             email: '',
             telephone: '',
@@ -161,6 +168,7 @@ export const DEFAULT_APP_STORE = {
             street: '',
             city: '',
             postcode: '',
+            customer: undefined,
             country: { value: '', label: '' },
             companyName: '',
             companyNumber: '',
@@ -180,12 +188,6 @@ export const DEFAULT_APP_STORE = {
             isWithoutHeurekaAgreement: false,
         },
         packeteryPickupPoint: null,
-        userConsent: {
-            statistics: false,
-            marketing: false,
-            preferences: false,
-        },
-        wishlistUuid: null,
     },
-    version: 0,
+    version: 1,
 };

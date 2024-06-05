@@ -6,16 +6,19 @@ import {
 } from './cartSupport';
 import { loginFromHeader, logoutFromHeader } from 'e2e/authentication/authenticationSupport';
 import { fillEmailInThirdStep } from 'e2e/order/orderSupport';
-import { DEFAULT_APP_STORE, password, payment, products, transport, url } from 'fixtures/demodata';
+import { password, payment, products, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
-import { checkAndHideInfoToast, checkAndHideSuccessToast, checkPopupIsVisible, takeSnapshotAndCompare } from 'support';
+import {
+    checkAndHideSuccessToast,
+    checkPopupIsVisible,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
 
 describe('Cart login tests', () => {
     beforeEach(() => {
-        cy.window().then((win) => {
-            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
-        });
+        initializePersistStoreInLocalStorageToDefaultValues();
     });
 
     it('should log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
