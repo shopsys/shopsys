@@ -1181,3 +1181,5 @@ We want to implement more usable UI design which will be better base for upcomin
 -   we never use `useContext` directly, but provide a wrapper which takes care of extra actions, such as throwing errors if used outside of a provider
 
 #### minor array keys fix ([#3178](https://github.com/shopsys/shopsys/pull/3178))
+
+#### fixed translation on customer's edit profile page ([#3179](https://github.com/shopsys/shopsys/pull/3179))
