@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository as BasePaymentReposi
  * @method \App\Model\Payment\Payment getOneByUuid(string $uuid)
  * @method \App\Model\Payment\Payment[] getByGoPayPaymentMethod(\Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod)
  * @method \App\Model\Payment\Payment getEnabledOnDomainByUuid(string $uuid, int $domainId)
+ * @method \App\Model\Payment\Payment[] getAllWithEagerLoadedDomainsAndTranslations(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  */
 class PaymentRepository extends BasePaymentRepository
 {
