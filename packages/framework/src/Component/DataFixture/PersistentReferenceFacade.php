@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityIdIsNotSetException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException;
-use Shopsys\FrameworkBundle\Component\DataFixture\Exception\ObjectRequiredException;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 
 class PersistentReferenceFacade
@@ -26,12 +25,12 @@ class PersistentReferenceFacade
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $name
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    public function getReference(string $name, ?string $entityClassName = null)
+    public function getReference(string $name, ?string $entityClassName = null): object
     {
         $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
         $entity = $this->em->find($persistentReference->getEntityName(), $persistentReference->getEntityId());
@@ -47,12 +46,8 @@ class PersistentReferenceFacade
      * @param string $name
      * @param object $object
      */
-    public function persistReference($name, $object)
+    public function persistReference(string $name, object $object): void
     {
-        if (!is_object($object)) {
-            throw new ObjectRequiredException($object);
-        }
-
         $entityName = get_class($object);
 
         if (!method_exists($object, 'getId')) {
@@ -82,20 +77,20 @@ class PersistentReferenceFacade
      * @param object $object
      * @param int $domainId
      */
-    public function persistReferenceForDomain(string $name, $object, int $domainId): void
+    public function persistReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
         $this->persistReference($referenceName, $object);
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $name
      * @param int $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    public function getReferenceForDomain(string $name, int $domainId, ?string $entityClassName = null)
+    public function getReferenceForDomain(string $name, int $domainId, ?string $entityClassName = null): object
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
 

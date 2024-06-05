@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RouteConfigCustomization
 {
-    protected const DEFAULT_ID_VALUE = 1;
+    protected const int DEFAULT_ID_VALUE = 1;
 
     private ContainerInterface $container;
 
@@ -38,7 +38,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $this->filterRoutesForTesting($routeConfigCustomizer);
         $this->configureGeneralRules($routeConfigCustomizer);
@@ -49,7 +49,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer)
+    private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -117,7 +117,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -158,7 +158,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -399,7 +399,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) {
             if (preg_match('~^front_~', $info->getRouteName())) {
@@ -409,14 +409,17 @@ class RouteConfigCustomization
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $name
      * @param int|null $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    private function getPersistentReference($name, ?int $domainId = null, ?string $entityClassName = null)
-    {
+    private function getPersistentReference(
+        string $name,
+        ?int $domainId = null,
+        ?string $entityClassName = null,
+    ): object {
         /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade */
         $persistentReferenceFacade = $this->container
             ->get(PersistentReferenceFacade::class);
@@ -431,7 +434,7 @@ class RouteConfigCustomization
     /**
      * @return bool
      */
-    private function isSingleDomain()
+    private function isSingleDomain(): bool
     {
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->container->get(Domain::class);
