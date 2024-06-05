@@ -20,7 +20,7 @@ const logException = async (e) => {
         parsedException = 'Unknown exception thrown inside i18n.js loadLocaleFrom function';
     }
 
-    fetch(process.env.INTERNAL_ENDPOINT + '/api/log-exception', {
+    fetch(process.env.INTERNAL_ENDPOINT + 'api/log-exception', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

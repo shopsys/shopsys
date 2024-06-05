@@ -1251,3 +1251,8 @@ We want to implement more usable UI design which will be better base for upcomin
 #### fix slider ([#3130](https://github.com/shopsys/shopsys/pull/3130))
 
 On Chrome there was issue when clicking on next/previous button while slider is only partially visible, in this case scroll freeze after scroll onto slider element and is stuck. Fixed by scrolling first onto the slider element and with a little delay continue sliding onto an item in the slider.
+
+#### fix usage of INTERNAL_ENDPOINT env variable ([#3205](https://github.com/shopsys/shopsys/pull/3205))
+
+-   INTERNAL_ENDPOINT env variable is defined with trailing slash, so any usage of it should not include slash at the beginning of the path
+-   update your usages in a similar way as in the PR
