@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainV
  * )
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation> getTranslations()
  */
 class Product extends AbstractTranslatableEntity
 {

@@ -33,7 +33,6 @@ class ImageRepository extends BaseImageRepository
         );
 
         foreach ($images as &$image) {
-            /** @var \Doctrine\ORM\PersistentCollection $translations */
             $translations = $image->getTranslations();
 
             if ($translations instanceof PersistentCollection) {
@@ -54,7 +53,6 @@ class ImageRepository extends BaseImageRepository
     {
         /** @var \App\Component\Image\Image $image */
         $image = parent::getImageByEntity($entityName, $entityId, $type);
-        /** @var \Doctrine\ORM\PersistentCollection $translations */
         $translations = $image->getTranslations();
 
         if ($translations instanceof PersistentCollection) {

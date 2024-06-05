@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="parameter_groups")
  * @ORM\Entity
  * @method translation($locale = null): ParameterGroupTranslation
+ * @method \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Parameter\ParameterGroupTranslation> getTranslations()
  */
 class ParameterGroup extends AbstractTranslatableEntity
 {

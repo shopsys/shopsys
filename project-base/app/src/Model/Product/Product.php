@@ -38,6 +38,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  * @method setDomains(\App\Model\Product\ProductData $productData)
+ * @method \Doctrine\Common\Collections\Collection<int, \App\Model\Product\ProductTranslation> getTranslations()
  */
 class Product extends BaseProduct
 {

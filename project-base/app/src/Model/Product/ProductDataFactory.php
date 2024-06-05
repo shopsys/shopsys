@@ -147,7 +147,6 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     protected function fillFromProduct(BaseProductData $productData, BaseProduct $product): void
     {
-        /** @var \App\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
 
         foreach ($translations as $translation) {

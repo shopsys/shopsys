@@ -45,7 +45,6 @@ class ParameterGroupDataFactory
         ParameterGroupData $parameterGroupData,
         ParameterGroup $parameterGroup,
     ): void {
-        /** @var \App\Model\Product\Parameter\ParameterGroupTranslation[] $translations */
         $translations = $parameterGroup->getTranslations();
         $names = [];
 
