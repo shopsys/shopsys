@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const int FREE_TRANSPORT_AND_PAYMENT_LIMIT = 10000;
+    public const int FREE_TRANSPORT_AND_PAYMENT_LIMIT = 2000;
 
     /**
      * @param \App\Component\Setting\Setting $setting

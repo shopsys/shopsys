@@ -1048,6 +1048,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework and frontend-api packages:
     -   `NavigationItem` entity and all the related logic
     -   `NavigationQuery`
+    -   see #project-base-diff to update your project
+
+#### change free transport limit in demo data ([#3199](https://github.com/shopsys/shopsys/pull/3199))
+
 -   see #project-base-diff to update your project
 
 ### Storefront
