@@ -16,7 +16,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
 
     return (
         <>
-            {dividedParts.map((part: string, index: number) => {
+            {dividedParts.map((part, index) => {
                 if (part.match(/\[gjc-comp-(.*?)\]/g)) {
                     return (
                         <GrapesJsProducts

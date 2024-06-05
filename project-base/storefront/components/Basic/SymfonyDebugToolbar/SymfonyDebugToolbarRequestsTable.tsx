@@ -28,7 +28,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
                 </thead>
                 <tbody>
                     {responses.map((response, index) => (
-                        <tr key={index} className="border-b border-skyBlue" ref={responsesRefs[index]}>
+                        <tr key={response.token} className="border-b border-skyBlue" ref={responsesRefs[index]}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>
                                 <TableLink href={response.profiler}>{response.token}</TableLink>

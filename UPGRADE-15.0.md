@@ -1179,3 +1179,5 @@ We want to implement more usable UI design which will be better base for upcomin
 -   we now throw errors if contexts are used outside of providers, which is good if you want to discover bugs as soon as possible, but might not be the right choice for you
     -   if you can and want provide default state instead of throwing errors, you can do that as well
 -   we never use `useContext` directly, but provide a wrapper which takes care of extra actions, such as throwing errors if used outside of a provider
+
+#### minor array keys fix ([#3178](https://github.com/shopsys/shopsys/pull/3178))
