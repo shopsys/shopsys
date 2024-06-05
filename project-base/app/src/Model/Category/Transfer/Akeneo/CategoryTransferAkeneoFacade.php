@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\CategoryApiInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 
 class CategoryTransferAkeneoFacade
 {

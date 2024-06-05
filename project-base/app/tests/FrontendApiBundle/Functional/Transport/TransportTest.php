@@ -17,9 +17,9 @@ class TransportTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $this->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
-
         parent::setUp();
+
+        $this->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
     }
 
     public function testTransportNameByUuid(): void

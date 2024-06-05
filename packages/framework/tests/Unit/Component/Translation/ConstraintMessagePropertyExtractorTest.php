@@ -8,6 +8,7 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use PhpParser\ParserFactory;
+use PhpParser\PhpVersion;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Translation\ConstraintMessagePropertyExtractor;
 use SplFileInfo;
@@ -53,7 +54,7 @@ class ConstraintMessagePropertyExtractorTest extends TestCase
         $extractor = new ConstraintMessagePropertyExtractor();
 
         $parserFactory = new ParserFactory();
-        $parser = $parserFactory->create(ParserFactory::ONLY_PHP7);
+        $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.3'));
         $ast = $parser->parse(file_get_contents($file->getPathname()));
 
         $catalogue = new MessageCatalogue();

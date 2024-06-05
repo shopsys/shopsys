@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\ProductApiInterface;
+use Akeneo\Pim\ApiClient\Api\PublishedProductApiInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Akeneo\Pim\ApiClient\Search\SearchBuilder;
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
-use Akeneo\Pim\ApiClient\Api\PublishedProductApiInterface;
 use DateTime;
 use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;

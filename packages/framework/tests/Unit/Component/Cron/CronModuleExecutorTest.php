@@ -16,7 +16,7 @@ class CronModuleExecutorTest extends TestCase
 {
     public function testRunModuleSuspendAfterTimeout()
     {
-        $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
+        $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->once())->method('sleep');
         $cronModuleServiceMock->method('iterate')->willReturnCallback(function () {
             usleep(1000);
@@ -36,7 +36,7 @@ class CronModuleExecutorTest extends TestCase
 
     public function testRunModuleAfterTimeout()
     {
-        $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
+        $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->never())->method('iterate');
 
         $cronModuleExecutor = $this->getCronModuleExecutor([
@@ -52,7 +52,7 @@ class CronModuleExecutorTest extends TestCase
 
     public function testRunModule()
     {
-        $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
+        $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->never())->method('wakeUp');
         $cronModuleServiceMock->expects($this->once())->method('iterate')->willReturn(false);
 
@@ -68,7 +68,7 @@ class CronModuleExecutorTest extends TestCase
 
     public function testRunSuspendedModule()
     {
-        $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
+        $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
         $cronModuleServiceMock->expects($this->once())->method('wakeUp');
         $cronModuleServiceMock->method('iterate')->willReturn(false);
 

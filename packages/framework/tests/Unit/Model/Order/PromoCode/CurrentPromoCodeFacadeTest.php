@@ -37,7 +37,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
 
         $emMock = $this->createMock(EntityManager::class);
         $promoCodeRepositoryMock = $this->getMockBuilder(PromoCodeRepository::class)
-            ->setMethods(['findByCode'])
+            ->onlyMethods(['findByCode'])
             ->disableOriginalConstructor()
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn($validPromoCode);
@@ -70,7 +70,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
 
         $emMock = $this->createMock(EntityManager::class);
         $promoCodeRepositoryMock = $this->getMockBuilder(PromoCodeRepository::class)
-            ->setMethods(['findByCode'])
+            ->onlyMethods(['findByCode'])
             ->disableOriginalConstructor()
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn(null);
@@ -107,7 +107,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
 
         $emMock = $this->createMock(EntityManager::class);
         $promoCodeRepositoryMock = $this->getMockBuilder(PromoCodeRepository::class)
-            ->setMethods(['findByCode'])
+            ->onlyMethods(['findByCode'])
             ->disableOriginalConstructor()
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn($validPromoCode);
@@ -136,7 +136,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
 
         $emMock = $this->createMock(EntityManager::class);
         $promoCodeRepositoryMock = $this->getMockBuilder(PromoCodeRepository::class)
-            ->setMethods(['findByCode'])
+            ->onlyMethods(['findByCode'])
             ->disableOriginalConstructor()
             ->getMock();
         $promoCodeRepositoryMock->expects($this->atLeastOnce())->method('findByCode')->willReturn(null);

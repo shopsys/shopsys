@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -103,8 +104,8 @@ class IndexFacadeTest extends TestCase
      * @param array $affectedIds
      * @param array $exportData
      * @param array $expectedIdsToDelete
-     * @dataProvider exportIdsDataProvider
      */
+    #[DataProvider('exportIdsDataProvider')]
     public function testExportIds(array $affectedIds, array $exportData, array $expectedIdsToDelete): void
     {
         $indexAlias = 'mock_alias_1';
@@ -142,7 +143,7 @@ class IndexFacadeTest extends TestCase
     /**
      * @return array
      */
-    public function exportIdsDataProvider(): array
+    public static function exportIdsDataProvider(): array
     {
         return [
             [

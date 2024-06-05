@@ -48,7 +48,7 @@ class ProductFactoryTest extends TestCase
         $dummyAvailability = new Availability(new AvailabilityData());
         $productAvailabilityCalculationMock = $this->getMockBuilder(ProductAvailabilityCalculation::class)
             ->disableOriginalConstructor()
-            ->setMethods(['calculateAvailability'])
+            ->onlyMethods(['calculateAvailability'])
             ->getMock();
         $productAvailabilityCalculationMock
             ->expects($this->any())

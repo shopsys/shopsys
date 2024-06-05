@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation;
@@ -13,12 +14,12 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 class InputPriceCalculationTest extends TestCase
 {
     /**
-     * @dataProvider getInputPriceDataProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedResult
      */
+    #[DataProvider('getInputPriceDataProvider')]
     public function testGetInputPrice(
         int $inputPriceType,
         Money $priceWithVat,
@@ -31,7 +32,7 @@ class InputPriceCalculationTest extends TestCase
         $this->assertThat($actualInputPrice, new IsMoneyEqual($expectedResult));
     }
 
-    public function getInputPriceDataProvider()
+    public static function getInputPriceDataProvider()
     {
         return [
             [

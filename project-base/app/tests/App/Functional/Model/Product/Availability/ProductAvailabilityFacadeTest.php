@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\ProductFacade;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
@@ -50,10 +51,10 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     private StockFacade $stockFacade;
 
     /**
-     * @dataProvider getTestIsProductAvailableOnDomainProvider
      * @param int $stockQuantity
      * @param bool $expectedIsProductAvailableOnDomain
      */
+    #[DataProvider('getTestIsProductAvailableOnDomainProvider')]
     public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
     {
 
@@ -82,7 +83,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     /**
      * @return array
      */
-    public function getTestIsProductAvailableOnDomainProvider(): array
+    public static function getTestIsProductAvailableOnDomainProvider(): array
     {
         return [
             [
@@ -123,11 +124,11 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @dataProvider getTestProductAvailabilityInformationByDomainIdProvider
      * @param int $stockQuantity
      * @param int<-1,0> $expectedWeekCount
      * @param int $transfer
      */
+    #[DataProvider('getTestProductAvailabilityInformationByDomainIdProvider')]
     public function testProductAvailabilityInformationByDomainId(
         int $stockQuantity,
         int $expectedWeekCount,
@@ -166,7 +167,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     /**
      * @return array
      */
-    public function getTestProductAvailabilityInformationByDomainIdProvider(): array
+    public static function getTestProductAvailabilityInformationByDomainIdProvider(): array
     {
         return [
             [

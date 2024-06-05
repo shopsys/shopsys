@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Exception;
 use Shopsys\FrameworkBundle\Component\Phing\PhingDownloader;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -52,11 +53,11 @@ class DownloadPhingCommand extends Command
         $downloader = new PhingDownloader($projectDir);
 
         try {
-            $downloader->download($version);
+            $downloader->execute($input, $output);
             $symfonyStyle->success(sprintf('Phing %s downloaded successfully.', $version));
 
             return Command::SUCCESS;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $symfonyStyle->error($e->getMessage());
 
             return Command::FAILURE;

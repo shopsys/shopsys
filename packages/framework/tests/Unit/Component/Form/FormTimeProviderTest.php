@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Form;
 
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Form\FormTimeProvider;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTimeProviderTest extends TestCase
 {
-    public function isFormTimeValidProvider()
+    public static function isFormTimeValidProvider()
     {
         return [
             [9, '-10 second', true],
@@ -22,11 +23,11 @@ class FormTimeProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider isFormTimeValidProvider
      * @param int $minimumSeconds
      * @param string $formCreatedAt
      * @param bool $isValid
      */
+    #[DataProvider('isFormTimeValidProvider')]
     public function testIsFormTimeValid($minimumSeconds, $formCreatedAt, $isValid)
     {
         $sessionMock = $this->getMockBuilder(Session::class)

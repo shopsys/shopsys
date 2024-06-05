@@ -334,7 +334,7 @@ class OrderFacade extends BaseOrderFacade
         $name = sprintf(
             '%s %s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
-            $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
+            $this->numberFormatterExtension->formatPercent((string)-$discountPercent, $locale),
             $orderItem->getName(),
         );
         $discountPrice = $quantifiedItemDiscount->inverse();

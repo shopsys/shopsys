@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Doctrine;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DuplicatedAliasException;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
@@ -23,7 +24,7 @@ class QueryBuilderExtenderTest extends TestCase
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMock();
         $queryBuilder = new QueryBuilder($entityManager);
 
         $entityNameResolver = new EntityNameResolver([]);
@@ -36,12 +37,12 @@ class QueryBuilderExtenderTest extends TestCase
     }
 
     /**
-     * @dataProvider extendJoinWithExtendedEntityProvider
      * @param string $firstJoinedEntity
      * @param string $secondJoinedEntity
      * @param string $expectedJoinedEntity
      * @param array $extensionMap
      */
+    #[DataProvider('extendJoinWithExtendedEntityProvider')]
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
         string $secondJoinedEntity,
@@ -51,7 +52,7 @@ class QueryBuilderExtenderTest extends TestCase
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMock();
         $queryBuilder = new QueryBuilder($entityManager);
 
         $entityNameResolver = new EntityNameResolver($extensionMap);
@@ -76,7 +77,7 @@ class QueryBuilderExtenderTest extends TestCase
     /**
      * @return array
      */
-    public function extendJoinWithExtendedEntityProvider(): array
+    public static function extendJoinWithExtendedEntityProvider(): array
     {
         $extensionMap = [BaseProduct::class => Product::class];
 
@@ -101,7 +102,7 @@ class QueryBuilderExtenderTest extends TestCase
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMock();
 
         $queryBuilder = new QueryBuilder($entityManager);
         $queryBuilder
@@ -132,7 +133,7 @@ class QueryBuilderExtenderTest extends TestCase
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMock();
 
         $queryBuilder = new QueryBuilder($entityManager);
         $queryBuilder

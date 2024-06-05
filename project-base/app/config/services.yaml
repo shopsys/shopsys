@@ -12,6 +12,12 @@ services:
         autoconfigure: true
         public: false
 
+    App\:
+        exclude:
+            - '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+            - '../src/FrontendApi/**/*{Resolver,Mapper}.php'
+        resource: '../src/**/*{Calculation,Collector,Dispatcher,Enum,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,Validator,Transfer,Helper,Converter,DataFetcher}.php'
+
     App\Command\:
         resource: '../src/Command'
 
@@ -26,12 +32,6 @@ services:
 
     App\Twig\:
         resource: '../src/Twig/'
-
-    App\:
-        resource: '../src/**/*{Calculation,Collector,Dispatcher,Enum,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,Validator,Transfer,Helper,Converter,DataFetcher}.php'
-        exclude:
-            - '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-            - '../src/FrontendApi/**/*{Resolver,Mapper}.php'
 
     League\Flysystem\MountManager:
         arguments:

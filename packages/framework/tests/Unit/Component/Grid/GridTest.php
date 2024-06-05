@@ -234,9 +234,7 @@ class GridTest extends TestCase
         $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
-        $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)
-            ->setMethods(['getTotalRowsCount', 'getPaginatedRows'])
-            ->getMockForAbstractClass();
+        $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)->getMock();
         $dataSourceMock->expects($this->never())->method('getTotalRowsCount');
         $dataSourceMock->expects($this->once())->method('getPaginatedRows')
             ->willReturn(new PaginationResult(1, 1, 0, []));
@@ -263,9 +261,7 @@ class GridTest extends TestCase
         $twigMock = $this->createMock(Environment::class);
         $routerMock = $this->createMock(Router::class);
         $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
-        $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)
-            ->setMethods(['getTotalRowsCount', 'getPaginatedRows'])
-            ->getMockForAbstractClass();
+        $dataSourceMock = $this->getMockBuilder(DataSourceInterface::class)->getMock();
         $dataSourceMock->expects($this->once())->method('getTotalRowsCount')->willReturn(0);
         $dataSourceMock->expects($this->once())->method('getPaginatedRows')
             ->willReturn(new PaginationResult(1, 1, 0, []));

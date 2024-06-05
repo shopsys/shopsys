@@ -22,7 +22,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
     {
         $routeConfigCustomization = new RouteConfigCustomization(static::$container);
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);

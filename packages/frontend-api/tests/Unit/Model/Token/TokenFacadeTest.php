@@ -11,7 +11,8 @@ use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\Builder;
-use Lcobucci\JWT\UnencryptedToken;
+use Lcobucci\JWT\Token\Plain;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -27,12 +28,19 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 class TokenFacadeTest extends TestCase
 {
     /**
-     * @dataProvider tokensDataProvider
-     * @param \Lcobucci\JWT\UnencryptedToken $token
+     * @param string|null $issuedBy
+     * @param \Lcobucci\JWT\Signer\Key\InMemory|null $privateKey
+     * @param \DateTimeImmutable|null $expiresAt
      * @param class-string|null $exceptionClass
      */
-    public function testTokenValidation(UnencryptedToken $token, ?string $exceptionClass): void
-    {
+    #[DataProvider('tokensDataProvider')]
+    public function testTokenValidation(
+        ?string $issuedBy,
+        ?InMemory $privateKey,
+        ?DateTimeImmutable $expiresAt,
+        ?string $exceptionClass,
+    ): void {
+        $token = $this->createToken($issuedBy, $privateKey, $expiresAt);
         $tokenFacade = $this->createTokenFacade();
 
         if ($exceptionClass !== null) {
@@ -42,11 +50,14 @@ class TokenFacadeTest extends TestCase
     }
 
     /**
-     * @return iterable
+     * @param string|null $issuedBy
+     * @param \Lcobucci\JWT\Signer\Key\InMemory|null $privateKey
+     * @param \DateTimeImmutable|null $expiresAt
+     * @return \Lcobucci\JWT\Token\Plain
      */
-    public function tokensDataProvider(): iterable
+    protected function createToken(?string $issuedBy, ?InMemory $privateKey, ?DateTimeImmutable $expiresAt): Plain
     {
-        $builderTemplate = (new Builder(new JoseEncoder(), ChainedFormatter::default()))
+        $builder = (new Builder(new JoseEncoder(), ChainedFormatter::default()))
             ->issuedBy('http://webserver:8080')
             ->permittedFor('http://webserver:8080')
             ->issuedAt(new DateTimeImmutable())
@@ -55,38 +66,53 @@ class TokenFacadeTest extends TestCase
 
         $jwtConfiguration = $this->createJwtConfiguration();
         $signer = $jwtConfiguration->signer();
-        $privateKey = $jwtConfiguration->signingKey();
 
-        $builder = clone $builderTemplate;
+        if ($privateKey === null) {
+            $privateKey = $jwtConfiguration->signingKey();
+        }
 
+        if ($issuedBy !== null) {
+            $builder->issuedBy($issuedBy);
+        }
+
+        if ($expiresAt !== null) {
+            $builder->expiresAt($expiresAt);
+        }
+
+        return $builder->getToken($signer, $privateKey);
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function tokensDataProvider(): iterable
+    {
         yield [
-            $builder->getToken($signer, $privateKey),
-            null,
+            'issuedBy' => null,
+            'privateKey' => null,
+            'expiresAt' => null,
+            'exceptionClass' => null,
         ];
 
-        $builder = clone $builderTemplate;
-
         yield [
-            $builder
-                ->issuedBy('http://another-server:8080')
-                ->getToken($signer, $privateKey),
-            InvalidTokenUserMessageException::class,
+            'issuedBy' => 'http://another-server:8080',
+            'privateKey' => null,
+            'expiresAt' => null,
+            'exceptionClass' => InvalidTokenUserMessageException::class,
         ];
 
-        $builder = clone $builderTemplate;
-
         yield [
-            $builder->getToken($signer, InMemory::file(__DIR__ . '/testKeys/invalid-private.key')),
-            NotVerifiedTokenUserMessageException::class,
+            'issuedBy' => null,
+            'privateKey' => InMemory::file(__DIR__ . '/testKeys/invalid-private.key'),
+            'expiresAt' => null,
+            'exceptionClass' => NotVerifiedTokenUserMessageException::class,
         ];
 
-        $builder = clone $builderTemplate;
-
         yield [
-            $builder
-                ->expiresAt(new DateTimeImmutable('- 5 minutes'))
-                ->getToken($signer, $privateKey),
-            ExpiredTokenUserMessageException::class,
+            'issuedBy' => null,
+            'privateKey' => null,
+            'expiresAt' => new DateTimeImmutable('- 5 minutes'),
+            'exceptionClass' => ExpiredTokenUserMessageException::class,
         ];
     }
 

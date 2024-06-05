@@ -7,15 +7,14 @@ namespace Tests\CodingStandards\Unit\CsFixer\Phpdoc\MissingParamAnnotationsFixer
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\WhitespacesFixerConfig;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\Helper\FqnNameResolver;
 use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
 use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
-/**
- * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
- */
+#[CoversClass(MissingParamAnnotationsFixer::class)]
 final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
 {
     /**
@@ -41,7 +40,7 @@ final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
-    public function getTestingFiles(): iterable
+    public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +24,11 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     {
         parent::setUp();
 
+        static::boot();
+    }
+
+    protected static function boot(): void
+    {
         static::bootKernel([
             'environment' => static::APP_ENV,
             'debug' => static::APP_DEBUG,
@@ -36,8 +43,8 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * createRequest or handleRequest method.
      *
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
-     * @dataProvider httpResponseTestDataProvider
      */
+    #[DataProvider('httpResponseTestDataProvider')]
     final public function testHttpResponse(RequestDataSet $requestDataSet)
     {
         $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
@@ -62,14 +69,19 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet[][]
      */
-    final public function httpResponseTestDataProvider()
+    public static function httpResponseTestDataProvider()
     {
-        $this->setUp();
+        static::boot();
+
+        /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
+        $domain = static::$kernel->getContainer()->get(Domain::class);
+        $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+
         $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();
         /** @var \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[] $requestDataSetGenerators */
         $requestDataSetGenerators = [];
 
-        $allRouteInfo = $this->getRouterAdapter()->getAllRouteInfo();
+        $allRouteInfo = static::getRouterAdapter()->getAllRouteInfo();
 
         foreach ($allRouteInfo as $routeInfo) {
             $requestDataSetGenerators[] = $requestDataSetGeneratorFactory->create($routeInfo);
@@ -77,7 +89,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
 
         $routeConfigCustomizer = new RouteConfigCustomizer($requestDataSetGenerators);
 
-        $this->customizeRouteConfigs($routeConfigCustomizer);
+        static::customizeRouteConfigs($routeConfigCustomizer);
 
         $requestDataSets = [];
 
@@ -96,7 +108,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     /**
      * @return \Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface
      */
-    protected function getRouterAdapter()
+    protected static function getRouterAdapter()
     {
         $router = static::$kernel->getContainer()->get('router');
 
@@ -108,15 +120,15 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
+    abstract protected static function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
 
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function createRequest(RequestDataSet $requestDataSet)
+    protected static function createRequest(RequestDataSet $requestDataSet)
     {
-        $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
+        $uri = static::getRouterAdapter()->generateUri($requestDataSet);
 
         $request = Request::create($uri);
 

@@ -31,10 +31,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($domainConfigs, $settingMock);
 
-        $routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->setMethods(['match'])
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+        $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $routerMock->method('match')->willReturnCallback(function ($path) {
             if ($path !== '/existing-url/') {
                 throw new ResourceNotFoundException();
@@ -42,7 +39,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         });
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->setMethods(['getRouter'])
+            ->onlyMethods(['getRouter'])
             ->disableOriginalConstructor()
             ->getMock();
         $domainRouterFactoryMock->method('getRouter')->willReturn($routerMock);

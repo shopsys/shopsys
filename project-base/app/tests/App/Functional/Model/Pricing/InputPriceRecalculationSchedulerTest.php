@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Pricing;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -85,7 +86,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $inputPriceRecalculationScheduler->onKernelResponse($responseEvent);
     }
 
-    public function inputPricesTestDataProvider()
+    public static function inputPricesTestDataProvider()
     {
         return [
             [
@@ -102,11 +103,11 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @dataProvider inputPricesTestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithVat
      * @param mixed $vatPercent
      */
+    #[DataProvider('inputPricesTestDataProvider')]
     public function testOnKernelResponseRecalculateInputPricesWithoutVat(
         Money $inputPriceWithoutVat,
         Money $inputPriceWithVat,
@@ -123,11 +124,11 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @dataProvider inputPricesTestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithVat
      * @param mixed $vatPercent
      */
+    #[DataProvider('inputPricesTestDataProvider')]
     public function testOnKernelResponseRecalculateInputPricesWithVat(
         Money $inputPriceWithoutVat,
         Money $inputPriceWithVat,

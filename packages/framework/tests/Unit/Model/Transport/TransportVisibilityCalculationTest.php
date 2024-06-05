@@ -23,7 +23,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentTransportVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentTransportVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -52,7 +52,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentTransportVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentTransportVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -64,7 +64,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentPaymentVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentPaymentVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -86,7 +86,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $transportMock = $this->createMock(Transport::class);
         $paymentMock = $this->getMockBuilder(Payment::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getTransports'])
+            ->onlyMethods(['getTransports'])
             ->getMock();
         $paymentMock->expects($this->atLeastOnce())->method('getTransports')->willReturn([]);
 
@@ -94,7 +94,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentTransportVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentTransportVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -106,7 +106,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentPaymentVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentPaymentVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -128,7 +128,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $transportMock = $this->createMock(Transport::class);
         $paymentMock = $this->getMockBuilder(Payment::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getTransports'])
+            ->onlyMethods(['getTransports'])
             ->getMock();
         $paymentMock->expects($this->atLeastOnce())->method('getTransports')->willReturn([$transportMock]);
 
@@ -136,7 +136,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentTransportVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentTransportVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -148,7 +148,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentPaymentVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentPaymentVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -171,7 +171,7 @@ class TransportVisibilityCalculationTest extends TestCase
         $transportVisibleMock = $this->createMock(Transport::class);
         $paymentMock = $this->getMockBuilder(Payment::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getTransports'])
+            ->onlyMethods(['getTransports'])
             ->getMock();
         $paymentMock->expects($this->atLeastOnce())->method('getTransports')->willReturn([$transportVisibleMock]);
 
@@ -179,7 +179,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentTransportVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentTransportVisibilityCalculationMock
             ->expects($this->atLeastOnce())
@@ -191,7 +191,7 @@ class TransportVisibilityCalculationTest extends TestCase
             IndependentPaymentVisibilityCalculation::class,
         )
             ->disableOriginalConstructor()
-            ->setMethods(['isIndependentlyVisible'])
+            ->onlyMethods(['isIndependentlyVisible'])
             ->getMock();
         $independentPaymentVisibilityCalculationMock
             ->expects($this->atLeastOnce())

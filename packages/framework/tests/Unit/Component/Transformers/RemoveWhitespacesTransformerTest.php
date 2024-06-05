@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Transformers;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveWhitespacesTransformer;
 
 class RemoveWhitespacesTransformerTest extends TestCase
 {
-    public function transformValuesProvider()
+    public static function transformValuesProvider()
     {
         return [
             ['value' => 'foo bar', 'expected' => 'foobar'],
@@ -22,10 +23,10 @@ class RemoveWhitespacesTransformerTest extends TestCase
     }
 
     /**
-     * @dataProvider transformValuesProvider
      * @param mixed $value
      * @param mixed $expected
      */
+    #[DataProvider('transformValuesProvider')]
     public function testReverseTransform($value, $expected)
     {
         $transformer = new RemoveWhitespacesTransformer();

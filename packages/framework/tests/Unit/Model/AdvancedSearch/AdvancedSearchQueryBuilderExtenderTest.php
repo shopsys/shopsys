@@ -27,12 +27,10 @@ class AdvancedSearchQueryBuilderExtenderTest extends TestCase
             0 => $ruleData,
         ];
 
-        $advancedSearchFilterMock = $this->getMockBuilder(AdvancedSearchFilterInterface::class)
-            ->setMethods(['extendQueryBuilder'])
-            ->getMockForAbstractClass();
+        $advancedSearchFilterMock = $this->getMockBuilder(AdvancedSearchFilterInterface::class)->getMock();
 
         $advancedSearchConfigMock = $this->getMockBuilder(ProductAdvancedSearchConfig::class)
-            ->setMethods(['getFilter'])
+            ->onlyMethods(['getFilter'])
             ->disableOriginalConstructor()
             ->getMock();
         $advancedSearchConfigMock
@@ -42,7 +40,7 @@ class AdvancedSearchQueryBuilderExtenderTest extends TestCase
             ->willReturn($advancedSearchFilterMock);
 
         $queryBuilderMock = $this->getMockBuilder(QueryBuilder::class)
-            ->setMethods(null)
+            ->onlyMethods([])
             ->disableOriginalConstructor()
             ->getMock();
 

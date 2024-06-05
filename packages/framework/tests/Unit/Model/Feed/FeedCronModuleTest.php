@@ -23,7 +23,7 @@ class FeedCronModuleTest extends TestCase
 {
     public function testSleepExactBetweenFeeds(): void
     {
-        $feedInfoMock = $this->getMockForAbstractClass(FeedInfoInterface::class);
+        $feedInfoMock = $this->getMockBuilder(FeedInfoInterface::class)->getMock();
 
         $settingMock = $this->getMockBuilder(Setting::class)
             ->disableOriginalConstructor()
@@ -31,7 +31,7 @@ class FeedCronModuleTest extends TestCase
 
         $feedModuleRepositoryMock = $this->getMockBuilder(FeedModuleRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllScheduledFeedModules', 'getFeedModuleByNameAndDomainId'])
+            ->onlyMethods(['getAllScheduledFeedModules', 'getFeedModuleByNameAndDomainId'])
             ->getMock();
 
         $feedModule1 = new FeedModule('feed1', 1);
@@ -70,7 +70,7 @@ class FeedCronModuleTest extends TestCase
 
         $feedModuleFacadeMock = $this->getMockBuilder(FeedModuleFacade::class)
             ->disableOriginalConstructor()
-            ->setMethods(['deleteFeedCronModulesByName'])
+            ->onlyMethods(['deleteFeedCronModulesByName'])
             ->getMock();
 
         $feedCronModule = new FeedCronModule($feedFacadeMock, $domain, $settingMock, $feedModuleRepositoryMock, $feedModuleFacadeMock);

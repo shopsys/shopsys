@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Transformers;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Form\Transformers\IndexedBooleansToArrayOfIndexesTransformer;
 
 class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 {
-    public function transformValuesProvider()
+    public static function transformValuesProvider()
     {
         return [
             ['value' => [], 'expected' => []],
@@ -21,17 +22,17 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
     }
 
     /**
-     * @dataProvider transformValuesProvider
      * @param mixed $value
      * @param mixed $expected
      */
+    #[DataProvider('transformValuesProvider')]
     public function testTransform($value, $expected)
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->transform($value));
     }
 
-    public function reverseTransformValuesProvider()
+    public static function reverseTransformValuesProvider()
     {
         return [
             ['value' => [], 'expected' => []],
@@ -45,10 +46,10 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
     }
 
     /**
-     * @dataProvider reverseTransformValuesProvider
      * @param mixed $value
      * @param mixed $expected
      */
+    #[DataProvider('reverseTransformValuesProvider')]
     public function testReverseTransform($value, $expected)
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();

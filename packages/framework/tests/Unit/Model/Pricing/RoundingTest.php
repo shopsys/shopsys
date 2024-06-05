@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -13,7 +14,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class RoundingTest extends TestCase
 {
-    public function roundingProvider()
+    public static function roundingProvider()
     {
         return [
             [
@@ -56,12 +57,12 @@ class RoundingTest extends TestCase
     }
 
     /**
-     * @dataProvider roundingProvider
      * @param mixed $unroundedPrice
      * @param mixed $expectedAsPriceWithVat
      * @param mixed $expectedAsPriceWithoutVat
      * @param mixed $expectedAsVatAmount
      */
+    #[DataProvider('roundingProvider')]
     public function testRoundingByCurrency(
         $unroundedPrice,
         $expectedAsPriceWithVat,
@@ -83,7 +84,7 @@ class RoundingTest extends TestCase
         $this->assertThat($rounding->roundVatAmount($unroundedPrice), new IsMoneyEqual($expectedAsVatAmount));
     }
 
-    public function roundingPriceWithVatProvider()
+    public static function roundingPriceWithVatProvider()
     {
         return [
             [
@@ -135,11 +136,11 @@ class RoundingTest extends TestCase
     }
 
     /**
-     * @dataProvider roundingPriceWithVatProvider
      * @param string $roundingType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $outputPrice
      */
+    #[DataProvider('roundingPriceWithVatProvider')]
     public function testRoundingPriceWithVatByCurrency(
         string $roundingType,
         Money $inputPrice,

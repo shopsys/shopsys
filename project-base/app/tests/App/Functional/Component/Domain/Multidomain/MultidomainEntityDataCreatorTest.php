@@ -29,7 +29,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $multidomainEntityClassFinderFacadeMock = $this->getMockBuilder(MultidomainEntityClassFinderFacade::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllNotNullableColumnNamesIndexedByTableName'])
+            ->onlyMethods(['getAllNotNullableColumnNamesIndexedByTableName'])
             ->getMock();
 
         $multidomainEntityClassFinderFacadeMock
@@ -86,7 +86,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $multidomainEntityClassFinderFacadeMock = $this->getMockBuilder(MultidomainEntityClassFinderFacade::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getAllNotNullableColumnNamesIndexedByTableName'])
+            ->onlyMethods(['getAllNotNullableColumnNamesIndexedByTableName'])
             ->getMock();
 
         $multidomainEntityClassFinderFacadeMock

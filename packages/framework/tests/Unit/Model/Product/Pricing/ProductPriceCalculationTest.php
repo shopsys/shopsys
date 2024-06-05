@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Product\Pricing;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
@@ -32,7 +33,7 @@ class ProductPriceCalculationTest extends TestCase
     private function getProductPriceCalculationWithInputPriceTypeAndVariants($inputPriceType, $variants)
     {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType', 'getRoundingType', 'getDomainDefaultCurrencyIdByDomainId'])
+            ->onlyMethods(['getInputPriceType', 'getDomainDefaultCurrencyIdByDomainId'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock
@@ -47,7 +48,7 @@ class ProductPriceCalculationTest extends TestCase
             ->getMock();
 
         $productRepositoryMock = $this->getMockBuilder(ProductRepository::class)
-            ->setMethods(['getAllSellableVariantsByMainVariant'])
+            ->onlyMethods(['getAllSellableVariantsByMainVariant'])
             ->disableOriginalConstructor()
             ->getMock();
         $productRepositoryMock
@@ -102,10 +103,10 @@ class ProductPriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider getMinimumPriceProvider
      * @param array $prices
      * @param mixed $minimumPrice
      */
+    #[DataProvider('getMinimumPriceProvider')]
     public function testGetMinimumPrice(array $prices, $minimumPrice)
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
@@ -116,7 +117,7 @@ class ProductPriceCalculationTest extends TestCase
         $this->assertEquals($minimumPrice, $productPriceCalculation->getMinimumPriceByPriceWithoutVat($prices));
     }
 
-    public function getMinimumPriceProvider()
+    public static function getMinimumPriceProvider()
     {
         return [
             [
@@ -144,10 +145,10 @@ class ProductPriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider getArePricesDifferentProvider
      * @param array $prices
      * @param mixed $arePricesDifferent
      */
+    #[DataProvider('getArePricesDifferentProvider')]
     public function testArePricesDifferent(array $prices, $arePricesDifferent)
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
@@ -158,7 +159,7 @@ class ProductPriceCalculationTest extends TestCase
         $this->assertSame($arePricesDifferent, $productPriceCalculation->arePricesDifferent($prices));
     }
 
-    public function getArePricesDifferentProvider()
+    public static function getArePricesDifferentProvider()
     {
         return [
             [

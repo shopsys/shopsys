@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Api\AttributeApiInterface;
 use Akeneo\Pim\ApiClient\Api\AttributeGroupApiInterface;
-use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Generator;
 
 class FlagTransferAkeneoFacade

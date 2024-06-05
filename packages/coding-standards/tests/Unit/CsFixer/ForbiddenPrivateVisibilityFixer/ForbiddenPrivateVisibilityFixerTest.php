@@ -25,7 +25,7 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
-    public function getTestingFiles(): iterable
+    public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/constructor_property_promotion.php', __DIR__ . '/wrong/constructor_property_promotion.php'];
 

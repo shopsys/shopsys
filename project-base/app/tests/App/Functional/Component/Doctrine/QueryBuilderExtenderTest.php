@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Component\Doctrine;
 use App\Model\Category\Category;
 use App\Model\Product\Product;
 use Doctrine\ORM\Query\Expr\Join;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -19,11 +20,11 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
     private QueryBuilderExtender $queryBuilderExtender;
 
     /**
-     * @dataProvider extendJoinWithExtendedEntityProvider
      * @param string $firstJoinedEntity
      * @param string $secondJoinedEntity
      * @param string $expectedJoinedEntity
      */
+    #[DataProvider('extendJoinWithExtendedEntityProvider')]
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
         string $secondJoinedEntity,
@@ -46,7 +47,7 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
     /**
      * @return array
      */
-    public function extendJoinWithExtendedEntityProvider(): array
+    public static function extendJoinWithExtendedEntityProvider(): array
     {
         return [
             'extend base entity join with extended entity' => [

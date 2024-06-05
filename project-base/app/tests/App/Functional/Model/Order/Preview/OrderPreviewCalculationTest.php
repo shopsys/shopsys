@@ -42,14 +42,14 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $currency = TestCurrencyProvider::getTestCurrency();
 
         $quantifiedProductPriceCalculationMock = $this->getMockBuilder(QuantifiedProductPriceCalculation::class)
-            ->setMethods(['calculatePrices', '__construct'])
+            ->onlyMethods(['calculatePrices'])
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductPriceCalculationMock->expects($this->once())->method('calculatePrices')
             ->willReturn($quantifiedItemsPrices);
 
         $quantifiedProductDiscountCalculationMock = $this->getMockBuilder(QuantifiedProductDiscountCalculation::class)
-            ->setMethods(['calculateDiscountsRoundedByCurrency', '__construct'])
+            ->onlyMethods(['calculateDiscountsRoundedByCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
@@ -58,19 +58,19 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->willReturn($quantifiedProductsDiscounts);
 
         $paymentPriceCalculationMock = $this->getMockBuilder(PaymentPriceCalculation::class)
-            ->setMethods(['calculatePrice', '__construct'])
+            ->onlyMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $paymentPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn($paymentPrice);
 
         $transportPriceCalculationMock = $this->getMockBuilder(TransportPriceCalculation::class)
-            ->setMethods(['calculatePrice', '__construct'])
+            ->onlyMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $transportPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn($transportPrice);
 
         $orderPriceCalculationMock = $this->getMockBuilder(OrderPriceCalculation::class)
-            ->setMethods(['calculateOrderRoundingPrice'])
+            ->onlyMethods(['calculateOrderRoundingPrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $orderPriceCalculationMock->expects($this->any())->method('calculateOrderRoundingPrice')->willReturn(null);
@@ -136,14 +136,14 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $currency = TestCurrencyProvider::getTestCurrency();
 
         $quantifiedProductPriceCalculationMock = $this->getMockBuilder(QuantifiedProductPriceCalculation::class)
-            ->setMethods(['calculatePrices', '__construct'])
+            ->onlyMethods(['calculatePrices'])
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductPriceCalculationMock->expects($this->once())->method('calculatePrices')
             ->willReturn($quantifiedItemsPrices);
 
         $quantifiedProductDiscountCalculationMock = $this->getMockBuilder(QuantifiedProductDiscountCalculation::class)
-            ->setMethods(['calculateDiscountsRoundedByCurrency', '__construct'])
+            ->onlyMethods(['calculateDiscountsRoundedByCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
@@ -152,13 +152,13 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->willReturn($quantifiedProductsDiscounts);
 
         $paymentPriceCalculationMock = $this->getMockBuilder(PaymentPriceCalculation::class)
-            ->setMethods(['calculatePrice', '__construct'])
+            ->onlyMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $paymentPriceCalculationMock->expects($this->never())->method('calculatePrice');
 
         $transportPriceCalculationMock = $this->getMockBuilder(TransportPriceCalculation::class)
-            ->setMethods(['calculatePrice', '__construct'])
+            ->onlyMethods(['calculatePrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $transportPriceCalculationMock->expects($this->never())->method('calculatePrice');

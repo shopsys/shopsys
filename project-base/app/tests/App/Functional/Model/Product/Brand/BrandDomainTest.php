@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Brand;
 
 use App\Model\Product\Brand\Brand;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -26,9 +27,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
      */
     private BrandFactoryInterface $brandFactory;
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testCreateBrandDomain()
     {
         $brandData = $this->brandDataFactory->create();
@@ -47,9 +46,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
         $this->assertNull($refreshedBrand->getSeoH1(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @group singledomain
-     */
+    #[Group('singledomain')]
     public function testCreateBrandDomainForSingleDomain()
     {
         $brandData = $this->brandDataFactory->create();

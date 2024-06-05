@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Order\Item;
 
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -25,7 +26,7 @@ final class OrderProductFacadeTest extends TestCase
         parent::setUp();
 
         $moduleFacadeMock = $this->getMockBuilder(ModuleFacade::class)
-            ->setMethods(['isEnabled'])
+            ->onlyMethods(['isEnabled'])
             ->disableOriginalConstructor()
             ->getMock();
         $moduleFacadeMock->expects($this->any())->method('isEnabled')->willReturn(true);
@@ -41,7 +42,7 @@ final class OrderProductFacadeTest extends TestCase
     /**
      * @return iterable
      */
-    public function subtractOrderProductsFromStockUsingStockProvider(): iterable
+    public static function subtractOrderProductsFromStockUsingStockProvider(): iterable
     {
         yield [15, 10, 5];
 
@@ -53,11 +54,11 @@ final class OrderProductFacadeTest extends TestCase
     }
 
     /**
-     * @dataProvider subtractOrderProductsFromStockUsingStockProvider
      * @param int $stockQuantity
      * @param int $orderedQuantity
      * @param int $expectedStockQuantity
      */
+    #[DataProvider('subtractOrderProductsFromStockUsingStockProvider')]
     public function testSubtractOrderProductsFromStockUsingStock(
         int $stockQuantity,
         int $orderedQuantity,
@@ -74,7 +75,7 @@ final class OrderProductFacadeTest extends TestCase
     /**
      * @return iterable
      */
-    public function addOrderProductsFromStockUsingStockProvider(): iterable
+    public static function addOrderProductsFromStockUsingStockProvider(): iterable
     {
         yield [15, 10, 25];
 
@@ -86,11 +87,11 @@ final class OrderProductFacadeTest extends TestCase
     }
 
     /**
-     * @dataProvider addOrderProductsFromStockUsingStockProvider
      * @param int $stockQuantity
      * @param int $orderedQuantity
      * @param int $expectedStockQuantity
      */
+    #[DataProvider('addOrderProductsFromStockUsingStockProvider')]
     public function testAddOrderProductsToStockUsingStock(
         int $stockQuantity,
         int $orderedQuantity,

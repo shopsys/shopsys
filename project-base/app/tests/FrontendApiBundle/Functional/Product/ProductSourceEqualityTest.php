@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductSourceEqualityTest extends GraphQlTestCase
@@ -12,7 +13,7 @@ class ProductSourceEqualityTest extends GraphQlTestCase
     /**
      * @return array<array<int, int>>
      */
-    public function getProductsIdsToTest(): array
+    public static function getProductsIdsToTest(): array
     {
         return [
             [1], // regular product
@@ -22,8 +23,8 @@ class ProductSourceEqualityTest extends GraphQlTestCase
 
     /**
      * @param int $productId
-     * @dataProvider getProductsIdsToTest
      */
+    #[DataProvider('getProductsIdsToTest')]
     public function testProductReturnsTheSameData(int $productId): void
     {
         $productUuid = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId)->getUuid();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Mail;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Mail\Email;
 use Shopsys\FrameworkBundle\Model\Mail\EventListener\EnvelopeListener;
@@ -18,7 +19,6 @@ use Symfony\Component\Mime\Header\MailboxListHeader;
 class EnvelopeListenerTest extends TestCase
 {
     /**
-     * @dataProvider onMessageDataProvider
      * @param string|null $deliveryWhitelist
      * @param bool $isWhitelistEnabled
      * @param bool $isWhitelistForced
@@ -27,6 +27,7 @@ class EnvelopeListenerTest extends TestCase
      * @param \Symfony\Component\Mime\Address|null $mailBcc
      * @param array $expectedRecipients
      */
+    #[DataProvider('onMessageDataProvider')]
     public function testOnMessage(
         ?string $deliveryWhitelist,
         bool $isWhitelistEnabled,
@@ -87,7 +88,7 @@ class EnvelopeListenerTest extends TestCase
     /**
      * @return iterable
      */
-    public function onMessageDataProvider(): iterable
+    public static function onMessageDataProvider(): iterable
     {
         $netdeveloNoReplyMail = new Address('no-reply@netdevelo.cz');
         $shopsysNoReplyMail1 = new Address('no-reply@shopsys.com');
