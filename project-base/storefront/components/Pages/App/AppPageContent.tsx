@@ -4,7 +4,6 @@ import { Portal } from 'components/Basic/Portal/Portal';
 import { DeferredSymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/DeferredSymfonyDebugToolbar';
 import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserConsent';
 import { DeferredGtmHeadScript } from 'gtm/DeferredGtmHeadScript';
-import { GtmProvider } from 'gtm/context/GtmProvider';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
@@ -32,16 +31,14 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
 
     return (
         <div className={ralewayFont.variable}>
-            <GtmProvider>
-                <Fonts />
-                <DeferredLoaders />
-                <DeferredGtmHeadScript />
-                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <Component {...pageProps} />
-                <DeferredSymfonyDebugToolbar />
-                <DeferredUserConsent url={pageProps.domainConfig.url} />
-                <Portal />
-            </GtmProvider>
+            <Fonts />
+            <DeferredLoaders />
+            <DeferredGtmHeadScript />
+            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+            <Component {...pageProps} />
+            <DeferredSymfonyDebugToolbar />
+            <DeferredUserConsent url={pageProps.domainConfig.url} />
+            <Portal />
         </div>
     );
 };

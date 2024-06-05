@@ -1,5 +1,6 @@
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
+import { GtmProvider } from 'gtm/context/GtmProvider';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
 import { AppProps as NextAppProps } from 'next/app';
@@ -58,7 +59,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
-                        <AppPageContent Component={Component} pageProps={pageProps} />
+                        <GtmProvider>
+                            <AppPageContent Component={Component} pageProps={pageProps} />
+                        </GtmProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>
             </UrqlWrapper>

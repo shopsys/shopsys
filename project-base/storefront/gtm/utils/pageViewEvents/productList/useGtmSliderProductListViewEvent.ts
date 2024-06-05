@@ -1,6 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { useGtmContext } from 'gtm/context/useGtmContext';
+import { useGtmContext } from 'gtm/context/GtmProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmProductListViewEvent } from 'gtm/factories/getGtmProductListViewEvent';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
