@@ -982,6 +982,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fixer `RedundantMarkDownTrailingSpacesFixer` was removed as markdown files are formatted by prettier
 -   see #project-base-diff to update your project
 
+#### fix annotations for getTranslations() method in all translatable entities ([#3203](https://github.com/shopsys/shopsys/pull/3203))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
