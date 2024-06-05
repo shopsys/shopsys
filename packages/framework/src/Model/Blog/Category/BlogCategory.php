@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @method translation($locale = null): BlogCategoryTranslation
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation> getTranslations()
  */
 #[ORM\Table(name: 'blog_categories')]
 #[ORM\Entity]
@@ -33,7 +34,7 @@ class BlogCategory extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation>
      */
     #[Prezent\Translations(targetEntity: BlogCategoryTranslation::class)]
     #[Override]

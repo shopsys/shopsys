@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  * Product
  *
  * @method \Shopsys\FrameworkBundle\Model\Product\ProductTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation> getTranslations()
  */
 #[ORM\Table(name: 'products')]
 #[ORM\Index(columns: ['variant_type'])]
@@ -50,7 +51,7 @@ class Product extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\ProductTranslation>
      */
     #[Prezent\Translations(targetEntity: ProductTranslation::class)]
     #[Override]

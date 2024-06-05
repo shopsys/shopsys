@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation> getTranslations()
  */
 #[ORM\Table(name: 'units')]
 #[ORM\Entity]
@@ -27,7 +28,7 @@ class Unit extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation>
      */
     #[Prezent\Translations(targetEntity: UnitTranslation::class)]
     #[Override]

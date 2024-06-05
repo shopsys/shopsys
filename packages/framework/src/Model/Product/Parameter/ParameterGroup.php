@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation> getTranslations()
  */
 #[ORM\Table(name: 'parameter_groups')]
 #[ORM\Entity]
@@ -31,7 +32,7 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation>
      */
     #[Prezent\Translations(targetEntity: ParameterGroupTranslation::class)]
     #[Override]

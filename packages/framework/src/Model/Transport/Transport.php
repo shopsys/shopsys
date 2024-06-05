@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundExce
 
 /**
  * @method \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation> getTranslations()
  */
 #[ORM\Table(name: 'transports')]
 #[ORM\Entity]
@@ -40,7 +41,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation>
      */
     #[Prezent\Translations(targetEntity: TransportTranslation::class)]
     #[Override]

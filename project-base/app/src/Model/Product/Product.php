@@ -29,13 +29,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method void addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method int[] unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
  * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
- * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductTranslation> $translations
+ * @property \Doctrine\Common\Collections\Collection<string,\App\Model\Product\ProductTranslation> $translations
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductDomain> $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
  * @method \Shopsys\FrameworkBundle\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  * @method void setDomains(\App\Model\Product\ProductData $productData)
+ * @method \Doctrine\Common\Collections\Collection<string, \App\Model\Product\ProductTranslation> getTranslations()
  * @method \App\Model\Product\ProductDomain[] getProductDomains()
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $excludedTransports
  * @method void setExcludedTransports(\App\Model\Transport\Transport[] $excludedTransports)

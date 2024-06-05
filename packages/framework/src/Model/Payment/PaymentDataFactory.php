@@ -67,7 +67,6 @@ class PaymentDataFactory
         $paymentData->czkRounding = $payment->isCzkRounding();
         $paymentData->transports = $payment->getTransports();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation[] $translations */
         $translations = $payment->getTranslations();
 
         $names = [];

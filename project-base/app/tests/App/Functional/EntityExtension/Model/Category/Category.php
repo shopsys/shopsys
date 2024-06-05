@@ -13,6 +13,10 @@ use Prezent\Doctrine\Translatable\Attribute as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
+/**
+ * @method \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<string, \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation> getTranslations()
+ */
 #[Gedmo\Tree(type: 'nested')]
 #[ORM\Table(name: 'categories')]
 #[ORM\Index(columns: ['lft'])]
@@ -33,7 +37,7 @@ class Category extends AbstractTranslatableEntity
     protected string $uuid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation>
+     * @var \Doctrine\Common\Collections\Collection<string, \Tests\App\Functional\EntityExtension\Model\Category\CategoryTranslation>
      */
     #[Prezent\Translations(targetEntity: CategoryTranslation::class)]
     #[Override]

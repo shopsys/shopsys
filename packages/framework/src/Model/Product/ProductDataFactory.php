@@ -107,7 +107,6 @@ class ProductDataFactory
 
     protected function fillFromProduct(ProductData $productData, Product $product): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
 
         foreach ($translations as $translation) {
