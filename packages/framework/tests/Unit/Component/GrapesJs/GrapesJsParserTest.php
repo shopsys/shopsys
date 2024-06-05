@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\GrapesJs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 
 class GrapesJsParserTest extends TestCase
 {
     /**
-     * @dataProvider parseDataProvider
      * @param string $inputText
      * @param string $expectedOutput
      */
+    #[DataProvider('parseDataProvider')]
     public function testParse(string $inputText, string $expectedOutput): void
     {
         $grapesJsParser = new GrapesJsParser();
@@ -23,7 +24,7 @@ class GrapesJsParserTest extends TestCase
     /**
      * @return iterable
      */
-    public function parseDataProvider(): iterable
+    public static function parseDataProvider(): iterable
     {
         yield 'drop products' => [
             '<div class="gjs-products" data-products="1, 2, 3"><div class="gjs-product" data-product="1"></div><div class="gjs-product" data-product="2"><div class="gjs-product" data-product="3"></div>',

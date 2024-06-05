@@ -325,7 +325,7 @@
         <phingcall target="shopsys_framework.translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysFormTypesBundle"/>
             <arg value="--dir=${path.packages}/form-types-bundle/src"/>
             <arg value="--output-format=po"/>
@@ -334,7 +334,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysFrameworkBundle"/>
             <arg value="--dir=${path.framework}/src"/>
             <arg value="--dir=${path.var}/translations/framework"/>
@@ -348,7 +348,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysFrontendApiBundle"/>
             <arg value="--dir=${path.packages}/frontend-api/src"/>
             <arg value="--output-format=po"/>
@@ -357,7 +357,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysBrandFeedLuigisBoxBundle"/>
             <arg value="--dir=${path.packages}/brand-feed-luigis-box/src"/>
             <arg value="--output-format=po"/>
@@ -366,7 +366,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysCategoryFeedLuigisBoxBundle"/>
             <arg value="--dir=${path.packages}/category-feed-luigis-box/src"/>
             <arg value="--output-format=po"/>
@@ -375,7 +375,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysProductFeedGoogleBundle"/>
             <arg value="--dir=${path.packages}/product-feed-google/src"/>
             <arg value="--output-format=po"/>
@@ -384,7 +384,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysProductFeedHeurekaBundle"/>
             <arg value="--dir=${path.packages}/product-feed-heureka/src"/>
             <arg value="--output-format=po"/>
@@ -393,7 +393,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysProductFeedHeurekaDeliveryBundle"/>
             <arg value="--dir=${path.packages}/product-feed-heureka-delivery/src"/>
             <arg value="--output-format=po"/>
@@ -402,7 +402,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysProductFeedZboziBundle"/>
             <arg value="--dir=${path.packages}/product-feed-zbozi/src"/>
             <arg value="--output-format=po"/>
@@ -411,7 +411,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysProductFeedLuigisBoxBundle"/>
             <arg value="--dir=${path.packages}/product-feed-luigis-box/src"/>
             <arg value="--output-format=po"/>
@@ -420,7 +420,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysArticleFeedLuigisBoxBundle"/>
             <arg value="--dir=${path.packages}/article-feed-luigis-box/src"/>
             <arg value="--output-format=po"/>
@@ -429,7 +429,7 @@
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--bundle=ShopsysLuigisBoxBundle"/>
             <arg value="--dir=${path.packages}/luigis-box/src"/>
             <arg value="--output-format=po"/>

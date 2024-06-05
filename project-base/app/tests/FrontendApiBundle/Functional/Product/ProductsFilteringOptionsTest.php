@@ -12,6 +12,7 @@ use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\Parameter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -745,10 +746,10 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     }
 
     /**
-     * @dataProvider isSliderSelectable
      * @param bool $isSliderSelectable
      * @param array $filter
      */
+    #[DataProvider('isSliderSelectable')]
     public function testIsSliderSelectable(bool $isSliderSelectable, array $filter): void
     {
         $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
@@ -776,7 +777,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function isSliderSelectable(): iterable
+    public static function isSliderSelectable(): iterable
     {
         yield [true, 'filter' => []];
 

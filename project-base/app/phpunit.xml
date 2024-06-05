@@ -2,60 +2,52 @@
 <!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     backupGlobals="false"
-    backupStaticAttributes="false"
     bootstrap="tests/bootstrap.php"
     colors="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
     processIsolation="false"
     stopOnFailure="false"
     failOnWarning="true"
     beStrictAboutTestsThatDoNotTestAnything="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
 >
-    <coverage>
-        <include>
-            <directory>src</directory>
-            <directory>tests</directory>
-        </include>
-        <exclude>
-            <directory>src/*/Resources</directory>
-            <directory>tests/App/Unit</directory>
-            <directory>tests/App/Functional</directory>
-            <directory>tests/App/Smoke</directory>
-            <directory>tests/App/Performance</directory>
-            <directory>tests/*Bundle/Functional</directory>
-        </exclude>
-    </coverage>
-    <php>
-        <env name="KERNEL_CLASS" value="App\Kernel" />
-        <env name="APP_ENV" value="test" />
-        <env name="APP_DEBUG" value="false" />
-        <ini name="memory_limit" value="2G" />
-    </php>
-
-    <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/App/Unit</directory>
-            <directory>tests/*Bundle/Unit</directory>
-        </testsuite>
-        <testsuite name="Functional">
-            <directory>tests/App/Functional</directory>
-        </testsuite>
-        <testsuite name="FrontendApiFunctional">
-            <directory>tests/FrontendApiBundle/Functional</directory>
-        </testsuite>
-        <testsuite name="Smoke">
-            <directory>tests/App/Smoke</directory>
-        </testsuite>
-        <testsuite name="Performance">
-            <directory>tests/App/Performance</directory>
-        </testsuite>
-    </testsuites>
-
-    <listeners>
-        <listener class="Zalas\Injector\PHPUnit\TestListener\ServiceInjectorListener" />
-    </listeners>
-
+  <php>
+    <env name="KERNEL_CLASS" value="App\Kernel"/>
+    <env name="APP_ENV" value="test"/>
+    <env name="APP_DEBUG" value="false"/>
+    <ini name="memory_limit" value="2G"/>
+  </php>
+  <testsuites>
+    <testsuite name="Unit">
+      <directory>tests/App/Unit</directory>
+      <directory>tests/*Bundle/Unit</directory>
+    </testsuite>
+    <testsuite name="Functional">
+      <directory>tests/App/Functional</directory>
+    </testsuite>
+    <testsuite name="FrontendApiFunctional">
+      <directory>tests/FrontendApiBundle/Functional</directory>
+    </testsuite>
+    <testsuite name="Smoke">
+      <directory>tests/App/Smoke</directory>
+    </testsuite>
+    <testsuite name="Performance">
+      <directory>tests/App/Performance</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory>src</directory>
+      <directory>tests</directory>
+    </include>
+    <exclude>
+      <directory>src/*/Resources</directory>
+      <directory>tests/App/Unit</directory>
+      <directory>tests/App/Functional</directory>
+      <directory>tests/App/Smoke</directory>
+      <directory>tests/App/Performance</directory>
+      <directory>tests/*Bundle/Functional</directory>
+    </exclude>
+  </source>
 </phpunit>

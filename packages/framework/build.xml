@@ -1581,7 +1581,7 @@
         <phingcall target="npm-translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--dir=${path.src}"/>
             <arg value="--dir=${path.config}"/>
             <arg value="--dir=${path.templates}"/>
@@ -1600,7 +1600,7 @@
         <phingcall target="npm-translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:extract"/>
+            <arg value="jms:translation:extract"/>
             <arg value="--dir=${path.src}"/>
             <arg value="--dir=${path.templates}"/>
             <arg value="--dir=${path.var}/translations/projectBase"/>
@@ -1623,7 +1623,7 @@
     <target name="translations-import" description="Import translatable messages from front-end source files in your project.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
-            <arg value="translation:import"/>
+            <arg value="jms:translation:import"/>
             <arg value="${path.root}/translations-update/"/>
             <arg value="${path.root}/translations/"/>
             <arg value="messages"/>

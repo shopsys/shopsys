@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Doctrine;
 
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class SqlParametersFlattenerTest extends TestCase
 {
     /**
-     * @dataProvider expandArrayParametersDataProvider
      * @param string $dql
      * @param array $parameters
      * @param array $expectedFlattenedParameters
      */
+    #[DataProvider('expandArrayParametersDataProvider')]
     public function testExpandArrayParameters(string $dql, array $parameters, array $expectedFlattenedParameters): void
     {
         $sqlParametersFlattener = new SqlParametersFlattener();
@@ -27,7 +28,7 @@ class SqlParametersFlattenerTest extends TestCase
     /**
      * @return \Iterator
      */
-    public function expandArrayParametersDataProvider(): Iterator
+    public static function expandArrayParametersDataProvider(): Iterator
     {
         yield [
             'dql' => 'SELECT a FROM Article WHERE id = :id AND name = :name',

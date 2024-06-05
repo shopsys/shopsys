@@ -8,6 +8,8 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use DateTimeImmutable;
 use DateTimeZone;
 use Nette\Utils\Json;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
@@ -67,8 +69,6 @@ class GetStoreTest extends GraphQlTestCase
 
     private DateTimeImmutable $now;
 
-    private DateTimeImmutable $today;
-
     public function testGetStoreByUuid(): void
     {
         foreach ($this->getStoreDataProvider() as $dataSet) {
@@ -102,9 +102,7 @@ class GetStoreTest extends GraphQlTestCase
         }
     }
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testStoreOnSecondDomainIsNotAvailable(): void
     {
         $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3, Store::class);
@@ -167,13 +165,13 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @dataProvider openingHoursDataProvider
      * @param array $openingRangesModifiers
      * @param \DateTimeImmutable|null $publicHolidayDate
      * @param array $publicHolidayExcludedStoresIds
      * @param bool $expectedIsOpen
      * @param array $expectedOpeningRangesModifiers
      */
+    #[DataProvider('openingHoursDataProvider')]
     public function testGetStoreOpeningHours(
         array $openingRangesModifiers,
         ?DateTimeImmutable $publicHolidayDate,
@@ -209,7 +207,7 @@ class GetStoreTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    protected function openingHoursDataProvider(): iterable
+    public static function openingHoursDataProvider(): iterable
     {
         yield 'store with one opening range' => [
             'openingRangesModifiers' => [
@@ -227,7 +225,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
-            'publicHolidayDate' => $this->getToday(),
+            'publicHolidayDate' => static::getToday(),
             'publicHolidayExcludedStoresIds' => [1],
             'expectedIsOpen' => true,
             'expectedOpeningRangesModifiers' => [
@@ -239,7 +237,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
-            'publicHolidayDate' => $this->getToday(),
+            'publicHolidayDate' => static::getToday(),
             'publicHolidayExcludedStoresIds' => [],
             'expectedIsOpen' => false,
             'expectedOpeningRangesModifiers' => [],
@@ -567,13 +565,9 @@ class GetStoreTest extends GraphQlTestCase
     /**
      * @return \DateTimeImmutable
      */
-    private function getToday(): DateTimeImmutable
+    protected static function getToday(): DateTimeImmutable
     {
-        if (!isset($this->today)) {
-            $this->today = new DateTimeImmutable('today', new DateTimeZone('Europe/Prague'));
-        }
-
-        return $this->today;
+        return new DateTimeImmutable('today', new DateTimeZone('Europe/Prague'));
     }
 
     /**

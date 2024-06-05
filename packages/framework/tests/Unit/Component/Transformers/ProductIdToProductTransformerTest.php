@@ -15,7 +15,7 @@ class ProductIdToProductTransformerTest extends TestCase
     {
         $productId = 1;
         $product = $this->getMockBuilder(Product::class)
-            ->setMethods(['getId'])
+            ->onlyMethods(['getId'])
             ->disableOriginalConstructor()
             ->getMock();
         $product->expects($this->atLeastOnce())->method('getId')->willReturn($productId);
@@ -37,7 +37,7 @@ class ProductIdToProductTransformerTest extends TestCase
         ];
 
         $productRepository = $this->getMockBuilder(ProductRepository::class)
-            ->setMethods(['getById'])
+            ->onlyMethods(['getById'])
             ->disableOriginalConstructor()
             ->getMock();
         $productRepository->expects($this->atLeastOnce())->method('getById')->willReturnMap(

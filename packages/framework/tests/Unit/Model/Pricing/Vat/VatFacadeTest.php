@@ -28,7 +28,7 @@ class VatFacadeTest extends TestCase
         $emMock = $this->createMock(EntityManager::class);
 
         $settingMock = $this->getMockBuilder(Setting::class)
-            ->setMethods(['getForDomain', '__construct'])
+            ->onlyMethods(['getForDomain', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
         $settingMock
@@ -38,7 +38,7 @@ class VatFacadeTest extends TestCase
             ->willReturn(1);
 
         $vatRepositoryMock = $this->getMockBuilder(VatRepository::class)
-            ->setMethods(['findById', '__construct'])
+            ->onlyMethods(['findById', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
         $vatRepositoryMock
@@ -48,7 +48,7 @@ class VatFacadeTest extends TestCase
             ->willReturn($expected);
 
         $domainMock = $this->getMockBuilder(Domain::class)
-            ->setMethods(['__construct'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -74,13 +74,13 @@ class VatFacadeTest extends TestCase
         $vatRepositoryMock = $this->createMock(VatRepository::class);
 
         $vatMock = $this->getMockBuilder(Vat::class)
-            ->setMethods(['getId', '__construct'])
+            ->onlyMethods(['getId', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
         $vatMock->expects($this->once())->method('getId')->willReturn(1);
 
         $settingMock = $this->getMockBuilder(Setting::class)
-            ->setMethods(['setForDomain', '__construct'])
+            ->onlyMethods(['setForDomain', '__construct'])
             ->disableOriginalConstructor()
             ->getMock();
         $settingMock
@@ -89,7 +89,7 @@ class VatFacadeTest extends TestCase
             ->with($this->equalTo(Vat::SETTING_DEFAULT_VAT), $this->equalTo(1));
 
         $domainMock = $this->getMockBuilder(Domain::class)
-            ->setMethods(['__construct'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 

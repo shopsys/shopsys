@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionObject;
@@ -12,7 +13,7 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser;
-use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnnotationsReplacerTest;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnnotationsReplacer;
 
 class AnnotationsReplacerTest extends TestCase
 {
@@ -32,7 +33,7 @@ class AnnotationsReplacerTest extends TestCase
     /**
      * @return array
      */
-    public function getTestReplaceAnnotationsDataProvider(): array
+    public static function getTestReplaceAnnotationsDataProvider(): array
     {
         return [
             [
@@ -79,10 +80,10 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestReplaceAnnotationsDataProvider
      * @param string $input
      * @param string $output
      */
+    #[DataProvider('getTestReplaceAnnotationsDataProvider')]
     public function testReplaceIn(string $input, string $output): void
     {
         $this->assertEquals($output, $this->annotationsReplacer->replaceIn($input));
@@ -91,9 +92,9 @@ class AnnotationsReplacerTest extends TestCase
     /**
      * @return array
      */
-    public function getTestReplaceInMethodReturnTypeDataProvider(): array
+    public static function getTestReplaceInMethodReturnTypeDataProvider(): array
     {
-        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacer::class);
 
         return [
             [$reflectionClass->getMethod('returnsFrameworkCategoryFacade'), '\App\Model\Category\CategoryFacade'],
@@ -106,10 +107,10 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestReplaceInMethodReturnTypeDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
      * @param string $output
      */
+    #[DataProvider('getTestReplaceInMethodReturnTypeDataProvider')]
     public function testReplaceInMethodReturnType(ReflectionMethod $reflectionMethod, string $output): void
     {
         $this->assertEquals($output, $this->annotationsReplacer->replaceInMethodReturnType($reflectionMethod));
@@ -118,9 +119,9 @@ class AnnotationsReplacerTest extends TestCase
     /**
      * @return array
      */
-    public function getTestReplaceInInPropertyTypeDataProvider(): array
+    public static function getTestReplaceInInPropertyTypeDataProvider(): array
     {
-        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacer::class);
 
         return [
             [$reflectionClass->getProperty('categoryFacadeOrNull'), '\App\Model\Category\CategoryFacade|null'],
@@ -130,10 +131,10 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestReplaceInInPropertyTypeDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
      * @param string $output
      */
+    #[DataProvider('getTestReplaceInInPropertyTypeDataProvider')]
     public function testReplaceInPropertyType(ReflectionProperty $reflectionProperty, string $output): void
     {
         $this->assertEquals($output, $this->annotationsReplacer->replaceInPropertyType($reflectionProperty));
@@ -142,9 +143,9 @@ class AnnotationsReplacerTest extends TestCase
     /**
      * @return array
      */
-    public function testReplaceInParameterTypeDataProvider(): array
+    public static function testReplaceInParameterTypeDataProvider(): array
     {
-        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacer::class);
         $reflectionMethod = $reflectionClass->getMethod('acceptsVariousParameters');
 
         return [
@@ -156,10 +157,10 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @dataProvider testReplaceInParameterTypeDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
      * @param string $output
      */
+    #[DataProvider('testReplaceInParameterTypeDataProvider')]
     public function testReplaceInParameterType(ReflectionParameter $reflectionParameter, string $output): void
     {
         $this->assertEquals($output, $this->annotationsReplacer->replaceInParameterType($reflectionParameter));

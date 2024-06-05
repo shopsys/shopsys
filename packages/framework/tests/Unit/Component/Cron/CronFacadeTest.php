@@ -22,7 +22,7 @@ class CronFacadeTest extends TestCase
     public function testRunModuleByServiceId()
     {
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
-        $cronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $cronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
 
         $cronModuleServiceMock->expects($this->once())->method('run');
 
@@ -37,7 +37,7 @@ class CronFacadeTest extends TestCase
     public function testRunIteratedModuleByServiceId()
     {
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
-        $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
+        $cronModuleServiceMock = $this->getMockBuilder(IteratedCronModuleInterface::class)->getMock();
 
         $iterations = 3;
         $cronModuleServiceMock->expects($this->exactly($iterations))->method('iterate')->willReturnCallback(
@@ -58,9 +58,9 @@ class CronFacadeTest extends TestCase
 
     public function testScheduleModulesByTime()
     {
-        $validCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $validCronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
         $validServiceId = get_class($validCronModuleServiceMock);
-        $invalidCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $invalidCronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
         $invalidServiceId = get_class($invalidCronModuleServiceMock);
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
 
@@ -86,9 +86,9 @@ class CronFacadeTest extends TestCase
 
     public function testRunScheduledModules()
     {
-        $scheduledCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $scheduledCronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
         $scheduledServiceId = get_class($scheduledCronModuleServiceMock);
-        $unscheduledCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $unscheduledCronModuleServiceMock = $this->getMockBuilder(SimpleCronModuleInterface::class)->getMock();
         $unscheduledServiceId = get_class($unscheduledCronModuleServiceMock);
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
 

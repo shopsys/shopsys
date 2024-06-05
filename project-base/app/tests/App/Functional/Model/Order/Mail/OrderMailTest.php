@@ -26,13 +26,13 @@ class OrderMailTest extends TransactionFunctionalTestCase
     public function testGetMailTemplateNameByStatus()
     {
         $orderStatus1 = $this->getMockBuilder(OrderStatus::class)
-            ->setMethods(['getId'])
+            ->onlyMethods(['getId'])
             ->disableOriginalConstructor()
             ->getMock();
         $orderStatus1->expects($this->atLeastOnce())->method('getId')->willReturn(1);
 
         $orderStatus2 = $this->getMockBuilder(OrderStatus::class)
-            ->setMethods(['getId'])
+            ->onlyMethods(['getId'])
             ->disableOriginalConstructor()
             ->getMock();
         $orderStatus2->expects($this->atLeastOnce())->method('getId')->willReturn(2);
@@ -51,13 +51,11 @@ class OrderMailTest extends TransactionFunctionalTestCase
 
     public function testGetMessageByOrder()
     {
-        $routerMock = $this->getMockBuilder(RouterInterface::class)
-            ->setMethods(['generate'])
-            ->getMockForAbstractClass();
+        $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->setMethods(['getRouter'])
+            ->onlyMethods(['getRouter'])
             ->disableOriginalConstructor()
             ->getMock();
         $domainRouterFactoryMock->expects($this->any())->method('getRouter')->willReturn($routerMock);

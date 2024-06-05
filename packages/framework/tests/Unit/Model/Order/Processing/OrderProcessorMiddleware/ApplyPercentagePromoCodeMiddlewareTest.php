@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -91,9 +92,9 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
     }
 
     /**
-     * @dataProvider invalidPromoCodeTypeDataProvider
      * @param int|null $promoCodeType
      */
+    #[DataProvider('invalidPromoCodeTypeDataProvider')]
     public function testNoPromoCodeIsAdded(?int $promoCodeType): void
     {
         $orderProcessingData = $this->createOrderProcessingData();
@@ -151,7 +152,7 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
     /**
      * @return iterable
      */
-    public function invalidPromoCodeTypeDataProvider(): iterable
+    public static function invalidPromoCodeTypeDataProvider(): iterable
     {
         yield [PromoCode::DISCOUNT_TYPE_NOMINAL];
 

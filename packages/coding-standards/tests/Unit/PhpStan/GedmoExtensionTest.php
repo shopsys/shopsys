@@ -6,6 +6,8 @@ namespace Tests\CodingStandards\Unit\PhpStan;
 
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Testing\PHPStanTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use Shopsys\CodingStandards\Phpstan\GedmoExtension;
 
 class GedmoExtensionTest extends PHPStanTestCase
@@ -17,7 +19,7 @@ class GedmoExtensionTest extends PHPStanTestCase
     /**
      * @return iterable
      */
-    public function getProperties(): iterable
+    public static function getProperties(): iterable
     {
         yield ['parent', true];
 
@@ -40,10 +42,11 @@ class GedmoExtensionTest extends PHPStanTestCase
     }
 
     /**
-     * @dataProvider getProperties
      * @param string $propertyName
      * @param bool $isWritten
      */
+    #[DataProvider('getProperties')]
+    #[RunInSeparateProcess]
     public function testPropertyIsProperlyReported(string $propertyName, bool $isWritten): void
     {
         $classReflection = $this->reflectionProvider->getClass(GedmoTestEntity::class);

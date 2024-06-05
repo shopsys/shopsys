@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -66,16 +67,27 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
     }
 
     /**
-     * @dataProvider noDeliveryIsSetDataProvider
      * @param string|null $deliveryAddressUuid
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @param bool $createCustomerUser
+     * @param bool $createDeliveryAddress
      */
+    #[DataProvider('noDeliveryIsSetDataProvider')]
     public function testNoDeliveryAddressIsSet(
         ?string $deliveryAddressUuid,
-        ?CustomerUser $customerUser,
-        ?DeliveryAddress $deliveryAddress,
+        bool $createCustomerUser,
+        bool $createDeliveryAddress,
     ): void {
+        $customerUser = null;
+        $deliveryAddress = null;
+
+        if ($createCustomerUser) {
+            $customerUser = $this->createCustomerUser();
+        }
+
+        if ($createDeliveryAddress) {
+            $deliveryAddress = $this->createMock(DeliveryAddress::class);
+        }
+
         $orderProcessingData = $this->createOrderProcessingData();
 
         $orderProcessingData->orderInput->addAdditionalData(SetDeliveryAddressByDeliveryAddressUuidMiddleware::DELIVERY_ADDRESS_UUID, $deliveryAddressUuid);
@@ -103,24 +115,24 @@ class SetDeliveryAddressByDeliveryAddressUuidMiddlewareTest extends MiddlewareTe
     /**
      * @return iterable
      */
-    public function noDeliveryIsSetDataProvider(): iterable
+    public static function noDeliveryIsSetDataProvider(): iterable
     {
         yield 'no delivery address uuid' => [
             null,
-            $this->createCustomerUser(),
-            $this->createMock(DeliveryAddress::class),
+            true,
+            true,
         ];
 
         yield 'no customer user' => [
             '234f5474-8c84-47c6-8713-21cfc0a32ade',
-            null,
-            $this->createMock(DeliveryAddress::class),
+            false,
+            true,
         ];
 
         yield 'no delivery address' => [
             '86caffe0-c926-4cdf-8e03-7458e22422e5',
-            $this->createCustomerUser(),
-            null,
+            true,
+            false,
         ];
     }
 

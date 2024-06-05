@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Recalculation;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -15,10 +16,10 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
     private ProductRecalculationRepository $productRecalculationRepository;
 
     /**
-     * @dataProvider getProductsForRecalculationProvider
      * @param int[] $inputIds
      * @param int[] $expectedIds
      */
+    #[DataProvider('getProductsForRecalculationProvider')]
     public function testProperIdsAreReturned(array $inputIds, array $expectedIds): void
     {
         $calculatedIds = $this->productRecalculationRepository->getIdsToRecalculate($inputIds);
@@ -29,7 +30,7 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
     /**
      * @return iterable
      */
-    public function getProductsForRecalculationProvider(): iterable
+    public static function getProductsForRecalculationProvider(): iterable
     {
         yield 'regular products only' => [
             'inputIds' => [1, 2, 3],

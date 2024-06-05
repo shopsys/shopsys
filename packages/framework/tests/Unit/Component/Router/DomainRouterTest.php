@@ -16,8 +16,8 @@ class DomainRouterTest extends TestCase
     public function testGetRouter()
     {
         $context = new RequestContext();
-        $basicRouterMock = $this->getMockBuilder(RouterInterface::class)->getMockForAbstractClass();
-        $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMockForAbstractClass();
+        $basicRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
+        $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)
             ->disableOriginalConstructor()
             ->getMock();

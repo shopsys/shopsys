@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Paginator;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class PaginationResultTest extends TestCase
 {
-    public function getTestPageCountData()
+    public static function getTestPageCountData()
     {
         return [
             [1, 10, 40, [], 4],
@@ -25,13 +26,13 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestPageCountData
      * @param mixed $page
      * @param mixed $pageSize
      * @param mixed $totalCount
      * @param mixed $results
      * @param mixed $expectedPageCount
      */
+    #[DataProvider('getTestPageCountData')]
     public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount)
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, $results);
@@ -39,7 +40,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedPageCount, $paginationResult->getPageCount());
     }
 
-    public function getTestIsFirstPageData()
+    public static function getTestIsFirstPageData()
     {
         yield [1, 10, 20, true];
 
@@ -49,12 +50,12 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestIsFirstPageData
      * @param int $page
      * @param int|null $pageSize
      * @param int $totalCount
      * @param bool $expectedIsFirst
      */
+    #[DataProvider('getTestIsFirstPageData')]
     public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst)
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
@@ -62,7 +63,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedIsFirst, $paginationResult->isFirstPage());
     }
 
-    public function getTestIsLastPageData()
+    public static function getTestIsLastPageData()
     {
         yield [1, 10, 20, false];
 
@@ -78,12 +79,12 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestIsLastPageData
      * @param int $page
      * @param int|null $pageSize
      * @param int $totalCount
      * @param bool $expectedIsLast
      */
+    #[DataProvider('getTestIsLastPageData')]
     public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast)
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
@@ -91,7 +92,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedIsLast, $paginationResult->isLastPage());
     }
 
-    public function getTestGetPreviousPageData()
+    public static function getTestGetPreviousPageData()
     {
         yield [1, 10, 20, null];
 
@@ -103,12 +104,12 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestGetPreviousPageData
      * @param int $page
      * @param int|null $pageSize
      * @param int $totalCount
      * @param int|null $expectedPrevious
      */
+    #[DataProvider('getTestGetPreviousPageData')]
     public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious)
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
@@ -116,7 +117,7 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedPrevious, $paginationResult->getPreviousPage());
     }
 
-    public function getTestGetNextPageData()
+    public static function getTestGetNextPageData()
     {
         yield [1, 10, 20, 2];
 
@@ -130,12 +131,12 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestGetNextPageData
      * @param int $page
      * @param int|null $pageSize
      * @param int $totalCount
      * @param int|null $expectedNext
      */
+    #[DataProvider('getTestGetNextPageData')]
     public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext)
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);

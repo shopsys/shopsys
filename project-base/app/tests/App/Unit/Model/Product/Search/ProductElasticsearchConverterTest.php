@@ -6,14 +6,15 @@ namespace Tests\App\Unit\Model\Product\Search;
 
 use App\Model\Product\Search\ProductElasticsearchConverter;
 use Nette\Utils\Json;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ProductElasticsearchConverterTest extends TestCase
 {
     /**
-     * @dataProvider getProductMappingFiles
      * @param string $mappingFile
      */
+    #[DataProvider('getProductMappingFiles')]
     public function testAllFieldsAreMentionedInConverter(string $mappingFile): void
     {
         $productElasticsearchConverter = new ProductElasticsearchConverter();
@@ -67,7 +68,7 @@ class ProductElasticsearchConverterTest extends TestCase
     /**
      * @return iterable
      */
-    public function getProductMappingFiles(): iterable
+    public static function getProductMappingFiles(): iterable
     {
         yield [realpath(__DIR__ . '/../../../../../../src/Resources/definition/product/1.json')];
 

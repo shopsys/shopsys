@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Twig;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Twig\CropZerosExtension;
 
 class CropZerosExtensionTest extends TestCase
 {
-    public function returnValuesProvider()
+    public static function returnValuesProvider()
     {
         return [
             ['input' => '12', 'return' => '12'],
@@ -22,10 +23,10 @@ class CropZerosExtensionTest extends TestCase
     }
 
     /**
-     * @dataProvider returnValuesProvider
      * @param mixed $input
      * @param mixed $return
      */
+    #[DataProvider('returnValuesProvider')]
     public function testReturnValues($input, $return)
     {
         $this->assertSame($return, (new CropZerosExtension())->cropZeros($input));

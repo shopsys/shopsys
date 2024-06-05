@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
@@ -12,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 
 class CronTimeResolverTest extends TestCase
 {
-    public function validTimeStringProvider()
+    public static function validTimeStringProvider()
     {
         return [
             ['*', 1, 1],
@@ -26,18 +27,18 @@ class CronTimeResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider validTimeStringProvider
      * @param mixed $timeString
      * @param mixed $maxValue
      * @param mixed $divisibleBy
      */
+    #[DataProvider('validTimeStringProvider')]
     public function testValidateTimeString($timeString, $maxValue, $divisibleBy)
     {
         $cronTimeResolver = new CronTimeResolver();
         $cronTimeResolver->validateTimeString($timeString, $maxValue, $divisibleBy);
     }
 
-    public function invalidTimeStringProvider()
+    public static function invalidTimeStringProvider()
     {
         return [
             ['abcd', 1, 1],
@@ -51,11 +52,11 @@ class CronTimeResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidTimeStringProvider
      * @param mixed $invalidTimeString
      * @param mixed $maxValue
      * @param mixed $divisibleBy
      */
+    #[DataProvider('invalidTimeStringProvider')]
     public function testValidateTimeStringInvalidTimeFormatException($invalidTimeString, $maxValue, $divisibleBy)
     {
         $cronTimeResolver = new CronTimeResolver();
@@ -63,7 +64,7 @@ class CronTimeResolverTest extends TestCase
         $cronTimeResolver->validateTimeString($invalidTimeString, $maxValue, $divisibleBy);
     }
 
-    public function isValidAtTimeProvider()
+    public static function isValidAtTimeProvider()
     {
         return [
             ['0', '0', '2000-01-01 00:00:00', true],
@@ -86,17 +87,17 @@ class CronTimeResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider isValidAtTimeProvider
      * @param mixed $timeHours
      * @param mixed $timeMinutes
      * @param mixed $dateTimeString
      * @param mixed $isValid
      */
+    #[DataProvider('isValidAtTimeProvider')]
     public function testIsValidAtTime($timeHours, $timeMinutes, $dateTimeString, $isValid)
     {
         $cronTimeMock = $this->getMockBuilder(CronTimeInterface::class)
-            ->setMethods(['getTimeHours', 'getTimeMinutes'])
-            ->getMockForAbstractClass();
+            ->onlyMethods(['getTimeHours', 'getTimeMinutes'])
+            ->getMock();
         $cronTimeMock->expects($this->any())->method('getTimeHours')->willReturn($timeHours);
         $cronTimeMock->expects($this->any())->method('getTimeMinutes')->willReturn($timeMinutes);
 

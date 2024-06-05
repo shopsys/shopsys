@@ -13,8 +13,8 @@ services:
         public: false
 
     Akeneo\Pim\ApiClient\AkeneoPimClientInterface:
-        lazy: true
         factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
+        lazy: true
 
     App\:
         exclude:

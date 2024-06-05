@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Model\Product;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
@@ -37,9 +38,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testCreateProductDomainWithData()
     {
         $productData = $this->productDataFactory->create();
@@ -80,9 +79,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $this->assertNull($refreshedProduct->getShortDescription(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @group singledomain
-     */
+    #[Group('singledomain')]
     public function testCreateProductDomainWithDataForSingleDomain()
     {
         $productData = $this->productDataFactory->create();

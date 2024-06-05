@@ -64,7 +64,7 @@ class CurrentCustomerUserTest extends TestCase
     private function getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(PricingGroup $defaultPricingGroup)
     {
         $pricingGroupSettingFacadeMock = $this->getMockBuilder(PricingGroupSettingFacade::class)
-            ->setMethods(['getDefaultPricingGroupByCurrentDomain'])
+            ->onlyMethods(['getDefaultPricingGroupByCurrentDomain'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -87,15 +87,15 @@ class CurrentCustomerUserTest extends TestCase
          * Since version 6 of symfony, this function is then integrated into the interface. It is possible to remove the manual implementation of the mocked class.
          */
         // $tokenMock = $this->getMockBuilder(TokenMock::class)
-        //     ->setMethods(['getUser'])
-        //     ->getMockForAbstractClass();
+        //     ->onlyMethods(['getUser'])
+        //     ->getMock();
         // $tokenMock->method('getUser')->willReturn($customerUser);
         // $tokenMock->expects($this->any())->method('getUserIdentifier')->willReturn($customerUser->getEmail());
 
         $tokenMock = new TokenMock($customerUser);
 
         $tokenStorageMock = $this->getMockBuilder(TokenStorage::class)
-            ->setMethods(['getToken'])
+            ->onlyMethods(['getToken'])
             ->disableOriginalConstructor()
             ->getMock();
         $tokenStorageMock->method('getToken')->willReturn($tokenMock);

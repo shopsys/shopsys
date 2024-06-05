@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -34,10 +35,10 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @dataProvider getAddOrderItemsToCartDataProvider
      * @param bool $shouldMerge
      * @param array $expectedProducts
      */
+    #[DataProvider('getAddOrderItemsToCartDataProvider')]
     public function testOrderItemsAreCorrectlyAddedToCart(bool $shouldMerge, array $expectedProducts): void
     {
         $orderUuid = $this->createMinimalOrderQuery();
@@ -73,7 +74,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     /**
      * @return array[]
      */
-    public function getAddOrderItemsToCartDataProvider(): array
+    public static function getAddOrderItemsToCartDataProvider(): array
     {
         return [
             [

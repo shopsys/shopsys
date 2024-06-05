@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\ConstantVisibilityRequiredSniff;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
@@ -20,7 +21,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     /**
      * {@inheritdoc}
      */
-    public function getWrongFiles(): iterable
+    public static function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/SingleValue.php'];
 
@@ -38,7 +39,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     /**
      * {@inheritdoc}
      */
-    public function getCorrectFiles(): iterable
+    public static function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/correct/Annotation.php'];
 
@@ -55,5 +56,23 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
         yield [__DIR__ . '/correct/SingleValueAfterMethodWithoutNamespace.php'];
 
         yield [__DIR__ . '/correct/SingleValueWithoutNamespace.php'];
+    }
+
+    /**
+     * @param string $fileToTest
+     */
+    #[DataProvider('getWrongFiles')]
+    public function testWrongFiles(string $fileToTest): void
+    {
+        $this->runWrongFilesTest($fileToTest);
+    }
+
+    /**
+     * @param string $fileToTest
+     */
+    #[DataProvider('getCorrectFiles')]
+    public function testCorrectFiles(string $fileToTest): void
+    {
+        $this->runCorrectFilesTest($fileToTest);
     }
 }

@@ -29,4 +29,4 @@ yarn-error.log
 /assets/public/admin_svg.less
 /assets/public/frontend_svg.less
 
-/.phpunit.result.cache
+/.phpunit.cache

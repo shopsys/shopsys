@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Category;
 
 use App\Model\Category\Category;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -55,9 +56,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedCategory->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testCreateCategoryWithDifferentVisibilityOnDomains()
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -74,9 +73,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertFalse($refreshedCategory->isEnabled(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testCreateCategoryDomainWithData()
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -101,9 +98,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertNull($refreshedCategory->getSeoH1(self::SECOND_DOMAIN_ID));
     }
 
-    /**
-     * @group singledomain
-     */
+    #[Group('singledomain')]
     public function testCreateCategoryDomainWithDataForSingleDomain()
     {
         $categoryData = $this->categoryDataFactory->create();

@@ -18,9 +18,9 @@ class PaymentTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $this->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY, Payment::class);
-
         parent::setUp();
+
+        $this->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY, Payment::class);
     }
 
     public function testPaymentNameByUuid(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Administrator;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
@@ -13,7 +14,7 @@ use Tests\FrameworkBundle\Unit\TestCase;
 
 class AdministratorTest extends TestCase
 {
-    public function administratorRolesDataProvider()
+    public static function administratorRolesDataProvider()
     {
         return [
             [
@@ -28,10 +29,10 @@ class AdministratorTest extends TestCase
     }
 
     /**
-     * @dataProvider administratorRolesDataProvider
      * @param array $roles
      * @param string $expectedRole
      */
+    #[DataProvider('administratorRolesDataProvider')]
     public function testSetAdministratorRolesWithMandatoryRole(array $roles, string $expectedRole)
     {
         $administratorData = new AdministratorData();

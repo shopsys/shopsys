@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -24,7 +25,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class TransportPriceCalculationTest extends TestCase
 {
-    public function calculateIndependentPriceProvider()
+    public static function calculateIndependentPriceProvider()
     {
         return [
             [
@@ -45,13 +46,13 @@ class TransportPriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider calculateIndependentPriceProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      */
+    #[DataProvider('calculateIndependentPriceProvider')]
     public function testCalculateIndependentPrice(
         int $inputPriceType,
         Money $inputPrice,
@@ -60,7 +61,7 @@ class TransportPriceCalculationTest extends TestCase
         Money $priceWithVat,
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType'])
+            ->onlyMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock

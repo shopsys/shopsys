@@ -14,6 +14,7 @@ use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -59,9 +60,9 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
     /**
-     * @dataProvider UsablePromoCodeDataProvider
      * @param string $promoCodeCode
      */
+    #[DataProvider('usablePromoCodeDataProvider')]
     public function testApplyPromoCode(string $promoCodeCode): void
     {
         $promoCode = $this->getReferenceForDomain($promoCodeCode, 1, AppPromoCode::class);
@@ -95,7 +96,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
     /**
      * @return iterable
      */
-    public function usablePromoCodeDataProvider(): iterable
+    public static function usablePromoCodeDataProvider(): iterable
     {
         yield 'valid promo code' => [PromoCodeDataFixture::VALID_PROMO_CODE];
 
@@ -242,10 +243,10 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider getInvalidPromoCodesDataProvider
      * @param string|null $promoCodeReferenceName
      * @param string $expectedError
      */
+    #[DataProvider('getInvalidPromoCodesDataProvider')]
     public function testApplyInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError): void
     {
         $promoCodeCode = 'non-existing-promo-code';
@@ -272,7 +273,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
     /**
      * @return iterable
      */
-    public function getInvalidPromoCodesDataProvider(): iterable
+    public static function getInvalidPromoCodesDataProvider(): iterable
     {
         yield [null, PromoCode::INVALID_ERROR];
 

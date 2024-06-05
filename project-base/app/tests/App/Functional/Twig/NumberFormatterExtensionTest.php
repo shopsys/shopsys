@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Twig;
 
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -19,7 +20,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
      */
     private AdministrationFacade $administrationFacade;
 
-    public function formatNumberDataProvider()
+    public static function formatNumberDataProvider()
     {
         return [
             ['input' => '12', 'locale' => 'cs', 'result' => '12'],
@@ -41,16 +42,16 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
     }
 
     /**
-     * @dataProvider formatNumberDataProvider
      * @param mixed $input
      * @param mixed $locale
      * @param mixed $result
      */
+    #[DataProvider('formatNumberDataProvider')]
     public function testFormatNumber($input, $locale, $result)
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getLocale'])
+            ->onlyMethods(['getLocale'])
             ->getMock();
         $localizationMock->expects($this->any())->method('getLocale')
             ->willReturn($locale);

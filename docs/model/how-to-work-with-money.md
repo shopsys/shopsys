@@ -400,7 +400,7 @@ class MyTest extends FunctionalTestCase
     /**
      * @return array
      */
-    public function customerLoyaltyCreditAmountProvider(): array
+    public static function customerLoyaltyCreditAmountProvider(): array
     {
         return [
             [self::CUSTOMER_ID_WITHOUT_LOYALTY_CREDIT, Money::zero()],
@@ -410,10 +410,10 @@ class MyTest extends FunctionalTestCase
     }
 
     /**
-     * @dataProvider customerLoyaltyCreditAmountProvider
      * @param int $customerId
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedCreditAmount
      */
+     #[DataProvider('customerLoyaltyCreditAmountProvider')]
     public function testCustomerLoyaltyCreditAmount(int $customerId, Money $expectedCreditAmount) {
         $customer = $this->getCustomerFromDatabase($customerId);
 

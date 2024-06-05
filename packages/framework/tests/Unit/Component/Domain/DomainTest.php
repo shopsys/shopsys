@@ -63,7 +63,7 @@ class DomainTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $requestMock = $this->getMockBuilder(Request::class)
-            ->setMethods(['getSchemeAndHttpHost'])
+            ->onlyMethods(['getSchemeAndHttpHost'])
             ->getMock();
         $requestMock
             ->expects($this->atLeastOnce())

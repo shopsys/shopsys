@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Twig;
 
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,7 +24,7 @@ class DateTimeFormatterExtensionTest extends TestCase
     /**
      * @return array
      */
-    public function formatDateDataProvider(): array
+    public static function formatDateDataProvider(): array
     {
         return [
             ['input' => new DateTime('2015-04-08'), 'locale' => 'cs', 'result' => '8. 4. 2015'],
@@ -35,11 +36,11 @@ class DateTimeFormatterExtensionTest extends TestCase
     }
 
     /**
-     * @dataProvider formatDateDataProvider
      * @param mixed $input
      * @param mixed $locale
      * @param mixed $result
      */
+    #[DataProvider('formatDateDataProvider')]
     public function testFormatDate($input, $locale, $result): void
     {
         $localizationMock = $this->createLocalizationMock($locale);
@@ -58,7 +59,7 @@ class DateTimeFormatterExtensionTest extends TestCase
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getLocale'])
+            ->onlyMethods(['getLocale'])
             ->getMock();
 
         $localizationMock->expects($this->any())->method('getLocale')

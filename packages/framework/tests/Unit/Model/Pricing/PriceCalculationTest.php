@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -15,7 +16,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PriceCalculationTest extends TestCase
 {
-    public function applyVatPercentProvider()
+    public static function applyVatPercentProvider()
     {
         return [
             [
@@ -42,11 +43,11 @@ class PriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider applyVatPercentProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedPriceWithVat
      */
+    #[DataProvider('applyVatPercentProvider')]
     public function testApplyVatPercent(
         Money $priceWithoutVat,
         string $vatPercent,
@@ -64,7 +65,7 @@ class PriceCalculationTest extends TestCase
         $this->assertThat($actualPriceWithVat, new IsMoneyEqual($expectedPriceWithVat));
     }
 
-    public function getVatAmountByPriceWithVatProvider()
+    public static function getVatAmountByPriceWithVatProvider()
     {
         return [
             [
@@ -73,24 +74,24 @@ class PriceCalculationTest extends TestCase
                 'expectedVatAmount' => Money::create(0),
             ],
             [
-                'priceWithoutVat' => Money::create(100),
+                'priceWithVat' => Money::create(100),
                 'vatPercent' => '0',
-                'expectedPriceWithVat' => Money::create(0),
+                'expectedVatAmount' => Money::create(0),
             ],
             [
-                'priceWithoutVat' => Money::create(100),
+                'priceWithVat' => Money::create(100),
                 'vatPercent' => '21',
-                'expectedPriceWithVat' => Money::create('17.36'),
+                'expectedVatAmount' => Money::create('17.36'),
             ],
         ];
     }
 
     /**
-     * @dataProvider getVatAmountByPriceWithVatProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedVatAmount
      */
+    #[DataProvider('getVatAmountByPriceWithVatProvider')]
     public function testGetVatAmountByPriceWithVat(
         Money $priceWithVat,
         string $vatPercent,

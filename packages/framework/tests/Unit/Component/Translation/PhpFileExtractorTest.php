@@ -9,9 +9,8 @@ use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use PhpParser\Lexer;
-use PhpParser\Parser\Multiple;
-use PhpParser\Parser\Php5;
-use PhpParser\Parser\Php7;
+use PhpParser\ParserFactory;
+use PhpParser\PhpVersion;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory;
@@ -67,7 +66,8 @@ class PhpFileExtractorTest extends TestCase
         $extractor = $this->getExtractor();
 
         $lexer = new Lexer();
-        $parser = new Multiple([new Php7($lexer), new Php5($lexer)]);
+        $parserFactory = new ParserFactory();
+        $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.3'));
         $ast = $parser->parse(file_get_contents($file->getPathname()));
 
         $catalogue = new MessageCatalogue();
