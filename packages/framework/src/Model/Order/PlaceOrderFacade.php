@@ -90,7 +90,7 @@ class PlaceOrderFacade
             $orderData->status = $status;
         }
 
-        $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
+        $orderNumber = $this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
 
         $order = $this->orderFactory->create(

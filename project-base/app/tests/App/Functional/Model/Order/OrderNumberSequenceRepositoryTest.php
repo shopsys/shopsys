@@ -14,7 +14,7 @@ class OrderNumberSequenceRepositoryTest extends TransactionFunctionalTestCase
      */
     private OrderNumberSequenceRepository $orderNumberSequenceRepository;
 
-    public function testGetNextNumber()
+    public function testGetNextNumber(): void
     {
         $numbers = [];
 
@@ -24,6 +24,6 @@ class OrderNumberSequenceRepositoryTest extends TransactionFunctionalTestCase
 
         $uniqueNumbers = array_unique($numbers);
 
-        $this->assertSame(count($numbers), count($uniqueNumbers));
+        $this->assertCount(count($numbers), $uniqueNumbers);
     }
 }

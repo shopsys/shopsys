@@ -864,6 +864,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### refactor the place order process ([#3084](https://github.com/shopsys/shopsys/pull/3084))
 
 -   see the specialized upgrade note in [upgrade-order-processing.md](./upgrade-order-processing.md)
+-   see #project-base-diff to update your project
 
 #### rename user-consent related code accordingly ([#3181](https://github.com/shopsys/shopsys/pull/3181))
 
@@ -1016,6 +1017,14 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
     -   `ProductInputPriceFacade::replaceBatchVatAndRecalculateInputPrices()` logic
     -   `Product::getProductDomains()` method
+-   see #project-base-diff to update your project
+
+#### improve OrderSequence related types ([#3206](https://github.com/shopsys/shopsys/pull/3206))
+
+-   class `Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactory` was removed
+-   interface `Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceFactoryInterface` was removed
+-   method `Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository::getNextNumber()` now returns `string`
+-   class `Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository` is now strictly typed
 -   see #project-base-diff to update your project
 
 ### Storefront
