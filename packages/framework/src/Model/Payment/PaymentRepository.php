@@ -149,7 +149,7 @@ class PaymentRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Payment\Payment[]
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig): array
     {
