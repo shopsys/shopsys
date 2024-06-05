@@ -31,7 +31,7 @@ class NumberFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -54,11 +54,11 @@ class NumberFormatterExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed $number
+     * @param string $number
      * @param string|null $locale
      * @return string
      */
-    public function formatNumber($number, $locale = null)
+    public function formatNumber(string $number, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
             'locale' => $this->getLocale($locale),
@@ -71,12 +71,12 @@ class NumberFormatterExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed $number
+     * @param string $number
      * @param int $minimumFractionDigits
      * @param string|null $locale
      * @return string
      */
-    public function formatDecimalNumber($number, $minimumFractionDigits, $locale = null)
+    public function formatDecimalNumber(string $number, int $minimumFractionDigits, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
             'locale' => $this->getLocale($locale),
@@ -89,11 +89,11 @@ class NumberFormatterExtension extends AbstractExtension
     }
 
     /**
-     * @param mixed $number
+     * @param string $number
      * @param string|null $locale
      * @return string
      */
-    public function formatPercent($number, $locale = null)
+    public function formatPercent(string $number, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
             'locale' => $this->getLocale($locale),
@@ -102,14 +102,14 @@ class NumberFormatterExtension extends AbstractExtension
             'maximum_fraction_digits' => static::MAXIMUM_FRACTION_DIGITS,
         ]);
 
-        return $numberFormatter->format((string)($number / 100));
+        return $numberFormatter->format((string)((float)$number / 100));
     }
 
     /**
      * @param string|null $locale
      * @return string
      */
-    protected function getLocale($locale = null)
+    protected function getLocale(?string $locale = null): string
     {
         if ($locale !== null) {
             return $locale;
@@ -125,16 +125,16 @@ class NumberFormatterExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'number_formatter_extension';
     }
 
     /**
-     * @param mixed $number
+     * @param string $number
      * @return bool
      */
-    public function isInteger($number)
+    public function isInteger(string $number): bool
     {
         return is_numeric($number) && (string)(int)$number === (string)$number;
     }

@@ -231,7 +231,7 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         return sprintf(
             '%s %s - %s %s %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-            $this->numberFormatterExtension->formatPercent(-10, $firstDomainLocale),
+            $this->numberFormatterExtension->formatPercent('-10', $firstDomainLocale),
             t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
