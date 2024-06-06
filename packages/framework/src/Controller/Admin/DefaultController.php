@@ -185,11 +185,11 @@ class DefaultController extends AdminBaseController
                 );
             }
 
-            if ($this->setting->getForDomain(Setting::COOKIES_ARTICLE_ID, $domainConfig->getId()) === null) {
+            if ($this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->addErrorFlashTwig(
-                    t('<a href="{{ url }}">Cookies information article for domain {{ domainName }} is not set.</a>'),
+                    t('<a href="{{ url }}">User consent policy article for domain {{ domainName }} is not set.</a>'),
                     [
-                        'url' => $this->generateUrl('admin_cookies_setting'),
+                        'url' => $this->generateUrl('admin_userconsentpolicy_setting'),
                         'domainName' => $domainConfig->getName(),
                     ],
                 );

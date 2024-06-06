@@ -271,15 +271,6 @@ msgstr ""
 msgid "Content-Security-Policy header setting"
 msgstr ""
 
-msgid "Cookies article setting - full"
-msgstr ""
-
-msgid "Cookies article setting - view"
-msgstr ""
-
-msgid "Cookies information"
-msgstr ""
-
 msgid "Copy administrator role group"
 msgstr ""
 
@@ -1334,6 +1325,15 @@ msgid "Upload image for mobile devices"
 msgstr ""
 
 msgid "Upload new image"
+msgstr ""
+
+msgid "User consent policy"
+msgstr ""
+
+msgid "User consent policy article setting - full"
+msgstr ""
+
+msgid "User consent policy article setting - view"
 msgstr ""
 
 msgid "User translation"

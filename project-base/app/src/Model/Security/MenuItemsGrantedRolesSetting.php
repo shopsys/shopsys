@@ -94,8 +94,8 @@ class MenuItemsGrantedRolesSetting
             'marketing' . self::MENU_ITEM_PATH_SEPARATOR . 'legal' . self::MENU_ITEM_PATH_SEPARATOR . 'personal_data' => [
                 Roles::ROLE_PERSONAL_DATA_VIEW,
             ],
-            'marketing' . self::MENU_ITEM_PATH_SEPARATOR . 'legal' . self::MENU_ITEM_PATH_SEPARATOR . 'cookies' => [
-                Roles::ROLE_COOKIES_VIEW,
+            'marketing' . self::MENU_ITEM_PATH_SEPARATOR . 'legal' . self::MENU_ITEM_PATH_SEPARATOR . 'user-consent-policy' => [
+                Roles::ROLE_USER_CONSENT_POLICY_VIEW,
             ],
             'administrators' => [
                 Roles::ROLE_ADMINISTRATOR_VIEW,

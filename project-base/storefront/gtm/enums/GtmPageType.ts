@@ -18,7 +18,7 @@ export enum GtmPageType {
     payment_fail = 'payment fail',
     payment_success = 'payment success',
     not_found = '404',
-    cookie_consent = 'cookie consent',
+    user_consent = 'user consent',
     contact = 'contact',
     product_comparison = 'product comparison',
     other = 'other',

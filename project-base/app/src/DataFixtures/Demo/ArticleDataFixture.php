@@ -16,18 +16,18 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 class ArticleDataFixture extends AbstractReferenceFixture
 {
-    public const ARTICLE_TERMS_AND_CONDITIONS = 'article_terms_and_conditions';
-    public const ARTICLE_PRIVACY_POLICY = 'article_privacy_policy';
-    public const ARTICLE_COOKIES = 'article_cookies';
+    public const string ARTICLE_TERMS_AND_CONDITIONS = 'article_terms_and_conditions';
+    public const string ARTICLE_PRIVACY_POLICY = 'article_privacy_policy';
+    public const string USER_CONSENT_POLICY_ARTICLE = 'article_user_consent_policy';
 
-    private const ATTRIBUTE_NAME_KEY = 'name';
-    private const ATTRIBUTE_PLAIN_NAME_KEY = 'plainName';
-    private const ATTRIBUTE_TEXT_KEY = 'text';
-    private const ATTRIBUTE_PLACEMENT_KEY = 'placement';
-    private const ATTRIBUTE_SEO_H1_KEY = 'seoH1';
-    private const ATTRIBUTE_SEO_TITLE_KEY = 'soeTitle';
-    private const ATTRIBUTE_SEO_META_DESCRIPTION_KEY = 'soeMetaDescription';
-    private const REFERENCE_NAME_KEY = 'referenceName';
+    private const string ATTRIBUTE_NAME_KEY = 'name';
+    private const string ATTRIBUTE_PLAIN_NAME_KEY = 'plainName';
+    private const string ATTRIBUTE_TEXT_KEY = 'text';
+    private const string ATTRIBUTE_PLACEMENT_KEY = 'placement';
+    private const string ATTRIBUTE_SEO_H1_KEY = 'seoH1';
+    private const string ATTRIBUTE_SEO_TITLE_KEY = 'soeTitle';
+    private const string ATTRIBUTE_SEO_META_DESCRIPTION_KEY = 'soeMetaDescription';
+    private const string REFERENCE_NAME_KEY = 'referenceName';
     private const string UUID_NAMESPACE = '008cf1fb-218e-45c2-ae6e-02f9324948ba';
 
     /**
@@ -45,7 +45,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $data = $this->getDataForArticles($domainConfig->getLocale());
@@ -152,8 +152,8 @@ class ArticleDataFixture extends AbstractReferenceFixture
                 self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_NONE,
                 self::REFERENCE_NAME_KEY => self::ARTICLE_PRIVACY_POLICY,
             ], [
-                self::ATTRIBUTE_PLAIN_NAME_KEY => 'Information about cookies',
-                self::ATTRIBUTE_NAME_KEY => t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                self::ATTRIBUTE_PLAIN_NAME_KEY => 'User consent policy',
+                self::ATTRIBUTE_NAME_KEY => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 self::ATTRIBUTE_TEXT_KEY => t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],
@@ -161,7 +161,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                     $locale,
                 ),
                 self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_NONE,
-                self::REFERENCE_NAME_KEY => self::ARTICLE_COOKIES,
+                self::REFERENCE_NAME_KEY => self::USER_CONSENT_POLICY_ARTICLE,
             ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'Article for search testing',
                 self::ATTRIBUTE_NAME_KEY => t('Article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -214,12 +214,12 @@ class ArticleDataFixture extends AbstractReferenceFixture
         }
     }
 
-    private function changeDataForSecondDomain()
+    private function changeDataForSecondDomain(): void
     {
-        $cookiesArticle = $this->getReferenceForDomain(self::ARTICLE_COOKIES, Domain::SECOND_DOMAIN_ID, Article::class);
-        $cookiesArticleData = $this->articleDataFactory->createFromArticle($cookiesArticle);
-        $cookiesArticleData->placement = Article::PLACEMENT_FOOTER_2;
+        $userConsentPolicyArticle = $this->getReferenceForDomain(self::USER_CONSENT_POLICY_ARTICLE, Domain::SECOND_DOMAIN_ID, Article::class);
+        $userConsentPolicyArticleData = $this->articleDataFactory->createFromArticle($userConsentPolicyArticle);
+        $userConsentPolicyArticleData->placement = Article::PLACEMENT_FOOTER_2;
 
-        $this->articleFacade->edit($cookiesArticle->getId(), $cookiesArticleData);
+        $this->articleFacade->edit($userConsentPolicyArticle->getId(), $userConsentPolicyArticleData);
     }
 }

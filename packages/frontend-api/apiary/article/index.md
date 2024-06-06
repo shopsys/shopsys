@@ -2,7 +2,7 @@
 
 :[article-detail](methods/article-detail.md)
 
-:[information-about-cookies-article](methods/information-about-cookies-article.md)
+:[user-consent-policy-article](methods/user-consent-policy-article.md)
 
 :[list-of-articles](methods/list-of-articles.md)
 

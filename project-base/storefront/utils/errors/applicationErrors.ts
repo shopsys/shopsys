@@ -29,6 +29,10 @@ const ApplicationErrors = {
     'wishlist-product-already-in-list': 'flash-message',
     'wishlist-product-not-in-list': 'flash-message',
     'unable-to-generate-breadcrumb-items': 'no-flash-message',
+    'article-not-found': 'flash-message',
+    'article-not-found-terms-and-conditions': 'no-flash-message',
+    'article-not-found-privacy-policy': 'no-flash-message',
+    'article-not-found-user-consent-policy': 'no-flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {

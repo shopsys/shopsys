@@ -516,15 +516,6 @@ Returns category filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cookiesArticle</strong></td>
-<td valign="top"><a href="#articlesite">ArticleSite</a></td>
-<td>
-
-Returns information about cookies article
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>countries</strong></td>
 <td valign="top">[<a href="#country">Country</a>!]!</td>
 <td>
@@ -1159,6 +1150,15 @@ Returns available transport methods based on the current cart state
 <td colspan="2" align="right" valign="top">cartUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>userConsentPolicyArticle</strong></td>
+<td valign="top"><a href="#articlesite">ArticleSite</a></td>
+<td>
+
+Returns User consent policy article
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>Variant</strong></td>

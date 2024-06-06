@@ -864,6 +864,24 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### refactor the place order process ([#3084](https://github.com/shopsys/shopsys/pull/3084))
 
 -   see the specialized upgrade note in [upgrade-order-processing.md](./upgrade-order-processing.md)
+
+#### rename user-consent related code accordingly ([#3181](https://github.com/shopsys/shopsys/pull/3181))
+
+-   setting values in DB was renamed from `cookiesArticleId` to `userConsentPolicyArticleId` (via migration `Version20240527121326`)
+-   controller `Shopsys\FrameworkBundle\Controller\Admin\CookiesController` was renamed to `Shopsys\FrameworkBundle\Controller\Admin\UserConsentPolicyController`
+    -   route `/cookies/setting/` (`admin_cookies_setting`) was changed to `/user-consent-policy/setting/` (`admin_userconsentpolicy_setting`)
+    -   template `@ShopsysFramework/Admin/Content/Cookies/setting.html.twig` was moved to `@ShopsysFramework/Admin/Content/UserConsentPolicy/setting.html.twig`
+-   form type `Shopsys\FrameworkBundle\Form\Admin\Cookies\CookiesSettingFormType` was renamed to `Shopsys\FrameworkBundle\Form\Admin\UserConsentPolicy\UserConsentPolicySettingFormType`
+-   constant `Shopsys\FrameworkBundle\Component\Setting\Setting::COOKIES_ARTICLE_ID` was renamed to `Shopsys\FrameworkBundle\Component\Setting\Setting::USER_CONSENT_POLICY_ARTICLE_ID`
+-   class `Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade` was renamed to `Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade`
+    -   class no longer accepts `$environment` as a first argument in constructor
+    -   method `isCookiesConsentGiven()` was removed without a replacement
+    -   class is now strictly typed
+-   class `Shopsys\FrameworkBundle\Twig\CookiesExtension` was removed
+-   administrator roles `ROLE_COOKIES_FULL` and `ROLE_COOKIES_VIEW` were renamed to `ROLE_USER_CONSENT_POLICY_FULL` and `ROLE_USER_CONSENT_POLICY_VIEW`
+    -   roles are renamed in migration `Version20240527121326`
+-   graphql query `cookiesArticleQuery` was renamed to `userConsentPolicyArticleQuery`
+    -   method `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery::cookiesArticleQuery` was renamed to `userConsentPolicyArticleQuery`
 -   see #project-base-diff to update your project
 
 #### fix search testing blog article demo data ([#3182](https://github.com/shopsys/shopsys/pull/3182))
@@ -1190,3 +1208,15 @@ We want to implement more usable UI design which will be better base for upcomin
 -   all persist store slices should now expose default state as a constant
 -   docs regarding store management (`store-management.md`) were improved, so make sure that you implement changes to store based on them
 -   remember to update the `DEFAULT_PERSIST_STORE_STATE` constant in your cypress tests to suit the new version of persist store
+
+#### rename user-consent related code accordingly ([#3181](https://github.com/shopsys/shopsys/pull/3181))
+
+-   route /cookie-consent was renamed to /user-consent
+-   components and translations were also renamed/rewritten
+-   you should follow this naming convention in your app as well
+-   if you have any other special articles (other than t&c, privacy policy, user consent), you should correctly handle their error user codes
+-   if you want to use a different approach to non existent special articles (other than the one described in commit messages), be sure to modify the logic, as now
+    -   if special articles are not found, error is now not thrown
+    -   if t&c and privacy policy articles are not found, the text where they are used are the same, but without the link
+    -   if user consent article is not found, we do not display the footer link to the user consent update page, the consent update bar (`UserConsent.tsx`), and the consent update page returns 404
+    -   `article-not-found` error user code now displays a better message (not unknown error)

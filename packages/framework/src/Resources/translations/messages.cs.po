@@ -37,9 +37,6 @@ msgstr "-- Vyberte název převodu --"
 msgid "0"
 msgstr ""
 
-msgid "<a href=\"{{ url }}\">Cookies information article for domain {{ domainName }} is not set.</a>"
-msgstr "<a href=\"{{ url }}\">Není nastaven článek informace o cookies pro doménu {{ domainName }}.</a>"
-
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastavena výchozí jednotka.</a>"
 
@@ -54,6 +51,9 @@ msgstr "<a href=\"{{ url }}\">Není nastaven článek obchodní podmínky pro do
 
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
 msgstr "<a href=\"{{ url }}\">Neexistují žádné jednotky, musíte nějakou vytvořit.</a>"
+
+msgid "<a href=\"{{ url }}\">User consent policy article for domain {{ domainName }} is not set.</a>"
+msgstr "<a href=\"{{ url }}\">Není nastaven článek správa osobních údajů pro doménu {{ domainName }}.</a>"
 
 msgid "Accessories"
 msgstr "Příslušenství"
@@ -241,11 +241,11 @@ msgstr "Plocha"
 msgid "Article"
 msgstr "Článek"
 
-msgid "Article \"%name%\" set for displaying cookies information. This setting will be lost. Do you really want to delete it?"
-msgstr "Článek \"%name%\" je nastaven pro zobrazení informací o cookies. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
-
 msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
 msgstr "Článek \"%name%\" je nastaven pro zobrazení právních podmínek. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
+
+msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
+msgstr "Článek \"%name%\" je nastaven pro zobrazení informací o správě osobních údajů. Toto nastavení bude ztraceno. Opravdu si jej přejete smazat?"
 
 msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Byl vytvořen článek <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
@@ -442,9 +442,6 @@ msgstr "Změny"
 msgid "Choose"
 msgstr "Vybrat"
 
-msgid "Choose article, which will provide information about how this pages uses cookies."
-msgstr "Vyberte článek, který bude sloužit jako informace o tom, jak tyto stránky používají cookies."
-
 msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
 msgstr "Vyberte článek, který bude sloužit jako zásady ochrany osobních údajů, se kterými zákazník musí souhlasit při vytváření objednávky nebo registraci uživatele."
 
@@ -459,6 +456,9 @@ msgstr "Vyberte produkt"
 
 msgid "Choose replacement"
 msgstr "Vyberte náhradu"
+
+msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgstr "Vyberte článek, který poskytuje informace o tom, jak je na této doméně získáván, spravován a odvoláván souhlas se správou osobních údajů."
 
 msgid "Chosen payment name"
 msgstr "Název zvolené platby"
@@ -537,15 +537,6 @@ msgstr "Napište nám"
 
 msgid "Content"
 msgstr "Obsah"
-
-msgid "Cookies information"
-msgstr "Informace o cookies"
-
-msgid "Cookies information settings"
-msgstr "Nastavení informací o cookies"
-
-msgid "Cookies information settings modified."
-msgstr "Bylo upraveno nastavení informací o cookies."
 
 msgid "Copied to clipboard!"
 msgstr "Zkopírováno do schránky!"
@@ -2952,6 +2943,18 @@ msgstr "Využito: %currentLength% znaků. Doporučeno max. %recommendedLength%"
 
 msgid "User"
 msgstr "Uživatel"
+
+msgid "User consent policy"
+msgstr "Správa osobních údajů"
+
+msgid "User consent policy article"
+msgstr "Článek o správě osobních údajů"
+
+msgid "User consent policy settings"
+msgstr "Nastavení správy osobních údajů"
+
+msgid "User consent policy settings modified."
+msgstr "Nastavení správy osobních údajů bylo uloženo"
 
 msgid "Username"
 msgstr "Uživatelské jméno"

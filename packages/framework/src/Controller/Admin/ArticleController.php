@@ -16,8 +16,8 @@ use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
-use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +33,7 @@ class ArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
+     * @param \Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade $userConsentPolicyFacade
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
@@ -44,7 +44,7 @@ class ArticleController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
-        protected readonly CookiesFacade $cookiesFacade,
+        protected readonly UserConsentPolicyFacade $userConsentPolicyFacade,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
@@ -201,9 +201,9 @@ class ArticleController extends AdminBaseController
                 'Article "%name%" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?',
                 ['%name%' => $article->getName()],
             );
-        } elseif ($this->cookiesFacade->isArticleUsedAsCookiesInfo($article)) {
+        } elseif ($this->userConsentPolicyFacade->isArticleUsedAsUserConsentPolicyArticle($article)) {
             $message = t(
-                'Article "%name%" set for displaying cookies information. This setting will be lost. Do you really want to delete it?',
+                'Article "%name%" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?',
                 ['%name%' => $article->getName()],
             );
         } else {

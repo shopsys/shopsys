@@ -37,9 +37,6 @@ msgstr ""
 msgid "0"
 msgstr ""
 
-msgid "<a href=\"{{ url }}\">Cookies information article for domain {{ domainName }} is not set.</a>"
-msgstr ""
-
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr ""
 
@@ -53,6 +50,9 @@ msgid "<a href=\"{{ url }}\">Terms and conditions article for domain {{ domainNa
 msgstr ""
 
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
+msgstr ""
+
+msgid "<a href=\"{{ url }}\">User consent policy article for domain {{ domainName }} is not set.</a>"
 msgstr ""
 
 msgid "Accessories"
@@ -241,10 +241,10 @@ msgstr ""
 msgid "Article"
 msgstr ""
 
-msgid "Article \"%name%\" set for displaying cookies information. This setting will be lost. Do you really want to delete it?"
+msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
 msgstr ""
 
-msgid "Article \"%name%\" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?"
+msgid "Article \"%name%\" set for displaying user consent policy information. This setting will be lost. Do you really want to delete it?"
 msgstr ""
 
 msgid "Article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
@@ -442,9 +442,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-msgid "Choose article, which will provide information about how this pages uses cookies."
-msgstr ""
-
 msgid "Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user."
 msgstr ""
 
@@ -458,6 +455,9 @@ msgid "Choose product"
 msgstr ""
 
 msgid "Choose replacement"
+msgstr ""
+
+msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
 msgstr ""
 
 msgid "Chosen payment name"
@@ -536,15 +536,6 @@ msgid "Contact us"
 msgstr ""
 
 msgid "Content"
-msgstr ""
-
-msgid "Cookies information"
-msgstr ""
-
-msgid "Cookies information settings"
-msgstr ""
-
-msgid "Cookies information settings modified."
 msgstr ""
 
 msgid "Copied to clipboard!"
@@ -2951,6 +2942,18 @@ msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
 msgstr ""
 
 msgid "User"
+msgstr ""
+
+msgid "User consent policy"
+msgstr ""
+
+msgid "User consent policy article"
+msgstr ""
+
+msgid "User consent policy settings"
+msgstr ""
+
+msgid "User consent policy settings modified."
 msgstr ""
 
 msgid "Username"

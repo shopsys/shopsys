@@ -1664,8 +1664,6 @@ type Query {
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
-  "Returns information about cookies article"
-  cookiesArticle: ArticleSite
   "Returns available countries"
   countries: [Country!]!
   "Returns currently logged in customer user"
@@ -1756,6 +1754,8 @@ type Query {
   transport(uuid: Uuid!): Transport
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
+  "Returns User consent policy article"
+  userConsentPolicyArticle: ArticleSite
   Variant: Variant
 }
 
