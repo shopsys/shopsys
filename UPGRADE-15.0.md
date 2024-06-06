@@ -1000,6 +1000,24 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fixer `RedundantMarkDownTrailingSpacesFixer` was removed as markdown files are formatted by prettier
 -   see #project-base-diff to update your project
 
+#### fix VatDeletionCronModule ([#3195](https://github.com/shopsys/shopsys/pull/3195))
+
+-   `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator` class was removed
+-   `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                // ...
+                protected readonly ProductRepository $productRepository,
+        -       protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator,
+                protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        ```
+    -   the class is now strictly typed
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework package:
+    -   `ProductInputPriceFacade::replaceBatchVatAndRecalculateInputPrices()` logic
+    -   `Product::getProductDomains()` method
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

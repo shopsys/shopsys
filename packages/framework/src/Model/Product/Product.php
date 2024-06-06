@@ -890,4 +890,12 @@ class Product extends AbstractTranslatableEntity
     {
         return $this->weight;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductDomain[]
+     */
+    public function getProductDomains(): array
+    {
+        return $this->domains->getValues();
+    }
 }

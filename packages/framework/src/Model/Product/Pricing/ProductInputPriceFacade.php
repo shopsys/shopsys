@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDisp
 
 class ProductInputPriceFacade
 {
-    protected const BATCH_SIZE = 50;
+    protected const int BATCH_SIZE = 50;
 
     /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
@@ -25,7 +25,6 @@ class ProductInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator $productInputPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
@@ -33,7 +32,6 @@ class ProductInputPriceFacade
         protected readonly PricingSetting $pricingSetting,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
-        protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
@@ -42,7 +40,7 @@ class ProductInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
-    public function getManualInputPricesDataIndexedByPricingGroupId(Product $product)
+    public function getManualInputPricesDataIndexedByPricingGroupId(Product $product): array
     {
         $manualInputPricesDataByPricingGroupId = [];
 
@@ -59,7 +57,7 @@ class ProductInputPriceFacade
     /**
      * @return bool
      */
-    public function replaceBatchVatAndRecalculateInputPrices()
+    public function replaceBatchVatAndRecalculateInputPrices(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productRepository->getProductIteratorForReplaceVat();
@@ -78,22 +76,13 @@ class ProductInputPriceFacade
             /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
             $product = $row[0];
 
-            $productManualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
-            $inputPriceType = $this->pricingSetting->getInputPriceType();
-
-            foreach ($productManualInputPrices as $productManualInputPrice) {
-                $domainId = $productManualInputPrice->getPricingGroup()->getDomainId();
+            foreach ($product->getProductDomains() as $productDomain) {
+                $domainId = $productDomain->getDomainId();
                 $newVat = $product->getVatForDomain($domainId)->getReplaceWith();
 
                 if ($newVat === null) {
                     continue;
                 }
-
-                $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
-                    $productManualInputPrice,
-                    $inputPriceType,
-                    $newVat->getPercent(),
-                );
 
                 $product->changeVatForDomain($newVat, $domainId);
                 $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());

@@ -38,6 +38,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  * @method setDomains(\App\Model\Product\ProductData $productData)
+ * @method \App\Model\Product\ProductDomain[] getProductDomains()
  */
 class Product extends BaseProduct
 {
@@ -288,14 +289,6 @@ class Product extends BaseProduct
     public function getProductFileNameByType(int $domainId, string $type): string
     {
         return $type . '_' . $this->getId() . '_' . $domainId . self::PDF_SUFFIX;
-    }
-
-    /**
-     * @return \App\Model\Product\ProductDomain[]
-     */
-    public function getProductDomains(): array
-    {
-        return $this->domains->getValues();
     }
 
     /**
