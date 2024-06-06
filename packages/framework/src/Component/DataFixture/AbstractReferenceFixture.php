@@ -31,7 +31,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @required
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      */
-    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade)
+    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade): void
     {
         $this->persistentReferenceFacade = $persistentReferenceFacade;
     }
@@ -40,18 +40,18 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param string $name
      * @param object $object
      */
-    public function addReference($name, $object)
+    public function addReference(string $name, object $object): void
     {
         $this->persistentReferenceFacade->persistReference($name, $object);
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $name
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    public function getReference($name, ?string $entityClassName = null)
+    public function getReference(string $name, ?string $entityClassName = null): object
     {
         return $this->persistentReferenceFacade->getReference($name, $entityClassName);
     }
@@ -61,19 +61,19 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param object $object
      * @param int $domainId
      */
-    public function addReferenceForDomain(string $name, $object, int $domainId): void
+    public function addReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $this->persistentReferenceFacade->persistReferenceForDomain($name, $object, $domainId);
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $name
      * @param int $domainId
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    public function getReferenceForDomain(string $name, int $domainId, ?string $entityClassName = null)
+    public function getReferenceForDomain(string $name, int $domainId, ?string $entityClassName = null): object
     {
         return $this->persistentReferenceFacade->getReferenceForDomain($name, $domainId, $entityClassName);
     }

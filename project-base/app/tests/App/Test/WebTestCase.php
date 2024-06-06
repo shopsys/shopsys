@@ -87,18 +87,18 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $referenceName
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    protected function getReference(string $referenceName, ?string $entityClassName = null)
+    protected function getReference(string $referenceName, ?string $entityClassName = null): object
     {
         return $this->persistentReferenceFacade->getReference($referenceName, $entityClassName);
     }
 
     /**
-     * @template T
+     * @template T of object
      * @param string $referenceName
      * @param int $domainId
      * @param class-string<T>|null $entityClassName
@@ -108,7 +108,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         string $referenceName,
         int $domainId,
         ?string $entityClassName = null,
-    ) {
+    ): object {
         return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId, $entityClassName);
     }
 
