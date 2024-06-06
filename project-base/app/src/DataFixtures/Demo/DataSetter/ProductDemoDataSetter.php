@@ -50,16 +50,14 @@ class ProductDemoDataSetter
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param string|null $vatReference
+     * @param string $vatReference
      */
-    public function setVat(ProductData $productData, ?string $vatReference): void
+    public function setVat(ProductData $productData, string $vatReference): void
     {
         $productVatsIndexedByDomainId = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            if ($vatReference !== null) {
-                $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
-            }
+            $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
@@ -97,11 +95,11 @@ class ProductDemoDataSetter
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param string|null $date
+     * @param string $date
      */
-    public function setSellingTo(ProductData $productData, ?string $date): void
+    public function setSellingTo(ProductData $productData, string $date): void
     {
-        $productData->sellingTo = $date === null ? null : new DateTime($date);
+        $productData->sellingTo = new DateTime($date);
     }
 
     /**
@@ -164,13 +162,11 @@ class ProductDemoDataSetter
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param string|null $brandReference
+     * @param string $brandReference
      */
-    public function setBrand(ProductData $productData, ?string $brandReference): void
+    public function setBrand(ProductData $productData, string $brandReference): void
     {
-        /** @var \App\Model\Product\Brand\Brand|null $brand */
-        $brand = $brandReference === null ? null : $this->persistentReferenceFacade->getReference($brandReference, Brand::class);
-        $productData->brand = $brand;
+        $productData->brand = $this->persistentReferenceFacade->getReference($brandReference, Brand::class);
     }
 
     /**

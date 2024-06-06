@@ -35,7 +35,6 @@ class ProductDemoDataFactory
 
         $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->productDemoDataSetter->setUnit($productData, UnitDataFixture::UNIT_PIECES);
-        $this->productDemoDataSetter->setSellingTo($productData, null);
 
         return $productData;
     }
