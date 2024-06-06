@@ -80,6 +80,8 @@ services:
         resource: '../src/DataFixtures/**/*DataFixture.php'
         tags: [ 'doctrine.fixture.orm' ]
 
+    App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter: ~
+
     App\DataFixtures\Demo\ImageDataFixture:
         arguments:
             - '%shopsys.data_fixtures_images.resources_dir%'
