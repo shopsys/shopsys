@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForb
  * @ORM\Table(name="order_statuses")
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation> getTranslations()
  */
 class OrderStatus extends AbstractTranslatableEntity
 {

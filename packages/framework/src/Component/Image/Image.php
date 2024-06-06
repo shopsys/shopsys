@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="images", indexes={@ORM\Index(columns={"entity_name", "entity_id", "type"})})
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Component\Image\ImageTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation> getTranslations()
  */
 class Image extends AbstractTranslatableEntity implements EntityFileUploadInterface
 {

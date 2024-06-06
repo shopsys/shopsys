@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
  * @ORM\Table(name="transports")
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation> getTranslations()
  */
 class Transport extends AbstractTranslatableEntity implements OrderableEntityInterface
 {

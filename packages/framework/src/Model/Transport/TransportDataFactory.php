@@ -94,7 +94,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $instructions = [];
         $trackingInstruction = [];
 
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation[] $translations */
         $translations = $transport->getTranslations();
 
         foreach ($translations as $translate) {

@@ -80,7 +80,6 @@ class BrandDataFactory implements BrandDataFactoryInterface
     {
         $brandData->name = $brand->getName();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation[] $translations */
         $translations = $brand->getTranslations();
 
         $brandData->descriptions = [];

@@ -53,7 +53,6 @@ class ParameterDataFactory extends BaseParameterDataFactory
      */
     protected function fillFromParameter(BaseParameterData $parameterData, BaseParameter $parameter)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
         $translations = $parameter->getTranslations();
 
         foreach ($translations as $translate) {

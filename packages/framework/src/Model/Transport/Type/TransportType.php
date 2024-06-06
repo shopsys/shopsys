@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="transport_types")
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeTranslation> getTranslations()
  * @phpstan-ignore-next-line the entity creation is not supported so the required factory (TransportTypeFactory) would be unused
  */
 class TransportType extends AbstractTranslatableEntity

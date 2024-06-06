@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @ORM\Table(name="units")
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation> getTranslations()
  */
 class Unit extends AbstractTranslatableEntity
 {

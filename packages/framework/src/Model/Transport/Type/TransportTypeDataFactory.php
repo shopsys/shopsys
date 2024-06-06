@@ -63,7 +63,6 @@ class TransportTypeDataFactory
      */
     protected function fillFromTransportType(TransportTypeData $transportTypeData, TransportType $transportType): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeTranslation[] $translations */
         $translations = $transportType->getTranslations();
 
         $names = [];

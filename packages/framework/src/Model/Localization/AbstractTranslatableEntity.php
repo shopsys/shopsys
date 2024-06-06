@@ -32,7 +32,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
      */
     protected function findTranslation($locale)
     {
-        /** @var \Prezent\Doctrine\Translatable\Entity\AbstractTranslation[] $translations */
+        /** @var \Doctrine\Common\Collections\Collection<int, \Prezent\Doctrine\Translatable\Entity\AbstractTranslation> $translations */
         $translations = $this->getTranslations();
 
         foreach ($translations as $translation) {
