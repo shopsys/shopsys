@@ -7,7 +7,7 @@ overblog_dataloader:
             batch_load_fn: "@App\\FrontendApi\\Model\\Brand\\BrandsBatchLoader:loadByIds"
         categoriesBatchLoader:
             alias: "categories_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoriesBatchLoader:loadByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\CategoriesBatchLoader:loadByIds"
         categoryChildrenBatchLoader:
             alias: "category_children_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoryChildrenBatchLoader:loadByCategories"
