@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Messenger;
 
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractMessageDispatcher
 {
@@ -17,8 +18,8 @@ abstract class AbstractMessageDispatcher
      *
      * @param \Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency $messageDispatcherDependency
      * @internal This method is public only for the purpose of setter injection
-     * @required
      */
+    #[Required]
     public function setMessageDispatcherDependency(MessageDispatcherDependency $messageDispatcherDependency): void
     {
         $this->transportDsn = $messageDispatcherDependency->transportDsn;
