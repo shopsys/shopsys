@@ -173,8 +173,9 @@ class ProductsQuery extends BaseProductsQuery
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return never
      */
-    public function productsQuery(Argument $argument)
+    public function productsQuery(Argument $argument): never
     {
         throw new DeprecatedMethodException();
     }
