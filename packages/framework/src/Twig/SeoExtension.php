@@ -27,8 +27,8 @@ class SeoExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getSeoTitleAddOn', [$this, 'getSeoTitleAddOn']),
-            new TwigFunction('getSeoMetaDescription', [$this, 'getSeoMetaDescription']),
+            new TwigFunction('getSeoTitleAddOn', $this->getSeoTitleAddOn(...)),
+            new TwigFunction('getSeoMetaDescription', $this->getSeoMetaDescription(...)),
         ];
     }
 

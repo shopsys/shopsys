@@ -35,19 +35,19 @@ class DateTimeFormatterExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'formatDate',
-                [$this, 'formatDate'],
+                $this->formatDate(...),
             ),
             new TwigFilter(
                 'formatTime',
-                [$this, 'formatTime'],
+                $this->formatTime(...),
             ),
             new TwigFilter(
                 'formatDateTime',
-                [$this, 'formatDateTime'],
+                $this->formatDateTime(...),
             ),
             new TwigFilter(
                 'formatDurationInSeconds',
-                [$this, 'formatDurationInSeconds'],
+                $this->formatDurationInSeconds(...),
             ),
         ];
     }
@@ -60,7 +60,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'dateOfCreation',
-                [$this, 'dateOfCreation'],
+                $this->dateOfCreation(...),
             ),
         ];
     }

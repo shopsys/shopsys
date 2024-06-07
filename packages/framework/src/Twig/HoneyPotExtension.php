@@ -21,7 +21,7 @@ class HoneyPotExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'formHoneyPotCheckPasswordAlreadyRendered',
-                [$this, 'formHoneyPotCheckPasswordAlreadyRendered'],
+                $this->formHoneyPotCheckPasswordAlreadyRendered(...),
             ),
         ];
     }

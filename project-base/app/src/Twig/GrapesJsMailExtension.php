@@ -27,7 +27,7 @@ class GrapesJsMailExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('getMailTemplate', [$this, 'getMailTemplate'], ['is_safe' => ['html']]),
+            new TwigFunction('getMailTemplate', $this->getMailTemplate(...), ['is_safe' => ['html']]),
         ];
     }
 

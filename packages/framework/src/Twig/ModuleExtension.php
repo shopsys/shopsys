@@ -23,7 +23,7 @@ class ModuleExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('isModuleEnabled', [$this, 'isModuleEnabled']),
+            new TwigFunction('isModuleEnabled', $this->isModuleEnabled(...)),
         ];
     }
 

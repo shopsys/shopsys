@@ -17,7 +17,7 @@ class VarDumperExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'd',
-                [$this, 'd'],
+                $this->d(...),
             ),
         ];
     }

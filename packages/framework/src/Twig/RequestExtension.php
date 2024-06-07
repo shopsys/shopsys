@@ -25,15 +25,15 @@ class RequestExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'getAllRequestParams',
-                [$this, 'getAllRequestParams'],
+                $this->getAllRequestParams(...),
             ),
             new TwigFunction(
                 'getRoute',
-                [$this, 'getRoute'],
+                $this->getRoute(...),
             ),
             new TwigFunction(
                 'getRouteParams',
-                [$this, 'getRouteParams'],
+                $this->getRouteParams(...),
             ),
         ];
     }

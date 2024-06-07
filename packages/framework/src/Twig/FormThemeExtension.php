@@ -26,7 +26,7 @@ class FormThemeExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getDefaultFormTheme', [$this, 'getDefaultFormTheme']),
+            new TwigFunction('getDefaultFormTheme', $this->getDefaultFormTheme(...)),
         ];
     }
 

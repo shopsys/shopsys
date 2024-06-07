@@ -29,7 +29,7 @@ class LocalizationExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('localeFlag', [$this, 'getLocaleFlagHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('localeFlag', $this->getLocaleFlagHtml(...), ['is_safe' => ['html']]),
         ];
     }
 

@@ -16,7 +16,7 @@ class FormExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getFormErrorSourceId', [$this, 'getFormErrorSourceId']),
+            new TwigFunction('getFormErrorSourceId', $this->getFormErrorSourceId(...)),
         ];
     }
 

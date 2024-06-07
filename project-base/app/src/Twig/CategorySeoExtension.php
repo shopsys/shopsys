@@ -32,8 +32,8 @@ class CategorySeoExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('getReadyCategoryMixCombinationParametersPairsIterator', [$this, 'getReadyCategoryMixCombinationParametersPairsIterator']),
-            new TwigFunction('getAbsoluteUrlOfReadyCategorySeoMix', [$this, 'getAbsoluteUrlOfReadyCategorySeoMix']),
+            new TwigFunction('getReadyCategoryMixCombinationParametersPairsIterator', $this->getReadyCategoryMixCombinationParametersPairsIterator(...)),
+            new TwigFunction('getAbsoluteUrlOfReadyCategorySeoMix', $this->getAbsoluteUrlOfReadyCategorySeoMix(...)),
         ];
     }
 

@@ -15,7 +15,7 @@ class JoinNoneEmptyExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('joinNoneEmpty', [$this, 'getArray']),
+            new TwigFilter('joinNoneEmpty', $this->getArray(...)),
         ];
     }
 

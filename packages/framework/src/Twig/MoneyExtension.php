@@ -18,7 +18,7 @@ class MoneyExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'moneyFormat',
-                [$this, 'moneyFormatFilter'],
+                $this->moneyFormatFilter(...),
             ),
         ];
     }

@@ -36,19 +36,19 @@ class NumberFormatterExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'formatNumber',
-                [$this, 'formatNumber'],
+                $this->formatNumber(...),
             ),
             new TwigFilter(
                 'formatDecimalNumber',
-                [$this, 'formatDecimalNumber'],
+                $this->formatDecimalNumber(...),
             ),
             new TwigFilter(
                 'formatPercent',
-                [$this, 'formatPercent'],
+                $this->formatPercent(...),
             ),
             new TwigFilter(
                 'isInteger',
-                [$this, 'isInteger'],
+                $this->isInteger(...),
             ),
         ];
     }

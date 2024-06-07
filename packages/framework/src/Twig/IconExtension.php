@@ -24,7 +24,7 @@ class IconExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('icon', [$this, 'renderIcon'], ['is_safe' => ['html']]),
+            new TwigFunction('icon', $this->renderIcon(...), ['is_safe' => ['html']]),
         ];
     }
 

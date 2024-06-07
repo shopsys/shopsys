@@ -24,8 +24,8 @@ class FormDetailExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('form_id', [$this, 'formId'], ['is_safe' => ['html']]),
-            new TwigFunction('form_save', [$this, 'formSave'], ['is_safe' => ['html']]),
+            new TwigFunction('form_id', $this->formId(...), ['is_safe' => ['html']]),
+            new TwigFunction('form_save', $this->formSave(...), ['is_safe' => ['html']]),
         ];
     }
 

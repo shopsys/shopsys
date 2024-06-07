@@ -15,7 +15,7 @@ class CropZerosExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('cropZeros', [$this, 'cropZeros']),
+            new TwigFilter('cropZeros', $this->cropZeros(...)),
         ];
     }
 

@@ -41,7 +41,7 @@ class ProductExtension extends BaseProductExtension
         $functions = parent::getFunctions();
         $functions[] = new TwigFunction(
             'getOrderingNameByOrderingId',
-            [$this, 'getOrderingNameByOrderingId'],
+            $this->getOrderingNameByOrderingId(...),
         );
 
         return $functions;
