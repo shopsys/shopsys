@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
 
 class CurrentDomainRouter implements ChainRouterInterface
 {
@@ -42,7 +43,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @return \Symfony\Component\Routing\RouteCollection
      */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         return $this->getDomainRouter()->getRouteCollection();
     }
