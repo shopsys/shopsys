@@ -43,7 +43,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
      * Passes trans() call to original translator for logging purposes.
      * {@inheritdoc}
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         $normalizedId = $this->messageIdNormalizer->normalizeMessageId($id);
         $resolvedLocale = $this->resolveLocale($locale);
@@ -103,7 +103,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     /**
      * {@inheritdoc}
      */
-    public function setLocale($locale): void
+    public function setLocale(string $locale): void
     {
         $this->originalTranslator->setLocale($locale);
         $this->identityTranslator->setLocale($locale);
