@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:schema:import-default')]
+#[AsCommand(
+    name: 'shopsys:schema:import-default',
+    description: 'Import database default schema',
+)]
 class ImportDefaultDatabaseSchemaCommand extends Command
 {
     /**
@@ -19,12 +22,6 @@ class ImportDefaultDatabaseSchemaCommand extends Command
     public function __construct(private readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Import database default schema');
     }
 
     /**

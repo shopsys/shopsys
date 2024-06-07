@@ -11,7 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:check-timezones')]
+#[AsCommand(
+    name: 'shopsys:check-timezones',
+    description: 'Checks uniformity of PHP and Postgres timezones',
+)]
 class CheckTimezonesCommand extends Command
 {
     /**
@@ -20,12 +23,6 @@ class CheckTimezonesCommand extends Command
     public function __construct(private readonly Connection $connection)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Checks uniformity of PHP and Postgres timezones');
     }
 
     /**

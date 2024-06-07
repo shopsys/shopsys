@@ -12,17 +12,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:clean-opcache')]
+#[AsCommand(
+    name: 'shopsys:clean-opcache',
+    description: 'Clean opcache in PHP-FPM service',
+)]
 class CleanOpcacheCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->setDescription('Clean opcache in PHP-FPM service');
-    }
-
     /**
      * {@inheritdoc}
      */

@@ -16,7 +16,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Webmozart\Assert\Assert;
 use Webmozart\Assert\InvalidArgumentException;
 
-#[AsCommand(name: 'shopsys:dispatch:recalculations')]
+#[AsCommand(
+    name: 'shopsys:dispatch:recalculations',
+    description: 'Dispatch messages with product IDs to recalculate',
+)]
 class DispatchRecalculationMessageCommand extends Command
 {
     /**
@@ -35,7 +38,7 @@ class DispatchRecalculationMessageCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Dispatch messages with product IDs to recalculate')
+        $this
             ->addArgument(
                 'productIds',
                 InputArgument::OPTIONAL | InputArgument::IS_ARRAY,

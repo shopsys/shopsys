@@ -50,8 +50,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Limit command to only one domain.',
-            )
-            ->setDescription($this->getCommandDescription());
+            );
     }
 
     /**
@@ -120,11 +119,6 @@ abstract class AbstractElasticsearchIndexCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     abstract protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void;
-
-    /**
-     * @return string
-     */
-    abstract protected function getCommandDescription(): string;
 
     /**
      * @return string

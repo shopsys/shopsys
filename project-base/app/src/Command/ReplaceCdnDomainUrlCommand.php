@@ -11,7 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:cdn-domain-url:replace')]
+#[AsCommand(
+    name: 'shopsys:cdn-domain-url:replace',
+    description: 'Replace "content" and "public" folders url in all database text columns by corresponding CDN url',
+)]
 class ReplaceCdnDomainUrlCommand extends Command
 {
     /**
@@ -29,8 +32,6 @@ class ReplaceCdnDomainUrlCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setDescription('Replace "content" and "public" folders url in all database text columns by corresponding CDN url');
     }
 
     /**

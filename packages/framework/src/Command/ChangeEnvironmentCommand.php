@@ -14,7 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:environment:change')]
+#[AsCommand(
+    name: 'shopsys:environment:change',
+    description: 'Change the application environment',
+)]
 class ChangeEnvironmentCommand extends Command
 {
     private const ARG_ENVIRONMENT = 'environment';
@@ -33,7 +36,6 @@ class ChangeEnvironmentCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Change the application environment.')
             ->addArgument(self::ARG_ENVIRONMENT, InputArgument::OPTIONAL, 'The target environment');
     }
 

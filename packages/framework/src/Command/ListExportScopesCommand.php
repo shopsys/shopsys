@@ -12,7 +12,10 @@ use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:list:export-scopes')]
+#[AsCommand(
+    name: 'shopsys:list:export-scopes',
+    description: 'List all export scopes with their fields and preconditions',
+)]
 class ListExportScopesCommand extends Command
 {
     /**

@@ -12,7 +12,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:domains-urls:replace')]
+#[AsCommand(
+    name: 'shopsys:domains-urls:replace',
+    description: 'Replace domains urls in database by urls in domains config',
+)]
 class ReplaceDomainsUrlsCommand extends Command
 {
     /**
@@ -26,12 +29,6 @@ class ReplaceDomainsUrlsCommand extends Command
         private readonly Setting $setting,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Replace domains urls in database by urls in domains config');
     }
 
     /**

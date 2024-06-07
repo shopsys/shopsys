@@ -19,7 +19,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 
-#[AsCommand(name: 'shopsys:extended-classes:annotations')]
+#[AsCommand(
+    name: 'shopsys:extended-classes:annotations',
+    description: 'Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information',
+)]
 class ExtendedClassesAnnotationsCommand extends Command
 {
     protected const DRY_RUN = 'dry-run';
@@ -30,9 +33,6 @@ class ExtendedClassesAnnotationsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription(
-                'Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information',
-            )
             ->addOption(
                 static::DRY_RUN,
                 null,

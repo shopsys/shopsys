@@ -11,7 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:domains-db-functions:create')]
+#[AsCommand(
+    name: 'shopsys:domains-db-functions:create',
+    description: 'Create new domains DB functions',
+)]
 class CreateDomainsDbFunctionsCommand extends Command
 {
     /**
@@ -23,12 +26,6 @@ class CreateDomainsDbFunctionsCommand extends Command
         private readonly DomainDbFunctionsFacade $domainDbFunctionsFacade,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Create new domains DB functions');
     }
 
     /**

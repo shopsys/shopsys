@@ -11,7 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:entities:dump')]
+#[AsCommand(
+    name: 'shopsys:entities:dump',
+    description: 'Dump entities filepaths for use in coding standards',
+)]
 class EntitiesDumpCommand extends Command
 {
     private const OUTPUT_FILE = 'entities-dump.json';
@@ -25,15 +28,6 @@ class EntitiesDumpCommand extends Command
         protected string $cacheDir,
     ) {
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Dump entities filepaths for use in coding standards');
     }
 
     /**

@@ -14,7 +14,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:phing-config:fix')]
+#[AsCommand(
+    name: 'shopsys:phing-config:fix',
+    description: 'Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace)',
+)]
 class PhingConfigFixerCommand extends Command
 {
     protected const ARG_XML_PATH = 'xml';
@@ -23,9 +26,6 @@ class PhingConfigFixerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription(
-                'Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace).',
-            )
             ->addArgument(
                 static::ARG_XML_PATH,
                 InputArgument::REQUIRED | InputArgument::IS_ARRAY,

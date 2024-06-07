@@ -14,7 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:administrator:change-password')]
+#[AsCommand(
+    name: 'shopsys:administrator:change-password',
+    description: 'Set new password for administrator.',
+)]
 class ChangeAdminPasswordCommand extends Command
 {
     private const ARG_USERNAME = 'username';
@@ -33,7 +36,6 @@ class ChangeAdminPasswordCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Set new password for administrator.')
             ->addArgument(self::ARG_USERNAME, InputArgument::REQUIRED, 'Existing administrator username');
     }
 

@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'deploy:cron:lock')]
+#[AsCommand(
+    name: 'deploy:cron:lock',
+    description: 'This command will prevent any crons from running on this machine until it is terminated',
+)]
 class CronLockCommand extends Command
 {
     public const CRON_MUTEX_LOCK_NAME = 'cronLocker';
@@ -25,14 +28,6 @@ class CronLockCommand extends Command
         protected readonly LockInterface $lock,
     ) {
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this->setDescription('This command will prevent any crons from running on this machine until it is terminated.');
     }
 
     /**

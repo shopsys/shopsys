@@ -14,7 +14,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:domains-data:create')]
+#[AsCommand(
+    name: 'shopsys:domains-data:create',
+    description: 'Create new domains data',
+)]
 class CreateDomainsDataCommand extends Command
 {
     /**
@@ -30,12 +33,6 @@ class CreateDomainsDataCommand extends Command
         private readonly DbIndexesFacade $dbIndexesFacade,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Create new domains data');
     }
 
     /**

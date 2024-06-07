@@ -11,7 +11,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:schema:drop')]
+#[AsCommand(
+    name: 'shopsys:schema:drop',
+    description: 'Drop database public schema',
+)]
 class DropDatabaseSchemaCommand extends Command
 {
     /**
@@ -25,7 +28,6 @@ class DropDatabaseSchemaCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Drop database public schema')
             ->addOption(
                 'tables-only',
                 null,

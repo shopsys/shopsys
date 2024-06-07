@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:feed-schedule')]
+#[AsCommand(
+    name: 'shopsys:feed-schedule',
+    description: 'Schedule feeds to be generated in the next cron run',
+)]
 class ScheduleFeedsCommand extends Command
 {
     private const OPTION_FEED_NAME = 'feed-name';
@@ -33,7 +36,6 @@ class ScheduleFeedsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Schedule feeds to be generated in the next cron run.')
             ->addOption(self::OPTION_FEED_NAME, null, InputOption::VALUE_OPTIONAL, 'name of feed to be scheduled')
             ->addOption(self::OPTION_ALL, null, InputOption::VALUE_NONE, 'schedule all feeds');
     }

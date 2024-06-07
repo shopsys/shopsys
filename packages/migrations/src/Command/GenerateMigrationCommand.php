@@ -16,7 +16,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:migrations:generate')]
+#[AsCommand(
+    name: 'shopsys:migrations:generate',
+    description: 'Generate a new migration if need it',
+)]
 class GenerateMigrationCommand extends Command
 {
     protected const RETURN_CODE_OK = 0;
@@ -39,12 +42,6 @@ class GenerateMigrationCommand extends Command
         $this->configuration = $dependencyFactory->getConfiguration();
 
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Generate a new migration if need it');
     }
 
     /**

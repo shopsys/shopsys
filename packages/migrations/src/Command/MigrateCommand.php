@@ -16,7 +16,10 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:migrations:migrate')]
+#[AsCommand(
+    name: 'shopsys:migrations:migrate',
+    description: 'Execute all database migrations and check if database schema is satisfying ORM, all in one transaction',
+)]
 class MigrateCommand extends Command
 {
     /**
@@ -30,14 +33,6 @@ class MigrateCommand extends Command
         protected readonly MigrationLockPlanCalculator $migrationLockPlanCalculator,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription(
-                'Execute all database migrations and check if database schema is satisfying ORM, all in one transaction.',
-            );
     }
 
     /**
@@ -62,7 +57,7 @@ class MigrateCommand extends Command
         $availableMigrationsList = $this->migrationLockPlanCalculator->getMigrations();
         $this->migrationsLock->saveNewMigrations($availableMigrationsList);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**

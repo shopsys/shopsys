@@ -8,7 +8,10 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:elasticsearch:changed-data-export')]
+#[AsCommand(
+    name: 'shopsys:elasticsearch:changed-data-export',
+    description: 'Export changed data to Elasticsearch',
+)]
 class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportCommand
 {
     /**
@@ -21,14 +24,6 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
             $indexDefinition,
             $output,
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandDescription(): string
-    {
-        return 'Export changed data to Elasticsearch';
     }
 
     /**

@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:redis:clean-cache-old')]
+#[AsCommand(
+    name: 'shopsys:redis:clean-cache-old',
+    description: 'Cleans up redis cache for previous build versions',
+)]
 class RedisCleanCacheOldCommand extends Command
 {
     /**
@@ -19,12 +22,6 @@ class RedisCleanCacheOldCommand extends Command
     public function __construct(private readonly RedisVersionsFacade $redisVersionsFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Cleans up redis cache for previous build versions');
     }
 
     /**

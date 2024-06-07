@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:migrations:check-schema')]
+#[AsCommand(
+    name: 'shopsys:migrations:check-schema',
+    description: 'Check if database schema is satisfying ORM',
+)]
 class CheckDatabaseSchemaCommand extends Command
 {
     protected const RETURN_CODE_OK = 0;
@@ -22,12 +25,6 @@ class CheckDatabaseSchemaCommand extends Command
     public function __construct(protected readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Check if database schema is satisfying ORM');
     }
 
     /**

@@ -17,7 +17,10 @@ use Symfony\Component\Filesystem\Filesystem;
  * copy of \FM\ElfinderBundle\Command\ElFinderInstallerCommand and updated to work properly in monorepo
  * replaces default `elfinder:install` command
  */
-#[AsCommand(name: 'elfinder:install')]
+#[AsCommand(
+    name: 'elfinder:install',
+    description: 'Copies elfinder assets to public directory',
+)]
 final class ElFinderInstallerCommand extends Command
 {
     private const ELFINDER_CSS_DIR = 'studio-42/elfinder/css';
@@ -42,7 +45,6 @@ final class ElFinderInstallerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Copies elfinder assets to public directory')
             ->addOption('docroot', null, InputOption::VALUE_OPTIONAL, 'Website document root.', 'public')
             ->setHelp(
                 <<<'EOF'

@@ -16,15 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-#[AsCommand(name: 'router:match')]
+#[AsCommand(
+    name: 'router:match',
+    description: 'Help debug routes by simulating a path info match',
+)]
 class RouterMatchCommandForDomain extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultDescription = 'Help debug routes by simulating a path info match';
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
      * @param \Symfony\Bundle\FrameworkBundle\Command\RouterMatchCommand $routerMatchCommand
@@ -50,7 +47,6 @@ class RouterMatchCommandForDomain extends Command
                 new InputOption('scheme', null, InputOption::VALUE_REQUIRED, 'Set the URI scheme (usually http or https)'),
                 new InputOption('host', null, InputOption::VALUE_REQUIRED, 'Set the URI host'),
             ])
-            ->setDescription(self::$defaultDescription)
             ->setHelp(
                 <<<'EOF'
 The <info>%command.name%</info> shows which routes match a given request and which don't and for what reason:

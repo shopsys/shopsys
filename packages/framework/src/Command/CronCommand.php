@@ -19,7 +19,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-#[AsCommand(name: 'shopsys:cron')]
+#[AsCommand(
+    name: 'shopsys:cron',
+    description: 'Runs background jobs. Should be executed periodically by system CRON every 5 minutes.',
+)]
 class CronCommand extends Command
 {
     private const OPTION_MODULE = 'module';
@@ -45,7 +48,6 @@ class CronCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
             ->addOption(self::OPTION_LIST, null, InputOption::VALUE_NONE, 'List all Service commands')
             ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID')
             ->addOption(

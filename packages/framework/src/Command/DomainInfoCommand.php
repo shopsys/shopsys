@@ -17,7 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
-#[AsCommand(name: 'shopsys:domains:info')]
+#[AsCommand(
+    name: 'shopsys:domains:info',
+    description: 'Loads and displays domain info',
+)]
 class DomainInfoCommand extends Command
 {
     protected const ARG_PROPERTY_NAME = 'propertyName';
@@ -40,7 +43,6 @@ class DomainInfoCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Loads and displays domain info.')
             ->addArgument(static::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
             ->addArgument(
                 static::ARG_ID,

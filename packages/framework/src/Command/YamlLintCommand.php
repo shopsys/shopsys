@@ -23,7 +23,10 @@ use Traversable;
 use function count;
 use function in_array;
 
-#[AsCommand(name: 'lint:yaml')]
+#[AsCommand(
+    name: 'lint:yaml',
+    description: 'Lints a file and outputs encountered errors',
+)]
 class YamlLintCommand extends Command
 {
     private ?Parser $parser = null;
@@ -35,7 +38,6 @@ class YamlLintCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Lints a file and outputs encountered errors')
             ->addArgument('filename', null, 'A file or a directory or STDIN')
             ->addOption('format', null, InputOption::VALUE_REQUIRED, 'The output format', 'txt')
             ->addOption('parse-tags', null, InputOption::VALUE_NONE, 'Parse custom tags')

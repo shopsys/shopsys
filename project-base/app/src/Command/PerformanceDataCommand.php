@@ -13,7 +13,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:performance-data')]
+#[AsCommand(
+    name: 'shopsys:performance-data',
+    description: 'Import performance data to test db. Demo and base data fixtures must be imported first',
+)]
 class PerformanceDataCommand extends Command
 {
     /**
@@ -29,14 +32,6 @@ class PerformanceDataCommand extends Command
         private readonly OrderDataFixture $orderDataFixture,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription(
-                'Import performance data to test db. Demo and base data fixtures must be imported first.',
-            );
     }
 
     /**
