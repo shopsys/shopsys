@@ -34,9 +34,7 @@ class PricingGroupController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/pricing/group/list/")
-     */
+    #[Route(path: '/pricing/group/list/')]
     public function listAction()
     {
         $grid = $this->pricingGroupInlineEdit->getGrid();
@@ -47,11 +45,11 @@ class PricingGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/pricing/group/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/pricing/group/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(Request $request, $id)
     {
         $newId = $request->get('newId');
@@ -87,9 +85,9 @@ class PricingGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/pricing/group/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
+    #[Route(path: '/pricing/group/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction($id)
     {
         try {

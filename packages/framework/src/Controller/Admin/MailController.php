@@ -40,9 +40,9 @@ class MailController extends AdminBaseController
     }
 
     /**
-     * @Route("/mail/template/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/mail/template/')]
     public function templateAction(): Response
     {
         $grid = $this->mailTemplateGridFactory->create();
@@ -53,11 +53,11 @@ class MailController extends AdminBaseController
     }
 
     /**
-     * @Route("/mail/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/mail/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $mailTemplate = $this->mailTemplateFacade->getById($id);
@@ -114,9 +114,9 @@ class MailController extends AdminBaseController
     }
 
     /**
-     * @Route("/mail/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/mail/setting/')]
     public function settingAction(Request $request)
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

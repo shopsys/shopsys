@@ -27,10 +27,10 @@ class UnusedFriendlyUrlController extends AdminBaseController
     }
 
     /**
-     * @Route("/unused-friendly-url/list/", name="admin_unused_friendly_url_list")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/unused-friendly-url/list/', name: 'admin_unused_friendly_url_list')]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -46,13 +46,16 @@ class UnusedFriendlyUrlController extends AdminBaseController
     }
 
     /**
-     * @Route("/unused-friendly-url/delete/{domainId}/{slug}", requirements={"domainId" = "\d+", "slug" = ".+"}, name="admin_unused_friendly_url_delete")
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $domainId
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/unused-friendly-url/delete/{domainId}/{slug}', requirements: [
+        'domainId' => '\d+',
+        'slug' => '.+',
+    ], name: 'admin_unused_friendly_url_delete')]
     public function deleteAction(Request $request, int $domainId, string $slug): Response
     {
         $this->friendlyUrlFacade->removeFriendlyUrl($domainId, $slug);

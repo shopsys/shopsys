@@ -15,7 +15,6 @@ class TestController
     /**
      * @param string $name
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/hello/{name}")
      * @DataSet(parameters={
      *     @Parameter(name="name", value="Batman")
      * })
@@ -23,6 +22,7 @@ class TestController
      *     @Parameter(name="name", value="World")
      * })
      */
+    #[Route(path: '/hello/{name}')]
     public function helloAction(string $name): Response
     {
         if ($name === 'Batman') {
@@ -35,11 +35,11 @@ class TestController
     /**
      * @param string $name
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/test")
      * @DataSet(parameters={
      *     @Parameter(name="myName", value="Batman")
      * })
      */
+    #[Route(path: '/test')]
     public function testAction(string $name): Response
     {
         if ($name === 'Batman') {
@@ -51,9 +51,9 @@ class TestController
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/untested")
      * @Skipped()
      */
+    #[Route(path: '/untested')]
     public function untestedAction(): Response
     {
         return new Response('', 500);

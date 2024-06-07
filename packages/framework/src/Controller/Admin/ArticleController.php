@@ -50,11 +50,11 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/article/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $article = $this->articleFacade->getById($id);
@@ -96,9 +96,9 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/article/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/article/list/')]
     public function listAction(): Response
     {
         $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1);
@@ -119,10 +119,10 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/article/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/article/new/')]
     public function newAction(Request $request): Response
     {
         $articleData = $this->articleDataFactory->create();
@@ -160,11 +160,11 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/article/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/article/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -188,10 +188,10 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/article/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction(int $id): Response
     {
         $article = $this->articleFacade->getById($id);
@@ -214,10 +214,10 @@ class ArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/article/save-ordering/", condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
+    #[Route(path: '/article/save-ordering/', condition: 'request.isXmlHttpRequest()')]
     public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));

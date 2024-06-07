@@ -38,9 +38,7 @@ class SliderController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/slider/list/")
-     */
+    #[Route(path: '/slider/list/')]
     public function listAction()
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
@@ -69,9 +67,9 @@ class SliderController extends AdminBaseController
     }
 
     /**
-     * @Route("/slider/item/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/slider/item/new/')]
     public function newAction(Request $request)
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
@@ -108,10 +106,10 @@ class SliderController extends AdminBaseController
     }
 
     /**
-     * @Route("/slider/item/edit/{id}", requirements={"id"="\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/slider/item/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, $id)
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
@@ -152,10 +150,10 @@ class SliderController extends AdminBaseController
     }
 
     /**
-     * @Route("/slider/item/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/slider/item/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {

@@ -23,9 +23,9 @@ class PersonalDataController extends AdminBaseController
     }
 
     /**
-     * @Route("/personal-data/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/personal-data/setting/')]
     public function settingAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

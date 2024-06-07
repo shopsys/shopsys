@@ -45,10 +45,10 @@ class DomainController extends AdminBaseController
     }
 
     /**
-     * @Route("/multidomain/select-domain/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
      */
+    #[Route(path: '/multidomain/select-domain/{id}', requirements: ['id' => '\d+'])]
     public function selectDomainAction(Request $request, $id)
     {
         $id = (int)$id;
@@ -64,9 +64,7 @@ class DomainController extends AdminBaseController
         return $this->redirect($referer);
     }
 
-    /**
-     * @Route("/domain/list")
-     */
+    #[Route(path: '/domain/list')]
     public function listAction()
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');
@@ -85,10 +83,10 @@ class DomainController extends AdminBaseController
     }
 
     /**
-     * @Route("/domain/edit/{id}", requirements={"id" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/domain/edit/{id}', requirements: ['id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     public function editAction(Request $request, $id)
     {
         $id = (int)$id;

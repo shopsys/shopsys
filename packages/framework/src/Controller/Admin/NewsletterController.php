@@ -33,9 +33,9 @@ class NewsletterController extends AdminBaseController
     }
 
     /**
-     * @Route("/newsletter/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/newsletter/list/')]
     public function listAction(Request $request)
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -68,11 +68,11 @@ class NewsletterController extends AdminBaseController
     }
 
     /**
-     * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/newsletter/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -93,9 +93,7 @@ class NewsletterController extends AdminBaseController
         return $this->redirectToRoute('admin_newsletter_list');
     }
 
-    /**
-     * @Route("/newsletter/export-csv/")
-     */
+    #[Route(path: '/newsletter/export-csv/')]
     public function exportAction()
     {
         $response = new StreamedResponse();

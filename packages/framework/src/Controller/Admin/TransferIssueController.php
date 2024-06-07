@@ -34,10 +34,10 @@ class TransferIssueController extends AdminBaseController
     }
 
     /**
-     * @Route("/transfer/issue/list/", name="admin_transferissue_list")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/transfer/issue/list/', name: 'admin_transferissue_list')]
     public function listAction(Request $request): Response
     {
         $administrator = $this->getCurrentAdministrator();
@@ -79,11 +79,11 @@ class TransferIssueController extends AdminBaseController
     }
 
     /**
-     * @Route("/transfer/issue/delete/{id}",name="admin_transferissue_delete", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/transfer/issue/delete/{id}', name: 'admin_transferissue_delete', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

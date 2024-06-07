@@ -17,9 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class LegalConditionsController extends BaseLegalConditionsController
 {
     /**
-     * @Route("/legal-conditions/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/legal-conditions/setting/')]
     public function termsAndConditionsAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -55,9 +55,9 @@ class LegalConditionsController extends BaseLegalConditionsController
     }
 
     /**
-     * @Route("/legal-conditions/privacy-policy/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/legal-conditions/privacy-policy/')]
     public function privacyPolicy(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

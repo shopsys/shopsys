@@ -26,9 +26,9 @@ class HeurekaController extends AdminBaseController
     }
 
     /**
-     * @Route("/heureka/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/heureka/setting/')]
     public function settingAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

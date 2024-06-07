@@ -35,9 +35,9 @@ class StoreController extends AdminBaseController
     }
 
     /**
-     * @Route("/store/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/store/list/')]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Store/list.html.twig', [
@@ -72,10 +72,10 @@ class StoreController extends AdminBaseController
     }
 
     /**
-     * @Route("/store/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/store/new/')]
     public function newAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -110,11 +110,11 @@ class StoreController extends AdminBaseController
     }
 
     /**
-     * @Route("/store/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/store/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $store = $this->storeFacade->getById($id);
@@ -150,11 +150,11 @@ class StoreController extends AdminBaseController
     }
 
     /**
-     * @Route("/store/delete/{id}", requirements={"id" = "\d+"}, name="admin_store_delete")
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/store/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_store_delete')]
     public function deleteAction(int $id): Response
     {
         try {
@@ -182,11 +182,11 @@ class StoreController extends AdminBaseController
     }
 
     /**
-     * @Route("/store/setdefault/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/store/setdefault/{id}', requirements: ['id' => '\d+'])]
     public function setDefaultAction(int $id): Response
     {
         try {

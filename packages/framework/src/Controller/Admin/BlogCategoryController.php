@@ -34,11 +34,11 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/edit/{id}", requirements={"id" = "\d+"}, name="admin_blogcategory_edit")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/category/edit/{id}', requirements: ['id' => '\d+'], name: 'admin_blogcategory_edit')]
     public function editAction(Request $request, int $id): Response
     {
         $blogCategory = $this->blogCategoryFacade->getById($id);
@@ -76,10 +76,10 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/new/", name="admin_blogcategory_new")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/category/new/', name: 'admin_blogcategory_new')]
     public function newAction(Request $request): Response
     {
         $blogCategoryData = $this->blogCategoryDataFactory->create();
@@ -114,10 +114,10 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/list/", name="admin_blogcategory_list")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/category/list/', name: 'admin_blogcategory_list')]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'blog-category';
@@ -142,11 +142,11 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/apply-sorting/", methods={"post"}, condition="request.isXmlHttpRequest()")
      * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/category/apply-sorting/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
     public function applySortingAction(Request $request): Response
     {
         $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
@@ -158,11 +158,11 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/delete/{id}", requirements={"id" = "\d+"}, name="admin_blogcategory_delete")
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/category/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_blogcategory_delete')]
     public function deleteAction(int $id): Response
     {
         try {
@@ -184,11 +184,11 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()", name="admin_blogcategory_loadbranchjson")
      * @param int $domainId
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
+    #[Route(path: '/blog/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()', name: 'admin_blogcategory_loadbranchjson')]
     public function loadBranchJsonAction(int $domainId, int $id): JsonResponse
     {
         $blogParentCategory = $this->blogCategoryFacade->getById($id);

@@ -20,10 +20,10 @@ class RedisController extends AdminBaseController
     }
 
     /**
-     * @Route("/superadmin/redis/clean-storefront-query-cache")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/redis/clean-storefront-query-cache')]
     public function cleanAction(Request $request): Response
     {
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache();
@@ -36,10 +36,10 @@ class RedisController extends AdminBaseController
     }
 
     /**
-     * @Route("/superadmin/redis/show-clean-storefront-query-cache")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/redis/show-clean-storefront-query-cache')]
     public function showAction(Request $request): Response
     {
         return $this->render('Admin/Content/StorefrontCache/clean.html.twig');

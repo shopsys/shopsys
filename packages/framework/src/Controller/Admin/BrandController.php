@@ -42,10 +42,10 @@ class BrandController extends AdminBaseController
     }
 
     /**
-     * @Route("/brand/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/brand/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, $id)
     {
         $brand = $this->brandFacade->getById($id);
@@ -82,9 +82,7 @@ class BrandController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/brand/list/")
-     */
+    #[Route(path: '/brand/list/')]
     public function listAction()
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
@@ -114,9 +112,9 @@ class BrandController extends AdminBaseController
     }
 
     /**
-     * @Route("/brand/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/brand/new/')]
     public function newAction(Request $request)
     {
         $brandData = $this->brandDataFactory->create();
@@ -150,10 +148,10 @@ class BrandController extends AdminBaseController
     }
 
     /**
-     * @Route("/brand/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/brand/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id)
     {
         try {

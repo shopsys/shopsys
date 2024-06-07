@@ -40,7 +40,7 @@ class ParameterValueController extends AdminBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route('/parameter-value/list', name: 'admin_parametervalue_list')]
+    #[Route(path: '/parameter-value/list', name: 'admin_parametervalue_list')]
     public function listAction(): Response
     {
         $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
@@ -68,7 +68,7 @@ class ParameterValueController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    #[Route('/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
+    #[Route(path: '/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $parameterValue = $this->parameterFacade->getParameterValueById($id);

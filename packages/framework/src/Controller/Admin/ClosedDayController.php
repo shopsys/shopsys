@@ -34,9 +34,9 @@ class ClosedDayController extends AdminBaseController
     }
 
     /**
-     * @Route("/closed-day/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/closed-day/list/')]
     public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/ClosedDay/list.html.twig', [
@@ -45,10 +45,10 @@ class ClosedDayController extends AdminBaseController
     }
 
     /**
-     * @Route("/closed-day/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/closed-day/new/')]
     public function newAction(Request $request): Response
     {
         $closedDayData = $this->closedDayDataFactory->create();
@@ -81,11 +81,11 @@ class ClosedDayController extends AdminBaseController
     }
 
     /**
-     * @Route("/closed-day/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/closed-day/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $closedDay = $this->closedDayFacade->getById($id);
@@ -128,10 +128,10 @@ class ClosedDayController extends AdminBaseController
     }
 
     /**
-     * @Route("/closed-day/delete/{id}", requirements={"id" = "\d+"})
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/closed-day/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {

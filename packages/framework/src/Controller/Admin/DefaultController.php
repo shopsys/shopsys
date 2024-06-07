@@ -63,9 +63,9 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/dashboard/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/dashboard/')]
     public function dashboardAction(): Response
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
@@ -315,10 +315,10 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/cron/schedule/{serviceId}")
      * @param string $serviceId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/cron/schedule/{serviceId}')]
     public function scheduleCronAction(string $serviceId): Response
     {
         $this->cronModuleFacade->schedule($serviceId);
@@ -330,10 +330,10 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/cron/disable/{serviceId}")
      * @param string $serviceId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/cron/disable/{serviceId}')]
     public function cronDisableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
@@ -345,10 +345,10 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/cron/enable/{serviceId}")
      * @param string $serviceId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/cron/enable/{serviceId}')]
     public function cronEnableAction(string $serviceId): Response
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
@@ -360,10 +360,10 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @Route("/cron/detail/{serviceId}")
      * @param string $serviceId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/cron/detail/{serviceId}')]
     public function cronDetailAction(string $serviceId): Response
     {
         if ($this->getParameter('shopsys.display_cron_overview_for_superadmin_only') === true) {

@@ -31,9 +31,7 @@ class VatController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/vat/list/")
-     */
+    #[Route(path: '/vat/list/')]
     public function listAction()
     {
         $grid = $this->vatInlineEdit->getGrid();
@@ -44,9 +42,9 @@ class VatController extends AdminBaseController
     }
 
     /**
-     * @Route("/vat/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
+    #[Route(path: '/vat/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction(int $id)
     {
         try {
@@ -79,11 +77,11 @@ class VatController extends AdminBaseController
     }
 
     /**
-     * @Route("/vat/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/vat/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(Request $request, $id)
     {
         $newId = $request->get('newId');

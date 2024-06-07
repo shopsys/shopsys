@@ -63,10 +63,10 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/customer/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id)
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
@@ -111,9 +111,9 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/customer/list/')]
     public function listAction(Request $request)
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -158,9 +158,9 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/customer/new/')]
     public function newAction(Request $request)
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
@@ -198,10 +198,10 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {
@@ -223,9 +223,9 @@ class CustomerController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer/login-as-user/{customerUserId}/", requirements={"id" = "\d+"})
      * @param int $customerUserId
      */
+    #[Route(path: '/customer/login-as-user/{customerUserId}/', requirements: ['id' => '\d+'])]
     public function loginAsUserAction($customerUserId)
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);

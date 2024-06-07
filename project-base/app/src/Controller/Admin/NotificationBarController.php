@@ -35,9 +35,9 @@ class NotificationBarController extends AdminBaseController
     }
 
     /**
-     * @Route("/notification-bar/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/notification-bar/list/')]
     public function listAction(): Response
     {
         $queryBuilder = $this->notificationBarFacade->getAllByDomainIdQueryBuilderForGrid($this->adminDomainTabsFacade->getSelectedDomainId());
@@ -61,10 +61,10 @@ class NotificationBarController extends AdminBaseController
     }
 
     /**
-     * @Route("/notification-bar/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/notification-bar/new/')]
     public function newAction(Request $request): Response
     {
         $notificationBarData = $this->notificationBarDataFactory->create();
@@ -94,11 +94,11 @@ class NotificationBarController extends AdminBaseController
     }
 
     /**
-     * @Route("/notification-bar/edit/{id}", requirements={"id"="\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/notification-bar/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $notificationBar = $this->notificationBarFacade->getById($id);
@@ -134,11 +134,11 @@ class NotificationBarController extends AdminBaseController
     }
 
     /**
-     * @Route("/notification-bar/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/notification-bar/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

@@ -25,10 +25,10 @@ class CustomerCommunicationController extends AdminBaseController
     }
 
     /**
-     * @Route("/customer-communication/order-submitted/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/customer-communication/order-submitted/')]
     public function orderSubmittedAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

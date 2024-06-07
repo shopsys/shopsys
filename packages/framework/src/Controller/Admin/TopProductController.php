@@ -23,9 +23,9 @@ class TopProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/top-product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/product/top-product/list/')]
     public function listAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

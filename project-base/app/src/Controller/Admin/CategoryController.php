@@ -52,10 +52,10 @@ class CategoryController extends BaseCategoryController
     }
 
     /**
-     * @Route("/category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/list/')]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'category';

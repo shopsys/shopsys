@@ -32,9 +32,7 @@ class CurrencyController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/currency/list/")
-     */
+    #[Route(path: '/currency/list/')]
     public function listAction()
     {
         $grid = $this->currencyInlineEdit->getGrid();
@@ -45,9 +43,9 @@ class CurrencyController extends AdminBaseController
     }
 
     /**
-     * @Route("/currency/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
+    #[Route(path: '/currency/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction($id)
     {
         try {
@@ -64,10 +62,10 @@ class CurrencyController extends AdminBaseController
     }
 
     /**
-     * @Route("/currency/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/currency/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {

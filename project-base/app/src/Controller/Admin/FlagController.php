@@ -44,10 +44,10 @@ class FlagController extends BaseFlagController
     }
 
     /**
-     * @Route("/product/flag/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/flag/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction(int $id): Response
     {
         try {
@@ -74,11 +74,11 @@ class FlagController extends BaseFlagController
     }
 
     /**
-     * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/flag/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id): Response
     {
         try {
@@ -109,9 +109,9 @@ class FlagController extends BaseFlagController
     }
 
     /**
-     * @Route("/product/flag/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/flag/list/')]
     public function listAction(): Response
     {
         $grid = $this->flagGridFactory->create();
@@ -122,11 +122,11 @@ class FlagController extends BaseFlagController
     }
 
     /**
-     * @Route("/product/flag/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/flag/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $flag = $this->flagFacade->getById($id);
@@ -165,10 +165,10 @@ class FlagController extends BaseFlagController
     }
 
     /**
-     * @Route("/product/flag/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/flag/new/')]
     public function newAction(Request $request): Response
     {
         $flagData = $this->flagDataFactory->create();
