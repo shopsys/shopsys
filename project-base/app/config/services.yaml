@@ -685,9 +685,6 @@ services:
         class: 'App\Component\Validator\FlysystemFileValidatorDecorator'
         public: true
 
-    sensio_framework_extra.psr7.http_message_factory:
-        class: Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory
-
     validator.validator_factory:
         arguments:
             - ~

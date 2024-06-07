@@ -642,9 +642,6 @@
     "seld/phar-utils": {
         "version": "1.0.1"
     },
-    "sensio/framework-extra-bundle": {
-        "version": "v3.0.29"
-    },
     "sentry/sdk": {
         "version": "2.2.0"
     },
