@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -33,7 +34,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {
         $referer = $request->headers->get('referer');
 
@@ -54,7 +55,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         if ($request->isXmlHttpRequest()) {
             $responseData = [

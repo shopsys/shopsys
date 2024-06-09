@@ -27,7 +27,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @return \Symfony\Component\Routing\RequestContext
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -35,7 +35,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
@@ -49,21 +49,21 @@ class CurrentDomainRouter implements ChainRouterInterface
     }
 
     /**
-     * @param string $routeName
+     * @param string $name
      * @param array $parameters
      * @param int $referenceType
      * @return string
      */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
-        return $this->getDomainRouter()->generate($routeName, $parameters, $referenceType);
+        return $this->getDomainRouter()->generate($name, $parameters, $referenceType);
     }
 
     /**
      * @param string $pathinfo
      * @return array
      */
-    public function match($pathinfo)
+    public function match(string $pathinfo): array
     {
         return $this->getDomainRouter()->match($pathinfo);
     }
@@ -71,7 +71,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Router\DomainRouter
      */
-    protected function getDomainRouter()
+    protected function getDomainRouter(): DomainRouter
     {
         return $this->domainRouterFactory->getRouter($this->domain->getId());
     }
@@ -80,7 +80,7 @@ class CurrentDomainRouter implements ChainRouterInterface
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param int $priority
      */
-    public function add($router, $priority = 0)
+    public function add($router, $priority = 0): void
     {
         $this->getDomainRouter()->add($router, $priority);
     }
@@ -88,7 +88,7 @@ class CurrentDomainRouter implements ChainRouterInterface
     /**
      * @return \Symfony\Component\Routing\RouterInterface[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->getDomainRouter()->all();
     }
@@ -97,7 +97,7 @@ class CurrentDomainRouter implements ChainRouterInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return array
      */
-    public function matchRequest(Request $request)
+    public function matchRequest(Request $request): array
     {
         return $this->getDomainRouter()->matchRequest($request);
     }

@@ -368,7 +368,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = [];
 

@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Routing\RouteCollection;
 
 class CurrentDomainRouterTest extends TestCase
@@ -28,7 +28,7 @@ class CurrentDomainRouterTest extends TestCase
         $pathInfo = 'pathInfo';
         $matchResult = ['matchResult'];
         $getRouteCollectionResult = new RouteCollection();
-        $routerMock = $this->getMockBuilder(Router::class)
+        $routerMock = $this->getMockBuilder(DomainRouter::class)
             ->setMethods(['__construct', 'generate', 'match', 'getRouteCollection'])
             ->disableOriginalConstructor()
             ->getMock();

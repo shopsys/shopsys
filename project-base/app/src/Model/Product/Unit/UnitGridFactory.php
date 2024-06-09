@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory as BaseUnitGridFa
 
 class UnitGridFactory extends BaseUnitGridFactory
 {
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
     public function create()
     {
         $grid = parent::create();
