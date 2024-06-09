@@ -12,7 +12,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function transform($value)
+    public function transform($value): mixed
     {
         $value['mailWhitelist'] = $this->doTransformMailWhitelist($value['mailWhitelist'] ?? null);
 
@@ -22,7 +22,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         $value['mailWhitelist'] = $this->doReverseTransformMailWhitelist($value['mailWhitelist'] ?? []);
 
