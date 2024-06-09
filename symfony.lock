@@ -339,18 +339,6 @@
     "nikic/php-parser": {
         "version": "v4.2.5"
     },
-    "nyholm/psr7": {
-        "version": "1.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
-        },
-        "files": [
-            "project-base/config/packages/nyholm_psr7.yaml"
-        ]
-    },
     "overblog/dataloader-bundle": {
         "version": "v0.5.2"
     },
