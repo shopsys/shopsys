@@ -103,10 +103,16 @@ msgstr ""
 msgid "Please enter telephone number"
 msgstr ""
 
+msgid "Please enter the message"
+msgstr ""
+
 msgid "Please enter valid email"
 msgstr ""
 
 msgid "Please enter your email address"
+msgstr ""
+
+msgid "Please enter your name"
 msgstr ""
 
 msgid "Please enter zip code"

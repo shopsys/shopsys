@@ -124,9 +124,6 @@ msgstr "Vyplňte prosím ulici"
 msgid "Please enter telephone number"
 msgstr "Vyplňte prosím telefonní číslo"
 
-msgid "Please enter the message"
-msgstr "Vyplňte prosím zprávu"
-
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
 
@@ -138,9 +135,6 @@ msgstr "Prosím vyplňte vaše město"
 
 msgid "Please enter your email address"
 msgstr "Vyplňte prosím e-mail"
-
-msgid "Please enter your name"
-msgstr "Vyplňte prosím své jméno"
 
 msgid "Please enter your postal code"
 msgstr "Prosím vyplňte vaše PSČ"
