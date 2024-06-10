@@ -13,6 +13,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery as BaseOrdersQuer
 /**
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @property \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
+ * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade)
  */
 class OrdersQuery extends BaseOrdersQuery
 {
