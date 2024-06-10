@@ -5,6 +5,5 @@ Mutation:
         - 'CustomerUserMutation'
         - 'PersonalDataMutation'
         - 'CustomerMutation'
-        - 'ContactFormMutation'
         - 'RegisterMutation'
         - 'LoginMutation'

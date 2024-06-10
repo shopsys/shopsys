@@ -1,0 +1,28 @@
+ContactInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            name:
+                type: "String!"
+                description: "Name of the sender"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your name"
+            email:
+                type: "String!"
+                description: "Email address of the sender"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your email address"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+            message:
+                type: "String!"
+                description: "Message sent to recipient"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter the message"
