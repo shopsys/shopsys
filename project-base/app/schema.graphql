@@ -1958,7 +1958,7 @@ type SeoPage implements Hreflang {
   title: String
 }
 
-"Represents setting of SEO"
+"Represents settings of SEO"
 type SeoSetting {
   "Description of the content of a web page"
   metaDescription: String!

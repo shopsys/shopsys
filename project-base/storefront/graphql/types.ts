@@ -2576,7 +2576,7 @@ export type TypeSeoPage = TypeHreflang & {
   title: Maybe<Scalars['String']['output']>;
 };
 
-/** Represents setting of SEO */
+/** Represents settings of SEO */
 export type TypeSeoSetting = {
   __typename?: 'SeoSetting';
   /** Description of the content of a web page */

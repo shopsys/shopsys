@@ -7192,7 +7192,7 @@ Document's title that is shown in a browser's title
 
 ### SeoSetting
 
-Represents setting of SEO
+Represents settings of SEO
 
 <table>
 <thead>
