@@ -1,10 +1,8 @@
-PriceDecorator:
-    type: object
+PriceInterfaceDecorator:
+    type: interface
     decorator: true
     config:
         description: "Represents the price"
-        interfaces:
-            - 'PriceInterface'
         fields:
             priceWithVat:
                 type: "Money!"
