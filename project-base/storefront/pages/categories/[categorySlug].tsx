@@ -10,6 +10,10 @@ import {
 } from 'components/Pages/CategoryDetail/categoryDetailUtils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
+    AdvertsQueryDocument,
+    TypeAdvertsQueryVariables,
+} from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
+import {
     TypeCategoryDetailQuery,
     TypeCategoryDetailQueryVariables,
     CategoryDetailQueryDocument,
@@ -92,6 +96,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 t,
             });
 
+            let categoryUuid: string | null = null;
+
             if (isRedirectedFromSsr(context.req.headers)) {
                 const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
                 const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
@@ -118,6 +124,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     categoryProductsResponsePromise,
                 ]);
 
+                categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
+
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     categoryDetailResponse.error?.graphQLErrors,
                     categoryDetailResponse.data?.category,
@@ -129,11 +137,25 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 }
             }
 
-            const initServerSideData = await initServerSideProps({
+            const initServerSideData = await initServerSideProps<TypeAdvertsQueryVariables>({
                 domainConfig,
                 context,
                 client,
                 ssrExchange,
+                prefetchedQueries: [
+                    {
+                        query: AdvertsQueryDocument,
+                        variables: { positionName: 'productList', categoryUuid },
+                    },
+                    {
+                        query: AdvertsQueryDocument,
+                        variables: { positionName: 'productListMiddle', categoryUuid },
+                    },
+                    {
+                        query: AdvertsQueryDocument,
+                        variables: { positionName: 'productListSecondRow', categoryUuid },
+                    },
+                ],
             });
 
             return initServerSideData;

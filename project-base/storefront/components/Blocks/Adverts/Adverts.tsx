@@ -1,10 +1,7 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Image } from 'components/Basic/Image/Image';
+import { AdvertImage } from './AdvertImage';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeAdvertsFragment } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
-import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type PositionNameType =
@@ -33,57 +30,25 @@ export const Adverts: FC<AdvertsProps> = ({
     className,
     isSingle,
 }) => {
-    const [{ data: advertsData }] = useAdvertsQuery();
-
-    const filteredAdverts = advertsData?.adverts.filter((advert) => advert.positionName === positionName);
+    const [{ data: advertsData }] = useAdvertsQuery({
+        variables: {
+            categoryUuid: currentCategory?.uuid || null,
+            positionName,
+        },
+    });
+    const adverts = advertsData?.adverts ?? [];
     const displayedAdverts =
-        isSingle && filteredAdverts?.length
-            ? [filteredAdverts[Math.floor(Math.random() * filteredAdverts.length)]]
-            : filteredAdverts;
+        isSingle && adverts.length ? [adverts[Math.floor(Math.random() * adverts.length)]] : adverts;
 
-    const content = !!displayedAdverts?.length && (
+    const content = !!displayedAdverts.length && (
         <div className={twJoin(withGapBottom && 'mb-8', withGapTop && 'mt-8', !withWebline && className)}>
-            {displayedAdverts
-                .filter((advert) => shouldBeShown(advert, positionName, currentCategory))
-                .map((advert, index) => {
-                    if (advert.__typename === 'AdvertImage') {
-                        const mainImage = advert.mainImage;
-                        const mainImageMobile = advert.mainImageMobile;
+            {displayedAdverts.map((advert) => {
+                if (advert.__typename === 'AdvertImage') {
+                    return <AdvertImage key={advert.uuid} advert={advert} />;
+                }
 
-                        const ImageComponent = (
-                            <>
-                                <Image
-                                    alt={mainImage?.name || advert.name}
-                                    className="hidden lg:block"
-                                    height={400}
-                                    src={mainImage?.url}
-                                    width={1280}
-                                />
-                                <Image
-                                    alt={mainImageMobile?.name || advert.name}
-                                    className="lg:hidden"
-                                    height={300}
-                                    src={mainImageMobile?.url}
-                                    width={770}
-                                />
-                            </>
-                        );
-
-                        return (
-                            <Fragment key={index}>
-                                {advert.link ? (
-                                    <ExtendedNextLink href={advert.link} target="_blank">
-                                        {ImageComponent}
-                                    </ExtendedNextLink>
-                                ) : (
-                                    ImageComponent
-                                )}
-                            </Fragment>
-                        );
-                    }
-
-                    return <div key={index} dangerouslySetInnerHTML={{ __html: advert.code }} />;
-                })}
+                return <div key={advert.uuid} dangerouslySetInnerHTML={{ __html: advert.code }} />;
+            })}
         </div>
     );
 
@@ -92,30 +57,4 @@ export const Adverts: FC<AdvertsProps> = ({
     }
 
     return content || null;
-};
-
-const shouldBeShown = (
-    advert: TypeAdvertsFragment | undefined,
-    positionName: PositionNameType,
-    currentCategory?: TypeCategoryDetailFragment,
-): boolean => {
-    if (!advert || advert.positionName !== positionName) {
-        return false;
-    }
-
-    const isAdvertWithCategoryRestriction = ['productList', 'productListMiddle', 'productListSecondRow'].includes(
-        advert.positionName,
-    );
-
-    if (isAdvertWithCategoryRestriction && !advert.categories.length) {
-        return false;
-    }
-
-    for (const category of advert.categories) {
-        if (category.slug === currentCategory?.slug || category.slug === currentCategory?.originalCategorySlug) {
-            return true;
-        }
-    }
-
-    return !isAdvertWithCategoryRestriction && advert.positionName === positionName;
 };

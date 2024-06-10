@@ -1,6 +1,9 @@
 import { Variables } from '@urql/exchange-graphcache';
 import { DocumentNode } from 'graphql';
-import { AdvertsQueryDocument } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
+import {
+    AdvertsQueryDocument,
+    TypeAdvertsQueryVariables,
+} from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import {
     TypeArticlesQueryVariables,
     ArticlesQueryDocument,
@@ -88,7 +91,11 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 
     const prefetchQueries: QueriesArray<
-        TypeArticlesQueryVariables | TypeSettingsQueryVariables | TypeSeoPageQueryVariables | VariablesType
+        | TypeAdvertsQueryVariables
+        | TypeArticlesQueryVariables
+        | TypeSettingsQueryVariables
+        | TypeSeoPageQueryVariables
+        | VariablesType
     > = [
         { query: NotificationBarsDocument },
         { query: NavigationQueryDocument },
@@ -104,7 +111,8 @@ export const initServerSideProps = async <VariablesType extends Variables>({
                 first: 100,
             },
         },
-        { query: AdvertsQueryDocument },
+        { query: AdvertsQueryDocument, variables: { positionName: 'header', categoryUuid: null } },
+        { query: AdvertsQueryDocument, variables: { positionName: 'footer', categoryUuid: null } },
         { query: CurrentCustomerUserQueryDocument },
         { query: SettingsQueryDocument },
         ...(seoPageSlug
