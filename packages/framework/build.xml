@@ -232,12 +232,13 @@
 
     <target name="cluster-first-deploy" hidden="true" description="Run commands for first deploy to cluster.">
         <property name="production.confirm.action" value="y" override="true"/>
+        <phingcall target="db-wipe-tables-only"/>
         <phingcall target="dirs-create"/>
         <phingcall target="db-import-basic-structure"/>
         <phingcall target="db-migrations"/>
         <phingcall target="domains-data-create"/>
         <phingcall target="frontend-api-generate-new-keys"/>
-        <phingcall target="elasticsearch-index-migrate"/>
+        <phingcall target="elasticsearch-index-recreate"/>
         <phingcall target="elasticsearch-export"/>
         <phingcall target="error-pages-generate"/>
         <phingcall target="warmup"/>
@@ -424,6 +425,15 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:schema:create"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="db-wipe-tables-only" depends="production-protection" description="Drops all tables in the database." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:schema:drop"/>
+            <arg value="--tables-only"/>
             <arg value="--verbose"/>
         </exec>
     </target>

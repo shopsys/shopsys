@@ -7,21 +7,17 @@ namespace Shopsys\FrameworkBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20180730135725 extends AbstractMigration
+class Version20240604152553 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $this->sql(
-            'CREATE OR REPLACE FUNCTION field(integer, integer[])
-            RETURNS integer AS
-            $$
-            SELECT COALESCE(( SELECT i FROM generate_subscripts($2, 1) gs(i) WHERE $2[i] = $1 ), 0)
-            $$
-            LANGUAGE SQL STABLE',
-        );
+        $this->isAppMigrationNotInstalledRemoveIfExists('Version20200617101511');
+
+        $this->sql('DROP TABLE IF EXISTS advert_category');
+        $this->sql('DROP TABLE IF EXISTS entity');
     }
 
     /**

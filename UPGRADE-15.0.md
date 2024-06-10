@@ -1027,6 +1027,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   class `Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository` is now strictly typed
 -   see #project-base-diff to update your project
 
+#### minor improvements related to deployment ([#3201](https://github.com/shopsys/shopsys/pull/3201))
+
+-   not used database tables `advert_category` and `entity` were removed in migration `Version20240604152553`
+-   update `shopsys/deployment` package to a new major version
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

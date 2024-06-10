@@ -141,7 +141,7 @@
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/deployment": "~2.1.0",
+        "shopsys/deployment": "~3.0.2",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/ordered-form": "^5.2",
         "snc/redis-bundle": "^4.4.1",
