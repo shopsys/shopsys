@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Order;
+namespace Shopsys\FrontendApiBundle\Model\Order;
 
-use App\Model\Order\Item\OrderItem;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 
 class OrderItemRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
-    public function __construct(private EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $entityManager,
+    ) {
     }
 
     /**
-     * @param \App\Model\Order\Order[] $orders
-     * @return \App\Model\Order\Item\OrderItem[][]
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order[] $orders
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[][]
      */
     public function loadAllByOrders(array $orders): array
     {
@@ -35,7 +36,7 @@ class OrderItemRepository
             ->orderBy('oi.id')
             ->getQuery()->execute();
 
-        /** @var \App\Model\Order\Item\OrderItem $orderItem */
+        /** @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem */
         foreach ($orderItems as $orderItem) {
             $allOrderItemsByOrderId[$orderItem->getOrder()->getId()][] = $orderItem;
         }

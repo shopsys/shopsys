@@ -33,10 +33,10 @@ OrderDecorator:
                 description: "Total price of the order including transport and payment prices"
 
             firstName:
-                type: "String!"
+                type: "String"
                 description: "The customer's first name"
             lastName:
-                type: "String!"
+                type: "String"
                 description: "The customer's last name"
             email:
                 type: "String!"
@@ -65,8 +65,8 @@ OrderDecorator:
                 type: "String!"
                 description: "Billing address zip code"
             country:
-                type: "String!"
-                description: "Billing address country code"
+                type: "Country!"
+                description: "Billing address country"
 
             isDeliveryAddressDifferentFromBilling:
                 type: "Boolean!"
@@ -94,8 +94,8 @@ OrderDecorator:
                 type: "String"
                 description: "Zip code for delivery"
             deliveryCountry:
-                type: "String"
-                description: "Country code for delivery"
+                type: "Country"
+                description: "Country for delivery"
             note:
                 type: "String"
                 description: "Other information related to the order"
@@ -121,3 +121,9 @@ OrderDecorator:
             trackingUrl:
                 type: "String"
                 description: "The order tracking link"
+            promoCode:
+                type: "String"
+                description: "Promo code (coupon) used in the order"
+            productItems:
+                type: "[OrderItem!]!"
+                description: "All product items in the order"

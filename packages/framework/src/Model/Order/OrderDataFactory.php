@@ -109,6 +109,7 @@ class OrderDataFactory
 
         $orderData->heurekaAgreement = $order->isHeurekaAgreement();
         $orderData->trackingNumber = $order->getTrackingNumber();
+        $orderData->gtmCoupon = $order->getGtmCoupon();
     }
 
     /**

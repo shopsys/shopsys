@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Order;
+namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
@@ -11,14 +11,16 @@ class OrderItemsBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \App\FrontendApi\Model\Order\OrderItemFacade $orderItemFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemFacade $orderItemFacade
      */
-    public function __construct(private PromiseAdapter $promiseAdapter, private OrderItemFacade $orderItemFacade)
-    {
+    public function __construct(
+        protected readonly PromiseAdapter $promiseAdapter,
+        protected readonly OrderItemFacade $orderItemFacade,
+    ) {
     }
 
     /**
-     * @param \App\Model\Order\Order[] $orders
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order[] $orders
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadAllByOrders(array $orders): Promise

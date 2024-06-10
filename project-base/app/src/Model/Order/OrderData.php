@@ -23,8 +23,4 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  */
 class OrderData extends BaseOrderData
 {
-    /**
-     * @var string|null
-     */
-    public $gtmCoupon;
 }
