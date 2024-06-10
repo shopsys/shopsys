@@ -73,6 +73,9 @@ return [
         __DIR__ . '/src/*',
         __DIR__ . '/tests/App/*',
     ],
+    \Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff::class => [
+        __DIR__ . '/app/downloadPhing.php',
+    ],
     MethodDeclarationSniff::class . '.Underscore' => [
         __DIR__ . '/tests/App/Test/Codeception/Helper/CloseNewlyOpenedWindowsHelper.php',
         __DIR__ . '/tests/App/Test/Codeception/Helper/DatabaseHelper.php',

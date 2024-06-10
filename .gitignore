@@ -18,3 +18,5 @@
 /.env.*.local
 /utils/releaser/.phpunit.cache
 /packages/frontend-api/.phpunit.cache
+
+/phing.phar

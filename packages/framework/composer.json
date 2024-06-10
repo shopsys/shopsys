@@ -70,6 +70,7 @@
         "league/iso3166": "^4.2.1",
         "nette/utils": "^3.0",
         "nikic/php-parser": "^5.0",
+        "phar-io/version": "^3.0",
         "phpdocumentor/reflection-docblock": "^5.3.0",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable": "^3.3.0",

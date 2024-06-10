@@ -30,3 +30,5 @@ yarn-error.log
 /assets/public/frontend_svg.less
 
 /.phpunit.cache
+
+/phing.phar

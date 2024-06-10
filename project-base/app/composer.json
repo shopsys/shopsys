@@ -62,7 +62,6 @@
         "league/flysystem-aws-s3-v3": "^3.12.2",
         "nette/utils": "^3.2",
         "overblog/dataloader-bundle": "^0.6.0",
-        "phing/phing": "dev-tl-add-support-sebastian-version-5 as 3.0.0",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "scheb/2fa-bundle": "^5.7",
@@ -161,6 +160,7 @@
             "@security-check"
         ],
         "auto-scripts": {
+            "php app/downloadPhing.php --phing-version=3.0.0": "script",
             "php phing clean": "script",
             "shopsys:domains-urls:configure": "symfony-cmd",
             "ckeditor:install --clear=skip --release=full --tag=4.5.11": "symfony-cmd"
@@ -194,11 +194,5 @@
             "require": "^5.4",
             "docker": false
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/TomasLudvik/phing"
-        }
-    ]
+    }
 }

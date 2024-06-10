@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
 use App\Model\Order\Order;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
