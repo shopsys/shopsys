@@ -17,3 +17,7 @@ LoginInputDecorator:
                 type: "Boolean!"
                 description: "A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid"
                 defaultValue: false
+            cartUuid:
+                type: "Uuid"
+                description: "Uuid of the cart that should be merged to the cart of the user"
+                defaultValue: null
