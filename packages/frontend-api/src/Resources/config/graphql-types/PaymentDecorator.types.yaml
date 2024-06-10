@@ -35,9 +35,20 @@ PaymentDecorator:
                     type:
                         type: "String"
                         defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Payment image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
             transports:
                 type: "[Transport!]!"
                 description: "List of assigned transports"
             goPayPaymentMethod:
                 type: "GoPayPaymentMethod"
                 description: "Additional data for GoPay payment"
+            type:
+                type: "String!"
+                description: "Type of payment"
