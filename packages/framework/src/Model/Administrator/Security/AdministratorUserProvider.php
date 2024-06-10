@@ -116,7 +116,7 @@ class AdministratorUserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
-    public function supportsClass($class): bool
+    public function supportsClass(string $class): bool
     {
         return $class === Administrator::class || is_subclass_of($class, Administrator::class);
     }

@@ -32,7 +32,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response|null
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {

@@ -1183,6 +1183,48 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `PriceInterface` graphql type was removed
 -   see #project-base-diff to update your project
 
+#### resolve some deprecations to prepare for easier upgrade to Symfony 6 ([#3209](https://github.com/shopsys/shopsys/pull/3209))
+
+-   `nyholm/psr7` package was removed from the project
+-   `sensio/framework-extra-bundle` package was removed from the project
+-   the description of every Symfony command is now defined in the attribute `#[AsCommand]` instead of the `configure()` method
+-   the `@Route` annotation in the Admin controllers was replaced with the `#[Route]` attribute
+-   the method `Shopsys\FormTypesBundle\YesNoType::getParent()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Component\AnnotatedRouteControllerLoader::getDefaultRouteName()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigDefinition::getConfigTreeBuilder()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Component\Domain\Config\DomainsUrlsConfigDefinition::getConfigTreeBuilder()` is now strictly typed
+-   the constructor of `Shopsys\FrameworkBundle\Component\Domain\DomainIconProcessor` accepts `Monolog\Logger` as a first argument instead of `\Symfony\Bridge\Monolog\Logger`
+-   the method `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition::getConfigTreeBuilder()` is now strictly typed
+-   the class `Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter::setContext()` is now strictly typed
+-   the class `Shopsys\FrameworkBundle\Component\Translation\CustomTransFiltersVisitor` no longer extends `AbstractNodeVisitor`, but implements `NodeVisitorInterface` instead
+-   the class `Shopsys\FrameworkBundle\Component\Translation\Translator` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigDefinition::getConfigTreeBuilder()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType::getBlockPrefix()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Form\DisplayVariablesType::getParent()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Form\GrapesJsType::getParent()` is now strictly typed
+-   the class `Shopsys\FrameworkBundle\Form\Transformers\MailWhitelistTransformer` is now strictly typed
+-   the class `Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Administrator\Administrator::getRoles()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider::refreshUser()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider::supportsClass()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider::refreshUser()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider::supportsClass()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator::getBreadcrumbItems()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler::onAuthenticationSuccess()` is now strictly typed
+-   the method `Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler::onAuthenticationFailure()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\DeliveryAddressUuid::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\ProductInOrder::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\PromoCode::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Component\Constraints\TransportInOrder::getTargets()` is now strictly typed
+-   the method `Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery::ordersQuery()` is now strictly typed
+-   you may simplify the [upgrade of your project with Rector](https://docs.shopsys.com/en/15.0/project/upgrade-your-project-with-rector/)
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

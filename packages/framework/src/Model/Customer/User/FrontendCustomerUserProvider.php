@@ -101,7 +101,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
-    public function supportsClass($class): bool
+    public function supportsClass(string $class): bool
     {
         return $class === CustomerUser::class || is_subclass_of($class, CustomerUser::class);
     }
