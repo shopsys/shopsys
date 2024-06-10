@@ -5,5 +5,5 @@ UnitDecorator:
         description: "Represents a unit"
         fields:
             name:
-                type: "String"
+                type: "String!"
                 description: "Localized unit name (domain dependent)"
