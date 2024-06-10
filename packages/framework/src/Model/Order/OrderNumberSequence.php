@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="order_number_sequences")
  * @ORM\Entity
+ * @phpstan-ignore-next-line // Factory is not implemented as this entity is not supposed to be created in application
  */
 class OrderNumberSequence
 {

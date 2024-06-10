@@ -6,32 +6,34 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Exception;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNumberSequenceNotFoundException;
 
 class OrderNumberSequenceRepository
 {
-    protected const ID = 1;
+    protected const int ID = 1;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Model\Order\OrderNumberSequence>
      */
-    protected function getOrderNumberSequenceRepository()
+    protected function getOrderNumberSequenceRepository(): EntityRepository
     {
         return $this->em->getRepository(OrderNumberSequence::class);
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getNextNumber()
+    public function getNextNumber(): string
     {
         try {
             $this->em->beginTransaction();
@@ -66,6 +68,6 @@ class OrderNumberSequenceRepository
             throw $e;
         }
 
-        return $requestedNumber;
+        return $orderNumberSequence->getNumber();
     }
 }
