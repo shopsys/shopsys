@@ -1,0 +1,12 @@
+CountryDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents country"
+        fields:
+            name:
+                type: "String!"
+                description: "Localized country name"
+            code:
+                type: "String!"
+                description: "Country code in ISO 3166-1 alpha-2"
