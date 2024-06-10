@@ -1167,6 +1167,20 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   after these manual changes run `composer install`, `php phing standards-fix` and `php phing phpstan` commands, which will probably fail on errors caused by incompatibility strict types, if so fix them manually
     -   see #project-base-diff to update your project
 
+#### move features from project-base to the packages ([#3210](https://github.com/shopsys/shopsys/pull/3210))
+
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the frontend-api package:
+    -   `Order::$gtmCoupon`
+    -   `CategoriesBatchLoader`
+    -   `ContactFormMutation` and related graphql types
+    -   `OrderItemsBatchLoader`
+    -   `CountriesQuery` and `Country` graphql type
+    -   `PriceInterface` graphql type
+    -   `File` graphql type
+    -   `Payment::mainImage` and `Payment::type` graphql fields
+    -   `AdvertImage::mainImage` graphql field
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
