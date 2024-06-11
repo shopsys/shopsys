@@ -130,6 +130,13 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $this->setDefaultLimit($promoCode);
         $this->addReferenceForDomain(self::PROMO_CODE_FOR_NEW_PRODUCT, $promoCode, Domain::FIRST_DOMAIN_ID);
 
+        $promoCodeData = $this->promoCodeDataFactory->create();
+        $promoCodeData->code = 'test100';
+        $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
+        $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
+        $promoCode = $this->promoCodeFacade->create($promoCodeData);
+        $this->setDefaultNominalLimit($promoCode);
+
         $this->loadForOtherDomains();
     }
 
@@ -144,6 +151,13 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
             $promoCodeData->domainId = $domainId;
             $promoCode = $this->promoCodeFacade->create($promoCodeData);
             $this->setDefaultLimit($promoCode);
+
+            $promoCodeData = $this->promoCodeDataFactory->create();
+            $promoCodeData->code = 'test100';
+            $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
+            $promoCodeData->domainId = $domainId;
+            $promoCode = $this->promoCodeFacade->create($promoCodeData);
+            $this->setDefaultNominalLimit($promoCode);
         }
     }
 
@@ -165,6 +179,17 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     private function setDefaultLimit(PromoCode $promoCode): void
     {
         $promoCodeLimit = $this->promoCodeLimitFactory->create('1.0', '10');
+        $promoCodeLimit->setPromoCode($promoCode);
+        $this->em->persist($promoCodeLimit);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    private function setDefaultNominalLimit(PromoCode $promoCode): void
+    {
+        $promoCodeLimit = $this->promoCodeLimitFactory->create('101', '100');
         $promoCodeLimit->setPromoCode($promoCode);
         $this->em->persist($promoCodeLimit);
         $this->em->flush();

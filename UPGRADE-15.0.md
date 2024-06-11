@@ -1033,6 +1033,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   update `shopsys/deployment` package to a new major version
 -   see #project-base-diff to update your project
 
+#### add nominal promo code to demo data ([#3197](https://github.com/shopsys/shopsys/pull/3197))
+
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))
