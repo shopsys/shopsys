@@ -10,6 +10,7 @@ import { TIDs } from 'cypress/tids';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
@@ -25,9 +26,14 @@ export const Cart: FC = ({ className }) => {
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div className={twMergeCustom('group relative lg:flex', className)}>
+        <div
+            className={twMergeCustom('group relative lg:flex', className)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             {isCartFetchingOrUnavailable && (
                 <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-graySlate py-2 opacity-50" />
             )}
@@ -58,28 +64,32 @@ export const Cart: FC = ({ className }) => {
                         : 'lg:w-[510px]',
                 )}
             >
-                {cart?.items.length ? (
+                {isHovered && (
                     <>
-                        <ul className="relative m-0 flex max-h-96 w-full list-none flex-col overflow-y-auto p-0">
-                            {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
-                            {cart.items.map((cartItem, listIndex) => (
-                                <ListItem
-                                    key={cartItem.uuid}
-                                    cartItem={cartItem}
-                                    onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
-                                />
-                            ))}
-                        </ul>
-                        <div className="flex w-full justify-end pt-5">
-                            <Button size="small" onClick={() => router.push(cartUrl)}>
-                                {t('Go to cart')}
-                            </Button>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <EmptyCartIcon className={twJoin('w-20 text-secondary')} />
+                        {cart?.items.length ? (
+                            <>
+                                <ul className="relative m-0 flex max-h-96 w-full list-none flex-col overflow-y-auto p-0">
+                                    {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
+                                    {cart.items.map((cartItem, listIndex) => (
+                                        <ListItem
+                                            key={cartItem.uuid}
+                                            cartItem={cartItem}
+                                            onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
+                                        />
+                                    ))}
+                                </ul>
+                                <div className="flex w-full justify-end pt-5">
+                                    <Button size="small" onClick={() => router.push(cartUrl)}>
+                                        {t('Go to cart')}
+                                    </Button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <span className="text-dark">{t('Your cart is currently empty.')}</span>
+                                <EmptyCartIcon className={twJoin('w-20 text-secondary')} />
+                            </>
+                        )}
                     </>
                 )}
             </div>
@@ -96,7 +106,6 @@ export const Cart: FC = ({ className }) => {
         </div>
     );
 };
-
 const CartCount: FC = ({ children }) => (
     <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold leading-normal text-white lg:-top-2 lg:-right-2">
         {children}
