@@ -1,5 +1,5 @@
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
-import { forwardRef, TextareaHTMLAttributes } from 'react';
+import { forwardRef, ReactNode, TextareaHTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
@@ -11,7 +11,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 export type TextareaProps = NativeProps & {
     value: any;
-    label: string;
+    label: ReactNode;
     hasError: boolean;
 };
 
@@ -23,7 +23,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                     disabled={disabled}
                     id={id}
                     name={name}
-                    placeholder={label}
+                    placeholder={typeof label === 'string' ? label : ' '}
                     ref={textareaForwardedProps}
                     rows={rows}
                     value={value}

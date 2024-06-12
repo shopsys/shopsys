@@ -1,17 +1,16 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
-import { Link } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
 import { useContactMutation } from 'graphql/requests/contact/mutations/ContactMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -26,15 +25,20 @@ export const ContactContent: FC = () => {
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
-    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const [, contact] = useContactMutation();
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
         async (values) => {
-            const contactResult = await contact({ input: values });
+            const { name, email, message } = values;
+            const contactResult = await contact({
+                input: {
+                    name,
+                    email,
+                    message,
+                },
+            });
 
             if (contactResult.data?.Contact !== undefined) {
                 showSuccessMessage(formMeta.messages.success);
@@ -111,20 +115,16 @@ export const ContactContent: FC = () => {
                                 rows: 4,
                             }}
                         />
-                        <div className="mb-4">
-                            <Trans
-                                defaultTrans="By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>."
-                                i18nKey="ContactFormInfo"
-                                components={{
-                                    lnk1:
-                                        privacyPolicyArticleUrl !== undefined ? (
-                                            <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
-                                        ) : (
-                                            <span />
-                                        ),
-                                }}
-                            />
-                        </div>
+                        <CheckboxControlled
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            name={formMeta.fields.privacyPolicy.name}
+                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.privacyPolicy.label,
+                                required: true,
+                            }}
+                        />
                         <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
                             {t('Send message')}
                         </SubmitButton>

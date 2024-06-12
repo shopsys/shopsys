@@ -52,6 +52,7 @@ export type ContactFormType = {
     email: string;
     name: string;
     message: string;
+    privacyPolicy: boolean;
 };
 
 export type RegistrationFormType = {
