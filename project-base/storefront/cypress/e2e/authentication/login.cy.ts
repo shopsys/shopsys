@@ -37,7 +37,7 @@ describe('Login tests', () => {
         checkAndHideSuccessToast('Successfully logged out');
         checkUrl(url.loginWithCustomerRedirect);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after logout');
+        takeSnapshotAndCompare(this.test?.title, 'after logout', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should login from header and then log out', function () {

@@ -1,6 +1,7 @@
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
 import { IconImage } from 'components/Basic/IconImage/IconImage';
+import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 
 export const FooterContact: FC = () => {
@@ -10,7 +11,10 @@ export const FooterContact: FC = () => {
         <>
             <div className="h4 mb-3 text-center uppercase text-white">{t('Follow Us')}</div>
 
-            <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-graySlate">
+            <div
+                className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-graySlate"
+                tid={TIDs.footer_social_links}
+            >
                 <FooterContactSocialsItem href="#" title="Instagram">
                     <InstagramIcon className="w-8 text-white" />
                 </FooterContactSocialsItem>

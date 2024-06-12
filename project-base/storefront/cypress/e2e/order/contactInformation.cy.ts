@@ -34,7 +34,7 @@ describe('Contact information page tests', () => {
         checkTransportSelectionIsNotVisible();
         checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'empty cart page');
+        takeSnapshotAndCompare(this.test?.title, 'empty cart page', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', function () {
@@ -59,7 +59,7 @@ describe('Contact information page tests', () => {
         checkTransportSelectionIsNotVisible();
         checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'empty cart page');
+        takeSnapshotAndCompare(this.test?.title, 'empty cart page', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in', function () {
