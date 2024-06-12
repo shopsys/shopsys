@@ -1,6 +1,7 @@
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentListItem } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
+import { getIsGoPayBankTransferPayment } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
@@ -29,7 +30,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
     const isBankSelectVisible =
         payment.uuid === selectedPaymentForChange?.uuid &&
         payment.type === 'goPay' &&
-        payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' &&
+        getIsGoPayBankTransferPayment(payment) &&
         setSelectedPaymentSwiftForChange;
 
     return (

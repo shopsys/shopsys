@@ -786,15 +786,6 @@ Return personal data page content and URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>privacyPolicyArticle</strong></td>
-<td valign="top"><a href="#articlesite">ArticleSite</a></td>
-<td>
-
-Returns privacy policy article
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>product</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>
@@ -1114,15 +1105,6 @@ Returns list of stores that can be paginated using `first`, `last`, `before` and
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>termsAndConditionsArticle</strong></td>
-<td valign="top"><a href="#articlesite">ArticleSite</a></td>
-<td>
-
-Returns Terms and Conditions article
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>transport</strong></td>
 <td valign="top"><a href="#transport">Transport</a></td>
 <td>
@@ -1149,15 +1131,6 @@ Returns available transport methods based on the current cart state
 <td colspan="2" align="right" valign="top">cartUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>userConsentPolicyArticle</strong></td>
-<td valign="top"><a href="#articlesite">ArticleSite</a></td>
-<td>
-
-Returns User consent policy article
-
-</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>Variant</strong></td>
@@ -7311,11 +7284,38 @@ Settings related to pricing
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>privacyPolicyArticleUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Returns privacy policy article's url
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>seo</strong></td>
 <td valign="top"><a href="#seosetting">SeoSetting</a>!</td>
 <td>
 
 Settings related to SEO
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>termsAndConditionsArticleUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Returns Terms and Conditions article's url
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>userConsentPolicyArticleUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Returns User consent policy article's url
 
 </td>
 </tr>

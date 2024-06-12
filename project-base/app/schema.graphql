@@ -1696,8 +1696,6 @@ type Query {
   payments: [Payment!]!
   "Return personal data page content and URL"
   personalDataPage: PersonalDataPage
-  "Returns privacy policy article"
-  privacyPolicyArticle: ArticleSite
   "Returns product filtered using UUID or URL slug"
   product(urlSlug: String, uuid: Uuid): Product
   "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
@@ -1738,14 +1736,10 @@ type Query {
   store(urlSlug: String, uuid: Uuid): Store
   "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
   stores(after: String, before: String, first: Int, last: Int): StoreConnection!
-  "Returns Terms and Conditions article"
-  termsAndConditionsArticle: ArticleSite
   "Returns complete list of transport methods"
   transport(uuid: Uuid!): Transport
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
-  "Returns User consent policy article"
-  userConsentPolicyArticle: ArticleSite
   Variant: Variant
 }
 
@@ -1974,8 +1968,14 @@ type Settings {
   maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
   pricing: PricingSetting!
+  "Returns privacy policy article's url"
+  privacyPolicyArticleUrl: String
   "Settings related to SEO"
   seo: SeoSetting!
+  "Returns Terms and Conditions article's url"
+  termsAndConditionsArticleUrl: String
+  "Returns User consent policy article's url"
+  userConsentPolicyArticleUrl: String
 }
 
 type SliderItem {

@@ -11,12 +11,11 @@ import { mapConnectionEdges } from 'utils/mappers/connection';
 
 export type BlogPreviewProps = {
     blogArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
-    blogUrl: string | undefined;
+    blogUrl: string | null | undefined;
     fetchingArticles: boolean;
-    fetchingBlogUrl: boolean;
 };
 
-export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetchingArticles, fetchingBlogUrl }) => {
+export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetchingArticles }) => {
     const { t } = useTranslation();
 
     const blogMainItems = useMemo(
@@ -49,9 +48,9 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
                 )}
             </div>
 
-            {(fetchingArticles || fetchingBlogUrl) && <SkeletonModuleMagazine />}
+            {fetchingArticles && <SkeletonModuleMagazine />}
 
-            {!fetchingArticles && !fetchingBlogUrl && !!(blogMainItems || blogSideItems) && (
+            {!fetchingArticles && !!(blogMainItems || blogSideItems) && (
                 <div className="flex flex-col gap-16 vl:flex-row  vl:justify-between">
                     {!!blogMainItems && (
                         <div className="flex flex-1 gap-6 vl:gap-16">

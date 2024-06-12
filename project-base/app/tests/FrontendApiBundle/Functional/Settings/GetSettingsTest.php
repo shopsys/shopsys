@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
 use App\Model\Order\Order;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -63,11 +65,16 @@ CONTENT,
      */
     private function getExpectedSettings(?string $data): array
     {
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
+
         return [
             'seo' => [
                 'robotsTxtContent' => $data,
             ],
             'maxAllowedPaymentTransactions' => Order::MAX_TRANSACTION_COUNT,
+            'termsAndConditionsArticleUrl' => '/' . TransformString::stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'privacyPolicyArticleUrl' => '/' . TransformString::stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'userConsentPolicyArticleUrl' => '/' . TransformString::stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
         ];
     }
 }

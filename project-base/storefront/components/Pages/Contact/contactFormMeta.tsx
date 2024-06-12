@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail } from 'components/Forms/validationRules';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -54,8 +54,8 @@ type ContactFormMetaType = {
 
 export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFormType>): ContactFormMetaType => {
     const { t } = useTranslation();
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
-    const privacyPolicyUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
+    const [{ data: settingsData }] = useSettingsQuery();
+    const privacyPolicyUrl = settingsData?.settings?.privacyPolicyArticleUrl;
     const errors = formProviderMethods.formState.errors;
 
     const formMeta = useMemo(
@@ -88,12 +88,11 @@ export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFor
                             defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
                             i18nKey="GdprAgreementCheckbox"
                             components={{
-                                lnk1:
-                                    privacyPolicyUrl !== undefined ? (
-                                        <Link isExternal href={privacyPolicyUrl} target="_blank" />
-                                    ) : (
-                                        <span className={linkPlaceholderTwClass} />
-                                    ),
+                                lnk1: privacyPolicyUrl ? (
+                                    <Link isExternal href={privacyPolicyUrl} target="_blank" />
+                                ) : (
+                                    <span className={linkPlaceholderTwClass} />
+                                ),
                             }}
                         />
                     ),

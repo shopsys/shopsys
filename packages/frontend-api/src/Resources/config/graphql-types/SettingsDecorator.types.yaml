@@ -32,3 +32,15 @@ SettingsDecorator:
                 type: Boolean!
                 resolve: "@=query('heurekaEnabledQuery')"
                 description: "Returns true if Heureka is available for the current domain"
+            termsAndConditionsArticleUrl:
+                type: String
+                resolve: "@=query('termsAndConditionsArticleUrlQuery')"
+                description: "Returns Terms and Conditions article's url"
+            privacyPolicyArticleUrl:
+                type: String
+                resolve: "@=query('privacyPolicyArticleUrlQuery')"
+                description: "Returns privacy policy article's url"
+            userConsentPolicyArticleUrl:
+                type: String
+                resolve: "@=query('userConsentPolicyArticleUrlQuery')"
+                description: "Returns User consent policy article's url"

@@ -239,7 +239,7 @@ export const getTransportAndPaymentValidationMessages = (
             errorMessage: t('Please select payment'),
         };
     }
-    if (payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && !paymentGoPayBankSwift) {
+    if (getIsGoPayBankTransferPayment(payment) && !paymentGoPayBankSwift) {
         errors.goPaySwift = {
             name: 'goPaySwift',
             label: t('Choose your bank'),
@@ -377,3 +377,6 @@ export const useTransportAndPaymentPageNavigation = (validationMessages: Partial
 
     return { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage };
 };
+
+export const getIsGoPayBankTransferPayment = (payment: Maybe<TypeSimplePaymentFragment>) =>
+    payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT';

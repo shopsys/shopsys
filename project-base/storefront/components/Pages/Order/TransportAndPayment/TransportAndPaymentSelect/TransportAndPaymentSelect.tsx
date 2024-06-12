@@ -5,9 +5,10 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import {
+    getIsGoPayBankTransferPayment,
+    getPickupPlaceDetail,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
-    getPickupPlaceDetail,
 } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -16,6 +17,8 @@ import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwif
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import Skeleton from 'react-loading-skeleton';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -38,7 +41,10 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const { t } = useTranslation();
     const { currencyCode } = useDomainConfig();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-    const [getGoPaySwiftsResult] = useGoPaySwiftsQuery({ variables: { currencyCode } });
+    const [{ data: goPaySwiftsData, fetching: areGoPaySwiftsFetching }] = useGoPaySwiftsQuery({
+        variables: { currencyCode },
+        pause: !getIsGoPayBankTransferPayment(payment),
+    });
     const { changePayment, changeGoPaySwift, resetPaymentAndGoPayBankSwift } =
         usePaymentChangeInSelect(changePaymentInCart);
     const { changeTransport, resetTransportAndPayment } = useTransportChangeInSelect(
@@ -75,9 +81,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
     const renderPaymentListItem = (paymentItem: TypeSimplePaymentFragment, isActive: boolean) => {
         const isGoPaySwiftPayment =
-            paymentItem.uuid === payment?.uuid &&
-            payment.type === 'goPay' &&
-            payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT';
+            paymentItem.uuid === payment?.uuid && payment.type === 'goPay' && getIsGoPayBankTransferPayment(payment);
 
         return (
             <TransportAndPaymentListItem key={paymentItem.uuid} isActive={isActive}>
@@ -102,19 +106,23 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     };
 
     const goPaySwiftSelect = (
-        <div className="relative w-full">
+        <div className="relative w-full flex flex-col gap-2">
             <b>{t('Choose your bank')}</b>
-            {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
-                <Radiobutton
-                    key={goPaySwift.swift}
-                    checked={paymentGoPayBankSwift === goPaySwift.swift}
-                    id={goPaySwift.swift}
-                    label={goPaySwift.name}
-                    name="goPaySwift"
-                    value={goPaySwift.swift}
-                    onChange={(event) => changeGoPaySwift(event.target.value)}
-                />
-            ))}
+            {areGoPaySwiftsFetching
+                ? createEmptyArray(2).map((_, index) => (
+                      <Skeleton key={index} className="h-6 w-36" containerClassName="h-6 w-36" />
+                  ))
+                : goPaySwiftsData?.GoPaySwifts.map((goPaySwift) => (
+                      <Radiobutton
+                          key={goPaySwift.swift}
+                          checked={paymentGoPayBankSwift === goPaySwift.swift}
+                          id={goPaySwift.swift}
+                          label={goPaySwift.name}
+                          name="goPaySwift"
+                          value={goPaySwift.swift}
+                          onChange={(event) => changeGoPaySwift(event.target.value)}
+                      />
+                  ))}
         </div>
     );
 

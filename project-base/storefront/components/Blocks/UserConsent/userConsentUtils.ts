@@ -1,8 +1,10 @@
-import { CombinedError } from 'urql';
+import { TypeSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { OperationResult, UseQueryState } from 'urql';
 
 export const getCouldNotFindUserConsentPolicyArticleUrl = (
-    userConsentPolicyArticleUrlError: CombinedError | undefined,
+    settingsQueryResponse: OperationResult<TypeSettingsQuery> | UseQueryState<TypeSettingsQuery>,
 ) =>
-    userConsentPolicyArticleUrlError?.graphQLErrors.some(
+    settingsQueryResponse.data?.settings?.userConsentPolicyArticleUrl === null ||
+    settingsQueryResponse.error?.graphQLErrors.some(
         (error) => error.extensions.userCode === 'article-not-found-user-consent-policy',
     );

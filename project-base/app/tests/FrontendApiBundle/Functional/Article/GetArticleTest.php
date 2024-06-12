@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
-use App\DataFixtures\Demo\ArticleDataFixture;
-use App\Model\Article\Article;
-use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -60,48 +55,6 @@ class GetArticleTest extends GraphQlTestCase
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
     }
 
-    public function testGetSpecialArticle(): void
-    {
-        foreach ($this->getSpecialArticleDataProvider() as $dataSet) {
-            [$graphQlType, $expectedData] = $dataSet;
-
-            $response = $this->getResponseContentForQuery($this->getSpecialArticleQuery($graphQlType));
-            $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-            $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
-
-            $this->assertArrayHasKey('uuid', $responseData);
-            $this->assertTrue(Uuid::isValid($responseData['uuid']));
-
-            $this->assertKeysAreSameAsExpected(
-                [
-                    'name',
-                    'slug',
-                    'placement',
-                    'text',
-                    'seoH1',
-                    'seoTitle',
-                    'seoMetaDescription',
-                    'breadcrumb',
-                ],
-                $responseData,
-                $expectedData,
-            );
-        }
-    }
-
-    /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
-     */
-    private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
-    {
-        foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $actual);
-            $this->assertSame($expected[$key], $actual[$key]);
-        }
-    }
-
     /**
      * @return array
      */
@@ -126,90 +79,6 @@ class GetArticleTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
-     */
-    private function getSpecialArticleDataProvider(): array
-    {
-        $termsAndConditionsArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, 1, Article::class);
-        $privacyPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, 1, Article::class);
-        $userConsentPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::USER_CONSENT_POLICY_ARTICLE, 1, Article::class);
-
-        $firstDomainLocale = $this->getLocaleForFirstDomain();
-
-        return [
-            [
-                'termsAndConditionsArticle',
-                [
-                    'name' => t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
-                    'placement' => Article::PLACEMENT_FOOTER_4,
-                    'text' => t(
-                        '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',
-                        [],
-                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale,
-                    ),
-                    'seoH1' => null,
-                    'seoTitle' => null,
-                    'seoMetaDescription' => null,
-                    'breadcrumb' => [
-                        [
-                            'name' => t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $termsAndConditionsArticle->getId()]),
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'privacyPolicyArticle',
-                [
-                    'name' => t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
-                    'placement' => Article::PLACEMENT_NONE,
-                    'text' => t(
-                        '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',
-                        [],
-                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale,
-                    ),
-                    'seoH1' => null,
-                    'seoTitle' => null,
-                    'seoMetaDescription' => null,
-                    'breadcrumb' => [
-                        [
-                            'name' => t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $privacyPolicyArticle->getId()]),
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'userConsentPolicyArticle',
-                [
-                    'name' => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
-                    'placement' => Article::PLACEMENT_NONE,
-                    'text' => t(
-                        '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',
-                        [],
-                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale,
-                    ),
-                    'seoH1' => null,
-                    'seoTitle' => null,
-                    'seoMetaDescription' => null,
-                    'breadcrumb' => [
-                        [
-                            'name' => t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $userConsentPolicyArticle->getId()]),
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
      * @param string $uuid
      * @return string
      */
@@ -221,32 +90,6 @@ class GetArticleTest extends GraphQlTestCase
                     name
                     placement
                     external
-                }
-            }
-        ';
-    }
-
-    /**
-     * @param string $specialArticle
-     * @return string
-     */
-    private function getSpecialArticleQuery(string $specialArticle): string
-    {
-        return '
-            {
-                ' . $specialArticle . ' {
-                    uuid
-                    name
-                    slug
-                    placement
-                    text
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
-                    breadcrumb {
-                        name
-                        slug
-                    }
                 }
             }
         ';
