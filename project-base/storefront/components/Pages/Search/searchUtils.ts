@@ -2,10 +2,10 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCurso
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    TypeSearchProductsQueryVariables,
     TypeSearchProductsQuery,
+    TypeSearchProductsQueryVariables,
     SearchProductsQueryDocument,
-} from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+} from 'graphql/requests/search/queries/SearchProductsQuery.generated';
 import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
 import { useRef, useState, useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';

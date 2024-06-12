@@ -3,8 +3,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchPageContent } from 'components/Pages/Search/SearchPageContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { TypeSearchProductsQueryVariables } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
-import { TypeSearchQueryVariables } from 'graphql/requests/search/queries/SearchQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -50,7 +48,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         return redirect;
     }
 
-    return initServerSideProps<TypeSearchQueryVariables | TypeSearchProductsQueryVariables>({
+    return initServerSideProps({
         context,
         redisClient,
         domainConfig,
