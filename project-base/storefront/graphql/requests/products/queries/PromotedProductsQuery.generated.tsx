@@ -88,7 +88,7 @@ export type TypePromotedProductsQuery = { __typename?: 'Query', promotedProducts
     
 
 export const PromotedProductsQueryDocument = gql`
-    query PromotedProductsQuery {
+    query PromotedProductsQuery @redisCache(ttl: 3600) {
   promotedProducts {
     ...ListedProductFragment
   }
