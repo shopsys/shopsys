@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -20,35 +20,35 @@ class NavigationItem implements OrderableEntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var int
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    private $position;
+    protected $position;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=false)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=false)
      */
-    private $url;
+    protected $url;
 
     /**
      * @var int
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $domainId;
+    protected $domainId;
 
     /**
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
     public function __construct(NavigationItemData $navigationItemData)
     {
@@ -58,7 +58,7 @@ class NavigationItem implements OrderableEntityInterface
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
     public function edit(NavigationItemData $navigationItemData): void
     {
@@ -70,7 +70,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -78,7 +78,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -86,7 +86,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl()
     {
         return $this->url;
     }
@@ -94,7 +94,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }
@@ -110,7 +110,7 @@ class NavigationItem implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getDomainId(): int
+    public function getDomainId()
     {
         return $this->domainId;
     }

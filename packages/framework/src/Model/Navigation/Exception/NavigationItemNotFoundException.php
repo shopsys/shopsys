@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation\Exception;
+namespace Shopsys\FrameworkBundle\Model\Navigation\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

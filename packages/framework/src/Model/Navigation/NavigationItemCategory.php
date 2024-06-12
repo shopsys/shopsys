@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
-use App\Model\Category\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 
 /**
  * @ORM\Table(name="navigation_item_categories")
@@ -16,40 +16,40 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 class NavigationItemCategory implements OrderableEntityInterface
 {
     /**
-     * @var \App\Model\Navigation\NavigationItem
+     * @var \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Model\Navigation\NavigationItem")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Navigation\NavigationItem")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private NavigationItem $navigationItem;
+    protected $navigationItem;
 
     /**
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
-    private int $columnNumber;
+    protected $columnNumber;
 
     /**
      * @var int
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    private int $position;
+    protected $position;
 
     /**
-     * @var \App\Model\Category\Category
+     * @var \Shopsys\FrameworkBundle\Model\Category\Category
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Model\Category\Category")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private Category $category;
+    protected $category;
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
      * @param int $columnNumber
      * @param int $position
-     * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
     public function __construct(
         NavigationItem $navigationItem,
@@ -74,15 +74,15 @@ class NavigationItemCategory implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getColumnNumber(): int
+    public function getColumnNumber()
     {
         return $this->columnNumber;
     }
 
     /**
-     * @return \App\Model\Category\Category
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getCategory(): Category
+    public function getCategory()
     {
         return $this->category;
     }
@@ -90,15 +90,15 @@ class NavigationItemCategory implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }
 
     /**
-     * @return \App\Model\Navigation\NavigationItem
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      */
-    public function getNavigationItem(): NavigationItem
+    public function getNavigationItem()
     {
         return $this->navigationItem;
     }

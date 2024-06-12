@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Navigation;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Navigation;
 
-use App\Model\Navigation\NavigationItemDetail;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail;
 
 class NavigationItemResolverMap extends ResolverMap
 {
@@ -23,7 +23,7 @@ class NavigationItemResolverMap extends ResolverMap
                     return $navigationItemDetail->getNavigationItem()->getUrl();
                 },
                 'categoriesByColumns' => static function (NavigationItemDetail $navigationItemDetail) {
-                    foreach ($navigationItemDetail->getCategoryDetailsByColumnNumber() as $columnNumber => $categories) {
+                    foreach ($navigationItemDetail->getCategoriesByColumnNumber() as $columnNumber => $categories) {
                         yield [
                             'columnNumber' => $columnNumber,
                             'categories' => $categories,

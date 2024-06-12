@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -14,15 +14,15 @@ class NavigationItemCategoryRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(
+    protected function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(
         array $navigationItems,
     ): QueryBuilder {
         return $this->em->createQueryBuilder()
@@ -35,8 +35,8 @@ class NavigationItemCategoryRepository
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
-     * @return \App\Model\Navigation\NavigationItemCategory[]
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategory[]
      */
     public function getSortedNavigationItemCategoriesByNavigationItems(array $navigationItems): array
     {
@@ -45,9 +45,9 @@ class NavigationItemCategoryRepository
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Navigation\NavigationItemCategory[]
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategory[]
      */
     public function getSortedVisibleNavigationItemCategoriesByNavigationItems(
         array $navigationItems,

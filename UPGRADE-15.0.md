@@ -1043,6 +1043,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   `ProductDemoDataFactory` class was added as a foundation for creating demo data templates for certain groups of products that has a lot of common data which is not very applicable for project base demo data but could be in real projects.
 -   see #project-base-diff to update your project
 
+#### move navigation feature from project-base to the packages ([#3218](https://github.com/shopsys/shopsys/pull/3218))
+
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework and frontend-api packages:
+    -   `NavigationItem` entity and all the related logic
+    -   `NavigationQuery`
+-   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

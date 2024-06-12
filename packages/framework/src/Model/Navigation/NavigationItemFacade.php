@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -13,17 +13,19 @@ class NavigationItemFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
-     * @param \App\Model\Navigation\NavigationItemRepository $navigationItemRepository
-     * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
-     * @param \App\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemRepository $navigationItemRepository
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFactory $navigationItemFactory
      */
     public function __construct(
-        private readonly EntityManagerDecorator $em,
-        private readonly NavigationItemRepository $navigationItemRepository,
-        private readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
-        private readonly NavigationItemDetailFactory $navigationItemDetailFactory,
-        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly EntityManagerDecorator $em,
+        protected readonly NavigationItemRepository $navigationItemRepository,
+        protected readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        protected readonly NavigationItemDetailFactory $navigationItemDetailFactory,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly NavigationItemFactory $navigationItemFactory,
     ) {
     }
 
@@ -47,7 +49,7 @@ class NavigationItemFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Navigation\NavigationItemDetail[]
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail[]
      */
     public function getOrderedNavigationItemDetails(DomainConfig $domainConfig): array
     {
@@ -58,7 +60,7 @@ class NavigationItemFacade
 
     /**
      * @param int $id
-     * @return \App\Model\Navigation\NavigationItem
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      */
     public function getById(int $id): NavigationItem
     {
@@ -66,14 +68,14 @@ class NavigationItemFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
-     * @return \App\Model\Navigation\NavigationItem
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      */
     public function create(NavigationItemData $navigationItemData): NavigationItem
     {
         $this->fixUrlInNavigationItemData($navigationItemData);
 
-        $navigationItem = new NavigationItem($navigationItemData);
+        $navigationItem = $this->navigationItemFactory->create($navigationItemData);
 
         $this->em->persist($navigationItem);
         $this->em->flush();
@@ -88,8 +90,8 @@ class NavigationItemFacade
 
     /**
      * @param int $id
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
-     * @return \App\Model\Navigation\NavigationItem
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      */
     public function edit(int $id, NavigationItemData $navigationItemData): NavigationItem
     {
@@ -109,9 +111,9 @@ class NavigationItemFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
-    private function fixUrlInNavigationItemData(NavigationItemData $navigationItemData): void
+    protected function fixUrlInNavigationItemData(NavigationItemData $navigationItemData): void
     {
         if ($navigationItemData->url === null) {
             return;
@@ -131,7 +133,7 @@ class NavigationItemFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
      */
     public function delete(NavigationItem $navigationItem): void
     {

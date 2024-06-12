@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Form\Admin\Navigation\NavigationItemFormType;
-use App\Model\Navigation\Exception\NavigationItemNotFoundException;
-use App\Model\Navigation\NavigationItem;
-use App\Model\Navigation\NavigationItemDataFactory;
-use App\Model\Navigation\NavigationItemFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Form\Admin\Navigation\NavigationItemFormType;
+use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundException;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,16 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class NavigationController extends AdminBaseController
 {
     /**
-     * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \App\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        private NavigationItemFacade $navigationItemFacade,
-        private GridFactory $gridFactory,
-        private NavigationItemDataFactory $navigationItemDataFactory,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly NavigationItemFacade $navigationItemFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly NavigationItemDataFactory $navigationItemDataFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -45,7 +44,7 @@ class NavigationController extends AdminBaseController
             $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
-        return $this->render('Admin/Content/Navigation/itemsList.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Navigation/itemsList.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -85,7 +84,7 @@ class NavigationController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/Navigation/Item/new.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Navigation/Item/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -127,7 +126,7 @@ class NavigationController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/Navigation/Item/edit.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Navigation/Item/edit.html.twig', [
             'form' => $form->createView(),
             'item' => $navigationItem,
         ]);
@@ -164,7 +163,7 @@ class NavigationController extends AdminBaseController
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    private function getGrid(int $domainId): Grid
+    protected function getGrid(int $domainId): Grid
     {
         $queryBuilder = $this->navigationItemFacade->getOrderedItemsByDomainQueryBuilder($domainId);
 

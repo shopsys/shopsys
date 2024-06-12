@@ -289,6 +289,9 @@ msgstr "Prosím vložte limit od"
 msgid "Please enter link"
 msgstr "Prosím vyplňte odkaz"
 
+msgid "Please enter link URL"
+msgstr "Vyplňte prosím URL odkazu"
+
 msgid "Please enter login"
 msgstr "Vyplňte prosím login"
 
@@ -297,6 +300,9 @@ msgstr "Vyplňte prosím název"
 
 msgid "Please enter name of advertisement area"
 msgstr "Zadejte prosím název reklamní plochy"
+
+msgid "Please enter navigation item name"
+msgstr "Zadejte prosím název položky navigace"
 
 msgid "Please enter order status name in all languages"
 msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"

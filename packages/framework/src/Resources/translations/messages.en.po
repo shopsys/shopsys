@@ -613,6 +613,9 @@ msgstr ""
 msgid "Create new holiday or internal day"
 msgstr ""
 
+msgid "Create new item"
+msgstr ""
+
 msgid "Create new order status"
 msgstr ""
 
@@ -931,6 +934,9 @@ msgstr ""
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr ""
 
+msgid "Do you really want to remove this navigation item?"
+msgstr ""
+
 msgid "Do you really want to remove this page?"
 msgstr ""
 
@@ -1100,6 +1106,12 @@ msgid "Editing email template - %name%"
 msgstr ""
 
 msgid "Editing holiday / internal day - {{ name }}"
+msgstr ""
+
+msgid "Editing item"
+msgstr ""
+
+msgid "Editing navigation item"
 msgstr ""
 
 msgid "Editing order"
@@ -1597,6 +1609,9 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
+msgid "Link URL"
+msgstr ""
+
 msgid "Link to the log in page"
 msgstr ""
 
@@ -1744,6 +1759,18 @@ msgstr ""
 msgid "Name serves only for internal use within the administration."
 msgstr ""
 
+msgid "Navigation"
+msgstr ""
+
+msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr ""
+
+msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
+msgstr ""
+
+msgid "Navigation item <strong>{{ name }}</strong> has been removed"
+msgstr ""
+
 msgid "New SEO page"
 msgstr ""
 
@@ -1778,6 +1805,12 @@ msgid "New customer"
 msgstr ""
 
 msgid "New delivery address"
+msgstr ""
+
+msgid "New item"
+msgstr ""
+
+msgid "New navigation item"
 msgstr ""
 
 msgid "New orders"
@@ -2507,6 +2540,9 @@ msgid "Selected flag doesn't exist."
 msgstr ""
 
 msgid "Selected holiday / internal day doesn't exist."
+msgstr ""
+
+msgid "Selected navigation item does not exist."
 msgstr ""
 
 msgid "Selected order doesn't exist."

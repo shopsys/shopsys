@@ -1,14 +1,4 @@
 NavigationItem:
     type: object
-    config:
-        description: "Represents a navigation structure item"
-        fields:
-            name:
-                type: "String!"
-                description: "Navigation item name"
-            link:
-                type: "String!"
-                description: "Target URL"
-            categoriesByColumns:
-                type: "[NavigationItemCategoriesByColumns!]!"
-                description: "Categories separated into columns"
+    inherits:
+        - 'NavigationItemDecorator'

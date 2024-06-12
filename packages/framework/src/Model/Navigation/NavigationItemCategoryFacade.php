@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -11,17 +11,19 @@ class NavigationItemCategoryFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Navigation\NavigationItemCategoryRepository $navigationItemCategoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryRepository $navigationItemCategoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFactory $navigationItemCategoryFactory
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly NavigationItemCategoryRepository $navigationItemCategoryRepository,
+        protected readonly EntityManagerInterface $em,
+        protected readonly NavigationItemCategoryRepository $navigationItemCategoryRepository,
+        protected readonly NavigationItemCategoryFactory $navigationItemCategoryFactory,
     ) {
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
     public function refreshCategoriesForNavigationItem(
         NavigationItem $navigationItem,
@@ -41,11 +43,11 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
      * @param int $columnNumber
-     * @param \App\Model\Category\Category[] $categories
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    private function saveCategoriesInColumn(
+    protected function saveCategoriesInColumn(
         NavigationItem $navigationItem,
         int $columnNumber,
         array $categories,
@@ -53,7 +55,7 @@ class NavigationItemCategoryFacade
         $position = 1;
 
         foreach ($categories as $category) {
-            $navigationItemCategory = new NavigationItemCategory(
+            $navigationItemCategory = $this->navigationItemCategoryFactory->create(
                 $navigationItem,
                 $columnNumber,
                 $position++,
@@ -67,8 +69,8 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @return \App\Model\Category\Category[][]
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public function getSortedCategoriesIndexedByColumnNumberForNavigationItem(NavigationItem $navigationItem): array
     {
@@ -86,9 +88,9 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Category\Category[][][]
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[][][]
      */
     public function getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber(
         array $navigationItems,

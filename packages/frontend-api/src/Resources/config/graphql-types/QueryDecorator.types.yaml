@@ -263,3 +263,7 @@ QueryDecorator:
                         validation: cascade
                 resolve: "@=query('cartQuery', args)"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
+            navigation:
+                type: '[NavigationItem!]!'
+                resolve: "@=query('navigationQuery')"
+                description: "Returns complete navigation menu"

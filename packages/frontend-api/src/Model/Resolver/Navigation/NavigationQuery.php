@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Navigation;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Navigation;
 
-use App\Model\Navigation\NavigationItemFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class NavigationQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly NavigationItemFacade $navigationItemFacade,
-        private readonly Domain $domain,
+        protected readonly NavigationItemFacade $navigationItemFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
-     * @return \App\Model\Navigation\NavigationItemDetail[]
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail[]
      */
     public function navigationQuery(): array
     {
