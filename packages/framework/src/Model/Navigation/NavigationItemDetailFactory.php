@@ -12,7 +12,7 @@ class NavigationItemDetailFactory
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      */
     public function __construct(
-        protected NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        protected readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
     }
 

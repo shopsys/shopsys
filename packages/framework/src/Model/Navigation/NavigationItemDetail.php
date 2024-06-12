@@ -7,19 +7,13 @@ namespace Shopsys\FrameworkBundle\Model\Navigation;
 class NavigationItemDetail
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Category[][]
-     */
-    protected array $categoryDetailsByColumnNumber;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[][] $categoriesByColumnNumber
      */
     public function __construct(
-        protected NavigationItem $navigationItem,
-        array $categoriesByColumnNumber,
+        protected readonly NavigationItem $navigationItem,
+        protected readonly array $categoriesByColumnNumber,
     ) {
-        $this->categoryDetailsByColumnNumber = $categoriesByColumnNumber;
     }
 
     /**
@@ -33,8 +27,8 @@ class NavigationItemDetail
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
-    public function getCategoryDetailsByColumnNumber(): array
+    public function getCategoriesByColumnNumber(): array
     {
-        return $this->categoryDetailsByColumnNumber;
+        return $this->categoriesByColumnNumber;
     }
 }

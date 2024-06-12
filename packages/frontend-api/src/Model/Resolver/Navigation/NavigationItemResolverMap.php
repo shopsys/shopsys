@@ -23,7 +23,7 @@ class NavigationItemResolverMap extends ResolverMap
                     return $navigationItemDetail->getNavigationItem()->getUrl();
                 },
                 'categoriesByColumns' => static function (NavigationItemDetail $navigationItemDetail) {
-                    foreach ($navigationItemDetail->getCategoryDetailsByColumnNumber() as $columnNumber => $categories) {
+                    foreach ($navigationItemDetail->getCategoriesByColumnNumber() as $columnNumber => $categories) {
                         yield [
                             'columnNumber' => $columnNumber,
                             'categories' => $categories,
