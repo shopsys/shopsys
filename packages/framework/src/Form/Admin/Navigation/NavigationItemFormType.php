@@ -64,7 +64,7 @@ class NavigationItemFormType extends AbstractType
                 'label' => t('Name'),
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter article name']),
+                    new Constraints\NotBlank(['message' => 'Please enter navigation item name']),
                 ],
             ])
             ->add('url', TextType::class, [

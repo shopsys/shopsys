@@ -301,6 +301,9 @@ msgstr ""
 msgid "Please enter name of advertisement area"
 msgstr ""
 
+msgid "Please enter navigation item name"
+msgstr ""
+
 msgid "Please enter order status name in all languages"
 msgstr ""
 
