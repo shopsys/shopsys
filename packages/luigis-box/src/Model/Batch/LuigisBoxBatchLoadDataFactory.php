@@ -7,7 +7,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Batch;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
-use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
+use Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory;
 use Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 
@@ -17,11 +17,13 @@ class LuigisBoxBatchLoadDataFactory
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper
      * @param \Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum $typeInLuigisBoxEnum
      * @param \Shopsys\LuigisBoxBundle\Model\Type\RecommendationTypeEnum $recommendationTypeEnum
+     * @param \Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory $facetFactory
      */
     public function __construct(
         protected readonly ProductFilterToLuigisBoxFilterMapper $productFilterToLuigisBoxFilterMapper,
         protected readonly TypeInLuigisBoxEnum $typeInLuigisBoxEnum,
         protected readonly RecommendationTypeEnum $recommendationTypeEnum,
+        protected readonly FacetFactory $facetFactory,
     ) {
     }
 
@@ -31,6 +33,7 @@ class LuigisBoxBatchLoadDataFactory
      * @param int $page
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param array $luigisBoxFilter
+     * @param string[] $facets
      * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
     public function createForSearch(
@@ -39,6 +42,7 @@ class LuigisBoxBatchLoadDataFactory
         int $page,
         Argument $argument,
         array $luigisBoxFilter = [],
+        array $facets = [],
     ): LuigisBoxBatchLoadData {
         $this->typeInLuigisBoxEnum->validateCase($type);
 
@@ -51,6 +55,8 @@ class LuigisBoxBatchLoadDataFactory
         $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxEndpointEnum::AUTOCOMPLETE : LuigisBoxEndpointEnum::SEARCH;
         $userIdentifier = $argument['searchInput']['userIdentifier'];
 
+        $facets = array_unique([...$facets, ...$this->facetFactory->getDefaultFacetNamesByType($type)], SORT_REGULAR);
+
         return new LuigisBoxSearchBatchLoadData(
             $type,
             $endpoint,
@@ -60,20 +66,8 @@ class LuigisBoxBatchLoadDataFactory
             $page,
             $luigisBoxFilter,
             $orderingMode,
-            $this->getFacetNamesByType($type),
+            $facets,
         );
-    }
-
-    /**
-     * @param string $type
-     * @return string[]
-     */
-    protected function getFacetNamesByType(string $type): array
-    {
-        return match ($type) {
-            TypeInLuigisBoxEnum::PRODUCT => LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES,
-            default => [],
-        };
     }
 
     /**
