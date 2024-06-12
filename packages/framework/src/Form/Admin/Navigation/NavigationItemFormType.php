@@ -33,8 +33,8 @@ class NavigationItemFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
+        private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
+        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
         CategoryFacade $categoryFacade,
     ) {
         $this->categoryPaths = $categoryFacade->getFullPathsIndexedByIdsForDomain(Domain::FIRST_DOMAIN_ID, LocaleHelper::LOCALE_CS);
