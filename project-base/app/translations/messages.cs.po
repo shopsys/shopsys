@@ -295,9 +295,6 @@ msgstr "Vytvořit novou skupinu práv pro administrátora"
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
 
-msgid "Create new item"
-msgstr "Vytvořit novou položku"
-
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
 
@@ -358,9 +355,6 @@ msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL mů
 msgid "Do you really want to remove this language constant translation?"
 msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
 
-msgid "Do you really want to remove this navigation item?"
-msgstr "Opravdu si přejete odstranit tuto položku navigace?"
-
 msgid "Do you really want to remove this notification bar?"
 msgstr "Opravdu chcete odebrat tuto notifikační lištu?"
 
@@ -414,12 +408,6 @@ msgstr "Editace příznaku"
 
 msgid "Editing flag - {{ name }}"
 msgstr "Editace příznaku - {{ name }}"
-
-msgid "Editing item"
-msgstr "Editace položky"
-
-msgid "Editing navigation item"
-msgstr "Editace položky navigace"
 
 msgid "Editing notification bar"
 msgstr "Editace notifikační lišty"
@@ -670,9 +658,6 @@ msgstr "Nastavení právních podmínek upraveno."
 msgid "Link Block"
 msgstr "Blok odkazu"
 
-msgid "Link URL"
-msgstr "URL odkazu"
-
 msgid "Link of text under banner"
 msgstr "Odkaz textu pod bannerem"
 
@@ -745,23 +730,11 @@ msgstr "Prefix názvu"
 msgid "Name suffix"
 msgstr "Suffix názvu"
 
-msgid "Navigation"
-msgstr "Navigace"
-
 msgid "Navigation - full"
 msgstr "Navigace - vše"
 
 msgid "Navigation - view"
 msgstr "Navigace - zobrazení"
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr "Byla vytvořena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
-msgstr "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Navigation item <strong>{{ name }}</strong> has been removed"
-msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
 
 msgid "New"
 msgstr "Novinka"
@@ -780,12 +753,6 @@ msgstr "Nový svátek / interní den"
 
 msgid "New flag"
 msgstr "Nový příznak"
-
-msgid "New item"
-msgstr "Nová položka"
-
-msgid "New navigation item"
-msgstr "Nová položka navigace"
 
 msgid "New notification bar"
 msgstr "Nová notifikační lišta"
@@ -1128,9 +1095,6 @@ msgstr "Vybraná skupina práv pro administrátora neexistuje."
 
 msgid "Selected flag doesn't exist."
 msgstr "Vybraný příznak neexistuje."
-
-msgid "Selected navigation item does not exist."
-msgstr "Zvolená položka navigace neexistuje."
 
 msgid "Selected notification bar does not exist"
 msgstr "Vybraná notifikační lišta neexistuje"

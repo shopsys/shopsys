@@ -295,9 +295,6 @@ msgstr ""
 msgid "Create new banner"
 msgstr ""
 
-msgid "Create new item"
-msgstr ""
-
 msgid "Create notification bar"
 msgstr ""
 
@@ -358,9 +355,6 @@ msgstr ""
 msgid "Do you really want to remove this language constant translation?"
 msgstr ""
 
-msgid "Do you really want to remove this navigation item?"
-msgstr ""
-
 msgid "Do you really want to remove this notification bar?"
 msgstr ""
 
@@ -413,12 +407,6 @@ msgid "Editing flag"
 msgstr ""
 
 msgid "Editing flag - {{ name }}"
-msgstr ""
-
-msgid "Editing item"
-msgstr ""
-
-msgid "Editing navigation item"
 msgstr ""
 
 msgid "Editing notification bar"
@@ -670,9 +658,6 @@ msgstr ""
 msgid "Link Block"
 msgstr ""
 
-msgid "Link URL"
-msgstr ""
-
 msgid "Link of text under banner"
 msgstr ""
 
@@ -745,22 +730,10 @@ msgstr ""
 msgid "Name suffix"
 msgstr ""
 
-msgid "Navigation"
-msgstr ""
-
 msgid "Navigation - full"
 msgstr ""
 
 msgid "Navigation - view"
-msgstr ""
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr ""
-
-msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
-msgstr ""
-
-msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
 msgid "New"
@@ -779,12 +752,6 @@ msgid "New closed day"
 msgstr ""
 
 msgid "New flag"
-msgstr ""
-
-msgid "New item"
-msgstr ""
-
-msgid "New navigation item"
 msgstr ""
 
 msgid "New notification bar"
@@ -1127,9 +1094,6 @@ msgid "Selected administrator role group doesn't exist."
 msgstr ""
 
 msgid "Selected flag doesn't exist."
-msgstr ""
-
-msgid "Selected navigation item does not exist."
 msgstr ""
 
 msgid "Selected notification bar does not exist"

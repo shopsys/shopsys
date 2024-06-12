@@ -73,9 +73,6 @@ msgstr ""
 msgid "Please enter GTM ID"
 msgstr ""
 
-msgid "Please enter article name"
-msgstr ""
-
 msgid "Please enter city"
 msgstr ""
 
@@ -104,9 +101,6 @@ msgid "Please enter identification number"
 msgstr ""
 
 msgid "Please enter last name"
-msgstr ""
-
-msgid "Please enter link URL"
 msgstr ""
 
 msgid "Please enter name"

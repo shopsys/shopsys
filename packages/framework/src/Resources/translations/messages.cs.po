@@ -613,6 +613,9 @@ msgstr "Vytvořit nového zákazníka"
 msgid "Create new holiday or internal day"
 msgstr "Vytvořit nový svátek nebo interní den"
 
+msgid "Create new item"
+msgstr "Vytvořit novou položku"
+
 msgid "Create new order status"
 msgstr "Vytvořit nový stav objednávek"
 
@@ -931,6 +934,9 @@ msgstr "Opravdu chcete odstranit tento příznak?"
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
 
+msgid "Do you really want to remove this navigation item?"
+msgstr "Opravdu si přejete odstranit tuto položku navigace?"
+
 msgid "Do you really want to remove this page?"
 msgstr "Opravdu chcete odstranit tuto stránku?"
 
@@ -1101,6 +1107,12 @@ msgstr "Editace e-mailové šablony - %name%"
 
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr "Editace svátku / interního dne - {{ name }}"
+
+msgid "Editing item"
+msgstr "Editace položky"
+
+msgid "Editing navigation item"
+msgstr "Editace položky navigace"
 
 msgid "Editing order"
 msgstr "Editace objednávky"
@@ -1597,6 +1609,9 @@ msgstr "Limity"
 msgid "Link"
 msgstr "Odkaz"
 
+msgid "Link URL"
+msgstr "URL odkazu"
+
 msgid "Link to the log in page"
 msgstr "Odkaz na stránku s přihlášením"
 
@@ -1744,6 +1759,18 @@ msgstr "Název slouží pouze pro interní použití v rámci administrace"
 msgid "Name serves only for internal use within the administration."
 msgstr "Název slouží pouze pro interní použití v rámci administrace."
 
+msgid "Navigation"
+msgstr "Navigace"
+
+msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr "Byla vytvořena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been modified"
+msgstr "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Navigation item <strong>{{ name }}</strong> has been removed"
+msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
+
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
@@ -1779,6 +1806,12 @@ msgstr "Nový zákazník"
 
 msgid "New delivery address"
 msgstr "Nová doručovací adresa"
+
+msgid "New item"
+msgstr "Nová položka"
+
+msgid "New navigation item"
+msgstr "Nová položka navigace"
 
 msgid "New orders"
 msgstr "Nové objednávky"
@@ -2508,6 +2541,9 @@ msgstr "Zvolený příznak neexistuje."
 
 msgid "Selected holiday / internal day doesn't exist."
 msgstr "Vybraný svátek / interní den neexistuje."
+
+msgid "Selected navigation item does not exist."
+msgstr "Zvolená položka navigace neexistuje."
 
 msgid "Selected order doesn't exist."
 msgstr "Zvolená objednávka neexistuje"

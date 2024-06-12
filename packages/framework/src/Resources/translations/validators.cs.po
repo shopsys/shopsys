@@ -289,6 +289,9 @@ msgstr "Prosím vložte limit od"
 msgid "Please enter link"
 msgstr "Prosím vyplňte odkaz"
 
+msgid "Please enter link URL"
+msgstr "Vyplňte prosím URL odkazu"
+
 msgid "Please enter login"
 msgstr "Vyplňte prosím login"
 

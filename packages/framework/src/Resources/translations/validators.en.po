@@ -289,6 +289,9 @@ msgstr ""
 msgid "Please enter link"
 msgstr ""
 
+msgid "Please enter link URL"
+msgstr ""
+
 msgid "Please enter login"
 msgstr ""
 

@@ -73,9 +73,6 @@ msgstr "Vyberte prosím obrázek"
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
 
-msgid "Please enter article name"
-msgstr "Vyplňte prosím název článku"
-
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
 
@@ -105,9 +102,6 @@ msgstr "Prosím vyplňte IČ"
 
 msgid "Please enter last name"
 msgstr "Vyplňte prosím příjmení"
-
-msgid "Please enter link URL"
-msgstr "Vyplňte prosím URL odkazu"
 
 msgid "Please enter name"
 msgstr "Vyplňte prosím jméno"
