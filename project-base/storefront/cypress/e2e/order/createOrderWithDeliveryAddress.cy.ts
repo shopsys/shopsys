@@ -8,7 +8,7 @@ import {
     changeOrderConfirmationDynamicPartsToStaticDemodata,
     changeOrderDetailDynamicPartsToStaticDemodata,
 } from './orderSupport';
-import { deliveryAddress, payment, transport, url } from 'fixtures/demodata';
+import { deliveryAddress, deliveryAddress2, payment, transport, url } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     clickOnLabel,
@@ -194,7 +194,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         });
 
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'changed contact information after refresh', {
             blackout: [
@@ -228,7 +228,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         });
 
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
-        clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
+        clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
         loseFocus();
         takeSnapshotAndCompare(this.test?.title, 'with changed delivery address', {
             blackout: [
@@ -351,7 +351,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
             ],
         });
 
-        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'contact information form after refresh', {
             blackout: [
@@ -387,7 +387,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
             ],
         });
 
-        clearAndFillDeliveryContactInThirdStep(deliveryAddress);
+        clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
         loseFocus();
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);

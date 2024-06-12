@@ -21,18 +21,18 @@ import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();
-    const [{ data: storeDetailData, fetching }] = useStoreDetailQuery({
+    const [{ data: storeDetailData, fetching: isStoreFetching }] = useStoreDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isStoreFetching);
 
     return (
         <CommonLayout
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             canonicalQueryParams={[]}
-            isFetchingData={fetching}
+            isFetchingData={isStoreFetching}
             title={storeDetailData?.store?.storeName}
         >
             {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}

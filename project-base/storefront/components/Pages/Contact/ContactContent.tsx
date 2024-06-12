@@ -25,7 +25,7 @@ export const ContactContent: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
-    const [{ data }] = useSettingsQuery({ requestPolicy: 'cache-only' });
+    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
     const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const [, contact] = useContactMutation();
@@ -50,8 +50,11 @@ export const ContactContent: FC = () => {
         <div className="mb-8">
             <Webline>
                 <h1 className="mb-3">{t('Write to us')}</h1>
-                {data?.settings?.contactFormMainText !== undefined && (
-                    <div className="mb-4" dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
+                {settingsData?.settings?.contactFormMainText !== undefined && (
+                    <div
+                        className="mb-4"
+                        dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }}
+                    />
                 )}
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>

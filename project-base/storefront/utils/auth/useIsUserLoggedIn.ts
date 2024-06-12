@@ -1,7 +1,7 @@
 import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 
 export const useIsUserLoggedIn = (): boolean => {
-    const [{ data }] = useCurrentCustomerUserQuery();
+    const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
 
-    return !!data?.currentCustomerUser;
+    return !!currentCustomerUserData?.currentCustomerUser;
 };

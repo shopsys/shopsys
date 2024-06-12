@@ -1,5 +1,5 @@
 import { SearchProductsContent } from './SearchProductsContent';
-import { useSearchProductsData } from './utils';
+import { useSearchProductsData } from './searchUtils';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SkeletonModuleProductsList } from 'components/Blocks/Skeleton/SkeletonModuleProductsList';
@@ -22,7 +22,7 @@ export const SearchProducts: FC = () => {
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
 
-    const { searchProductsData, isFetching, isLoadMoreFetching } = useSearchProductsData();
+    const { searchProductsData, areSearchProductsFetching, isLoadingMoreSearchProducts } = useSearchProductsData();
 
     const handlePanelOpenerClick = () => {
         const body = document.getElementsByTagName('body')[0];
@@ -35,7 +35,7 @@ export const SearchProducts: FC = () => {
         });
     };
 
-    if (isFetching) {
+    if (areSearchProductsFetching) {
         return (
             <>
                 <Skeleton className="h-full" containerClassName="block h-7 w-72 mb-3" />
@@ -94,8 +94,8 @@ export const SearchProducts: FC = () => {
                     />
 
                     <SearchProductsContent
-                        isFetching={isFetching}
-                        isLoadMoreFetching={isLoadMoreFetching}
+                        areSearchProductsFetching={areSearchProductsFetching}
+                        isLoadingMoreSearchProducts={isLoadingMoreSearchProducts}
                         paginationScrollTargetRef={paginationScrollTargetRef}
                         searchProductsData={searchProductsData}
                     />

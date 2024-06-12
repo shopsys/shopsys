@@ -38,12 +38,12 @@ export const LoginPopup: FC<LoginPopupProps> = ({ defaultEmail, shouldOverwriteC
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: defaultEmail ?? '', password: '' });
     const login = useLogin();
 
-    const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data) => {
+    const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (loginFormData) => {
         blurInput();
 
         const loginResponse = await login({
-            email: data.email,
-            password: data.password,
+            email: loginFormData.email,
+            password: loginFormData.password,
             previousCartUuid: cartUuid,
             shouldOverwriteCustomerUserCart,
         });

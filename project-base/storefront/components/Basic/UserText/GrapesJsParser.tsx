@@ -10,7 +10,9 @@ type GrapesJsParserProps = {
 
 export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
     const catnums = parseCatnums(text);
-    const [{ data: allProductsResponse, fetching }] = useProductsByCatnums({ variables: { catnums } });
+    const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
+        variables: { catnums },
+    });
 
     const dividedParts = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
 
@@ -21,8 +23,8 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
                     return (
                         <GrapesJsProducts
                             key={index}
-                            allFetchedProducts={allProductsResponse}
-                            fetching={fetching}
+                            allFetchedProducts={productsData}
+                            areProductsFetching={areProductsFetching}
                             rawProductPart={part}
                         />
                     );

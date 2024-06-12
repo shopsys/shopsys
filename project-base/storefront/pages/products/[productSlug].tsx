@@ -46,7 +46,7 @@ const ProductDetailMainVariantContent = dynamic(
 );
 const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
-    const [{ data: productData, fetching }] = useProductDetailQuery({
+    const [{ data: productData, fetching: isProductFetching }] = useProductDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -63,15 +63,15 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
                 canonicalQueryParams={[]}
                 description={product?.seoMetaDescription}
                 hreflangLinks={product?.hreflangLinks}
-                isFetchingData={fetching}
+                isFetchingData={isProductFetching}
                 title={product?.seoTitle || product?.name}
             >
                 {product?.__typename === 'RegularProduct' && (
-                    <ProductDetailContent fetching={fetching} product={product} />
+                    <ProductDetailContent isProductDetailFetching={isProductFetching} product={product} />
                 )}
 
                 {product?.__typename === 'MainVariant' && (
-                    <ProductDetailMainVariantContent fetching={fetching} product={product} />
+                    <ProductDetailMainVariantContent isProductDetailFetching={isProductFetching} product={product} />
                 )}
 
                 <DeferredLastVisitedProducts currentProductCatnum={product?.catalogNumber} />

@@ -9,16 +9,16 @@ import { useEffect, useRef } from 'react';
 export const useGtmProductDetailViewEvent = (
     productDetailData: TypeProductDetailFragment | TypeMainVariantDetailFragment,
     slug: string,
-    fetching: boolean,
+    isProductFetching: boolean,
 ): void => {
     const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
     const { url, currencyCode } = useDomainConfig();
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
 
     useEffect(() => {
-        if (isScriptLoaded && didPageViewRun && lastViewedProductDetailSlug.current !== slug && !fetching) {
+        if (isScriptLoaded && didPageViewRun && lastViewedProductDetailSlug.current !== slug && !isProductFetching) {
             lastViewedProductDetailSlug.current = slug;
             gtmSafePushEvent(getGtmProductDetailViewEvent(productDetailData, currencyCode, url));
         }
-    }, [productDetailData, currencyCode, slug, url, fetching, didPageViewRun]);
+    }, [productDetailData, currencyCode, slug, url, isProductFetching, didPageViewRun]);
 };

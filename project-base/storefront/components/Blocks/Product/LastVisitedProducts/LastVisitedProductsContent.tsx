@@ -8,19 +8,19 @@ type LastVisitedProductsProps = {
 };
 
 export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ productsCatnums }) => {
-    const [{ data: result, fetching }] = useProductsByCatnums({
+    const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
         variables: { catnums: productsCatnums },
     });
 
-    const lastVisitedProducts = result?.productsByCatnums;
+    const lastVisitedProducts = productsData?.productsByCatnums;
 
-    if (!lastVisitedProducts && !fetching) {
+    if (!lastVisitedProducts && !areProductsFetching) {
         return null;
     }
 
     return (
         <>
-            {lastVisitedProducts && !fetching ? (
+            {lastVisitedProducts && !areProductsFetching ? (
                 <ProductsSlider
                     gtmProductListName={GtmProductListNameType.last_visited_products}
                     products={lastVisitedProducts}

@@ -17,7 +17,7 @@ export const DeferredCategoryDetailProductsWrapper: FC<DeferredCategoryDetailPro
 }) => {
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const [categoryProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
+    const { products, areProductsFetching, hasNextPage, isLoadingMoreProducts } = useProductsData(
         CategoryProductsQueryDocument,
         category.products.totalCount,
         {
@@ -25,19 +25,19 @@ export const DeferredCategoryDetailProductsWrapper: FC<DeferredCategoryDetailPro
             abortedFetchCallback: () => setWasRedirectedToSeoCategory(false),
         },
     );
-    const products = getMappedProducts(categoryProductsData);
+    const mappedProducts = getMappedProducts(products);
     const shouldRender = useDeferredRender('product_list');
 
     return shouldRender ? (
         <CategoryDetailProductsWrapper
+            areProductsFetching={areProductsFetching}
             category={category}
-            fetching={fetching}
             hasNextPage={hasNextPage}
-            loadMoreFetching={loadMoreFetching}
+            isLoadingMoreProducts={isLoadingMoreProducts}
             paginationScrollTargetRef={paginationScrollTargetRef}
-            products={products}
+            products={mappedProducts}
         />
     ) : (
-        <CategoryDetailProductsWrapperPlaceholder category={category} products={products} />
+        <CategoryDetailProductsWrapperPlaceholder category={category} products={mappedProducts} />
     );
 };

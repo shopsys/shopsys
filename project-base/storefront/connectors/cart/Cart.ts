@@ -5,13 +5,13 @@ import { TypeCartPromoCodeModificationsFragment } from 'graphql/requests/cart/fr
 import { TypeCartTransportModificationsFragment } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { Translate } from 'next-translate';
-import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
+import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 
 export const handleCartModifications = (
     cartModifications: TypeCartModificationsFragment,
     t: Translate,
-    changePaymentInCart: ChangePaymentHandler,
+    changePaymentInCart: ChangePaymentInCart,
 ): void => {
     handleRemovedProductFromEshopModifications(cartModifications.someProductWasRemovedFromEshop, t);
     handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
@@ -32,7 +32,7 @@ const handleRemovedProductFromEshopModifications = (someProductWasRemovedFromEsh
 const handleCartTransportModifications = (
     transportModifications: TypeCartTransportModificationsFragment,
     t: Translate,
-    changePaymentInCart: ChangePaymentHandler,
+    changePaymentInCart: ChangePaymentInCart,
 ): void => {
     if (transportModifications.transportPriceChanged) {
         showInfoMessage(t('The price of the transport you selected has changed.'), GtmMessageOriginType.cart);

@@ -7,9 +7,9 @@ export const useFormatDate = (): {
     formatDateAndTime: typeof formatDateAndTime;
 } => {
     const { fallbackTimezone } = useDomainConfig();
-    const [{ data }] = useSettingsQuery({ requestPolicy: 'cache-only' });
+    const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
 
-    const timezone = data?.settings?.displayTimezone || fallbackTimezone;
+    const timezone = settingsData?.settings?.displayTimezone || fallbackTimezone;
 
     return {
         formatDate: (date, format) => formatDate(date, timezone, format),

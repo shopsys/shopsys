@@ -175,7 +175,7 @@ const shouldValidateDeliveryAddressField = (
     return true;
 };
 
-type ContactInformationFormMetaType = {
+export type ContactInformationFormMetaType = {
     formName: string;
     messages: {
         error: string;

@@ -25,9 +25,9 @@ export const NewsletterForm: FC = () => {
     useErrorPopup(formProviderMethods, formMeta.fields);
 
     const onSubscribeToNewsletterHandler = useCallback<SubmitHandler<NewsletterFormType>>(
-        async (data) => {
+        async (newsletterFormData) => {
             blurInput();
-            const subscribeToNewsletterResult = await subscribeToNewsletter(data);
+            const subscribeToNewsletterResult = await subscribeToNewsletter(newsletterFormData);
 
             if (subscribeToNewsletterResult.data?.NewsletterSubscribe !== undefined) {
                 showSuccessMessage(formMeta.messages.success);

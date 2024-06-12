@@ -28,7 +28,7 @@ const OrdersPage: FC = () => {
     const { t } = useTranslation();
     const currentPage = useCurrentPageQuery();
     const { url } = useDomainConfig();
-    const [{ data: ordersData, fetching }] = useOrdersQuery({
+    const [{ data: ordersData, fetching: areOrdersFetching }] = useOrdersQuery({
         variables: { after: getEndCursor(currentPage), first: DEFAULT_PAGE_SIZE },
         requestPolicy: 'cache-and-network',
     });
@@ -48,7 +48,11 @@ const OrdersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <CommonLayout breadcrumbs={breadcrumbs} title={t('My orders')}>
-                <OrdersContent isLoading={fetching} orders={mappedOrders} totalCount={ordersData?.orders?.totalCount} />
+                <OrdersContent
+                    areOrdersFetching={areOrdersFetching}
+                    orders={mappedOrders}
+                    totalCount={ordersData?.orders?.totalCount}
+                />
             </CommonLayout>
         </>
     );

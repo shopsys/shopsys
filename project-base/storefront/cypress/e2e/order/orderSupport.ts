@@ -11,7 +11,7 @@ import {
     url,
 } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
-import { changeElementText } from 'support';
+import { changeElementText, checkUrl } from 'support';
 import { TIDs } from 'tids';
 
 export const fillEmailInThirdStep = (email: string) => {
@@ -210,6 +210,7 @@ export const submitRegistrationFormAfterOrder = () => {
 
 export const goToOrderDetailFromOrderList = (index: number = 0) => {
     cy.getByTID([[TIDs.my_orders_link_, index]]).click();
+    checkUrl(url.order.orderDetail);
     cy.waitForStableAndInteractiveDOM();
 };
 

@@ -37,7 +37,7 @@ export const useProductsData = (
         shouldAbortFetchingProducts: boolean;
         abortedFetchCallback: () => void;
     },
-): [TypeListedProductConnectionFragment['edges'] | undefined, boolean, boolean, boolean] => {
+) => {
     const client = useClient();
     const { asPath } = useRouter();
     const currentPage = useCurrentPageQuery();
@@ -63,8 +63,8 @@ export const useProductsData = (
         ),
     );
 
-    const [fetching, setFetching] = useState(!productsData.products);
-    const [loadMoreFetching, setLoadMoreFetching] = useState(false);
+    const [areProductsFetching, setAreProductsFetching] = useState(!productsData.products);
+    const [isLoadingMoreProducts, setIsLoadingMoreProducts] = useState(false);
 
     const fetchProducts = async (
         variables:
@@ -73,38 +73,38 @@ export const useProductsData = (
             | TypeBrandProductsQueryVariables,
         previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
     ) => {
-        const response = await client
+        const productsResponse = await client
             .query<
                 TypeCategoryProductsQuery | TypeBrandProductsQuery | TypeFlagProductsQuery,
                 typeof variables
             >(queryDocument, variables)
             .toPromise();
 
-        if (!response.data) {
+        if (!productsResponse.data) {
             setProductsData({ products: undefined, hasNextPage: false });
 
             return;
         }
 
         setProductsData({
-            products: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.products.edges),
-            hasNextPage: response.data.products.pageInfo.hasNextPage,
+            products: mergeProductEdges(previouslyQueriedProductsFromCache, productsResponse.data.products.edges),
+            hasNextPage: productsResponse.data.products.pageInfo.hasNextPage,
         });
         stopFetching();
     };
 
     const startFetching = () => {
         if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setFetching(true);
+            setAreProductsFetching(true);
         } else {
-            setLoadMoreFetching(true);
+            setIsLoadingMoreProducts(true);
             previousLoadMoreRef.current = currentLoadMore;
         }
     };
 
     const stopFetching = () => {
-        setFetching(false);
-        setLoadMoreFetching(false);
+        setAreProductsFetching(false);
+        setIsLoadingMoreProducts(false);
     };
 
     useEffect(() => {
@@ -159,5 +159,5 @@ export const useProductsData = (
         );
     }, [urlSlug, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
 
-    return [productsData.products, productsData.hasNextPage, fetching, loadMoreFetching];
+    return { ...productsData, areProductsFetching, isLoadingMoreProducts };
 };

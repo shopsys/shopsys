@@ -28,7 +28,7 @@ import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initS
 
 const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
     const router = useRouter();
-    const [{ data: blogCategoryData, fetching }] = useBlogCategoryQuery({
+    const [{ data: blogCategoryData, fetching: isBlogCategoryFetching }] = useBlogCategoryQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
@@ -39,7 +39,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
     );
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(blogCategoryData?.blogCategory);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isBlogCategoryFetching);
 
     return (
         <CommonLayout
@@ -47,7 +47,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
             breadcrumbsType="blogCategory"
             description={blogCategoryData?.blogCategory?.seoMetaDescription}
             hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
-            isFetchingData={fetching}
+            isFetchingData={isBlogCategoryFetching}
             title={seoTitle}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}

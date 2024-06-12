@@ -1,9 +1,10 @@
 import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
+import { Webline } from 'components/Layout/Webline/Webline';
 import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageCart: FC = () => (
-    <>
+    <Webline>
         <Skeleton className="w-full h-10 mb-6 lg:mb-3" />
         <div className="mb-6 lg:mb-8">
             {createEmptyArray(4).map((index) => (
@@ -21,5 +22,5 @@ export const SkeletonPageCart: FC = () => (
         </div>
         <Skeleton className="w-60 lg:w-72 h-8 mb-3" />
         <SkeletonModuleProductSlider />
-    </>
+    </Webline>
 );

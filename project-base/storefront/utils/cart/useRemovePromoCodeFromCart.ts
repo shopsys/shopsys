@@ -8,19 +8,17 @@ import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
-type RemovePromoCodeHandler = (
-    promoCodeToBeRemoved: string,
-    messages: { success: string; error: string },
-) => Promise<TypeCartFragment | undefined | null>;
+type RemovePromoCodeFromCart = (promoCodeToBeRemoved: string) => Promise<TypeCartFragment | undefined | null>;
 
-export const useRemovePromoCodeFromCart = (): [RemovePromoCodeHandler, boolean] => {
-    const [{ fetching }, removePromoCode] = useRemovePromoCodeFromCartMutation();
+export const useRemovePromoCodeFromCart = (messages: { success: string; error: string }) => {
+    const [{ fetching: isRemovingPromoCodeFromCart }, removePromoCodeFromCartMutation] =
+        useRemovePromoCodeFromCartMutation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
 
-    const removePromoCodeHandler = useCallback<RemovePromoCodeHandler>(
-        async (promoCodeToBeRemoved: string, messages: { success: string; error: string }) => {
-            const removePromoCodeResult = await removePromoCode({
+    const removePromoCodeFromCart = useCallback<RemovePromoCodeFromCart>(
+        async (promoCodeToBeRemoved: string) => {
+            const removePromoCodeResult = await removePromoCodeFromCartMutation({
                 input: { promoCode: promoCodeToBeRemoved, cartUuid },
             });
 
@@ -41,8 +39,8 @@ export const useRemovePromoCodeFromCart = (): [RemovePromoCodeHandler, boolean] 
 
             return removePromoCodeResult.data?.RemovePromoCodeFromCart;
         },
-        [cartUuid, removePromoCode, t],
+        [cartUuid, removePromoCodeFromCartMutation, t],
     );
 
-    return [removePromoCodeHandler, fetching];
+    return { removePromoCodeFromCart, isRemovingPromoCodeFromCart };
 };

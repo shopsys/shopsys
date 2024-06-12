@@ -22,7 +22,7 @@ import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWr
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export type OrderConfirmationQuery = {
+export type OrderConfirmationUrlQuery = {
     orderUuid: string | undefined;
     orderEmail: string | undefined;
     orderPaymentType: string | undefined;
@@ -32,32 +32,35 @@ export type OrderConfirmationQuery = {
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
-    const { fetchCart, isWithCart } = useCurrentCart(false);
-    const { orderUuid, orderPaymentType } = query as OrderConfirmationQuery;
+    const { fetchCart } = useCurrentCart(false);
+    const { orderUuid, orderPaymentType } = query as OrderConfirmationUrlQuery;
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData, fetching }] = useOrderSentPageContentQuery({
-        variables: { orderUuid: orderUuid! },
-    });
+    const [{ data: orderSentPageContentData, fetching: isOrderSentPageContentFetching }] = useOrderSentPageContentQuery(
+        {
+            variables: { orderUuid: orderUuid! },
+        },
+    );
 
     useEffect(() => {
-        if (isWithCart) {
-            fetchCart();
-        }
+        fetchCart();
     }, []);
 
     return (
         <>
             <MetaRobots content="noindex" />
 
-            <CommonLayout title={t('Thank you for your order')}>
+            <CommonLayout
+                isFetchingData={isOrderSentPageContentFetching}
+                pageTypeOverride="order-confirmation"
+                title={t('Thank you for your order')}
+            >
                 <Webline tid={TIDs.pages_orderconfirmation}>
                     <ConfirmationPageContent
                         content={orderSentPageContentData?.orderSentPageContent}
                         heading={t('Your order was created')}
-                        isFetching={fetching}
                         AdditionalContent={
                             orderPaymentType === PaymentTypeEnum.GoPay ? (
                                 <GoPayGateway orderUuid={orderUuid!} />
@@ -72,7 +75,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    const { orderUuid, orderEmail } = context.query as OrderConfirmationQuery;
+    const { orderUuid, orderEmail } = context.query as OrderConfirmationUrlQuery;
 
     if (!orderUuid || !orderEmail) {
         return {

@@ -6,22 +6,22 @@ import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useRef, useEffect } from 'react';
-import { AddToCartAction } from 'utils/cart/useAddToCart';
+import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type CartListItemProps = {
     item: TypeCartItemFragment;
     listIndex: number;
-    onItemRemove: MouseEventHandler<HTMLButtonElement>;
-    onItemQuantityChange: AddToCartAction;
+    onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
+    onAddToCart: AddToCart;
 };
 
 export const CartListItem: FC<CartListItemProps> = ({
     item: { product, quantity, uuid },
     listIndex,
-    onItemRemove,
-    onItemQuantityChange,
+    onRemoveFromCart,
+    onAddToCart,
 }) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
@@ -40,7 +40,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            onItemQuantityChange(product.uuid, spinboxRef.current!.valueAsNumber, listIndex, true);
+            onAddToCart(product.uuid, spinboxRef.current!.valueAsNumber, listIndex, true);
         }, 500);
     };
 
@@ -127,7 +127,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
             <RemoveCartItemButton
                 className="absolute right-0 top-5 flex items-center vl:static"
-                onItemRemove={onItemRemove}
+                onRemoveFromCart={onRemoveFromCart}
             />
         </div>
     );

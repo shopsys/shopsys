@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 
 export const useGtmAutocompleteResultsViewEvent = (
     searchResults: TypeAutocompleteSearchQuery | undefined,
-    TypeSearchQuery: string,
+    keyword: string,
 ): void => {
     const lastViewedAutocompleteResults = useRef<TypeAutocompleteSearchQuery>();
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
@@ -19,7 +19,7 @@ export const useGtmAutocompleteResultsViewEvent = (
             lastViewedAutocompleteResults.current !== searchResults
         ) {
             lastViewedAutocompleteResults.current = searchResults;
-            gtmSafePushEvent(getGtmAutocompleteResultsViewEvent(searchResults, TypeSearchQuery));
+            gtmSafePushEvent(getGtmAutocompleteResultsViewEvent(searchResults, keyword));
         }
-    }, [searchResults, TypeSearchQuery, didPageViewRun]);
+    }, [searchResults, keyword, didPageViewRun]);
 };

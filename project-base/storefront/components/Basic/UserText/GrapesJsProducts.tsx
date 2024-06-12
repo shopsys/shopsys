@@ -9,10 +9,10 @@ import { parseCatnums } from 'utils/parsing/grapesJsParser';
 type GrapesJsProps = {
     rawProductPart: string;
     allFetchedProducts?: TypeProductsByCatnums | undefined;
-    fetching: boolean;
+    areProductsFetching: boolean;
 };
 
-export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetchedProducts, fetching }) => {
+export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetchedProducts, areProductsFetching }) => {
     const products = [];
 
     const productCatnums = parseCatnums(rawProductPart);
@@ -27,7 +27,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
         }
     }
 
-    if (fetching) {
+    if (areProductsFetching) {
         return (
             <div className="flex">
                 {createEmptyArray(4).map((_, index) => (

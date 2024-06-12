@@ -35,8 +35,8 @@ export const useSearchProductsData = (totalProductCount?: number) => {
     const initialPageSizeRef = useRef(calculatePageSize(currentLoadMore));
 
     const [searchProductsData, setSearchProductsData] = useState<TypeSearchProductsQuery | undefined>();
-    const [isFetching, setIsFetching] = useState(!searchProductsData);
-    const [isLoadMoreFetching, setIsLoadMoreFetching] = useState(false);
+    const [areSearchProductsFetching, setAreSearchProductsFetching] = useState(!searchProductsData);
+    const [isLoadingMoreSearchProducts, setIsLoadingMoreSearchProducts] = useState(false);
 
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
 
@@ -44,19 +44,22 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         variables: TypeSearchProductsQueryVariables,
         previouslyQueriedProductsFromCache: TypeListedProductConnectionFragment['edges'] | undefined,
     ) => {
-        const response = await client
+        const searchProductsResponse = await client
             .query<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(SearchProductsQueryDocument, variables)
             .toPromise();
 
-        if (!response.data?.productsSearch) {
+        if (!searchProductsResponse.data?.productsSearch) {
             return;
         }
 
         setSearchProductsData({
-            ...response.data,
+            ...searchProductsResponse.data,
             productsSearch: {
-                ...response.data.productsSearch,
-                edges: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
+                ...searchProductsResponse.data.productsSearch,
+                edges: mergeProductEdges(
+                    previouslyQueriedProductsFromCache,
+                    searchProductsResponse.data.productsSearch.edges,
+                ),
             },
         });
         stopFetching();
@@ -64,16 +67,16 @@ export const useSearchProductsData = (totalProductCount?: number) => {
 
     const startFetching = () => {
         if (previousLoadMoreRef.current === currentLoadMore || currentLoadMore === 0) {
-            setIsFetching(true);
+            setAreSearchProductsFetching(true);
         } else {
-            setIsLoadMoreFetching(true);
+            setIsLoadingMoreSearchProducts(true);
             previousLoadMoreRef.current = currentLoadMore;
         }
     };
 
     const stopFetching = () => {
-        setIsFetching(false);
-        setIsLoadMoreFetching(false);
+        setAreSearchProductsFetching(false);
+        setIsLoadingMoreSearchProducts(false);
     };
 
     useEffect(() => {
@@ -122,7 +125,11 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         );
     }, [currentSearchString, currentSort, JSON.stringify(currentFilter), currentPage, currentLoadMore]);
 
-    return { searchProductsData: searchProductsData?.productsSearch, isFetching, isLoadMoreFetching };
+    return {
+        searchProductsData: searchProductsData?.productsSearch,
+        areSearchProductsFetching,
+        isLoadingMoreSearchProducts,
+    };
 };
 
 const readProductsSearchFromCache = (

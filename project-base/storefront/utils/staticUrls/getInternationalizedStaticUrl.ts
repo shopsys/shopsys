@@ -6,8 +6,8 @@ export const getInternationalizedStaticUrl = (url: Url, domainUrl: string) => {
     const urlsOnDomain = STATIC_REWRITE_PATHS[domainUrl];
 
     if (typeof url === 'string') {
-        const result = urlsOnDomain[url];
-        return typeof result !== 'undefined' ? result : '';
+        const internationalizedUrl = urlsOnDomain[url];
+        return typeof internationalizedUrl !== 'undefined' ? internationalizedUrl : '';
     }
 
     const staticUrlTemplate = urlsOnDomain[url.url];

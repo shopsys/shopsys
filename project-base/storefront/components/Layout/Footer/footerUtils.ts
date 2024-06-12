@@ -7,7 +7,7 @@ import { FooterArticle } from 'types/footerArticle';
 
 export const useFooterArticles = () => {
     const { t } = useTranslation();
-    const [{ data }] = useArticlesQuery({
+    const [{ data: articlesData }] = useArticlesQuery({
         variables: {
             placement: [
                 TypeArticlePlacementTypeEnum.Footer1,
@@ -24,25 +24,25 @@ export const useFooterArticles = () => {
             {
                 key: 'about-cc',
                 title: t('About Shopsys'),
-                items: filterArticlesByPlacement(data?.articles.edges, TypeArticlePlacementTypeEnum.Footer1),
+                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer1),
             },
             {
                 key: 'about-shopping',
                 title: t('About shopping'),
-                items: filterArticlesByPlacement(data?.articles.edges, TypeArticlePlacementTypeEnum.Footer2),
+                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer2),
             },
             {
                 key: 'e-shop',
                 title: t('E-shop'),
-                items: filterArticlesByPlacement(data?.articles.edges, TypeArticlePlacementTypeEnum.Footer3),
+                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer3),
             },
             {
                 key: 'stores',
                 title: t('Stores'),
-                items: filterArticlesByPlacement(data?.articles.edges, TypeArticlePlacementTypeEnum.Footer4),
+                items: filterArticlesByPlacement(articlesData?.articles.edges, TypeArticlePlacementTypeEnum.Footer4),
             },
         ],
-        [data?.articles.edges],
+        [articlesData?.articles.edges],
     );
 
     return footerArticles;

@@ -3,12 +3,15 @@ import './api';
 import 'cypress-real-events';
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
 import { registerCommand } from 'cypress-wait-for-stable-dom';
-import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME } from 'fixtures/demodata';
+import { DEFAULT_PERSIST_STORE_STATE, PERSIST_STORE_NAME, url } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
-const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = ['#newsletter-form-privacyPolicy', TIDs.simple_header_contact];
+const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
+    '[for="newsletter-form-privacyPolicy"]',
+    TIDs.simple_header_contact,
+];
 
 Cypress.Commands.add(
     'getByTID',
@@ -109,6 +112,7 @@ export const goToEditProfileFromHeader = () => {
         .should('be.visible')
         .realHover()
         .then(() => cy.getByTID([TIDs.header_edit_profile_link]).should('be.visible').click());
+    checkUrl(url.customer.editProfile);
     cy.waitForStableAndInteractiveDOM();
 };
 

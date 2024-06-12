@@ -8,10 +8,10 @@ import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type ListItemProps = {
     cartItem: TypeCartItemFragment;
-    onItemRemove: MouseEventHandler<HTMLButtonElement>;
+    onRemoveFromCart: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantity }, onItemRemove }) => {
+export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantity }, onRemoveFromCart }) => {
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
@@ -41,7 +41,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
                 {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
             </div>
 
-            <RemoveCartItemButton onItemRemove={onItemRemove} />
+            <RemoveCartItemButton onRemoveFromCart={onRemoveFromCart} />
         </li>
     );
 };

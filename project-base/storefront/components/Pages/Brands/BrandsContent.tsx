@@ -4,9 +4,9 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useBrandsQuery } from 'graphql/requests/brands/queries/BrandsQuery.generated';
 
 export const BrandsContent: FC = () => {
-    const [{ data: brandsData, fetching }] = useBrandsQuery();
+    const [{ data: brandsData, fetching: areBrandsFetching }] = useBrandsQuery();
 
-    if (fetching) {
+    if (areBrandsFetching) {
         return <SkeletonPageBrandsOverview />;
     }
 

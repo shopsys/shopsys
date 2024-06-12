@@ -21,18 +21,21 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
 }) => {
     const currentPage = useCurrentPageQuery();
 
-    const [{ data, fetching }] = useBlogCategoryArticles({
+    const [{ data: blogCategoryArticlesData, fetching: areBlogCategoryArticlesFetching }] = useBlogCategoryArticles({
         variables: { uuid, endCursor: getEndCursor(currentPage), pageSize: DEFAULT_PAGE_SIZE },
     });
 
     const mappedArticles = useMemo(
-        () => mapConnectionEdges<TypeListedBlogArticleFragment>(data?.blogCategory?.blogArticles.edges),
-        [data?.blogCategory?.blogArticles.edges],
+        () =>
+            mapConnectionEdges<TypeListedBlogArticleFragment>(
+                blogCategoryArticlesData?.blogCategory?.blogArticles.edges,
+            ),
+        [blogCategoryArticlesData?.blogCategory?.blogArticles.edges],
     );
 
     return (
         <>
-            {!!mappedArticles?.length && !fetching ? (
+            {!!mappedArticles?.length && !areBlogCategoryArticlesFetching ? (
                 <BlogArticlesList blogArticles={mappedArticles} />
             ) : (
                 <div className="flex flex-col gap-10">
@@ -44,7 +47,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
 
             <Pagination
                 paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={data?.blogCategory?.blogArticles.totalCount ?? 0}
+                totalCount={blogCategoryArticlesData?.blogCategory?.blogArticles.totalCount ?? 0}
             />
         </>
     );

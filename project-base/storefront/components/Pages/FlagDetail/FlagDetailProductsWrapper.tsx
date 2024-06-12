@@ -15,21 +15,21 @@ type FlagDetailProductsWrapperProps = {
 };
 
 export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, paginationScrollTargetRef }) => {
-    const [flagProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
+    const { products, areProductsFetching, hasNextPage, isLoadingMoreProducts } = useProductsData(
         FlagProductsQueryDocument,
         flag.products.totalCount,
     );
-    const flagListedProducts = getMappedProducts(flagProductsData);
+    const flagListedProducts = getMappedProducts(products);
 
     useGtmPaginatedProductListViewEvent(flagListedProducts, GtmProductListNameType.flag_detail);
 
     return (
         <>
             <ProductsList
+                areProductsFetching={areProductsFetching}
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.flag_detail}
-                isFetching={fetching}
-                isLoadMoreFetching={loadMoreFetching}
+                isLoadingMoreProducts={isLoadingMoreProducts}
                 products={flagListedProducts}
             />
             <Pagination

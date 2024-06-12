@@ -24,7 +24,7 @@ const OrderDetailByHashPage: FC = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
     const orderHash = getStringFromUrlQuery(router.query.urlHash);
-    const [{ data: orderData, fetching: orderFetching }] = useOrderDetailByHashQuery({
+    const [{ data: orderData, fetching: isOrderFetching }] = useOrderDetailByHashQuery({
         variables: { urlHash: orderHash },
     });
 
@@ -39,7 +39,7 @@ const OrderDetailByHashPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || orderFetching}>
+            <PageGuard errorRedirectUrl="/" isWithAccess={!!orderData?.order || isOrderFetching}>
                 <CommonLayout breadcrumbs={breadcrumbs} title={`${t('Order number')} ${orderHash}`}>
                     {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
                 </CommonLayout>

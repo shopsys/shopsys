@@ -17,11 +17,14 @@ export const getServerSideInternationalizedStaticUrl = (
         return { trimmedUrlWithoutQueryParams: '/', queryParams: null };
     }
 
-    const result = getInternationalizedStaticUrl(trimmedUrlWithoutQueryParams as StaticRewritePathKeyType, domainUrl);
+    const internationalizedStaticUrl = getInternationalizedStaticUrl(
+        trimmedUrlWithoutQueryParams as StaticRewritePathKeyType,
+        domainUrl,
+    );
     const queryParams = getQueryWithoutSlugTypeParameterFromQueryString(context.resolvedUrl.split('?')[1]);
 
     return {
-        trimmedUrlWithoutQueryParams: result || trimmedUrlWithoutQueryParams,
+        trimmedUrlWithoutQueryParams: internationalizedStaticUrl || trimmedUrlWithoutQueryParams,
         queryParams: queryParams ? `?${queryParams}` : null,
     };
 };

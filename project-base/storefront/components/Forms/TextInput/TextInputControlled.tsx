@@ -8,10 +8,20 @@ type TextInputControlledProps = {
     render: (input: JSX.Element) => ReactElement<any, any> | null;
     textInputProps: Pick<
         TextInputProps,
-        'disabled' | 'required' | 'onBlur' | 'onKeyDown' | 'onChange' | 'type' | 'label' | 'inputSize' | 'autoComplete'
+        | 'disabled'
+        | 'required'
+        | 'onBlur'
+        | 'onKeyDown'
+        | 'onChange'
+        | 'type'
+        | 'label'
+        | 'inputSize'
+        | 'autoComplete'
+        | 'className'
     >;
     control: Control<any>;
     formName: string;
+    isWithoutFormLineError?: boolean;
 };
 
 export const TextInputControlled: FC<TextInputControlledProps> = ({
@@ -20,6 +30,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
     control,
     textInputProps,
     formName,
+    isWithoutFormLineError,
 }) => {
     const {
         fieldState: { invalid, error },
@@ -53,7 +64,9 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
                 onBlur={onBlurHandler}
                 onChange={onChangeHandler}
             />
-            <FormLineError error={error} inputType="text-input" textInputSize={textInputProps.inputSize} />
+            {!isWithoutFormLineError && (
+                <FormLineError error={error} inputType="text-input" textInputSize={textInputProps.inputSize} />
+            )}
         </>,
     );
 };

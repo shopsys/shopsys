@@ -351,3 +351,24 @@ export const changeElementText = (selector: TIDs, newText: string, isRightAfterS
 ```
 
 You can also just hide the element using the [`blackout` parameter](#hidingcovering-parts-of-the-application-for-the-screenshot-blackout-parameter).
+
+## How to debug and commit changes made to snapshots
+
+When modifying your code, or the UI of your application, it is likely that you will deal with visual changes and will have to regenerate the cypress snapshots. In such scenario, you can run `run-acceptance-tests-actual` or `open-acceptance-tests-actual`, check the failed test's snapshot diffs if they mirror the expected changes, and then use `run-acceptance-tests-base` or `open-acceptance-tests-base` to regenerate the snapshots.
+
+However, by doing this in a situation where your application is unstable (flaky), you expose yourself to the risk that the initial changes seen in the diff are different than the changes made to the real snapshot while running it in the `base` mode. Because of that, we suggest that you use the points below to effectively debug changes made to your snapshots, and also commit them in the correct shape to your git repo.
+
+### Better snapshot git diff tools
+
+The best thing you can do is to install a plugin that allows you to see highlighted pixel changes in your snapshots. If you work in standard environments, such as VS Code or PHP Storm, we suggest these plugins:
+
+-   for VS Code: [png-image-diff](https://marketplace.visualstudio.com/items?itemName=RayWiis.png-image-diff)
+    -   You can simply view the diff in the git tab in your IDE. There, you will see diffs similar to the one below, which clearly shows the changed pixels
+    -   ![VS Code diff tool](./images/vs-code-diff-tool.png)
+-   for PHP Storm: [Image Diff](https://plugins.jetbrains.com/plugin/12691-image-diff)
+    -   You can right-click the changed file, then select git, and show diff
+    -   ![PHP Storm diff tool](./images/php-storm-diff-tool.png)
+
+### Commiting flow
+
+By using tools such as those mentioned above, you can simply run cypress tests in the `base` mode, and then check the changed pixels. With this, you avoid the unnecessary step of running the tests in the `actual` mode, but still keep the option of checking exactly which parts of the application have changed.

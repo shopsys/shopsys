@@ -1,4 +1,4 @@
-import { ResponseInfo } from './utils';
+import { ResponseInfo } from './symfonyDebugToolbarUtils';
 import { RefObject, createRef, useEffect } from 'react';
 
 type RequestsTableProps = {

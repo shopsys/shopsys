@@ -43,11 +43,11 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onNewPasswordHandler = useCallback<SubmitHandler<NewPasswordFormType>>(
-        async (data) => {
+        async (newPasswordFormData) => {
             const formData = {
                 hash: hash,
                 email: email,
-                newPassword: data.newPassword,
+                newPassword: newPasswordFormData.newPassword,
             };
             const newPasswordResult = await newPassword(formData);
 

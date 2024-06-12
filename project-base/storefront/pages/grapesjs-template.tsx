@@ -1,7 +1,7 @@
 import { GrapesJs } from 'components/Basic/UserText/GrapesJs';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { NewsletterForm } from 'components/Layout/Footer/NewsletterForm/NewsletterForm';
-import { useFooterArticles } from 'components/Layout/Footer/utils';
+import { useFooterArticles } from 'components/Layout/Footer/footerUtils';
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
 import { Cart } from 'components/Layout/Header/Cart/Cart';
 import { Logo } from 'components/Layout/Header/Logo/Logo';

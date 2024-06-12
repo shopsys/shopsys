@@ -1,6 +1,5 @@
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
-import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -11,20 +10,23 @@ type PaymentFailProps = {
     orderUuid: string;
     lastUsedOrderPaymentType: string | undefined;
     paymentTransactionCount: number;
+    orderPaymentFailedContent: string;
 };
 
-export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, lastUsedOrderPaymentType, paymentTransactionCount }) => {
+export const PaymentFail: FC<PaymentFailProps> = ({
+    orderUuid,
+    lastUsedOrderPaymentType,
+    paymentTransactionCount,
+    orderPaymentFailedContent,
+}) => {
     const { t } = useTranslation();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_fail);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: contentData, fetching }] = useOrderPaymentFailedContentQuery({ variables: { orderUuid } });
-
     return (
         <ConfirmationPageContent
-            content={contentData?.orderPaymentFailedContent}
+            content={orderPaymentFailedContent}
             heading={t('Your payment was not successful')}
-            isFetching={fetching}
             AdditionalContent={
                 <>
                     {lastUsedOrderPaymentType === PaymentTypeEnum.GoPay && (

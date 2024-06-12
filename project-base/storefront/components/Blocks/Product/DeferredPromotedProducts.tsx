@@ -16,10 +16,10 @@ const ProductsSliderPlaceholder = dynamic(() =>
 );
 
 export const DeferredPromotedProducts: FC = () => {
-    const [{ data: promotedProductsData, fetching }] = usePromotedProductsQuery();
+    const [{ data: promotedProductsData, fetching: arePromotedProductsFetching }] = usePromotedProductsQuery();
     const shouldRender = useDeferredRender('promoted_products');
 
-    if (fetching) {
+    if (arePromotedProductsFetching) {
         return <SkeletonModulePromotedProducts />;
     }
 

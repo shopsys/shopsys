@@ -18,17 +18,19 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     const { query } = useRouter();
     const hash = getStringFromUrlQuery(query.hash);
 
-    const [{ data, fetching }] = usePersonalDataDetailQuery({ variables: { hash } });
+    const [{ data: personalDataDetailData, fetching: arePersonalDataFetching }] = usePersonalDataDetailQuery({
+        variables: { hash },
+    });
 
-    const content = data ? (
-        <PersonalDataDetailContent data={data} />
+    const content = personalDataDetailData ? (
+        <PersonalDataDetailContent personalDataDetail={personalDataDetailData} />
     ) : (
         <Webline>
             <p className="my-28 text-center text-2xl">{t('Could not find personal data overview.')}</p>
         </Webline>
     );
 
-    return <CommonLayout>{fetching ? <SkeletonPagePersonalDataOverview /> : content}</CommonLayout>;
+    return <CommonLayout>{arePersonalDataFetching ? <SkeletonPagePersonalDataOverview /> : content}</CommonLayout>;
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(

@@ -137,7 +137,7 @@
     "Found categories": "Nájdené kategórie",
     "Found products": "Nájdené produkty",
     "Free": "Zadarmo",
-    "FreeTransportAmountLeft": "Nakúpte ešte za <0>{{ amountFormatted }}</0> a máte <0>dopravu zdarma!</0>",
+    "FreeTransportAmountLeft": "Nakúpte ešte za <0>{{ remainingAmountFormatted }}</0> a máte <0>dopravu zdarma!</0>",
     "Friday": "Piatok",
     "from": "od",
     "From": "Od",

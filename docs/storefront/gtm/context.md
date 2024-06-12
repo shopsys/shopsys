@@ -25,16 +25,16 @@ With this state structure, you then need to set and reset the value for `didPage
 
 ```ts
 // set when page view runs (inside useGtmPageViewEvent.ts)
-export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, fetching?: boolean): void => {
+export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, areDataFetching?: boolean): void => {
     // skipped code
     const { setDidPageViewRun } = useGtmContext();
 
     useEffect(() => {
-        if (gtmPageViewEvent._isLoaded && lastViewedSlug.current !== slug && !fetching) {
+        if (gtmPageViewEvent._isLoaded && lastViewedSlug.current !== slug && !areDataFetching) {
             // skipped code
             setDidPageViewRun(true);
         }
-    }, [gtmPageViewEvent, fetching, slug]);
+    }, [gtmPageViewEvent, areDataFetching, slug]);
 };
 
 // reset inside the provider (inside GtmProvider.tsx)

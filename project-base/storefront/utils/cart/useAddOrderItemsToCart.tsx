@@ -28,15 +28,15 @@ export const useAddOrderItemsToCart = () => {
     const updatePortalContent = useSessionStore((store) => store.updatePortalContent);
 
     const handleAddingItemsToCart = async (input: TypeAddOrderItemsToCartInput) => {
-        const response = await addOrderItemsToCart({ input });
+        const addOrderItemsToCartResponse = await addOrderItemsToCart({ input });
 
-        if (response.error) {
+        if (addOrderItemsToCartResponse.error) {
             showErrorMessage(t('Could not prefill your cart'));
 
             return;
         }
 
-        const newCart = response.data?.AddOrderItemsToCart;
+        const newCart = addOrderItemsToCartResponse.data?.AddOrderItemsToCart;
         updateCartUuid(newCart?.uuid ?? null);
 
         if (newCart) {

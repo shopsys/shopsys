@@ -36,7 +36,7 @@ export const AutocompleteSearch: FC = () => {
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
-    const [{ data: fetchedSearchData, fetching: isFetchingSearchData }] = useAutocompleteSearchQuery({
+    const [{ data: autocompleteSearchData, fetching: areAutocompleteSearchDataFetching }] = useAutocompleteSearchQuery({
         variables: {
             search: debouncedSearchQuery,
             maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
@@ -49,8 +49,8 @@ export const AutocompleteSearch: FC = () => {
     });
 
     useEffect(() => {
-        setSearchData(fetchedSearchData);
-    }, [fetchedSearchData]);
+        setSearchData(autocompleteSearchData);
+    }, [autocompleteSearchData]);
 
     useEffect(() => {
         if (!isWithValidSearchQuery) {
@@ -80,8 +80,8 @@ export const AutocompleteSearch: FC = () => {
             >
                 <SearchInput
                     className="w-full border-2 border-white"
-                    isLoading={isFetchingSearchData}
                     label={t("Type what you're looking for")}
+                    shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}
                     value={searchQueryValue}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
                     onClear={() => setSearchQueryValue('')}

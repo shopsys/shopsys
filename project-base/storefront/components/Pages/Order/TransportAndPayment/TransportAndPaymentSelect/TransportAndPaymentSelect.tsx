@@ -5,10 +5,10 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import {
-    getPickupPlaceDetail,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
-} from 'components/Pages/Order/TransportAndPayment/utils';
+    getPickupPlaceDetail,
+} from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
@@ -16,15 +16,15 @@ import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwif
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { ChangePaymentHandler } from 'utils/cart/useChangePaymentInCart';
-import { ChangeTransportHandler } from 'utils/cart/useChangeTransportInCart';
+import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
+import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 type TransportAndPaymentSelectProps = {
     transports: TypeTransportWithAvailablePaymentsAndStoresFragment[];
     lastOrderPickupPlace: TypeListedStoreFragment | null;
-    changeTransportInCart: ChangeTransportHandler;
-    changePaymentInCart: ChangePaymentHandler;
+    changeTransportInCart: ChangeTransportInCart;
+    changePaymentInCart: ChangePaymentInCart;
     isTransportSelectionLoading: boolean;
 };
 

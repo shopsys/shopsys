@@ -4,7 +4,10 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
-import { useCategoryDetailData, useHandleDefaultFiltersUpdate } from 'components/Pages/CategoryDetail/utils';
+import {
+    useCategoryDetailData,
+    useHandleDefaultFiltersUpdate,
+} from 'components/Pages/CategoryDetail/categoryDetailUtils';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     TypeCategoryDetailQuery,

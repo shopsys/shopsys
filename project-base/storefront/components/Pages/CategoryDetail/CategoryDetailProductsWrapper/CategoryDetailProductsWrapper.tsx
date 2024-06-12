@@ -10,8 +10,8 @@ import { RefObject, useMemo } from 'react';
 export type CategoryDetailProductsWrapperProps = {
     category: TypeCategoryDetailFragment;
     products: TypeListedProductFragment[] | undefined;
-    fetching: boolean;
-    loadMoreFetching: boolean;
+    areProductsFetching: boolean;
+    isLoadingMoreProducts: boolean;
     hasNextPage: boolean;
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
@@ -19,8 +19,8 @@ export type CategoryDetailProductsWrapperProps = {
 export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProps> = ({
     category,
     products,
-    fetching,
-    loadMoreFetching,
+    areProductsFetching,
+    isLoadingMoreProducts,
     hasNextPage,
     paginationScrollTargetRef,
 }) => {
@@ -33,11 +33,11 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProductsWrapperProp
     return (
         <>
             <ProductsList
+                areProductsFetching={areProductsFetching}
                 category={category}
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={gtmProductListName}
-                isFetching={fetching}
-                isLoadMoreFetching={loadMoreFetching}
+                isLoadingMoreProducts={isLoadingMoreProducts}
                 products={products}
             />
             <Pagination

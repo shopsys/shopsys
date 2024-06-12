@@ -1,9 +1,9 @@
 import { PaymentsInOrderSelectItem } from './PaymentsInOrderSelectItem';
+import { useChangePaymentInOrder } from './paymentInOrderSelectUtils';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
-import { useChangePaymentInOrder } from 'components/PaymentsInOrderSelect/utils';
 import { useOrderAvailablePaymentsQuery } from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import useTranslation from 'next-translate/useTranslation';

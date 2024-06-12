@@ -3,9 +3,9 @@ import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModule
 import { useSliderItemsQuery } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
 
 export const Banners: FC = () => {
-    const [{ data: sliderItemsData, fetching }] = useSliderItemsQuery();
+    const [{ data: sliderItemsData, fetching: areSliderItemsFetching }] = useSliderItemsQuery();
 
-    if (fetching) {
+    if (areSliderItemsFetching) {
         return <SkeletonModuleBanners />;
     }
 

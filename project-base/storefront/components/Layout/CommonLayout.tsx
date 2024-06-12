@@ -10,6 +10,7 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
@@ -22,6 +23,7 @@ type CommonLayoutProps = {
     canonicalQueryParams?: CanonicalQueryParameters;
     hreflangLinks?: TypeHreflangLink[];
     isFetchingData?: boolean;
+    pageTypeOverride?: PageType;
 };
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
@@ -33,6 +35,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     canonicalQueryParams,
     hreflangLinks,
     isFetchingData,
+    pageTypeOverride,
 }) => {
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
@@ -60,7 +63,11 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </Webline>
             )}
 
-            <SkeletonManager isFetchingData={isFetchingData} isPageLoading={isPageLoading}>
+            <SkeletonManager
+                isFetchingData={isFetchingData}
+                isPageLoading={isPageLoading}
+                pageTypeOverride={pageTypeOverride}
+            >
                 {children}
             </SkeletonManager>
 

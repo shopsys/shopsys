@@ -9,7 +9,7 @@ import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
-import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/utils';
+import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -24,10 +24,10 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
-    fetching: boolean;
+    isProductDetailFetching: boolean;
 };
 
-export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, fetching }) => {
+export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, isProductDetailFetching }) => {
     const { t } = useTranslation();
     const router = useRouter();
 
@@ -35,9 +35,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const formatPrice = useFormatPrice();
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
     useLastVisitedProductView(product.catalogNumber);
-    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
+    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
         <>

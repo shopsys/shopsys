@@ -21,14 +21,14 @@ export const Cart: FC = ({ className }) => {
     const router = useRouter();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { cart, isFetching } = useCurrentCart();
+    const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
+    const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
 
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>
-            {isFetching && (
+            {isCartFetchingOrUnavailable && (
                 <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-graySlate py-2 opacity-50" />
             )}
 
@@ -61,12 +61,12 @@ export const Cart: FC = ({ className }) => {
                 {cart?.items.length ? (
                     <>
                         <ul className="relative m-0 flex max-h-96 w-full list-none flex-col overflow-y-auto p-0">
-                            {isRemovingItem && <LoaderWithOverlay className="w-16" />}
+                            {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
                             {cart.items.map((cartItem, listIndex) => (
                                 <ListItem
                                     key={cartItem.uuid}
                                     cartItem={cartItem}
-                                    onItemRemove={() => removeItemFromCart(cartItem, listIndex)}
+                                    onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
                                 />
                             ))}
                         </ul>

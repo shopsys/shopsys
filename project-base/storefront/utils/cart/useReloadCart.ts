@@ -7,7 +7,7 @@ import { useBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const useReloadCart = (): void => {
     const { modifications, fetchCart } = useCurrentCart(false);
-    const [changePaymentInCart] = useChangePaymentInCart();
+    const { changePaymentInCart } = useChangePaymentInCart();
     const { t } = useTranslation();
 
     useBroadcastChannel('refetchCart', () => {
