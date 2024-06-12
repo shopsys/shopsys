@@ -1,4 +1,12 @@
-query SearchQuery($search: String!, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
+query SearchQuery(
+    $search: String!
+    $isAutocomplete: Boolean!
+    $userIdentifier: Uuid!
+    $endCursor: String!
+    $orderingMode: ProductOrderingModeEnum
+    $filter: ProductFilter
+    $pageSize: Int
+) {
     articlesSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
         ...SimpleArticleInterfaceFragment
     }
@@ -9,5 +17,24 @@ query SearchQuery($search: String!, $isAutocomplete: Boolean!, $userIdentifier: 
         searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }
     ) {
         ...ListedCategoryConnectionFragment
+    }
+    # This is here for Luigi's Box to correctly relate categories, articles, and brands to
+    # products displayed on search page. It has to exactly match the query definition inside
+    # SearchProductsQuery.graphql, as then that query is loaded from cache and not re-fetched
+    # unnecessarily.
+    productsSearch(
+        after: $endCursor
+        orderingMode: $orderingMode
+        filter: $filter
+        first: $pageSize
+        searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }
+    ) {
+        orderingMode
+        defaultOrderingMode
+        totalCount
+        productFilterOptions {
+            ...ProductFilterOptionsFragment
+        }
+        ...ListedProductConnectionFragment
     }
 }
