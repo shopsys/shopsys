@@ -10,7 +10,7 @@ class NavigationItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      */
     public function __construct(
-        protected NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        protected readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
     }
 
@@ -19,7 +19,7 @@ class NavigationItemDataFactory
      */
     public function createNew(): NavigationItemData
     {
-        return new NavigationItemData();
+        return $this->createInstance();
     }
 
     /**
@@ -28,7 +28,7 @@ class NavigationItemDataFactory
      */
     public function createForEntity(NavigationItem $navigationItem): NavigationItemData
     {
-        $navigationItemData = new NavigationItemData();
+        $navigationItemData = $this->createInstance();
         $navigationItemData->name = $navigationItem->getName();
         $navigationItemData->url = $navigationItem->getUrl();
         $navigationItemData->domainId = $navigationItem->getDomainId();
@@ -37,5 +37,13 @@ class NavigationItemDataFactory
             ->getSortedCategoriesIndexedByColumnNumberForNavigationItem($navigationItem);
 
         return $navigationItemData;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData
+     */
+    protected function createInstance(): NavigationItemData
+    {
+        return new NavigationItemData();
     }
 }
