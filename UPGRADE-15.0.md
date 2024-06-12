@@ -1300,3 +1300,9 @@ On Chrome there was issue when clicking on next/previous button while slider is 
 -   you should rename all `result`, `response`, and `data` variables to more descriptive names, such as `productDetailData`
 -   you should rename all mutation fetching states to names that describe what is happening, e.g. from `isCreateOrderMutationFetching` to `isCreatingOrder`
 -   you should rename all your `utils.ts` and `utils.tsx` files to more descriptive names, such as `lastVisitedProductsUtils.ts`
+
+#### Luigi's Box search relations fix ([#3217](https://github.com/shopsys/shopsys/pull/3217))
+
+-   `SearchQuery.graphql` now incldues products search query in order to relate searched categories, brands, and articles to searched products
+    -   this is required for Luigi's Box, so if you are not using it for search, then you might skip this change
+    -   make sure that `SearchQuery.graphql` includes the same products search query (same fragments, same variables) as `SearchProductsQuery.graphql` in order to utilize URQL cache
