@@ -725,6 +725,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
 
+    Shopsys\FrameworkBundle\Model\Navigation\NavigationSaveOrderingListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
     Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory
 

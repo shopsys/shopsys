@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 class NavigationItemData
 {
@@ -17,7 +17,7 @@ class NavigationItemData
     public $url;
 
     /**
-     * @var \App\Model\Category\Category[][]
+     * @var \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public $categoriesByColumnNumber = [];
 

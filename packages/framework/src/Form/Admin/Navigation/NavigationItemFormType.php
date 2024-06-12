@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin\Navigation;
+namespace Shopsys\FrameworkBundle\Form\Admin\Navigation;
 
-use App\Model\Category\CategoryFacade;
-use App\Model\Navigation\NavigationItem;
-use App\Model\Navigation\NavigationItemData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Locale\LocaleHelper;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,14 +23,14 @@ use Symfony\Component\Validator\Constraints;
 class NavigationItemFormType extends AbstractType
 {
     /**
-     * @var \App\Model\Category\Category[]
+     * @var \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     private array $categoryPaths;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,

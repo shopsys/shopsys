@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 class NavigationItemDataFactory
 {
     /**
-     * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      */
     public function __construct(
-        private NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        protected NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
     }
 
     /**
-     * @return \App\Model\Navigation\NavigationItemData
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData
      */
     public function createNew(): NavigationItemData
     {
@@ -23,8 +23,8 @@ class NavigationItemDataFactory
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @return \App\Model\Navigation\NavigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem $navigationItem
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData
      */
     public function createForEntity(NavigationItem $navigationItem): NavigationItemData
     {

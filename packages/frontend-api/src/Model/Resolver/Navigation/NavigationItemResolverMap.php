@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Navigation;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Navigation;
 
-use App\Model\Navigation\NavigationItemDetail;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail;
 
 class NavigationItemResolverMap extends ResolverMap
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
-use App\Model\Navigation\Exception\NavigationItemNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Navigation\Exception\NavigationItemNotFoundException;
 
 class NavigationItemRepository
 {
@@ -15,21 +15,21 @@ class NavigationItemRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getEntityRepository(): EntityRepository
+    protected function getEntityRepository(): EntityRepository
     {
         return $this->em->getRepository(NavigationItem::class);
     }
 
     /**
      * @param int $id
-     * @return \App\Model\Navigation\NavigationItem|null
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem|null
      */
     public function findById(int $id): ?NavigationItem
     {
@@ -38,7 +38,7 @@ class NavigationItemRepository
 
     /**
      * @param int $id
-     * @return \App\Model\Navigation\NavigationItem
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem
      */
     public function getById(int $id): NavigationItem
     {

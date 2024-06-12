@@ -306,6 +306,10 @@ class SideMenuBuilder
         $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
         $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
+        $navigationMenu = $menu->addChild('navigation', ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
+        $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editing item')]);
+        $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 
         return $menu;

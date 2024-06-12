@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
-use App\Model\Navigation\NavigationItemData;
-use App\Model\Navigation\NavigationItemDataFactory;
-use App\Model\Navigation\NavigationItemFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class NavigationItemDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
-     * @param \App\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
@@ -90,7 +90,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
     private function createItem(NavigationItemData $navigationItemData): void
     {
@@ -108,7 +108,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
      */
     private function addCategoriesToNavigationItem(NavigationItemData $navigationItemData): void
     {

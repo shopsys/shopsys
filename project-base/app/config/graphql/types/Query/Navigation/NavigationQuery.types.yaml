@@ -1,8 +1,0 @@
-NavigationQuery:
-    type: object
-    config:
-        fields:
-            navigation:
-                type: '[NavigationItem!]!'
-                resolve: "@=query('navigationQuery')"
-                description: "Returns complete navigation menu"

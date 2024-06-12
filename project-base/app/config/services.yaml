@@ -146,10 +146,6 @@ services:
 
     App\Model\Mail\MailTemplateBuilder: ~
 
-    App\Model\Navigation\NavigationSaveOrderingListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
     App\Model\Order\Mail\OrderMail: ~
 
     App\Model\PersonalData\Mail\PersonalDataExportMail: ~

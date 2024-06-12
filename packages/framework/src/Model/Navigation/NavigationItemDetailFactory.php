@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Navigation;
+namespace Shopsys\FrameworkBundle\Model\Navigation;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemDetailFactory
 {
     /**
-     * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      */
     public function __construct(
-        private NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        protected NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItem[] $navigationItems
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Navigation\NavigationItemDetail[]
+     * @return \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail[]
      */
     public function createDetails(array $navigationItems, DomainConfig $domainConfig): array
     {
