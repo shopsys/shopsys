@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints;
 class NavigationItemFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @var string[]
      */
     private array $categoryPaths;
 
