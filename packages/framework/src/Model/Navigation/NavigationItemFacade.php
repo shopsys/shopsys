@@ -17,6 +17,7 @@ class NavigationItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFactory $navigationItemFactory
      */
     public function __construct(
         protected readonly EntityManagerDecorator $em,
@@ -24,6 +25,7 @@ class NavigationItemFacade
         protected readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
         protected readonly NavigationItemDetailFactory $navigationItemDetailFactory,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly NavigationItemFactory $navigationItemFactory,
     ) {
     }
 
@@ -73,7 +75,7 @@ class NavigationItemFacade
     {
         $this->fixUrlInNavigationItemData($navigationItemData);
 
-        $navigationItem = new NavigationItem($navigationItemData);
+        $navigationItem = $this->navigationItemFactory->create($navigationItemData);
 
         $this->em->persist($navigationItem);
         $this->em->flush();

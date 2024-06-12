@@ -12,10 +12,12 @@ class NavigationItemCategoryFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryRepository $navigationItemCategoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemCategoryFactory $navigationItemCategoryFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly NavigationItemCategoryRepository $navigationItemCategoryRepository,
+        protected readonly NavigationItemCategoryFactory $navigationItemCategoryFactory,
     ) {
     }
 
@@ -53,7 +55,7 @@ class NavigationItemCategoryFacade
         $position = 1;
 
         foreach ($categories as $category) {
-            $navigationItemCategory = new NavigationItemCategory(
+            $navigationItemCategory = $this->navigationItemCategoryFactory->create(
                 $navigationItem,
                 $columnNumber,
                 $position++,
