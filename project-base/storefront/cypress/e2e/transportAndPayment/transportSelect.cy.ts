@@ -127,7 +127,9 @@ describe('Transport select tests', () => {
         checkTransportSelectionIsNotVisible();
         checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page');
+        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
     });
 
     it('should redirect to cart page and not display transport options if cart is empty and user is logged in', function () {
@@ -137,7 +139,9 @@ describe('Transport select tests', () => {
         checkTransportSelectionIsNotVisible();
         checkEmptyCartTextIsVisible();
         checkUrl(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page');
+        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
     });
 
     it('should change price for transport when cart is large enough for transport to be free', function () {
@@ -154,7 +158,7 @@ describe('Transport select tests', () => {
         cy.addProductToCartForTest(products.helloKitty.uuid, 1099);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
         takeSnapshotAndCompare(this.test?.title, 'cart page with enough products', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         goToNextOrderStep();

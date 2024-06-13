@@ -33,7 +33,9 @@ describe('Registration tests (basic)', () => {
         fillInRegstrationForm('commonCustomer', email);
         clearAndFillInRegistrationFormPasswords(password);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled registration form');
+        takeSnapshotAndCompare(this.test?.title, 'filled registration form', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         submitRegistrationForm();
         checkAndHideSuccessToast('Your account has been created and you are logged in now');
@@ -42,7 +44,9 @@ describe('Registration tests (basic)', () => {
 
         goToEditProfileFromHeader();
         checkUrl(url.customer.editProfile);
-        takeSnapshotAndCompare(this.test?.title, 'customer edit page');
+        takeSnapshotAndCompare(this.test?.title, 'customer edit page', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
     });
 });
 
@@ -57,7 +61,9 @@ describe('Registration tests (repeated tries)', () => {
         checkRegistrationValidationErrorsPopup();
         checkPopupIsVisible(true);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'after invalid try');
+        takeSnapshotAndCompare(this.test?.title, 'after invalid try', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         const email = 'invalid-registration-then-correct-and-try-again@shopsys.com';
         clearAndFillInRegstrationFormEmail(email);

@@ -23,7 +23,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -43,7 +43,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -63,7 +63,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 });
@@ -89,7 +89,7 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -112,7 +112,7 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -135,7 +135,7 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 });

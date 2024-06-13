@@ -50,7 +50,7 @@ describe('Cart page tests', () => {
             'AddToCartMutation',
         );
         takeSnapshotAndCompare(this.test?.title, 'after increase', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -63,7 +63,7 @@ describe('Cart page tests', () => {
             'AddToCartMutation',
         );
         takeSnapshotAndCompare(this.test?.title, 'after decrease', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -83,7 +83,7 @@ describe('Cart page tests', () => {
             'AddToCartMutation',
         );
         takeSnapshotAndCompare(this.test?.title, 'after increase', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         checkNumberOfApiRequestsTriggeredByActions(
@@ -97,7 +97,7 @@ describe('Cart page tests', () => {
             'AddToCartMutation',
         );
         takeSnapshotAndCompare(this.test?.title, 'after decrease', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -105,12 +105,14 @@ describe('Cart page tests', () => {
         removeProductFromCartPage(products.philips32PFL4308.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after first removal', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         removeProductFromCartPage(products.helloKitty.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'empty cart after second removal');
+        takeSnapshotAndCompare(this.test?.title, 'empty cart after second removal', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
     });
 
     it('spinbox buttons should not be clickable if they cannot be used due to min/max quantity', function () {
@@ -128,7 +130,7 @@ describe('Cart page tests', () => {
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
         takeSnapshotAndCompare(this.test?.title, 'cart page after applying first promocode', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         goToNextOrderStep();
@@ -146,13 +148,13 @@ describe('Cart page tests', () => {
         removePromoCodeOnCartPage();
         checkAndHideSuccessToast('Promo code was removed from the order.');
         takeSnapshotAndCompare(this.test?.title, 'cart page after removing first promocode', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         applyPromoCodeOnCartPage('test-product2');
         checkAndHideSuccessToast('Promo code was added to the order.');
         takeSnapshotAndCompare(this.test?.title, 'cart page after removing second promocode', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -162,25 +164,25 @@ describe('Cart page tests', () => {
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
         takeSnapshotAndCompare(this.test?.title, 'after applying promocode', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         removeProductFromCartPage(products.helloKitty.catnum);
         checkAndHideInfoToast('The promo code test is no longer applicable.');
         takeSnapshotAndCompare(this.test?.title, 'after removing product that allows promocode', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
     });
 
     it('transport should not be free if price minus promo code discount is below the free transport limit', function () {
-        cy.addProductToCartForTest(products.helloKitty.uuid, 70);
+        cy.addProductToCartForTest(products.helloKitty.uuid, 10);
         cy.reloadAndWaitForStableAndInteractiveDOM();
 
         clickOnPromoCodeButton();
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
         takeSnapshotAndCompare(this.test?.title, 'cart page with non-free transport after applying promocode', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }],
+            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
         });
 
         goToNextOrderStep();

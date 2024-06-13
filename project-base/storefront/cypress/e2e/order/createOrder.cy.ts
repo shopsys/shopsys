@@ -49,12 +49,14 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should create order as unlogged user (transport to home, cash on delivery) and check it in order detail', function () {
@@ -77,12 +79,14 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should create order as unlogged user (personal collection, cash) and check it in order detail', function () {
@@ -105,12 +109,14 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should create order as unlogged user (PPL, credit cart) and check it in order detail', function () {
@@ -133,12 +139,14 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should create order with promo code and check it in order detail', function () {
@@ -162,12 +170,14 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         clickOnOrderDetailButtonOnThankYouPage();
         cy.waitForStableAndInteractiveDOM();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
     it('should register after order completion, and check that the just created order is in customer orders', function () {
@@ -189,7 +199,9 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         fillRegistrationInfoAfterOrder(password);
         submitRegistrationFormAfterOrder();
@@ -200,10 +212,12 @@ describe('Create order tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.customer.orders);
         goToOrderDetailFromOrderList();
         changeOrderDetailDynamicPartsToStaticDemodata(true);
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
 
         goToEditProfileFromHeader();
-        takeSnapshotAndCompare(this.test?.title, 'customer edit page');
+        takeSnapshotAndCompare(this.test?.title, 'customer edit page', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
     });
 
     it('should create order as logged-in user (transport to home, cash on delivery) and check it in order detail', function () {
@@ -227,10 +241,12 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation');
+        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         clickOnOrderDetailButtonOnThankYouPage();
         changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail');
+        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 });

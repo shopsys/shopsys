@@ -1048,6 +1048,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework and frontend-api packages:
     -   `NavigationItem` entity and all the related logic
     -   `NavigationQuery`
+    -   see #project-base-diff to update your project
+
+#### change free transport limit in demo data ([#3199](https://github.com/shopsys/shopsys/pull/3199))
+
 -   see #project-base-diff to update your project
 
 ### Storefront
@@ -1306,3 +1310,7 @@ On Chrome there was issue when clicking on next/previous button while slider is 
 -   `SearchQuery.graphql` now incldues products search query in order to relate searched categories, brands, and articles to searched products
     -   this is required for Luigi's Box, so if you are not using it for search, then you might skip this change
     -   make sure that `SearchQuery.graphql` includes the same products search query (same fragments, same variables) as `SearchProductsQuery.graphql` in order to utilize URQL cache
+
+#### change free transport limit in demo data ([#3199](https://github.com/shopsys/shopsys/pull/3199))
+
+-   social links in footer were blacked-out for cypress snapshots as they caused issues, so do not forget to add the blackout to snapshots where these links are visible, and also regenerate your screenshots
