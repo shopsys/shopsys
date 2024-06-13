@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
@@ -194,7 +195,8 @@ class ParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->orderBy('pt.name');
+            ->orderBy('p.orderingPriority', 'ASC')
+            ->addOrderBy('pt.name');
     }
 
     /**
@@ -374,5 +376,41 @@ class ParameterRepository
         }
 
         return $parameterValuesIndexedById;
+    }
+
+    /**
+     * @param string $locale
+     * @param string $type
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderParameterValuesUsedByProductsByLocaleAndType(
+        string $locale,
+        string $type,
+    ): QueryBuilder {
+        return $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->select('pv')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
+            ->join(Parameter::class, 'p', Join::WITH, 'ppv.parameter = p and p.parameterType = :type')
+            ->setParameter(':locale', $locale)
+            ->setParameter(':type', $type)
+            ->groupBy('pv')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale));
+    }
+
+    /**
+     * @param int $parameterValueId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueById(int $parameterValueId): ParameterValue
+    {
+        $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
+
+        if ($parameterValue === null) {
+            $message = 'ParameterValue with ID ' . $parameterValueId . ' not found.';
+
+            throw new ParameterValueNotFoundException($message);
+        }
+
+        return $parameterValue;
     }
 }

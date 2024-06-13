@@ -12,18 +12,18 @@ use App\DataFixtures\Demo\ParameterDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
-use App\Model\Product\Filter\ParameterFilterData;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
@@ -453,7 +453,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     /**
      * @param array $namesByLocale
      * @param array $valuesTextsByLocales
-     * @return \App\Model\Product\Filter\ParameterFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
     {
@@ -469,7 +469,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
 
     /**
      * @param array[] $valuesTextsByLocales
-     * @return \App\Model\Product\Parameter\ParameterValue[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
     {

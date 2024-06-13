@@ -9,7 +9,7 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class CategorySeoFacade
 {

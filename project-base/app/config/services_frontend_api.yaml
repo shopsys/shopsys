@@ -73,9 +73,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
         alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
 
-    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper:
-        alias: App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper
-
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterFacade
 

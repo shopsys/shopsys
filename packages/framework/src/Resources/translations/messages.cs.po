@@ -1123,6 +1123,15 @@ msgstr "Editace objednávky - č. %number%"
 msgid "Editing page"
 msgstr "Editace stránky"
 
+msgid "Editing parameter of type color"
+msgstr "Editace parametru typu barva"
+
+msgid "Editing parameter value of type color"
+msgstr "Editace hodnoty parametru typu barva"
+
+msgid "Editing parameter value of type color - %name%"
+msgstr "Úprava hodnoty parametru typu barva - %name%"
+
 msgid "Editing payment"
 msgstr "Editace platby"
 
@@ -2098,11 +2107,26 @@ msgstr "Parametr"
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr "Parametr <strong>{{ name }}</strong> byl smazán"
 
+msgid "Parameter value"
+msgstr "Hodnota parameteru"
+
+msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
+msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
+
+msgid "Parameter value of type color"
+msgstr "Hodnota parameteru typu barva"
+
+msgid "Parameter values of type color"
+msgstr "Hodnoty parameteru typu barva"
+
 msgid "Parameters"
 msgstr "Parametry"
 
 msgid "Parameters overview"
 msgstr "Přehled parametrů"
+
+msgid "Pararameter value of type color"
+msgstr "Hodnota parametru typu barva"
 
 msgid "Parent category"
 msgstr "Nadřazená kategorie"
@@ -2361,6 +2385,9 @@ msgstr "Rychlé vyhledávání v produktech"
 
 msgid "Quick search"
 msgstr "Rychlé vyhledávání"
+
+msgid "RGB Hex"
+msgstr ""
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou odstranit s nahrazením za novou."
@@ -2781,6 +2808,9 @@ msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. St
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
+
+msgid "There are no parameter values of type color yet."
+msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
 
 msgid "There is no warehouse on this domain yet."
 msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
@@ -3255,6 +3285,9 @@ msgstr "objednávek"
 
 msgid "orders sold"
 msgstr "prodaných objednávek"
+
+msgid "parameter values"
+msgstr "hodnoty parametru"
 
 msgid "parameters"
 msgstr "parametry"

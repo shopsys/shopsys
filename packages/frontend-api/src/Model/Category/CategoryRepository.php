@@ -100,7 +100,7 @@ class CategoryRepository
     /**
      * @param int[][] $categoriesIds
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Category\Category[][]
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
     public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
     {

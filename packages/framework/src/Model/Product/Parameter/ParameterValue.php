@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 
 /**
  * @ORM\Table(name="parameter_values")
@@ -29,7 +30,7 @@ class ParameterValue
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="text")
      */
     protected $text;
 
@@ -40,6 +41,17 @@ class ParameterValue
     protected $locale;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    protected $rgbHex;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    protected $colourIcon;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
      */
     public function __construct(ParameterValueData $parameterData)
@@ -47,6 +59,18 @@ class ParameterValue
         $this->text = $parameterData->text;
         $this->locale = $parameterData->locale;
         $this->uuid = $parameterData->uuid ?: Uuid::uuid4()->toString();
+        $this->rgbHex = $parameterData->rgbHex;
+        $this->colourIcon = $parameterData->colourIcon;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
+     */
+    public function edit(ParameterValueData $parameterData)
+    {
+        $this->text = $parameterData->text;
+        $this->rgbHex = $parameterData->rgbHex;
+        $this->colourIcon = $parameterData->colourIcon;
     }
 
     /**
@@ -82,10 +106,18 @@ class ParameterValue
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
+     * @return string|null
      */
-    public function edit(ParameterValueData $parameterData)
+    public function getRgbHex()
     {
-        $this->text = $parameterData->text;
+        return $this->rgbHex;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    public function getColourIcon(): UploadedFileData
+    {
+        return $this->colourIcon;
     }
 }

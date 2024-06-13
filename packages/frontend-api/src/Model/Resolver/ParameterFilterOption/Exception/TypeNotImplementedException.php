@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\ParameterFilterOption\Exception;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\ParameterFilterOption\Exception;
 
 use RuntimeException;
 

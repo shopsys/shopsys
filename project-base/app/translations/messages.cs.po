@@ -415,18 +415,6 @@ msgstr "Editace notifikační lišty"
 msgid "Editing page"
 msgstr "Editace stránky"
 
-msgid "Editing parameter of type color"
-msgstr "Editace parametru typu barva"
-
-msgid "Editing parameter of type color:"
-msgstr "Editace parametru typu barva:"
-
-msgid "Editing parameter value of type color"
-msgstr "Editace hodnoty parametru typu barva"
-
-msgid "Editing pararameter value of type color - %name%"
-msgstr "Úprava hodnoty parametru typu barva - %name%"
-
 msgid "Email"
 msgstr "E-mail"
 
@@ -883,18 +871,6 @@ msgstr "Titulek stránky"
 msgid "Parameter"
 msgstr "Parametr"
 
-msgid "Parameter value"
-msgstr "Hodnota parameteru"
-
-msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
-msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
-
-msgid "Parameter value of type color"
-msgstr "Hodnota parameteru typu barva"
-
-msgid "Parameter values of type color"
-msgstr "Hodnoty parameterů typu barva"
-
 msgid "Parameters - full"
 msgstr "Parametry - vše"
 
@@ -903,9 +879,6 @@ msgstr "Parametry - zobrazení"
 
 msgid "Parameters order in category"
 msgstr "Pořadí parametrů v kategorii"
-
-msgid "Pararameter value of type color"
-msgstr "Hodnota parametru typu barva"
 
 msgid "Password"
 msgstr "Heslo"
@@ -1014,9 +987,6 @@ msgstr "Promované produkty"
 
 msgid "Quick search"
 msgstr "Rychlé hledání"
-
-msgid "RGB Hex"
-msgstr "RGB Hex"
 
 msgid "Redirect target"
 msgstr "Cíl přesměrování"
@@ -1174,9 +1144,6 @@ msgstr "Text s obrázkem"
 msgid "The selected flag cannot be deleted."
 msgstr "Vybraný příznak nelze smazat."
 
-msgid "There are no parameter values of type color yet."
-msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
-
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
 
@@ -1278,9 +1245,6 @@ msgstr "Seznam nepoužívaných hezkých URL - vše"
 
 msgid "Unused friendly URLs - view"
 msgstr "Seznam nepoužívaných hezkých URL - zobrazení"
-
-msgid "Upload attachment"
-msgstr "Nahrát přílohu"
 
 msgid "Upload image"
 msgstr "Nahrát obrázek"
@@ -1386,9 +1350,6 @@ msgstr "od nejdražšího"
 
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
-
-msgid "parameter values"
-msgstr "hodnot parametrů"
 
 msgid "ready category seo mixes"
 msgstr "SEO kombinace kategorií"

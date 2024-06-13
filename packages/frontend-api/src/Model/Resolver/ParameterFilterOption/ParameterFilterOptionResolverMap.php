@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\ParameterFilterOption;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\ParameterFilterOption;
 
-use App\FrontendApi\Model\Product\Filter\ParameterFilterOption;
-use App\FrontendApi\Resolver\ParameterFilterOption\Exception\TypeNotImplementedException;
-use App\Model\Product\Parameter\Parameter;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption;
+use Shopsys\FrontendApiBundle\Model\Resolver\ParameterFilterOption\Exception\TypeNotImplementedException;
 
 class ParameterFilterOptionResolverMap extends ResolverMap
 {
-    private const PARAMETER_CHECKBOX_FILTER_OPTION = 'ParameterCheckboxFilterOption';
-    private const PARAMETER_SLIDER_FILTER_OPTION = 'ParameterSliderFilterOption';
-    private const PARAMETER_COLOR_FILTER_OPTION = 'ParameterColorFilterOption';
+    protected const string PARAMETER_CHECKBOX_FILTER_OPTION = 'ParameterCheckboxFilterOption';
+    protected const string PARAMETER_SLIDER_FILTER_OPTION = 'ParameterSliderFilterOption';
+    protected const string PARAMETER_COLOR_FILTER_OPTION = 'ParameterColorFilterOption';
 
     /**
      * {@inheritdoc}
@@ -30,10 +30,10 @@ class ParameterFilterOptionResolverMap extends ResolverMap
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\Filter\ParameterFilterOption $parameterFilterOption
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption $parameterFilterOption
      * @return string
      */
-    private function getResolveType(ParameterFilterOption $parameterFilterOption): string
+    protected function getResolveType(ParameterFilterOption $parameterFilterOption): string
     {
         $parameterType = $parameterFilterOption->parameter->getParameterType();
 

@@ -8,23 +8,20 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ParameterFilterChoice
 {
-    protected Parameter $parameter;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
     public function __construct(
-        ?Parameter $parameter = null,
+        protected readonly Parameter $parameter,
         protected readonly array $values = [],
     ) {
-        $this->parameter = $parameter;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getParameter()
+    public function getParameter(): Parameter
     {
         return $this->parameter;
     }
@@ -32,7 +29,7 @@ class ParameterFilterChoice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }

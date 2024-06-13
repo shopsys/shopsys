@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin\Product\Parameter\Value;
+namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value;
 
-use App\Model\Product\Parameter\ParameterValue;
-use App\Model\Product\Parameter\ParameterValueData;
 use Shopsys\FrameworkBundle\Form\FileUploadType;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

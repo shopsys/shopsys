@@ -415,18 +415,6 @@ msgstr ""
 msgid "Editing page"
 msgstr ""
 
-msgid "Editing parameter of type color"
-msgstr ""
-
-msgid "Editing parameter of type color:"
-msgstr ""
-
-msgid "Editing parameter value of type color"
-msgstr ""
-
-msgid "Editing pararameter value of type color - %name%"
-msgstr ""
-
 msgid "Email"
 msgstr ""
 
@@ -883,18 +871,6 @@ msgstr ""
 msgid "Parameter"
 msgstr ""
 
-msgid "Parameter value"
-msgstr ""
-
-msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
-msgstr ""
-
-msgid "Parameter value of type color"
-msgstr ""
-
-msgid "Parameter values of type color"
-msgstr ""
-
 msgid "Parameters - full"
 msgstr ""
 
@@ -902,9 +878,6 @@ msgid "Parameters - view"
 msgstr ""
 
 msgid "Parameters order in category"
-msgstr ""
-
-msgid "Pararameter value of type color"
 msgstr ""
 
 msgid "Password"
@@ -1013,9 +986,6 @@ msgid "Promoted products"
 msgstr ""
 
 msgid "Quick search"
-msgstr ""
-
-msgid "RGB Hex"
 msgstr ""
 
 msgid "Redirect target"
@@ -1174,9 +1144,6 @@ msgstr ""
 msgid "The selected flag cannot be deleted."
 msgstr ""
 
-msgid "There are no parameter values of type color yet."
-msgstr ""
-
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr ""
 
@@ -1277,9 +1244,6 @@ msgid "Unused friendly URLs - full"
 msgstr ""
 
 msgid "Unused friendly URLs - view"
-msgstr ""
-
-msgid "Upload attachment"
 msgstr ""
 
 msgid "Upload image"
@@ -1385,9 +1349,6 @@ msgid "from most expensive"
 msgstr ""
 
 msgid "from the cheapest"
-msgstr ""
-
-msgid "parameter values"
 msgstr ""
 
 msgid "ready category seo mixes"

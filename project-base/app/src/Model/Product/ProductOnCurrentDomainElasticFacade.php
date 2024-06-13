@@ -7,7 +7,6 @@ namespace App\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade as BaseProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -67,51 +66,11 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     }
 
     /**
-     * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
-    public function getProductFilterCountDataForFlag(
-        int $flagId,
-        ProductFilterData $productFilterData,
-    ): ProductFilterCountData {
-        $filterQuery = $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
-            $flagId,
-            $productFilterData,
-        );
-
-        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
-            $productFilterData,
-            $filterQuery,
-        );
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return int[]
      */
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData)
     {
         return $this->productElasticsearchRepository->getCategoryIdsForFilterData($productFilterData);
-    }
-
-    /**
-     * @param int $brandId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
-    public function getProductFilterCountDataForBrand(
-        int $brandId,
-        ProductFilterData $productFilterData,
-    ): ProductFilterCountData {
-        $filterQuery = $this->filterQueryFactory->createListableProductsByBrandIdWithPriceAndStockFilter(
-            $brandId,
-            $productFilterData,
-        );
-
-        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
-            $productFilterData,
-            $filterQuery,
-        );
     }
 }

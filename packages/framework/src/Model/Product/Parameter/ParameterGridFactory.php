@@ -61,6 +61,13 @@ class ParameterGridFactory implements GridFactoryInterface
                 true,
             );
         }
+
+        $grid->addColumn(
+            'parameterType',
+            'p.parameterType',
+            t('Type'),
+        );
+
         $grid->addColumn('visible', 'p.visible', t('Filter by'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

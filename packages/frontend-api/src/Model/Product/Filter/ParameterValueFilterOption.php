@@ -8,19 +8,18 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class ParameterValueFilterOption
 {
-    public ParameterValue $value;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      * @param int $count
      * @param bool $isAbsolute
+     * @param bool $isSelected
      */
     public function __construct(
-        ParameterValue $parameterValue,
+        public readonly ParameterValue $parameterValue,
         public readonly int $count,
         public readonly bool $isAbsolute,
+        public readonly bool $isSelected,
     ) {
-        $this->value = $parameterValue;
     }
 
     /**
@@ -28,7 +27,7 @@ class ParameterValueFilterOption
      */
     public function getUuid(): string
     {
-        return $this->value->getUuid();
+        return $this->parameterValue->getUuid();
     }
 
     /**
@@ -36,6 +35,14 @@ class ParameterValueFilterOption
      */
     public function getText(): string
     {
-        return $this->value->getText();
+        return $this->parameterValue->getText();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRgbHex(): ?string
+    {
+        return $this->parameterValue->getRgbHex();
     }
 }

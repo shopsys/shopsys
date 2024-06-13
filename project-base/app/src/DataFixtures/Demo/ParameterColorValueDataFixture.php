@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Product\Parameter\ParameterValueDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 
 class ParameterColorValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      */
     public function __construct(
         private readonly Domain $domain,

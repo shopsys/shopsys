@@ -116,4 +116,24 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
             $this->filterQueryFactory->createListableProductsWithPriceAndStockFilter($productFilterData),
         );
     }
+
+    /**
+     * @param int $flagId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getProductFilterCountDataForFlag(
+        int $flagId,
+        ProductFilterData $productFilterData,
+    ): ProductFilterCountData {
+        $filterQuery = $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
+            $flagId,
+            $productFilterData,
+        );
+
+        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
+            $productFilterData,
+            $filterQuery,
+        );
+    }
 }

@@ -6,21 +6,18 @@ namespace App\FrontendApi\Model\Product\Filter;
 
 use App\Model\Product\Flag\Flag;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade as BaseProductFilterFacade;
 
 /**
- * @property \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
  * @property \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig)
+ * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper, \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer, \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForCategory(\App\Model\Category\Category $category)
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForAll(\Overblog\GraphQLBundle\Definition\Argument $argument)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
- * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
- * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper, \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer, \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
  */
 class ProductFilterFacade extends BaseProductFilterFacade
 {
@@ -53,44 +50,6 @@ class ProductFilterFacade extends BaseProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForFlag(
                 $flag,
                 $locale,
-            );
-        }
-
-        return $this->productFilterConfigCache[$cacheKey];
-    }
-
-    /**
-     * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
-    public function getProductFilterConfigForSearch(string $searchText): ProductFilterConfig
-    {
-        $cacheKey = 'search_' . $searchText;
-
-        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
-            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForSearch(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $searchText,
-            );
-        }
-
-        return $this->productFilterConfigCache[$cacheKey];
-    }
-
-    /**
-     * @param \App\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
-    public function getProductFilterConfigForBrand(Brand $brand): ProductFilterConfig
-    {
-        $cacheKey = 'brand_' . $brand->getId();
-
-        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
-            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForBrand(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $brand,
             );
         }
 

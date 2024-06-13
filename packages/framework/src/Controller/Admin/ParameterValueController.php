@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
-use App\Model\Product\Parameter\Parameter;
-use App\Model\Product\Parameter\ParameterFacade;
-use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Product\Parameter\ParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,26 +21,26 @@ class ParameterValueController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        private GridFactory $gridFactory,
-        private ParameterRepository $parameterRepository,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
-        private ParameterFacade $parameterFacade,
-        private ParameterValueDataFactory $parameterValueDataFactory,
-        private BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly GridFactory $gridFactory,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly ParameterFacade $parameterFacade,
+        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
     /**
-     * @Route("/parameter-value/list", name="admin_parametervalue_list")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route('/parameter-value/list', name: 'admin_parametervalue_list')]
     public function listAction(): Response
     {
         $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
@@ -54,10 +53,10 @@ class ParameterValueController extends AdminBaseController
         $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
-        $grid->setTheme('Admin/Content/ParameterValue/listGrid.html.twig');
+        $grid->setTheme('@ShopsysFramework/Admin/Content/ParameterValue/listGrid.html.twig');
 
         return $this->render(
-            'Admin/Content/ParameterValue/list.html.twig',
+            '@ShopsysFramework/Admin/Content/ParameterValue/list.html.twig',
             [
                 'gridView' => $grid->createView(),
             ],
@@ -65,11 +64,11 @@ class ParameterValueController extends AdminBaseController
     }
 
     /**
-     * @Route("/parameter-value/edit/{id}", requirements={"id" = "\d+"}, name="admin_parametervalue_edit")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
+    #[Route('/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $parameterValue = $this->parameterFacade->getParameterValueById($id);
@@ -95,10 +94,10 @@ class ParameterValueController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing pararameter value of type color - %name%', ['%name%' => $parameterValue->getText()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing parameter value of type color - %name%', ['%name%' => $parameterValue->getText()]));
 
         return $this->render(
-            'Admin/Content/ParameterValue/edit.html.twig',
+            '@ShopsysFramework/Admin/Content/ParameterValue/edit.html.twig',
             [
                 'parameterValue' => $parameterValue,
                 'form' => $form->createView(),

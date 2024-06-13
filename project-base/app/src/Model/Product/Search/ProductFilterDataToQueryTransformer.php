@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransfo
  * @method \App\Model\Product\Search\FilterQuery addFlagsToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
  * @method \App\Model\Product\Search\FilterQuery addStockToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
  * @method \App\Model\Product\Search\FilterQuery addPricesToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
- * @method array flattenParameterFilterData(\App\Model\Product\Filter\ParameterFilterData[] $parameters)
  */
 class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTransformer
 {
@@ -24,7 +23,6 @@ class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTr
      */
     public function addParametersToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
-        /** @var \App\Model\Product\Filter\ParameterFilterData[] $parametersFilterData */
         $parametersFilterData = $productFilterData->parameters;
 
         if (count($parametersFilterData) === 0) {
@@ -37,22 +35,5 @@ class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTr
         return $filterQuery
             ->filterByParameters($parameters)
             ->filterBySliderParameters($sliderParametersData);
-    }
-
-    /**
-     * @param \App\Model\Product\Filter\ParameterFilterData[] $parametersFilterData
-     * @return \App\Model\Product\Filter\ParameterFilterData[]
-     */
-    private function getSliderParametersData(array $parametersFilterData): array
-    {
-        foreach ($parametersFilterData as $key => $parameterFilterData) {
-            $parameter = $parameterFilterData->parameter;
-
-            if ($parameter === null || $parameter->isSlider() === false) {
-                unset($parametersFilterData[$key]);
-            }
-        }
-
-        return $parametersFilterData;
     }
 }

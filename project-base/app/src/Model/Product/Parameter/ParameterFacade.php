@@ -17,17 +17,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @method \App\Model\Product\Parameter\Parameter getById(int $parameterId)
+ * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getAll()
  * @method \App\Model\Product\Parameter\Parameter create(\App\Model\Product\Parameter\ParameterData $parameterData)
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
  * @method \App\Model\Product\Parameter\Parameter edit(int $parameterId, \App\Model\Product\Parameter\ParameterData $parameterData)
- * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByValueTextAndLocale(string $valueText, string $locale)
  * @method dispatchParameterEvent(\App\Model\Product\Parameter\Parameter $parameter, string $eventType)
- * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
- * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
- * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
  * @method int[] getParametersIdsSortedByPositionFilteredByCategory(\App\Model\Category\Category $category)
+ * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
  */
 class ParameterFacade extends BaseParameterFacade
 {
@@ -37,8 +35,8 @@ class ParameterFacade extends BaseParameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -46,8 +44,8 @@ class ParameterFacade extends BaseParameterFacade
         ParameterFactoryInterface $parameterFactory,
         EventDispatcherInterface $eventDispatcher,
         CategoryParameterRepository $categoryParameterRepository,
+        UploadedFileFacade $uploadedFileFacade,
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        private readonly UploadedFileFacade $uploadedFileFacade,
     ) {
         parent::__construct(
             $em,
@@ -55,6 +53,7 @@ class ParameterFacade extends BaseParameterFacade
             $parameterFactory,
             $eventDispatcher,
             $categoryParameterRepository,
+            $uploadedFileFacade,
         );
     }
 
@@ -86,18 +85,9 @@ class ParameterFacade extends BaseParameterFacade
     }
 
     /**
-     * @param int $parameterValueId
-     * @return \App\Model\Product\Parameter\ParameterValue
-     */
-    public function getParameterValueById(int $parameterValueId): ParameterValue
-    {
-        return $this->parameterRepository->getParameterValueById($parameterValueId);
-    }
-
-    /**
      * @param string $parameterValueText
      * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue|null
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
      */
     public function findParameterValueByText(string $parameterValueText, string $locale): ?ParameterValue
     {
@@ -109,6 +99,7 @@ class ParameterFacade extends BaseParameterFacade
      */
     public function deleteById($parameterId): void
     {
+        /** @var \App\Model\Product\Parameter\Parameter $parameter */
         $parameter = $this->parameterRepository->getById($parameterId);
         $this->readyCategorySeoMixFacade->deleteAllWithParameter($parameter);
 
@@ -121,28 +112,5 @@ class ParameterFacade extends BaseParameterFacade
     public function getAllAkeneoParameterIds(): array
     {
         return $this->parameterRepository->getAllAkeneoParameterIds();
-    }
-
-    /**
-     * @param int $parameterValueId
-     * @param \App\Model\Product\Parameter\ParameterValueData $parameterValueData
-     * @return \App\Model\Product\Parameter\ParameterValue
-     */
-    public function editParameterValue(int $parameterValueId, ParameterValueData $parameterValueData): ParameterValue
-    {
-        $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
-        $parameterValue->edit($parameterValueData);
-
-        if ($parameterValueData->colourIcon->uploadedFilenames) {
-            $this->uploadedFileFacade->manageSingleFile($parameterValue, $parameterValueData->colourIcon);
-        }
-
-        if (count($parameterValueData->colourIcon->uploadedFilenames) === 0 && $parameterValueData->colourIcon->filesToDelete) {
-            $this->uploadedFileFacade->deleteAllUploadedFilesByEntity($parameterValue);
-        }
-
-        $this->em->flush();
-
-        return $parameterValue;
     }
 }

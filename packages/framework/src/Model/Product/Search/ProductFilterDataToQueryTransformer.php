@@ -63,13 +63,35 @@ class ProductFilterDataToQueryTransformer
      */
     public function addParametersToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
-        if (count($productFilterData->parameters) === 0) {
+        $parametersFilterData = $productFilterData->parameters;
+
+        if (count($parametersFilterData) === 0) {
             return $filterQuery;
         }
 
-        $parameters = $this->flattenParameterFilterData($productFilterData->parameters);
+        $parameters = $this->flattenParameterFilterData($parametersFilterData);
+        $sliderParametersData = $this->getSliderParametersData($parametersFilterData);
 
-        return $filterQuery->filterByParameters($parameters);
+        return $filterQuery
+            ->filterByParameters($parameters)
+            ->filterBySliderParameters($sliderParametersData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parametersFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]
+     */
+    protected function getSliderParametersData(array $parametersFilterData): array
+    {
+        foreach ($parametersFilterData as $key => $parameterFilterData) {
+            $parameter = $parameterFilterData->parameter;
+
+            if ($parameter === null || $parameter->isSlider() === false) {
+                unset($parametersFilterData[$key]);
+            }
+        }
+
+        return $parametersFilterData;
     }
 
     /**
