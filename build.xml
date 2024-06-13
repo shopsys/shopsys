@@ -9,6 +9,7 @@
     <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
+    <property name="path.upgrade-notes" value="${project.basedir}/upgrade-notes"/>
     <property name="translations.dump.flags" value=""/>
 
     <import file="${path.framework}/build.xml"/>
@@ -466,7 +467,7 @@
             <then>
                 <exec executable="php">
                     <arg value="-r"/>
-                    <arg value="copy('upgrade-notes/_template.md', 'upgrade-notes/backend_' . date('Ymd_His') . '.md');"/>
+                    <arg value="copy('${path.upgrade-notes}/_template.md', '${path.upgrade-notes}/backend_' . date('Ymd_His') . '.md');"/>
                 </exec>
             </then>
         </if>
@@ -478,7 +479,7 @@
             <then>
                 <exec executable="php">
                     <arg value="-r"/>
-                    <arg value="copy('upgrade-notes/_template.md', 'upgrade-notes/storefront_' . date('Ymd_His') . '.md');"/>
+                    <arg value="copy('${path.upgrade-notes}/_template.md', '${path.upgrade-notes}/storefront_' . date('Ymd_His') . '.md');"/>
                 </exec>
             </then>
         </if>
@@ -486,9 +487,9 @@
 
     <target name="upgrade-merge" description="Merges all upgrade notes into UPGRADE-{X.X}.md according to structure specified in upgrade-notes/_layout.md.">
         <input message="Enter version to merge upgrade notes for:" propertyName="version"/>
-        <exec executable="sh">
-            <arg value="-c"/>
-            <arg value="upgrade-notes/upgrade_notes.sh ${version}"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.upgrade-notes}/upgrade_notes.php"/>
+            <arg value="${version}"/>
         </exec>
     </target>
 

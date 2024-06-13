@@ -43,8 +43,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   if any of the database migrations do not suit you, there is an option to skip it; see [our Database Migrations docs](https://docs.shopsys.com/en/latest/introduction/database-migrations/#reordering-and-skipping-migrations)
 -   we may miss something even if we care a lot about these instructions. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
-<backendNotes>
+<!-- backendNotes -->
 
 ### Storefront
 
-<storefrontNotes>
+<!-- storefrontNotes -->
