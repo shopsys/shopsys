@@ -2,10 +2,15 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCurso
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
-    TypeSearchProductsQueryVariables,
     TypeSearchProductsQuery,
+    TypeSearchProductsQueryVariables,
     SearchProductsQueryDocument,
-} from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+} from 'graphql/requests/search/queries/SearchProductsQuery.generated';
+import {
+    TypeSearchQuery,
+    TypeSearchQueryVariables,
+    SearchQueryDocument,
+} from 'graphql/requests/search/queries/SearchQuery.generated';
 import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
 import { useRef, useState, useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
@@ -196,4 +201,43 @@ const getPreviousProductsFromCache = (
     }
 
     return cachedPartOfProducts;
+};
+
+export const useSearchQuery = (searchString: string | undefined) => {
+    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
+    const currentPage = useCurrentPageQuery();
+    const currentFilter = useCurrentFilterQuery();
+    const currentSort = useCurrentSortQuery();
+    const currentLoadMore = useCurrentLoadMoreQuery();
+    const mappedFilter = mapParametersFilter(currentFilter);
+    const { pageSize, isMoreThanOnePage } = getPageSizeInfo(false, currentLoadMore);
+    const endCursor = getEndCursor(currentPage, isMoreThanOnePage ? undefined : currentLoadMore);
+    const client = useClient();
+    const [searchData, setSearchData] = useState<TypeSearchQuery | undefined>(undefined);
+    const [isSearchFetching, setIsSearchFetching] = useState(true);
+
+    useEffect(() => {
+        if (searchString && userIdentifier) {
+            setIsSearchFetching(true);
+            client
+                .query<TypeSearchQuery, TypeSearchQueryVariables>(SearchQueryDocument, {
+                    search: searchString!,
+                    isAutocomplete: false,
+                    userIdentifier,
+                    endCursor,
+                    filter: mappedFilter,
+                    orderingMode: currentSort,
+                    pageSize,
+                })
+                .then((searchResponse) => {
+                    setSearchData(searchResponse.data);
+                    setIsSearchFetching(false);
+                });
+        }
+    }, [searchString, userIdentifier]);
+
+    return {
+        searchData,
+        isSearchFetching,
+    };
 };

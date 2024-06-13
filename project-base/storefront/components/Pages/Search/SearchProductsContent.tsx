@@ -2,7 +2,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { TypeSearchProductsQuery } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+import { TypeSearchProductsQuery } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmPaginatedProductListViewEvent';
