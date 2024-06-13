@@ -39,11 +39,17 @@
         "webonyx/graphql-php": "^15.6"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5.20"
+        "phpstan/phpstan": "^1.6.8",
+        "phpstan/phpstan-doctrine": "^1.3.4",
+        "phpstan/phpstan-phpunit": "^1.1.1",
+        "phpstan/phpstan-symfony": "^1.1.8",
+        "phpunit/phpunit": "^9.5.20",
+        "shopsys/coding-standards": "15.0.x-dev"
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

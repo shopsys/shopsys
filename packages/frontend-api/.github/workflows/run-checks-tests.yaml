@@ -22,3 +22,5 @@ jobs:
                 run: composer install --optimize-autoloader --no-interaction
             -   name: Run PHPUnit
                 run: php vendor/bin/phpunit tests
+            -   name: Run PHPStan level 5
+                run: php vendor/bin/phpstan analyze -c ./phpstan.neon ./src --level=5
