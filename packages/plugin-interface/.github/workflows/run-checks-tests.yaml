@@ -8,6 +8,9 @@ jobs:
         name: Run checks and tests
         runs-on: ubuntu-22.04
         steps:
+            -   name: Sleep for 15 seconds to ensure that split packages has been promoted to packagist.org
+                run: sleep 15s
+                shell: bash
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
