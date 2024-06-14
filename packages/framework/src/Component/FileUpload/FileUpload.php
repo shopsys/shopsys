@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadDirectoryNotFoundException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -130,9 +131,15 @@ class FileUpload
      */
     public function getUploadDirectory($isImage, $category, $targetDirectory)
     {
-        return ($isImage ? $this->imageDir : $this->uploadedFileDir)
+        $uploadDirectory = ($isImage ? $this->imageDir : $this->uploadedFileDir)
             . $category
             . ($targetDirectory !== null ? '/' . $targetDirectory : '');
+
+        if ($this->filesystem->directoryExists($uploadDirectory) === false) {
+            $message = sprintf('Directory "%s" does not exist. It must be created with correct permissions before uploading. You can run "phing dirs-create" for creating it.', $uploadDirectory);
+
+            throw new UploadDirectoryNotFoundException($message);
+        }
     }
 
     /**
