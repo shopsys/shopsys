@@ -8756,7 +8756,7 @@ Email address of the sender
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Message sent to recipient
+Message that will be sent to recipient
 
 </td>
 </tr>

@@ -716,7 +716,7 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
 export type TypeContactInput = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
-  /** Message sent to recipient */
+  /** Message that will be sent to recipient */
   message: Scalars['String']['input'];
   /** Name of the sender */
   name: Scalars['String']['input'];

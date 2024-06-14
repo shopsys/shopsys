@@ -582,7 +582,7 @@ type CompanyCustomerUser implements CustomerUser {
 input ContactInput {
   "Email address of the sender"
   email: String!
-  "Message sent to recipient"
+  "Message that will be sent to recipient"
   message: String!
   "Name of the sender"
   name: String!

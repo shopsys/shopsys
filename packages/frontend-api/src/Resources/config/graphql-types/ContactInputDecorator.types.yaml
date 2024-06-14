@@ -22,7 +22,7 @@ ContactInputDecorator:
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
             message:
                 type: "String!"
-                description: "Message sent to recipient"
+                description: "Message that will be sent to recipient"
                 validation:
                     -   NotBlank:
                             message: "Please enter the message"
