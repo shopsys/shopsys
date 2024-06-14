@@ -767,9 +767,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory
-
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
 

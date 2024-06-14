@@ -9,16 +9,17 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 
 class OrderStatusTest extends TestCase
 {
     public static function checkForDeleteProvider()
     {
         return [
-            ['statusType' => OrderStatus::TYPE_NEW, 'expectedException' => OrderStatusDeletionForbiddenException::class],
-            ['statusType' => OrderStatus::TYPE_IN_PROGRESS, 'expectedException' => null],
-            ['statusType' => OrderStatus::TYPE_DONE, 'expectedException' => OrderStatusDeletionForbiddenException::class],
-            ['statusType' => OrderStatus::TYPE_CANCELED, 'expectedException' => OrderStatusDeletionForbiddenException::class],
+            ['statusType' => OrderStatusTypeEnum::TYPE_NEW, 'expectedException' => OrderStatusDeletionForbiddenException::class],
+            ['statusType' => OrderStatusTypeEnum::TYPE_IN_PROGRESS, 'expectedException' => null],
+            ['statusType' => OrderStatusTypeEnum::TYPE_DONE, 'expectedException' => OrderStatusDeletionForbiddenException::class],
+            ['statusType' => OrderStatusTypeEnum::TYPE_CANCELED, 'expectedException' => OrderStatusDeletionForbiddenException::class],
         ];
     }
 
