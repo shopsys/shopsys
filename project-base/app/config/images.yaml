@@ -6,6 +6,9 @@
 #            multiple: true
 #        -   name: main
 
+-   name: domain
+    class: Shopsys\FrameworkBundle\Component\Domain\Domain
+
 -   name: payment
     class: Shopsys\FrameworkBundle\Model\Payment\Payment
 
