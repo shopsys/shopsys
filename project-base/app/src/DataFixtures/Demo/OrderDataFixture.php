@@ -124,7 +124,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 34, 19);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR, Administrator::class);
-        $orderData->gtmCoupon = 'promoCode123';
+        $orderData->promoCode = 'promoCode123';
         $this->createOrder(
             $orderData,
             [
@@ -334,7 +334,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(7, 2, 31);
-        $orderData->gtmCoupon = 'promoCode123';
+        $orderData->promoCode = 'promoCode123';
         $this->createOrder(
             $orderData,
             [

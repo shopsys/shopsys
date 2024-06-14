@@ -94,7 +94,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
                     ),
                     'firstName' => $order->getFirstName(),
                     'lastName' => $order->getLastName(),
-                    'promoCode' => $order->getGtmCoupon(),
+                    'promoCode' => $order->getPromoCode(),
                     'trackingNumber' => $order->getTrackingNumber(),
                     'trackingUrl' => $order->getTrackingUrl(),
                     'paymentTransactionsCount' => $order->getPaymentTransactionsCount(),

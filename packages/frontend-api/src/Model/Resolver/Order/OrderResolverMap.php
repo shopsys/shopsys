@@ -37,9 +37,6 @@ class OrderResolverMap extends ResolverMap
                 'status' => function (Order $order) {
                     return $order->getStatus()->getName($this->domain->getLocale());
                 },
-                'promoCode' => function (Order $order) {
-                    return $order->getGtmCoupon();
-                },
                 'items' => function (Order $order) {
                     return $this->orderItemsBatchLoader->load($order);
                 },

@@ -1170,7 +1170,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 #### move features from project-base to the packages ([#3210](https://github.com/shopsys/shopsys/pull/3210))
 
 -   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the frontend-api package:
-    -   `Order::$gtmCoupon`
+    -   `Order::$gtmCoupon` (renamed to `Order::$promoCode`)
     -   `CategoriesBatchLoader`
     -   `ContactFormMutation` and related graphql types
         -   `ContactInput` was renamed to `ContactFormInput`

@@ -340,7 +340,7 @@ class Order
      * @var string|null
      * @ORM\Column(type="string", length=64, nullable=true)
      */
-    protected $gtmCoupon;
+    protected $promoCode;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
@@ -509,7 +509,7 @@ class Order
 
         $this->setDeliveryAddress($orderData);
 
-        $this->gtmCoupon = $orderData->gtmCoupon;
+        $this->promoCode = $orderData->promoCode;
     }
 
     /**
@@ -1157,8 +1157,8 @@ class Order
     /**
      * @return string|null
      */
-    public function getGtmCoupon()
+    public function getPromoCode()
     {
-        return $this->gtmCoupon;
+        return $this->promoCode;
     }
 }

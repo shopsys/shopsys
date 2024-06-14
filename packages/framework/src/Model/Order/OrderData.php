@@ -246,7 +246,7 @@ class OrderData
     /**
      * @var string|null
      */
-    public $gtmCoupon;
+    public $promoCode;
 
     public function __construct()
     {
