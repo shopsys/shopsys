@@ -60,10 +60,6 @@ export type TypeSimpleArticleInterfaceFragment = TypeSimpleArticleInterfaceFragm
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -55,10 +55,6 @@ export type TypeSimpleBlogArticleFragment = { __typename: 'BlogArticle', name: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

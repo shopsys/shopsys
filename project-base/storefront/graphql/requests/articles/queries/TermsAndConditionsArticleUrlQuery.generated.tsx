@@ -59,10 +59,6 @@ export type TypeTermsAndConditionsArticleUrlQuery = { __typename?: 'Query', term
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -54,10 +54,6 @@ export type TypePageInfoFragment = { __typename: 'PageInfo', hasNextPage: boolea
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -65,10 +65,6 @@ export type TypeRecommendedProductsQuery = { __typename?: 'Query', recommendedPr
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

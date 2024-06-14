@@ -62,10 +62,6 @@ export type TypeArticleDetailQuery = { __typename?: 'Query', article: { __typena
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

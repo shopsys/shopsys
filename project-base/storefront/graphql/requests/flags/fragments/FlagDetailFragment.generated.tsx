@@ -57,10 +57,6 @@ export type TypeFlagDetailFragment = { __typename: 'Flag', uuid: string, slug: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

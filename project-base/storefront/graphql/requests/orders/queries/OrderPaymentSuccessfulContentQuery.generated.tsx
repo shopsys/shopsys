@@ -61,10 +61,6 @@ export type TypeOrderPaymentSuccessfulContentQuery = { __typename?: 'Query', ord
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

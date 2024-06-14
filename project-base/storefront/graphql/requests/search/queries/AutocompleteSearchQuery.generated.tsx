@@ -70,10 +70,6 @@ export type TypeAutocompleteSearchQuery = { __typename?: 'Query', articlesSearch
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

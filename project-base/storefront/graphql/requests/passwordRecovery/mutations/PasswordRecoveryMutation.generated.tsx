@@ -61,10 +61,6 @@ export type TypePasswordRecoveryMutation = { __typename?: 'Mutation', RequestPas
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

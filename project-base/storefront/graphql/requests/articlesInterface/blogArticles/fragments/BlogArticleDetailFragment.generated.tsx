@@ -57,10 +57,6 @@ export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: num
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

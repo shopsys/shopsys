@@ -61,10 +61,6 @@ export type TypeContactFormMutation = { __typename?: 'Mutation', ContactForm: bo
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

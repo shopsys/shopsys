@@ -66,10 +66,6 @@ export type TypePersonalDataDetailQuery = { __typename?: 'Query', accessPersonal
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

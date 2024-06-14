@@ -55,10 +55,6 @@ export type TypeStoreAvailabilityFragment = { __typename: 'StoreAvailability', a
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

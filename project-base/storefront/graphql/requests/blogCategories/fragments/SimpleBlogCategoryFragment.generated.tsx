@@ -54,10 +54,6 @@ export type TypeSimpleBlogCategoryFragment = { __typename: 'BlogCategory', uuid:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -62,10 +62,6 @@ export type TypeCartQuery = { __typename?: 'Query', cart: { __typename: 'Cart', 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

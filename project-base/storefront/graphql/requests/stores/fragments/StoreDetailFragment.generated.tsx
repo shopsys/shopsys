@@ -58,10 +58,6 @@ export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

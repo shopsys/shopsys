@@ -62,10 +62,6 @@ export type TypeOrderAvailablePaymentsQuery = { __typename?: 'Query', orderPayme
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

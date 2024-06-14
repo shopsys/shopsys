@@ -54,10 +54,6 @@ export type TypeProductPriceFragment = { __typename: 'ProductPrice', priceWithVa
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

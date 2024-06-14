@@ -56,10 +56,6 @@ export type TypeProductDetailFragment = { __typename: 'RegularProduct', shortDes
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -60,10 +60,6 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

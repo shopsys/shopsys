@@ -72,10 +72,6 @@ export type TypeSearchQuery = { __typename?: 'Query', articlesSearch: Array<{ __
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

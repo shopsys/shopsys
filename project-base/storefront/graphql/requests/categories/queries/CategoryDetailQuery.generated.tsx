@@ -64,10 +64,6 @@ export type TypeCategoryDetailQuery = { __typename?: 'Query', category: { __type
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -60,10 +60,6 @@ export type TypeCustomerUserFragment = TypeCustomerUserFragment_CompanyCustomerU
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -62,10 +62,6 @@ export type TypeOrderDetailByHashQuery = { __typename?: 'Query', order: { __type
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -63,10 +63,6 @@ export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePasswo
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

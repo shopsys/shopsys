@@ -1,4 +1,0 @@
-PriceInterface:
-    type: interface
-    inherits:
-        - 'PriceInterfaceDecorator'

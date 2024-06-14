@@ -1401,17 +1401,7 @@ type PersonalDataPage {
 }
 
 "Represents the price"
-type Price implements PriceInterface {
-  "Price without VAT"
-  priceWithoutVat: Money!
-  "Price with VAT"
-  priceWithVat: Money!
-  "Total value of VAT"
-  vatAmount: Money!
-}
-
-"Represents the price"
-interface PriceInterface {
+type Price {
   "Price without VAT"
   priceWithoutVat: Money!
   "Price with VAT"
@@ -1603,7 +1593,7 @@ enum ProductOrderingModeEnum {
 }
 
 "Represents the price of the product"
-type ProductPrice implements PriceInterface {
+type ProductPrice {
   "Determines whether it's a final price or starting price"
   isPriceFrom: Boolean!
   "Price without VAT"

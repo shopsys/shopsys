@@ -60,10 +60,6 @@ export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

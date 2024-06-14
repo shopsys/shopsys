@@ -62,10 +62,6 @@ export type TypeDeleteDeliveryAddressMutation = { __typename?: 'Mutation', Delet
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

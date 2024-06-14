@@ -58,10 +58,6 @@ export type TypeCartModificationsFragment = { __typename: 'CartModificationsResu
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

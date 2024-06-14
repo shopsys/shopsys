@@ -54,10 +54,6 @@ export type TypeProductFilterOptionsParametersSliderFragment = { __typename: 'Pa
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

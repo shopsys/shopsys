@@ -64,10 +64,6 @@ export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPass
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

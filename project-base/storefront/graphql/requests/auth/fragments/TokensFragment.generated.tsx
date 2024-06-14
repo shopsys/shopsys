@@ -54,10 +54,6 @@ export type TypeTokenFragments = { __typename?: 'Token', accessToken: string, re
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

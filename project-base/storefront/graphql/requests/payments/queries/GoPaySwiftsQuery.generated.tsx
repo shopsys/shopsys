@@ -61,10 +61,6 @@ export type TypeGoPaySwiftsQuery = { __typename?: 'Query', GoPaySwifts: Array<{ 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

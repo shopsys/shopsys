@@ -54,10 +54,6 @@ export type TypeCartPaymentModificationsFragment = { __typename: 'CartPaymentMod
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

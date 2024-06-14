@@ -64,10 +64,6 @@ export type TypeFlagDetailQuery = { __typename?: 'Query', flag: { __typename: 'F
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

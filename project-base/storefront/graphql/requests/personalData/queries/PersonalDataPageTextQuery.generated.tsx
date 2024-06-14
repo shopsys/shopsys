@@ -59,10 +59,6 @@ export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalData
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

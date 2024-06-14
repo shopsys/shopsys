@@ -54,10 +54,6 @@ export type TypeSimpleArticleLinkFragment = { __typename: 'ArticleLink', uuid: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -60,10 +60,6 @@ export type TypeBlogCategories = { __typename?: 'Query', blogCategories: Array<{
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

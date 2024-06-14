@@ -56,10 +56,6 @@ export type TypeBlogArticleConnectionFragment = { __typename: 'BlogArticleConnec
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

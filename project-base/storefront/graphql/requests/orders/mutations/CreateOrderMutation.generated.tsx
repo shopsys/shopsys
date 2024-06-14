@@ -87,10 +87,6 @@ export type TypeCreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

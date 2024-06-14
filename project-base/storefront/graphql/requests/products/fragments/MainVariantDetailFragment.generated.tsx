@@ -57,10 +57,6 @@ export type TypeMainVariantDetailFragment = { __typename: 'MainVariant', id: num
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

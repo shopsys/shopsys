@@ -56,10 +56,6 @@ export type TypeOrderDetailFragment = { __typename: 'Order', uuid: string, numbe
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

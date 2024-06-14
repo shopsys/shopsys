@@ -54,10 +54,6 @@ export type TypeSimpleTransportFragment = { __typename: 'Transport', uuid: strin
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

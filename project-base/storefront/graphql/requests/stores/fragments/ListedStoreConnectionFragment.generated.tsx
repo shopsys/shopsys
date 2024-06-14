@@ -55,10 +55,6 @@ export type TypeListedStoreConnectionFragment = { __typename: 'StoreConnection',
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -60,10 +60,6 @@ export type TypeAdvertsFragment = TypeAdvertsFragment_AdvertCode_ | TypeAdvertsF
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -62,10 +62,6 @@ export type TypeRemovePromoCodeFromCartMutation = { __typename?: 'Mutation', Rem
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -62,10 +62,6 @@ export type TypeChangeTransportInCartMutation = { __typename?: 'Mutation', Chang
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

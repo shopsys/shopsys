@@ -54,10 +54,6 @@ export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: st
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

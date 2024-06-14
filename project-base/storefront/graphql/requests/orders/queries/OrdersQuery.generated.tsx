@@ -63,10 +63,6 @@ export type TypeOrdersQuery = { __typename?: 'Query', orders: { __typename: 'Ord
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

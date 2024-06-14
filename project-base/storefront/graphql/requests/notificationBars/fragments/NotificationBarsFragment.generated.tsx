@@ -55,10 +55,6 @@ export type TypeNotificationBarsFragment = { __typename: 'NotificationBar', text
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

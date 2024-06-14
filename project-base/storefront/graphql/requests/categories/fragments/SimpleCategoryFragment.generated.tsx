@@ -54,10 +54,6 @@ export type TypeSimpleCategoryFragment = { __typename: 'Category', uuid: string,
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

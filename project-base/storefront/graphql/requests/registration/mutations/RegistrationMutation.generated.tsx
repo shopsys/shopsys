@@ -62,10 +62,6 @@ export type TypeRegistrationMutation = { __typename?: 'Mutation', Register: { __
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

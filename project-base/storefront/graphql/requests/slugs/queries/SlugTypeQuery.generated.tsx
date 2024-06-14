@@ -61,10 +61,6 @@ export type TypeSlugTypeQuery = { __typename?: 'Query', slug: { __typename: 'Art
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

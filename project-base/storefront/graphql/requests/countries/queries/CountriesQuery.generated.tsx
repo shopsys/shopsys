@@ -60,10 +60,6 @@ export type TypeCountriesQuery = { __typename?: 'Query', countries: Array<{ __ty
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

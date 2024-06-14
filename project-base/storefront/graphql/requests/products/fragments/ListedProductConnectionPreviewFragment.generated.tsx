@@ -55,10 +55,6 @@ export type TypeListedProductConnectionPreviewFragment = { __typename: 'ProductC
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

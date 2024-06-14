@@ -62,10 +62,6 @@ export type TypePersonalDataRequestMutation = { __typename?: 'Mutation', Request
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

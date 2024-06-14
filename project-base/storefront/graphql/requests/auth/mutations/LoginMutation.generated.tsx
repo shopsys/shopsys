@@ -66,10 +66,6 @@ export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -62,10 +62,6 @@ export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdateP
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

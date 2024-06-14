@@ -54,10 +54,6 @@ export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'Par
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

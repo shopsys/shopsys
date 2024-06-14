@@ -1760,18 +1760,8 @@ export type TypePersonalDataPage = {
 };
 
 /** Represents the price */
-export type TypePrice = TypePriceInterface & {
+export type TypePrice = {
   __typename?: 'Price';
-  /** Price with VAT */
-  priceWithVat: Scalars['Money']['output'];
-  /** Price without VAT */
-  priceWithoutVat: Scalars['Money']['output'];
-  /** Total value of VAT */
-  vatAmount: Scalars['Money']['output'];
-};
-
-/** Represents the price */
-export type TypePriceInterface = {
   /** Price with VAT */
   priceWithVat: Scalars['Money']['output'];
   /** Price without VAT */
@@ -1994,7 +1984,7 @@ export enum TypeProductOrderingModeEnum {
 }
 
 /** Represents the price of the product */
-export type TypeProductPrice = TypePriceInterface & {
+export type TypeProductPrice = {
   __typename?: 'ProductPrice';
   /** Determines whether it's a final price or starting price */
   isPriceFrom: Scalars['Boolean']['output'];

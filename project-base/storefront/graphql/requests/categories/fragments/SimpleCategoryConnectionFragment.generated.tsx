@@ -55,10 +55,6 @@ export type TypeSimpleCategoryConnectionFragment = { __typename: 'CategoryConnec
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

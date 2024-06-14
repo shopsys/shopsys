@@ -1177,10 +1177,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   `Contact` mutation was renamed to `ContactForm`
     -   `OrderItemsBatchLoader`
     -   `CountriesQuery` and `Country` graphql type
-    -   `PriceInterface` graphql type
     -   `File` graphql type
     -   `Payment::mainImage` and `Payment::type` graphql fields
     -   `AdvertImage::mainImage` graphql field
+    -   `PriceInterface` graphql type was removed
 -   see #project-base-diff to update your project
 
 ### Storefront

@@ -62,10 +62,6 @@ export type TypeBlogCategoryQuery = { __typename?: 'Query', blogCategory: { __ty
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -59,10 +59,6 @@ export type TypeRobotsTxtQuery = { __typename?: 'Query', settings: { __typename?
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

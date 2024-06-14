@@ -70,10 +70,6 @@ export type TypeProductDetailInterfaceFragment = TypeProductDetailInterfaceFragm
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

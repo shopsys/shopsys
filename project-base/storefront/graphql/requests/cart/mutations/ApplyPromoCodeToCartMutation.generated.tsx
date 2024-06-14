@@ -62,10 +62,6 @@ export type TypeApplyPromoCodeToCartMutation = { __typename?: 'Mutation', ApplyP
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

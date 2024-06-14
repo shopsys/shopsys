@@ -54,10 +54,6 @@ export type TypeNavigationSubCategoriesLinkFragment = { __typename: 'Category', 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

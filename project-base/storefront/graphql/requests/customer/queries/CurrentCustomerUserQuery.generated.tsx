@@ -60,10 +60,6 @@ export type TypeCurrentCustomerUserQuery = { __typename?: 'Query', currentCustom
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

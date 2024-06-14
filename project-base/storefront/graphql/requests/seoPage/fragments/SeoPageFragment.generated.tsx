@@ -56,10 +56,6 @@ export type TypeSeoPageFragment = { __typename: 'SeoPage', title: string | null,
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",
