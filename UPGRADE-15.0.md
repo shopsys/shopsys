@@ -1173,6 +1173,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Order::$gtmCoupon`
     -   `CategoriesBatchLoader`
     -   `ContactFormMutation` and related graphql types
+        -   `ContactInput` was renamed to `ContactFormInput`
+        -   `Contact` mutation was renamed to `ContactForm`
     -   `OrderItemsBatchLoader`
     -   `CountriesQuery` and `Country` graphql type
     -   `PriceInterface` graphql type

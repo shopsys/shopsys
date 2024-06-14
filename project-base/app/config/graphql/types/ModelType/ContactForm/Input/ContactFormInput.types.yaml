@@ -1,0 +1,4 @@
+ContactFormInput:
+    type: input-object
+    inherits:
+        - 'ContactFormInputDecorator'

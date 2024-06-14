@@ -713,7 +713,7 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type TypeContactInput = {
+export type TypeContactFormInput = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
   /** Message that will be sent to recipient */
@@ -1066,7 +1066,7 @@ export type TypeMutation = {
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
-  Contact: Scalars['Boolean']['output'];
+  ContactForm: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
   /** Delete delivery address by Uuid */
@@ -1151,8 +1151,8 @@ export type TypeMutationChangeTransportInCartArgs = {
 };
 
 
-export type TypeMutationContactArgs = {
-  input: TypeContactInput;
+export type TypeMutationContactFormArgs = {
+  input: TypeContactFormInput;
 };
 
 

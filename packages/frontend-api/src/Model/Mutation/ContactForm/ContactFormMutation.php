@@ -29,7 +29,7 @@ class ContactFormMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return bool
      */
-    public function contactMutation(Argument $argument, InputValidator $validator): bool
+    public function contactFormMutation(Argument $argument, InputValidator $validator): bool
     {
         $validator->validate();
 

@@ -1,4 +1,0 @@
-ContactInput:
-    type: input-object
-    inherits:
-        - 'ContactInputDecorator'

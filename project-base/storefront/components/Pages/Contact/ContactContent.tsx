@@ -8,7 +8,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useContactMutation } from 'graphql/requests/contact/mutations/ContactMutation.generated';
+import { useContactFormMutation } from 'graphql/requests/contact/mutations/ContactFormMutation.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
@@ -25,14 +25,14 @@ export const ContactContent: FC = () => {
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
-    const [, contact] = useContactMutation();
+    const [, contactForm] = useContactFormMutation();
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
         async (values) => {
             const { name, email, message } = values;
-            const contactResult = await contact({
+            const contactFormResult = await contactForm({
                 input: {
                     name,
                     email,
@@ -40,14 +40,14 @@ export const ContactContent: FC = () => {
                 },
             });
 
-            if (contactResult.data?.Contact !== undefined) {
+            if (contactFormResult.data?.ContactForm !== undefined) {
                 showSuccessMessage(formMeta.messages.success);
             }
 
-            handleFormErrors(contactResult.error, formProviderMethods, t, formMeta.messages.error);
-            clearForm(contactResult.error, formProviderMethods, defaultValues);
+            handleFormErrors(contactFormResult.error, formProviderMethods, t, formMeta.messages.error);
+            clearForm(contactFormResult.error, formProviderMethods, defaultValues);
         },
-        [contact, formMeta.messages, formProviderMethods, t, defaultValues],
+        [contactForm, formMeta.messages, formProviderMethods, t, defaultValues],
     );
 
     return (

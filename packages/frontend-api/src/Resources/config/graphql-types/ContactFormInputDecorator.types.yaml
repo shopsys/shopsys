@@ -1,4 +1,4 @@
-ContactInputDecorator:
+ContactFormInputDecorator:
     type: input-object
     decorator: true
     config:

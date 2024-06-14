@@ -579,7 +579,7 @@ type CompanyCustomerUser implements CustomerUser {
   uuid: Uuid!
 }
 
-input ContactInput {
+input ContactFormInput {
   "Email address of the sender"
   email: String!
   "Message that will be sent to recipient"
@@ -891,7 +891,7 @@ type Mutation {
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "Send message to the site owner"
-  Contact(input: ContactInput!): Boolean!
+  ContactForm(input: ContactFormInput!): Boolean!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
   "Delete delivery address by Uuid"

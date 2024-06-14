@@ -106,7 +106,7 @@
     * [ChangePaymentInOrderInput](#changepaymentinorderinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
-    * [ContactInput](#contactinput)
+    * [ContactFormInput](#contactforminput)
     * [DeliveryAddressInput](#deliveryaddressinput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
@@ -1306,7 +1306,7 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>Contact</strong></td>
+<td colspan="2" valign="top"><strong>ContactForm</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1316,7 +1316,7 @@ Send message to the site owner
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#contactinput">ContactInput</a>!</td>
+<td valign="top"><a href="#contactforminput">ContactFormInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -8731,7 +8731,7 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 </tbody>
 </table>
 
-### ContactInput
+### ContactFormInput
 
 <table>
 <thead>
