@@ -24,7 +24,7 @@
         "php": "^8.3",
         "ext-json": "*",
         "ext-pdo": "*",
-        "doctrine/dbal": "^3.3.3",
+        "doctrine/dbal": "^3.8.5",
         "doctrine/doctrine-bundle": "^2.5.7",
         "doctrine/orm": "^2.11.2",
         "doctrine/persistence": "^2.4",
