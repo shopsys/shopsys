@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -51,7 +51,7 @@ class AutomaticBestsellingProductRepository
             ->join('o.status', 'os')
             ->andWhere('pmip.pricingGroup = prv.pricingGroup')
             ->andWhere('os.type = :orderStatusType')
-            ->setParameter('orderStatusType', OrderStatus::TYPE_DONE)
+            ->setParameter('orderStatusType', OrderStatusTypeEnum::TYPE_DONE)
             ->andWhere('o.createdAt >= :createdAt')
             ->setParameter('createdAt', $ordersCreatedAtLimit)
             ->orderBy('orderCount', 'DESC')

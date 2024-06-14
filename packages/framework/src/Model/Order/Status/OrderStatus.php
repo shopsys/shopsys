@@ -19,11 +19,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForb
  */
 class OrderStatus extends AbstractTranslatableEntity
 {
-    public const TYPE_NEW = 1;
-    public const TYPE_IN_PROGRESS = 2;
-    public const TYPE_DONE = 3;
-    public const TYPE_CANCELED = 4;
-
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -41,14 +36,14 @@ class OrderStatus extends AbstractTranslatableEntity
     protected $translations;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var string
+     * @ORM\Column(type="string", length=25)
      */
     protected $type;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
-     * @param int $type
+     * @param string $type
      */
     public function __construct(OrderStatusData $orderStatusData, $type)
     {
@@ -60,7 +55,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
-    public function edit(OrderStatusData $orderStatusData)
+    public function edit(OrderStatusData $orderStatusData): void
     {
         $this->setData($orderStatusData);
     }
@@ -94,7 +89,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
-    protected function setTranslations(OrderStatusData $orderStatusData)
+    protected function setTranslations(OrderStatusData $orderStatusData): void
     {
         foreach ($orderStatusData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -110,7 +105,7 @@ class OrderStatus extends AbstractTranslatableEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getType()
     {
@@ -118,25 +113,20 @@ class OrderStatus extends AbstractTranslatableEntity
     }
 
     /**
-     * @param int $type
+     * @param string $type
      */
-    protected function setType($type)
+    protected function setType($type): void
     {
-        if (!in_array($type, [
-            self::TYPE_NEW,
-            self::TYPE_IN_PROGRESS,
-            self::TYPE_DONE,
-            self::TYPE_CANCELED,
-        ], true)) {
+        if (!in_array($type, OrderStatusTypeEnum::ALL_TYPES, true)) {
             throw new InvalidOrderStatusTypeException($type);
         }
 
         $this->type = $type;
     }
 
-    public function checkForDelete()
+    public function checkForDelete(): void
     {
-        if ($this->type !== self::TYPE_IN_PROGRESS) {
+        if ($this->type !== OrderStatusTypeEnum::TYPE_IN_PROGRESS) {
             throw new OrderStatusDeletionForbiddenException($this);
         }
     }

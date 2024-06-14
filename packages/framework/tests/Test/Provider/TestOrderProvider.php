@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -126,7 +127,7 @@ class TestOrderProvider
      */
     public static function createOrderStatusInstance(OrderStatusData $orderStatusData): OrderStatus
     {
-        return new OrderStatus($orderStatusData, OrderStatus::TYPE_NEW);
+        return new OrderStatus($orderStatusData, OrderStatusTypeEnum::TYPE_NEW);
     }
 
     /**

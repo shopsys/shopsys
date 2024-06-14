@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 
 class OrderStatusGridFactory implements GridFactoryInterface
 {
@@ -49,9 +50,9 @@ class OrderStatusGridFactory implements GridFactoryInterface
             ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/OrderStatus/listGrid.html.twig', [
-            'TYPE_NEW' => OrderStatus::TYPE_NEW,
-            'TYPE_DONE' => OrderStatus::TYPE_DONE,
-            'TYPE_CANCELED' => OrderStatus::TYPE_CANCELED,
+            'TYPE_NEW' => OrderStatusTypeEnum::TYPE_NEW,
+            'TYPE_DONE' => OrderStatusTypeEnum::TYPE_DONE,
+            'TYPE_CANCELED' => OrderStatusTypeEnum::TYPE_CANCELED,
         ]);
 
         return $grid;

@@ -59,7 +59,7 @@ class OrderStatusRepository
      */
     public function getDefault()
     {
-        $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatus::TYPE_NEW]);
+        $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatusTypeEnum::TYPE_NEW]);
 
         if ($orderStatus === null) {
             $message = 'Default order status not found.';

@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 
 class StatisticsRepository
 {
@@ -68,7 +68,8 @@ class StatisticsRepository
         $query = $this->em->createNativeQuery(
             'SELECT DATE(o.created_at) AS date, COUNT(o.created_at) AS count
             FROM orders o
-            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE
+            JOIN order_statuses os ON o.status_id = os.id AND os.type != :canceled
+            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.deleted = FALSE
             GROUP BY date
             ORDER BY date ASC',
             $resultSetMapping,
@@ -76,7 +77,7 @@ class StatisticsRepository
 
         $query->setParameter('start_date', $start);
         $query->setParameter('end_date', $end);
-        $query->setParameter('canceled', OrderStatus::TYPE_CANCELED);
+        $query->setParameter('canceled', OrderStatusTypeEnum::TYPE_CANCELED);
 
         return array_map(
             function (array $item) {
@@ -124,13 +125,14 @@ class StatisticsRepository
         $query = $this->em->createNativeQuery(
             'SELECT COUNT(o.created_at) AS count
             FROM orders o
-            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE',
+            JOIN order_statuses os ON o.status_id = os.id AND os.type != :canceled
+            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.deleted = FALSE',
             $resultSetMapping,
         );
 
         $query->setParameter('start_date', $startDateTime);
         $query->setParameter('end_date', $endDateTime);
-        $query->setParameter('canceled', OrderStatus::TYPE_CANCELED);
+        $query->setParameter('canceled', OrderStatusTypeEnum::TYPE_CANCELED);
 
         return (int)$query->getSingleScalarResult();
     }
@@ -147,15 +149,16 @@ class StatisticsRepository
 
         $query = $this->em->createNativeQuery(
             'SELECT SUM(o.total_price_with_vat * c.exchange_rate) AS total_price
-            FROM orders o, currencies c
-            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE
-            AND o.currency_id = c.id',
+            FROM orders o
+            JOIN currencies c ON o.currency_id = c.id
+            JOIN order_statuses os ON o.status_id = os.id AND os.type != :canceled
+            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.deleted = FALSE',
             $resultSetMapping,
         );
 
         $query->setParameter('start_date', $startDateTime);
         $query->setParameter('end_date', $endDateTime);
-        $query->setParameter('canceled', OrderStatus::TYPE_CANCELED);
+        $query->setParameter('canceled', OrderStatusTypeEnum::TYPE_CANCELED);
 
         return (int)$query->getSingleScalarResult();
     }

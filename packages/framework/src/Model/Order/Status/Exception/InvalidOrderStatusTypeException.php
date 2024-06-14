@@ -8,24 +8,12 @@ use Exception;
 
 class InvalidOrderStatusTypeException extends Exception implements OrderStatusException
 {
-    protected int $orderStatusType;
-
     /**
-     * @param int $orderStatusType
+     * @param string $orderStatusType
      * @param \Exception|null $previous
      */
-    public function __construct($orderStatusType, ?Exception $previous = null)
+    public function __construct(string $orderStatusType, ?Exception $previous = null)
     {
-        $this->orderStatusType = $orderStatusType;
-
-        parent::__construct('Order status type ' . $orderStatusType . ' is not valid', 0, $previous);
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrderStatusType()
-    {
-        return $this->orderStatusType;
+        parent::__construct('Order status type "' . $orderStatusType . '" is not valid', 0, $previous);
     }
 }
