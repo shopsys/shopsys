@@ -11,6 +11,7 @@ import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageVie
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { OgTypeEnum } from 'types/seo';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -38,6 +39,7 @@ const ArticleDetailPage: NextPage = () => {
             canonicalQueryParams={[]}
             description={article?.seoMetaDescription}
             isFetchingData={isArticleDetailFetching}
+            ogType={OgTypeEnum.Article}
             title={article?.seoTitle || article?.articleName}
         >
             {!!article && <ArticleDetailContent article={article} />}

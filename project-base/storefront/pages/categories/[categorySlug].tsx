@@ -46,6 +46,8 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
         categoryData?.seoTitle,
     );
 
+    const firstImageUrl = categoryData?.images[0]?.url;
+
     return (
         <PageDefer>
             {!!currentFilter && <MetaRobots content="noindex, follow" />}
@@ -56,6 +58,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 description={categoryData?.seoMetaDescription}
                 hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
+                ogImageUrlDefault={firstImageUrl}
                 title={seoTitle}
             >
                 {!!categoryData && (

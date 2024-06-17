@@ -13,6 +13,7 @@ import { TypeHreflangLink } from 'graphql/types';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import { OgTypeEnum } from 'types/seo';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 
 export type CommonLayoutProps = {
@@ -24,6 +25,8 @@ export type CommonLayoutProps = {
     hreflangLinks?: TypeHreflangLink[];
     isFetchingData?: boolean;
     pageTypeOverride?: PageType;
+    ogType?: OgTypeEnum | undefined;
+    ogImageUrlDefault?: string | undefined;
 };
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
@@ -36,6 +39,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     hreflangLinks,
     isFetchingData,
     pageTypeOverride,
+    ogType,
+    ogImageUrlDefault,
 }) => {
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
@@ -46,6 +51,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 defaultDescription={description}
                 defaultHreflangLinks={hreflangLinks}
                 defaultTitle={title}
+                ogImageUrlDefault={ogImageUrlDefault}
+                ogType={ogType}
             />
 
             <NotificationBars />
