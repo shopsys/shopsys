@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Litipk\BigNumbers\Decimal;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
@@ -127,6 +128,16 @@ class OrderItem
     protected $product;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
+     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem")
+     * @ORM\JoinTable(name="order_item_relations",
+     *      joinColumns={@ORM\JoinColumn(name="order_item_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="related_item_id", referencedColumnName="id")}
+     * )
+     */
+    protected $relatedItems;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
@@ -156,6 +167,7 @@ class OrderItem
         $this->unitName = $unitName;
         $this->catnum = $catnum;
         $this->order->addItem($this); // call after setting attrs for recalc total price
+        $this->relatedItems = new ArrayCollection();
     }
 
     /**
