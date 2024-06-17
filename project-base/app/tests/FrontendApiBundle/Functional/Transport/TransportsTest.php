@@ -26,6 +26,7 @@ class TransportsTest extends GraphQlTestCase
             ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
         ];
         $this->assertCount(count($expectedTransportsData), $responseData);
 
@@ -155,6 +156,28 @@ class TransportsTest extends GraphQlTestCase
                 'payments' => [
                     ['name' => t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ['name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                ],
+                'stores' => null,
+            ],
+            [
+                'name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'description' => t(
+                    'Packeta delivery company',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $this->getLocaleForFirstDomain(),
+                ),
+                'instruction' => null,
+                'position' => 4,
+                'daysUntilDelivery' => 2,
+                'transportType' => [
+                    'name' => t('Packetery', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    'code' => 'packetery',
+                ],
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.95', $vatHigh),
+                'images' => [],
+                'payments' => [
+                    ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                 ],
                 'stores' => null,
             ],

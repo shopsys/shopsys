@@ -28,6 +28,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
     public const TRANSPORT_DRONE = 'transport_drone';
+    public const TRANSPORT_PACKETERY = 'transport_packetery';
 
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
@@ -112,6 +113,19 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_DRONE, $transportData);
+
+        $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 2;
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Packeta delivery company', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $this->setPriceForAllDomains($transportData, Money::create('49.95'));
+        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportType::TYPE_PACKETERY);
+        $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
     }
 
     /**

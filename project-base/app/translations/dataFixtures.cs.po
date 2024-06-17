@@ -1378,6 +1378,12 @@ msgstr "PPL"
 msgid "PRIMECOOLER PC-AD2 3D glasses"
 msgstr "PRIMECOOLER PC-AD2 3D brýle"
 
+msgid "Packeta"
+msgstr "Zásilkovna"
+
+msgid "Packeta delivery company"
+msgstr "Zásilkovna doručovací společnost"
+
 msgid "Pages count"
 msgstr "Počet stránek"
 
@@ -1461,6 +1467,9 @@ msgstr "Tiskárny"
 
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
+
+msgid "Probably best value for your money"
+msgstr "Pravděpodobně ta nejlepší volba"
 
 msgid "Processor frequency (GHz)"
 msgstr "Frekvence procesoru (GHz)"

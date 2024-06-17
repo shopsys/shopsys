@@ -71,6 +71,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(self::PAYMENT_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
+            TransportDataFixture::TRANSPORT_PACKETERY,
         ]);
 
         $paymentData = $this->paymentDataFactory->create();
