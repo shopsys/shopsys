@@ -110,12 +110,4 @@ class OrderStatusFacade
     {
         return $this->orderStatusRepository->getAll();
     }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
-     */
-    public function getAllIndexedById()
-    {
-        return $this->orderStatusRepository->getAllIndexedById();
-    }
 }

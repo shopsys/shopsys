@@ -79,20 +79,6 @@ class OrderStatusRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
-     */
-    public function getAllIndexedById()
-    {
-        $orderStatusesIndexedById = [];
-
-        foreach ($this->getAll() as $orderStatus) {
-            $orderStatusesIndexedById[$orderStatus->getId()] = $orderStatus;
-        }
-
-        return $orderStatusesIndexedById;
-    }
-
-    /**
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
