@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
+use League\Flysystem\Config;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
+use League\Flysystem\Visibility;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -130,9 +132,15 @@ class FileUpload
      */
     public function getUploadDirectory($isImage, $category, $targetDirectory)
     {
-        return ($isImage ? $this->imageDir : $this->uploadedFileDir)
+        $uploadDirectory = ($isImage ? $this->imageDir : $this->uploadedFileDir)
             . $category
             . ($targetDirectory !== null ? '/' . $targetDirectory : '');
+
+        if ($this->filesystem->directoryExists($uploadDirectory) === false) {
+            $this->filesystem->createDirectory($uploadDirectory, [Config::OPTION_VISIBILITY => Visibility::PUBLIC]);
+        }
+
+        return $uploadDirectory;
     }
 
     /**
