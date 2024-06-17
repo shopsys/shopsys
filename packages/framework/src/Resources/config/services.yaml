@@ -601,9 +601,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
-    Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory
-
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher: ~
 
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:

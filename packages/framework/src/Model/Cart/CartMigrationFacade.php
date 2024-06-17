@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
@@ -17,13 +17,13 @@ class CartMigrationFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
-        protected readonly CartItemFactoryInterface $cartItemFactory,
+        protected readonly CartItemFactory $cartItemFactory,
         protected readonly CartFacade $cartFacade,
     ) {
     }

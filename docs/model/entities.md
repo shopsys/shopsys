@@ -21,13 +21,13 @@ These entities are created by their main entity.
 ### Example
 
 ```php
-// FrameworkBundle/Model/Cart/Item/CartItemFactoryInterface.php
+// FrameworkBundle/Model/Cart/Item/CartItemFactory.php
 
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
 // ...
 
-interface CartItemFactoryInterface
+class CartItemFactory
 {
 
     /**
@@ -46,7 +46,7 @@ interface CartItemFactoryInterface
 }
 ```
 
-The factory has an implementation in the framework and can be overwritten in your project when you need to work with an extended entity.
+The factory can be overwritten in your project when you need to work with an extended entity.
 You can read about entity extension in a [separate article](../extensibility/entity-extension.md).
 
 ## Domain entity
