@@ -49,7 +49,7 @@ class Cart
      *     targetEntity="Shopsys\FrameworkBundle\Model\Cart\Item\CartItem",
      *     mappedBy="cart"
      * )
-     * @ORM\OrderBy({"id" = "DESC"})
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $items;
 
