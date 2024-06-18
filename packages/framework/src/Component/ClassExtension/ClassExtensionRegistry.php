@@ -61,8 +61,7 @@ class ClassExtensionRegistry
                 ->files()
                 ->ignoreUnreadableDirs()
                 ->in($package['path'] . '/src')
-                ->name('/.*\.php/');
-
+                ->name('/.*\.php$/');
 
             /** @var \Symfony\Component\Finder\SplFileInfo $file */
             foreach ($finder as $file) {
