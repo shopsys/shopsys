@@ -1318,3 +1318,8 @@ On Chrome there was issue when clicking on next/previous button while slider is 
 #### change free transport limit in demo data ([#3199](https://github.com/shopsys/shopsys/pull/3199))
 
 -   social links in footer were blacked-out for cypress snapshots as they caused issues, so do not forget to add the blackout to snapshots where these links are visible, and also regenerate your screenshots
+
+#### add privacy policy checkbox to contact form ([#3219](https://github.com/shopsys/shopsys/pull/3219))
+
+-   privacy policy checbox is required and needs to be checked in order to submit the contact form
+-   the checkbox have replaced the text agreement of the privacy policy by clicking on the submit button
