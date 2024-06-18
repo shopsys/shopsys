@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use LimitIterator;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
@@ -78,13 +79,13 @@ class ExtendedClassesAnnotationsCommand extends Command
         if (count($filesForReplacingAnnotations) > 0) {
             if ($isDryRun) {
                 $symfonyStyle->error('Following files need fixing annotations:');
-                $symfonyStyle->listing($filesForReplacingAnnotations);
             } else {
-                $symfonyStyle->note(
-                    ['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations,
-                );
+                $symfonyStyle->note('Annotations were fixed in the following files:');
             }
+
+            $symfonyStyle->listing($filesForReplacingAnnotations);
         }
+
         $filesForAddingPropertyOrMethodAnnotations = $this->addPropertyAndMethodAnnotationsToProjectClasses($isDryRun);
 
         if (count($this->methodAnnotationsAdder->getWarnings()) > 0) {
@@ -127,18 +128,31 @@ class ExtendedClassesAnnotationsCommand extends Command
     {
         $finder = $this->getFinderForReplacingAnnotations();
         $filesForReplacingAnnotations = [];
+        $i = 0;
 
-        foreach ($finder as $file) {
-            $pathname = $file->getPathname();
-            $filesForReplacingAnnotations[] = $file->getRealPath();
+        do {
+            $page = $i * 100;
+            $limitIterator = new LimitIterator($finder->getIterator(), $page, 100);
 
-            if ($isDryRun) {
-                continue;
+            foreach ($limitIterator as $file) {
+                $pathname = $file->getPathname();
+
+                $originalContent = file_get_contents($pathname);
+                $replacedContent = $this->annotationsReplacer->replaceIn($originalContent);
+
+                if ($originalContent === $replacedContent) {
+                    continue;
+                }
+
+                $filesForReplacingAnnotations[] = $file->getRealPath();
+
+                if (!$isDryRun) {
+                    file_put_contents($pathname, $replacedContent);
+                }
             }
 
-            $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
-            file_put_contents($pathname, $replacedContent);
-        }
+            $i++;
+        } while ($page <= $limitIterator->getPosition());
 
         return $filesForReplacingAnnotations;
     }
@@ -155,8 +169,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $this->projectRootDirectory . '/app',
                 $this->projectRootDirectory . '/src',
             ])
-            ->name('*.php')
-            ->contains($this->annotationsReplacementsMap->getPatternForAny());
+            ->name('*.php');
     }
 
     /**
