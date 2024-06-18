@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use ErrorException;
 use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflector\DefaultReflector;
 use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
@@ -24,10 +25,12 @@ class ClassExtensionRegistry
     /**
      * @param string $frameworkRootDir
      * @param string[] $entityExtensionMap
+     * @param array<int, array{name: string, path: string, namespace: string, app_namespace: string}> $packagesRegistry
      */
     public function __construct(
         protected readonly string $frameworkRootDir,
-        protected readonly array $entityExtensionMap = [],
+        protected readonly array $entityExtensionMap,
+        protected readonly array $packagesRegistry,
     ) {
         $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
     }
@@ -51,37 +54,29 @@ class ClassExtensionRegistry
      */
     protected function getOtherClassesExtensionMap(): array
     {
-        $finder = Finder::create()
-            ->files()
-            ->ignoreUnreadableDirs()
-            ->in($this->frameworkRootDir . '/src')
-            ->name('/.*(Data|Controller)\.php/');
-
         $otherClassesMap = [];
 
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
-        foreach ($finder as $file) {
-            $frameworkClassFqcn = $this->getFqcn($file->getPathname());
-            $projectClassFqcn = str_replace('Shopsys\FrameworkBundle', 'App', $frameworkClassFqcn);
+        foreach ($this->packagesRegistry as $package) {
+            $finder = Finder::create()
+                ->files()
+                ->ignoreUnreadableDirs()
+                ->in($package['path'] . '/src')
+                ->name('/.*\.php/');
 
-            if (class_exists($projectClassFqcn)) {
-                $otherClassesMap[$frameworkClassFqcn] = $projectClassFqcn;
-            }
-        }
 
-        $finder = Finder::create()
-            ->files()
-            ->ignoreUnreadableDirs()
-            ->in($this->frameworkRootDir . '/../frontend-api/src')
-            ->name('/.*\.php/');
+            /** @var \Symfony\Component\Finder\SplFileInfo $file */
+            foreach ($finder as $file) {
+                try {
+                    $packageClassFqcn = $this->getFqcn($file->getPathname());
+                } catch (ErrorException) {
+                    continue;
+                }
 
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
-        foreach ($finder as $file) {
-            $frontendApiClassFqcn = $this->getFqcn($file->getPathname());
-            $projectClassFqcn = str_replace('Shopsys\FrontendApiBundle', 'App\FrontendApi', $frontendApiClassFqcn);
+                $projectClassFqcn = str_replace($package['namespace'], $package['app_namespace'], $packageClassFqcn);
 
-            if (class_exists($projectClassFqcn)) {
-                $otherClassesMap[$frontendApiClassFqcn] = $projectClassFqcn;
+                if (class_exists($projectClassFqcn)) {
+                    $otherClassesMap[$packageClassFqcn] = $projectClassFqcn;
+                }
             }
         }
 

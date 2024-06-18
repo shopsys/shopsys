@@ -32,6 +32,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
         $loader->load('parameters_common.yaml');
         $loader->load('services.yaml');
         $loader->load('paths.yaml');
+        $loader->load('packages_registry.yaml');
 
         if ($container->getParameter('kernel.environment') === EnvironmentType::DEVELOPMENT) {
             $loader->load('services_dev.yaml');

@@ -16,10 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
  * @property \App\Component\Setting\Setting $setting
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method setSellingToUntilEndOfDay(\App\Model\Product\ProductData|null $productData)
- * @method __construct(\Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \App\Model\Product\ProductFacade $productFacade, \App\Model\Product\ProductDataFactory $productDataFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade, \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade, \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade, \Shopsys\FrameworkBundle\Twig\ProductExtension $productExtension, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Product\Unit\UnitFacade $unitFacade, \App\Component\Setting\Setting $setting)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \App\Model\Product\ProductFacade $productFacade, \App\Model\Product\ProductDataFactory $productDataFactory, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade $productListAdminFacade, \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade, \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade, \App\Twig\ProductExtension $productExtension, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Product\Unit\UnitFacade $unitFacade, \App\Component\Setting\Setting $setting)
  * @property \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
  * @property \App\Model\Product\Unit\UnitFacade $unitFacade
  * @method \App\Model\Administrator\Administrator getCurrentAdministrator()
+ * @property \App\Twig\ProductExtension $productExtension
  */
 class ProductController extends BaseProductController
 {

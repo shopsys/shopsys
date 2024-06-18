@@ -1,0 +1,4 @@
+parameters:
+    shopsys.packages.registry:
+        - { name: 'framework', path: '%shopsys.framework.root_dir%', namespace: 'Shopsys\FrameworkBundle', app_namespace: 'App' }
+        - { name: 'frontend-api', path: '%shopsys.framework.root_dir%/../frontend-api', namespace: 'Shopsys\FrontendApiBundle', app_namespace: 'App\FrontendApi' }
