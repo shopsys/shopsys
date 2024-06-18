@@ -25,6 +25,7 @@ class AnnotationsReplacerTest extends TestCase
             'Shopsys\FrameworkBundle\Model\Category\CategoryFacade' => 'App\Model\Category\CategoryFacade',
             'Shopsys\FrameworkBundle\Model\Product\ProductDataFactory' => 'App\Model\MyProduct\ProductDataFactory',
             'Shopsys\FrameworkBundle\Model\Article\ArticleData' => 'App\Model\Article\ArticleData',
+            'Shopsys\FrontendApiBundle\Model\Product\ProductRepository' => 'App\FrontendApi\Model\Product\ProductRepository',
         ]);
 
         $this->annotationsReplacer = new AnnotationsReplacer($replacementMap, new DocBlockParser());
@@ -57,8 +58,16 @@ class AnnotationsReplacerTest extends TestCase
                 'output' => '@var \Shopsys\FrameworkBundle\Model\Article\ArticleDataInterface',
             ],
             [
+                'input' => '@var \Shopsys\FrontendApiBundle\Model\Product\ProductRepository',
+                'output' => '@var \App\FrontendApi\Model\Product\ProductRepository',
+            ],
+            [
                 'input' => '@param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade',
                 'output' => '@param \App\Model\Category\CategoryFacade',
+            ],
+            [
+                'input' => '@param \Shopsys\FrontendApiBundle\Model\Product\ProductRepository',
+                'output' => '@param \App\FrontendApi\Model\Product\ProductRepository',
             ],
             [
                 'input' => '@return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade',
@@ -103,6 +112,7 @@ class AnnotationsReplacerTest extends TestCase
             ), '\App\Model\Category\CategoryFacade|null'],
             [$reflectionClass->getMethod('returnsFrameworkArticleDataArray'), '\App\Model\Article\ArticleData[]'],
             [$reflectionClass->getMethod('returnsInt'), 'int'],
+            [$reflectionClass->getMethod('returnsFrontendApiProductRepository'), '\App\FrontendApi\Model\Product\ProductRepository'],
         ];
     }
 
@@ -152,6 +162,7 @@ class AnnotationsReplacerTest extends TestCase
             [$reflectionMethod->getParameter('categoryFacade'), '\App\Model\Category\CategoryFacade'],
             [$reflectionMethod->getParameter('categoryFacadeOrNull'), '\App\Model\Category\CategoryFacade|null'],
             [$reflectionMethod->getParameter('array'), '\App\Model\Article\ArticleData[]'],
+            [$reflectionMethod->getParameter('frontendApiproductRepository'), '\App\FrontendApi\Model\Product\ProductRepository'],
             [$reflectionMethod->getParameter('integer'), 'int'],
         ];
     }

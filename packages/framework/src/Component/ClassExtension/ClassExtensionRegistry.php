@@ -23,12 +23,10 @@ class ClassExtensionRegistry
     protected array $otherClassesExtensionMap = [];
 
     /**
-     * @param string $frameworkRootDir
      * @param string[] $entityExtensionMap
      * @param array<int, array{name: string, path: string, namespace: string, app_namespace: string}> $packagesRegistry
      */
     public function __construct(
-        protected readonly string $frameworkRootDir,
         protected readonly array $entityExtensionMap,
         protected readonly array $packagesRegistry,
     ) {
@@ -57,6 +55,10 @@ class ClassExtensionRegistry
         $otherClassesMap = [];
 
         foreach ($this->packagesRegistry as $package) {
+            if (!is_dir($package['path'] . '/src')) {
+                continue;
+            }
+
             $finder = Finder::create()
                 ->files()
                 ->ignoreUnreadableDirs()

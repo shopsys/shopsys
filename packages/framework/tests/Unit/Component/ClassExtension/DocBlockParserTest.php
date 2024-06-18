@@ -87,6 +87,10 @@ class DocBlockParserTest extends TestCase
                 [new Array_(new Object_(new Fqsen('\Shopsys\FrameworkBundle\Model\Article\ArticleData')))],
             ],
             [
+                $reflectionClass->getMethod('returnsFrontendApiProductRepository')->getDocComment(),
+                [new Object_(new Fqsen('\Shopsys\FrontendApiBundle\Model\Product\ProductRepository'))],
+            ],
+            [
                 $reflectionClass->getMethod('returnsInt')->getDocComment(),
                 [new Integer()],
             ],

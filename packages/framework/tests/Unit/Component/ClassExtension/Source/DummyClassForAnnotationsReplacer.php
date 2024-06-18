@@ -43,6 +43,13 @@ class DummyClassForAnnotationsReplacer
     }
 
     /**
+     * @return \Shopsys\FrontendApiBundle\Model\Product\ProductRepository
+     */
+    public function returnsFrontendApiProductRepository()
+    {
+    }
+
+    /**
      * @return int
      */
     public function returnsInt()
@@ -67,9 +74,15 @@ class DummyClassForAnnotationsReplacer
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null $categoryFacadeOrNull
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductRepository $frontendApiproductRepository
      * @param int $integer
      */
-    public function acceptsVariousParameters($categoryFacade, $categoryFacadeOrNull, $array, $integer)
-    {
+    public function acceptsVariousParameters(
+        $categoryFacade,
+        $categoryFacadeOrNull,
+        $array,
+        $frontendApiproductRepository,
+        $integer,
+    ) {
     }
 }
