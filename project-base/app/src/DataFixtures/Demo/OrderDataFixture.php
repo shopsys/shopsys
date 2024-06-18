@@ -30,9 +30,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 {
     private const string UUID_NAMESPACE = '0338e624-c961-4475-a29d-c90080d02d1f';
     public const string ORDER_PREFIX = 'order_';
-    private const string ORDER_WITH_GOPAY_PAYMENT_PREFIX = 'order_with_gopay_payment_';
-    public const string ORDER_WITH_GOPAY_PAYMENT_1 = 'order_with_gopay_payment_1';
-    public const string ORDER_WITH_GOPAY_PAYMENT_14 = 'order_with_gopay_payment_14';
+    public const string ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION = 'order_with_gopay_payment_one_transaction';
+    public const string ORDER_WITH_GOPAY_PAYMENT_TWO_TRANSACTIONS = 'order_with_gopay_payment_two_transactions';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -107,7 +106,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId,
             $customerUser,
         );
-        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
+        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
@@ -444,7 +443,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             TransportDataFixture::TRANSPORT_PERSONAL,
             PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId,
         );
-        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
+        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_TWO_TRANSACTIONS, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);

@@ -610,6 +610,9 @@ msgstr "Solární čepice s ventilátorkem, bílá"
 msgid "Capacity"
 msgstr "kapacita"
 
+msgid "Cart"
+msgstr "Košík"
+
 msgid "Cash"
 msgstr "Hotově"
 

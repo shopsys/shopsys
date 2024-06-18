@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Cart;
 
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 
 class AddProductResult
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $cartItem
      * @param bool $isNew
      * @param int $addedQuantity
      * @param int $notOnStockQuantity
      */
     public function __construct(
-        protected readonly CartItem $cartItem,
+        protected readonly OrderItem $cartItem,
         protected readonly bool $isNew,
         protected readonly int $addedQuantity,
         protected readonly int $notOnStockQuantity,
@@ -23,9 +23,9 @@ class AddProductResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getCartItem(): CartItem
+    public function getCartItem(): OrderItem
     {
         return $this->cartItem;
     }

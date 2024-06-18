@@ -29,7 +29,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method removeItem(\App\Model\Order\Item\OrderItem $item)
  * @method fillCommonFields(\App\Model\Order\OrderData $orderData)
  * @property \App\Model\Order\Status\OrderStatus|null $status
- * @method setStatus(\App\Model\Order\Status\OrderStatus $status)
+ * @method setStatus(\App\Model\Order\Status\OrderStatus|null $status)
  * @method \App\Model\Order\Status\OrderStatus|null getStatus()
  * @method \Shopsys\FrameworkBundle\Model\Order\OrderEditResult edit(\App\Model\Order\OrderData $orderData)
  * @method \App\Model\Payment\Payment getPayment()
@@ -49,14 +49,14 @@ class Order extends BaseOrder
 {
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param string $orderNumber
-     * @param string $urlHash
+     * @param string|null $orderNumber
+     * @param string|null $urlHash
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(
         BaseOrderData $orderData,
-        string $orderNumber,
-        string $urlHash,
+        ?string $orderNumber = null,
+        ?string $urlHash = null,
         ?CustomerUser $customerUser = null,
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);

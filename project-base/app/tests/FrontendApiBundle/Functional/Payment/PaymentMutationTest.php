@@ -26,7 +26,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
     public function testPayOrderWithGoPay(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION, Order::class);
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
@@ -44,7 +44,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
     public function testUpdatePaymentStatusWithGoPay(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION, Order::class);
 
         $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
@@ -63,7 +63,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
 
         $this->em->clear();
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION, Order::class);
 
         foreach ($order->getPaymentTransactions() as $paymentTransaction) {
             $this->assertSame('PAID', $paymentTransaction->getExternalPaymentStatus());
@@ -78,7 +78,7 @@ class PaymentMutationTest extends GraphQlTestCase
         $paymentTransactionData->externalPaymentStatus = PaymentStatus::PAID;
         $this->paymentTransactionFacade->edit(1, $paymentTransactionData);
 
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION, Order::class);
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',
@@ -93,7 +93,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
     public function testOrderCannotBePaidForPaymentWithTwoTransactions(): void
     {
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_14, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_TWO_TRANSACTIONS, Order::class);
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/PayOrderMutation.graphql',

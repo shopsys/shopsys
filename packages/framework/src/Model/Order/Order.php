@@ -53,8 +53,8 @@ class Order
     protected $uuid;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=30, unique=true, nullable=false)
+     * @var string|null
+     * @ORM\Column(type="string", length=30, unique=true, nullable=true)
      */
     protected $number;
 
@@ -66,8 +66,8 @@ class Order
     protected $customerUser;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
@@ -92,14 +92,14 @@ class Order
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $transport;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $payment;
 
@@ -149,14 +149,14 @@ class Order
     protected $lastName;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $email;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=30)
+     * @var string|null
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $telephone;
 
@@ -179,27 +179,27 @@ class Order
     protected $companyTaxNumber;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $street;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $city;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=30)
+     * @var string|null
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $postcode;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\Country
+     * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
      */
     protected $country;
 
@@ -234,20 +234,20 @@ class Order
     protected $deliveryTelephone;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryStreet;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryCity;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $deliveryPostcode;
 
@@ -277,8 +277,8 @@ class Order
     protected $domainId;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=50, unique=true)
+     * @var string|null
+     * @ORM\Column(type="string", length=50, unique=true, nullable=true)
      */
     protected $urlHash;
 
@@ -351,15 +351,21 @@ class Order
     protected $promoCode;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $modifiedAt;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param string $orderNumber
-     * @param string $urlHash
+     * @param string|null $orderNumber
+     * @param string|null $urlHash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(
         OrderData $orderData,
-        string $orderNumber,
-        string $urlHash,
+        ?string $orderNumber = null,
+        ?string $urlHash = null,
         ?CustomerUser $customerUser = null,
     ) {
         $this->fillCommonFields($orderData);
@@ -374,11 +380,7 @@ class Order
         $this->customerUser = $customerUser;
         $this->deleted = false;
 
-        if ($orderData->createdAt === null) {
-            $this->createdAt = new DateTime();
-        } else {
-            $this->createdAt = $orderData->createdAt;
-        }
+        $this->createdAt = $orderData->createdAt;
         $this->domainId = $orderData->domainId;
         $this->urlHash = $urlHash;
         $this->currency = $orderData->currency;
@@ -391,6 +393,7 @@ class Order
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
+        $this->setModifiedNow();
     }
 
     /**
@@ -743,7 +746,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     #[EntityLogIdentify]
     public function getNumber()
@@ -917,7 +920,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEmail()
     {
@@ -925,7 +928,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getTelephone()
     {
@@ -933,7 +936,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCompanyName()
     {
@@ -941,7 +944,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCompanyNumber()
     {
@@ -949,7 +952,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCompanyTaxNumber()
     {
@@ -957,7 +960,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getStreet()
     {
@@ -965,7 +968,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCity()
     {
@@ -973,7 +976,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPostcode()
     {
@@ -981,7 +984,7 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country
+     * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
     public function getCountry()
     {
@@ -1013,7 +1016,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDeliveryCompanyName()
     {
@@ -1021,7 +1024,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDeliveryTelephone()
     {
@@ -1029,7 +1032,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDeliveryStreet()
     {
@@ -1037,7 +1040,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDeliveryCity()
     {
@@ -1045,7 +1048,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDeliveryPostcode()
     {
@@ -1077,7 +1080,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUrlHash()
     {
@@ -1212,5 +1215,18 @@ class Order
     public function setCustomerUser($customerUser): void
     {
         $this->customerUser = $customerUser;
+    }
+
+    /**
+     * @param \DateTime $modifiedAt
+     */
+    public function setModifiedAt($modifiedAt)
+    {
+        $this->modifiedAt = $modifiedAt;
+    }
+
+    public function setModifiedNow(): void
+    {
+        $this->modifiedAt = new DateTime();
     }
 }

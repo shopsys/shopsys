@@ -57,7 +57,7 @@ class OrderStatusRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getDefault()
+    public function getDefault(): OrderStatus
     {
         $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatusTypeEnum::TYPE_NEW]);
 

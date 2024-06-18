@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderDataFactory
@@ -16,11 +19,15 @@ class OrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
         protected readonly OrderItemTypeEnum $orderItemTypeEnum,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -123,5 +130,20 @@ class OrderDataFactory
         }
 
         return $orderData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    public function createCartOrderData(CustomerUserIdentifier $customerUserIdentifier): OrderData
+    {
+        $orderData = $this->createInstance();
+        $orderData->uuid = $customerUserIdentifier->getCartIdentifier();
+        $orderData->customerUser = $customerUserIdentifier->getCustomerUser();
+        $orderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+        $orderData->domainId = $this->domain->getId();
+
+        return $this->fillZeroPrices($orderData);
     }
 }

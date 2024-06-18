@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Litipk\BigNumbers\Decimal;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrderedException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
@@ -138,6 +141,18 @@ class OrderItem
     protected $relatedItems;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $addedAt;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
@@ -166,6 +181,8 @@ class OrderItem
         $this->type = $type;
         $this->unitName = $unitName;
         $this->catnum = $catnum;
+        $this->uuid = Uuid::uuid4()->toString();
+        $this->addedAt = new DateTime();
         $this->order->addItem($this); // call after setting attrs for recalc total price
         $this->relatedItems = new ArrayCollection();
     }
@@ -500,5 +517,25 @@ class OrderItem
     public function getRelatedItems()
     {
         return $this->relatedItems->getValues();
+    }
+
+    /**
+     * @param int $newQuantity
+     */
+    public function changeQuantity(int $newQuantity): void
+    {
+        if ($newQuantity <= 0) {
+            throw new InvalidQuantityException($newQuantity);
+        }
+
+        $this->quantity = $newQuantity;
+    }
+
+    /**
+     * @param \DateTime $addedAt
+     */
+    public function changeAddedAt(DateTime $addedAt): void
+    {
+        $this->addedAt = $addedAt;
     }
 }

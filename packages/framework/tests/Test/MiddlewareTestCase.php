@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Test;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -45,11 +46,15 @@ class MiddlewareTestCase extends TestCase
         $orderItemTypeEnum = new OrderItemTypeEnum();
         $paymentTransactionRefundDataFactory = $this->createMock(PaymentTransactionRefundDataFactory::class);
         $orderItemDataFactory = $this->createMock(OrderItemDataFactory::class);
+        $currencyFacade = $this->createMock(CurrencyFacade::class);
+        $domain = $this->createMock(Domain::class);
 
         $orderDataFactory = new OrderDataFactory(
             $orderItemDataFactory,
             $paymentTransactionRefundDataFactory,
             $orderItemTypeEnum,
+            $currencyFacade,
+            $domain,
         );
         $orderData = $orderDataFactory->create();
 

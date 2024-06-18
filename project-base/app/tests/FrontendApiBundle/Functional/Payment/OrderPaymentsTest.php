@@ -28,7 +28,7 @@ class OrderPaymentsTest extends GraphQlTestCase
         // make sure the payment and transport is free
         $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
 
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_ONE_TRANSACTION, Order::class);
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/OrderPaymentsPricesQuery.graphql',
             [

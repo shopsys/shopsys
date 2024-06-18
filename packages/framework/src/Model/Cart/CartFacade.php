@@ -13,8 +13,15 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -35,6 +42,9 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -48,26 +58,29 @@ class CartFacade
         protected readonly CartItemFactory $cartItemFactory,
         protected readonly CartRepository $cartRepository,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly OrderItemFactory $orderItemFactory,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
     ) {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param bool $isAbsoluteQuantity
      * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
     public function addProductToExistingCart(
         Product $product,
         int $quantity,
-        Cart $cart,
+        Order $cart,
         bool $isAbsoluteQuantity = false,
     ): AddProductResult {
         $maximumOrderQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $this->domain->getId());
         $notOnStockQuantity = 0;
 
-        if (!is_int($quantity) || $quantity <= 0) {
+        if ($quantity <= 0) {
             throw new InvalidQuantityException($quantity);
         }
 
@@ -102,7 +115,7 @@ class CartFacade
         }
 
         $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
-        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPriceWithVat());
+        $newCartItem = $this->createNewCartItem($product, $productPrice, $quantity, $cart);
         $cart->addItem($newCartItem);
         $cart->setModifiedNow();
 
@@ -166,10 +179,11 @@ class CartFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier)
-    {
+    public function getCartByCustomerUserIdentifierCreateIfNotExists(
+        CustomerUserIdentifier $customerUserIdentifier,
+    ): Order {
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart === null) {
@@ -217,5 +231,34 @@ class CartFacade
         $this->em->flush();
 
         return $cart;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $productPrice
+     * @param int $quantity
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    protected function createNewCartItem(
+        Product $product,
+        ProductPrice $productPrice,
+        int $quantity,
+        Order $cart,
+    ): OrderItem {
+        $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
+        $locale = $this->domain->getLocale();
+
+        // copy-pasted from AddProductsMiddleware
+        $orderItemData->name = $product->getName($locale);
+        $orderItemData->setUnitPrice($productPrice);
+        $orderItemData->setTotalPrice($productPrice->multiply($quantity));
+        $orderItemData->vatPercent = $product->getVatForDomain($this->domain->getId())->getPercent();
+        $orderItemData->quantity = $quantity;
+        $orderItemData->unitName = $product->getUnit()->getName($locale);
+        $orderItemData->catnum = $product->getCatnum();
+        $orderItemData->product = $product;
+
+        return $this->orderItemFactory->createProduct($orderItemData, $cart, $product);
     }
 }

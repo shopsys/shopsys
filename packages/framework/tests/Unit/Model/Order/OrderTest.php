@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Order;
 
 use DateTime;
-use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
@@ -134,17 +133,6 @@ class OrderTest extends TestCase
         $this->assertSame($orderData->country, $order->getDeliveryCountry());
     }
 
-    public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow()
-    {
-        $orderData = TestOrderProvider::getTestOrderData();
-        $customerUser = null;
-
-        $orderData->createdAt = null;
-        $order = new Order($orderData, 'orderNumber', 'urlHash', $customerUser);
-
-        $this->assertDateTimeIsCloseTo(new DateTime(), $order->getCreatedAt(), 5);
-    }
-
     public function testOrderCanBeCreatedWithSpecificCreatedAt()
     {
         $orderData = TestOrderProvider::getTestOrderData();
@@ -155,27 +143,5 @@ class OrderTest extends TestCase
         $order = new Order($orderData, 'orderNumber', 'urlHash', $customerUser);
 
         $this->assertEquals($createAt, $order->getCreatedAt());
-    }
-
-    /**
-     * @param \DateTimeInterface $expected
-     * @param \DateTimeInterface $actual
-     * @param int $deltaInSeconds
-     */
-    private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, $deltaInSeconds)
-    {
-        $diffInSeconds = $expected->getTimestamp() - $actual->getTimestamp();
-
-        if (abs($diffInSeconds) <= $deltaInSeconds) {
-            return;
-        }
-
-        $message = sprintf(
-            'Failed asserting that %s is close to %s (delta: %d seconds)',
-            $expected->format(DateTime::ISO8601),
-            $actual->format(DateTime::ISO8601),
-            $deltaInSeconds,
-        );
-        $this->fail($message);
     }
 }

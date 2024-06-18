@@ -610,6 +610,9 @@ msgstr ""
 msgid "Capacity"
 msgstr ""
 
+msgid "Cart"
+msgstr ""
+
 msgid "Cash"
 msgstr ""
 

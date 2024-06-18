@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
@@ -87,6 +88,7 @@ class PlaceOrderFacade
             $status = $this->orderStatusRepository->getDefault();
             $orderData->status = $status;
         }
+        $orderData->createdAt = new DateTime();
 
         $orderNumber = $this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();

@@ -8,14 +8,19 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
 class CartRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderStatusRepository $orderStatusRepository,
+    ) {
     }
 
     /**
@@ -23,21 +28,21 @@ class CartRepository
      */
     protected function getCartRepository()
     {
-        return $this->em->getRepository(Cart::class);
+        return $this->em->getRepository(Order::class);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
+    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?Order
     {
-        $criteria = [];
+        $criteria = ['status' => null];
 
         if ($customerUserIdentifier->getCustomerUser() !== null) {
             $criteria['customerUser'] = $customerUserIdentifier->getCustomerUser()->getId();
         } else {
-            $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
+            $criteria['uuid'] = $customerUserIdentifier->getCartIdentifier();
         }
 
         return $this->getCartRepository()->findOneBy($criteria, ['id' => 'desc']);

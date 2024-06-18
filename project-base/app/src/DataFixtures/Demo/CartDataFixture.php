@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Cart\CartFacade;
-use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 
 class CartDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -46,6 +46,8 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
         return [
             ProductDataFixture::class,
             CustomerUserDataFixture::class,
+            OrderStatusDataFixture::class,
+            OrderDataFixture::class, // workaround to ensure demo orders IDs are not changed by creating the "cart" orders first
         ];
     }
 
@@ -58,8 +60,8 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
         $this->em
             ->createQuery(
                 sprintf(
-                    'UPDATE %s ci SET ci.uuid = \'%s\' WHERE ci.id = %d',
-                    CartItem::class,
+                    'UPDATE %s oi SET oi.uuid = \'%s\' WHERE oi.id = %d',
+                    OrderItem::class,
                     $uuid,
                     $id,
                 ),
