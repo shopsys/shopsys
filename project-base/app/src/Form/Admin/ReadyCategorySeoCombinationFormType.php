@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\CategorySeo\ReadyCategorySeoMixDataForForm;
+use App\Model\CategorySeo\ReadyCategorySeoMixData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
@@ -91,7 +91,7 @@ class ReadyCategorySeoCombinationFormType extends AbstractType
             ->setRequired('readyCategorySeoMix')
             ->addAllowedTypes('readyCategorySeoMix', [ReadyCategorySeoMix::class, 'null'])
             ->setDefaults([
-                'data_class' => ReadyCategorySeoMixDataForForm::class,
+                'data_class' => ReadyCategorySeoMixData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
     }

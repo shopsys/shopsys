@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+
 class ReadyCategorySeoMixData
 {
+    /**
+     * @var int|null
+     */
+    public $id;
+
     /**
      * @var int|null
      */
@@ -65,4 +72,8 @@ class ReadyCategorySeoMixData
      * @var string|null
      */
     public $choseCategorySeoMixCombinationJson;
+
+    public UrlListData $urls;
+
+    public ?string $categorySeoFilterFormTypeAllQueriesJson = null;
 }
