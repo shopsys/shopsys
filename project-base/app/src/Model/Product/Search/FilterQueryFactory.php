@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method \App\Model\Product\Search\FilterQuery createOnlyExistingProductIdsFilterQuery(int[] $productIds, int $domainId)
  * @method \App\Model\Product\Search\FilterQuery createSellableProductIdsByProductUuidsFilter(string[] $productUuids)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsByFlagIdWithPriceAndStockFilter(int $flagId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  */
 class FilterQueryFactory extends BaseFilterQueryFactory
 {
@@ -60,22 +61,6 @@ class FilterQueryFactory extends BaseFilterQueryFactory
         $filterQuery = parent::createListableProductsBySearchText($productFilterData, $orderingModeId, $page, $limit, $searchText);
 
         $filterQuery = $filterQuery->filterNotExcludeOrInStock();
-
-        return $filterQuery;
-    }
-
-    /**
-     * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function createListableProductsByFlagIdWithPriceAndStockFilter(
-        int $flagId,
-        ProductFilterData $productFilterData,
-    ): FilterQuery {
-        $filterQuery = $this->createListable()
-            ->filterByFlags([$flagId]);
-        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
 
         return $filterQuery;
     }

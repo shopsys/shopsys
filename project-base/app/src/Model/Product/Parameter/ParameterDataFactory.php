@@ -9,42 +9,18 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParamet
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory as BaseParameterDataFactory;
 
 /**
- * @method \App\Model\Product\Parameter\ParameterData createInstance()
+ * @method \App\Model\Product\Parameter\ParameterData create()
+ * @method \App\Model\Product\Parameter\ParameterData createFromParameter(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method fillNew(\App\Model\Product\Parameter\ParameterData $parameterData)
  */
 class ParameterDataFactory extends BaseParameterDataFactory
 {
     /**
      * @return \App\Model\Product\Parameter\ParameterData
      */
-    public function create(): BaseParameterData
+    protected function createInstance(): BaseParameterData
     {
-        $parameterData = new ParameterData();
-        $this->fillNew($parameterData);
-
-        return $parameterData;
-    }
-
-    /**
-     * @param \App\Model\Product\Parameter\ParameterData $parameterData
-     */
-    protected function fillNew(BaseParameterData $parameterData): void
-    {
-        parent::fillNew($parameterData);
-
-        $parameterData->orderingPriority = 0;
-        $parameterData->parameterType = Parameter::PARAMETER_TYPE_COMMON;
-    }
-
-    /**
-     * @param \App\Model\Product\Parameter\Parameter $parameter
-     * @return \App\Model\Product\Parameter\ParameterData
-     */
-    public function createFromParameter(BaseParameter $parameter): BaseParameterData
-    {
-        $parameterData = new ParameterData();
-        $this->fillFromParameter($parameterData, $parameter);
-
-        return $parameterData;
+        return new ParameterData();
     }
 
     /**
@@ -53,18 +29,10 @@ class ParameterDataFactory extends BaseParameterDataFactory
      */
     protected function fillFromParameter(BaseParameterData $parameterData, BaseParameter $parameter)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
-        $translations = $parameter->getTranslations();
-
-        foreach ($translations as $translate) {
-            $parameterData->name[$translate->getLocale()] = $translate->getName();
-        }
+        parent::fillFromParameter($parameterData, $parameter);
 
         $parameterData->group = $parameter->getGroup();
-        $parameterData->orderingPriority = $parameter->getOrderingPriority();
         $parameterData->akeneoCode = $parameter->getAkeneoCode();
         $parameterData->akeneoType = $parameter->getAkeneoType();
-        $parameterData->parameterType = $parameter->getParameterType();
-        $parameterData->unit = $parameter->getUnit();
     }
 }

@@ -20,4 +20,14 @@ class ParameterValueData
      * @var string|null
      */
     public $uuid;
+
+    /**
+     * @var string|null
+     */
+    public $rgbHex;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    public $colourIcon;
 }

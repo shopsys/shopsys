@@ -14,7 +14,7 @@
             multiple: true
 
 -   name: parameterValue
-    class: App\Model\Product\Parameter\ParameterValue
+    class: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
     types:
         -   name: default
             multiple: false

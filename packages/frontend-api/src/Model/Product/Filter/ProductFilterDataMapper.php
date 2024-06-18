@@ -86,12 +86,16 @@ class ProductFilterDataMapper
                     continue;
                 }
 
-                $parameterValues[] = $this->parameterValuesByUuid[$parameterValueUuid];
+                $parameterValue = $this->parameterValuesByUuid[$parameterValueUuid];
+
+                $parameterValues[] = $parameterValue;
             }
 
             $parameterFilterData = new ParameterFilterData();
             $parameterFilterData->parameter = $parameter;
             $parameterFilterData->values = $parameterValues;
+            $parameterFilterData->minimalValue = $parameterAndValueUuid['minimalValue'];
+            $parameterFilterData->maximalValue = $parameterAndValueUuid['maximalValue'];
 
             $parametersFilterData[] = $parameterFilterData;
         }

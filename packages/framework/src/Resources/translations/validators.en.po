@@ -52,6 +52,9 @@ msgstr ""
 msgid "Enter date in DD.MM.YYYY format"
 msgstr ""
 
+msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
+msgstr ""
+
 msgid "External ID cannot be longer than {{ limit }} characters"
 msgstr ""
 

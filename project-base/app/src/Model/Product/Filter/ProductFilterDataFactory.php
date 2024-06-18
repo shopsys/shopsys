@@ -5,19 +5,12 @@ declare(strict_types=1);
 namespace App\Model\Product\Filter;
 
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory as BaseProductFilterDataFactory;
 
 class ProductFilterDataFactory extends BaseProductFilterDataFactory
 {
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
-     */
-    public function create(): ProductFilterData
-    {
-        return new ProductFilterData();
-    }
-
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Parameter;
 
 use App\Model\Product\Parameter\Parameter;
-use App\Model\Product\Parameter\ParameterValue;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class ParameterRepository
 {

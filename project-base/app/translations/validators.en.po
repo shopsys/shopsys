@@ -19,9 +19,6 @@ msgstr ""
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
-msgstr ""
-
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -197,9 +194,6 @@ msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr ""
 
 msgid "This email is already registered"
-msgstr ""
-
-msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
 msgstr ""
 
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."

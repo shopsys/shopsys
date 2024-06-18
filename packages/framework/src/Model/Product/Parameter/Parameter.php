@@ -17,6 +17,15 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class Parameter extends AbstractTranslatableEntity
 {
+    public const string PARAMETER_TYPE_COMMON = 'checkbox';
+    public const string PARAMETER_TYPE_SLIDER = 'slider';
+    public const string PARAMETER_TYPE_COLOR = 'colorPicker';
+    public const array PARAMETER_TYPES = [
+        self::PARAMETER_TYPE_COMMON => self::PARAMETER_TYPE_COMMON,
+        self::PARAMETER_TYPE_SLIDER => self::PARAMETER_TYPE_SLIDER,
+        self::PARAMETER_TYPE_COLOR => self::PARAMETER_TYPE_COLOR,
+    ];
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -45,6 +54,25 @@ class Parameter extends AbstractTranslatableEntity
     protected $visible;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    protected $parameterType;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $orderingPriority;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
+     * @ORM\JoinColumn(nullable=true, name="unit_id", referencedColumnName="id")
+     */
+    protected $unit;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      */
     public function __construct(ParameterData $parameterData)
@@ -69,6 +97,9 @@ class Parameter extends AbstractTranslatableEntity
     {
         $this->setTranslations($parameterData);
         $this->visible = $parameterData->visible;
+        $this->orderingPriority = $parameterData->orderingPriority;
+        $this->parameterType = $parameterData->parameterType;
+        $this->unit = $parameterData->unit;
     }
 
     /**
@@ -120,5 +151,37 @@ class Parameter extends AbstractTranslatableEntity
     protected function createTranslation()
     {
         return new ParameterTranslation();
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterType()
+    {
+        return $this->parameterType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSlider(): bool
+    {
+        return $this->getParameterType() === self::PARAMETER_TYPE_SLIDER;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderingPriority()
+    {
+        return $this->orderingPriority;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
+     */
+    public function getUnit()
+    {
+        return $this->unit;
     }
 }

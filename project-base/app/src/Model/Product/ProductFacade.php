@@ -174,7 +174,6 @@ class ProductFacade extends BaseProductFacade
         $toFlush = [];
 
         foreach ($productParameterValuesData as $productParameterValueData) {
-            /** @var \App\Model\Product\Parameter\ParameterValueData $parameterValueData */
             $parameterValueData = $productParameterValueData->parameterValueData;
             $parameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
                 $parameterValueData,

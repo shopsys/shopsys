@@ -52,6 +52,9 @@ msgstr "E-mail {{ email }} je již registrován"
 msgid "Enter date in DD.MM.YYYY format"
 msgstr "Datum zadávejte ve formátu dd.mm.rrrr"
 
+msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
+msgstr "Zadaný RGB Hex je v neplatném formátu. Platné formáty jsou #336699 nebo #ABC."
+
 msgid "External ID cannot be longer than {{ limit }} characters"
 msgstr "Externí ID nesmí být delší než {{ limit }} znaků"
 

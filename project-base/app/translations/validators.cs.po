@@ -19,9 +19,6 @@ msgstr "Název společnosti nesmí být delší než {{ limit }} znaků"
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
-msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
-msgstr "Zadaný RGB Hex je v neplatném formátu. Platné formáty jsou #336699 nebo #ABC."
-
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
@@ -198,9 +195,6 @@ msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
 
 msgid "This email is already registered"
 msgstr "Tento email je již registrován"
-
-msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
-msgstr "Uploadovaný soubor je příliš velký ({{ size }} {{ suffix }}). Maximální velikost souboru je {{ limit }} {{ suffix }}."
 
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr "Uploadovaný obrázek je příliš velký ({{ size }} {{ suffix }}). Maximální velikost obrázku je {{ limit }} {{ suffix }}."

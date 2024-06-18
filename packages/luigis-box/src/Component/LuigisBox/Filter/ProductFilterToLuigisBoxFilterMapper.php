@@ -145,8 +145,15 @@ class ProductFilterToLuigisBoxFilterMapper
     protected function mapParameters(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
         foreach ($productFilterData->parameters as $parameterFilterData) {
-            foreach ($parameterFilterData->values as $parameterValue) {
-                $luigisBoxFilter[self::FILTER_OR][] = $parameterFilterData->parameter->getName() . ':' . $parameterValue->getText();
+            if ($parameterFilterData->parameter->isSlider()) {
+                $valueFrom = $parameterFilterData->minimalValue === null ? '' : (string)$parameterFilterData->minimalValue;
+                $valueTo = $parameterFilterData->maximalValue === null ? '' : (string)$parameterFilterData->maximalValue;
+
+                $luigisBoxFilter[self::FILTER_OR][] = $parameterFilterData->parameter->getName() . ':' . $valueFrom . '|' . $valueTo;
+            } else {
+                foreach ($parameterFilterData->values as $parameterValue) {
+                    $luigisBoxFilter[self::FILTER_OR][] = $parameterFilterData->parameter->getName() . ':' . $parameterValue->getText();
+                }
             }
         }
 

@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @method int[] calculateFlagsPlusNumbers(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $plusFlagsQuery)
  * @method int[] calculateBrandsPlusNumbers(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $plusBrandsQuery)
  * @method replaceParametersPlusNumbers(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData, \App\Model\Product\Search\FilterQuery $plusParametersQuery)
- * @method array calculateParameterPlusNumbers(\App\Model\Product\Filter\ParameterFilterData $parameterFilterData, \App\Model\Product\Search\FilterQuery $parameterFilterQuery)
+ * @method array calculateParameterPlusNumbers(\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData, \App\Model\Product\Search\FilterQuery $parameterFilterQuery)
  */
 class ProductFilterCountDataElasticsearchRepository extends BaseProductFilterCountDataElasticsearchRepository
 {

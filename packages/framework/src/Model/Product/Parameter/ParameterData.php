@@ -21,6 +21,21 @@ class ParameterData
      */
     public $uuid;
 
+    /**
+     * @var int
+     */
+    public $orderingPriority;
+
+    /**
+     * @var string
+     */
+    public $parameterType;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
+     */
+    public $unit;
+
     public function __construct()
     {
         $this->name = [];

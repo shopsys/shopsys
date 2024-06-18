@@ -18,17 +18,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 
 class ProductFilterOptionsFactory
 {
-    protected ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      */
     public function __construct(
         protected readonly ModuleFacade $moduleFacade,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade,
+        protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
     ) {
-        $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainFacade;
     }
 
     /**
@@ -43,11 +40,16 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @param int $count
      * @param bool $isAbsolute
+     * @param bool $isSelected
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption
      */
-    protected function createFlagFilterOption(Flag $flag, int $count, bool $isAbsolute): FlagFilterOption
-    {
-        return new FlagFilterOption($flag, $count, $isAbsolute);
+    protected function createFlagFilterOption(
+        Flag $flag,
+        int $count,
+        bool $isAbsolute,
+        bool $isSelected = false,
+    ): FlagFilterOption {
+        return new FlagFilterOption($flag, $count, $isAbsolute, $isSelected);
     }
 
     /**
@@ -64,27 +66,35 @@ class ProductFilterOptionsFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions
+     * @param bool $collapsed
+     * @param bool $isSliderAllowed
+     * @param float|null $selectedValue
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption
      */
     protected function createParameterFilterOption(
         Parameter $parameter,
         array $parameterValueFilterOptions,
+        bool $collapsed,
+        bool $isSliderAllowed,
+        ?float $selectedValue = null,
     ): ParameterFilterOption {
-        return new ParameterFilterOption($parameter, $parameterValueFilterOptions);
+        return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed, $isSliderAllowed, $selectedValue);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $brand
      * @param int $count
      * @param bool $isAbsolute
+     * @param bool $isSelected
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption
      */
     protected function createParameterValueFilterOption(
         ParameterValue $brand,
         int $count,
         bool $isAbsolute,
+        bool $isSelected = false,
     ): ParameterValueFilterOption {
-        return new ParameterValueFilterOption($brand, $count, $isAbsolute);
+        return new ParameterValueFilterOption($brand, $count, $isAbsolute, $isSelected);
     }
 
     /**
@@ -297,10 +307,12 @@ class ProductFilterOptionsFactory
         ProductFilterData $productFilterData,
     ): void {
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
-            $isAbsolute = !$this->isParameterFiltered($parameterFilterChoice->getParameter(), $productFilterData);
-
             $parameter = $parameterFilterChoice->getParameter();
+            $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
+
             $parameterValueFilterOptions = [];
+
+            $isSliderSelectable = false;
 
             foreach ($parameterFilterChoice->getValues() as $parameterValue) {
                 $parameterValueCount = $this->getParameterValueCount(
@@ -309,16 +321,24 @@ class ProductFilterOptionsFactory
                     $productFilterData,
                     $productFilterCountData,
                 );
+
+                if ($parameterValueCount > 0 && $parameter->isSlider()) {
+                    $isSliderSelectable = true;
+                }
+
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
                     $isAbsolute,
+                    false,
                 );
             }
 
             $productFilterOptions->parameters[] = $this->createParameterFilterOption(
                 $parameter,
                 $parameterValueFilterOptions,
+                false,
+                $isSliderSelectable,
             );
         }
     }
@@ -351,12 +371,8 @@ class ProductFilterOptionsFactory
         ProductFilterData $productFilterData,
     ): bool {
         foreach ($productFilterData->parameters as $parameterFilterData) {
-            if ($parameterFilterData->parameter === $parameter) {
-                foreach ($parameterFilterData->values as $filteredParameterValue) {
-                    if ($filteredParameterValue === $parameterValue) {
-                        return true;
-                    }
-                }
+            if ($parameterFilterData->parameter === $parameter && in_array($parameterValue, $parameterFilterData->values, true)) {
+                return true;
             }
         }
 
@@ -381,5 +397,35 @@ class ProductFilterOptionsFactory
         }
 
         return $productFilterCountData->countByParameterIdAndValueId[$parameter->getId()][$parameterValue->getId()] ?? 0;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
+     */
+    public function createProductFilterOptionsForFlag(
+        Flag $flag,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterData $productFilterData,
+    ): ProductFilterOptions {
+        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
+            return $this->createProductFilterOptionsInstance();
+        }
+
+        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForFlag(
+            $flag->getId(),
+            $productFilterData,
+        );
+
+        $productFilterOptions = $this->createProductFilterOptions(
+            $productFilterConfig,
+            $productFilterCountData,
+            $productFilterData,
+        );
+        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+
+        return $productFilterOptions;
     }
 }

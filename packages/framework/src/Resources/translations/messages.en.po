@@ -1123,6 +1123,15 @@ msgstr ""
 msgid "Editing page"
 msgstr ""
 
+msgid "Editing parameter of type color"
+msgstr ""
+
+msgid "Editing parameter value of type color"
+msgstr ""
+
+msgid "Editing parameter value of type color - %name%"
+msgstr ""
+
 msgid "Editing payment"
 msgstr ""
 
@@ -2098,10 +2107,25 @@ msgstr ""
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Parameter value"
+msgstr ""
+
+msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> modified."
+msgstr ""
+
+msgid "Parameter value of type color"
+msgstr ""
+
+msgid "Parameter values of type color"
+msgstr ""
+
 msgid "Parameters"
 msgstr ""
 
 msgid "Parameters overview"
+msgstr ""
+
+msgid "Pararameter value of type color"
 msgstr ""
 
 msgid "Parent category"
@@ -2360,6 +2384,9 @@ msgid "Quick product search"
 msgstr ""
 
 msgid "Quick search"
+msgstr ""
+
+msgid "RGB Hex"
 msgstr ""
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
@@ -2780,6 +2807,9 @@ msgid "The higher the priority, the higher the country will be shown in the list
 msgstr ""
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
+msgstr ""
+
+msgid "There are no parameter values of type color yet."
 msgstr ""
 
 msgid "There is no warehouse on this domain yet."
@@ -3254,6 +3284,9 @@ msgid "orders"
 msgstr ""
 
 msgid "orders sold"
+msgstr ""
+
+msgid "parameter values"
 msgstr ""
 
 msgid "parameters"

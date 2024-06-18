@@ -51,3 +51,6 @@
     class: Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
     types:
         -   name: og
+
+-   name: parameterValue
+    class: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue

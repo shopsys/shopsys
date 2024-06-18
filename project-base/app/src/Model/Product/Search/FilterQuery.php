@@ -25,6 +25,7 @@ use stdClass;
  * @method \App\Model\Product\Search\FilterQuery filterByProductUuids(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery filterOutVariants()
  * @method \App\Model\Product\Search\FilterQuery restrictFields(string[] $fields)
+ * @method \App\Model\Product\Search\FilterQuery filterBySliderParameters(\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData)
  */
 class FilterQuery extends BaseFilterQuery
 {
@@ -82,37 +83,6 @@ class FilterQuery extends BaseFilterQuery
         }
 
         return $query;
-    }
-
-    /**
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function orderByStockQuantity(): self
-    {
-        $clone = clone $this;
-
-        $clone->sorting = [
-            'stock_quantity' => 'desc',
-            'id' => 'asc',
-        ];
-
-        return $clone;
-    }
-
-    /**
-     * @param int $productId
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function excludeProductByProductId(int $productId): self
-    {
-        $clone = clone $this;
-        $clone->mustNot[] = [
-            'term' => [
-                'id' => $productId,
-            ],
-        ];
-
-        return $clone;
     }
 
     /**
@@ -295,49 +265,6 @@ class FilterQuery extends BaseFilterQuery
                 ],
             ],
         ];
-
-        return $clone;
-    }
-
-    /**
-     * @param \App\Model\Product\Filter\ParameterFilterData[] $sliderParametersData
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function filterBySliderParameters(array $sliderParametersData): self
-    {
-        $clone = clone $this;
-
-        foreach ($sliderParametersData as $sliderParameterData) {
-            $parameterRange = [
-                'gte' => $sliderParameterData->minimalValue,
-                'lte' => $sliderParameterData->maximalValue,
-            ];
-
-            $clone->filters[] = [
-                'nested' => [
-                    'path' => 'parameters',
-                    'query' => [
-                        'bool' => [
-                            'must' => [
-                                'match_all' => new stdClass(),
-                            ],
-                            'filter' => [
-                                [
-                                    'term' => [
-                                        'parameters.parameter_id' => $sliderParameterData->parameter->getId(),
-                                    ],
-                                ],
-                                [
-                                    'range' => [
-                                        'parameters.parameter_value_for_slider_filter' => $parameterRange,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ];
-        }
 
         return $clone;
     }

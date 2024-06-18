@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
-use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -14,29 +13,24 @@ use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
- * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
  * @method \App\Model\Product\Parameter\Parameter|null findById(int $parameterId)
  * @method \App\Model\Product\Parameter\Parameter getById(int $parameterId)
+ * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getAll()
- * @method \App\Model\Product\Parameter\ParameterValue findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale)
- * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByValueTextAndLocale(string $valueText, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
- * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
- * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
- * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
  * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersByIds(int[] $parameterIds, string $locale)
- * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByIds(int[] $parameterValueIds)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -83,7 +77,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param int $domainId
      * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getParameterValuesUsedByProductsInCategoryByParameter(
         Category $category,
@@ -102,23 +96,6 @@ class ParameterRepository extends BaseParameterRepository
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
         return $queryBuilder->getQuery()->execute();
-    }
-
-    /**
-     * @param int $parameterValueId
-     * @return \App\Model\Product\Parameter\ParameterValue
-     */
-    public function getParameterValueById(int $parameterValueId): ParameterValue
-    {
-        $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
-
-        if ($parameterValue === null) {
-            $message = 'ParameterValue with ID ' . $parameterValueId . ' not found.';
-
-            throw new ParameterValueNotFoundException($message);
-        }
-
-        return $parameterValue;
     }
 
     /**
@@ -210,20 +187,18 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterValueData $parameterValueData
-     * @return \App\Model\Product\Parameter\ParameterValue
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
     public function findOrCreateParameterValueByParameterValueData(
         ParameterValueData $parameterValueData,
     ): ParameterValue {
-        /** @var \App\Model\Product\Parameter\ParameterValue|null $parameterValue */
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $parameterValueData->text,
             'locale' => $parameterValueData->locale,
         ]);
 
         if ($parameterValue === null) {
-            /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
             $parameterValue = $this->parameterValueFactory->create($parameterValueData);
             $this->em->persist($parameterValue);
             // Doctrine's identity map is not cache.
@@ -255,28 +230,9 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
-     * @param string $locale
-     * @param string $type
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getQueryBuilderParameterValuesUsedByProductsByLocaleAndType(
-        string $locale,
-        string $type,
-    ): QueryBuilder {
-        return $this->getParameterValueRepository()->createQueryBuilder('pv')
-            ->select('pv')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->join(Parameter::class, 'p', Join::WITH, 'ppv.parameter = p and p.parameterType = :type')
-            ->setParameter(':locale', $locale)
-            ->setParameter(':type', $type)
-            ->groupBy('pv')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale));
-    }
-
-    /**
      * @param string $parameterValueText
      * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue|null
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
      */
     public function findParameterValueByText(string $parameterValueText, string $locale): ?ParameterValue
     {

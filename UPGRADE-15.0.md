@@ -1062,6 +1062,111 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### move part of the parameter and filters functionality from project-base to framework and frontend-api packages ([#3221](https://github.com/shopsys/shopsys/pull/3221))
+
+-   [features moved](#movement-of-features-from-project-base-to-packages) from project-base to the framework and frontend-api packages:
+    -   `Parameter` properties (and all the related logic):
+        -   `$parameterType`
+        -   `$orderingPriority`
+        -   `$unit`
+    -   `ParameterValue` properties (and all the related logic):
+        -   `$rgbHex`
+        -   `$colourIcon`
+        -   `$unit`
+        -   `$text` is now text instead of string(100)
+-   `Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        -       ?Parameter $parameter = null,
+        +       protected readonly Parameter $parameter,
+                protected readonly array $values = [],
+            ) {
+        ```
+-   `Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+                protected readonly ParameterRepository $parameterRepository,
+                protected readonly ParameterFactoryInterface $parameterFactory,
+                protected readonly EventDispatcherInterface $eventDispatcher,
+                protected readonly CategoryParameterRepository $categoryParameterRepository,
+        +       protected readonly UploadedFileFacade $uploadedFileFacade,
+            ) {
+        ```
+-   `Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                public readonly Flag $flag,
+                public readonly int $count,
+                public readonly bool $isAbsolute,
+        +       public bool $isSelected,
+            ) {
+        ```
+-   `Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                public readonly Parameter $parameter,
+                public readonly array $values,
+            +   public bool $isCollapsed,
+            +   public bool $isSelectable,
+            +   public ?float $selectedValue = null,
+            ) {
+        ```
+-   `Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+        -       ParameterValue $parameterValue,
+        +       public readonly ParameterValue $parameterValue,
+                public readonly int $count,
+                public readonly bool $isAbsolute,
+        +       public readonly bool $isSelected,
+            ) {
+        ```
+-   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory` class was changed:
+    -   `__construct()` method changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly ModuleFacade $moduleFacade,
+        -       ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade,
+        +       protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
+            ) {
+        ```
+    -   `createFlagFilterOption()` method changed its interface:
+        ```diff
+            protected function createFlagFilterOption(
+                Flag $flag,
+                int $count,
+                bool $isAbsolute,
+        +       bool $isSelected = false,
+            ): FlagFilterOption {
+        ```
+    -   `createParameterFilterOption()` method changed its interface:
+        ```diff
+            protected function createParameterFilterOption(
+                Parameter $parameter,
+                array $parameterValueFilterOptions,
+        +       bool $collapsed,
+        +       bool $isSliderAllowed,
+        +       ?float $selectedValue = null,
+            ): ParameterFilterOption {
+        ```
+    -   `createParameterFilterOption()` method changed its interface:
+        ```diff
+            protected function createParameterValueFilterOption(
+                ParameterValue $brand,
+                int $count,
+                bool $isAbsolute,
+        +       bool $isSelected = false,
+            ): ParameterValueFilterOption {
+        ```
+    -   after these manual changes run `composer install`, `php phing standards-fix` and `php phing phpstan` commands, which will probably fail on errors caused by incompatibility strict types, if so fix them manually
+    -   see #project-base-diff to update your project
+
 ### Storefront
 
 #### added query/mutation name to URL and headers ([#3041](https://github.com/shopsys/shopsys/pull/3041))

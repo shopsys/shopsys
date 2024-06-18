@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter;
 
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -31,6 +33,10 @@ class ParameterFormType extends AbstractType
                         ),
                     ],
                 ],
+            ])
+            ->add('parameterType', ChoiceType::class, [
+                'required' => false,
+                'choices' => Parameter::PARAMETER_TYPES,
             ])
             ->add('visible', CheckboxType::class, ['required' => false]);
     }

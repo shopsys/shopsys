@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
@@ -18,6 +19,7 @@ class ParameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -25,6 +27,7 @@ class ParameterFacade
         protected readonly ParameterFactoryInterface $parameterFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterRepository $categoryParameterRepository,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 
@@ -198,5 +201,37 @@ class ParameterFacade
             static fn ($categoryParameter) => $categoryParameter->getParameter()->getId(),
             $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category),
         );
+    }
+
+    /**
+     * @param int $parameterValueId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+     */
+    public function editParameterValue(int $parameterValueId, ParameterValueData $parameterValueData): ParameterValue
+    {
+        $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
+        $parameterValue->edit($parameterValueData);
+
+        if ($parameterValueData->colourIcon->uploadedFilenames) {
+            $this->uploadedFileFacade->manageFiles($parameterValue, $parameterValueData->colourIcon);
+        }
+
+        if (count($parameterValueData->colourIcon->uploadedFilenames) === 0 && $parameterValueData->colourIcon->filesToDelete) {
+            $this->uploadedFileFacade->deleteAllUploadedFilesByEntity($parameterValue);
+        }
+
+        $this->em->flush();
+
+        return $parameterValue;
+    }
+
+    /**
+     * @param int $parameterValueId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueById(int $parameterValueId): ParameterValue
+    {
+        return $this->parameterRepository->getParameterValueById($parameterValueId);
     }
 }

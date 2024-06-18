@@ -107,7 +107,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php',
             ],
             EarlyExitSniff::class => [
-                __DIR__ . '/packages/framework/src/Migrations/Version20231213165330.php',
+                __DIR__ . '/packages/framework/src/Migrations/Version*.php',
             ],
             DisallowEmptySniff::class => [
                 __DIR__ . '/packages/framework/src/Component/Filesystem/Flysystem/VolumeDriver.php',

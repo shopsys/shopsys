@@ -15,4 +15,14 @@ class ParameterFilterData
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public $values = [];
+
+    /**
+     * @var float|null
+     */
+    public ?float $minimalValue = null;
+
+    /**
+     * @var float|null
+     */
+    public ?float $maximalValue = null;
 }

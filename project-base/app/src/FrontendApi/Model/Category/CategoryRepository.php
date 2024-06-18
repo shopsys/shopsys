@@ -13,6 +13,7 @@ use Shopsys\FrontendApiBundle\Model\Category\CategoryRepository as BaseCategoryR
 /**
  * @property \App\Model\Category\CategoryRepository $categoryRepository
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository)
+ * @method \App\Model\Category\Category[][] getVisibleCategoriesByIds(int[][] $categoriesIds, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  */
 class CategoryRepository extends BaseCategoryRepository
 {

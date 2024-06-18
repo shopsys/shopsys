@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
- * @method \App\Model\Product\Parameter\ParameterValue[][] getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale)
  */
 class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepository
 {
@@ -147,7 +146,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     /**
      * @param array $rows
      * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     protected function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale): array
     {
@@ -170,7 +169,6 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
 
         $valuesIndexedById = [];
 
-        /** @var \App\Model\Product\Parameter\ParameterValue $value */
         foreach ($values as $value) {
             $valuesIndexedById[$value->getId()] = $value;
         }

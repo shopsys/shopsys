@@ -316,4 +316,19 @@ class FilterQueryFactory
             ->filterByProductIds($productIds)
             ->restrictFields(['id']);
     }
+
+    /**
+     * @param int $flagId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsByFlagIdWithPriceAndStockFilter(
+        int $flagId,
+        ProductFilterData $productFilterData,
+    ): FilterQuery {
+        $filterQuery = $this->createListable()
+            ->filterByFlags([$flagId]);
+
+        return $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+    }
 }

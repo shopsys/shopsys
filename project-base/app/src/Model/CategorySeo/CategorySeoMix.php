@@ -15,7 +15,7 @@ class CategorySeoMix
     private ?string $ordering = null;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterValue[]
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     private array $parameterValues = [];
 
@@ -78,7 +78,7 @@ class CategorySeoMix
     }
 
     /**
-     * @return \App\Model\Product\Parameter\ParameterValue[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getParameterValues(): array
     {
@@ -86,7 +86,7 @@ class CategorySeoMix
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterValue $parameterValue
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      */
     public function addParameterValue(ParameterValue $parameterValue): void
     {

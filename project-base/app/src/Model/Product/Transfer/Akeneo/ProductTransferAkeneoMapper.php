@@ -11,7 +11,6 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Product\Flag\FlagRepository;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
-use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -27,14 +26,12 @@ class ProductTransferAkeneoMapper
 {
     private const PARAMETER_TEXT_MAX_LENGTH = 300;
 
-    private ParameterValueDataFactory $parameterValueDataFactory;
-
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
-     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface $parameterValueDataFactory
      * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      * @param \App\Model\Product\Transfer\Akeneo\ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
      */
@@ -43,11 +40,10 @@ class ProductTransferAkeneoMapper
         private CategoryFacade $categoryFacade,
         private ParameterFacade $parameterFacade,
         private ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory,
+        private ParameterValueDataFactoryInterface $parameterValueDataFactory,
         private FlagRepository $flagRepository,
         private ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade,
     ) {
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
     }
 
     /**

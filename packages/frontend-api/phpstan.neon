@@ -1,0 +1,16 @@
+parameters:
+
+    treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        -
+            # in fact, anything can be passed to the load function, it just has a bad annotation
+            message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
+            path: %currentWorkingDirectory%/*
+
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/shopsys/coding-standards/extension.neon

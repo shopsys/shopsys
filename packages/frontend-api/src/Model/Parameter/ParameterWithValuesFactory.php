@@ -83,6 +83,7 @@ class ParameterWithValuesFactory
             'uuid' => $product['parameter_uuid'],
             'name' => $product['parameter_name'],
             'visible' => true,
+            'unit' => $product['parameter_unit'] ? ['name' => $product['parameter_unit']] : null,
             'values' => [[
                 'uuid' => $product['parameter_value_uuid'],
                 'text' => $product['parameter_value_text'],

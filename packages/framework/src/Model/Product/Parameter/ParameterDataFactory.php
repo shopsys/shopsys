@@ -42,6 +42,9 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterData->name[$locale] = null;
         }
+
+        $parameterData->orderingPriority = 0;
+        $parameterData->parameterType = Parameter::PARAMETER_TYPE_COMMON;
     }
 
     /**
@@ -69,8 +72,12 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }
+
         $parameterData->name = $names;
         $parameterData->visible = $parameter->isVisible();
         $parameterData->uuid = $parameter->getUuid();
+        $parameterData->parameterType = $parameter->getParameterType();
+        $parameterData->unit = $parameter->getUnit();
+        $parameterData->orderingPriority = $parameter->getOrderingPriority();
     }
 }
