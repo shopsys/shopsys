@@ -90,12 +90,12 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
                 'shouldMerge' => true,
                 'expectedProducts' => [
                     [
-                        'name' => '22" Sencor SLE 22F46DM4 HELLO KITTY',
-                        'quantity' => 2,
-                    ],
-                    [
                         'name' => 'Apple iPhone 5S 64GB, gold',
                         'quantity' => 6,
+                    ],
+                    [
+                        'name' => '22" Sencor SLE 22F46DM4 HELLO KITTY',
+                        'quantity' => 2,
                     ],
                 ],
             ],
@@ -106,12 +106,12 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     {
         $orderUuid = $this->createMinimalOrderQuery();
 
-        $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
-        $addedProductQuantity = 6;
+        $addedProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $addedProductQuantity = 2800;
         $this->addProductToCustomerCart($addedProduct, $addedProductQuantity);
 
-        $addedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $addedProductQuantity2 = 2800;
+        $addedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class);
+        $addedProductQuantity2 = 6;
         $this->addProductToCustomerCart($addedProduct2, $addedProductQuantity2);
 
         $cart = $this->findCartOfCurrentCustomer();

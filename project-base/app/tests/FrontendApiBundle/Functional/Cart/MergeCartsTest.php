@@ -177,11 +177,11 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cartItems = $cart->getItems();
         self::assertCount(2, $cartItems);
 
-        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
+        $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         self::assertEquals($secondProduct->getFullname(), $cartItems[0]->getName(), 'Second product name mismatch');
         self::assertEquals(2, $cartItems[0]->getQuantity(), 'Second product quantity mismatch');
 
-        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
         self::assertEquals($firstProduct->getFullname(), $cartItems[1]->getName(), 'Third product name mismatch');
         self::assertEquals(2, $cartItems[1]->getQuantity(), 'Third product quantity mismatch');
 
