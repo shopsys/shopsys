@@ -25,10 +25,14 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
         $this->registerTwoFactorAuthenticationCodeMailTemplate();
     }
 
-    private function registerExtendedOrderStatusMailTemplates(): void
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    private function createExtendedOrderStatusMailTemplatesVariables(): MailTemplateVariables
     {
-        $mailTemplate = new MailTemplateVariables(t('Order status changed'));
-        $mailTemplate
+        $mailTemplateVariables = new MailTemplateVariables(t('Order status changed'));
+
+        return $mailTemplateVariables
             ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
             ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
             ->addVariable(OrderMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
@@ -42,60 +46,62 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_ORDER_DETAIL_URL, t('Order detail URL address'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS, t('Shipping instructions'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY);
+    }
 
-        $this->addMailTemplateVariables(MailTemplate::ORDER_STATUS_NAME, $mailTemplate);
+    private function registerExtendedOrderStatusMailTemplates(): void
+    {
+        $mailTemplateVariables = $this->createExtendedOrderStatusMailTemplatesVariables();
+
+        $this->addMailTemplateVariables(MailTemplate::ORDER_STATUS_NAME, $mailTemplateVariables);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    private function createCustomerActivationMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Customer activation'));
+
+        return $mailTemplateVariables
+            ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
+            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Link to complete the registration'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
     }
 
     private function registerCustomerActivationMailTemplate(): void
     {
-        $mailTemplate = new MailTemplateVariables(t('Customer activation'));
-        $mailTemplate
-            ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
-            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Link to complete the registration'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
-        $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplate);
+        $mailTemplateVariables = $this->createCustomerActivationMailTemplateVariables();
+
+        $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateVariables);
     }
 
-    protected function registerOrderStatusMailTemplates(): void
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createOrderStatusMailTemplateVariables(): MailTemplateVariables
     {
-        $orderStatusMailTemplate = new MailTemplateVariables('', self::TYPE_ORDER_STATUS);
-
-        $orderStatusMailTemplate
-            ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
-            ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
-            ->addVariable(OrderMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_TRANSPORT, t('Chosen shipping name'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_PAYMENT, t('Chosen payment name'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_TOTAL_PRICE, t('Total order price (including VAT)'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_BILLING_ADDRESS, t('Billing address - name, last name, company, company number, tax number and billing address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_DELIVERY_ADDRESS, t('Delivery address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_NOTE, t('Note'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_PRODUCTS, t('List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_ORDER_DETAIL_URL, t('Order detail URL address'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS, t('Shipping instructions'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY)
+        return parent::createOrderStatusMailTemplateVariables()
             ->addVariable(OrderMail::VARIABLE_TRACKING_INSTRUCTIONS, t('Tracking instructions'), MailTemplateVariables::CONTEXT_BODY);
-
-        /** @var \App\Model\Order\Status\OrderStatus[] $allOrderStatuses */
-        $allOrderStatuses = $this->orderStatusFacade->getAll();
-
-        foreach ($allOrderStatuses as $orderStatus) {
-            $this->addMailTemplateVariables(
-                OrderMail::getMailTemplateNameByStatus($orderStatus),
-                $orderStatusMailTemplate->withNewName($orderStatus->getName()),
-            );
-        }
     }
 
-    private function registerTwoFactorAuthenticationCodeMailTemplate(): void
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    private function createTwoFactorAuthenticationCodeMailTemplateVariables(): MailTemplateVariables
     {
-        $mailTemplate = new MailTemplateVariables(t('Two factor authentication code'));
-        $mailTemplate->addVariable(
+        $mailTemplateVariables = new MailTemplateVariables(t('Two factor authentication code'));
+
+        return $mailTemplateVariables->addVariable(
             TwoFactorAuthenticationMail::VARIABLE_AUTHENTICATION_CODE,
             t('Authentication code'),
             MailTemplateVariables::CONTEXT_BODY,
             MailTemplateVariables::REQUIRED_BODY,
         );
+    }
 
-        $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplate);
+    private function registerTwoFactorAuthenticationCodeMailTemplate(): void
+    {
+        $mailTemplateVariables = $this->createTwoFactorAuthenticationCodeMailTemplateVariables();
+
+        $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateVariables);
     }
 }
