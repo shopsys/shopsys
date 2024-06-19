@@ -267,3 +267,7 @@ QueryDecorator:
                 type: '[NavigationItem!]!'
                 resolve: "@=query('navigationQuery')"
                 description: "Returns complete navigation menu"
+            countries:
+                type: '[Country!]!'
+                resolve: "@=query('countriesQuery')"
+                description: "Returns available countries"

@@ -61,10 +61,6 @@ export type TypeOrderSentPageContentQuery = { __typename?: 'Query', orderSentPag
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

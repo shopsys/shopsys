@@ -54,10 +54,6 @@ export type TypeHreflangLinksFragment = { __typename?: 'HreflangLink', hreflang:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

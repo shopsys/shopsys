@@ -60,10 +60,6 @@ export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Arr
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -66,10 +66,6 @@ export type TypeBrandProductsQuery = { __typename?: 'Query', products: { __typen
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

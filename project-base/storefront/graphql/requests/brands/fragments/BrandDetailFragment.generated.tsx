@@ -58,10 +58,6 @@ export type TypeBrandDetailFragment = { __typename: 'Brand', id: number, uuid: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

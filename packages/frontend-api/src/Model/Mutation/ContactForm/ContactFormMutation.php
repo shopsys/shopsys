@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Mutation\ContactForm;
+namespace Shopsys\FrontendApiBundle\Model\Mutation\ContactForm;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
@@ -19,8 +19,8 @@ class ContactFormMutation extends AbstractMutation
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        private readonly ContactFormFacade $contactFormFacade,
-        private readonly LoggerInterface $logger,
+        protected readonly ContactFormFacade $contactFormFacade,
+        protected readonly LoggerInterface $logger,
     ) {
     }
 
@@ -29,7 +29,7 @@ class ContactFormMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return bool
      */
-    public function contactMutation(Argument $argument, InputValidator $validator): bool
+    public function contactFormMutation(Argument $argument, InputValidator $validator): bool
     {
         $validator->validate();
 
@@ -55,7 +55,7 @@ class ContactFormMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData
      */
-    private function createContactFormDataFromArgument(Argument $argument): ContactFormData
+    protected function createContactFormDataFromArgument(Argument $argument): ContactFormData
     {
         $contactFormData = new ContactFormData();
 

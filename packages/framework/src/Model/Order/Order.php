@@ -129,14 +129,14 @@ class Order
     protected $totalProductPriceWithVat;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $firstName;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $lastName;
 
@@ -202,14 +202,14 @@ class Order
     protected $deliveryAddressSameAsBillingAddress;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryFirstName;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryLastName;
 
@@ -335,6 +335,12 @@ class Order
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $trackingNumber;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    protected $promoCode;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
@@ -502,6 +508,8 @@ class Order
         $this->heurekaAgreement = $orderData->heurekaAgreement;
 
         $this->setDeliveryAddress($orderData);
+
+        $this->promoCode = $orderData->promoCode;
     }
 
     /**
@@ -1144,5 +1152,13 @@ class Order
         return strtr($trackingUrl, [
             OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
         ]);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPromoCode()
+    {
+        return $this->promoCode;
     }
 }

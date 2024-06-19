@@ -61,10 +61,6 @@ export type TypeNewsletterSubscribeMutation = { __typename?: 'Mutation', Newslet
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -579,10 +579,10 @@ type CompanyCustomerUser implements CustomerUser {
   uuid: Uuid!
 }
 
-input ContactInput {
+input ContactFormInput {
   "Email address of the sender"
   email: String!
-  "Message sent to recipient"
+  "Message that will be sent to recipient"
   message: String!
   "Name of the sender"
   name: String!
@@ -891,7 +891,7 @@ type Mutation {
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "Send message to the site owner"
-  Contact(input: ContactInput!): Boolean!
+  ContactForm(input: ContactFormInput!): Boolean!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
   "Delete delivery address by Uuid"
@@ -1401,17 +1401,7 @@ type PersonalDataPage {
 }
 
 "Represents the price"
-type Price implements PriceInterface {
-  "Price without VAT"
-  priceWithoutVat: Money!
-  "Price with VAT"
-  priceWithVat: Money!
-  "Total value of VAT"
-  vatAmount: Money!
-}
-
-"Represents the price"
-interface PriceInterface {
+type Price {
   "Price without VAT"
   priceWithoutVat: Money!
   "Price with VAT"
@@ -1603,7 +1593,7 @@ enum ProductOrderingModeEnum {
 }
 
 "Represents the price of the product"
-type ProductPrice implements PriceInterface {
+type ProductPrice {
   "Determines whether it's a final price or starting price"
   isPriceFrom: Boolean!
   "Price without VAT"
@@ -1958,7 +1948,7 @@ type SeoPage implements Hreflang {
   title: String
 }
 
-"Represents setting of SEO"
+"Represents settings of SEO"
 type SeoSetting {
   "Description of the content of a web page"
   metaDescription: String!

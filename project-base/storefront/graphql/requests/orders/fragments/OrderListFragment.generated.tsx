@@ -56,10 +56,6 @@ export type TypeOrderListFragment = { __typename: 'OrderConnection', totalCount:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

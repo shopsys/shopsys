@@ -54,10 +54,6 @@ export type TypeSimpleArticleSiteFragment = { __typename: 'ArticleSite', uuid: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

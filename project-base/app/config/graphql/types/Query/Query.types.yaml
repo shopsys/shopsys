@@ -12,7 +12,6 @@ Query:
         - 'ProductQuery'
         - 'SlugQuery'
         - 'NotificationBarQuery'
-        - 'CountryQuery'
         - 'LanguageConstantQuery'
         - 'SeoPageQuery'
         - 'RecommendationQueryDecorator'

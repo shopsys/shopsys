@@ -54,10 +54,6 @@ export type TypeCartTransportModificationsFragment = { __typename: 'CartTranspor
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

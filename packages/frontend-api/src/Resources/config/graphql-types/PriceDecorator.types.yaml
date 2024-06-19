@@ -1,14 +1,15 @@
 PriceDecorator:
     type: object
+    decorator: true
     config:
         description: "Represents the price"
         fields:
             priceWithVat:
-                type: "Money"
+                type: "Money!"
                 description: "Price with VAT"
             priceWithoutVat:
-                type: "Money"
+                type: "Money!"
                 description: "Price without VAT"
             vatAmount:
-                type: "Money"
+                type: "Money!"
                 description: "Total value of VAT"

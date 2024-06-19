@@ -62,10 +62,6 @@ export type TypeStoreDetailQuery = { __typename?: 'Query', store: { __typename: 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

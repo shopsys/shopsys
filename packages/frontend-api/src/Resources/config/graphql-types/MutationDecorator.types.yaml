@@ -162,3 +162,11 @@ MutationDecorator:
                         type: RemovePromoCodeFromCartInput!
                         validation: cascade
                 resolve: "@=mutation('removePromoCodeFromCartMutation', args, validator)"
+            ContactForm:
+                type: Boolean!
+                description: "Send message to the site owner"
+                args:
+                    input:
+                        type: ContactFormInput!
+                        validation: cascade
+                resolve: "@=mutation('contactFormMutation', args, validator)"

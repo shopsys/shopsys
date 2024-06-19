@@ -54,10 +54,6 @@ export type TypeSimpleBrandFragment = { __typename: 'Brand', name: string, slug:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

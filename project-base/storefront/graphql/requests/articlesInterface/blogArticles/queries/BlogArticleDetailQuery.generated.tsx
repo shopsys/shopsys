@@ -62,10 +62,6 @@ export type TypeBlogArticleDetailQuery = { __typename?: 'Query', blogArticle: { 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

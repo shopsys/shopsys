@@ -1,8 +1,0 @@
-CountryQuery:
-    type: object
-    config:
-        fields:
-            countries:
-                type: '[Country!]!'
-                resolve: "@=query('countriesQuery')"
-                description: "Returns available countries"

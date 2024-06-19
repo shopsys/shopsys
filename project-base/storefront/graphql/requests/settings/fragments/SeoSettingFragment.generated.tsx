@@ -54,10 +54,6 @@ export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

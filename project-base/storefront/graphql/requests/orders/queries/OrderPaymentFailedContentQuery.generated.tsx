@@ -61,10 +61,6 @@ export type TypeOrderPaymentFailedContentQuery = { __typename?: 'Query', orderPa
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -58,10 +58,6 @@ export type TypeTransportWithAvailablePaymentsAndStoresFragment = { __typename: 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

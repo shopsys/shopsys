@@ -62,10 +62,6 @@ export type TypeProductsByCatnums = { __typename?: 'Query', productsByCatnums: A
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

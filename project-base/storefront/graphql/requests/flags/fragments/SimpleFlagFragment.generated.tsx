@@ -54,10 +54,6 @@ export type TypeSimpleFlagFragment = { __typename: 'Flag', uuid: string, name: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

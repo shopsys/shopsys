@@ -54,10 +54,6 @@ export type TypeImageFragment = { __typename: 'Image', name: string | null, url:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

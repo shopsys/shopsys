@@ -59,10 +59,6 @@ export type TypeUserConsentPolicyArticleUrlQuery = { __typename?: 'Query', userC
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

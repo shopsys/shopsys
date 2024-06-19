@@ -55,10 +55,6 @@ export type TypeDeliveryAddressFragment = { __typename: 'DeliveryAddress', uuid:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

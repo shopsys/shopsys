@@ -60,10 +60,6 @@ export type TypePromotedProductsQuery = { __typename?: 'Query', promotedProducts
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

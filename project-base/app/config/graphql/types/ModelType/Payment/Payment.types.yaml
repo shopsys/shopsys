@@ -2,24 +2,3 @@ Payment:
     type: object
     inherits:
         - 'PaymentDecorator'
-    config:
-        fields:
-            type:
-                type: "String!"
-                description: "Type of payment"
-            images:
-                type: "[Image!]!"
-                description: "Payment images"
-                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null
-            mainImage:
-                type: "Image"
-                description: "Payment image by params"
-                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null

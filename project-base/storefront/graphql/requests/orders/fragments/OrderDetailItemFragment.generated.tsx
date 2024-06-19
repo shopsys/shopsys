@@ -55,10 +55,6 @@ export type TypeOrderDetailItemFragment = { __typename: 'OrderItem', name: strin
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

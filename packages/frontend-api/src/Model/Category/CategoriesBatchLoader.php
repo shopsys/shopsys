@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Category;
+namespace Shopsys\FrontendApiBundle\Model\Category;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
@@ -12,13 +12,13 @@ class CategoriesBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \App\FrontendApi\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private PromiseAdapter $promiseAdapter,
-        private CategoryFacade $categoryFacade,
-        private Domain $domain,
+        protected readonly PromiseAdapter $promiseAdapter,
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly Domain $domain,
     ) {
     }
 

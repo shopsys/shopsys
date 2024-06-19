@@ -54,10 +54,6 @@ export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, nam
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -3,12 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeContactMutationVariables = Types.Exact<{
-  input: Types.TypeContactInput;
+export type TypeContactFormMutationVariables = Types.Exact<{
+  input: Types.TypeContactFormInput;
 }>;
 
 
-export type TypeContactMutation = { __typename?: 'Mutation', Contact: boolean };
+export type TypeContactFormMutation = { __typename?: 'Mutation', ContactForm: boolean };
 
 
       export interface PossibleTypesResultData {
@@ -61,10 +61,6 @@ export type TypeContactMutation = { __typename?: 'Mutation', Contact: boolean };
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",
@@ -92,12 +88,12 @@ export type TypeContactMutation = { __typename?: 'Mutation', Contact: boolean };
       export default result;
     
 
-export const ContactMutationDocument = gql`
-    mutation ContactMutation($input: ContactInput!) {
-  Contact(input: $input)
+export const ContactFormMutationDocument = gql`
+    mutation ContactFormMutation($input: ContactFormInput!) {
+  ContactForm(input: $input)
 }
     `;
 
-export function useContactMutation() {
-  return Urql.useMutation<TypeContactMutation, TypeContactMutationVariables>(ContactMutationDocument);
+export function useContactFormMutation() {
+  return Urql.useMutation<TypeContactFormMutation, TypeContactFormMutationVariables>(ContactFormMutationDocument);
 };

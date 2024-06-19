@@ -54,10 +54,6 @@ export type TypePricingSettingFragment = { __typename: 'PricingSetting', default
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

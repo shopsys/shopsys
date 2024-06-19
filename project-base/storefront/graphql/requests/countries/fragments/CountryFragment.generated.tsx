@@ -54,10 +54,6 @@ export type TypeCountryFragment = { __typename: 'Country', name: string, code: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

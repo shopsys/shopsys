@@ -15,7 +15,6 @@ services:
             Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader: '@flags_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader: '@brands_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $orderItemsBatchLoader: '@order_items_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $storesBatchLoader: '@stores_batch_loader'
         public: false
 
@@ -104,9 +103,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery:
         alias: App\FrontendApi\Resolver\Order\OrderQuery
         public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolverMap:
-        alias: App\FrontendApi\Model\Order\OrderResolverMap
 
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery:
         alias: App\FrontendApi\Resolver\Order\OrdersQuery

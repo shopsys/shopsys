@@ -54,10 +54,6 @@ export type TypeProductFilterOptionsParametersCheckboxFragment = { __typename: '
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

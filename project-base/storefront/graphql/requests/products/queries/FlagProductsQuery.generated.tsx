@@ -66,10 +66,6 @@ export type TypeFlagProductsQuery = { __typename?: 'Query', products: { __typena
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

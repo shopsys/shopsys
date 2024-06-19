@@ -54,10 +54,6 @@ export type TypeOpeningHoursFragment = { __typename?: 'OpeningHours', isOpen: bo
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

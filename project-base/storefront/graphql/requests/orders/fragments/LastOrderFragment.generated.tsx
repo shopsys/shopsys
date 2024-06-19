@@ -57,10 +57,6 @@ export type TypeLastOrderFragment = { __typename: 'Order', pickupPlaceIdentifier
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

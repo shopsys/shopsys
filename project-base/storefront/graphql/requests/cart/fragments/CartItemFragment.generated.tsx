@@ -59,10 +59,6 @@ export type TypeCartItemFragment = { __typename: 'CartItem', uuid: string, quant
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -62,10 +62,6 @@ export type TypeProductInProductListFragment = TypeProductInProductListFragment_
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

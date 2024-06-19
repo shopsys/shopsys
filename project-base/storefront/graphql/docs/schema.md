@@ -106,7 +106,7 @@
     * [ChangePaymentInOrderInput](#changepaymentinorderinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
-    * [ContactInput](#contactinput)
+    * [ContactFormInput](#contactforminput)
     * [DeliveryAddressInput](#deliveryaddressinput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
@@ -146,7 +146,6 @@
     * [Hreflang](#hreflang)
     * [NotBlogArticleInterface](#notblogarticleinterface)
     * [ParameterFilterOptionInterface](#parameterfilteroptioninterface)
-    * [PriceInterface](#priceinterface)
     * [Product](#product)
     * [ProductListable](#productlistable)
     * [Slug](#slug)
@@ -1306,7 +1305,7 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>Contact</strong></td>
+<td colspan="2" valign="top"><strong>ContactForm</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1316,7 +1315,7 @@ Send message to the site owner
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#contactinput">ContactInput</a>!</td>
+<td valign="top"><a href="#contactforminput">ContactFormInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -7192,7 +7191,7 @@ Document's title that is shown in a browser's title
 
 ### SeoSetting
 
-Represents setting of SEO
+Represents settings of SEO
 
 <table>
 <thead>
@@ -8731,7 +8730,7 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 </tbody>
 </table>
 
-### ContactInput
+### ContactFormInput
 
 <table>
 <thead>
@@ -8756,7 +8755,7 @@ Email address of the sender
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Message sent to recipient
+Message that will be sent to recipient
 
 </td>
 </tr>
@@ -10419,50 +10418,6 @@ The parameter unit
 <td>
 
 The parameter UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### PriceInterface
-
-Represents the price
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price without VAT
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price with VAT
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>vatAmount</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Total value of VAT
 
 </td>
 </tr>

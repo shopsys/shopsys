@@ -40,44 +40,11 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItem getTransportItem()
  * @method \App\Model\Order\Item\OrderItem getPaymentItem()
  * @method \App\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
+ * @method editData(\App\Model\Order\OrderData $orderData)
  */
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order extends BaseOrder
 {
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @phpstan-ignore-next-line Overridden property type
-     */
-    protected $firstName;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @phpstan-ignore-next-line Overridden property type
-     */
-    protected $lastName;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @phpstan-ignore-next-line Overridden property type
-     */
-    protected $deliveryFirstName;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @phpstan-ignore-next-line Overridden property type
-     */
-    protected $deliveryLastName;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=64, nullable=true)
-     */
-    protected $gtmCoupon;
-
     /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
@@ -101,28 +68,6 @@ class Order extends BaseOrder
             $this->companyNumber = null;
             $this->companyTaxNumber = null;
         }
-
-        $this->firstName = $orderData->firstName;
-        $this->lastName = $orderData->lastName;
-        $this->gtmCoupon = $orderData->gtmCoupon;
-    }
-
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     */
-    protected function editData(BaseOrderData $orderData): void
-    {
-        parent::editData($orderData);
-
-        $this->gtmCoupon = $orderData->gtmCoupon;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getGtmCoupon(): ?string
-    {
-        return $this->gtmCoupon;
     }
 
     /**

@@ -60,10 +60,6 @@ export type TypeLastOrderQuery = { __typename?: 'Query', lastOrder: { __typename
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -713,10 +713,10 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type TypeContactInput = {
+export type TypeContactFormInput = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
-  /** Message sent to recipient */
+  /** Message that will be sent to recipient */
   message: Scalars['String']['input'];
   /** Name of the sender */
   name: Scalars['String']['input'];
@@ -1066,7 +1066,7 @@ export type TypeMutation = {
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
-  Contact: Scalars['Boolean']['output'];
+  ContactForm: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
   /** Delete delivery address by Uuid */
@@ -1151,8 +1151,8 @@ export type TypeMutationChangeTransportInCartArgs = {
 };
 
 
-export type TypeMutationContactArgs = {
-  input: TypeContactInput;
+export type TypeMutationContactFormArgs = {
+  input: TypeContactFormInput;
 };
 
 
@@ -1760,18 +1760,8 @@ export type TypePersonalDataPage = {
 };
 
 /** Represents the price */
-export type TypePrice = TypePriceInterface & {
+export type TypePrice = {
   __typename?: 'Price';
-  /** Price with VAT */
-  priceWithVat: Scalars['Money']['output'];
-  /** Price without VAT */
-  priceWithoutVat: Scalars['Money']['output'];
-  /** Total value of VAT */
-  vatAmount: Scalars['Money']['output'];
-};
-
-/** Represents the price */
-export type TypePriceInterface = {
   /** Price with VAT */
   priceWithVat: Scalars['Money']['output'];
   /** Price without VAT */
@@ -1994,7 +1984,7 @@ export enum TypeProductOrderingModeEnum {
 }
 
 /** Represents the price of the product */
-export type TypeProductPrice = TypePriceInterface & {
+export type TypeProductPrice = {
   __typename?: 'ProductPrice';
   /** Determines whether it's a final price or starting price */
   isPriceFrom: Scalars['Boolean']['output'];
@@ -2576,7 +2566,7 @@ export type TypeSeoPage = TypeHreflang & {
   title: Maybe<Scalars['String']['output']>;
 };
 
-/** Represents setting of SEO */
+/** Represents settings of SEO */
 export type TypeSeoSetting = {
   __typename?: 'SeoSetting';
   /** Description of the content of a web page */

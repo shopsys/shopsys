@@ -62,10 +62,6 @@ export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', Change
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

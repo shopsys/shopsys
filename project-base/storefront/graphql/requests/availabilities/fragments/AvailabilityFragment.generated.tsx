@@ -54,10 +54,6 @@ export type TypeAvailabilityFragment = { __typename: 'Availability', name: strin
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

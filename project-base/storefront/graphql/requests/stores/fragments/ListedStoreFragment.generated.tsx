@@ -56,10 +56,6 @@ export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name:
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

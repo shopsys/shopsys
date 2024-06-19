@@ -54,10 +54,6 @@ export type TypeCartPromoCodeModificationsFragment = { __typename: 'CartPromoCod
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

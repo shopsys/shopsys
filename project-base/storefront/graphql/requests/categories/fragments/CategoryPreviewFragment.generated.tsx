@@ -55,10 +55,6 @@ export type TypeCategoryPreviewFragment = { __typename: 'Category', uuid: string
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

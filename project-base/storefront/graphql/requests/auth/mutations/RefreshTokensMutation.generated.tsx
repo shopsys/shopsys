@@ -62,10 +62,6 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

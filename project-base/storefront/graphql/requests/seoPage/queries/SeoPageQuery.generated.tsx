@@ -62,10 +62,6 @@ export type TypeSeoPageQuery = { __typename?: 'Query', seoPage: { __typename: 'S
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

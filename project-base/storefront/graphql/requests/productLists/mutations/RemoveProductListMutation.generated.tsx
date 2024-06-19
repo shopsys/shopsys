@@ -61,10 +61,6 @@ export type TypeRemoveProductListMutation = { __typename?: 'Mutation', RemovePro
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

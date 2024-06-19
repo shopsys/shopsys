@@ -55,10 +55,6 @@ export type TypeCategoriesByColumnFragment = { __typename: 'NavigationItem', nam
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

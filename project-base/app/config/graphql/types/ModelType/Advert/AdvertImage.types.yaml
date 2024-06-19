@@ -2,21 +2,3 @@ AdvertImage:
     type: object
     inherits:
         - 'AdvertImageDecorator'
-    config:
-        fields:
-            images:
-                type: "[Image!]!"
-                description: "Advert images"
-                resolve: '@=query("imagesByAdvertPromiseQuery", value, args["type"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null
-            mainImage:
-                type: "Image"
-                description: "Adverts first image by params"
-                resolve: '@=query("mainImageByAdvertPromiseQuery", value, args["type"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null

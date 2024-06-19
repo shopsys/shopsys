@@ -59,10 +59,6 @@ export type TypeLogoutMutation = { __typename?: 'Mutation', Logout: boolean };
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

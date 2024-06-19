@@ -16,5 +16,13 @@ AdvertImageDecorator:
                     type:
                         type: "String"
                         defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Adverts first image by params"
+                resolve: '@=query("mainImageByAdvertPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
         interfaces:
             - 'Advert'

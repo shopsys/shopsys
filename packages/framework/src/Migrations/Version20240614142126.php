@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200622122343 extends AbstractMigration
+class Version20240614142126 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE orders ADD gtm_coupon VARCHAR(64) DEFAULT NULL');
+        $this->sql('ALTER TABLE orders RENAME COLUMN gtm_coupon TO promo_code');
     }
 
     /**

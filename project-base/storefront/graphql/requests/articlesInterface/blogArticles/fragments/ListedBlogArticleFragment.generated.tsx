@@ -56,10 +56,6 @@ export type TypeListedBlogArticleFragment = { __typename: 'BlogArticle', uuid: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

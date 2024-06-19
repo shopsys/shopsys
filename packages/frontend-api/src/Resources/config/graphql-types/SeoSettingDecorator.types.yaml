@@ -7,3 +7,12 @@ SeoSettingDecorator:
             robotsTxtContent:
                 type: "String"
                 description: "Robots.txt's file content"
+            title:
+                type: "String!"
+                description: "Document's title that is shown in a browser's title"
+            titleAddOn:
+                type: "String!"
+                description: "Complement to title"
+            metaDescription:
+                type: "String!"
+                description: "Description of the content of a web page"

@@ -54,10 +54,6 @@ export type TypeBreadcrumbFragment = { __typename: 'Link', name: string, slug: s
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

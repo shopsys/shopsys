@@ -61,10 +61,6 @@ export type TypeMinimalCartQuery = { __typename?: 'Query', cart: { __typename?: 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

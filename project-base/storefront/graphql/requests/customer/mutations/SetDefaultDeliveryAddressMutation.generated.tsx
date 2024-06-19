@@ -62,10 +62,6 @@ export type TypeSetDefaultDeliveryAddressMutation = { __typename?: 'Mutation', S
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

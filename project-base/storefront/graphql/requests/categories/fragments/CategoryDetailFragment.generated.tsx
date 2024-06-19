@@ -59,10 +59,6 @@ export type TypeCategoryDetailFragment = { __typename: 'Category', id: number, u
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

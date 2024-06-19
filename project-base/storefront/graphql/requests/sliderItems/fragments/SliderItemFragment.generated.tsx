@@ -55,10 +55,6 @@ export type TypeSliderItemFragment = { __typename: 'SliderItem', uuid: string, n
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

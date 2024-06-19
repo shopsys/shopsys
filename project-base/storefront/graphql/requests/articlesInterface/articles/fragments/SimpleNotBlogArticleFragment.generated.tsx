@@ -60,10 +60,6 @@ export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

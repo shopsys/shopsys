@@ -62,10 +62,6 @@ export type TypeTransportsQuery = { __typename?: 'Query', transports: Array<{ __
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

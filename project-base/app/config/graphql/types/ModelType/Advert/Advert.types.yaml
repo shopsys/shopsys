@@ -2,8 +2,3 @@ Advert:
     type: interface
     inherits:
         - 'AdvertDecorator'
-    config:
-        fields:
-            categories:
-                type: "[Category!]!"
-                description: "Restricted categories of the advert (the advert is shown in these categories only)"

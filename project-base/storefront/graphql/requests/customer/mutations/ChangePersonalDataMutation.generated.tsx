@@ -62,10 +62,6 @@ export type TypeChangePersonalDataMutation = { __typename?: 'Mutation', ChangePe
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

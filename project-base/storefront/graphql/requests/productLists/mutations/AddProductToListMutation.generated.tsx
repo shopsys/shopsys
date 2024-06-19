@@ -62,10 +62,6 @@ export type TypeAddProductToListMutation = { __typename?: 'Mutation', AddProduct
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

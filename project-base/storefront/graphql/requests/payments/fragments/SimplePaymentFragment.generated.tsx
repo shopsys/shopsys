@@ -56,10 +56,6 @@ export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, n
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

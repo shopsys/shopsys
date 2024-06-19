@@ -60,10 +60,6 @@ export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ 
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

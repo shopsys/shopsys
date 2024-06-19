@@ -60,10 +60,6 @@ export type TypeBrandsQuery = { __typename?: 'Query', brands: Array<{ __typename
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

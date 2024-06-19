@@ -61,10 +61,6 @@ export type TypeIsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustom
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
     ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
-    ],
     "Product": [
       "MainVariant",
       "RegularProduct",

@@ -243,6 +243,11 @@ class OrderData
      */
     public $customerUser;
 
+    /**
+     * @var string|null
+     */
+    public $promoCode;
+
     public function __construct()
     {
         $this->deliveryAddressSameAsBillingAddress = false;
