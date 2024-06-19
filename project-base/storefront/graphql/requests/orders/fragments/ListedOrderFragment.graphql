@@ -13,15 +13,22 @@ fragment ListedOrderFragment on Order {
         mainImage {
             ...ImageFragment
         }
+        mainImage {
+            url
+        }
     }
     payment {
         __typename
         name
         type
+        mainImage {
+            url
+        }
     }
     totalPrice {
         ...PriceFragment
     }
     isPaid
     status
+    note
 }

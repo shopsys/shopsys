@@ -11,7 +11,7 @@ import {
 } from 'types/friendlyUrl';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 
-type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
+export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
     Omit<LinkProps, 'prefetch'> & {
         queryParams?: Record<string, string>;
         type?: PageType;

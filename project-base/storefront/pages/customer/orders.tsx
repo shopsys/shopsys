@@ -1,7 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
-import { CommonLayout } from 'components/Layout/CommonLayout';
-import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
+import { CustomerLayout } from 'components/Layout/CustomerLayout';
+import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -36,9 +36,8 @@ const OrdersPage: FC = () => {
         () => mapConnectionEdges<TypeListedOrderFragment>(ordersData?.orders?.edges),
         [ordersData?.orders?.edges],
     );
-    const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(['/customer', '/customer/orders'], url);
+    const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
@@ -47,13 +46,13 @@ const OrdersPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('My orders')}>
+            <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('My orders')} title={t('My orders')}>
                 <OrdersContent
                     areOrdersFetching={areOrdersFetching}
                     orders={mappedOrders}
                     totalCount={ordersData?.orders?.totalCount}
                 />
-            </CommonLayout>
+            </CustomerLayout>
         </>
     );
 };

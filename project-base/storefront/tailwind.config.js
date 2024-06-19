@@ -30,7 +30,9 @@ module.exports = {
             white: '#fff',
             black: '#000',
             green: '#00ecb1',
+            greenLight: '#2fa588',
             orange: '#ecb200',
+            orangeLight: '#ffe594',
         },
         fontFamily: {
             default: ['var(--font-inter)'],
