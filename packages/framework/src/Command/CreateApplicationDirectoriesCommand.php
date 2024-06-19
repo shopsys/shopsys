@@ -15,7 +15,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-#[AsCommand(name: 'shopsys:create-directories')]
+#[AsCommand(
+    name: 'shopsys:create-directories',
+    description: 'Create application directories for locks, docs, content, images, uploaded files, etc.',
+)]
 class CreateApplicationDirectoriesCommand extends Command
 {
     /**
@@ -64,12 +67,6 @@ class CreateApplicationDirectoriesCommand extends Command
         $this->publicDirectories = $publicDirectories;
 
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Create application directories for locks, docs, content, images, uploaded files, etc.');
     }
 
     /**

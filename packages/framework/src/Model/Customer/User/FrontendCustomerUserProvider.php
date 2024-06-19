@@ -61,7 +61,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function refreshUser(UserInterface $userInterface)
+    public function refreshUser(UserInterface $userInterface): UserInterface
     {
         $class = get_class($userInterface);
 
@@ -101,7 +101,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class): bool
     {
         return $class === CustomerUser::class || is_subclass_of($class, CustomerUser::class);
     }

@@ -59,11 +59,11 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/order/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $order = $this->orderFacade->getById($id);
@@ -114,11 +114,11 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $orderId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/order/add-product/{orderId}', requirements: ['orderId' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     public function addProductAction(Request $request, int $orderId): Response
     {
         $productId = (int)$request->request->get('productId');
@@ -143,10 +143,10 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @Route("/order/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/order/list/')]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'orders';
@@ -233,11 +233,11 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/order/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -259,10 +259,10 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @Route("/order/get-advanced-search-rule-form/", methods={"post"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/order/get-advanced-search-rule-form/', methods: ['post'])]
     public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
@@ -276,10 +276,10 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/order/preview/{id}', requirements: ['id' => '\d+'])]
     public function previewAction(int $id): Response
     {
         $order = $this->orderFacade->getById($id);

@@ -22,18 +22,16 @@ class TransportAndPaymentController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/transport-and-payment/list/")
-     */
+    #[Route(path: '/transport-and-payment/list/')]
     public function listAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/list.html.twig');
     }
 
     /**
-     * @Route("/transport-and-payment/free-transport-and-payment-limit/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/transport-and-payment/free-transport-and-payment-limit/')]
     public function freeTransportAndPaymentLimitAction(Request $request)
     {
         $formData = [];

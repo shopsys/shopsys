@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:redis:clean-storefront-cache')]
+#[AsCommand(
+    name: 'shopsys:redis:clean-storefront-cache',
+    description: 'Cleans up storefront caches',
+)]
 class CleanStorefrontQueryCacheCommand extends Command
 {
     /**
@@ -26,8 +29,6 @@ class CleanStorefrontQueryCacheCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Cleans up storefront caches');
-
         $this->addOption('queries', null, InputOption::VALUE_NONE, 'Clean graphql query cache');
         $this->addOption('translations', null, InputOption::VALUE_NONE, 'Clean translations cache');
     }

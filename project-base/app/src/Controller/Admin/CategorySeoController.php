@@ -56,9 +56,9 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/category/')]
     public function listAction(): Response
     {
         $grid = $this->readyCategorySeoMixGridFactory->create(
@@ -72,9 +72,9 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/new/category")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/category/new/category')]
     public function newCategoryAction(): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -91,11 +91,11 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/new/filters/category/{categoryId}", requirements={"categoryId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/category/new/filters/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     public function newFiltersAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -125,11 +125,11 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/new/combinations/category/{categoryId}", requirements={"categoryId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/category/new/combinations/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     public function newCombinationsAction(Request $request, int $categoryId): Response
     {
         $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
@@ -165,11 +165,11 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/new/ready-combination/category/{categoryId}", requirements={"categoryId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $categoryId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/category/new/ready-combination/category/{categoryId}', requirements: ['categoryId' => '\d+'])]
     public function readyCombinationAction(Request $request, int $categoryId): Response
     {
         $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
@@ -283,11 +283,11 @@ class CategorySeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/category/ready-combination/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/category/ready-combination/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {

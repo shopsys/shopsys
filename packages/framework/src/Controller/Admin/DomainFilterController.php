@@ -37,12 +37,12 @@ class DomainFilterController extends AdminBaseController
     }
 
     /**
-     * @Route("/multidomain/filter-domain/{namespace}/{domainId}", requirements={"domainId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $namespace
      * @param int|null $domainId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/multidomain/filter-domain/{namespace}/{domainId}', requirements: ['domainId' => '\d+'])]
     public function selectDomainAction(Request $request, string $namespace, ?int $domainId = null): RedirectResponse
     {
         $this->adminDomainFilterTabsFacade->setSelectedDomainId($namespace, $domainId);

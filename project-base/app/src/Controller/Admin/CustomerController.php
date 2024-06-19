@@ -30,9 +30,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CustomerController extends BaseCustomerController
 {
     /**
-     * @Route("/customer/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/customer/list/')]
     public function listAction(Request $request)
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -79,10 +79,10 @@ class CustomerController extends BaseCustomerController
     }
 
     /**
-     * @Route("/customer/login-as-user/{customerUserId}/")
      * @param int $customerUserId
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/customer/login-as-user/{customerUserId}/')]
     public function loginAsCustomerUserAction(int $customerUserId): Response
     {
         try {

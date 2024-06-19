@@ -17,7 +17,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-#[AsCommand(name: 'translation:import')]
+#[AsCommand(
+    name: 'translation:import',
+    description: 'Replace translated messages into translated text in the target language',
+)]
 class ImportPoFilesCommand extends Command
 {
     public const SOURCE_TRANSLATION_DIR = 'sourceTranslationDir';
@@ -50,7 +53,6 @@ class ImportPoFilesCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Replace translated messages into translated text in the target language.')
             ->addArgument(self::SOURCE_TRANSLATION_DIR, InputArgument::REQUIRED, 'Source directory with translations to process')
             ->addArgument(self::TARGET_TRANSLATION_DIR, InputArgument::REQUIRED, 'Target directory with production translations')
             ->addArgument(self::INPUT_FILES_TO_PROCESS, InputArgument::IS_ARRAY, 'Files to upload and process (messages, validators, etc...)');

@@ -30,7 +30,7 @@ class CsrfExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('protectedUrl', [$this, 'protectedUrl']),
+            new TwigFunction('protectedUrl', $this->protectedUrl(...)),
         ];
     }
 

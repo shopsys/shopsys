@@ -35,9 +35,9 @@ class NavigationController extends AdminBaseController
     }
 
     /**
-     * @Route("/navigation/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/navigation/list/')]
     public function listAction(): Response
     {
         $grid = $this->getGrid(
@@ -50,10 +50,10 @@ class NavigationController extends AdminBaseController
     }
 
     /**
-     * @Route("/navigation/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/navigation/new/')]
     public function newAction(Request $request): Response
     {
         $navigationItemData = $this->navigationItemDataFactory->createNew();
@@ -90,11 +90,11 @@ class NavigationController extends AdminBaseController
     }
 
     /**
-     * @Route("/navigation/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/navigation/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $navigationItem = $this->navigationItemFacade->getById($id);
@@ -133,11 +133,11 @@ class NavigationController extends AdminBaseController
     }
 
     /**
-     * @Route("/navigation/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/navigation/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {

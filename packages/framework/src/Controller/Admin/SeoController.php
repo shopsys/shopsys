@@ -26,10 +26,10 @@ class SeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/')]
     public function indexAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -64,10 +64,10 @@ class SeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/robots/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/robots/')]
     public function robotsAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -94,10 +94,10 @@ class SeoController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/hreflang/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/hreflang/')]
     public function hreflangAction(Request $request): Response
     {
         $hreflangData = [

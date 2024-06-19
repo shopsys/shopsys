@@ -47,9 +47,9 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/stock/list/')]
     public function listAction(): Response
     {
         $grid = $this->getGrid();
@@ -61,9 +61,9 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/setting/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/stock/setting/')]
     public function settingsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Stock/settings.html.twig', [
@@ -86,10 +86,10 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/savesettings/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/stock/savesettings/')]
     public function saveSettingsAction(Request $request): RedirectResponse
     {
         $form = $this->getStockSettingsForm();
@@ -119,10 +119,10 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/stock/new/')]
     public function newAction(Request $request): Response
     {
         $stockData = $this->stockDataFactory->create();
@@ -159,11 +159,11 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/stock/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $stock = $this->stockFacade->getById($id);
@@ -202,11 +202,11 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/setdefault/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/stock/setdefault/{id}', requirements: ['id' => '\d+'])]
     public function setDefaultAction(int $id): Response
     {
         try {
@@ -228,11 +228,11 @@ class StockController extends AdminBaseController
     }
 
     /**
-     * @Route("/stock/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/stock/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {

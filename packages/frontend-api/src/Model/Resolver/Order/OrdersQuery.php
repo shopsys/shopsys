@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
@@ -25,9 +27,9 @@ class OrdersQuery extends AbstractQuery
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
+     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|\GraphQL\Executor\Promise\Promise
      */
-    public function ordersQuery(Argument $argument)
+    public function ordersQuery(Argument $argument): ConnectionInterface|Promise
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 

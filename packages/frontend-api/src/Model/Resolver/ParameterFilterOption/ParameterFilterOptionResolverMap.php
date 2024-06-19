@@ -18,7 +18,7 @@ class ParameterFilterOptionResolverMap extends ResolverMap
     /**
      * {@inheritdoc}
      */
-    protected function map()
+    protected function map(): array
     {
         return [
             'ParameterFilterOptionInterface' => [

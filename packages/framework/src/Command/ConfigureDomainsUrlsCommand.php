@@ -10,7 +10,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-#[AsCommand(name: 'shopsys:domains-urls:configure')]
+#[AsCommand(
+    name: 'shopsys:domains-urls:configure',
+    description: 'Copies domain URL configuration from .dist template if it\'s not set yet',
+)]
 class ConfigureDomainsUrlsCommand extends Command
 {
     /**
@@ -22,11 +25,6 @@ class ConfigureDomainsUrlsCommand extends Command
         private readonly string $configFilepath,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Copies domain URL configuration from .dist template if it\'s not set yet');
     }
 
     /**

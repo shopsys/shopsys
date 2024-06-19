@@ -36,11 +36,11 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $category = $this->categoryFacade->getById($id);
@@ -81,10 +81,10 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/new/')]
     public function newAction(Request $request): Response
     {
         $categoryData = $this->categoryDataFactory->create();
@@ -119,10 +119,10 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/list/')]
     public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'category';
@@ -147,11 +147,11 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/apply-sorting/", methods={"post"})
      * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/apply-sorting/', methods: ['post'])]
     public function applySortingAction(Request $request): Response
     {
         $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
@@ -163,11 +163,11 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -189,11 +189,11 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param int $domainId
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     public function loadBranchJsonAction(int $domainId, int $id): Response
     {
         $parentCategory = $this->categoryFacade->getById($id);

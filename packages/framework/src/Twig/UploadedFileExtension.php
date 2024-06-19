@@ -37,9 +37,9 @@ class UploadedFileExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('uploadedFileUrl', [$this, 'getUploadedFileUrl']),
-            new TwigFunction('uploadedFilePreview', [$this, 'getUploadedFilePreviewHtml'], ['is_safe' => ['html']]),
-            new TwigFunction('uploadedFileExists', [$this, 'uploadedFileExists']),
+            new TwigFunction('uploadedFileUrl', $this->getUploadedFileUrl(...)),
+            new TwigFunction('uploadedFilePreview', $this->getUploadedFilePreviewHtml(...), ['is_safe' => ['html']]),
+            new TwigFunction('uploadedFileExists', $this->uploadedFileExists(...)),
         ];
     }
 

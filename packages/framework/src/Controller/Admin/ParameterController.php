@@ -22,9 +22,7 @@ class ParameterController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/product/parameter/list/")
-     */
+    #[Route(path: '/product/parameter/list/')]
     public function listAction()
     {
         $grid = $this->parameterInlineEdit->getGrid();
@@ -35,10 +33,10 @@ class ParameterController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/parameter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/product/parameter/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {

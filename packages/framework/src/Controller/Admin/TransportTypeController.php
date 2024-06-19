@@ -34,9 +34,9 @@ class TransportTypeController extends AdminBaseController
     }
 
     /**
-     * @Route("/transport-type/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/transport-type/list/')]
     public function listAction(): Response
     {
         $queryBuilder = $this->transportTypeFacade->getLocalisedQueryBuilder($this->domain->getLocale());
@@ -57,11 +57,11 @@ class TransportTypeController extends AdminBaseController
     }
 
     /**
-     * @Route("/transport-type/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/transport-type/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $transportType = $this->transportTypeFacade->getById($id);

@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:database:dump')]
+#[AsCommand(
+    name: 'shopsys:database:dump',
+    description: 'Dump database',
+)]
 class DatabaseDumpCommand extends Command
 {
     private const ARG_OUTPUT_FILE = 'outputFile';
@@ -33,7 +36,6 @@ class DatabaseDumpCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Dump database')
             ->addArgument(self::ARG_OUTPUT_FILE, InputArgument::REQUIRED, 'Output SQL file')
             ->addOption(self::OPT_PGDUMP_BIN, null, InputOption::VALUE_OPTIONAL, 'Path to pg_dump binary', 'pg_dump');
     }

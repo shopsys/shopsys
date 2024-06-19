@@ -34,9 +34,9 @@ class PaymentController extends AdminBaseController
     }
 
     /**
-     * @Route("/payment/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/payment/new/')]
     public function newAction(Request $request)
     {
         $paymentData = $this->paymentDataFactory->create();
@@ -71,10 +71,10 @@ class PaymentController extends AdminBaseController
     }
 
     /**
-     * @Route("/payment/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/payment/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, $id)
     {
         $payment = $this->paymentFacade->getById($id);
@@ -113,10 +113,10 @@ class PaymentController extends AdminBaseController
     }
 
     /**
-     * @Route("/payment/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/payment/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {

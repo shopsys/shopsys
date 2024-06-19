@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 use Twig\Environment;
 use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Node;
-use Twig\NodeVisitor\AbstractNodeVisitor;
+use Twig\NodeVisitor\NodeVisitorInterface;
 
 /**
  * Normalizes Twig translation filters by replacing custom filter "transHtml" by the default filter
@@ -16,17 +16,17 @@ use Twig\NodeVisitor\AbstractNodeVisitor;
  * Used for dumping translation messages in both custom and default translation filters because the extractor class
  * \JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor is not very extensible.
  */
-class CustomTransFiltersVisitor extends AbstractNodeVisitor
+class CustomTransFiltersVisitor implements NodeVisitorInterface
 {
-    protected const CUSTOM_TO_DEFAULT_TRANS_FILTERS_MAP = [
+    protected const array CUSTOM_TO_DEFAULT_TRANS_FILTERS_MAP = [
         'transHtml' => 'trans',
     ];
-    protected const PRIORITY = -1;
+    protected const int PRIORITY = -1;
 
     /**
      * {@inheritdoc}
      */
-    protected function doEnterNode(Node $node, Environment $env)
+    public function enterNode(Node $node, Environment $env): Node
     {
         if ($node instanceof FilterExpression) {
             $filterNameConstantNode = $node->getNode('filter');
@@ -45,7 +45,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
      * @param \Twig\Node\Expression\FilterExpression $filterExpressionNode
      * @param string $newFilterName
      */
-    protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, $newFilterName)
+    protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, string $newFilterName): void
     {
         $filterNameConstantNode = $filterExpressionNode->getNode('filter');
         $filterNameConstantNode->setAttribute('value', $newFilterName);
@@ -59,7 +59,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
     /**
      * {@inheritdoc}
      */
-    protected function doLeaveNode(Node $node, Environment $env)
+    public function leaveNode(Node $node, Environment $env): ?Node
     {
         return $node;
     }
@@ -67,7 +67,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY;
     }

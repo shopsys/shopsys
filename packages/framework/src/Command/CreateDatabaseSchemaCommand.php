@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:schema:create')]
+#[AsCommand(
+    name: 'shopsys:schema:create',
+    description: 'Create database public schema',
+)]
 class CreateDatabaseSchemaCommand extends Command
 {
     /**
@@ -19,12 +22,6 @@ class CreateDatabaseSchemaCommand extends Command
     public function __construct(private readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Create database public schema');
     }
 
     /**

@@ -16,7 +16,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-#[AsCommand(name: 'shopsys:elasticsearch:data-export')]
+#[AsCommand(
+    name: 'shopsys:elasticsearch:data-export',
+    description: 'Export data to Elasticsearch',
+)]
 class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
 {
     /**
@@ -73,14 +76,6 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
             $indexDefinition,
             $output,
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandDescription(): string
-    {
-        return 'Export data to Elasticsearch';
     }
 
     /**

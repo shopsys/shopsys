@@ -16,7 +16,7 @@ class TranslationExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('transHtml', [$this, 'transHtml'], [
+            new TwigFilter('transHtml', $this->transHtml(...), [
                 'needs_environment' => true,
                 'is_safe' => ['html'],
             ]),

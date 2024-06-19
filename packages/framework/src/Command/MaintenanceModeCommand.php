@@ -13,7 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'deploy:maintenance')]
+#[AsCommand(
+    name: 'deploy:maintenance',
+    description: 'Enable or disable maintenance mode',
+)]
 class MaintenanceModeCommand extends Command
 {
     /**
@@ -35,7 +38,6 @@ class MaintenanceModeCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Enable or disable maintenance mode');
         $this->addArgument(
             self::ACTION_ARGUMENT,
             InputArgument::REQUIRED,

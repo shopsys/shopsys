@@ -39,12 +39,12 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * @Route("/_error/{code}", requirements={"code" = "\d+"}, name="admin_error_page")
-     * @Route("/_error/{code}/{_format}", requirements={"code" = "\d+", "_format" = "css|html|js|json|txt|xml"}, name="admin_error_page_format")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $code
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/_error/{code}', requirements: ['code' => '\d+'], name: 'admin_error_page')]
+    #[Route(path: '/_error/{code}/{_format}', requirements: ['code' => '\d+', '_format' => 'css|html|js|json|txt|xml'], name: 'admin_error_page_format')]
     public function errorPagePreviewAction(Request $request, int $code): Response
     {
         return $this->renderTemplate($code, $request->getRequestFormat());

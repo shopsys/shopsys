@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:error-page:generate-all')]
+#[AsCommand(
+    name: 'shopsys:error-page:generate-all',
+    description: 'Generates all error pages for production',
+)]
 class GenerateErrorPagesCommand extends Command
 {
     /**
@@ -19,12 +22,6 @@ class GenerateErrorPagesCommand extends Command
     public function __construct(private readonly ErrorPagesFacade $errorPagesFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Generates all error pages for production.');
     }
 
     /**

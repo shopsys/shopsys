@@ -13,7 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:migrations:count')]
+#[AsCommand(
+    name: 'shopsys:migrations:count',
+    description: 'Get count of migrations to execute',
+)]
 class GetCountOfMigrationsToExecuteCommand extends Command
 {
     protected const OPTION_SIMPLE = 'simple';
@@ -36,7 +39,6 @@ class GetCountOfMigrationsToExecuteCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Get count of migrations to execute.')
             ->addOption(
                 static::OPTION_SIMPLE,
                 null,

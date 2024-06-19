@@ -36,10 +36,10 @@ class LanguageConstantController extends AdminBaseController
     }
 
     /**
-     * @Route("/constant/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/constant/list/')]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData())->handleRequest($request);
@@ -60,10 +60,10 @@ class LanguageConstantController extends AdminBaseController
     }
 
     /**
-     * @Route("/constant/edit/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/constant/edit/')]
     public function editAction(Request $request): Response
     {
         $key = $request->query->get('key');
@@ -122,11 +122,11 @@ class LanguageConstantController extends AdminBaseController
     }
 
     /**
-     * @Route("/constant/delete/")
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/constant/delete/')]
     public function deleteAction(Request $request): Response
     {
         $key = $request->query->get('key');

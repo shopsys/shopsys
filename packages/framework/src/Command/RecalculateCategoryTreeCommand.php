@@ -11,7 +11,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:categories:recalculate')]
+#[AsCommand(
+    name: 'shopsys:categories:recalculate',
+    description: 'Recalculate left, right and level for category nested set. <options=bold>Sort order of the categories on the same level may change when the tree is invalid.</>',
+)]
 class RecalculateCategoryTreeCommand extends Command
 {
     /**
@@ -20,11 +23,6 @@ class RecalculateCategoryTreeCommand extends Command
     public function __construct(protected readonly CategoryFacade $categoryFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Recalculate left, right and level for category nested set. <options=bold>Sort order of the categories on the same level may change when the tree is invalid.</>');
     }
 
     /**

@@ -23,11 +23,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class MailController extends baseMailController
 {
     /**
-     * @Route("/mail/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/mail/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $mailTemplate = $this->mailTemplateFacade->getById($id);
@@ -88,10 +88,10 @@ class MailController extends baseMailController
     }
 
     /**
-     * @Route("/mail/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/mail/setting/')]
     public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

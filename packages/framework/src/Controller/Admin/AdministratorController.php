@@ -44,9 +44,7 @@ class AdministratorController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/administrator/list/")
-     */
+    #[Route(path: '/administrator/list/')]
     public function listAction()
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
@@ -71,10 +69,10 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id)
     {
         $administrator = $this->administratorFacade->getById($id);
@@ -149,9 +147,7 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
-    /**
-     * @Route("/administrator/my-account/")
-     */
+    #[Route(path: '/administrator/my-account/')]
     public function myAccountAction()
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
@@ -163,9 +159,9 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/administrator/new/')]
     public function newAction(Request $request)
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
@@ -209,10 +205,10 @@ class AdministratorController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id)
     {
         try {

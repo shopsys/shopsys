@@ -11,7 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'deploy:cron:watch')]
+#[AsCommand(
+    name: 'deploy:cron:watch',
+    description: 'Cron watch command is running until cron instance ends, then is terminated',
+)]
 class CronWatchCommand extends Command
 {
     /**
@@ -30,8 +33,6 @@ class CronWatchCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Cron watch command is running until cron instance ends, then is terminated.');
-
         $this->setHelp(
             <<<'EOF'
 The <info>%command.name%</info> command runs continuously while any cron is running.

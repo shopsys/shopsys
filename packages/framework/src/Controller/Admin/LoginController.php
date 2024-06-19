@@ -39,11 +39,11 @@ class LoginController extends AdminBaseController
     }
 
     /**
-     * @Route("/", name="admin_login")
-     * @Route("/login-check/", name="admin_login_check")
-     * @Route("/logout/", name="admin_logout")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/', name: 'admin_login')]
+    #[Route(path: '/login-check/', name: 'admin_login_check')]
+    #[Route(path: '/logout/', name: 'admin_logout')]
     public function loginAction(Request $request)
     {
         $currentDomainId = $this->domain->getId();
@@ -95,10 +95,10 @@ class LoginController extends AdminBaseController
     }
 
     /**
-     * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $originalDomainId
      */
+    #[Route(path: '/sso/{originalDomainId}', requirements: ['originalDomainId' => '\d+'])]
     public function ssoAction(Request $request, $originalDomainId)
     {
         $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration(
@@ -118,9 +118,9 @@ class LoginController extends AdminBaseController
     }
 
     /**
-     * @Route("/authorization/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/authorization/')]
     public function authorizationAction(Request $request)
     {
         $multidomainLoginToken = $request->get(static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);

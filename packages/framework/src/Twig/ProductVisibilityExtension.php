@@ -31,14 +31,14 @@ class ProductVisibilityExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('isVisibleForDefaultPricingGroup', [$this, 'isVisibleForDefaultPricingGroupOnDomain']),
+            new TwigFunction('isVisibleForDefaultPricingGroup', $this->isVisibleForDefaultPricingGroupOnDomain(...)),
             new TwigFunction(
                 'isVisibleForDefaultPricingGroupOnEachDomain',
-                [$this, 'isVisibleForDefaultPricingGroupOnEachDomain'],
+                $this->isVisibleForDefaultPricingGroupOnEachDomain(...),
             ),
             new TwigFunction(
                 'isVisibleForDefaultPricingGroupOnSomeDomain',
-                [$this, 'isVisibleForDefaultPricingGroupOnSomeDomain'],
+                $this->isVisibleForDefaultPricingGroupOnSomeDomain(...),
             ),
         ];
     }

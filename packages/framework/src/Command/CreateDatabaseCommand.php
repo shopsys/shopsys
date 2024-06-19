@@ -14,7 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:database:create')]
+#[AsCommand(
+    name: 'shopsys:database:create',
+    description: 'Creates database with required db extensions',
+)]
 class CreateDatabaseCommand extends Command
 {
     private ?Connection $connection = null;
@@ -30,12 +33,6 @@ class CreateDatabaseCommand extends Command
         $this->doctrineRegistry = $managerRegistry;
 
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Creates database with required db extensions');
     }
 
     /**

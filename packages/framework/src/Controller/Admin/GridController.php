@@ -24,9 +24,9 @@ class GridController extends AdminBaseController
     }
 
     /**
-     * @Route("/_grid/get-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/_grid/get-form/')]
     public function getFormAction(Request $request)
     {
         $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
@@ -40,9 +40,9 @@ class GridController extends AdminBaseController
     }
 
     /**
-     * @Route("/_grid/save-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/_grid/save-form/')]
     public function saveFormAction(Request $request)
     {
         $responseData = [];
@@ -66,9 +66,9 @@ class GridController extends AdminBaseController
     }
 
     /**
-     * @Route("/_grid/save-ordering/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/_grid/save-ordering/')]
     public function saveOrderingAction(Request $request)
     {
         $this->gridOrderingFacade->saveOrdering(

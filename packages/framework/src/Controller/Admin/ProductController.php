@@ -70,11 +70,11 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $product = $this->productFacade->getById($id);
@@ -117,10 +117,10 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/new/')]
     public function newAction(Request $request): Response
     {
         try {
@@ -160,9 +160,9 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/product/list/')]
     public function listAction(Request $request)
     {
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
@@ -222,11 +222,11 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -248,9 +248,9 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/get-advanced-search-rule-form/", methods={"post"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/product/get-advanced-search-rule-form/', methods: ['post'])]
     public function getRuleFormAction(Request $request)
     {
         $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
@@ -264,9 +264,9 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/create-variant/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/product/create-variant/')]
     public function createVariantAction(Request $request)
     {
         $form = $this->createForm(VariantFormType::class);
@@ -346,9 +346,9 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/visibility/{productId}")
      * @param int $productId
      */
+    #[Route(path: '/product/visibility/{productId}')]
     public function visibilityAction($productId)
     {
         $product = $this->productFacade->getById($productId);

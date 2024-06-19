@@ -23,9 +23,9 @@ class TopCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/top-category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/category/top-category/list/')]
     public function listAction(Request $request)
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

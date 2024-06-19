@@ -29,8 +29,8 @@ class ProductExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('productDisplayName', [$this, 'getProductDisplayName']),
-            new TwigFilter('productListDisplayName', [$this, 'getProductListDisplayName']),
+            new TwigFilter('productDisplayName', $this->getProductDisplayName(...)),
+            new TwigFilter('productListDisplayName', $this->getProductListDisplayName(...)),
         ];
     }
 
@@ -42,19 +42,19 @@ class ProductExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'productMainCategory',
-                [$this, 'getProductMainCategory'],
+                $this->getProductMainCategory(...),
             ),
             new TwigFunction(
                 'findProductMainCategory',
-                [$this, 'findProductMainCategory'],
+                $this->findProductMainCategory(...),
             ),
             new TwigFunction(
                 'getProductSellingPrice',
-                [$this, 'getProductSellingPrice'],
+                $this->getProductSellingPrice(...),
             ),
             new TwigFunction(
                 'getProductParameterValues',
-                [$this, 'getProductParameterValues'],
+                $this->getProductParameterValues(...),
             ),
         ];
     }

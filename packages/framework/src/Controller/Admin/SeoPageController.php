@@ -36,9 +36,9 @@ class SeoPageController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/page/list")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/page/list')]
     public function listAction(): Response
     {
         $grid = $this->seoPageGridFactory->create($this->domain->getId());
@@ -49,10 +49,10 @@ class SeoPageController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/page/new")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/page/new')]
     public function newAction(Request $request): Response
     {
         $seoPageData = $this->seoPageDataFactory->create();
@@ -87,11 +87,11 @@ class SeoPageController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/page/edit/{id}", requirements={"id" = "\d+"})
      * @param int $id
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/page/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(int $id, Request $request): Response
     {
         $seoPage = $this->seoPageFacade->getById($id);
@@ -128,11 +128,11 @@ class SeoPageController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/page/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/page/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -155,10 +155,10 @@ class SeoPageController extends AdminBaseController
     }
 
     /**
-     * @Route("/seo/page/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/seo/page/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction(int $id): Response
     {
         $message = t('Do you really want to remove this SEO page?');

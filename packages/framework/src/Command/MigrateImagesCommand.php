@@ -15,7 +15,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:images:migrate')]
+#[AsCommand(
+    name: 'shopsys:images:migrate',
+    description: 'Remove all the folders with the generated image sizes, move images from the "original" folders one level up',
+)]
 class MigrateImagesCommand extends Command
 {
     protected const DIRECTORY_SEPARATOR_REGEX = '@[\\\\/]{1}@';
@@ -33,15 +36,6 @@ class MigrateImagesCommand extends Command
         protected readonly ImageConfig $imageConfig,
     ) {
         parent::__construct();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Remove all the folders with the generated image sizes, move images from the "original" folders one level up.');
     }
 
     /**

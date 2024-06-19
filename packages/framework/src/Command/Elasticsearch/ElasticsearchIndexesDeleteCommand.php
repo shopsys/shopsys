@@ -8,7 +8,10 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:elasticsearch:indexes-delete')]
+#[AsCommand(
+    name: 'shopsys:elasticsearch:indexes-delete',
+    description: 'Delete indexes from Elasticsearch',
+)]
 class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexCommand
 {
     /**
@@ -17,14 +20,6 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->indexFacade->delete($indexDefinition, $output);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandDescription(): string
-    {
-        return 'Delete indexes from Elasticsearch';
     }
 
     /**

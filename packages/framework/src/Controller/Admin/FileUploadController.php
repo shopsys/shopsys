@@ -25,10 +25,10 @@ class FileUploadController extends AdminBaseController
     }
 
     /**
-     * @Route("/file-upload/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
+    #[Route(path: '/file-upload/')]
     public function uploadAction(Request $request)
     {
         $actionResult = [
@@ -65,10 +65,10 @@ class FileUploadController extends AdminBaseController
     }
 
     /**
-     * @Route("/file-upload/delete-temporary-file/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
+    #[Route(path: '/file-upload/delete-temporary-file/')]
     public function deleteTemporaryFileAction(Request $request)
     {
         $filename = $request->get('filename');

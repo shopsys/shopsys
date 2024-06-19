@@ -51,7 +51,7 @@ class SubRequestListenerTest extends TestCase
         $event = new ResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
             new Response(),
         );
 
@@ -110,7 +110,7 @@ class SubRequestListenerTest extends TestCase
         $event3 = new ResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
             new Response(),
         );
 
@@ -148,7 +148,7 @@ class SubRequestListenerTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             fn () => null,
             $masterRequestMock,
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
         );
 
         $event2 = new ControllerEvent(

@@ -27,7 +27,7 @@ class CKEditorExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('ckeditor_init', [$this, 'ckEditorInit'], ['is_safe' => ['html']]),
+            new TwigFunction('ckeditor_init', $this->ckEditorInit(...), ['is_safe' => ['html']]),
         ];
     }
 

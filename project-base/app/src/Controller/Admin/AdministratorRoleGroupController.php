@@ -36,9 +36,9 @@ class AdministratorRoleGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/groups/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/administrator/groups/list/')]
     public function listAction(): Response
     {
         $queryBuilder = $this->administratorRoleGroupFacade->getAllQueryBuilder();
@@ -61,10 +61,10 @@ class AdministratorRoleGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/groups/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/administrator/groups/new/')]
     public function newAction(Request $request): Response
     {
         $roleGroupData = new AdministratorRoleGroupData();
@@ -104,11 +104,11 @@ class AdministratorRoleGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/groups/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/administrator/groups/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
@@ -156,11 +156,11 @@ class AdministratorRoleGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/groups/copy/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/administrator/groups/copy/{id}', requirements: ['id' => '\d+'])]
     public function copyAction(Request $request, int $id): Response
     {
         try {
@@ -186,11 +186,11 @@ class AdministratorRoleGroupController extends AdminBaseController
     }
 
     /**
-     * @Route("/administrator/groups/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/administrator/groups/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         $namesUsingThisRoleGroup = $this->administratorFacade->findAdministratorNamesWithRoleGroup($id);

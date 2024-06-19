@@ -20,7 +20,7 @@ class ImageConfigDefinition implements ConfigurationInterface
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(static::CONFIG_IMAGES);
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */

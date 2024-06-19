@@ -34,9 +34,9 @@ class TransportController extends AdminBaseController
     }
 
     /**
-     * @Route("/transport/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
+    #[Route(path: '/transport/new/')]
     public function newAction(Request $request)
     {
         $transportData = $this->transportDataFactory->create();
@@ -71,10 +71,10 @@ class TransportController extends AdminBaseController
     }
 
     /**
-     * @Route("/transport/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
+    #[Route(path: '/transport/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, $id)
     {
         $transport = $this->transportFacade->getById($id);
@@ -115,10 +115,10 @@ class TransportController extends AdminBaseController
     }
 
     /**
-     * @Route("/transport/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/transport/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {

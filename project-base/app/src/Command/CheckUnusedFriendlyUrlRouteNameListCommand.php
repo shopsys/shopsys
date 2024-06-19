@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:friendly-urls:check-entity-mapping')]
+#[AsCommand(
+    name: 'shopsys:friendly-urls:check-entity-mapping',
+    description: 'Checks validity of route names mapping to entities',
+)]
 class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
 {
     /**
@@ -25,7 +28,6 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Checks validity of route names mapping to entities');
     }
 
     /**
@@ -33,7 +35,7 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

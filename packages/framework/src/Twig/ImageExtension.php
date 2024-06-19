@@ -46,7 +46,7 @@ class ImageExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('image', [$this, 'getImageHtml'], ['is_safe' => ['html']]),
+            new TwigFunction('image', $this->getImageHtml(...), ['is_safe' => ['html']]),
         ];
     }
 

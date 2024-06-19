@@ -30,8 +30,8 @@ class MailerSettingExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('isMailerSettingUnusual', [$this, 'isMailerSettingUnusual']),
-            new TwigFunction('getMailerSettingInfo', [$this, 'getMailerSettingInfo'], ['is_safe' => ['html']]),
+            new TwigFunction('isMailerSettingUnusual', $this->isMailerSettingUnusual(...)),
+            new TwigFunction('getMailerSettingInfo', $this->getMailerSettingInfo(...), ['is_safe' => ['html']]),
         ];
     }
 

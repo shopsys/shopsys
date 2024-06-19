@@ -16,7 +16,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:translation:replace-source')]
+#[AsCommand(
+    name: 'shopsys:translation:replace-source',
+    description: 'Replace translation sources to translated texts in target locale. To be used after translation:extract.',
+)]
 class TranslationReplaceSourceCommand extends Command
 {
     private const ARG_TRANSLATIONS_DIR = 'translationsDir';
@@ -28,9 +31,6 @@ class TranslationReplaceSourceCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription(
-                'Replace translation sources to translated texts in target locale. To be used after translation:extract.',
-            )
             ->setHelp(
                 'Translation messages from whole project should be extracted first as this tool depends on dumped references.',
             )

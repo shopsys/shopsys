@@ -30,9 +30,9 @@ class CountryController extends AdminBaseController
     }
 
     /**
-     * @Route("/country/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/country/list/')]
     public function listAction(): Response
     {
         $grid = $this->countryGridFactory->create();
@@ -43,11 +43,11 @@ class CountryController extends AdminBaseController
     }
 
     /**
-     * @Route("/country/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/country/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $country = $this->countryFacade->getById($id);
@@ -84,10 +84,10 @@ class CountryController extends AdminBaseController
     }
 
     /**
-     * @Route("/country/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/country/new/')]
     public function newAction(Request $request): Response
     {
         $countryData = $this->countryDataFactory->create();

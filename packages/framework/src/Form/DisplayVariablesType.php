@@ -46,7 +46,7 @@ class DisplayVariablesType extends AbstractType
     /**
      * @return string|null
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

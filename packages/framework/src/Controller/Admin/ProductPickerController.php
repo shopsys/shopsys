@@ -35,12 +35,12 @@ class ProductPickerController extends AdminBaseController
     }
 
     /**
-     * @Route("/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $jsInstanceId
      * @param bool $allowMainVariants
      * @param bool $allowVariants
      */
+    #[Route(path: '/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}')]
     public function pickMultipleAction(
         Request $request,
         $jsInstanceId,
@@ -62,10 +62,10 @@ class ProductPickerController extends AdminBaseController
     }
 
     /**
-     * @Route("/product-picker/pick-single/{parentInstanceId}/", defaults={"parentInstanceId"="__instance_id__"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $parentInstanceId
      */
+    #[Route(path: '/product-picker/pick-single/{parentInstanceId}/', defaults: ['parentInstanceId' => '__instance_id__'])]
     public function pickSingleAction(Request $request, $parentInstanceId)
     {
         return $this->getPickerResponse(

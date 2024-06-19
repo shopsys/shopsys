@@ -11,7 +11,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:migrations:check-mapping')]
+#[AsCommand(
+    name: 'shopsys:migrations:check-mapping',
+    description: 'Check if ORM mapping is valid',
+)]
 class CheckOrmMappingCommand extends Command
 {
     protected const RETURN_CODE_OK = 0;
@@ -23,12 +26,6 @@ class CheckOrmMappingCommand extends Command
     public function __construct(protected readonly EntityManagerInterface $em)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Check if ORM mapping is valid');
     }
 
     /**

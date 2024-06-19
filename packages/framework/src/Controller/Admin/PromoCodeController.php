@@ -42,10 +42,10 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/list")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/promo-code/list')]
     public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
@@ -63,11 +63,11 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/promo-code/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): RedirectResponse
     {
         try {
@@ -89,10 +89,10 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/new")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/promo-code/new')]
     public function newAction(Request $request): Response
     {
         $fillFromPromoCodeId = $request->query->get('fillFromPromoCodeId');
@@ -134,11 +134,11 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/promo-code/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $promoCode = $this->promoCodeFacade->getById($id);
@@ -178,10 +178,10 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/new-mass-generate")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/promo-code/new-mass-generate')]
     public function newMassGenerateAction(Request $request): Response
     {
         $promoCodeData = $this->promoCodeDataFactory->create();
@@ -224,10 +224,10 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/list-mass-generate-batch")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/promo-code/list-mass-generate-batch')]
     public function listMassGenerateBatchAction(Request $request): Response
     {
         $grid = $this->promoCodeMassGeneratedBatchGridFactory->create();
@@ -242,10 +242,10 @@ class PromoCodeController extends AdminBaseController
     }
 
     /**
-     * @Route("/promo-code/download-mass-generate-batch/{batchId}")
      * @param int $batchId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
         $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');

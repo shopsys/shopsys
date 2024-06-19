@@ -11,10 +11,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccessController extends AdminBaseController
 {
     /**
-     * @Route("/access-denied/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/access-denied/')]
     public function deniedAction(Request $request): Response
     {
         $this->addErrorFlash(

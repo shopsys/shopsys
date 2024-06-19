@@ -8,7 +8,10 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:elasticsearch:indexes-migrate')]
+#[AsCommand(
+    name: 'shopsys:elasticsearch:indexes-migrate',
+    description: 'Creates new structure, reindex it from old one, deletes old structure and adds alias to new structure',
+)]
 class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexCommand
 {
     /**
@@ -17,14 +20,6 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
         $this->indexFacade->migrate($indexDefinition, $output);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandDescription(): string
-    {
-        return 'Creates new structure, reindexes it from old one, deletes old structure and adds alias to new structure';
     }
 
     /**

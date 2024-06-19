@@ -38,9 +38,9 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/article/list/", name="admin_blogarticle_list")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/article/list/', name: 'admin_blogarticle_list')]
     public function listAction(): Response
     {
         $domainFilterNamespace = 'blog-article';
@@ -55,11 +55,11 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/article/edit/{id}", requirements={"id" = "\d+"}, name="admin_blogarticle_edit")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/article/edit/{id}', requirements: ['id' => '\d+'], name: 'admin_blogarticle_edit')]
     public function editAction(Request $request, int $id): Response
     {
         $blogArticle = $this->blogArticleFacade->getById($id);
@@ -98,10 +98,10 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/article/new/", name="admin_blogarticle_new")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/article/new/', name: 'admin_blogarticle_new')]
     public function newAction(Request $request): Response
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
@@ -136,11 +136,11 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/article/delete/{id}", requirements={"id" = "\d+"}, name="admin_blogarticle_delete")
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/article/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_blogarticle_delete')]
     public function deleteAction(int $id): Response
     {
         try {
@@ -162,10 +162,10 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/article/delete-confirm/{id}", requirements={"id" = "\d+"}, name="admin_blogarticle_deleteconfirm")
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/blog/article/delete-confirm/{id}', requirements: ['id' => '\d+'], name: 'admin_blogarticle_deleteconfirm')]
     public function deleteConfirmAction(int $id): Response
     {
         $message = t('Do you really want to remove this blog article?');

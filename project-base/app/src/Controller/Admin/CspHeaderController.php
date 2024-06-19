@@ -21,10 +21,10 @@ class CspHeaderController extends AdminBaseController
     }
 
     /**
-     * @Route("superadmin/csp-header-setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: 'superadmin/csp-header-setting/')]
     public function settingAction(Request $request): Response
     {
         $formData = ['cspHeader' => $this->setting->get(Setting::CSP_HEADER)];

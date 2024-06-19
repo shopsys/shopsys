@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:redis:clean-cache')]
+#[AsCommand(
+    name: 'shopsys:redis:clean-cache',
+    description: 'Cleans up redis cache',
+)]
 class RedisCleanCacheCommand extends Command
 {
     /**
@@ -21,12 +24,6 @@ class RedisCleanCacheCommand extends Command
     public function __construct(private readonly RedisFacade $redisFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Cleans up redis cache');
     }
 
     /**

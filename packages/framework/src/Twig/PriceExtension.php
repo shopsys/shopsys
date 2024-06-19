@@ -45,41 +45,41 @@ class PriceExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'price',
-                [$this, 'priceFilter'],
+                $this->priceFilter(...),
             ),
             new TwigFilter(
                 'priceText',
-                [$this, 'priceTextFilter'],
+                $this->priceTextFilter(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceTextWithCurrencyByCurrencyIdAndLocale',
-                [$this, 'priceTextWithCurrencyByCurrencyIdAndLocaleFilter'],
+                $this->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrency',
-                [$this, 'priceWithCurrencyFilter'],
+                $this->priceWithCurrencyFilter(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrencyAdmin',
-                [$this, 'priceWithCurrencyAdminFilter'],
+                $this->priceWithCurrencyAdminFilter(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrencyByDomainId',
-                [$this, 'priceWithCurrencyByDomainIdFilter'],
+                $this->priceWithCurrencyByDomainIdFilter(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrencyByCurrencyId',
-                [$this, 'priceWithCurrencyByCurrencyIdFilter'],
+                $this->priceWithCurrencyByCurrencyIdFilter(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceFromDecimalStringWithCurrencyAdmin',
-                [$this, 'priceFromDecimalStringWithCurrencyAdmin'],
+                $this->priceFromDecimalStringWithCurrencyAdmin(...),
             ),
         ];
     }
@@ -92,22 +92,22 @@ class PriceExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'currencySymbolByDomainId',
-                [$this, 'getCurrencySymbolByDomainId'],
+                $this->getCurrencySymbolByDomainId(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFunction(
                 'currencySymbolDefault',
-                [$this, 'getDefaultCurrencySymbol'],
+                $this->getDefaultCurrencySymbol(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFunction(
                 'currencySymbolByCurrencyId',
-                [$this, 'getCurrencySymbolByCurrencyId'],
+                $this->getCurrencySymbolByCurrencyId(...),
                 ['is_safe' => ['html']],
             ),
             new TwigFunction(
                 'currencyCode',
-                [$this, 'getCurrencyCodeByDomainId'],
+                $this->getCurrencyCodeByDomainId(...),
             ),
         ];
     }

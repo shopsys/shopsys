@@ -57,7 +57,7 @@ class DomainRouter extends ChainRouter
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         if ($this->freeze) {
             $message = 'Set context is not supported in chain DomainRouter';

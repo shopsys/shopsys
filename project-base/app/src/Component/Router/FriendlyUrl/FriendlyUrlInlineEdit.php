@@ -85,7 +85,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     /**
      * @param mixed $formData
      */
-    protected function createEntityAndGetId($formData)
+    protected function createEntityAndGetId($formData): never
     {
         throw new LogicException('Creating a new unused friendly URL is not supported.');
     }

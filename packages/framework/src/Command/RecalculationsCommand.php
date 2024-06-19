@@ -12,7 +12,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:recalculations')]
+#[AsCommand(
+    name: 'shopsys:recalculations',
+    description: 'Run all recalculations',
+)]
 class RecalculationsCommand extends Command
 {
     /**
@@ -26,12 +29,6 @@ class RecalculationsCommand extends Command
         private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Run all recalculations.');
     }
 
     /**

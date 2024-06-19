@@ -35,10 +35,10 @@ class FeedController extends AdminBaseController
     }
 
     /**
-     * @Route("/feed/generate/{feedName}/{domainId}", requirements={"domainId" = "\d+"})
      * @param string $feedName
      * @param int $domainId
      */
+    #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
     public function generateAction($feedName, $domainId)
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
@@ -65,11 +65,11 @@ class FeedController extends AdminBaseController
     }
 
     /**
-     * @Route("/feed/schedule/{feedName}/{domainId}", requirements={"domainId" = "\d+"})
      * @param string $feedName
      * @param int $domainId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
+    #[Route(path: '/feed/schedule/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
     public function scheduleAction(string $feedName, int $domainId): RedirectResponse
     {
         try {
@@ -95,9 +95,7 @@ class FeedController extends AdminBaseController
         return $this->redirectToRoute('admin_feed_list');
     }
 
-    /**
-     * @Route("/feed/list/")
-     */
+    #[Route(path: '/feed/list/')]
     public function listAction()
     {
         $feedsData = [];

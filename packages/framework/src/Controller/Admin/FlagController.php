@@ -22,9 +22,7 @@ class FlagController extends AdminBaseController
     ) {
     }
 
-    /**
-     * @Route("/product/flag/list/")
-     */
+    #[Route(path: '/product/flag/list/')]
     public function listAction()
     {
         $productInlineEdit = $this->flagInlineEdit;
@@ -37,10 +35,10 @@ class FlagController extends AdminBaseController
     }
 
     /**
-     * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      */
+    #[Route(path: '/product/flag/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
         try {

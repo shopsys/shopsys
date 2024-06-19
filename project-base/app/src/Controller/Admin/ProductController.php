@@ -24,10 +24,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends BaseProductController
 {
     /**
-     * @Route("/product/edit/catnum-exists")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/product/edit/catnum-exists')]
     public function catnumExistsAction(Request $request): Response
     {
         $catnum = $request->get('catnum');
@@ -45,10 +45,10 @@ class ProductController extends BaseProductController
     /**
      * This route is used by GrapesJS to load Names of products
      *
-     * @Route("/product/names-by-catnums", methods={"post"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
+    #[Route(path: '/product/names-by-catnums', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
     public function productNamesByCatnumsAction(Request $request): JsonResponse
     {
         $catnums = $request->get('catnums');

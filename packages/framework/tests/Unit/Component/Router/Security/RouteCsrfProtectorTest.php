@@ -44,7 +44,7 @@ class RouteCsrfProtectorTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new ControllerNotProtected(),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
         );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
@@ -81,7 +81,7 @@ class RouteCsrfProtectorTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new ControllerProtected(),
             $request,
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
         );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
@@ -98,7 +98,7 @@ class RouteCsrfProtectorTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new ControllerProtected(),
             $request,
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
         );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
@@ -134,7 +134,7 @@ class RouteCsrfProtectorTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new ControllerProtected(),
             $request,
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
         );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);

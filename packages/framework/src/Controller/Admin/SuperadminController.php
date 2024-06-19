@@ -47,19 +47,19 @@ class SuperadminController extends AdminBaseController
     }
 
     /**
-     * @Route("/superadmin/errors/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/errors/')]
     public function errorsAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
     }
 
     /**
-     * @Route("/superadmin/pricing/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/pricing/')]
     public function pricingAction(Request $request)
     {
         $pricingSettingData = [
@@ -85,19 +85,19 @@ class SuperadminController extends AdminBaseController
     }
 
     /**
-     * @Route("/superadmin/urls/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/urls/')]
     public function urlsAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
     }
 
     /**
-     * @Route("/superadmin/modules/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/modules/')]
     public function modulesAction(Request $request)
     {
         $formData = [];
@@ -127,19 +127,19 @@ class SuperadminController extends AdminBaseController
     }
 
     /**
-     * @Route("/superadmin/css-documentation/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/css-documentation/')]
     public function cssDocumentationAction()
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
     }
 
     /**
-     * @Route("/superadmin/mail-whitelist")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/superadmin/mail-whitelist')]
     public function mailWhitelistAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();

@@ -10,7 +10,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'shopsys:generate:friendly-url')]
+#[AsCommand(
+    name: 'shopsys:generate:friendly-url',
+    description: 'Generate friendly urls for supported entities',
+)]
 class GenerateFriendlyUrlCommand extends Command
 {
     /**
@@ -19,12 +22,6 @@ class GenerateFriendlyUrlCommand extends Command
     public function __construct(private readonly FriendlyUrlGeneratorFacade $friendlyUrlGeneratorFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Generate friendly urls for supported entities.');
     }
 
     /**

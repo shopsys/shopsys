@@ -18,15 +18,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-#[AsCommand(name: 'debug:router')]
+#[AsCommand(
+    name: 'debug:router',
+    description: 'Display current routes for an application',
+)]
 class RouterDebugCommandForDomain extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultDescription = 'Display current routes for an application';
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
      * @param \Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand $routerDebugCommand
@@ -52,7 +49,6 @@ class RouterDebugCommandForDomain extends Command
                 new InputOption('format', null, InputOption::VALUE_REQUIRED, 'The output format (txt, xml, json, or md)', 'txt'),
                 new InputOption('raw', null, InputOption::VALUE_NONE, 'To output raw route(s)'),
             ])
-            ->setDescription(self::$defaultDescription)
             ->setHelp(
                 <<<'EOF'
 The <info>%command.name%</info> displays the configured routes:

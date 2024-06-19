@@ -12,7 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'shopsys:redis:check-availability')]
+#[AsCommand(
+    name: 'shopsys:redis:check-availability',
+    description: 'Checks availability of Redis',
+)]
 class CheckRedisCommand extends Command
 {
     /**
@@ -21,11 +24,6 @@ class CheckRedisCommand extends Command
     public function __construct(protected readonly RedisFacade $redisFacade)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this->setDescription('Checks availability of Redis');
     }
 
     /**

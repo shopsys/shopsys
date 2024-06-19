@@ -35,10 +35,10 @@ class DomainExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getDomain', [$this, 'getDomain']),
-            new TwigFunction('getDomainName', [$this, 'getDomainNameById']),
-            new TwigFunction('domainIcon', [$this, 'getDomainIconHtml'], ['is_safe' => ['html']]),
-            new TwigFunction('isMultidomain', [$this, 'isMultidomain']),
+            new TwigFunction('getDomain', $this->getDomain(...)),
+            new TwigFunction('getDomainName', $this->getDomainNameById(...)),
+            new TwigFunction('domainIcon', $this->getDomainIconHtml(...), ['is_safe' => ['html']]),
+            new TwigFunction('isMultidomain', $this->isMultidomain(...)),
         ];
     }
 

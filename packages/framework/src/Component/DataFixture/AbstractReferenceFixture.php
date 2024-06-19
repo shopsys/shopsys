@@ -8,15 +8,16 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\DBAL\Driver\Middleware as MiddlewareInterface;
 use Doctrine\DBAL\Logging\Middleware as LoggingMiddleware;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractReferenceFixture implements FixtureInterface
 {
     protected PersistentReferenceFacade $persistentReferenceFacade;
 
     /**
-     * @required
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
+    #[Required]
     public function removeLoggingMiddlewareFromEntityManager(EntityManagerInterface $entityManager): void
     {
         $middlewaresWithoutLoggingMiddleware = array_values(array_filter(
@@ -28,9 +29,9 @@ abstract class AbstractReferenceFixture implements FixtureInterface
     }
 
     /**
-     * @required
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      */
+    #[Required]
     public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade)
     {
         $this->persistentReferenceFacade = $persistentReferenceFacade;

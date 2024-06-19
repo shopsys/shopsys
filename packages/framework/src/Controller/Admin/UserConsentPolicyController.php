@@ -24,10 +24,10 @@ class UserConsentPolicyController extends AdminBaseController
     }
 
     /**
-     * @Route("/user-consent-policy/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/user-consent-policy/setting/')]
     public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();

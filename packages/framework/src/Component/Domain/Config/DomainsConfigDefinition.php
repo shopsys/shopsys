@@ -20,7 +20,7 @@ class DomainsConfigDefinition implements ConfigurationInterface
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(self::CONFIG_DOMAINS);
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */

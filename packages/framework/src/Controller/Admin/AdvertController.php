@@ -49,11 +49,11 @@ class AdvertController extends AdminBaseController
     }
 
     /**
-     * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/advert/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $advert = $this->advertFacade->getById($id);
@@ -97,9 +97,9 @@ class AdvertController extends AdminBaseController
     }
 
     /**
-     * @Route("/advert/list/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/advert/list/')]
     public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
@@ -145,10 +145,10 @@ class AdvertController extends AdminBaseController
     }
 
     /**
-     * @Route("/advert/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/advert/new/')]
     public function newAction(Request $request): Response
     {
         $advertData = $this->advertDataFactory->create();
@@ -187,11 +187,11 @@ class AdvertController extends AdminBaseController
     }
 
     /**
-     * @Route("/advert/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/advert/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
