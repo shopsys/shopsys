@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Advert;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
-use App\Model\Advert\AdvertDataFactory;
 use App\Model\Category\Category;
 use League\Flysystem\MountManager;
 use Ramsey\Uuid\Uuid;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 

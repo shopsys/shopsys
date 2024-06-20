@@ -60,6 +60,17 @@ class ReadyCategorySeoMixRepository implements ResetInterface
     }
 
     /**
+     * @param string $uuid
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix|null
+     */
+    public function findByUuid(string $uuid): ?ReadyCategorySeoMix
+    {
+        return $this->getRepository()->findOneBy([
+            'uuid' => $uuid,
+        ]);
+    }
+
+    /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix[]
      */
