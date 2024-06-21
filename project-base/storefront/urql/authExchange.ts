@@ -14,6 +14,7 @@ const isRefreshTokenMutation = (operation: Operation) => {
             if ('name' in def) {
                 return def.name?.value === 'RefreshTokens';
             }
+
             return false;
         })
     );
@@ -66,6 +67,10 @@ const doTryRefreshToken = async (
     if (!refreshTokenData?.RefreshTokens) {
         removeTokensFromCookies(context);
 
+        if (typeof window !== 'undefined') {
+            window.location.reload();
+        }
+
         return;
     }
 
@@ -83,6 +88,10 @@ const refreshAuth = async (
     const { refreshToken } = getTokensFromCookies(context);
     try {
         if (!refreshToken) {
+            if (typeof window !== 'undefined') {
+                window.location.reload();
+            }
+
             return;
         }
 
