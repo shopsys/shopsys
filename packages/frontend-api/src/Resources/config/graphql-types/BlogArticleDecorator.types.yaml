@@ -44,6 +44,9 @@ BlogArticleDecorator:
             blogCategories:
                 type: "[BlogCategory!]!"
                 description: "The list of the blog article blog categories"
+            mainBlogCategoryUuid:
+                type: "Uuid!"
+                description: "The UUID of the main blog category of the blog article"
             link:
                 type: "String!"
                 description: "The blog article absolute URL"

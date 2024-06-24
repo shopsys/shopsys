@@ -43,6 +43,9 @@ class BlogArticleResolverMap extends ResolverMap
                 'hreflangLinks' => function (array $blogArticleData) {
                     return $blogArticleData['hreflangLinks'];
                 },
+                'mainBlogCategoryUuid' => function (array $blogArticleData) {
+                    return $blogArticleData['mainBlogCategoryUuid'];
+                },
             ],
         ];
     }
