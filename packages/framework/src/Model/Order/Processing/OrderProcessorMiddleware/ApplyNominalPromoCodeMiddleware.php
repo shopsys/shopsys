@@ -62,10 +62,13 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         PromoCodeLimit $promoCodeLimit,
         OrderProcessingData $orderProcessingData,
     ): void {
+        $totalApplicableProductsPriceAmountWithVat = $this->calculateTotalApplicableProductsPriceAmountWithVat($orderData, $validProductIds);
+
         $discountOrderItemData = $this->createDiscountOrderItemData(
             $appliedPromoCode,
             $promoCodeLimit,
             $orderProcessingData->getDomainConfig(),
+            $totalApplicableProductsPriceAmountWithVat,
         );
 
         if ($discountOrderItemData === null) {
@@ -80,20 +83,28 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalApplicableProductsPriceAmountWithVat
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
      */
     protected function createDiscountOrderItemData(
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
         DomainConfig $domainConfig,
+        Money $totalApplicableProductsPriceAmountWithVat,
     ): ?OrderItemData {
         $locale = $domainConfig->getLocale();
         $domainId = $domainConfig->getId();
 
         $defaultVat = $this->vatFacade->getDefaultVatForDomain($domainId);
 
+        $discountValue = Money::create($promoCodeLimit->getDiscount());
+
+        if ($discountValue->isGreaterThan($totalApplicableProductsPriceAmountWithVat)) {
+            $discountValue = $totalApplicableProductsPriceAmountWithVat;
+        }
+
         $discountPrice = $this->discountCalculation->calculateNominalDiscount(
-            Money::create($promoCodeLimit->getDiscount()),
+            $discountValue,
             (float)$defaultVat->getPercent(),
         );
 
@@ -115,5 +126,25 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $discountOrderItemData->promoCode = $promoCode;
 
         return $discountOrderItemData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param int[] $validProductIds
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    protected function calculateTotalApplicableProductsPriceAmountWithVat(
+        OrderData $orderData,
+        array $validProductIds,
+    ): Money {
+        $totalPriceAmountWithVat = Money::zero();
+
+        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $item) {
+            if (in_array($item->product?->getId(), $validProductIds, true)) {
+                $totalPriceAmountWithVat = $totalPriceAmountWithVat->add($item->getTotalPrice()->getPriceWithVat());
+            }
+        }
+
+        return $totalPriceAmountWithVat;
     }
 }
