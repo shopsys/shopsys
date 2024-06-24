@@ -16,6 +16,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory;
 use Shopsys\LuigisBoxBundle\Model\Brand\BrandRepository;
 use Shopsys\LuigisBoxBundle\Model\Flag\FlagRepository;
+use Shopsys\LuigisBoxBundle\Model\Product\Filter\Exception\ValueIsNotSliderFormatException;
 use Shopsys\LuigisBoxBundle\Model\Product\Parameter\Value\ParameterValueRepository;
 
 class LuigisBoxFacetsToProductFilterOptionsMapper
@@ -170,22 +171,9 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
      */
     protected function mapPriceRange(array $facetData): PriceRange
     {
-        $minPrice = 0;
-        $maxPrice = 0;
+        $sliderValues = $this->getMinimalAndMaximalValueForSlider($facetData);
 
-        foreach ($facetData['values'] as $facetValue) {
-            [$minValue, $maxValue] = explode('|', $facetValue['value']);
-
-            if ($minValue < $minPrice || $minPrice === 0) {
-                $minPrice = $minValue;
-            }
-
-            if ($maxValue > $maxPrice) {
-                $maxPrice = $maxValue;
-            }
-        }
-
-        return new PriceRange(Money::create($minPrice), Money::create($maxPrice));
+        return new PriceRange(Money::create($sliderValues['minimalValue']), Money::create($sliderValues['maximalValue']));
     }
 
     /**
@@ -204,7 +192,26 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
             return null;
         }
 
-        $parameterValues = $this->parameterValueRepository->getExistingParameterValuesByValuesAndLocale(array_keys($parameterValueCountsByValue), $this->domain->getLocale());
+        $isSlider = $parameter->isSlider();
+        $parameterValues = [];
+        $parameterValueCountsByValue = [];
+
+        if ($isSlider) {
+            try {
+                $sliderValues = $this->getMinimalAndMaximalValueForSlider($facetData);
+                $parameterValues = $this->parameterValueRepository->getSliderParameterValuesBetweenMinAndMaxByLocale($parameter, $sliderValues['minimalValue'], $sliderValues['maximalValue'], $this->domain->getLocale());
+
+                $parameterValueCountsByValue = $this->mapValuesToApproximateCountsForSlider($parameterValues, $facetData['values']);
+            } catch (ValueIsNotSliderFormatException) {
+                $isSlider = false;
+            }
+        }
+
+        if (!$isSlider) {
+            $parameterValueCountsByValue = $this->mapValuesToCountsByName($facetData['values']);
+
+            $parameterValues = $this->parameterValueRepository->getExistingParameterValuesByValuesAndLocale(array_keys($parameterValueCountsByValue), $this->domain->getLocale());
+        }
 
         if (count($parameterValues) === 0) {
             return null;
@@ -215,5 +222,72 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         }
 
         return new ParameterFilterChoice($parameter, $parameterValues);
+    }
+
+    /**
+     * @param array $facetData
+     * @return array{minimalValue: string, maximalValue: string}
+     */
+    protected function getMinimalAndMaximalValueForSlider(array $facetData): array
+    {
+        $minimalValue = 0;
+        $maximalValue = 0;
+
+        foreach ($facetData['values'] as $facetValue) {
+            $values = explode('|', $facetValue['value']);
+
+            if (count($values) < 2) {
+                throw new ValueIsNotSliderFormatException();
+            }
+
+            [$minValue, $maxValue] = $values;
+
+            if ($minValue < $minimalValue || $minimalValue === 0) {
+                $minimalValue = $minValue;
+            }
+
+            if ($maxValue > $maximalValue) {
+                $maximalValue = $maxValue;
+            }
+        }
+
+        return ['minimalValue' => (string)$minimalValue, 'maximalValue' => (string)$maximalValue];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @param array<string, mixed> $facetValues
+     * @return array
+     */
+    protected function mapValuesToApproximateCountsForSlider(array $parameterValues, array $facetValues): array
+    {
+        $valuesToCountsByName = [];
+
+        foreach ($parameterValues as $parameterValue) {
+            $closestHitsCount = 0;
+            $smallestDiff = PHP_INT_MAX;
+            $currentValue = (float)$parameterValue->getText();
+
+            foreach ($facetValues as $facetValue) {
+                $splitValues = explode('|', $facetValue['value']);
+                $from = (float)$splitValues[0];
+                $to = (float)$splitValues[1];
+
+                $fromDiff = abs($from - $currentValue);
+                $toDiff = abs($to - $currentValue);
+                $currentDiff = min($fromDiff, $toDiff);
+
+                if ($currentDiff >= $smallestDiff) {
+                    continue;
+                }
+
+                $smallestDiff = $currentDiff;
+                $closestHitsCount = $facetValue['hits_count'];
+            }
+
+            $valuesToCountsByName[$parameterValue->getText()] = $closestHitsCount;
+        }
+
+        return $valuesToCountsByName;
     }
 }

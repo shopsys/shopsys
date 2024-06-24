@@ -6,6 +6,7 @@ namespace Shopsys\LuigisBoxBundle\Model\Product\Parameter\Value;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class ParameterValueRepository
@@ -32,6 +33,35 @@ class ParameterValueRepository
             ->andWhere('pv.locale = :locale')
             ->setParameters([
                 'parameterValues' => $parameterValues,
+                'locale' => $locale,
+            ])
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale))->getQuery()->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param string $min
+     * @param string $max
+     * @param string $locale
+     * @return array
+     */
+    public function getSliderParameterValuesBetweenMinAndMaxByLocale(
+        Parameter $parameter,
+        string $min,
+        string $max,
+        string $locale,
+    ): array {
+        return $this->em->createQueryBuilder()
+            ->select('pv')
+            ->from(ParameterValue::class, 'pv')
+            ->where('pv.text >= :min')
+            ->andWhere('pv.text <= :max')
+            ->andWhere('pv.locale = :locale')
+            ->andWhere('pv.parameter = :parameter')
+            ->setParameters([
+                'parameter' => $parameter,
+                'min' => $min,
+                'max' => $max,
                 'locale' => $locale,
             ])
             ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale))->getQuery()->getResult();
