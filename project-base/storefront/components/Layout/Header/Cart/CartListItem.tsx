@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
+import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -17,7 +18,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
 
     return (
         <li key={uuid} className="flex w-full items-center gap-x-3 border-b border-graySlate py-3">
-            <div className="flex w-11 items-center justify-center">
+            <div className="flex w-11 items-center justify-center" tid={TIDs.header_cart_list_item_image}>
                 <Image
                     alt={product.mainImage?.name || product.fullName}
                     className="max-h-11 w-auto"

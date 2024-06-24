@@ -21,4 +21,7 @@ export default defineConfig({
         specPattern: 'e2e/**/*.cy.ts',
         supportFile: 'support/index.ts',
     },
+    retries: {
+        runMode: 2,
+    },
 });

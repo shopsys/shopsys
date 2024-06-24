@@ -16,12 +16,20 @@ describe('Cart in header tests', () => {
     it('should remove products from cart using cart in header and then display empty cart message', function () {
         openHeaderCartByHovering();
         removeFirstProductFromHeaderCart();
-        openHeaderCartByHovering();
-        takeSnapshotAndCompare(this.test?.title, 'after first remove', {
-            capture: 'viewport',
-            wait: 2000,
-            blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }, { tid: TIDs.simple_navigation_image }],
-        });
+        takeSnapshotAndCompare(
+            this.test?.title,
+            'after first remove',
+            {
+                capture: 'viewport',
+                wait: 0,
+                blackout: [
+                    { tid: TIDs.banners_slider, zIndex: 5999 },
+                    { tid: TIDs.simple_navigation_image },
+                    { tid: TIDs.header_cart_list_item_image, shouldNotOffset: true },
+                ],
+            },
+            openHeaderCartByHovering,
+        );
 
         openHeaderCartByHovering();
         removeFirstProductFromHeaderCart();
