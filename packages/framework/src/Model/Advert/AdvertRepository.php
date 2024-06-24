@@ -64,6 +64,13 @@ class AdvertRepository
                 ->setParameter('category', $category);
         }
 
+        if ($positionName === AdvertPositionRegistry::POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST) {
+            $queryBuilder
+                ->join('a.categories', 'c')
+                ->andWhere('c = :category')
+                ->setParameter('category', $category);
+        }
+
         return $queryBuilder;
     }
 
