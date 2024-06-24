@@ -75,6 +75,8 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         </strong>
                                                         {deliveryAddress.companyName}
                                                         <br />
+                                                        {deliveryAddress.telephone}
+                                                        <br />
                                                         {deliveryAddress.street}, {deliveryAddress.city},{' '}
                                                         {deliveryAddress.postcode}, {deliveryAddress.country}
                                                     </p>
