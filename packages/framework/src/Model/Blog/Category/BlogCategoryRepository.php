@@ -11,6 +11,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
@@ -19,9 +20,12 @@ class BlogCategoryRepository extends NestedTreeRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(protected EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly Domain $domain,
+    ) {
         $classMetadata = $this->em->getClassMetadata(BlogCategory::class);
 
         parent::__construct($this->em, $classMetadata);
@@ -214,6 +218,9 @@ class BlogCategoryRepository extends NestedTreeRepository
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->andWhere('bc.parent = :blogCategory')
             ->setParameter('blogCategory', $blogCategory);
+
+        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        $this->addTranslation($queryBuilder, $locale);
 
         return $queryBuilder->getQuery()->execute();
     }
