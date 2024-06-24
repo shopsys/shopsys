@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFacade
  * @method \App\Model\Order\Order createOrderOnly(\App\Model\Order\OrderData $orderData)
  * @method \App\Model\Order\Item\OrderItem enhanceSpecificOrderItem(\App\Model\Order\Item\OrderItem $orderItem, \App\Model\Order\Item\OrderItemData $orderItemData)
  * @method \App\Model\Order\Item\OrderItem createSpecificOrderItem(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order)
+ * @method string generateCacheKey(\App\Model\Order\Item\OrderItemData $orderItemData)
  */
 class PlaceOrderFacade extends BasePlaceOrderFacade
 {

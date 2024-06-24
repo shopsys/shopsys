@@ -77,6 +77,12 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $orderData->addItem($discountOrderItemData);
         $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
+
+        foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $productItem) {
+            if (in_array($productItem->product->getId(), $validProductIds, true)) {
+                $productItem->relatedOrderItemsData[] = $discountOrderItemData;
+            }
+        }
     }
 
     /**

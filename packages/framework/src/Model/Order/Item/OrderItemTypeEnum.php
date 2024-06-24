@@ -16,9 +16,9 @@ class OrderItemTypeEnum extends AbstractEnum
 
     protected const array SORTED_TYPES = [
         self::TYPE_PRODUCT,
+        self::TYPE_DISCOUNT,
         self::TYPE_PAYMENT,
         self::TYPE_TRANSPORT,
-        self::TYPE_DISCOUNT,
         self::TYPE_ROUNDING,
     ];
 

@@ -77,6 +77,8 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
                 continue;
             }
 
+            $productItem->relatedOrderItemsData[] = $discountOrderItemData;
+
             $orderData->addItem($discountOrderItemData);
             $orderData->addTotalPrice($discountOrderItemData->getTotalPrice(), OrderItemTypeEnum::TYPE_DISCOUNT);
         }

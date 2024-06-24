@@ -118,6 +118,14 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                 'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             1 => [
+                'name' => $this->getExpectedPromoCodeItemName($firstDomainLocale),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('-289.26', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('-289.26', $vatHigh),
+                'quantity' => 1,
+                'vatRate' => $vatHigh->getPercent(),
+                'unit' => null,
+            ],
+            2 => [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
@@ -125,18 +133,10 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                 'vatRate' => $vatZero->getPercent(),
                 'unit' => null,
             ],
-            2 => [
+            3 => [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
-                'quantity' => 1,
-                'vatRate' => $vatHigh->getPercent(),
-                'unit' => null,
-            ],
-            3 => [
-                'name' => $this->getExpectedPromoCodeItemName($firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('-289.26', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('-289.26', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,

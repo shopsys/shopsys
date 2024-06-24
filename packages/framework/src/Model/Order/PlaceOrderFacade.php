@@ -117,13 +117,45 @@ class PlaceOrderFacade
      */
     protected function fillOrderItems(Order $order, OrderData $orderData): void
     {
+        $alreadyCreatedOrderItems = [];
+
         foreach ($this->orderItemTypeEnum->getAllCasesSortedByPriority() as $orderItemType) {
             foreach ($orderData->getItemsByType($orderItemType) as $orderItemData) {
+                if (array_key_exists($this->generateCacheKey($orderItemData), $alreadyCreatedOrderItems)) {
+                    continue;
+                }
+
                 $orderItem = $this->createSpecificOrderItem($orderItemData, $order);
+                $alreadyCreatedOrderItems[$this->generateCacheKey($orderItemData)] = $orderItem;
 
                 $this->em->persist($orderItem);
+
+                foreach ($orderItemData->relatedOrderItemsData as $relatedOrderItemData) {
+                    if (array_key_exists($this->generateCacheKey($relatedOrderItemData), $alreadyCreatedOrderItems)) {
+                        $relatedOrderItem = $alreadyCreatedOrderItems[$this->generateCacheKey($relatedOrderItemData)];
+                        $orderItem->addRelatedItem($relatedOrderItem);
+
+                        continue;
+                    }
+
+                    $relatedOrderItem = $this->createSpecificOrderItem($relatedOrderItemData, $order);
+                    $alreadyCreatedOrderItems[$this->generateCacheKey($relatedOrderItemData)] = $relatedOrderItem;
+
+                    $this->em->persist($relatedOrderItem);
+
+                    $orderItem->addRelatedItem($relatedOrderItem);
+                }
             }
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @return string
+     */
+    protected function generateCacheKey(OrderItemData $orderItemData): string
+    {
+        return spl_object_hash($orderItemData);
     }
 
     /**

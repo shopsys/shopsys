@@ -88,6 +88,11 @@ class OrderItemData
     public $type;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
+     */
+    public $relatedOrderItemsData = [];
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
      */
     public function setUnitPrice(Price $unitPrice): void

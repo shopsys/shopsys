@@ -485,4 +485,12 @@ class OrderItem
     {
         return $this->type;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $relatedItem
+     */
+    public function addRelatedItem(self $relatedItem): void
+    {
+        $this->relatedItems->add($relatedItem);
+    }
 }
