@@ -197,6 +197,21 @@ and corresponding methods can look like this
     Replacements (real values) for the variables are, most of the time, some user-entered values.<br>
     It's crucial to escape these values properly!
 
+## How to add custom variables to an existing mail template
+
+You can append them by calling parent method like this
+
+```php
+/**
+ * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+ */
+protected function createOrderStatusMailTemplateVariables(): MailTemplateVariables
+{
+    return parent::createOrderStatusMailTemplateVariables()
+        ->addVariable(OrderMail::VARIABLE_TRACKING_INSTRUCTIONS, t('Tracking instructions'), MailTemplateVariables::CONTEXT_BODY);
+}
+```
+
 ## Sending email
 
 Now, when the template is stored in the database, and we are properly replacing variables, we are ready to send this email when the user enters a new password after the reset password process.
