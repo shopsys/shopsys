@@ -206,6 +206,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   images(type: String = null): [Image!]!
   "The blog article absolute URL"
   link: String!
+  "The UUID of the main blog category of the blog article"
+  mainBlogCategoryUuid: Uuid!
   "Blog article image by params"
   mainImage(type: String = null): Image
   "The blog article title"

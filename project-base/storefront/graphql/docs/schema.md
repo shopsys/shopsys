@@ -2189,6 +2189,15 @@ The blog article absolute URL
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainBlogCategoryUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The UUID of the main blog category of the blog article
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
