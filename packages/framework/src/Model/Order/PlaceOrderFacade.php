@@ -97,7 +97,6 @@ class PlaceOrderFacade
             $orderData,
             $orderNumber,
             $orderUrlHash,
-            $orderData->customerUser,
         );
 
         $this->em->persist($order);

@@ -6,9 +6,7 @@ namespace App\Model\Order;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
-use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 
 /**
  * @ORM\Table(name="orders")
@@ -43,22 +41,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method editData(\App\Model\Order\OrderData $orderData)
  * @method setCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method \App\Model\Order\Item\OrderItem[] getItemsSortedWithRelatedItems()
+ * @method __construct(\App\Model\Order\OrderData $orderData, string|null $orderNumber = null, string|null $urlHash = null)
  */
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order extends BaseOrder
 {
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param string|null $orderNumber
-     * @param string|null $urlHash
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     */
-    public function __construct(
-        BaseOrderData $orderData,
-        ?string $orderNumber = null,
-        ?string $urlHash = null,
-        ?CustomerUser $customerUser = null,
-    ) {
-        parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
-    }
 }

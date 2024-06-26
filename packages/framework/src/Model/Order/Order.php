@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -360,13 +359,11 @@ class Order
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string|null $orderNumber
      * @param string|null $urlHash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function __construct(
         OrderData $orderData,
         ?string $orderNumber = null,
         ?string $urlHash = null,
-        ?CustomerUser $customerUser = null,
     ) {
         $this->fillCommonFields($orderData);
 
@@ -377,7 +374,7 @@ class Order
 
         $this->number = $orderNumber;
 
-        $this->customerUser = $customerUser;
+        $this->customerUser = $orderData->customerUser;
         $this->deleted = false;
 
         $this->createdAt = $orderData->createdAt;

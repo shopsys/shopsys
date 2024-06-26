@@ -24,7 +24,7 @@ class OrderTest extends TestCase
         $orderData = TestOrderProvider::getTestOrderData();
         $paymentPrice = Price::zero();
 
-        $order = new Order($orderData, 'orderNumber', 'urlHash', null);
+        $order = new Order($orderData, 'orderNumber', 'urlHash');
         $orderProduct = new OrderItem(
             $order,
             'productName',
@@ -61,7 +61,7 @@ class OrderTest extends TestCase
         $paymentItemPrice = Price::zero();
         $orderData = TestOrderProvider::getTestOrderData();
 
-        $order = new Order($orderData, 'orderNumber', 'urlHash', null);
+        $order = new Order($orderData, 'orderNumber', 'urlHash');
         $productItem = new OrderItem(
             $order,
             'productName',
@@ -106,7 +106,7 @@ class OrderTest extends TestCase
         $orderData->country = $country;
         $orderData->deliveryAddressSameAsBillingAddress = true;
 
-        $order = new Order($orderData, 'orderNumber', 'urlHash', null);
+        $order = new Order($orderData, 'orderNumber', 'urlHash');
 
         $this->assertSame('companyName', $order->getDeliveryCompanyName());
         $this->assertSame('telephone', $order->getDeliveryTelephone());
@@ -121,7 +121,7 @@ class OrderTest extends TestCase
     public function testOrderWithoutDeliveryAddressSameAsBillingAddress()
     {
         $orderData = TestOrderProvider::getTestOrderData();
-        $order = new Order($orderData, 'orderNumber', 'urlHash', null);
+        $order = new Order($orderData, 'orderNumber', 'urlHash');
 
         $this->assertSame('deliveryCompanyName', $order->getDeliveryCompanyName());
         $this->assertSame('deliveryTelephone', $order->getDeliveryTelephone());
@@ -136,11 +136,10 @@ class OrderTest extends TestCase
     public function testOrderCanBeCreatedWithSpecificCreatedAt()
     {
         $orderData = TestOrderProvider::getTestOrderData();
-        $customerUser = null;
 
         $createAt = new DateTime('2000-01-01 01:00:00');
         $orderData->createdAt = $createAt;
-        $order = new Order($orderData, 'orderNumber', 'urlHash', $customerUser);
+        $order = new Order($orderData, 'orderNumber', 'urlHash');
 
         $this->assertEquals($createAt, $order->getCreatedAt());
     }
