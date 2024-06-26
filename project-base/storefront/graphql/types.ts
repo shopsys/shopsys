@@ -2613,7 +2613,7 @@ export type TypeSliderItem = {
   /** Target link */
   link: Scalars['String']['output'];
   /** Slider item image by params */
-  mainImage: Maybe<TypeImage>;
+  mainImage: TypeImage;
   /** Slider name */
   name: Scalars['String']['output'];
   /** UUID */

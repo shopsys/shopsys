@@ -32,7 +32,7 @@ SliderItem:
                         type: "String"
                         defaultValue: null
             mainImage:
-                type: "Image"
+                type: "Image!"
                 description: "Slider item image by params"
                 resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
                 args:

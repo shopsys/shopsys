@@ -1992,7 +1992,7 @@ type SliderItem {
   "Target link"
   link: String!
   "Slider item image by params"
-  mainImage(type: String = null): Image
+  mainImage(type: String = null): Image!
   "Slider name"
   name: String!
   "UUID"

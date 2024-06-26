@@ -38,7 +38,6 @@
         "graphql-tag": "~2.12.6",
         "js-base64": "~3.7.6",
         "jwt-decode": "~4.0.0",
-        "keen-slider": "~5.5.1",
         "lz-string": "~1.5.0",
         "next": "~14.1.4",
         "next-translate": "~2.6.2",

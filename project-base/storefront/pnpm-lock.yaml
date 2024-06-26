@@ -53,9 +53,6 @@ importers:
       jwt-decode:
         specifier: ~4.0.0
         version: 4.0.0
-      keen-slider:
-        specifier: ~5.5.1
-        version: 5.5.1
       lz-string:
         specifier: ~1.5.0
         version: 1.5.0
@@ -3145,9 +3142,6 @@ packages:
   jwt-decode@4.0.0:
     resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
     engines: {node: '>=18'}
-
-  keen-slider@5.5.1:
-    resolution: {integrity: sha512-QXGZGt5Hbe0YufR/RYbOG03MmOk43RQEXqkkSvjr8ZS67sVR7LRp5RIvJALfjl+A7BnHNr1wd1QBOemwy65Lfw==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -8363,8 +8357,6 @@ snapshots:
       object.values: 1.1.7
 
   jwt-decode@4.0.0: {}
-
-  keen-slider@5.5.1: {}
 
   keyv@4.5.4:
     dependencies:
