@@ -17,8 +17,9 @@ class AdvertRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
@@ -58,13 +59,6 @@ class AdvertRepository
             ->setParameter('positionName', $positionName);
 
         if ($category !== null) {
-            $queryBuilder
-                ->leftJoin('a.categories', 'c')
-                ->andWhere('c IS NULL OR c = :category')
-                ->setParameter('category', $category);
-        }
-
-        if ($positionName === AdvertPositionRegistry::POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST) {
             $queryBuilder
                 ->join('a.categories', 'c')
                 ->andWhere('c = :category')
