@@ -740,9 +740,6 @@ services:
         arguments:
             $logger: '@monolog.logger.queue'
 
-    Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\OrderFactory
-
     Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack: ~
 
     Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor: ~
