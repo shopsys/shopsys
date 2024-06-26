@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Cart;
 
 use App\Model\Cart\CartFacade;
-use App\Model\Cart\Item\CartItem;
 use App\Model\Customer\User\CurrentCustomerUser;
+use App\Model\Order\Item\OrderItem;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\ProductRepository;
 use DateTime;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -73,6 +77,21 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
+
+    /**
+     * @inject
+     */
+    private OrderDataFactory $orderDataFactory;
+
+    /**
+     * @inject
+     */
+    private OrderItemFactory $orderItemFactory;
+
+    /**
+     * @inject
+     */
+    private OrderItemDataFactory $orderItemDataFactory;
 
     public function testOldUnregisteredCustomerCartGetsDeleted()
     {
@@ -180,6 +199,9 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->cartItemFactory,
             $this->cartRepository,
             $this->productAvailabilityFacade,
+            $this->orderDataFactory,
+            $this->orderItemFactory,
+            $this->orderItemDataFactory,
         );
     }
 
@@ -241,20 +263,29 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      */
     private function getCustomerUserIdentifierForUnregisteredCustomer()
     {
-        return new CustomerUserIdentifier('randomString');
+        return new CustomerUserIdentifier('c706442b-1f1a-4c42-8411-ea8d2c784b81');
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @param \App\Model\Cart\CartFacade $cartFacade
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
+     * @return \App\Model\Order\Order
      */
     private function createCartWithProduct(CustomerUserIdentifier $customerUserIdentifier, CartFacade $cartFacade)
     {
         $product = $this->getProductById(1);
         $cart = $cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
-        $cartItem = new CartItem($cart, $product, 1, Money::zero());
+        $cartItem = new OrderItem(
+            $cart,
+            $product->getName('cs'),
+            Price::zero(),
+            '0',
+            1,
+            OrderItemTypeEnum::TYPE_PRODUCT,
+            null,
+            null,
+        );
 
         $this->em->persist($cartItem);
         $this->em->flush();

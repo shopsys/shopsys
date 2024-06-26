@@ -160,7 +160,7 @@ class CartFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
@@ -168,7 +168,7 @@ class CartFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     public function findCartOfCurrentCustomerUser()
     {
@@ -207,7 +207,7 @@ class CartFacade
 
     /**
      * @param string $cartIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     public function findCartByCartIdentifier(string $cartIdentifier): ?Cart
     {

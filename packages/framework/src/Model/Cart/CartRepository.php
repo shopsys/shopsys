@@ -51,13 +51,13 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomerUsers(int $daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM cart_items WHERE cart_id IN (
-                SELECT C.id
-                FROM carts C
-                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
+            'DELETE FROM order_items WHERE order_id IN (
+                SELECT o.id
+                FROM orders o
+                WHERE o.modified_at <= :timeLimit AND customer_user_id IS NULL AND o.status_id IS NULL)',
             [
                 'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
             ],
@@ -67,12 +67,13 @@ class CartRepository
         );
 
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
+            'DELETE FROM orders WHERE modified_at <= :timeLimit AND customer_user_id IS NULL AND status_id IS NULL',
             [
                 'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
+                'cartOrderStatus' => Types::INTEGER,
             ],
         );
     }
@@ -80,13 +81,13 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForRegisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForRegisteredCustomerUsers(int $daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM cart_items WHERE cart_id IN (
-                SELECT C.id
-                FROM carts C
-                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NOT NULL)',
+            'DELETE FROM order_items WHERE order_id IN (
+                SELECT o.id
+                FROM orders o
+                WHERE o.modified_at <= :timeLimit AND customer_user_id IS NOT NULL AND o.status_id IS NULL)',
             [
                 'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
             ],
@@ -96,7 +97,7 @@ class CartRepository
         );
 
         $this->em->getConnection()->executeStatement(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NOT NULL',
+            'DELETE FROM orders WHERE modified_at <= :timeLimit AND customer_user_id IS NOT NULL AND status_id IS NULL',
             [
                 'timeLimit' => new DateTime('-' . $daysLimit . ' days'),
             ],
