@@ -153,8 +153,8 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $entityName = EntityLogFacade::getEntityNameByEntity($orderFromDb);
 
         $expectedOldCity = $orderFromDb->getCity();
-        $expectedOldStatusName = $orderFromDb->getStatus()->getName();
-        $expectedOldStatusId = $orderFromDb->getStatus()->getId();
+        $expectedOldStatusName = $orderFromDb->getStatus()?->getName();
+        $expectedOldStatusId = $orderFromDb->getStatus()?->getId();
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
         $orderData->city = $expectedNewCity;

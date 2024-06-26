@@ -104,9 +104,9 @@ class Order
     protected $payment;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $status;
 
@@ -598,7 +598,7 @@ class Order
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null $status
      */
     public function setStatus($status): void
     {
@@ -654,7 +654,7 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      */
     public function getStatus()
     {
@@ -1113,7 +1113,7 @@ class Order
      */
     public function isCancelled(): bool
     {
-        return $this->status->getType() === OrderStatusTypeEnum::TYPE_CANCELED;
+        return $this->status?->getType() === OrderStatusTypeEnum::TYPE_CANCELED;
     }
 
     /**

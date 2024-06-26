@@ -88,7 +88,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
             $data[] = [
                 $order->getUrlHash(),
                 [
-                    'status' => $order->getStatus()->getName(),
+                    'status' => $order->getStatus()?->getName() ?? '',
                     'totalPriceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(
                         $order->getTotalPriceWithVat(),
                     ),

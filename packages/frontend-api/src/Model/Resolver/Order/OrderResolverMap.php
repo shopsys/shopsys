@@ -32,7 +32,7 @@ class OrderResolverMap extends ResolverMap
                     return !$order->isDeliveryAddressSameAsBillingAddress();
                 },
                 'status' => function (Order $order) {
-                    return $order->getStatus()->getName($this->domain->getLocale());
+                    return $order->getStatus()?->getName($this->domain->getLocale()) ?? '';
                 },
                 'items' => function (Order $order) {
                     return $order->getItemsSortedWithRelatedItems();

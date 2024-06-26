@@ -274,7 +274,7 @@ class OrderRepository
             ->select('o, oi, os, ost, c')
             ->from(Order::class, 'o')
             ->join('o.items', 'oi')
-            ->join('o.status', 'os')
+            ->join('o.status', 'os', Join::WITH, 'o.status IS NOT NULL')
             ->join('os.translations', 'ost')
             ->join('o.currency', 'c')
             ->leftJoin('o.customerUser', 'cu');

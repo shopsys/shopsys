@@ -28,9 +28,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method addItem(\App\Model\Order\Item\OrderItem $item)
  * @method removeItem(\App\Model\Order\Item\OrderItem $item)
  * @method fillCommonFields(\App\Model\Order\OrderData $orderData)
- * @property \App\Model\Order\Status\OrderStatus $status
+ * @property \App\Model\Order\Status\OrderStatus|null $status
  * @method setStatus(\App\Model\Order\Status\OrderStatus $status)
- * @method \App\Model\Order\Status\OrderStatus getStatus()
+ * @method \App\Model\Order\Status\OrderStatus|null getStatus()
  * @method \Shopsys\FrameworkBundle\Model\Order\OrderEditResult edit(\App\Model\Order\OrderData $orderData)
  * @method \App\Model\Payment\Payment getPayment()
  * @method \App\Model\Transport\Transport getTransport()

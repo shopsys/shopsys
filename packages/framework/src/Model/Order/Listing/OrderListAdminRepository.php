@@ -37,7 +37,7 @@ class OrderListAdminRepository
                 END) AS customerName')
             ->from(Order::class, 'o')
             ->where('o.deleted = :deleted')
-            ->join('o.status', 'os')
+            ->join('o.status', 'os', Join::WITH, 'o.status IS NOT NULL')
             ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
             ->groupBy('o.id')
             ->setParameter('deleted', false)

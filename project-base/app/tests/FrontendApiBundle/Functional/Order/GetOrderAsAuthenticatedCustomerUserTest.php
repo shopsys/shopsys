@@ -109,7 +109,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                 $order->getUuid(),
                 $order->getNumber(),
                 [
-                    'status' => $order->getStatus()->getName(),
+                    'status' => $order->getStatus()?->getName() ?? '',
                     'totalPriceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(
                         $order->getTotalPriceWithVat(),
                     ),

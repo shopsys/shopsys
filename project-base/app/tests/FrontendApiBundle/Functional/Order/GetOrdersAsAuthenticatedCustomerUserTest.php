@@ -91,7 +91,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . $orderId, Order::class);
 
             $ordersArray[] = [
-                'status' => $order->getStatus()->getName(),
+                'status' => $order->getStatus()?->getName() ?? '',
                 'priceWithVat' => $order->getTotalPriceWithVat()->getAmount(),
             ];
         }

@@ -31,7 +31,12 @@ class OrderMailFacade
      */
     public function sendEmail(Order $order)
     {
-        $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
+        $orderStatus = $order->getStatus();
+        if ($orderStatus === null) {
+            return;
+        }
+
+        $mailTemplate = $this->getMailTemplateByStatusAndDomainId($orderStatus, $order->getDomainId());
 
         if (!$mailTemplate->isSendMail()) {
             return;
