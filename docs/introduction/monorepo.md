@@ -50,10 +50,11 @@ If you are interested, you can read more about the monorepo approach here - http
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
 -   [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
+-   [shopsys/administration](https://github.com/shopsys/administration)
 
 !!! note
 
-    The list of these packages is maintained in the function `get_all_packages` in [`.ci/monorepo_functions.sh`](https://github.com/shopsys/shopsys/blob/master/.ci/monorepo_functions.sh).<br>
+    The list of these packages is maintained in the function `get_all_packages` in [`.github/monorepo/monorepo_functions.sh`](https://github.com/shopsys/shopsys/blob/HEAD/.github/monorepo/monorepo_functions.sh).<br>
     It is used for automated splitting of the monorepo and needs to be updated when a package is added or removed.
 
 ## Infrastructure

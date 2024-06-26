@@ -1,4 +1,3 @@
-
 front_error_page:
     defaults:
         _controller: App\Controller\Admin\ErrorController::errorPagePreviewAction
@@ -13,6 +12,11 @@ front_error_page_format:
     requirements:
         _format: css|html|js|json|txt|xml
         code: \d+
+
+shopsys_administration:
+    prefix: /%admin_url%
+    resource: "@ShopsysAdministrationBundle/Controller"
+
 shopsys_framework:
     prefix: /%admin_url%
     resource: "@ShopsysFrameworkBundle/Controller/Admin"

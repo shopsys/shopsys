@@ -42,4 +42,5 @@ return [
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
+    Shopsys\AdministrationBundle\ShopsysAdministrationBundle::class => ['all' => true],
 ];
