@@ -147,6 +147,8 @@ services:
             - REDIS_HOSTS=redis
         ports:
             - "1600:8081"
+        profiles:
+            - debug
 
     selenium-server:
         image: seleniarm/standalone-firefox:4.9.0
@@ -159,6 +161,8 @@ services:
             - HUB_PORT_4444_TCP_ADDR=hub
             - HUB_PORT_4444_TCP_PORT=4444
         shm_size: '2GB'
+        profiles:
+            - backend-acceptance-tests
 
     adminer:
         image: adminer:latest
@@ -167,6 +171,8 @@ services:
             - "1100:8080"
         environment:
             ADMINER_DEFAULT_SERVER: postgres
+        profiles:
+            - debug
 
     smtp-server:
         image: ixdotai/smtp:latest
@@ -195,6 +201,8 @@ services:
             - elasticsearch
         ports:
             - "5601:5601"
+        profiles:
+            - debug
 
     mkdocs:
         build:
@@ -204,6 +212,8 @@ services:
             - "1300:8000"
         volumes:
             - source-code:/var/www/html
+        profiles:
+            - docs
 
     img-proxy:
         image: darthsim/imgproxy:latest
@@ -231,6 +241,8 @@ x-mutagen:
             alpha: "."
             beta: "volume://source-code"
             mode: "two-way-resolved"
+            watch:
+                mode: "no-watch"
             configurationBeta:
                 permissions:
                     defaultOwner: "id:501"
@@ -253,3 +265,7 @@ x-mutagen:
                     defaultOwner: "id:1000"
                     defaultGroup: "id:1000"
                     defaultDirectoryMode: 0777
+            ignore:
+                paths:
+                    - ./.next
+                    - ./.pnpm-store
