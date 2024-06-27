@@ -76,6 +76,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
                     <div
+                        tid={TIDs.product_list_item_image}
                         className={twMergeCustom([
                             'relative flex h-56 items-center justify-center',
                             isSimpleCard && 'h-44',

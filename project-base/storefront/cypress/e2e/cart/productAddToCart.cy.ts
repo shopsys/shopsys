@@ -32,7 +32,10 @@ describe('Product add to cart tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
             capture: 'viewport',
-            blackout: [{ tid: TIDs.add_to_cart_popup_image, zIndex: 20000 }],
+            blackout: [
+                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
+                { tid: TIDs.product_list_item_image, zIndex: 5 },
+            ],
         });
         checkPopupIsVisible(true);
     });
@@ -45,7 +48,10 @@ describe('Product add to cart tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
             capture: 'viewport',
-            blackout: [{ tid: TIDs.add_to_cart_popup_image, zIndex: 20000 }],
+            blackout: [
+                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
+                { tid: TIDs.product_detail_main_image, zIndex: 5 },
+            ],
         });
         checkPopupIsVisible(true);
     });
@@ -111,7 +117,10 @@ describe('Product add to cart tests', () => {
         addVariantToCartFromMainVariantDetail(products.philips54CRT.catnum);
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'add to cart popup', { capture: 'viewport' });
+        takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
+            capture: 'viewport',
+            blackout: [{ tid: TIDs.product_detail_main_image, zIndex: 5 }],
+        });
         checkPopupIsVisible(true);
     });
 
@@ -144,7 +153,10 @@ describe('Product add to cart tests', () => {
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'add to cart popup', {
             capture: 'viewport',
-            blackout: [{ tid: TIDs.add_to_cart_popup_image, zIndex: 20000 }],
+            blackout: [
+                { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
+                { tid: TIDs.product_list_item_image, zIndex: 5 },
+            ],
         });
         checkPopupIsVisible(true);
     });

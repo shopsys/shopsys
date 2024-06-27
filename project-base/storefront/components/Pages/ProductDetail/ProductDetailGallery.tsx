@@ -1,6 +1,7 @@
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
+import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
@@ -34,7 +35,11 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
     return (
         <>
             <div key={productName} className="flex basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row">
-                <div className={twJoin('relative flex w-full justify-center vl:order-2')} data-src={mainImage?.url}>
+                <div
+                    className={twJoin('relative flex w-full justify-center vl:order-2')}
+                    data-src={mainImage?.url}
+                    tid={TIDs.product_detail_main_image}
+                >
                     <Image
                         priority
                         alt={mainImage?.name || productName}

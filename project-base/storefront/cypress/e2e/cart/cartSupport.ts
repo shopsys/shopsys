@@ -69,6 +69,8 @@ export const loginInThirdOrderStep = (password: string) => {
 
 export const openHeaderCartByHovering = () => {
     cy.getByTID([TIDs.header_cart_link]).realHover();
+    cy.wait(1000);
+    cy.scrollTo('topLeft');
 };
 
 export const removeFirstProductFromHeaderCart = () => {

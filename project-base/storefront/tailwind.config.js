@@ -41,6 +41,7 @@ module.exports = {
         zIndex: {
             hidden: -1000,
             above: 1,
+            flag: 10,
             menu: 1010,
             aboveMenu: 1020,
             overlay: 1030,

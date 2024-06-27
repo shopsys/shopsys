@@ -139,6 +139,7 @@ export const takeSnapshotAndCompare = (
     testName: string | undefined,
     snapshotName: string,
     options: Partial<SnapshotAdditionalOptions> = {},
+    callbackBeforeBlackout?: () => void | undefined,
 ) => {
     const optionsWithDefaultValues = {
         capture: options.capture ?? 'fullPage',
@@ -152,6 +153,7 @@ export const takeSnapshotAndCompare = (
     }
 
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
+    callbackBeforeBlackout?.();
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
     removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
 
