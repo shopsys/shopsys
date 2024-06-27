@@ -21,6 +21,7 @@ export type PageLoadingStateSlice = {
     hadClientSideNavigation: boolean;
     isCartHydrated: boolean;
     isPageLoading: boolean;
+    isProductListHydrated: boolean;
     redirectPageType: PageType | undefined;
 
     updatePageLoadingState: (value: Partial<PageLoadingStateSlice>) => void;
@@ -30,6 +31,7 @@ export const createPageLoadingStateSlice: StateCreator<PageLoadingStateSlice> = 
     hadClientSideNavigation: false,
     isCartHydrated: false,
     isPageLoading: false,
+    isProductListHydrated: false,
     redirectPageType: undefined,
 
     updatePageLoadingState: (value) => {
