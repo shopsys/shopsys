@@ -1,7 +1,7 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
-import { useUserConsentPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/UserConsentPolicyArticleUrlQuery.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { onGtmConsentUpdateEventHandler } from 'gtm/handlers/onGtmConsentUpdateEventHandler';
 import { getGtmConsentInfo } from 'gtm/utils/getGtmConsentInfo';
 import Trans from 'next-translate/Trans';
@@ -18,8 +18,8 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const { t } = useTranslation();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
-    const [{ data: userConsentPolicyArticleUrlData }] = useUserConsentPolicyArticleUrlQuery();
-    const userConsentPolicyArticleUrl = userConsentPolicyArticleUrlData?.userConsentPolicyArticle?.slug;
+    const [{ data: settingsData }] = useSettingsQuery();
+    const userConsentPolicyArticleUrl = settingsData?.settings?.userConsentPolicyArticleUrl;
     const userConsent = usePersistStore((store) => store.userConsent);
     const updateUserConsent = usePersistStore((store) => store.updateUserConsent);
 
@@ -58,12 +58,11 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     defaultTrans="To learn more, you can read our <link>consent and tracking policy</link>"
                     i18nKey="userConsentPolicyLink"
                     components={{
-                        link:
-                            userConsentPolicyArticleUrl !== undefined ? (
-                                <a href={userConsentPolicyArticleUrl} rel="noreferrer" target="_blank" />
-                            ) : (
-                                <span />
-                            ),
+                        link: userConsentPolicyArticleUrl ? (
+                            <a href={userConsentPolicyArticleUrl} rel="noreferrer" target="_blank" />
+                        ) : (
+                            <span />
+                        ),
                     }}
                 />
             </p>

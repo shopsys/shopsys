@@ -73,4 +73,5 @@ export enum TIDs {
     simple_header_contact = 'simple_header_contact',
     simple_navigation_image = 'simple_navigation_image',
     footer_social_links = 'footer_social_links',
+    loader = 'loader',
 }

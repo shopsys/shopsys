@@ -2082,8 +2082,6 @@ export type TypeQuery = {
   payments: Array<TypePayment>;
   /** Return personal data page content and URL */
   personalDataPage: Maybe<TypePersonalDataPage>;
-  /** Returns privacy policy article */
-  privacyPolicyArticle: Maybe<TypeArticleSite>;
   /** Returns product filtered using UUID or URL slug */
   product: Maybe<TypeProduct>;
   /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
@@ -2113,14 +2111,10 @@ export type TypeQuery = {
   store: Maybe<TypeStore>;
   /** Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords */
   stores: TypeStoreConnection;
-  /** Returns Terms and Conditions article */
-  termsAndConditionsArticle: Maybe<TypeArticleSite>;
   /** Returns complete list of transport methods */
   transport: Maybe<TypeTransport>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TypeTransport>;
-  /** Returns User consent policy article */
-  userConsentPolicyArticle: Maybe<TypeArticleSite>;
 };
 
 
@@ -2594,8 +2588,14 @@ export type TypeSettings = {
   maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
   pricing: TypePricingSetting;
+  /** Returns privacy policy article's url */
+  privacyPolicyArticleUrl: Maybe<Scalars['String']['output']>;
   /** Settings related to SEO */
   seo: TypeSeoSetting;
+  /** Returns Terms and Conditions article's url */
+  termsAndConditionsArticleUrl: Maybe<Scalars['String']['output']>;
+  /** Returns User consent policy article's url */
+  userConsentPolicyArticleUrl: Maybe<Scalars['String']['output']>;
 };
 
 export type TypeSliderItem = {

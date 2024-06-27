@@ -39,9 +39,6 @@ export type TypeOrdersCountQuery = { __typename?: 'Query', orders: { __typename?
       "Store",
       "Variant"
     ],
-    "CartInterface": [
-      "Cart"
-    ],
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"
@@ -64,10 +61,6 @@ export type TypeOrdersCountQuery = { __typename?: 'Query', orders: { __typename?
       "ParameterCheckboxFilterOption",
       "ParameterColorFilterOption",
       "ParameterSliderFilterOption"
-    ],
-    "PriceInterface": [
-      "Price",
-      "ProductPrice"
     ],
     "Product": [
       "MainVariant",

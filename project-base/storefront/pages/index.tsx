@@ -5,7 +5,6 @@ import {
     TypeBlogArticlesQueryVariables,
     BlogArticlesQueryDocument,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
-import { BlogUrlQueryDocument } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 import { PromotedCategoriesQueryDocument } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import { PromotedProductsQueryDocument } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
 import {
@@ -38,7 +37,6 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     { query: SliderItemsQueryDocument },
                     { query: PromotedProductsQueryDocument },
                     { query: BlogArticlesQueryDocument, variables: BLOG_PREVIEW_VARIABLES },
-                    { query: BlogUrlQueryDocument },
                     ...(domainConfig.isLuigisBoxActive
                         ? [
                               {

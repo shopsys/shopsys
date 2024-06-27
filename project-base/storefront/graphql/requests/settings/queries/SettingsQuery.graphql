@@ -10,5 +10,9 @@ query SettingsQuery @redisCache(ttl: 3600) {
         maxAllowedPaymentTransactions
         displayTimezone
         heurekaEnabled
+        mainBlogCategoryUrl
+        privacyPolicyArticleUrl
+        termsAndConditionsArticleUrl
+        userConsentPolicyArticleUrl
     }
 }

@@ -88,7 +88,7 @@ export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ 
     
 
 export const SliderItemsQueryDocument = gql`
-    query SliderItemsQuery {
+    query SliderItemsQuery @redisCache(ttl: 3600) {
   sliderItems {
     ...SliderItemFragment
   }

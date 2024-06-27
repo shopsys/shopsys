@@ -2,12 +2,12 @@ import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/Us
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { UserConsentContent } from 'components/Pages/UserConsent/UserConsentContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import {
-    TypeUserConsentPolicyArticleUrlQuery,
-    TypeUserConsentPolicyArticleUrlQueryVariables,
-    UserConsentPolicyArticleUrlQueryDocument,
-} from 'graphql/requests/articles/queries/UserConsentPolicyArticleUrlQuery.generated';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import {
+    SettingsQueryDocument,
+    TypeSettingsQuery,
+    TypeSettingsQueryVariables,
+} from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -45,14 +45,11 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            const userConsentPolicyArticleUrlResponse = await client!
-                .query<
-                    TypeUserConsentPolicyArticleUrlQuery,
-                    TypeUserConsentPolicyArticleUrlQueryVariables
-                >(UserConsentPolicyArticleUrlQueryDocument, {})
+            const settingsQueryResponse = await client!
+                .query<TypeSettingsQuery, TypeSettingsQueryVariables>(SettingsQueryDocument, {})
                 .toPromise();
 
-            if (getCouldNotFindUserConsentPolicyArticleUrl(userConsentPolicyArticleUrlResponse.error)) {
+            if (getCouldNotFindUserConsentPolicyArticleUrl(settingsQueryResponse)) {
                 return {
                     notFound: true,
                 };

@@ -4,5 +4,8 @@ query SettingsQuery {
             robotsTxtContent
         }
         maxAllowedPaymentTransactions
+        termsAndConditionsArticleUrl
+        privacyPolicyArticleUrl
+        userConsentPolicyArticleUrl
     }
 }

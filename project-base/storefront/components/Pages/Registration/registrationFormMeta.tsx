@@ -16,7 +16,7 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -113,8 +113,8 @@ export const useRegistrationFormMeta = (
 ): RegistrationFormMetaType => {
     const { t } = useTranslation();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
-    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
+    const [{ data: settingsData }] = useSettingsQuery();
+    const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
 
     const customerFieldName = 'customer' as const;
 
@@ -215,12 +215,11 @@ export const useRegistrationFormMeta = (
                             defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
                             i18nKey="GdprAgreementCheckbox"
                             components={{
-                                lnk1:
-                                    privacyPolicyArticleUrl !== undefined ? (
-                                        <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
-                                    ) : (
-                                        <span className={linkPlaceholderTwClass} />
-                                    ),
+                                lnk1: privacyPolicyArticleUrl ? (
+                                    <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+                                ) : (
+                                    <span className={linkPlaceholderTwClass} />
+                                ),
                             }}
                         />
                     ),

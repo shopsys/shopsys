@@ -50,27 +50,27 @@ class ArticleQuery extends AbstractQuery
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function termsAndConditionsArticleQuery(): array
+    public function termsAndConditionsArticleUrlQuery(): string
     {
-        return $this->getSpecialArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, 'terms-and-conditions');
+        return '/' . $this->getSpecialArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, 'terms-and-conditions')['mainSlug'];
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function privacyPolicyArticleQuery(): array
+    public function privacyPolicyArticleUrlQuery(): string
     {
-        return $this->getSpecialArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, 'privacy-policy');
+        return '/' . $this->getSpecialArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, 'privacy-policy')['mainSlug'];
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function userConsentPolicyArticleQuery(): array
+    public function userConsentPolicyArticleUrlQuery(): string
     {
-        return $this->getSpecialArticle(Setting::USER_CONSENT_POLICY_ARTICLE_ID, 'user-consent-policy');
+        return '/' . $this->getSpecialArticle(Setting::USER_CONSENT_POLICY_ARTICLE_ID, 'user-consent-policy')['mainSlug'];
     }
 
     /**
@@ -88,7 +88,7 @@ class ArticleQuery extends AbstractQuery
             }
 
             return $this->articleElasticsearchFacade->getById($specialArticleId);
-        } catch (ArticleNotFoundException|SettingValueNotFoundException $exception) {
+        } catch (ArticleNotFoundException | SettingValueNotFoundException $exception) {
             throw new ArticleNotFoundUserError($exception->getMessage(), $articleIdentifier);
         }
     }

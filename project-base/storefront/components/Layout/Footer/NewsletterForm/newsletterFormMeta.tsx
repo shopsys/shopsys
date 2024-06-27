@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
-import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -42,8 +42,8 @@ export const useNewsletterFormMeta = (
     formProviderMethods: UseFormReturn<NewsletterFormType>,
 ): NewsletterFormMetaType => {
     const { t } = useTranslation();
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
-    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
+    const [{ data: settingsData }] = useSettingsQuery();
+    const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
 
     const formMeta = useMemo(
         () => ({

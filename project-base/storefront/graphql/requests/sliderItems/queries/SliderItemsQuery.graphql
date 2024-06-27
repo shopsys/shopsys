@@ -1,4 +1,4 @@
-query SliderItemsQuery {
+query SliderItemsQuery @redisCache(ttl: 3600) {
     sliderItems {
         ...SliderItemFragment
     }

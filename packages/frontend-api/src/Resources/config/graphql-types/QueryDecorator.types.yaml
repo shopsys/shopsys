@@ -138,18 +138,6 @@ QueryDecorator:
                     urlSlug:
                         type: "String"
                 description: "Returns article filtered using UUID or URL slug"
-            termsAndConditionsArticle:
-                type: 'ArticleSite'
-                resolve: "@=query('termsAndConditionsArticleQuery')"
-                description: "Returns Terms and Conditions article"
-            privacyPolicyArticle:
-                type: 'ArticleSite'
-                resolve: "@=query('privacyPolicyArticleQuery')"
-                description: "Returns privacy policy article"
-            userConsentPolicyArticle:
-                type: 'ArticleSite'
-                resolve: "@=query('userConsentPolicyArticleQuery')"
-                description: "Returns User consent policy article"
             ArticleSite:
                 type: "ArticleSite"
             ArticleLink:

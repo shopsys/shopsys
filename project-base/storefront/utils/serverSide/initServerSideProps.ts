@@ -1,7 +1,6 @@
 import { Variables } from '@urql/exchange-graphcache';
 import { DocumentNode } from 'graphql';
 import { AdvertsQueryDocument } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
-import { UserConsentPolicyArticleUrlQueryDocument } from 'graphql/requests/articles/queries/UserConsentPolicyArticleUrlQuery.generated';
 import {
     TypeArticlesQueryVariables,
     ArticlesQueryDocument,
@@ -108,7 +107,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         { query: AdvertsQueryDocument },
         { query: CurrentCustomerUserQueryDocument },
         { query: SettingsQueryDocument },
-        { query: UserConsentPolicyArticleUrlQueryDocument },
         ...(seoPageSlug
             ? [
                   {

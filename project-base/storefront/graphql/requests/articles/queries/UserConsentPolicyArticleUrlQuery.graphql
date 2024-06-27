@@ -1,5 +1,0 @@
-query UserConsentPolicyArticleUrlQuery {
-    userConsentPolicyArticle {
-        slug
-    }
-}

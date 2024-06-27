@@ -53,6 +53,7 @@ Cypress.Commands.add('waitForStableAndInteractiveDOM', () => {
     });
     cy.get('.react-loading-skeleton').should('not.exist');
     cy.get('#nprogress').should('not.exist');
+    cy.getByTID([TIDs.loader]).should('not.exist');
 
     return cy.waitForStableDOM();
 });

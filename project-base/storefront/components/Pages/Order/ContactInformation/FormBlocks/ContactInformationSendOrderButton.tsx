@@ -2,8 +2,7 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { usePrivacyPolicyArticleUrlQuery } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
-import { useTermsAndConditionsArticleUrlQuery } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -19,10 +18,9 @@ export const ContactInformationSendOrderButton: FC = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
 
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQuery();
-    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQuery();
-    const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
-    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
+    const [{ data: settingsData }] = useSettingsQuery();
+    const termsAndConditionsArticleUrl = settingsData?.settings?.termsAndConditionsArticleUrl;
+    const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
 
     const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
 
@@ -33,18 +31,16 @@ export const ContactInformationSendOrderButton: FC = () => {
                     defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
                     i18nKey="ContactInformationInfo"
                     components={{
-                        lnk1:
-                            termsAndConditionsArticleUrl !== undefined ? (
-                                <Link isExternal href={termsAndConditionsArticleUrl} target="_blank" />
-                            ) : (
-                                <span className={linkPlaceholderTwClass} />
-                            ),
-                        lnk2:
-                            privacyPolicyArticleUrl !== undefined ? (
-                                <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
-                            ) : (
-                                <span className={linkPlaceholderTwClass} />
-                            ),
+                        lnk1: termsAndConditionsArticleUrl ? (
+                            <Link isExternal href={termsAndConditionsArticleUrl} target="_blank" />
+                        ) : (
+                            <span className={linkPlaceholderTwClass} />
+                        ),
+                        lnk2: privacyPolicyArticleUrl ? (
+                            <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+                        ) : (
+                            <span className={linkPlaceholderTwClass} />
+                        ),
                     }}
                 />
             </p>
