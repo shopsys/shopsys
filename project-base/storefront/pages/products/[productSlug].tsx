@@ -55,6 +55,8 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
             ? productData.product
             : null;
 
+    const firstImageUrl = product?.images[0]?.url;
+
     return (
         <PageDefer>
             <CommonLayout
@@ -64,6 +66,7 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = () => {
                 description={product?.seoMetaDescription}
                 hreflangLinks={product?.hreflangLinks}
                 isFetchingData={isProductFetching}
+                ogImageUrlDefault={firstImageUrl}
                 title={product?.seoTitle || product?.name}
             >
                 {product?.__typename === 'RegularProduct' && (

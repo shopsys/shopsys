@@ -16,6 +16,7 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -35,11 +36,13 @@ import {
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const BrandDetailPage: NextPage = () => {
+    const { t } = useTranslation();
     const router = useRouter();
     const currentFilter = useCurrentFilterQuery();
     const currentSort = useCurrentSortQuery();
@@ -52,11 +55,15 @@ const BrandDetailPage: NextPage = () => {
         },
     });
 
+    const prefixedTitle = getPrefixedSeoTitle(brandDetailData?.brand?.seoTitle, t('Brand'));
+
     const seoTitle = useSeoTitleWithPagination(
         brandDetailData?.brand?.products.totalCount,
         brandDetailData?.brand?.name,
-        brandDetailData?.brand?.seoTitle,
+        prefixedTitle,
     );
+
+    const brandImageUrl = brandDetailData?.brand?.mainImage?.url;
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(brandDetailData?.brand);
     useGtmPageViewEvent(pageViewEvent, isBrandFetching);
@@ -67,6 +74,7 @@ const BrandDetailPage: NextPage = () => {
             description={brandDetailData?.brand?.seoMetaDescription}
             hreflangLinks={brandDetailData?.brand?.hreflangLinks}
             isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
+            ogImageUrlDefault={brandImageUrl}
             title={seoTitle}
         >
             {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}

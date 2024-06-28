@@ -6,6 +6,9 @@ fragment CategoryDetailFragment on Category {
     originalCategorySlug
     name
     description
+    images {
+        ...ImageFragment
+    }
     seoH1
     seoTitle
     seoMetaDescription

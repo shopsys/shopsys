@@ -9,6 +9,7 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
@@ -16,10 +17,12 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handl
 import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
+import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const StoreDetailPage: NextPage = () => {
+    const { t } = useTranslation();
     const router = useRouter();
     const [{ data: storeDetailData, fetching: isStoreFetching }] = useStoreDetailQuery({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -28,12 +31,16 @@ const StoreDetailPage: NextPage = () => {
     const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);
     useGtmPageViewEvent(pageViewEvent, isStoreFetching);
 
+    const seoTitle = getPrefixedSeoTitle(storeDetailData?.store?.storeName, t('Store'));
+    const storeImageUrl = storeDetailData?.store?.storeImages[0]?.url;
+
     return (
         <CommonLayout
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             canonicalQueryParams={[]}
             isFetchingData={isStoreFetching}
-            title={storeDetailData?.store?.storeName}
+            ogImageUrlDefault={storeImageUrl}
+            title={seoTitle}
         >
             {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}
         </CommonLayout>

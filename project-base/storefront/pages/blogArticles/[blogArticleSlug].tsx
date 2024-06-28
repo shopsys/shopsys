@@ -12,6 +12,7 @@ import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageVie
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { OgTypeEnum } from 'types/seo';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
@@ -28,6 +29,8 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
+    const blogArticleImageUrl = blogArticleData?.blogArticle?.mainImage?.url;
+
     const pageViewEvent = useGtmFriendlyPageViewEvent(blogArticleData?.blogArticle);
     useGtmPageViewEvent(pageViewEvent, isBlogArticleFetching);
 
@@ -39,6 +42,8 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = () => {
             description={blogArticleData?.blogArticle?.seoMetaDescription}
             hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={isBlogArticleFetching}
+            ogImageUrlDefault={blogArticleImageUrl}
+            ogType={OgTypeEnum.Article}
             title={blogArticleData?.blogArticle?.seoTitle || blogArticleData?.blogArticle?.name}
         >
             {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
