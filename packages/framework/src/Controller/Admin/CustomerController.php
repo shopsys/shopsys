@@ -32,8 +32,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AdminBaseController
 {
-    protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
