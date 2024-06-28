@@ -7395,7 +7395,7 @@ Target link
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>mainImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
+<td valign="top"><a href="#image">Image</a>!</td>
 <td>
 
 Slider item image by params
