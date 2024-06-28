@@ -10,6 +10,7 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckShopsysInstallReleaseWorker
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnableMergingReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureReleaseHighlightsPostIsReleasedReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureRoadmapIsUpdatedReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\PostInfoToSlackReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\RemoveLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetFrameworkBundleVersionToDevReleaseWorker;
@@ -39,5 +40,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class);
     $services->set(PostInfoToSlackReleaseWorker::class);
     $services->set(CheckDocsReleaseWorker::class);
+    $services->set(EnsureRoadmapIsUpdatedReleaseWorker::class);
     $services->set(BeHappyReleaseWorker::class);
 };
