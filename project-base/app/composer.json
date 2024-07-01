@@ -75,6 +75,7 @@
         "shopsys/framework": "15.0.x-dev",
         "shopsys/frontend-api": "15.0.x-dev",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
+        "shopsys/administration": "15.0.x-dev",
         "shopsys/migrations": "15.0.x-dev",
         "shopsys/plugin-interface": "15.0.x-dev",
         "shopsys/brand-feed-luigis-box": "15.0.x-dev",

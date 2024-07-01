@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Shopsys\AdministrationBundle\:
+        exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+        resource: '../../**/*{Enum,Facade,Factory,Repository,Transformer}.php'
+
+    Shopsys\AdministrationBundle\Controller\:
+        resource: '../../Controller/'
+        tags: ['controller.service_arguments']

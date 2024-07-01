@@ -7,6 +7,7 @@
         "psr-4": {
             "App\\": "project-base/app/src/",
             "Overblog\\GraphQLBundle\\__DEFINITIONS__\\": "project-base/app/var/overblogCompiledClasses",
+            "Shopsys\\AdministrationBundle\\": "packages/administration/src/",
             "Shopsys\\CodingStandards\\": "packages/coding-standards/src/",
             "Shopsys\\FormTypesBundle\\": "packages/form-types-bundle/src/",
             "Shopsys\\FrontendApiBundle\\": "packages/frontend-api/src/",
@@ -257,23 +258,24 @@
         }
     },
     "replace": {
+        "shopsys/administration": "self.version",
         "shopsys/article-feed-luigis-box": "self.version",
         "shopsys/brand-feed-luigis-box": "self.version",
         "shopsys/category-feed-luigis-box": "self.version",
+        "shopsys/coding-standards": "self.version",
         "shopsys/form-types-bundle": "self.version",
+        "shopsys/framework": "self.version",
         "shopsys/frontend-api": "self.version",
         "shopsys/google-cloud-bundle": "self.version",
         "shopsys/http-smoke-testing": "self.version",
+        "shopsys/luigis-box": "self.version",
         "shopsys/migrations": "self.version",
         "shopsys/plugin-interface": "self.version",
         "shopsys/product-feed-google": "self.version",
-        "shopsys/product-feed-zbozi": "self.version",
         "shopsys/product-feed-heureka": "self.version",
-        "shopsys/product-feed-luigis-box": "self.version",
         "shopsys/product-feed-heureka-delivery": "self.version",
-        "shopsys/framework": "self.version",
-        "shopsys/coding-standards": "self.version",
-        "shopsys/s3-bridge": "self.version",
-        "shopsys/luigis-box": "self.version"
+        "shopsys/product-feed-luigis-box": "self.version",
+        "shopsys/product-feed-zbozi": "self.version",
+        "shopsys/s3-bridge": "self.version"
     }
 }

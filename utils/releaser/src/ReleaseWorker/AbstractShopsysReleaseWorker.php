@@ -22,8 +22,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     public const PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
     /**
-     * If you modify this list do not forget updating:
-     *      /.ci/monorepo_functions.sh
+     * If you modify this list, do not forget updating:
+     *      /.github/monorepo/monorepo_functions.sh
      *      /docs/introduction/monorepo.md
      *      /CHANGELOG-XX.X.md
      *      "replace" section in monorepo's composer.json as well

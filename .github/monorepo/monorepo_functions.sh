@@ -15,7 +15,8 @@ NC="\e[0m"
 #   /CHANGELOG.md
 #   "replace" section in monorepo's composer.json
 get_all_packages() {
-    echo "framework \
+    echo "administration \
+        framework \
         frontend-api \
         google-cloud-bundle \
         s3-bridge \
