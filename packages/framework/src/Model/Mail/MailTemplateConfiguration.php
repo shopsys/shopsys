@@ -74,11 +74,14 @@ class MailTemplateConfiguration
         $this->mailTemplateVariables[$mailTemplateSlug] = $mailTemplateVariables;
     }
 
-    protected function registerOrderStatusMailTemplates(): void
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createOrderStatusMailTemplateVariables(): MailTemplateVariables
     {
-        $orderStatusMailTemplate = new MailTemplateVariables('', self::TYPE_ORDER_STATUS);
+        $mailTemplateVariables = new MailTemplateVariables('', self::TYPE_ORDER_STATUS);
 
-        $orderStatusMailTemplate
+        return $mailTemplateVariables
             ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
             ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
             ->addVariable(OrderMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY)
@@ -124,22 +127,30 @@ class MailTemplateConfiguration
                 t('Payment instructions'),
                 MailTemplateVariables::CONTEXT_BODY,
             );
+    }
+
+    protected function registerOrderStatusMailTemplates(): void
+    {
+        $mailTemplateVariables = $this->createOrderStatusMailTemplateVariables();
 
         $allOrderStatuses = $this->orderStatusFacade->getAll();
 
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
                 OrderMail::getMailTemplateNameByStatus($orderStatus),
-                $orderStatusMailTemplate->withNewName($orderStatus->getName()),
+                $mailTemplateVariables->withNewName($orderStatus->getName()),
             );
         }
     }
 
-    protected function registerStaticMailTemplates(): void
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createRegistrationConfirmationMailTemplateVariables(): MailTemplateVariables
     {
-        // registration mail template
-        $mailTemplate = new MailTemplateVariables(t('Registration confirmation'));
-        $mailTemplate
+        $mailTemplateVariables = new MailTemplateVariables(t('Registration confirmation'));
+
+        return $mailTemplateVariables
             ->addVariable(RegistrationMail::VARIABLE_FIRST_NAME, t('First name'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(RegistrationMail::VARIABLE_LAST_NAME, t('Last name'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(RegistrationMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
@@ -149,11 +160,16 @@ class MailTemplateConfiguration
                 t('Link to the log in page'),
                 MailTemplateVariables::CONTEXT_BODY,
             );
-        $this->addMailTemplateVariables(MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplate);
+    }
 
-        // reset password mail template
-        $mailTemplate = new MailTemplateVariables(t('Forgotten password sending'));
-        $mailTemplate
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createResetPasswordMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Forgotten password sending'));
+
+        return $mailTemplateVariables
             ->addVariable(ResetPasswordMail::VARIABLE_EMAIL, t('Email'))
             ->addVariable(
                 ResetPasswordMail::VARIABLE_NEW_PASSWORD_URL,
@@ -161,11 +177,16 @@ class MailTemplateConfiguration
                 MailTemplateVariables::CONTEXT_BOTH,
                 MailTemplateVariables::REQUIRED_BODY,
             );
-        $this->addMailTemplateVariables(MailTemplate::RESET_PASSWORD_NAME, $mailTemplate);
+    }
 
-        // personal data export mail template
-        $mailTemplate = new MailTemplateVariables(t('Personal information export'));
-        $mailTemplate
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createPersonalDataExportMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Personal information export'));
+
+        return $mailTemplateVariables
             ->addVariable(PersonalDataExportMail::VARIABLE_DOMAIN, t('E-shop name'))
             ->addVariable(PersonalDataExportMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
@@ -174,11 +195,16 @@ class MailTemplateConfiguration
                 MailTemplateVariables::CONTEXT_BODY,
                 MailTemplateVariables::REQUIRED_BODY,
             );
-        $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplate);
+    }
 
-        // personal data access mail template
-        $mailTemplate = new MailTemplateVariables(t('Personal information overview'));
-        $mailTemplate
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createPersonalDataAccessMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Personal information overview'));
+
+        return $mailTemplateVariables
             ->addVariable(PersonalDataAccessMail::VARIABLE_DOMAIN, t('E-shop name'))
             ->addVariable(PersonalDataAccessMail::VARIABLE_EMAIL, t('Email'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
@@ -187,6 +213,24 @@ class MailTemplateConfiguration
                 MailTemplateVariables::CONTEXT_BODY,
                 MailTemplateVariables::REQUIRED_BODY,
             );
-        $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplate);
+    }
+
+    protected function registerStaticMailTemplates(): void
+    {
+        // registration mail template
+        $mailTemplateVariables = $this->createRegistrationConfirmationMailTemplateVariables();
+        $this->addMailTemplateVariables(MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplateVariables);
+
+        // reset password mail template
+        $mailTemplateVariables = $this->createResetPasswordMailTemplateVariables();
+        $this->addMailTemplateVariables(MailTemplate::RESET_PASSWORD_NAME, $mailTemplateVariables);
+
+        // personal data export mail template
+        $mailTemplateVariables = $this->createPersonalDataExportMailTemplateVariables();
+        $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateVariables);
+
+        // personal data access mail template
+        $mailTemplateVariables = $this->createPersonalDataAccessMailTemplateVariables();
+        $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateVariables);
     }
 }
