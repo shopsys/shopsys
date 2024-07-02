@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin\Type;
+namespace Shopsys\FrameworkBundle\Form;
 
-use App\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

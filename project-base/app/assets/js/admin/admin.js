@@ -9,8 +9,6 @@ import './../common/validation/customizeFpValidator';
 import './category/categoryDeleteConfirm';
 
 import './grapesjs/initGrapesJs';
-import './roleGroup/roleGroups';
-import './roleGroup/administratorForm';
 
 import './product/product';
 

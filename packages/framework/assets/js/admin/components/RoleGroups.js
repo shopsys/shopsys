@@ -1,4 +1,4 @@
-import Register from 'framework/common/utils/Register';
+import Register from '../../common/utils/Register';
 
 export default class RoleGroups {
 

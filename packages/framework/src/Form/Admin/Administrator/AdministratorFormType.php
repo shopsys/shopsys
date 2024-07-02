@@ -10,8 +10,12 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -19,12 +23,23 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints;
 
 class AdministratorFormType extends AbstractType
 {
     public const SCENARIO_CREATE = 'create';
     public const SCENARIO_EDIT = 'edit';
+
+    /**
+     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
+     */
+    public function __construct(
+        private readonly Security $security,
+        private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+    ) {
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -97,9 +112,58 @@ class AdministratorFormType extends AbstractType
                 'label' => t('Password'),
             ]);
 
+        if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
+            $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->administratorRoleGroupFacade->getAll(),
+                'placeholder' => t('Custom'),
+                'multiple' => false,
+                'label' => t('Role Group'),
+                'choice_label' => function (AdministratorRoleGroup $administratorRoleGroup) {
+                    return $administratorRoleGroup->getName();
+                },
+                'attr' => [
+                    'class' => 'js-role-group-select',
+                ],
+            ]);
+
+            $builderSettingsGroup->add('roles', ChoiceType::class, [
+                'required' => false,
+                'choices' => Roles::getAvailableAdministratorRolesChoices(),
+                'placeholder' => t('-- Select a role --'),
+                'multiple' => true,
+                'label' => t('Role'),
+                'attr' => [
+                    'class' => 'js-role-group-custom',
+                ],
+            ]);
+        } elseif ($options['administrator'] !== null) {
+            $builderSettingsGroup->add('roleGroup', DisplayOnlyType::class, [
+                'label' => t('Role Group'),
+                'data' => $options['administrator']->getRoleGroup()?->getName() ?? t('Custom'),
+            ]);
+
+            $builderSettingsGroup->add('roles', DisplayOnlyType::class, [
+                'label' => t('Role'),
+                'data' => $this->getAdministratorRolesList($options['administrator']),
+            ]);
+        }
+
         $builder
             ->add($builderSettingsGroup)
             ->add('save', SubmitType::class);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
+     * @return string
+     */
+    private function getAdministratorRolesList(Administrator $administrator): string
+    {
+        $allAvailableRoleChoices = Roles::getAvailableAdministratorRolesChoices();
+        $intersection = array_intersect($allAvailableRoleChoices, $administrator->getRoles());
+
+        return implode(', ', array_keys($intersection));
     }
 
     /**

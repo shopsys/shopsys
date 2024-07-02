@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Security;
+namespace Shopsys\FrameworkBundle\Model\Security;
 
 class MenuItemsGrantedRolesSetting
 {
-    public const MENU_ITEM_PATH_SEPARATOR = ' -> ';
+    public const string MENU_ITEM_PATH_SEPARATOR = ' -> ';
 
     /**
      * @return array<string, string[]>
@@ -22,7 +22,7 @@ class MenuItemsGrantedRolesSetting
     /**
      * @return array<string, string[]>
      */
-    private static function getPagesGrantedRoles(): array
+    protected static function getPagesGrantedRoles(): array
     {
         return [
             'orders' => [
@@ -173,7 +173,7 @@ class MenuItemsGrantedRolesSetting
      * @param array<string, string[]> $pagesGrantedRoles
      * @return array<string, string[]>
      */
-    private static function getSectionsGrantedRoles(array $pagesGrantedRoles): array
+    protected static function getSectionsGrantedRoles(array $pagesGrantedRoles): array
     {
         $sectionsGrantedRoles = [
             'customers' => [],

@@ -129,6 +129,8 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/Scope/ProductExportScopeConfig.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
                 __DIR__ . '/packages/framework/src/Model/Product/ProductVisibilityRepository.php',
+                __DIR__ . '/packages/framework/src/Model/Security/MenuItemsGrantedRolesSetting.php',
+                __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
                 __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainDataCreatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Mail/EnvelopeListenerTest.php',
