@@ -6,20 +6,10 @@ namespace App\Controller\Admin;
 
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
-use Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Security;
 
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Symfony\Component\Security\Core\Security $security
-     */
-    public function __construct(
-        private readonly Security $security,
-    ) {
-    }
-
     /**
      * @return array
      */
@@ -39,7 +29,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
         $rootMenu->addChild($this->createIntegrationsMenu($event));
-        $this->removeNotGrantedItemsFromMenu($rootMenu);
     }
 
     /**
@@ -148,46 +137,5 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
 
         return $integrationsMenu;
-    }
-
-    /**
-     * @param \Knp\Menu\ItemInterface $rootMenu
-     */
-    public function removeNotGrantedItemsFromMenu(ItemInterface $rootMenu): void
-    {
-        foreach (MenuItemsGrantedRolesSetting::getGrantedRolesByMenuItems() as $menuItemPath => $grantedRoles) {
-            $isGranted = array_reduce(
-                $grantedRoles,
-                fn ($isGranted, $role) => $isGranted || $this->security->isGranted($role),
-                false,
-            );
-
-            if (!$isGranted) {
-                $this->removeItemFromMenu($menuItemPath, $rootMenu);
-            }
-        }
-    }
-
-    /**
-     * @param string $itemToRemovePath
-     * @param \Knp\Menu\ItemInterface $rootMenu
-     */
-    private function removeItemFromMenu(string $itemToRemovePath, ItemInterface $rootMenu): void
-    {
-        $itemToRemovePathExploded = explode(MenuItemsGrantedRolesSetting::MENU_ITEM_PATH_SEPARATOR, $itemToRemovePath);
-        $itemToRemoveName = end($itemToRemovePathExploded);
-
-        foreach ($itemToRemovePathExploded as $itemName) {
-            if ($rootMenu === null) {
-                break;
-            }
-
-            if ($itemName === $itemToRemoveName) {
-                $rootMenu->removeChild($itemName);
-
-                break;
-            }
-            $rootMenu = $rootMenu->getChild($itemName);
-        }
     }
 }
