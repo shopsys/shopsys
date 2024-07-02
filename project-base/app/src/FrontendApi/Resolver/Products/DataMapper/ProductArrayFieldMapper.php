@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
 
 /**
@@ -31,6 +32,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
@@ -42,12 +44,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         BrandFacade $brandFacade,
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
+        ProductFrontendLimitProvider $productFrontendLimitProvider,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
         private DataLoaderInterface $productsSellableByIdsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
     ) {
-        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
+        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory, $productFrontendLimitProvider);
     }
 
     /**
