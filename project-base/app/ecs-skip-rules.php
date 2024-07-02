@@ -32,7 +32,6 @@ return [
         __DIR__ . '/src/Form/Admin/NotificationBarFormType.php',
         __DIR__ . '/src/Migrations/Version20200319113341.php',
         __DIR__ . '/src/Migrations/Version20221205123619.php',
-        __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php',
         __DIR__ . '/src/Model/Security/MenuItemsGrantedRolesSetting.php',
         __DIR__ . '/src/Model/Security/Roles.php',
         __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
@@ -49,8 +48,6 @@ return [
         __DIR__ . '/src/DataFixtures/Demo/ProductDataFixture.php',
         __DIR__ . '/src/Model/Product/Elasticsearch/ProductExportRepository.php',
         __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
-        __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php',
-        __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php',
     ],
     CamelCapsFunctionNameSniff::class => [
         __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',

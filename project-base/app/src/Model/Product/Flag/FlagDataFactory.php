@@ -43,8 +43,6 @@ class FlagDataFactory extends BaseFlagDataFactory
     {
         parent::fillFromFlag($flagData, $flag);
 
-        $flagData->akeneoCode = $flag->getAkeneoCode();
-
         foreach ($this->domain->getAllIds() as $domainId) {
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_flag_detail', $flag->getId());
             $flagData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;

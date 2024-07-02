@@ -54,7 +54,6 @@ class ParameterGroupDataFactory
         }
         $parameterGroupData->names = $names;
 
-        $parameterGroupData->akeneoCode = $parameterGroup->getAkeneoCode();
         $parameterGroupData->orderingPriority = $parameterGroup->getOrderingPriority();
     }
 }

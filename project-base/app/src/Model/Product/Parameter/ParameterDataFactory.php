@@ -32,7 +32,5 @@ class ParameterDataFactory extends BaseParameterDataFactory
         parent::fillFromParameter($parameterData, $parameter);
 
         $parameterData->group = $parameter->getGroup();
-        $parameterData->akeneoCode = $parameter->getAkeneoCode();
-        $parameterData->akeneoType = $parameter->getAkeneoType();
     }
 }

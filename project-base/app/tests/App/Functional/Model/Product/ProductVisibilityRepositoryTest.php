@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\Component\Image\Image;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
@@ -13,9 +12,9 @@ use App\Model\Category\Category;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use App\Model\Product\Unit\Unit;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -25,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
@@ -235,7 +235,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         $image = new Image($entityName, $entityId, $namesIndexedByLocale, null, null);
-        $image->setAkeneoImageType('image_main');
         $image->setFileAsUploaded('image', '/web/public/frontend/images/noimage.png');
         $this->em->persist($image);
         $this->em->flush();

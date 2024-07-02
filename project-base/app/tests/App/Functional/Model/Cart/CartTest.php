@@ -10,10 +10,10 @@ use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartTest extends TransactionFunctionalTestCase

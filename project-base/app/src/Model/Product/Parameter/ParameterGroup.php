@@ -16,8 +16,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class ParameterGroup extends AbstractTranslatableEntity
 {
-    public const AKENEO_CODE_DIMENSIONS = 'param__dimensions';
-
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -33,12 +31,6 @@ class ParameterGroup extends AbstractTranslatableEntity
     protected $translations;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100, unique=true)
-     */
-    protected $akeneoCode;
-
-    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -52,7 +44,6 @@ class ParameterGroup extends AbstractTranslatableEntity
         $this->translations = new ArrayCollection();
         $this->setTranslations($parameterGroupData);
 
-        $this->akeneoCode = $parameterGroupData->akeneoCode;
         $this->orderingPriority = $parameterGroupData->orderingPriority;
     }
 
@@ -95,14 +86,6 @@ class ParameterGroup extends AbstractTranslatableEntity
         }
 
         return $namesByLocale;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAkeneoCode(): string
-    {
-        return $this->akeneoCode;
     }
 
     /**

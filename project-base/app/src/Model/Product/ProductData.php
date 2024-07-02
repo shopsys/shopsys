@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Brand\Brand|null $brand
  * @property \App\Model\Product\Product[] $variants
  * @property \App\Model\Product\Product[] $accessories
- * @property \App\Model\Product\Unit\Unit|null $unit
+ * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
  * @property \App\Model\Product\Flag\Flag[][]|null[][] $flagsByDomainId
  */
 class ProductData extends BaseProductData

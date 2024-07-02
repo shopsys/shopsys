@@ -76,9 +76,6 @@ msgstr "Reklamní systém - vše"
 msgid "Adverts - view"
 msgstr "Reklamní systém - zobrazení"
 
-msgid "Akeneo code"
-msgstr "Akeneo kód"
-
 msgid "All - full"
 msgstr "Vše"
 
@@ -198,9 +195,6 @@ msgstr "Rozšířené SEO kategorií - vše"
 
 msgid "Categories extended SEO - view"
 msgstr "Rozšířené SEO kategorií - zobrazení"
-
-msgid "Categories transfer"
-msgstr "Přenos kategorií"
 
 msgid "Category"
 msgstr "Kategorie"
@@ -952,23 +946,8 @@ msgstr "Produkty - vše"
 msgid "Products - view"
 msgstr "Produkty - zobrazení"
 
-msgid "Products accessories transfer"
-msgstr "Přenos příslušenství produktů"
-
-msgid "Products flags transfer"
-msgstr "Přenos příznaků produktů"
-
-msgid "Products parameters groups transfer"
-msgstr "Přenos skupin parametrů produktů"
-
 msgid "Products parameters of selected category"
 msgstr "Parametry produktů vybrané kategorie"
-
-msgid "Products parameters transfer"
-msgstr "Přenos parametrů produktů"
-
-msgid "Products transfer"
-msgstr "Přenos produktů"
 
 msgid "Promo code"
 msgstr "Slevový kupón"

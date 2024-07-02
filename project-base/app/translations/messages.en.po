@@ -76,9 +76,6 @@ msgstr ""
 msgid "Adverts - view"
 msgstr ""
 
-msgid "Akeneo code"
-msgstr ""
-
 msgid "All - full"
 msgstr ""
 
@@ -197,9 +194,6 @@ msgid "Categories extended SEO - full"
 msgstr ""
 
 msgid "Categories extended SEO - view"
-msgstr ""
-
-msgid "Categories transfer"
 msgstr ""
 
 msgid "Category"
@@ -952,22 +946,7 @@ msgstr ""
 msgid "Products - view"
 msgstr ""
 
-msgid "Products accessories transfer"
-msgstr ""
-
-msgid "Products flags transfer"
-msgstr ""
-
-msgid "Products parameters groups transfer"
-msgstr ""
-
 msgid "Products parameters of selected category"
-msgstr ""
-
-msgid "Products parameters transfer"
-msgstr ""
-
-msgid "Products transfer"
 msgstr ""
 
 msgid "Promo code"

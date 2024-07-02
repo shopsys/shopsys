@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Component\FileUpload;
 
-use App\Component\Image\Image;
 use App\Component\Image\ImageRepository;
 use App\Component\UploadedFile\UploadedFileRepository;
 use League\Flysystem\FilesystemOperator;
@@ -13,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload as BaseFileUpload;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile as ShopsysUploadedFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Service\ResetInterface;
@@ -58,7 +58,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
     }
 
     /**
-     * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
      */
     public function preFlushEntity(EntityFileUploadInterface $entity)
     {
@@ -70,7 +70,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
     }
 
     /**
-     * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
      * @return int
      */
     private function getPositionForNewEntity(EntityFileUploadInterface $entity): int
@@ -106,7 +106,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
     }
 
     /**
-     * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
      * @return string
      */
     private function getUploadEntityType(EntityFileUploadInterface $entity): string

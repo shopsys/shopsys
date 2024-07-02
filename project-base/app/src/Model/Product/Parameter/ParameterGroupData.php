@@ -7,11 +7,6 @@ namespace App\Model\Product\Parameter;
 class ParameterGroupData
 {
     /**
-     * @var string
-     */
-    public $akeneoCode;
-
-    /**
      * @var string[]|null[]
      */
     public $names;

@@ -136,32 +136,6 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param string $akeneoCode
-     * @return \App\Model\Category\Category|null
-     */
-    public function findByAkeneoCode(string $akeneoCode): ?Category
-    {
-        return $this->categoryRepository->findByAkeneoCode($akeneoCode);
-    }
-
-    /**
-     * @param string $akeneoCode
-     * @return \App\Model\Category\Category
-     */
-    public function getByAkeneoCode(string $akeneoCode): Category
-    {
-        return $this->categoryRepository->getByAkeneoCode($akeneoCode);
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getAllAkeneoCategoryIds(): array
-    {
-        return $this->categoryRepository->getAllAkeneoCategoryIds();
-    }
-
-    /**
      * @param \App\Model\Category\Category $destinationCategory
      * @return array
      */

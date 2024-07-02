@@ -226,7 +226,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             }
 
             $positions[$productId] = 0;
-            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, 'image_main', $positions[$productId]);
+            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, $positions[$productId]);
         }
 
         foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
@@ -237,7 +237,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             }
 
             $positions[$productId] = array_key_exists($productId, $positions) ? ++$positions[$productId] : 0;
-            $this->saveImageIntoDb($productId, 'product', $imageId, $names, null, 'image_main', $positions[$productId]);
+            $this->saveImageIntoDb($productId, 'product', $imageId, $names, null, $positions[$productId]);
         }
     }
 
@@ -309,7 +309,6 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param int $imageId
      * @param array $names
      * @param string|null $type
-     * @param string|null $akeneoImageType
      * @param int|null $position
      */
     private function saveImageIntoDb(
@@ -318,12 +317,11 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         int $imageId,
         array $names = [],
         ?string $type = null,
-        ?string $akeneoImageType = null,
         ?int $position = null,
     ) {
         $this->em->getConnection()->executeStatement(
-            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
-            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :akeneo_image_type)',
+            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)
+            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at)',
             [
                 'id' => $imageId,
                 'entity_name' => $entityName,
@@ -332,7 +330,6 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'extension' => self::IMAGE_TYPE,
                 'position' => $position,
                 'modified_at' => new DateTimeImmutable('2015-04-16 11:36:06'),
-                'akeneo_image_type' => $akeneoImageType,
             ],
             [
                 'id' => Types::INTEGER,
@@ -342,7 +339,6 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'extension' => Types::STRING,
                 'position' => Types::INTEGER,
                 'modified_at' => Types::DATETIME_IMMUTABLE,
-                'akeneo_image_type' => Types::STRING,
             ],
         );
 

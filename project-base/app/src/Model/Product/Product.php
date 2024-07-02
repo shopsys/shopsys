@@ -34,8 +34,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductTranslation> $translations
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductDomain> $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
- * @property \App\Model\Product\Unit\Unit $unit
- * @method \App\Model\Product\Unit\Unit getUnit()
+ * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
+ * @method \Shopsys\FrameworkBundle\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  * @method setDomains(\App\Model\Product\ProductData $productData)
  * @method \App\Model\Product\ProductDomain[] getProductDomains()
@@ -332,22 +332,6 @@ class Product extends BaseProduct
     public function getCatnum(): string
     {
         return $this->catnum;
-    }
-
-    /**
-     * @param string $akeneoCode
-     * @param int $domainId
-     * @return bool
-     */
-    public function hasFlagByAkeneoCodeForDomain(string $akeneoCode, int $domainId): bool
-    {
-        foreach ($this->getFlags($domainId) as $flag) {
-            if ($flag->getAkeneoCode() === $akeneoCode) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

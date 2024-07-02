@@ -23,32 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagReposit
 class FlagRepository extends BaseFlagRepository
 {
     /**
-     * @param string $akeneoCode
-     * @throws \RuntimeException
-     * @return \App\Model\Product\Flag\Flag|null
-     */
-    public function findByAkeneoCode(string $akeneoCode): ?Flag
-    {
-        return $this->getFlagRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     * @return array
-     */
-    public function getAllFlagAkeneoCodes(): array
-    {
-        $result = $this->em->createQueryBuilder()
-            ->select('fl.akeneoCode')
-            ->from(Flag::class, 'fl')
-            ->getQuery()
-            ->execute();
-
-        return array_column($result, 'akeneoCode');
-    }
-
-    /**
      * @param int $flagId
      * @param string $locale
      * @return \App\Model\Product\Flag\Flag

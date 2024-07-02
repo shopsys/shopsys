@@ -123,18 +123,6 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
-     * @param string $akeneoCode
-     * @return \App\Model\Product\Parameter\ParameterGroup|null
-     */
-    public function findParameterGroupByAkeneoCode(string $akeneoCode): ?ParameterGroup
-    {
-        /** @var \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup */
-        $parameterGroup = $this->getParameterGroupRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
-
-        return $parameterGroup;
-    }
-
-    /**
      * @param int $parameterGroupId
      * @return \App\Model\Product\Parameter\ParameterGroup
      */
@@ -147,18 +135,6 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $parameterGroup;
-    }
-
-    /**
-     * @param string $akeneoCode
-     * @return \App\Model\Product\Parameter\Parameter|null
-     */
-    public function findParameterByAkeneoCode(string $akeneoCode): ?Parameter
-    {
-        /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
-        $parameter = $this->getParameterRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
-
-        return $parameter;
     }
 
     /**
@@ -215,34 +191,6 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
-     * @return int[]
-     */
-    public function getAllAkeneoParameterIds(): array
-    {
-        $result = $this->em->createQueryBuilder()
-            ->select('p.id')
-            ->from(Parameter::class, 'p')
-            ->where('p.akeneoCode IS NOT NULL')
-            ->getQuery()
-            ->execute();
-
-        return array_column($result, 'id');
-    }
-
-    /**
-     * @param string $parameterValueText
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue|null
-     */
-    public function findParameterValueByText(string $parameterValueText, string $locale): ?ParameterValue
-    {
-        return $this->getParameterValueRepository()->findOneBy([
-            'text' => $parameterValueText,
-            'locale' => $locale,
-        ]);
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -281,7 +229,6 @@ class ParameterRepository extends BaseParameterRepository
                 pt.name as parameter_name,
                 pv.uuid as parameter_value_uuid,
                 pv.text as parameter_value_text,
-                CASE WHEN pg.akeneoCode = :akeneoCodeDimensions THEN TRUE ELSE FALSE END as parameter_is_dimensional,
                 pgt.name as parameter_group,
                 put.name as parameter_unit',
             )
@@ -300,7 +247,6 @@ class ParameterRepository extends BaseParameterRepository
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,
-                'akeneoCodeDimensions' => ParameterGroup::AKENEO_CODE_DIMENSIONS,
             ])
             ->getQuery()
             ->execute();

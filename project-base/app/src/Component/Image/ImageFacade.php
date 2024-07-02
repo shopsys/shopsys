@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
@@ -22,20 +23,16 @@ use Symfony\Contracts\Cache\CacheInterface;
 /**
  * @property \App\Component\Image\ImageRepository $imageRepository
  * @property \App\Component\FileUpload\FileUpload $fileUpload
- * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
- * @method deleteImageFiles(\App\Component\Image\Image $image)
- * @method \App\Component\Image\Image getImageByObject(object $imageOrEntity, string|null $type = null)
- * @method \App\Component\Image\Image getById(int $imageId)
- * @method \App\Component\Image\Image getImageByEntity(object $entity, string|null $type)
- * @method \App\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
- * @method string|null getSeoNameByImageAndLocale(\App\Component\Image\Image $image, string $locale)
+ * @method \Shopsys\FrameworkBundle\Component\Image\Image[] getAllImagesByEntity(object $entity)
+ * @method deleteImageFiles(\Shopsys\FrameworkBundle\Component\Image\Image $image)
+ * @method \Shopsys\FrameworkBundle\Component\Image\Image getImageByObject(object $imageOrEntity, string|null $type = null)
+ * @method \Shopsys\FrameworkBundle\Component\Image\Image getById(int $imageId)
+ * @method \Shopsys\FrameworkBundle\Component\Image\Image getImageByEntity(object $entity, string|null $type)
+ * @method \Shopsys\FrameworkBundle\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
+ * @method string|null getSeoNameByImageAndLocale(\Shopsys\FrameworkBundle\Component\Image\Image $image, string $locale)
  */
 class ImageFacade extends BaseImageFacade
 {
-    public const AKENEO_MAIN_IMAGE_TYPE = 'image_main';
-    public const NOIMAGE_FILENAME = 'noimage.png';
-    public const OPTIMIZED_NOIMAGE_FILENAME = 'optimized-' . self::NOIMAGE_FILENAME;
-
     /**
      * @param string $imageUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -87,7 +84,7 @@ class ImageFacade extends BaseImageFacade
      * @param array $temporaryFilenames
      * @param string|null $type
      * @param bool $deleteOldImage
-     * @return \App\Component\Image\Image|null
+     * @return \Shopsys\FrameworkBundle\Component\Image\Image|null
      */
     public function uploadAndReturnImage(
         object $entity,
@@ -112,7 +109,7 @@ class ImageFacade extends BaseImageFacade
                 $this->em->remove($oldImage);
             }
 
-            /** @var \App\Component\Image\Image|null $newImage */
+            /** @var \Shopsys\FrameworkBundle\Component\Image\Image|null $newImage */
             $newImage = $this->imageFactory->create(
                 $imageEntityConfig->getEntityName(),
                 $entityId,
@@ -153,37 +150,20 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param \App\Component\Image\Image[] $orderedImages
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
     protected function setImagePositionsByOrder(array $orderedImages): void
     {
         $position = 0;
-        $canUpdateAkeneoType = false;
 
         foreach ($orderedImages as $image) {
             $image->setPosition($position);
             $position++;
-
-            if ($image->getEntityName() === 'product') {
-                $canUpdateAkeneoType = true;
-            }
-        }
-
-        if (!$canUpdateAkeneoType) {
-            return;
-        }
-
-        foreach ($orderedImages as $image) {
-            if ($image->getPosition() === 0) {
-                $image->setAkeneoImageType(self::AKENEO_MAIN_IMAGE_TYPE);
-            } elseif ($image->getAkeneoImageType() === self::AKENEO_MAIN_IMAGE_TYPE) {
-                $image->setAkeneoImageType(null);
-            }
         }
     }
 
     /**
-     * @param \App\Component\Image\Image[] $orderedImages
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
     protected function saveImageOrdering($orderedImages): void
     {

@@ -38,7 +38,6 @@
         "ext-pdo_pgsql": "*",
         "ext-redis": "*",
         "ext-xml": "*",
-        "akeneo/api-php-client": "^11.0",
         "arvenil/ninja-mutex": "^0.6",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",

@@ -25,22 +25,6 @@
         </exec>
     </target>
 
-    <target name="cron-import-akeneo-product" description="Runs Import Akeneo Product background jobs. Should be executed periodically by system Cron every 5 minutes.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="shopsys:cron" />
-            <arg value="--instance-name=importAkeneoProduct" />
-        </exec>
-    </target>
-
-    <target name="cron-import-akeneo-files" description="Runs Import Akeneo Files background jobs. Should be executed periodically by system Cron every 5 minutes.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="shopsys:cron" />
-            <arg value="--instance-name=importAkeneoFiles" />
-        </exec>
-    </target>
-
     <target name="cron-gopay" description="Runs GoPay background jobs. Should be executed periodically by system Cron every 5 minutes.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
