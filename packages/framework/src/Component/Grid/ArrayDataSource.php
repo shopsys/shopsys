@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Shopsys\FrameworkBundle\Component\Grid\Exception\OrderingNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\PaginationNotSupportedException;
+use Shopsys\FrameworkBundle\Component\Grid\Exception\RowNotFoundInGridByIdException;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayDataSource implements DataSourceInterface
@@ -23,16 +24,16 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;
     }
 
     /**
      * @param int $rowId
-     * @return mixed
+     * @return array
      */
-    public function getOneRow($rowId)
+    public function getOneRow(int $rowId): array
     {
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];
@@ -43,6 +44,8 @@ class ArrayDataSource implements DataSourceInterface
                 return $item;
             }
         }
+
+        throw new RowNotFoundInGridByIdException(sprintf('Row with id "%s" not found', $rowId));
     }
 
     /**
@@ -53,11 +56,11 @@ class ArrayDataSource implements DataSourceInterface
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC,
-    ) {
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC,
+    ): PaginationResult {
         if ($limit !== null) {
             $message = 'Pagination not supported in ArrayDataSource';
 
@@ -76,7 +79,7 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return int
      */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
         return count($this->data);
     }

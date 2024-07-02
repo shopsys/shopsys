@@ -52,7 +52,7 @@ class Grid
 
     protected ?string $orderSourceColumnName = null;
 
-    protected ?string $orderDirection = null;
+    protected string $orderDirection = DataSourceInterface::ORDER_DESC;
 
     protected bool $isOrderFromRequest = false;
 
@@ -624,7 +624,7 @@ class Grid
 
         if ($this->isDragAndDrop()) {
             $orderSourceColumnName = null;
-            $orderDirection = null;
+            $orderDirection = DataSourceInterface::ORDER_DESC;
         }
 
         $this->paginationResults = $this->dataSource->getPaginatedRows(

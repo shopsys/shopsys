@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Paginator;
 
+use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
@@ -12,31 +13,36 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class QueryPaginator implements PaginatorInterface
 {
-    protected ?string $hydrationMode = null;
-
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $hydrationMode
      */
-    public function __construct(protected readonly QueryBuilder $queryBuilder, $hydrationMode = null)
-    {
-        $this->hydrationMode = $hydrationMode;
+    public function __construct(
+        protected readonly QueryBuilder $queryBuilder,
+        protected readonly ?string $hydrationMode = null,
+    ) {
     }
 
     /**
      * @param int $page
-     * @param int $pageSize
+     * @param int|null $pageSize
+     * @param int|null $totalCount
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getResult($page = 1, $pageSize = null)
-    {
+    public function getResult(
+        int $page = 1,
+        ?int $pageSize = null,
+        ?int $totalCount = null,
+    ): PaginationResult {
         $queryBuilder = clone $this->queryBuilder;
 
         if ($page < 1) {
             $page = 1;
         }
 
-        $totalCount = $this->getTotalCount();
+        if ($totalCount === null) {
+            $totalCount = $this->getTotalCount();
+        }
 
         if ($pageSize !== null) {
             $maxPage = (int)ceil($totalCount / $pageSize);
@@ -65,7 +71,7 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @return int
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         $totalNativeQuery = $this->getTotalNativeQuery($this->queryBuilder);
 
@@ -76,7 +82,7 @@ class QueryPaginator implements PaginatorInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Doctrine\ORM\NativeQuery
      */
-    protected function getTotalNativeQuery(QueryBuilder $queryBuilder)
+    protected function getTotalNativeQuery(QueryBuilder $queryBuilder): NativeQuery
     {
         $em = $queryBuilder->getEntityManager();
 

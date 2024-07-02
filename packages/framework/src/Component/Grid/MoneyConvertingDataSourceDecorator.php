@@ -27,10 +27,10 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC,
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC,
     ): PaginationResult {
         $paginationResult = $this->innerDataSource->getPaginatedRows(
             $limit,
@@ -57,7 +57,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
      * @param int $rowId
      * @return array
      */
-    public function getOneRow($rowId): array
+    public function getOneRow(int $rowId): array
     {
         $row = $this->innerDataSource->getOneRow($rowId);
 

@@ -7,10 +7,14 @@ namespace Shopsys\FrameworkBundle\Component\Paginator;
 interface PaginatorInterface
 {
     /**
-     * @param mixed $page
-     * @param mixed $pageSize
+     * @param int $page
+     * @param int|null $pageSize
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getResult($page, $pageSize);
+    public function getResult(int $page, ?int $pageSize): PaginationResult;
 
-    public function getTotalCount();
+    /**
+     * @return int
+     */
+    public function getTotalCount(): int;
 }
