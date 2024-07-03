@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Customer\User;
+namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 
 class RemoveOldCustomerUserRefreshTokenChainsCronModule implements SimpleCronModuleInterface
 {
-    private Logger $logger;
+    protected Logger $logger;
 
     /**
-     * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
      */
     public function __construct(
-        private CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository,
+        protected readonly CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository,
     ) {
     }
 
