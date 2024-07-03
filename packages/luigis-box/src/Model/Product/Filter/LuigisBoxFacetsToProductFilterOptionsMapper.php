@@ -93,6 +93,8 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
             }
         }
 
+        $this->sortParameterChoicesByParameterOrderingPriority($parameterFilterChoices);
+
         $productFilterConfig = $this->productFilterConfigFactory->create($parameterFilterChoices, $flags, $brands, $priceRange);
 
         return $this->productFilterOptionsFactory->createFullProductFilterOptions(
@@ -215,5 +217,22 @@ class LuigisBoxFacetsToProductFilterOptionsMapper
         }
 
         return new ParameterFilterChoice($parameter, $parameterValues);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterFilterChoices
+     */
+    protected function sortParameterChoicesByParameterOrderingPriority(array &$parameterFilterChoices): void
+    {
+        usort($parameterFilterChoices, static function (ParameterFilterChoice $a, ParameterFilterChoice $b) {
+            $parameterA = $a->getParameter();
+            $parameterB = $b->getParameter();
+
+            if ($parameterA->getOrderingPriority() === $parameterB->getOrderingPriority()) {
+                return strcmp($parameterA->getName(), $parameterB->getName());
+            }
+
+            return $parameterB->getOrderingPriority() - $parameterA->getOrderingPriority();
+        });
     }
 }
