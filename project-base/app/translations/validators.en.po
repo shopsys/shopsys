@@ -43,9 +43,6 @@ msgstr ""
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr ""
 
-msgid "Name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "New password must be at least {{ limit }} characters long"
 msgstr ""
 
@@ -98,9 +95,6 @@ msgid "Please enter identification number"
 msgstr ""
 
 msgid "Please enter last name"
-msgstr ""
-
-msgid "Please enter name"
 msgstr ""
 
 msgid "Please enter new password"

@@ -31,6 +31,9 @@ msgstr ""
 msgid "-- Choose unit --"
 msgstr ""
 
+msgid "-- Select a role --"
+msgstr ""
+
 msgid "-- Select name of the transfer --"
 msgstr ""
 
@@ -154,7 +157,28 @@ msgstr ""
 msgid "Administrator activities history"
 msgstr ""
 
+msgid "Administrator role group"
+msgstr ""
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr ""
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr ""
+
+msgid "Administrator role group <strong>{{ name }}</strong> deleted."
+msgstr ""
+
+msgid "Administrator role groups"
+msgstr ""
+
 msgid "Administrators"
+msgstr ""
+
+msgid "Administrators - full"
+msgstr ""
+
+msgid "Administrators - view"
 msgstr ""
 
 msgid "Administrators overview"
@@ -176,6 +200,18 @@ msgid "Advertising <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Advertising system"
+msgstr ""
+
+msgid "Adverts - full"
+msgstr ""
+
+msgid "Adverts - view"
+msgstr ""
+
+msgid "All - full"
+msgstr ""
+
+msgid "All - view"
 msgstr ""
 
 msgid "All domains"
@@ -259,6 +295,12 @@ msgstr ""
 msgid "Article data"
 msgstr ""
 
+msgid "Articles - full"
+msgstr ""
+
+msgid "Articles - view"
+msgstr ""
+
 msgid "Articles in footer"
 msgstr ""
 
@@ -319,6 +361,12 @@ msgstr ""
 msgid "Bestsellers of the category"
 msgstr ""
 
+msgid "Bestselling products - full"
+msgstr ""
+
+msgid "Bestselling products - view"
+msgstr ""
+
 msgid "Billing address"
 msgstr ""
 
@@ -332,6 +380,12 @@ msgid "Blog"
 msgstr ""
 
 msgid "Blog article"
+msgstr ""
+
+msgid "Blog article - full"
+msgstr ""
+
+msgid "Blog article - view"
 msgstr ""
 
 msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
@@ -350,6 +404,12 @@ msgid "Blog categories"
 msgstr ""
 
 msgid "Blog category"
+msgstr ""
+
+msgid "Blog category - full"
+msgstr ""
+
+msgid "Blog category - view"
 msgstr ""
 
 msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
@@ -377,6 +437,12 @@ msgid "Brand overview"
 msgstr ""
 
 msgid "Brands"
+msgstr ""
+
+msgid "Brands - full"
+msgstr ""
+
+msgid "Brands - view"
 msgstr ""
 
 msgid "Browse files"
@@ -413,6 +479,18 @@ msgid "Catalog number"
 msgstr ""
 
 msgid "Categories"
+msgstr ""
+
+msgid "Categories - full"
+msgstr ""
+
+msgid "Categories - view"
+msgstr ""
+
+msgid "Categories extended SEO - full"
+msgstr ""
+
+msgid "Categories extended SEO - view"
 msgstr ""
 
 msgid "Categories order saved."
@@ -502,6 +580,12 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
+msgid "Color parameter values - full"
+msgstr ""
+
+msgid "Color parameter values - view"
+msgstr ""
+
 msgid "Communication with customer"
 msgstr ""
 
@@ -526,6 +610,12 @@ msgstr ""
 msgid "Contact form"
 msgstr ""
 
+msgid "Contact form - full"
+msgstr ""
+
+msgid "Contact form - view"
+msgstr ""
+
 msgid "Contact form settings"
 msgstr ""
 
@@ -541,7 +631,16 @@ msgstr ""
 msgid "Copied to clipboard!"
 msgstr ""
 
+msgid "Copy administrator role group"
+msgstr ""
+
 msgid "Countries"
+msgstr ""
+
+msgid "Countries - full"
+msgstr ""
+
+msgid "Countries - view"
 msgstr ""
 
 msgid "Countries overview"
@@ -584,6 +683,9 @@ msgid "Create flag"
 msgstr ""
 
 msgid "Create new administrator"
+msgstr ""
+
+msgid "Create new administrator role group"
 msgstr ""
 
 msgid "Create new advertising"
@@ -700,6 +802,9 @@ msgstr ""
 msgid "Currency settings modified"
 msgstr ""
 
+msgid "Custom"
+msgstr ""
+
 msgid "Customer"
 msgstr ""
 
@@ -749,6 +854,12 @@ msgid "Customer street"
 msgstr ""
 
 msgid "Customers"
+msgstr ""
+
+msgid "Customers - full"
+msgstr ""
+
+msgid "Customers - view"
 msgstr ""
 
 msgid "Customers overview"
@@ -913,6 +1024,9 @@ msgstr ""
 msgid "Do you really want to remove this SEO page?"
 msgstr ""
 
+msgid "Do you really want to remove this administrator role group?"
+msgstr ""
+
 msgid "Do you really want to remove this administrator?"
 msgstr ""
 
@@ -1024,6 +1138,12 @@ msgstr ""
 msgid "E-shop identification"
 msgstr ""
 
+msgid "E-shop identification - full"
+msgstr ""
+
+msgid "E-shop identification - view"
+msgstr ""
+
 msgid "E-shop name"
 msgstr ""
 
@@ -1046,6 +1166,12 @@ msgid "Editing administrator"
 msgstr ""
 
 msgid "Editing administrator - %name%"
+msgstr ""
+
+msgid "Editing administrator role group"
+msgstr ""
+
+msgid "Editing administrator role group - %name%"
 msgstr ""
 
 msgid "Editing advertising"
@@ -1324,6 +1450,9 @@ msgstr ""
 msgid "Feed \"{{ feedName }}\" successfully generated."
 msgstr ""
 
+msgid "Feeds - view"
+msgstr ""
+
 msgid "File content"
 msgstr ""
 
@@ -1369,6 +1498,12 @@ msgstr ""
 msgid "Flags"
 msgstr ""
 
+msgid "Flags - full"
+msgstr ""
+
+msgid "Flags - view"
+msgstr ""
+
 msgid "Flags overview"
 msgstr ""
 
@@ -1403,6 +1538,12 @@ msgid "Free shipping and payment"
 msgstr ""
 
 msgid "Free shipping and payment settings saved"
+msgstr ""
+
+msgid "Free transport and payment - full"
+msgstr ""
+
+msgid "Free transport and payment - view"
 msgstr ""
 
 msgid "Frequency"
@@ -1466,6 +1607,12 @@ msgid "Heureka Widget code"
 msgstr ""
 
 msgid "Heureka agreement"
+msgstr ""
+
+msgid "Heureka setting - full"
+msgstr ""
+
+msgid "Heureka setting - view"
 msgstr ""
 
 msgid "Hidden"
@@ -1585,6 +1732,12 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
+msgid "Language constants - full"
+msgstr ""
+
+msgid "Language constants - view"
+msgstr ""
+
 msgid "Last action time"
 msgstr ""
 
@@ -1607,6 +1760,12 @@ msgid "Last started at"
 msgstr ""
 
 msgid "Legal conditions"
+msgstr ""
+
+msgid "Legal conditions article setting - full"
+msgstr ""
+
+msgid "Legal conditions article setting - view"
 msgstr ""
 
 msgid "Legal conditions settings"
@@ -1673,6 +1832,18 @@ msgid "Login name <strong>{{ name }}</strong> is already used"
 msgstr ""
 
 msgid "Login time"
+msgstr ""
+
+msgid "Mail setting - full"
+msgstr ""
+
+msgid "Mail setting - view"
+msgstr ""
+
+msgid "Mail templates - full"
+msgstr ""
+
+msgid "Mail templates - view"
 msgstr ""
 
 msgid "Main URL can't be deleted"
@@ -1774,6 +1945,12 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
+msgid "Navigation - full"
+msgstr ""
+
+msgid "Navigation - view"
+msgstr ""
+
 msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
 msgstr ""
 
@@ -1787,6 +1964,9 @@ msgid "New SEO page"
 msgstr ""
 
 msgid "New administrator"
+msgstr ""
+
+msgid "New administrator role group"
 msgstr ""
 
 msgid "New advertising"
@@ -1856,6 +2036,12 @@ msgid "New store"
 msgstr ""
 
 msgid "New warehouse"
+msgstr ""
+
+msgid "Newsletter - full"
+msgstr ""
+
+msgid "Newsletter - view"
 msgstr ""
 
 msgid "No"
@@ -1972,6 +2158,12 @@ msgstr ""
 msgid "Nothing to choose from."
 msgstr ""
 
+msgid "Notification bar - full"
+msgstr ""
+
+msgid "Notification bar - view"
+msgstr ""
+
 msgid "Number of generated promo codes"
 msgstr ""
 
@@ -2015,6 +2207,12 @@ msgid "Opening time"
 msgstr ""
 
 msgid "Operator information"
+msgstr ""
+
+msgid "Operator information - full"
+msgstr ""
+
+msgid "Operator information - view"
 msgstr ""
 
 msgid "Order Nr."
@@ -2068,10 +2266,28 @@ msgstr ""
 msgid "Order sent page content"
 msgstr ""
 
+msgid "Order statuses - full"
+msgstr ""
+
+msgid "Order statuses - view"
+msgstr ""
+
 msgid "Order statuses overview"
 msgstr ""
 
+msgid "Order submitted page setting - full"
+msgstr ""
+
+msgid "Order submitted page setting - view"
+msgstr ""
+
 msgid "Orders"
+msgstr ""
+
+msgid "Orders - full"
+msgstr ""
+
+msgid "Orders - view"
 msgstr ""
 
 msgid "Orders overview"
@@ -2123,6 +2339,12 @@ msgid "Parameter values of type color"
 msgstr ""
 
 msgid "Parameters"
+msgstr ""
+
+msgid "Parameters - full"
+msgstr ""
+
+msgid "Parameters - view"
 msgstr ""
 
 msgid "Parameters overview"
@@ -2218,6 +2440,12 @@ msgstr ""
 msgid "Personal data access"
 msgstr ""
 
+msgid "Personal data access pages setting - full"
+msgstr ""
+
+msgid "Personal data access pages setting - view"
+msgstr ""
+
 msgid "Personal data site content updated successfully"
 msgstr ""
 
@@ -2296,6 +2524,12 @@ msgstr ""
 msgid "Pricing groups"
 msgstr ""
 
+msgid "Pricing groups - full"
+msgstr ""
+
+msgid "Pricing groups - view"
+msgstr ""
+
 msgid "Pricing settings modified"
 msgstr ""
 
@@ -2303,6 +2537,12 @@ msgid "Priority"
 msgstr ""
 
 msgid "Privacy policy"
+msgstr ""
+
+msgid "Privacy policy article setting - full"
+msgstr ""
+
+msgid "Privacy policy article setting - view"
 msgstr ""
 
 msgid "Product"
@@ -2350,6 +2590,12 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
+msgid "Products - full"
+msgstr ""
+
+msgid "Products - view"
+msgstr ""
+
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr ""
 
@@ -2380,7 +2626,13 @@ msgstr ""
 msgid "Promo codes"
 msgstr ""
 
+msgid "Promo codes - full"
+msgstr ""
+
 msgid "Promo codes - generated batches"
+msgstr ""
+
+msgid "Promo codes - view"
 msgstr ""
 
 msgid "Quick product search"
@@ -2434,6 +2686,27 @@ msgstr ""
 msgid "Robots.txt settings modified"
 msgstr ""
 
+msgid "Role"
+msgstr ""
+
+msgid "Role Group"
+msgstr ""
+
+msgid "Role Groups"
+msgstr ""
+
+msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
+msgstr ""
+
+msgid "Role group name <strong>{{ name }}</strong> is already used"
+msgstr ""
+
+msgid "Role name"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
 msgid "Rounding"
 msgstr ""
 
@@ -2447,6 +2720,12 @@ msgid "Running"
 msgstr ""
 
 msgid "SEO"
+msgstr ""
+
+msgid "SEO - full"
+msgstr ""
+
+msgid "SEO - view"
 msgstr ""
 
 msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
@@ -2540,6 +2819,9 @@ msgid "Selected VAT doesn't exist."
 msgstr ""
 
 msgid "Selected administrated doesn't exist."
+msgstr ""
+
+msgid "Selected administrator role group doesn't exist."
 msgstr ""
 
 msgid "Selected advertisement doesn't exist."
@@ -2692,6 +2974,12 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
+msgid "Slider items - full"
+msgstr ""
+
+msgid "Slider items - view"
+msgstr ""
+
 msgid "Slider on main page"
 msgstr ""
 
@@ -2759,6 +3047,12 @@ msgid "Store list"
 msgstr ""
 
 msgid "Storefront queries cache has been cleaned."
+msgstr ""
+
+msgid "Stores - full"
+msgstr ""
+
+msgid "Stores - view"
 msgstr ""
 
 msgid "Street"
@@ -2866,6 +3160,18 @@ msgstr ""
 msgid "Too many login attempts. Please try again later."
 msgstr ""
 
+msgid "Top categories - full"
+msgstr ""
+
+msgid "Top categories - view"
+msgstr ""
+
+msgid "Top products - full"
+msgstr ""
+
+msgid "Top products - view"
+msgstr ""
+
 msgid "Total"
 msgstr ""
 
@@ -2917,6 +3223,9 @@ msgstr ""
 msgid "Transfers"
 msgstr ""
 
+msgid "Transfers - view"
+msgstr ""
+
 msgid "Transport type"
 msgstr ""
 
@@ -2924,6 +3233,18 @@ msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modi
 msgstr ""
 
 msgid "Transport types"
+msgstr ""
+
+msgid "Transport types - full"
+msgstr ""
+
+msgid "Transport types - view"
+msgstr ""
+
+msgid "Transports and payments - full"
+msgstr ""
+
+msgid "Transports and payments - view"
 msgstr ""
 
 msgid "Tuesday"
@@ -2980,7 +3301,19 @@ msgstr ""
 msgid "Units"
 msgstr ""
 
+msgid "Units - full"
+msgstr ""
+
+msgid "Units - view"
+msgstr ""
+
 msgid "Units overview"
+msgstr ""
+
+msgid "Unused friendly URLs - full"
+msgstr ""
+
+msgid "Unused friendly URLs - view"
 msgstr ""
 
 msgid "Upload attachment"
@@ -3017,6 +3350,12 @@ msgid "User consent policy"
 msgstr ""
 
 msgid "User consent policy article"
+msgstr ""
+
+msgid "User consent policy article setting - full"
+msgstr ""
+
+msgid "User consent policy article setting - view"
 msgstr ""
 
 msgid "User consent policy settings"
@@ -3082,6 +3421,12 @@ msgstr ""
 msgid "Variants"
 msgstr ""
 
+msgid "Vats - full"
+msgstr ""
+
+msgid "Vats - view"
+msgstr ""
+
 msgid "Visibility"
 msgstr ""
 
@@ -3113,6 +3458,12 @@ msgid "Warehouse setting %domainName% saved."
 msgstr ""
 
 msgid "Warehouse settings"
+msgstr ""
+
+msgid "Warehouses - full"
+msgstr ""
+
+msgid "Warehouses - view"
 msgstr ""
 
 msgid "Wednesday"

@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
-msgid "-- Select a role --"
-msgstr ""
-
 msgid "301 (Permanent redirect)"
 msgstr ""
 
@@ -43,43 +40,7 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-msgid "Administrator role group"
-msgstr ""
-
-msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
-msgstr ""
-
-msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
-msgstr ""
-
-msgid "Administrator role group <strong>{{ name }}</strong> deleted."
-msgstr ""
-
-msgid "Administrator role groups"
-msgstr ""
-
-msgid "Administrators - full"
-msgstr ""
-
-msgid "Administrators - view"
-msgstr ""
-
-msgid "Administrators overview"
-msgstr ""
-
 msgid "Advanced SEO categories"
-msgstr ""
-
-msgid "Adverts - full"
-msgstr ""
-
-msgid "Adverts - view"
-msgstr ""
-
-msgid "All - full"
-msgstr ""
-
-msgid "All - view"
 msgstr ""
 
 msgid "An authentication exception occurred."
@@ -89,12 +50,6 @@ msgid "An email with 6 digit code was sent to your email address."
 msgstr ""
 
 msgid "Article"
-msgstr ""
-
-msgid "Articles - full"
-msgstr ""
-
-msgid "Articles - view"
 msgstr ""
 
 msgid "Authentication code"
@@ -127,43 +82,19 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
-msgid "Bestselling products - full"
-msgstr ""
-
-msgid "Bestselling products - view"
-msgstr ""
-
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr ""
 
 msgid "Blog article"
 msgstr ""
 
-msgid "Blog article - full"
-msgstr ""
-
-msgid "Blog article - view"
-msgstr ""
-
 msgid "Blog category"
-msgstr ""
-
-msgid "Blog category - full"
-msgstr ""
-
-msgid "Blog category - view"
 msgstr ""
 
 msgid "Brand"
 msgstr ""
 
 msgid "Brand overview"
-msgstr ""
-
-msgid "Brands - full"
-msgstr ""
-
-msgid "Brands - view"
 msgstr ""
 
 msgid "But at other addresses we have a lot for you..."
@@ -182,18 +113,6 @@ msgid "Catalog number"
 msgstr ""
 
 msgid "Catalog numbers"
-msgstr ""
-
-msgid "Categories - full"
-msgstr ""
-
-msgid "Categories - view"
-msgstr ""
-
-msgid "Categories extended SEO - full"
-msgstr ""
-
-msgid "Categories extended SEO - view"
 msgstr ""
 
 msgid "Category"
@@ -232,12 +151,6 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-msgid "Color parameter values - full"
-msgstr ""
-
-msgid "Color parameter values - view"
-msgstr ""
-
 msgid "Combination of parameters and their values"
 msgstr ""
 
@@ -245,12 +158,6 @@ msgid "Confirm authentication code"
 msgstr ""
 
 msgid "Contact"
-msgstr ""
-
-msgid "Contact form - full"
-msgstr ""
-
-msgid "Contact form - view"
 msgstr ""
 
 msgid "Content"
@@ -265,15 +172,6 @@ msgstr ""
 msgid "Content-Security-Policy header setting"
 msgstr ""
 
-msgid "Copy administrator role group"
-msgstr ""
-
-msgid "Countries - full"
-msgstr ""
-
-msgid "Countries - view"
-msgstr ""
-
 msgid "Country"
 msgstr ""
 
@@ -283,25 +181,13 @@ msgstr ""
 msgid "Create flag"
 msgstr ""
 
-msgid "Create new administrator role group"
-msgstr ""
-
 msgid "Create new banner"
 msgstr ""
 
 msgid "Create notification bar"
 msgstr ""
 
-msgid "Custom"
-msgstr ""
-
 msgid "Customer activation"
-msgstr ""
-
-msgid "Customers - full"
-msgstr ""
-
-msgid "Customers - view"
 msgstr ""
 
 msgid "Date and time of order creation"
@@ -326,9 +212,6 @@ msgid "Display date FROM"
 msgstr ""
 
 msgid "Display date TO"
-msgstr ""
-
-msgid "Do you really want to remove this administrator role group?"
 msgstr ""
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
@@ -361,12 +244,6 @@ msgstr ""
 msgid "E-shop URL address"
 msgstr ""
 
-msgid "E-shop identification - full"
-msgstr ""
-
-msgid "E-shop identification - view"
-msgstr ""
-
 msgid "Edit"
 msgstr ""
 
@@ -377,15 +254,6 @@ msgid "Edit store"
 msgstr ""
 
 msgid "Edit transport type"
-msgstr ""
-
-msgid "Editing administrator"
-msgstr ""
-
-msgid "Editing administrator role group"
-msgstr ""
-
-msgid "Editing administrator role group - %name%"
 msgstr ""
 
 msgid "Editing banner"
@@ -466,9 +334,6 @@ msgstr ""
 msgid "Facebook URL"
 msgstr ""
 
-msgid "Feeds - view"
-msgstr ""
-
 msgid "File"
 msgstr ""
 
@@ -499,12 +364,6 @@ msgstr ""
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr ""
 
-msgid "Flags - full"
-msgstr ""
-
-msgid "Flags - view"
-msgstr ""
-
 msgid "Footer"
 msgstr ""
 
@@ -512,12 +371,6 @@ msgid "Footer Text"
 msgstr ""
 
 msgid "Forgotten password"
-msgstr ""
-
-msgid "Free transport and payment - full"
-msgstr ""
-
-msgid "Free transport and payment - view"
 msgstr ""
 
 msgid "Friendly URL \"%slug%\" was removed."
@@ -539,12 +392,6 @@ msgid "Heading (H1)"
 msgstr ""
 
 msgid "Heureka"
-msgstr ""
-
-msgid "Heureka setting - full"
-msgstr ""
-
-msgid "Heureka setting - view"
 msgstr ""
 
 msgid "Hide"
@@ -607,12 +454,6 @@ msgstr ""
 msgid "Language constants"
 msgstr ""
 
-msgid "Language constants - full"
-msgstr ""
-
-msgid "Language constants - view"
-msgstr ""
-
 msgid "Last modification"
 msgstr ""
 
@@ -623,12 +464,6 @@ msgid "Left"
 msgstr ""
 
 msgid "Legal conditions"
-msgstr ""
-
-msgid "Legal conditions article setting - full"
-msgstr ""
-
-msgid "Legal conditions article setting - view"
 msgstr ""
 
 msgid "Legal conditions settings modified."
@@ -673,18 +508,6 @@ msgstr ""
 msgid "Made in SK"
 msgstr ""
 
-msgid "Mail setting - full"
-msgstr ""
-
-msgid "Mail setting - view"
-msgstr ""
-
-msgid "Mail templates - full"
-msgstr ""
-
-msgid "Mail templates - view"
-msgstr ""
-
 msgid "Main URL"
 msgstr ""
 
@@ -709,19 +532,7 @@ msgstr ""
 msgid "Name suffix"
 msgstr ""
 
-msgid "Navigation - full"
-msgstr ""
-
-msgid "Navigation - view"
-msgstr ""
-
 msgid "New"
-msgstr ""
-
-msgid "New administrator"
-msgstr ""
-
-msgid "New administrator role group"
 msgstr ""
 
 msgid "New banner"
@@ -743,12 +554,6 @@ msgid "New store"
 msgstr ""
 
 msgid "New warehouse"
-msgstr ""
-
-msgid "Newsletter - full"
-msgstr ""
-
-msgid "Newsletter - view"
 msgstr ""
 
 msgid "No"
@@ -775,12 +580,6 @@ msgstr ""
 msgid "Notification bar"
 msgstr ""
 
-msgid "Notification bar - full"
-msgstr ""
-
-msgid "Notification bar - view"
-msgstr ""
-
 msgid "Notification bar has been successfuly created"
 msgstr ""
 
@@ -794,12 +593,6 @@ msgid "Oops! Error occurred."
 msgstr ""
 
 msgid "Open in new window"
-msgstr ""
-
-msgid "Operator information - full"
-msgstr ""
-
-msgid "Operator information - view"
 msgstr ""
 
 msgid "Order confirmation page"
@@ -820,28 +613,10 @@ msgstr ""
 msgid "Order status changed"
 msgstr ""
 
-msgid "Order statuses - full"
-msgstr ""
-
-msgid "Order statuses - view"
-msgstr ""
-
-msgid "Order submitted page setting - full"
-msgstr ""
-
-msgid "Order submitted page setting - view"
-msgstr ""
-
 msgid "Ordering"
 msgstr ""
 
 msgid "Orders"
-msgstr ""
-
-msgid "Orders - full"
-msgstr ""
-
-msgid "Orders - view"
 msgstr ""
 
 msgid "Orders value"
@@ -860,12 +635,6 @@ msgid "Page title"
 msgstr ""
 
 msgid "Parameter"
-msgstr ""
-
-msgid "Parameters - full"
-msgstr ""
-
-msgid "Parameters - view"
 msgstr ""
 
 msgid "Parameters order in category"
@@ -889,12 +658,6 @@ msgstr ""
 msgid "Personal data access"
 msgstr ""
 
-msgid "Personal data access pages setting - full"
-msgstr ""
-
-msgid "Personal data access pages setting - view"
-msgstr ""
-
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
@@ -916,43 +679,19 @@ msgstr ""
 msgid "Pricing group"
 msgstr ""
 
-msgid "Pricing groups - full"
-msgstr ""
-
-msgid "Pricing groups - view"
-msgstr ""
-
 msgid "Privacy Policy"
 msgstr ""
 
 msgid "Privacy Policy settings"
 msgstr ""
 
-msgid "Privacy policy article setting - full"
-msgstr ""
-
-msgid "Privacy policy article setting - view"
-msgstr ""
-
 msgid "Product"
-msgstr ""
-
-msgid "Products - full"
-msgstr ""
-
-msgid "Products - view"
 msgstr ""
 
 msgid "Products parameters of selected category"
 msgstr ""
 
 msgid "Promo code"
-msgstr ""
-
-msgid "Promo codes - full"
-msgstr ""
-
-msgid "Promo codes - view"
 msgstr ""
 
 msgid "Promoted categories"
@@ -977,33 +716,6 @@ msgid "Related products"
 msgstr ""
 
 msgid "Right"
-msgstr ""
-
-msgid "Role"
-msgstr ""
-
-msgid "Role Group"
-msgstr ""
-
-msgid "Role Groups"
-msgstr ""
-
-msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
-msgstr ""
-
-msgid "Role group name <strong>{{ name }}</strong> is already used"
-msgstr ""
-
-msgid "Role name"
-msgstr ""
-
-msgid "Roles"
-msgstr ""
-
-msgid "SEO - full"
-msgstr ""
-
-msgid "SEO - view"
 msgstr ""
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
@@ -1036,9 +748,6 @@ msgstr ""
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
-msgid "Selected administrator role group doesn't exist."
-msgstr ""
-
 msgid "Selected flag doesn't exist."
 msgstr ""
 
@@ -1066,12 +775,6 @@ msgstr ""
 msgid "Show in the category"
 msgstr ""
 
-msgid "Slider items - full"
-msgstr ""
-
-msgid "Slider items - view"
-msgstr ""
-
 msgid "Slug"
 msgstr ""
 
@@ -1082,12 +785,6 @@ msgid "Store"
 msgstr ""
 
 msgid "Stores"
-msgstr ""
-
-msgid "Stores - full"
-msgstr ""
-
-msgid "Stores - view"
 msgstr ""
 
 msgid "Street"
@@ -1126,40 +823,13 @@ msgstr ""
 msgid "TikTok URL"
 msgstr ""
 
-msgid "Top categories - full"
-msgstr ""
-
-msgid "Top categories - view"
-msgstr ""
-
-msgid "Top products - full"
-msgstr ""
-
-msgid "Top products - view"
-msgstr ""
-
 msgid "Total order price (including VAT)"
 msgstr ""
 
 msgid "Tracking instructions"
 msgstr ""
 
-msgid "Transfers - view"
-msgstr ""
-
 msgid "Transport types"
-msgstr ""
-
-msgid "Transport types - full"
-msgstr ""
-
-msgid "Transport types - view"
-msgstr ""
-
-msgid "Transports and payments - full"
-msgstr ""
-
-msgid "Transports and payments - view"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -1195,12 +865,6 @@ msgstr ""
 msgid "Unable to load list of language constants"
 msgstr ""
 
-msgid "Units - full"
-msgstr ""
-
-msgid "Units - view"
-msgstr ""
-
 msgid "Unlimited"
 msgstr ""
 
@@ -1216,12 +880,6 @@ msgstr ""
 msgid "Unused friendly URL list"
 msgstr ""
 
-msgid "Unused friendly URLs - full"
-msgstr ""
-
-msgid "Unused friendly URLs - view"
-msgstr ""
-
 msgid "Upload image"
 msgstr ""
 
@@ -1234,12 +892,6 @@ msgstr ""
 msgid "User consent policy"
 msgstr ""
 
-msgid "User consent policy article setting - full"
-msgstr ""
-
-msgid "User consent policy article setting - view"
-msgstr ""
-
 msgid "User translation"
 msgstr ""
 
@@ -1250,12 +902,6 @@ msgid "Valid to"
 msgstr ""
 
 msgid "Value"
-msgstr ""
-
-msgid "Vats - full"
-msgstr ""
-
-msgid "Vats - view"
 msgstr ""
 
 msgid "Videos"
@@ -1274,12 +920,6 @@ msgid "Warehouse settings"
 msgstr ""
 
 msgid "Warehouses"
-msgstr ""
-
-msgid "Warehouses - full"
-msgstr ""
-
-msgid "Warehouses - view"
 msgstr ""
 
 msgid "We have nothing to show you at this url."
