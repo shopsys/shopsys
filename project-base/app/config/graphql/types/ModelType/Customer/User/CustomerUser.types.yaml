@@ -19,9 +19,6 @@ CustomerUser:
             country:
                 type: "Country!"
                 description: "Billing address country"
-            newsletterSubscription:
-                type: "Boolean!"
-                description: "Whether customer user receives newsletters or not"
             defaultDeliveryAddress:
                 type: "DeliveryAddress"
                 description: "Default customer delivery addresses"
