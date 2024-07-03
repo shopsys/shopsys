@@ -98,6 +98,14 @@ class UnitRepository
     }
 
     /**
+     * @return bool
+     */
+    public function isAtLeastOneUnitCreated(): bool
+    {
+        return $this->getUnitRepository()->count([]) > 0;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $oldUnit
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $newUnit
      */

@@ -146,7 +146,7 @@ class DefaultController extends AdminBaseController
             );
         }
 
-        if (count($this->unitFacade->getAll()) === 0) {
+        if (!$this->unitFacade->isAtLeastOneUnitCreated()) {
             $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
                 [
