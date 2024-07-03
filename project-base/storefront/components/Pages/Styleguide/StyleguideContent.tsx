@@ -3,6 +3,7 @@ import { StyleguideCheckboxes } from './StyleguideCheckboxes';
 import { StyleguideColors } from './StyleguideColors';
 import { StyleguideForms } from './StyleguideForms';
 import { StyleguideIcons } from './StyleguideIcons';
+import { StyleguideNotImplementedYet } from './StyleguideNotImplementedYet';
 import { StyleguidePopups } from './StyleguidePopups';
 import { StyleguideRadiogroup } from './StyleguideRadiogroup';
 import { StyleguideSelects } from './StyleguideSelects';
@@ -31,6 +32,7 @@ export const StyleguideContent: FC<StyleguideContentProps> = ({ iconList }) => {
             <StyleguideSpinboxes />
             <StyleguideTables />
             <StyleguideIcons iconList={iconList} />
+            <StyleguideNotImplementedYet />
         </Webline>
     );
 };
