@@ -239,9 +239,6 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\CustomerController:
         class: 'App\Controller\Admin\CustomerController'
 
-    Shopsys\FrameworkBundle\Controller\Admin\DefaultController:
-        class: 'App\Controller\Admin\DefaultController'
-
     Shopsys\FrameworkBundle\Controller\Admin\FlagController:
         class: 'App\Controller\Admin\FlagController'
 

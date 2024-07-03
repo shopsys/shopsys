@@ -8,9 +8,20 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
+use Symfony\Contracts\Service\ResetInterface;
 
-class CronModuleFacade
+class CronModuleFacade implements ResetInterface
 {
+    /**
+     * @var array<string, array{cronModuleId: string, minimalDuration: string, maximalDuration: string, averageDuration: string}>|null
+     */
+    protected ?array $calculatedDurationsIndexedByServiceId = null;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModule[]|null
+     */
+    protected ?array $allIndexedByServiceId = null;
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository $cronModuleRepository
@@ -206,7 +217,11 @@ class CronModuleFacade
      */
     public function findAllIndexedByServiceId(): array
     {
-        return $this->cronModuleRepository->findAllIndexedByServiceId();
+        if ($this->allIndexedByServiceId === null) {
+            $this->allIndexedByServiceId = $this->cronModuleRepository->findAllIndexedByServiceId();
+        }
+
+        return $this->allIndexedByServiceId;
     }
 
     /**
@@ -234,7 +249,11 @@ class CronModuleFacade
      */
     public function getCronCalculatedDurationsIndexedByServiceId(): array
     {
-        return $this->cronModuleRepository->getCronCalculatedDurationsIndexedByServiceId();
+        if ($this->calculatedDurationsIndexedByServiceId === null) {
+            $this->calculatedDurationsIndexedByServiceId = $this->cronModuleRepository->getCronCalculatedDurationsIndexedByServiceId();
+        }
+
+        return $this->calculatedDurationsIndexedByServiceId;
     }
 
     /**
@@ -252,5 +271,11 @@ class CronModuleFacade
     public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
     {
         return $this->cronModuleRepository->getRunsByCronModuleQueryBuilder($cronModule);
+    }
+
+    public function reset(): void
+    {
+        $this->calculatedDurationsIndexedByServiceId = null;
+        $this->allIndexedByServiceId = null;
     }
 }

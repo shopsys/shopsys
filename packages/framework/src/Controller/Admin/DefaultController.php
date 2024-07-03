@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AdminBaseController
 {
-    protected const PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
+    protected const int PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
