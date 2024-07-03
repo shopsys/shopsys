@@ -7,6 +7,7 @@ import {
     TypeBlogArticleDetailQueryVariables,
     BlogArticleDetailQueryDocument,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
+import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
 import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -97,6 +98,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 client,
                 domainConfig,
                 ssrExchange,
+                prefetchedQueries: [{ query: BlogCategoriesDocument }],
             });
 
             return initServerSideData;

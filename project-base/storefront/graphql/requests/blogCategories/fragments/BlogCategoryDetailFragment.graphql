@@ -10,8 +10,5 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     hreflangLinks {
         ...HreflangLinksFragment
     }
-    blogCategoriesTree {
-        ...BlogCategoriesFragment
-    }
     articlesTotalCount
 }

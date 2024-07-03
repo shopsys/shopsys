@@ -3,6 +3,7 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import {
     useBlogCategoryQuery,
@@ -100,6 +101,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 client,
                 domainConfig,
                 ssrExchange,
+                prefetchedQueries: [{ query: BlogCategoriesDocument }],
             });
 
             return initServerSideData;

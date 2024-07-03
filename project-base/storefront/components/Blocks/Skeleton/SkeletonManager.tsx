@@ -1,4 +1,5 @@
 import { SkeletonPageArticle } from './SkeletonPageArticle';
+import { SkeletonPageBlogArticle } from './SkeletonPageBlogArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
 import { SkeletonPageCart } from './SkeletonPageCart';
 import { SkeletonPageComparison } from './SkeletonPageComparison';
@@ -65,8 +66,9 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
         case 'flag':
             return <SkeletonPageProductsListSimple />;
         case 'article':
-        case 'blogArticle':
             return <SkeletonPageArticle />;
+        case 'blogArticle':
+            return <SkeletonPageBlogArticle />;
         case 'blogCategory':
             return <SkeletonPageBlogCategory />;
         case 'stores':
