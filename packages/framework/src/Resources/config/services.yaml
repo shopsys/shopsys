@@ -519,6 +519,7 @@ services:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator }
 
     Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator:
+        public: true
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator }
 

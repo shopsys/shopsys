@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
-use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration as BaseMailTemplateConfiguration;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables;
@@ -20,7 +19,6 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
         parent::__construct($orderStatusFacade);
 
         $this->registerExtendedOrderStatusMailTemplates();
-        $this->registerCustomerActivationMailTemplate();
     }
 
     /**
@@ -51,25 +49,6 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
         $mailTemplateVariables = $this->createExtendedOrderStatusMailTemplatesVariables();
 
         $this->addMailTemplateVariables(MailTemplate::ORDER_STATUS_NAME, $mailTemplateVariables);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
-     */
-    private function createCustomerActivationMailTemplateVariables(): MailTemplateVariables
-    {
-        $mailTemplateVariables = new MailTemplateVariables(t('Customer activation'));
-
-        return $mailTemplateVariables
-            ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
-            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Link to complete the registration'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
-    }
-
-    private function registerCustomerActivationMailTemplate(): void
-    {
-        $mailTemplateVariables = $this->createCustomerActivationMailTemplateVariables();
-
-        $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateVariables);
     }
 
     /**

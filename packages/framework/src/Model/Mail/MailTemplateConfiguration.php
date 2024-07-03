@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
+use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\InvalidMailTemplateVariablesConfigurationException;
@@ -31,6 +32,7 @@ class MailTemplateConfiguration
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
         $this->registerTwoFactorAuthenticationCodeMailTemplate();
+        $this->registerCustomerActivationMailTemplate();
     }
 
     /**
@@ -256,5 +258,24 @@ class MailTemplateConfiguration
         $mailTemplateVariables = $this->createTwoFactorAuthenticationCodeMailTemplateVariables();
 
         $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateVariables);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createCustomerActivationMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Customer activation'));
+
+        return $mailTemplateVariables
+            ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
+            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Link to complete the registration'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
+    }
+
+    protected function registerCustomerActivationMailTemplate(): void
+    {
+        $mailTemplateVariables = $this->createCustomerActivationMailTemplateVariables();
+
+        $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateVariables);
     }
 }

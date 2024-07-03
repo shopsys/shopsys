@@ -95,10 +95,6 @@ services:
         arguments:
             - "%shopsys.performance_data.product.total_count%"
 
-    App\Form\Constraints\UniqueEmailValidator:
-        class: App\Form\Constraints\UniqueEmailValidator
-        public: true
-
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 
     App\Model\Cart\CartFacade:
@@ -674,6 +670,6 @@ services:
             - {
                 'Symfony\Component\Validator\Constraints\ImageValidator': 'app.component.validator.image_validator',
                 'Symfony\Component\Validator\Constraints\FileValidator': 'app.component.validator.file_validator',
-                'Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator': App\Form\Constraints\UniqueEmailValidator
+                'Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator': Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator
             }
         class: 'App\Component\Validator\ContainerConstraintValidatorFactory'

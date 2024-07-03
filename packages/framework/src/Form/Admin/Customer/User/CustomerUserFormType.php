@@ -66,6 +66,11 @@ class CustomerUserFormType extends AbstractType
                 'label' => t('Domain'),
                 'data' => $this->customerUser->getDomainId(),
             ]);
+            $builderSystemDataGroup->add('activated', DisplayOnlyType::class, [
+                'label' => t('Active'),
+                'data' => $this->customerUser->isActivated() ? t('Yes') : t('No'),
+                'position' => ['after' => 'formId'],
+            ]);
             $pricingGroups = $this->pricingGroupFacade->getByDomainId($this->customerUser->getDomainId());
         } else {
             $builderSystemDataGroup

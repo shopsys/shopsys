@@ -125,7 +125,8 @@ class CustomerUserRepository
                     END) AS name,
                 COUNT(o.id) ordersCount,
                 SUM(o.totalPriceWithVat) ordersSumPrice,
-                MAX(o.createdAt) lastOrderAt')
+                MAX(o.createdAt) lastOrderAt,
+                BOOL_AND(ba.activated) as isActivated')
             ->from(CustomerUser::class, 'u')
             ->where('u.domainId = :selectedDomainId')
             ->setParameter('selectedDomainId', $domainId)

@@ -6,7 +6,6 @@ namespace App\Form\Admin;
 
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -26,21 +25,7 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
-        $customerUser = $options['customerUser'];
-
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
-
-        if ($customerUser === null) {
-            return;
-        }
-
-        $builderSystemDataGroup = $builder->get('systemData');
-        $builderSystemDataGroup->add('activated', DisplayOnlyType::class, [
-            'label' => t('Active'),
-            'data' => $customerUser->isActivated() ? t('Yes') : t('No'),
-            'position' => ['after' => 'formId'],
-        ]);
     }
 
     /**
