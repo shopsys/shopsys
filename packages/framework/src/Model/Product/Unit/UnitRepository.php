@@ -59,8 +59,9 @@ class UnitRepository
     protected function getAllQueryBuilder()
     {
         return $this->em->createQueryBuilder()
-            ->select('u')
+            ->select('u, ut')
             ->from(Unit::class, 'u')
+            ->join('u.translations', 'ut')
             ->orderBy('u.id');
     }
 
