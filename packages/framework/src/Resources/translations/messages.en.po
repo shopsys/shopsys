@@ -238,6 +238,12 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "An authentication exception occurred."
+msgstr ""
+
+msgid "An email with 6 digit code was sent to your email address."
+msgstr ""
+
 msgid "Ancestor category"
 msgstr ""
 
@@ -314,6 +320,12 @@ msgid "Assign to category"
 msgstr ""
 
 msgid "Attribute %attribute% was changed %changes%"
+msgstr ""
+
+msgid "Authentication code"
+msgstr ""
+
+msgid "Authenticator key"
 msgstr ""
 
 msgid "Available immediately"
@@ -472,6 +484,9 @@ msgstr ""
 msgid "Calculated price including VAT"
 msgstr ""
 
+msgid "Cancel"
+msgstr ""
+
 msgid "Canonical URL"
 msgstr ""
 
@@ -605,6 +620,9 @@ msgid "Complement to title"
 msgstr ""
 
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
+msgstr ""
+
+msgid "Confirm authentication code"
 msgstr ""
 
 msgid "Contact form"
@@ -817,6 +835,9 @@ msgstr ""
 msgid "Customer <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Customer activation"
+msgstr ""
+
 msgid "Customer city"
 msgstr ""
 
@@ -953,6 +974,9 @@ msgid "Description can be set on product detail of the main product."
 msgstr ""
 
 msgid "Disable"
+msgstr ""
+
+msgid "Disable two factor authentication"
 msgstr ""
 
 msgid "Disabled"
@@ -1336,10 +1360,22 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
+msgid "Enable two factor authentication by Google Authenticator"
+msgstr ""
+
+msgid "Enable two factor authentication by email"
+msgstr ""
+
 msgid "Enable whitelist"
 msgstr ""
 
 msgid "Enter 32-digit code which will be sent to server"
+msgstr ""
+
+msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
+msgstr ""
+
+msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr ""
 
 msgid "Enter in the store local time"
@@ -1349,6 +1385,9 @@ msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 0
 msgstr ""
 
 msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgstr ""
+
+msgid "Entered code is not valid"
 msgstr ""
 
 msgid "Entered customer not found, please check entered data."
@@ -1717,6 +1756,9 @@ msgstr ""
 msgid "Internal note"
 msgstr ""
 
+msgid "Invalid two-factor authentication code."
+msgstr ""
+
 msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
 msgstr ""
 
@@ -1781,6 +1823,9 @@ msgid "Link"
 msgstr ""
 
 msgid "Link URL"
+msgstr ""
+
+msgid "Link to complete the registration"
 msgstr ""
 
 msgid "Link to the log in page"
@@ -2911,6 +2956,9 @@ msgstr ""
 msgid "Send email about change to this status"
 msgstr ""
 
+msgid "Send me authentication code"
+msgstr ""
+
 msgid "Send refund and save order"
 msgstr ""
 
@@ -3250,6 +3298,21 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
+msgid "Two factor authentication code"
+msgstr ""
+
+msgid "Two factor authentication is already enabled."
+msgstr ""
+
+msgid "Two factor authentication is not enabled."
+msgstr ""
+
+msgid "Two factor authentication was disabled"
+msgstr ""
+
+msgid "Two factor authentication was enabled"
+msgstr ""
+
 msgid "Two selected domains cannot have the same language"
 msgstr ""
 
@@ -3308,6 +3371,9 @@ msgid "Units - view"
 msgstr ""
 
 msgid "Units overview"
+msgstr ""
+
+msgid "Unsupported two factor authentication method"
 msgstr ""
 
 msgid "Unused friendly URLs - full"
@@ -3488,6 +3554,12 @@ msgid "XML availability feeds"
 msgstr ""
 
 msgid "Yes"
+msgstr ""
+
+msgid "You are allowed to disable two factor authentication only to yourself."
+msgstr ""
+
+msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr ""
 
 msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."

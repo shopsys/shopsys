@@ -22,9 +22,6 @@ msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla 
 msgid "Action"
 msgstr "Akce"
 
-msgid "Active"
-msgstr "Aktivní"
-
 msgid "Add another parameter"
 msgstr "Přidat další parametr"
 
@@ -34,29 +31,14 @@ msgstr "Přidat další video"
 msgid "Add some parameters"
 msgstr "Přidat parametr"
 
-msgid "Administration"
-msgstr "Administrace"
-
 msgid "Administrator"
 msgstr "Administrátor"
 
 msgid "Advanced SEO categories"
 msgstr "Extended SEO categories"
 
-msgid "An authentication exception occurred."
-msgstr "Došlo k výjimce během přihlášení."
-
-msgid "An email with 6 digit code was sent to your email address."
-msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu."
-
 msgid "Article"
 msgstr "Článek"
-
-msgid "Authentication code"
-msgstr "Ověřovací kód"
-
-msgid "Authenticator key"
-msgstr "Ověřovací klíč"
 
 msgid "Back to category selection"
 msgstr "Zpět na volbu kategorie"
@@ -142,9 +124,6 @@ msgstr "Název vybrané platby"
 msgid "Chosen shipping name"
 msgstr "Název vybrané dopravy"
 
-msgid "City"
-msgstr "Město"
-
 msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
@@ -153,9 +132,6 @@ msgstr "Barva"
 
 msgid "Combination of parameters and their values"
 msgstr "Kombinace parametrů a jejich hodnot parametrů"
-
-msgid "Confirm authentication code"
-msgstr "Potvrzení ověřovacího kódu"
 
 msgid "Contact"
 msgstr "Kontakt"
@@ -172,9 +148,6 @@ msgstr "Hlavička Content-Security-Policy byla nastavena."
 msgid "Content-Security-Policy header setting"
 msgstr "Nastavení hlavičky Content-Security-Policy"
 
-msgid "Country"
-msgstr "Stát"
-
 msgid "Create"
 msgstr "Vytvořit"
 
@@ -186,9 +159,6 @@ msgstr "Vytvořit nový banner"
 
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
-
-msgid "Customer activation"
-msgstr "Aktivace zákazníka"
 
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
@@ -216,9 +186,6 @@ msgstr "Datum zobrazení DO"
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
-
-msgid "Do you really want to remove this customer?"
-msgstr "Opravdu chcete odebrat tohoto zákazníka?"
 
 msgid "Do you really want to remove this flag?"
 msgstr "Opravdu chcete odstranit tento příznak?"
@@ -274,9 +241,6 @@ msgstr "Editace notifikační lišty"
 msgid "Editing page"
 msgstr "Editace stránky"
 
-msgid "Email"
-msgstr "E-mail"
-
 msgid "Email settings modified."
 msgstr "Nastavení emailu bylo upraveno."
 
@@ -288,15 +252,6 @@ msgstr "Zapnout dvoufaktorové ověřování pomocí Google Autentikátoru"
 
 msgid "Enable two factor authentication by email"
 msgstr "Zapnout dvoufaktorové ověřování pomocí e-mailu"
-
-msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
-msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte zažádat pomocí tlačítka níže."
-
-msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
-msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
-
-msgid "Entered code is not valid"
-msgstr "Zadaný kód není platný"
 
 msgid "Entity"
 msgstr "Entita"
@@ -376,9 +331,6 @@ msgstr "Zapomenuté heslo"
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr "Hezká URL \"%slug%\" byla smazána."
 
-msgid "Full name"
-msgstr "Celé jméno"
-
 msgid "GTM ID"
 msgstr "GTM ID"
 
@@ -427,9 +379,6 @@ msgstr "URL Instagramu"
 msgid "Integrations"
 msgstr "Integrace"
 
-msgid "Invalid two-factor authentication code."
-msgstr "Neplatný kód dvoufaktorového ověření."
-
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
 
@@ -457,9 +406,6 @@ msgstr "Jazykové konstanty"
 msgid "Last modification"
 msgstr "Poslední modifikace"
 
-msgid "Last order"
-msgstr "Poslední objednávka"
-
 msgid "Left"
 msgstr "Vlevo"
 
@@ -475,9 +421,6 @@ msgstr "Blok odkazu"
 msgid "Link of text under banner"
 msgstr "Odkaz textu pod bannerem"
 
-msgid "Link to complete the registration"
-msgstr "Odkaz na dokončení registrace"
-
 msgid "Linked categories"
 msgstr "Propojené kategorie"
 
@@ -492,9 +435,6 @@ msgstr "Seznam produktů"
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Seznam produktů v objednávce (název, množství, cena za jednotku včetně DPH, celková cena za položku včetně DPH)"
-
-msgid "Log in"
-msgstr "Přihlásit se"
 
 msgid "Login"
 msgstr "Přihlášení"
@@ -586,9 +526,6 @@ msgstr "Notifikační lišta byla úspěšně vytvořena"
 msgid "Notification bar has been successfuly deleted"
 msgstr "Notifikační lišta byla úspěšně smazána"
 
-msgid "Number of orders"
-msgstr "Počet objednávek"
-
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."
 
@@ -618,9 +555,6 @@ msgstr "Řazení"
 
 msgid "Orders"
 msgstr "Objednávky"
-
-msgid "Orders value"
-msgstr "Hodnota objednávek"
 
 msgid "Original translation"
 msgstr "Původní překlad"
@@ -670,14 +604,8 @@ msgstr "Pozice obrázku"
 msgid "Position of link"
 msgstr "Zarovnání odkazu"
 
-msgid "Postcode"
-msgstr "PSČ"
-
 msgid "Price hit"
 msgstr "Cenový hit"
-
-msgid "Pricing group"
-msgstr "Cenová skupina"
 
 msgid "Privacy Policy"
 msgstr "Zásady ochrany osobních údajů"
@@ -754,9 +682,6 @@ msgstr "Vybraný příznak neexistuje."
 msgid "Selected notification bar does not exist"
 msgstr "Vybraná notifikační lišta neexistuje"
 
-msgid "Send me authentication code"
-msgstr "Pošlete mi ověřovací kód"
-
 msgid "Seo"
 msgstr "Seo"
 
@@ -787,14 +712,8 @@ msgstr "Prodejna"
 msgid "Stores"
 msgstr "Prodejny"
 
-msgid "Street"
-msgstr "Ulice"
-
 msgid "TOP"
 msgstr "TOP"
-
-msgid "Telephone"
-msgstr "Telefon"
 
 msgid "Terms and Conditions"
 msgstr "Obchodní podmínky"
@@ -832,21 +751,6 @@ msgstr "Instrukce pro sledování zásilky"
 msgid "Transport types"
 msgstr "Typy doprav"
 
-msgid "Two factor authentication code"
-msgstr "Dvoufaktorový ověřovací kód"
-
-msgid "Two factor authentication is already enabled."
-msgstr "Dvoufaktorové ověření je již aktivní."
-
-msgid "Two factor authentication is not enabled."
-msgstr "Dvoufaktorové ověřování není zapnuto."
-
-msgid "Two factor authentication was disabled"
-msgstr "Dvoufaktorové ověření bylo vypnuto"
-
-msgid "Two factor authentication was enabled"
-msgstr "Dvoufaktorové ověření bylo zapnuto"
-
 msgid "Type"
 msgstr "Typ"
 
@@ -873,9 +777,6 @@ msgstr "Nepodporovaný typ souboru"
 
 msgid "Unsupported order"
 msgstr "Neplatné řazení"
-
-msgid "Unsupported two factor authentication method"
-msgstr "Nepodporovaná metoda dvoufaktorového ověření"
 
 msgid "Unused friendly URL list"
 msgstr "Seznam nepoužívaných hezkých URL"
@@ -930,12 +831,6 @@ msgstr "XML Feedy"
 
 msgid "Yes"
 msgstr "Ano"
-
-msgid "You are allowed to disable two factor authentication only to yourself."
-msgstr "Můžete si vypnout dvoufaktorové ověření pouze pro sebe."
-
-msgid "You are allowed to set up two factor authentication only to yourself."
-msgstr "Můžete si zapnout dvoufaktorové ověření pouze pro sebe."
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"

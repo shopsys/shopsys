@@ -223,6 +223,9 @@ msgstr ""
 msgid "Please enter city"
 msgstr ""
 
+msgid "Please enter code"
+msgstr ""
+
 msgid "Please enter company name"
 msgstr ""
 

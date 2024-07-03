@@ -70,9 +70,6 @@ msgstr "Prosím vyplňte GTM ID"
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
 
-msgid "Please enter code"
-msgstr "Vyplňte prosím kód"
-
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název společnosti"
 

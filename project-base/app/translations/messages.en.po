@@ -22,9 +22,6 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-msgid "Active"
-msgstr ""
-
 msgid "Add another parameter"
 msgstr ""
 
@@ -34,28 +31,13 @@ msgstr ""
 msgid "Add some parameters"
 msgstr ""
 
-msgid "Administration"
-msgstr ""
-
 msgid "Administrator"
 msgstr ""
 
 msgid "Advanced SEO categories"
 msgstr ""
 
-msgid "An authentication exception occurred."
-msgstr ""
-
-msgid "An email with 6 digit code was sent to your email address."
-msgstr ""
-
 msgid "Article"
-msgstr ""
-
-msgid "Authentication code"
-msgstr ""
-
-msgid "Authenticator key"
 msgstr ""
 
 msgid "Back to category selection"
@@ -142,9 +124,6 @@ msgstr ""
 msgid "Chosen shipping name"
 msgstr ""
 
-msgid "City"
-msgstr ""
-
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
@@ -152,9 +131,6 @@ msgid "Color"
 msgstr ""
 
 msgid "Combination of parameters and their values"
-msgstr ""
-
-msgid "Confirm authentication code"
 msgstr ""
 
 msgid "Contact"
@@ -172,9 +148,6 @@ msgstr ""
 msgid "Content-Security-Policy header setting"
 msgstr ""
 
-msgid "Country"
-msgstr ""
-
 msgid "Create"
 msgstr ""
 
@@ -185,9 +158,6 @@ msgid "Create new banner"
 msgstr ""
 
 msgid "Create notification bar"
-msgstr ""
-
-msgid "Customer activation"
 msgstr ""
 
 msgid "Date and time of order creation"
@@ -215,9 +185,6 @@ msgid "Display date TO"
 msgstr ""
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
-msgstr ""
-
-msgid "Do you really want to remove this customer?"
 msgstr ""
 
 msgid "Do you really want to remove this flag?"
@@ -274,9 +241,6 @@ msgstr ""
 msgid "Editing page"
 msgstr ""
 
-msgid "Email"
-msgstr ""
-
 msgid "Email settings modified."
 msgstr ""
 
@@ -287,15 +251,6 @@ msgid "Enable two factor authentication by Google Authenticator"
 msgstr ""
 
 msgid "Enable two factor authentication by email"
-msgstr ""
-
-msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
-msgstr ""
-
-msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
-msgstr ""
-
-msgid "Entered code is not valid"
 msgstr ""
 
 msgid "Entity"
@@ -376,9 +331,6 @@ msgstr ""
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr ""
 
-msgid "Full name"
-msgstr ""
-
 msgid "GTM ID"
 msgstr ""
 
@@ -427,9 +379,6 @@ msgstr ""
 msgid "Integrations"
 msgstr ""
 
-msgid "Invalid two-factor authentication code."
-msgstr ""
-
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
@@ -457,9 +406,6 @@ msgstr ""
 msgid "Last modification"
 msgstr ""
 
-msgid "Last order"
-msgstr ""
-
 msgid "Left"
 msgstr ""
 
@@ -475,9 +421,6 @@ msgstr ""
 msgid "Link of text under banner"
 msgstr ""
 
-msgid "Link to complete the registration"
-msgstr ""
-
 msgid "Linked categories"
 msgstr ""
 
@@ -491,9 +434,6 @@ msgid "List of products"
 msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
-
-msgid "Log in"
 msgstr ""
 
 msgid "Login"
@@ -586,9 +526,6 @@ msgstr ""
 msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
-msgid "Number of orders"
-msgstr ""
-
 msgid "Oops! Error occurred."
 msgstr ""
 
@@ -617,9 +554,6 @@ msgid "Ordering"
 msgstr ""
 
 msgid "Orders"
-msgstr ""
-
-msgid "Orders value"
 msgstr ""
 
 msgid "Original translation"
@@ -670,13 +604,7 @@ msgstr ""
 msgid "Position of link"
 msgstr ""
 
-msgid "Postcode"
-msgstr ""
-
 msgid "Price hit"
-msgstr ""
-
-msgid "Pricing group"
 msgstr ""
 
 msgid "Privacy Policy"
@@ -754,9 +682,6 @@ msgstr ""
 msgid "Selected notification bar does not exist"
 msgstr ""
 
-msgid "Send me authentication code"
-msgstr ""
-
 msgid "Seo"
 msgstr ""
 
@@ -787,13 +712,7 @@ msgstr ""
 msgid "Stores"
 msgstr ""
 
-msgid "Street"
-msgstr ""
-
 msgid "TOP"
-msgstr ""
-
-msgid "Telephone"
 msgstr ""
 
 msgid "Terms and Conditions"
@@ -832,21 +751,6 @@ msgstr ""
 msgid "Transport types"
 msgstr ""
 
-msgid "Two factor authentication code"
-msgstr ""
-
-msgid "Two factor authentication is already enabled."
-msgstr ""
-
-msgid "Two factor authentication is not enabled."
-msgstr ""
-
-msgid "Two factor authentication was disabled"
-msgstr ""
-
-msgid "Two factor authentication was enabled"
-msgstr ""
-
 msgid "Type"
 msgstr ""
 
@@ -872,9 +776,6 @@ msgid "Unsupported file type"
 msgstr ""
 
 msgid "Unsupported order"
-msgstr ""
-
-msgid "Unsupported two factor authentication method"
 msgstr ""
 
 msgid "Unused friendly URL list"
@@ -929,12 +830,6 @@ msgid "XML Feeds"
 msgstr ""
 
 msgid "Yes"
-msgstr ""
-
-msgid "You are allowed to disable two factor authentication only to yourself."
-msgstr ""
-
-msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"

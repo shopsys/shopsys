@@ -238,6 +238,12 @@ msgstr "Nastavení alternativních jazyků upraveno"
 msgid "Amount"
 msgstr "Množství"
 
+msgid "An authentication exception occurred."
+msgstr "Došlo k výjimce během přihlášení."
+
+msgid "An email with 6 digit code was sent to your email address."
+msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu."
+
 msgid "Ancestor category"
 msgstr "Rodičovská kategorie"
 
@@ -315,6 +321,12 @@ msgstr "Přiřazení do kategorie"
 
 msgid "Attribute %attribute% was changed %changes%"
 msgstr "Atribut %attribute% byl změněn %changes%"
+
+msgid "Authentication code"
+msgstr "Ověřovací kód"
+
+msgid "Authenticator key"
+msgstr "Ověřovací klíč"
 
 msgid "Available immediately"
 msgstr "Ihned k odběru"
@@ -472,6 +484,9 @@ msgstr "Vypočtená cena bez DPH"
 msgid "Calculated price including VAT"
 msgstr "Vypočtená cena vč. DPH"
 
+msgid "Cancel"
+msgstr "Zrušit"
+
 msgid "Canonical URL"
 msgstr "Kanonická URL"
 
@@ -606,6 +621,9 @@ msgstr "Doplněk k titulku"
 
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr "Doplněk k názvu bude nastaven jako přípona ke všem titulkům, např. pokud je doplněk nastaven jako “ | Můj obchod“ a název produktu je “iPhone 7”, výsledným názvem pro tuto stránku produktu bude “iPhone 7 | Můj obchod”."
+
+msgid "Confirm authentication code"
+msgstr "Potvrzení ověřovacího kódu"
 
 msgid "Contact form"
 msgstr "Kontaktní formulář"
@@ -817,6 +835,9 @@ msgstr "Byl upraven zákazník <strong><a href=\"{{ url }}\">{{ name }}</a></str
 msgid "Customer <strong>{{ name }}</strong> deleted"
 msgstr "Zákazník <strong>{{ name }}</strong> byl smazán"
 
+msgid "Customer activation"
+msgstr "Aktivace zákazníka"
+
 msgid "Customer city"
 msgstr "Město zákazníka"
 
@@ -954,6 +975,9 @@ msgstr "Popis můžete nastavit na kartě hlavní varianty."
 
 msgid "Disable"
 msgstr "Vypnout"
+
+msgid "Disable two factor authentication"
+msgstr "Vypnout dvoufaktorové ověřování"
 
 msgid "Disabled"
 msgstr "Vypnuto"
@@ -1336,11 +1360,23 @@ msgstr "Nastavení šablon e-mailů"
 msgid "Enable"
 msgstr "Zapnout"
 
+msgid "Enable two factor authentication by Google Authenticator"
+msgstr "Zapnout dvoufaktorové ověřování pomocí Google Autentikátoru"
+
+msgid "Enable two factor authentication by email"
+msgstr "Zapnout dvoufaktorové ověřování pomocí e-mailu"
+
 msgid "Enable whitelist"
 msgstr "Whitelist aktivní"
 
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
+
+msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
+msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte zažádat pomocí tlačítka níže."
+
+msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
+msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
 
 msgid "Enter in the store local time"
 msgstr "Zadejte v lokálním čase prodejny"
@@ -1350,6 +1386,9 @@ msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:
 
 msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
 msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
+
+msgid "Entered code is not valid"
+msgstr "Zadaný kód není platný"
 
 msgid "Entered customer not found, please check entered data."
 msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje"
@@ -1717,6 +1756,9 @@ msgstr "Pokyny"
 msgid "Internal note"
 msgstr "Interní poznámka"
 
+msgid "Invalid two-factor authentication code."
+msgstr "Neplatný kód dvoufaktorového ověření."
+
 msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
 msgstr "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
 
@@ -1782,6 +1824,9 @@ msgstr "Odkaz"
 
 msgid "Link URL"
 msgstr "URL odkazu"
+
+msgid "Link to complete the registration"
+msgstr "Odkaz na dokončení registrace"
 
 msgid "Link to the log in page"
 msgstr "Odkaz na stránku s přihlášením"
@@ -2911,6 +2956,9 @@ msgstr "Odeslat e-mail s potvrzením registrace zákazníkovi"
 msgid "Send email about change to this status"
 msgstr "Zasílat e-mail o změně na tento stav"
 
+msgid "Send me authentication code"
+msgstr "Pošlete mi ověřovací kód"
+
 msgid "Send refund and save order"
 msgstr "Odeslat refundaci a uložit objednávku"
 
@@ -3250,6 +3298,21 @@ msgstr "Dopravy a platby - zobrazení"
 msgid "Tuesday"
 msgstr "Úterý"
 
+msgid "Two factor authentication code"
+msgstr "Dvoufaktorový ověřovací kód"
+
+msgid "Two factor authentication is already enabled."
+msgstr "Dvoufaktorové ověření je již aktivní."
+
+msgid "Two factor authentication is not enabled."
+msgstr "Dvoufaktorové ověřování není zapnuto."
+
+msgid "Two factor authentication was disabled"
+msgstr "Dvoufaktorové ověření bylo vypnuto"
+
+msgid "Two factor authentication was enabled"
+msgstr "Dvoufaktorové ověření bylo zapnuto"
+
 msgid "Two selected domains cannot have the same language"
 msgstr "Dvě vybrané domény nemohou mít stejný jazyk"
 
@@ -3310,11 +3373,14 @@ msgstr "Měrné jednotky - zobrazení"
 msgid "Units overview"
 msgstr "Přehled jednotek"
 
-msgid "Unused friendly URL list"
-msgstr "Seznam nepoužívaných hezkých URL"
+msgid "Unsupported two factor authentication method"
+msgstr "Nepodporovaná metoda dvoufaktorového ověření"
 
 msgid "Unused friendly URLs - full"
 msgstr "Seznam nepoužívaných hezkých URL - vše"
+
+msgid "Unused friendly URLs - view"
+msgstr "Seznam nepoužívaných hezkých URL - zobrazení"
 
 msgid "Upload attachment"
 msgstr "Nahrát přílohu"
@@ -3489,6 +3555,12 @@ msgstr "XML dostupnostní feedy"
 
 msgid "Yes"
 msgstr "Ano"
+
+msgid "You are allowed to disable two factor authentication only to yourself."
+msgstr "Můžete si vypnout dvoufaktorové ověření pouze pro sebe."
+
+msgid "You are allowed to set up two factor authentication only to yourself."
+msgstr "Můžete si zapnout dvoufaktorové ověření pouze pro sebe."
 
 msgid "You are not allowed to access the requested page. Please ask your administrator to grant you access to the requested page."
 msgstr "Nemáte přístup k požadované stránce. Požádejte správce, aby vám udělil přístup."
