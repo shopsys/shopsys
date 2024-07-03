@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\InvalidMailTemplateVariablesConfigurationException;
@@ -29,6 +30,7 @@ class MailTemplateConfiguration
     {
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
+        $this->registerTwoFactorAuthenticationCodeMailTemplate();
     }
 
     /**
@@ -232,5 +234,27 @@ class MailTemplateConfiguration
         // personal data access mail template
         $mailTemplateVariables = $this->createPersonalDataAccessMailTemplateVariables();
         $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateVariables);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createTwoFactorAuthenticationCodeMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Two factor authentication code'));
+
+        return $mailTemplateVariables->addVariable(
+            TwoFactorAuthenticationMail::VARIABLE_AUTHENTICATION_CODE,
+            t('Authentication code'),
+            MailTemplateVariables::CONTEXT_BODY,
+            MailTemplateVariables::REQUIRED_BODY,
+        );
+    }
+
+    protected function registerTwoFactorAuthenticationCodeMailTemplate(): void
+    {
+        $mailTemplateVariables = $this->createTwoFactorAuthenticationCodeMailTemplateVariables();
+
+        $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateVariables);
     }
 }

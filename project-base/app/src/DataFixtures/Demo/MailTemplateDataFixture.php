@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
@@ -15,6 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
 
 class MailTemplateDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface

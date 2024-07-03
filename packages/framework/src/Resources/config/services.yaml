@@ -547,6 +547,8 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory
 
+    Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
+
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
 

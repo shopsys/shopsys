@@ -5,14 +5,14 @@ scheb_two_factor:
         digits: 6
         enabled: true
         mailer:
-            'App\Model\Administrator\Mail\TwoFactorAuthenticationMailFacade'
-        template: 'Admin/Content/Login/LoginFormTwoFA.html.twig'
+            'Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMailFacade'
+        template: '@ShopsysFramework/Admin/Content/Login/LoginFormTwoFA.html.twig'
     google:
         digits: 6
         enabled: true
         issuer: Shopsys
         server_name: Shopsys Platform
-        template: 'Admin/Content/Login/LoginFormTwoFA.html.twig'
+        template: '@ShopsysFramework/Admin/Content/Login/LoginFormTwoFA.html.twig'
         window: 1
     security_tokens:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken

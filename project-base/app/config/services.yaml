@@ -101,8 +101,6 @@ services:
 
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 
-    App\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
-
     App\Model\Cart\CartFacade:
         lazy: true
 

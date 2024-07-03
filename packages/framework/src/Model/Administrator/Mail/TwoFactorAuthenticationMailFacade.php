@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Administrator\Mail;
+namespace Shopsys\FrameworkBundle\Model\Administrator\Mail;
 
 use Scheb\TwoFactorBundle\Mailer\AuthCodeMailerInterface;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
@@ -14,15 +14,15 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
-     * @param \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \App\Model\Administrator\Mail\TwoFactorAuthenticationMail $twoFactorAuthenticationMail
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail $twoFactorAuthenticationMail
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly Mailer $mailer,
-        private readonly MailTemplateFacade $mailTemplateFacade,
-        private readonly TwoFactorAuthenticationMail $twoFactorAuthenticationMail,
-        private readonly Domain $domain,
+        protected readonly Mailer $mailer,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly TwoFactorAuthenticationMail $twoFactorAuthenticationMail,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -31,7 +31,6 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
      */
     public function sendAuthCode(TwoFactorInterface $administrator): void
     {
-        /** @var \App\Model\Mail\MailTemplate $mailTemplate */
         $mailTemplate = $this->mailTemplateFacade->get(
             TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE,
             $this->domain->getId(),
