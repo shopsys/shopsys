@@ -13,9 +13,11 @@ class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
 {
     /**
      * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting $menuItemsGrantedRolesSetting
      */
     public function __construct(
         protected readonly Security $security,
+        protected readonly MenuItemsGrantedRolesSetting $menuItemsGrantedRolesSetting,
     ) {
     }
 
@@ -36,7 +38,7 @@ class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
 
-        foreach (MenuItemsGrantedRolesSetting::getGrantedRolesByMenuItems() as $menuItemPath => $grantedRoles) {
+        foreach ($this->menuItemsGrantedRolesSetting->getGrantedRolesByMenuItems() as $menuItemPath => $grantedRoles) {
             $isGranted = array_reduce(
                 $grantedRoles,
                 fn ($isGranted, $role) => $isGranted || $this->security->isGranted($role),
