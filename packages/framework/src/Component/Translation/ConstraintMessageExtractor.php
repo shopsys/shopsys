@@ -9,8 +9,8 @@ use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use PhpParser\Node;
+use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
@@ -101,7 +101,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node\Expr\ArrayItem $node
+     * @param \PhpParser\Node\ArrayItem $node
      * @return bool
      */
     protected function isMessageOptionItem(ArrayItem $node)

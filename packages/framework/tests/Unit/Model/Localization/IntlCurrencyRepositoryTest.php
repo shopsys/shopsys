@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Localization;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository;
 
 class IntlCurrencyRepositoryTest extends TestCase
 {
     /**
-     * @dataProvider getSupportedCurrencyCodes
      * @param mixed $currencyCode
      */
+    #[DataProvider('getSupportedCurrencyCodes')]
     public function testGetSupportedCurrencies($currencyCode)
     {
         $intlCurrencyRepository = new IntlCurrencyRepository();
@@ -22,7 +23,7 @@ class IntlCurrencyRepositoryTest extends TestCase
     /**
      * @return string[][]
      */
-    public function getSupportedCurrencyCodes()
+    public static function getSupportedCurrencyCodes()
     {
         $data = [];
 

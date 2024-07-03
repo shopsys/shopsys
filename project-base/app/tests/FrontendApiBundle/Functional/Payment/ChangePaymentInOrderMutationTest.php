@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use GoPay\Definition\Response\PaymentStatus;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
@@ -112,9 +113,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         self::assertSame('payment-not-found', $extensions['userCode']);
     }
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testChangePaymentInOrderValidationUnavailablePayment(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
@@ -194,9 +193,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->testInvalidSwift('non-existing-swift');
     }
 
-    /**
-     * @group multidomain
-     */
+    #[Group('multidomain')]
     public function testChangePaymentInOrderValidationSwiftForAnotherDomain(): void
     {
         $swiftForSecondDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID)->getLocale());

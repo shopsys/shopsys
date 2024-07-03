@@ -27,9 +27,10 @@ class CurrentDomainRouterTest extends TestCase
         $generateResult = 'generateResult';
         $pathInfo = 'pathInfo';
         $matchResult = ['matchResult'];
+
         $getRouteCollectionResult = new RouteCollection();
         $routerMock = $this->getMockBuilder(DomainRouter::class)
-            ->setMethods(['__construct', 'generate', 'match', 'getRouteCollection'])
+            ->onlyMethods(['__construct', 'generate', 'match', 'getRouteCollection'])
             ->disableOriginalConstructor()
             ->getMock();
         $routerMock->expects($this->once())->method('generate')->willReturn($generateResult);
@@ -39,7 +40,7 @@ class CurrentDomainRouterTest extends TestCase
         $routerMock->expects($this->once())->method('getRouteCollection')->willReturn($getRouteCollectionResult);
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)
-            ->setMethods(['__construct', 'getRouter'])
+            ->onlyMethods(['__construct', 'getRouter'])
             ->disableOriginalConstructor()
             ->getMock();
         $domainRouterFactoryMock->expects($this->exactly(3))->method('getRouter')->willReturn($routerMock);

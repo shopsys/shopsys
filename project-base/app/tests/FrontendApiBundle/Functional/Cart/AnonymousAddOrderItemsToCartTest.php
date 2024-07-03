@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
@@ -24,10 +25,10 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     private CartApiFacade $cartApiFacade;
 
     /**
-     * @dataProvider notExistingCartDataProvider
      * @param bool $shouldMerge
      * @param string|null $cartUuid
      */
+    #[DataProvider('notExistingCartDataProvider')]
     public function testOrderItemsAreAddedToNotExistingCart(bool $shouldMerge, ?string $cartUuid): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '9', Order::class);
@@ -70,7 +71,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function notExistingCartDataProvider(): iterable
+    public static function notExistingCartDataProvider(): iterable
     {
         // cart is created with repeat order
 
@@ -262,9 +263,9 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     }
 
     /**
-     * @dataProvider trueFalseDataProvider
      * @param bool $shouldMerge
      */
+    #[DataProvider('trueFalseDataProvider')]
     public function testTheSameProductIsNotAddedAsSeparateOrderItem(bool $shouldMerge): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '9', Order::class);
@@ -310,7 +311,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function trueFalseDataProvider(): iterable
+    public static function trueFalseDataProvider(): iterable
     {
         yield [true];
 

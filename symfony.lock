@@ -377,9 +377,6 @@
     "phar-io/version": {
         "version": "2.0.1"
     },
-    "phing/phing": {
-        "version": "2.16.1"
-    },
     "php-http/discovery": {
         "version": "1.18",
         "recipe": {
@@ -503,9 +500,6 @@
     "roave/better-reflection": {
         "version": "3.5.0"
     },
-    "roave/signature": {
-        "version": "1.0.0"
-    },
     "scheb/2fa-bundle": {
         "version": "5.13",
         "recipe": {
@@ -557,9 +551,6 @@
     },
     "sebastian/recursion-context": {
         "version": "3.0.0"
-    },
-    "sebastian/resource-operations": {
-        "version": "2.0.1"
     },
     "sebastian/type": {
         "version": "1.1.3"

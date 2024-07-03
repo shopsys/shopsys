@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -43,11 +44,11 @@ class OrderPaymentsTest extends GraphQlTestCase
 
     /**
      * @group multidomain
-     * @dataProvider getOrderPaymentsMultidomainDataProvider
      * @param string $orderReferenceName
      * @param string $expectedCurrentPaymentReferenceName
      * @param array $expectedAvailablePaymentReferenceNames
      */
+    #[DataProvider('getOrderPaymentsMultidomainDataProvider')]
     public function testGetOrderPaymentsMultidomain(
         string $orderReferenceName,
         string $expectedCurrentPaymentReferenceName,
@@ -58,11 +59,11 @@ class OrderPaymentsTest extends GraphQlTestCase
 
     /**
      * @group singledomain
-     * @dataProvider getOrderPaymentsSingledomainDataProvider
      * @param string $orderReferenceName
      * @param string $expectedCurrentPaymentReferenceName
      * @param array $expectedAvailablePaymentReferenceNames
      */
+    #[DataProvider('getOrderPaymentsSingledomainDataProvider')]
     public function testGetOrderPaymentsSingledomain(
         string $orderReferenceName,
         string $expectedCurrentPaymentReferenceName,
@@ -74,9 +75,9 @@ class OrderPaymentsTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function getOrderPaymentsMultidomainDataProvider(): iterable
+    public static function getOrderPaymentsMultidomainDataProvider(): iterable
     {
-        yield from $this->getOrderPaymentsSingledomainDataProvider();
+        yield from static::getOrderPaymentsSingledomainDataProvider();
 
         yield 'order on second domain with dron delivery transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 24,
@@ -90,7 +91,7 @@ class OrderPaymentsTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function getOrderPaymentsSingledomainDataProvider(): iterable
+    public static function getOrderPaymentsSingledomainDataProvider(): iterable
     {
         yield 'order with personal collection transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 1,

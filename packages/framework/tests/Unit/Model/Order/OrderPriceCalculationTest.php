@@ -40,7 +40,7 @@ class OrderPriceCalculationTest extends TestCase
         $roundingMock = $this->createMock(Rounding::class);
 
         $orderItemPriceCalculationMock = $this->getMockBuilder(OrderItemPriceCalculation::class)
-            ->setMethods(['__construct', 'calculateTotalPrice'])
+            ->onlyMethods(['__construct', 'calculateTotalPrice'])
             ->disableOriginalConstructor()
             ->getMock();
         $orderItemPriceCalculationMock
@@ -51,7 +51,7 @@ class OrderPriceCalculationTest extends TestCase
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
 
         $orderMock = $this->getMockBuilder(Order::class)
-            ->setMethods(['__construct', 'getItems'])
+            ->onlyMethods(['__construct', 'getItems'])
             ->disableOriginalConstructor()
             ->getMock();
         $orderMock->expects($this->once())->method('getItems')->willReturn($orderItems);
@@ -121,7 +121,7 @@ class OrderPriceCalculationTest extends TestCase
         $orderTotalPrice = new Price(Money::create(100), Money::create('120.3'));
 
         $roundingMock = $this->getMockBuilder(Rounding::class)
-            ->setMethods(['roundPriceWithVatByCurrency'])
+            ->onlyMethods(['roundPriceWithVatByCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
         $roundingMock->expects($this->any())->method(
@@ -158,7 +158,7 @@ class OrderPriceCalculationTest extends TestCase
         $orderTotalPrice = new Price(Money::create(100), Money::create('120.9'));
 
         $roundingMock = $this->getMockBuilder(Rounding::class)
-            ->setMethods(['roundPriceWithVatByCurrency'])
+            ->onlyMethods(['roundPriceWithVatByCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
         $roundingMock->expects($this->any())->method(

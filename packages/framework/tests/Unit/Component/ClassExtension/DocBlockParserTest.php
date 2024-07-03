@@ -10,12 +10,13 @@ use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\Object_;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Roave\BetterReflection\Reflection\ReflectionParameter;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser;
-use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnnotationsReplacerTest;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnnotationsReplacer;
 
 class DocBlockParserTest extends TestCase
 {
@@ -27,20 +28,20 @@ class DocBlockParserTest extends TestCase
     }
 
     /**
-     * @dataProvider methodPhpDocReturnTypeDataProvider
      * @param string $phpDoc
      * @param string[] $returnTypes
      */
+    #[DataProvider('methodPhpDocReturnTypeDataProvider')]
     public function testGetReturnTypesFromPhpDoc(string $phpDoc, array $returnTypes): void
     {
         $this->assertEquals($returnTypes, $this->docBlockParser->getReturnTypes($phpDoc));
     }
 
     /**
-     * @dataProvider methodPhpDocParamTypeDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionParameter $reflectionParameter
      * @param string $paramTypeString
      */
+    #[DataProvider('methodPhpDocParamTypeDataProvider')]
     public function testGetMethodParamTypeFromPhpDoc(
         ReflectionParameter $reflectionParameter,
         string $paramTypeString,
@@ -49,10 +50,10 @@ class DocBlockParserTest extends TestCase
     }
 
     /**
-     * @dataProvider methodPhpDocPropertyTypeDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
      * @param string $paramTypeString
      */
+    #[DataProvider('methodPhpDocPropertyTypeDataProvider')]
     public function testGetPropertyTypeFromPhpDoc(
         ReflectionProperty $reflectionProperty,
         string $paramTypeString,
@@ -63,9 +64,9 @@ class DocBlockParserTest extends TestCase
     /**
      * @return array<string|\phpDocumentor\Reflection\Type[]>[]
      */
-    public function methodPhpDocReturnTypeDataProvider(): array
+    public static function methodPhpDocReturnTypeDataProvider(): array
     {
-        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacer::class);
 
         return [
             [
@@ -103,9 +104,9 @@ class DocBlockParserTest extends TestCase
     /**
      * @return array<(\Roave\BetterReflection\Reflection\ReflectionParameter|string|null)>[]
      */
-    public function methodPhpDocParamTypeDataProvider(): array
+    public static function methodPhpDocParamTypeDataProvider(): array
     {
-        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacer::class);
         $reflectionMethod = $reflectionClass->getMethod('acceptsVariousParameters');
 
         return [
@@ -131,9 +132,9 @@ class DocBlockParserTest extends TestCase
     /**
      * @return array<\Roave\BetterReflection\Reflection\ReflectionProperty|string>[]
      */
-    public function methodPhpDocPropertyTypeDataProvider(): array
+    public static function methodPhpDocPropertyTypeDataProvider(): array
     {
-        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacerTest::class);
+        $reflectionClass = ReflectionObject::createFromName(DummyClassForAnnotationsReplacer::class);
 
         return [
             [

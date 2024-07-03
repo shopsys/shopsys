@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\String;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class TransformStringTest extends TestCase
 {
-    public function safeFilenameProvider()
+    public static function safeFilenameProvider()
     {
         return [
             [
@@ -48,16 +49,16 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @dataProvider safeFilenameProvider
      * @param mixed $actual
      * @param mixed $expected
      */
+    #[DataProvider('safeFilenameProvider')]
     public function testSafeFilename($actual, $expected)
     {
         $this->assertSame($expected, TransformString::safeFilename($actual));
     }
 
-    public function stringToFriendlyUrlSlugProvider()
+    public static function stringToFriendlyUrlSlugProvider()
     {
         return [
             [
@@ -92,16 +93,16 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @dataProvider stringToFriendlyUrlSlugProvider
      * @param mixed $actual
      * @param mixed $expected
      */
+    #[DataProvider('stringToFriendlyUrlSlugProvider')]
     public function testStringToFriendlyUrlSlug($actual, $expected)
     {
         $this->assertSame($expected, TransformString::stringToFriendlyUrlSlug($actual));
     }
 
-    public function stringToCamelCaseProvider()
+    public static function stringToCamelCaseProvider()
     {
         return [
             [
@@ -144,10 +145,10 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @dataProvider stringToCamelCaseProvider
      * @param mixed $actual
      * @param mixed $expected
      */
+    #[DataProvider('stringToCamelCaseProvider')]
     public function testStringToCamelCase($actual, $expected)
     {
         $this->assertSame($expected, TransformString::stringToCamelCase($actual));
@@ -156,7 +157,7 @@ class TransformStringTest extends TestCase
     /**
      * @return array
      */
-    public function stringTrailingSlashesProvider(): array
+    public static function stringTrailingSlashesProvider(): array
     {
         return [
             [
@@ -187,20 +188,20 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @dataProvider stringTrailingSlashesProvider
      * @param string $string
      * @param string $expected
      */
+    #[DataProvider('stringTrailingSlashesProvider')]
     public function testAddOrRemoveTrailingSlashFromString(string $string, string $expected): void
     {
         static::assertSame($expected, TransformString::addOrRemoveTrailingSlashFromString($string));
     }
 
     /**
-     * @dataProvider trimmedStringOrNullProvider
      * @param string|null $original
      * @param string|null $expected
      */
+    #[DataProvider('trimmedStringOrNullProvider')]
     public function testGetTrimmedStringOrNullOnEmpty(?string $original, ?string $expected): void
     {
         static::assertSame($expected, TransformString::getTrimmedStringOrNullOnEmpty($original));
@@ -209,7 +210,7 @@ class TransformStringTest extends TestCase
     /**
      * @return array
      */
-    public function trimmedStringOrNullProvider(): array
+    public static function trimmedStringOrNullProvider(): array
     {
         return [
             [
@@ -240,10 +241,10 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @dataProvider convertHtmlToPlainTextDataProvider
      * @param string|null $htmlString
      * @param string|null $expected
      */
+    #[DataProvider('convertHtmlToPlainTextDataProvider')]
     public function testConvertHtmlToPlainText(?string $htmlString, ?string $expected): void
     {
         $this->assertSame($expected, TransformString::convertHtmlToPlainText($htmlString));
@@ -252,7 +253,7 @@ class TransformStringTest extends TestCase
     /**
      *  @return iterable
      */
-    public function convertHtmlToPlainTextDataProvider(): iterable
+    public static function convertHtmlToPlainTextDataProvider(): iterable
     {
         yield 'null' => [
             'htmlString' => null,

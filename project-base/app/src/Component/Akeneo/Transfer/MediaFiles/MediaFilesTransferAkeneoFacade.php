@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Component\Akeneo\Transfer\MediaFiles;
 
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class MediaFilesTransferAkeneoFacade
 {
     /**
-     * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
+     * @param \Akeneo\Pim\ApiClient\AkeneoPimClientInterface $akeneoClient
      */
-    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimClientInterface $akeneoClient)
     {
     }
 

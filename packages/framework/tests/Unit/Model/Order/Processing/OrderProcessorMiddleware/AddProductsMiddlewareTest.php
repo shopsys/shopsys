@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
@@ -19,10 +20,10 @@ use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 class AddProductsMiddlewareTest extends MiddlewareTestCase
 {
     /**
-     * @dataProvider productsProvider
      * @param array<int, array{name: string, quantity: int, unitPrice: \Shopsys\FrameworkBundle\Model\Pricing\Price}> $productsProviderInput
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $expectedTotalPrice
      */
+    #[DataProvider('productsProvider')]
     public function testProductsAreAdded(
         array $productsProviderInput,
         Price $expectedTotalPrice,
@@ -77,7 +78,7 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
     /**
      * @return iterable
      */
-    public function productsProvider(): iterable
+    public static function productsProvider(): iterable
     {
         yield 'single product' => [
             'productsProviderInput' => [

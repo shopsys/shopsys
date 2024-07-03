@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Tests\FrameworkBundle\Unit\TestCase;
 
@@ -25,7 +26,7 @@ class UserTest extends TestCase
         $this->assertSame('companyName', $customerUser->getFullName());
     }
 
-    public function isResetPasswordHashValidProvider()
+    public static function isResetPasswordHashValidProvider()
     {
         return [
             [
@@ -62,12 +63,12 @@ class UserTest extends TestCase
     }
 
     /**
-     * @dataProvider isResetPasswordHashValidProvider
      * @param mixed $resetPasswordHash
      * @param mixed $resetPasswordHashValidThrough
      * @param mixed $sentHash
      * @param mixed $isExpectedValid
      */
+    #[DataProvider('isResetPasswordHashValidProvider')]
     public function testIsResetPasswordHashValid(
         $resetPasswordHash,
         $resetPasswordHashValidThrough,

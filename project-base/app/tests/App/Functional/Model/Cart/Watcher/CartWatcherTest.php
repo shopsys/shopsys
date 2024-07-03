@@ -92,7 +92,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $cartItemMock = $this->getMockBuilder(CartItem::class)
             ->disableOriginalConstructor()
-            ->setMethods(null)
+            ->onlyMethods([])
             ->getMock();
 
         $currentCustomerUserMock = $this->createCustomerUserMock();
@@ -156,7 +156,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $cartItemMock = $this->getMockBuilder(CartItem::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getProduct'])
+            ->onlyMethods(['getProduct'])
             ->getMock();
 
         $cartItemMock
@@ -180,7 +180,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getPricingGroup'])
+            ->onlyMethods(['getPricingGroup'])
             ->getMock();
 
         $currentCustomerUserMock
@@ -198,7 +198,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     {
         $productVisibilityMock = $this->getMockBuilder(ProductVisibility::class)
             ->disableOriginalConstructor()
-            ->setMethods(['isVisible'])
+            ->onlyMethods(['isVisible'])
             ->getMock();
 
         $productVisibilityMock
@@ -208,7 +208,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $productVisibilityFacadeMock = $this->getMockBuilder(ProductVisibilityFacade::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getProductVisibility'])
+            ->onlyMethods(['getProductVisibility'])
             ->getMock();
 
         $productVisibilityFacadeMock

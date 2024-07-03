@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
 use App\Model\Order\Order;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -19,10 +20,10 @@ final class GetSettingsTest extends GraphQlTestCase
     private readonly SeoSettingFacade $seoSettingFacade;
 
     /**
-     * @dataProvider dataProvider
      * @param string|null $robotsTxtContent
      * @param string|null $robotsTxtData
      */
+    #[DataProvider('dataProvider')]
     public function testGetSettings(?string $robotsTxtContent, ?string $robotsTxtData): void
     {
         $this->seoSettingFacade->setRobotsTxtContent($robotsTxtContent, $this->domain->getId());
@@ -38,7 +39,7 @@ final class GetSettingsTest extends GraphQlTestCase
     /**
      * @return array
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             [

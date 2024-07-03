@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
@@ -15,11 +16,11 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     private const EXPECTED_ORDER_IDS = [4, 5, 3, 1, 2, 6];
 
     /**
-     * @dataProvider getOrdersDataProvider
      * @param array $queryVariables
      * @param int|null $offsetInExpected
      * @param int|null $lengthInExpected
      */
+    #[DataProvider('getOrdersDataProvider')]
     public function testGetAllCustomerUserOrders(
         array $queryVariables,
         ?int $offsetInExpected,
@@ -59,7 +60,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     /**
      * @return iterable
      */
-    public function getOrdersDataProvider(): iterable
+    public static function getOrdersDataProvider(): iterable
     {
         // all orders
         yield [[], null, null];

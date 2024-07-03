@@ -6,6 +6,7 @@ namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Unit\Unit;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
@@ -17,7 +18,7 @@ class NewProductTest extends ApplicationTestCase
     /**
      * @return iterable
      */
-    public function createOrEditProductProvider(): iterable
+    public static function createOrEditProductProvider(): iterable
     {
         yield ['admin/product/new/'];
 
@@ -25,9 +26,9 @@ class NewProductTest extends ApplicationTestCase
     }
 
     /**
-     * @dataProvider createOrEditProductProvider
      * @param string $relativeUrl
      */
+    #[DataProvider('createOrEditProductProvider')]
     public function testCreateOrEditProduct(string $relativeUrl): void
     {
         $domainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();

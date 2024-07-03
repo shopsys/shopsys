@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\SeoPageDataFixture;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -29,65 +30,65 @@ class HreflangLinksTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function getHreflangEntitiesDataProvider(): iterable
+    public static function getHreflangEntitiesDataProvider(): iterable
     {
         yield 'Brand' => [
             'entityReference' => BrandDataFixture::BRAND_APPLE,
             'routeName' => 'front_brand_detail',
             'graphQlFileName' => 'BrandHreflangLinksQuery.graphql',
-            'entityName' => 'brand',
+            'graphQlType' => 'brand',
         ];
 
         yield 'Category' => [
             'entityReference' => CategoryDataFixture::CATEGORY_BOOKS,
             'routeName' => 'front_product_list',
             'graphQlFileName' => 'CategoryHreflangLinksQuery.graphql',
-            'entityName' => 'category',
+            'graphQlType' => 'category',
         ];
 
         yield 'Product' => [
             'entityReference' => ProductDataFixture::PRODUCT_PREFIX . 1,
             'routeName' => 'front_product_detail',
             'graphQlFileName' => 'ProductHreflangLinksQuery.graphql',
-            'entityName' => 'product',
+            'graphQlType' => 'product',
         ];
 
         yield 'BlogArticle' => [
             'entityReference' => BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE,
             'routeName' => 'front_blogarticle_detail',
             'graphQlFileName' => 'BlogArticleHreflangLinksQuery.graphql',
-            'entityName' => 'blogArticle',
+            'graphQlType' => 'blogArticle',
         ];
 
         yield 'BlogCategory' => [
             'entityReference' => BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY,
             'routeName' => 'front_blogcategory_detail',
             'graphQlFileName' => 'BlogCategoryHreflangLinksQuery.graphql',
-            'entityName' => 'blogCategory',
+            'graphQlType' => 'blogCategory',
         ];
 
         yield 'SeoPage' => [
             'entityReference' => SeoPageDataFixture::FIRST_DEMO_SEO_PAGE,
             'routeName' => 'front_page_seo',
             'graphQlFileName' => 'SeoPageHreflangLinksQuery.graphql',
-            'entityName' => 'seoPage',
+            'graphQlType' => 'seoPage',
         ];
 
         yield 'Flag' => [
             'entityReference' => FlagDataFixture::FLAG_PRODUCT_NEW,
             'routeName' => 'front_flag_detail',
             'graphQlFileName' => 'FlagHreflangLinksQuery.graphql',
-            'entityName' => 'flag',
+            'graphQlType' => 'flag',
         ];
     }
 
     /**
-     * @dataProvider getHreflangEntitiesDataProvider
      * @param string $entityReference
      * @param string $routeName
      * @param string $graphQlFileName
      * @param string $graphQlType
      */
+    #[DataProvider('getHreflangEntitiesDataProvider')]
     public function testNoAlternateReturnsOnlyItself(
         string $entityReference,
         string $routeName,
@@ -139,12 +140,12 @@ class HreflangLinksTest extends GraphQlTestCase
 
     /**
      * @group multidomain
-     * @dataProvider getHreflangEntitiesDataProvider
      * @param string $entityReference
      * @param string $routeName
      * @param string $graphQlFileName
      * @param string $graphQlType
      */
+    #[DataProvider('getHreflangEntitiesDataProvider')]
     public function testAlternateDomainLanguages(
         string $entityReference,
         string $routeName,

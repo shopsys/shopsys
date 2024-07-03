@@ -14,6 +14,7 @@ use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
@@ -311,10 +312,10 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     }
 
     /**
-     * @dataProvider getInvalidPromoCodesDataProvider
      * @param string|null $promoCodeReferenceName
      * @param string $expectedError
      */
+    #[DataProvider('getInvalidPromoCodesDataProvider')]
     public function testApplyInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError): void
     {
         $promoCodeCode = 'non-existing-promo-code';
@@ -347,7 +348,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     /**
      * @return iterable
      */
-    public function getInvalidPromoCodesDataProvider(): iterable
+    public static function getInvalidPromoCodesDataProvider(): iterable
     {
         yield [null, PromoCode::INVALID_ERROR];
 

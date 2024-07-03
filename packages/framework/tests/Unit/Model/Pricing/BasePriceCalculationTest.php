@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Pricing;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -19,7 +20,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class BasePriceCalculationTest extends TestCase
 {
-    public function calculateBasePriceProvider()
+    public static function calculateBasePriceProvider()
     {
         return [
             [
@@ -42,7 +43,6 @@ class BasePriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider calculateBasePriceProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param mixed $vatPercent
@@ -50,6 +50,7 @@ class BasePriceCalculationTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceVatAmount
      */
+    #[DataProvider('calculateBasePriceProvider')]
     public function testCalculateBasePriceRoundedByCurrency(
         int $inputPriceType,
         Money $inputPrice,

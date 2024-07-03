@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -22,14 +24,17 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrameworkBundle\Test\ProductIndexBackupFacade;
+use Zalas\Injector\Factory\DefaultExtractorFactory;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
+use Zalas\Injector\PHPUnit\TestListener\TestCaseContainerFactory;
+use Zalas\Injector\Service\Injector;
 
 abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTestCase
 {
     /**
      * @inject
      */
-    private PersistentReferenceFacade $persistentReferenceFacade;
+    protected PersistentReferenceFacade $persistentReferenceFacade;
 
     /**
      * @inject
@@ -59,11 +64,13 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     /**
      * @inject
      */
-    private EventDispatcherInterface $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->injectServices();
 
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
@@ -156,7 +163,13 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
     protected function tearDown(): void
     {
-        $this->productIndexBackupFacade->restoreSnapshotIfPreviouslyCreated();
+        // workaround for https://github.com/jakzal/phpunit-injector/issues/33
+        if (!isset($this->productIndexBackupFacade)) {
+            self::bootKernel();
+            self::$kernel->getContainer()->get('test.service_container')->get(ProductIndexBackupFacade::class)->restoreSnapshotIfPreviouslyCreated();
+        } else {
+            $this->productIndexBackupFacade->restoreSnapshotIfPreviouslyCreated();
+        }
 
         parent::tearDown();
     }
@@ -225,5 +238,14 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         );
 
         $this->eventDispatcher->dispatch($fakeKernelResponseEvent, 'kernel.response');
+    }
+
+    /**
+     * workaround for https://github.com/jakzal/phpunit-injector/issues/33
+     */
+    protected function injectServices(): void
+    {
+        $injector = new Injector(new TestCaseContainerFactory($this), new DefaultExtractorFactory([TestCase::class, Assert::class]));
+        $injector->inject($this);
     }
 }

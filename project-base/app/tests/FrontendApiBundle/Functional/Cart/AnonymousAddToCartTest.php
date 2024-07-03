@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -119,9 +120,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     }
 
     /**
-     * @dataProvider getInvalidQuantityProvider
      * @param mixed $invalidQuantity
      */
+    #[DataProvider('getInvalidQuantityProvider')]
     public function testInvalidQuantityProvided($invalidQuantity): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -140,7 +141,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     /**
      * @return array<int, int[]>
      */
-    public function getInvalidQuantityProvider(): array
+    public static function getInvalidQuantityProvider(): array
     {
         return [
             [0],

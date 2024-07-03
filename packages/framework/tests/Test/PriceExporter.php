@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test;
 
-use SebastianBergmann\Exporter\Exporter;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
-final class PriceExporter extends Exporter
+final class PriceExporter
 {
     /**
-     * @param mixed $value
-     * @param int $indentation
-     * @param \SebastianBergmann\RecursionContext\Context $processed
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $value
      * @return string
      */
-    protected function recursiveExport(&$value, $indentation, $processed = null): string
+    public function export(Price $value): string
     {
-        if ($value instanceof Price) {
-            return $value->getPriceWithVat()->getAmount() . ' with Vat (' . $value->getPriceWithoutVat()->getAmount() . ' without VAT)';
-        }
-
-        return parent::recursiveExport($value, $indentation, $processed);
+        return $value->getPriceWithVat()->getAmount() . ' with Vat (' . $value->getPriceWithoutVat()->getAmount() . ' without VAT)';
     }
 }

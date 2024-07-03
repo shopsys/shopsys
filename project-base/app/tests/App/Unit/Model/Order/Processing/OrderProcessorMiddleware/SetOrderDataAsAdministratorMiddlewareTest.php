@@ -8,14 +8,15 @@ use App\Model\Administrator\Administrator;
 use App\Model\Administrator\AdministratorData;
 use App\Model\Order\Processing\OrderProcessorMiddleware\SetOrderDataAsAdministratorMiddleware;
 use App\Model\Security\LoginAsUserFacade;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class SetOrderDataAsAdministratorMiddlewareTest extends MiddlewareTestCase
 {
     /**
-     * @dataProvider getAdministratorData
      * @param \App\Model\Administrator\Administrator|null $expectedAdministrator
      */
+    #[DataProvider('getAdministratorData')]
     public function testAdministratorDataIsAdded(?Administrator $expectedAdministrator): void
     {
         $orderProcessingData = $this->createOrderProcessingData();
@@ -35,7 +36,7 @@ class SetOrderDataAsAdministratorMiddlewareTest extends MiddlewareTestCase
     /**
      * @return iterable
      */
-    public function getAdministratorData(): iterable
+    public static function getAdministratorData(): iterable
     {
         $administratorData = new AdministratorData();
         $administratorData->realName = 'realName';

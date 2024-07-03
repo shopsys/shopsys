@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\HttpSmokeTesting\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Parameter;
@@ -63,8 +64,8 @@ class RequestDataSetGeneratorTest extends TestCase
      * @param \Shopsys\HttpSmokeTesting\Annotation\DataSet $dataSet
      * @param int $statusCode
      * @param array $parameters
-     * @dataProvider getDataSets
      */
+    #[DataProvider('getDataSets')]
     public function testGeneratorGenerateRequestDataSetFromDataSetAnnotation(
         DataSet $dataSet,
         int $statusCode,
@@ -122,7 +123,7 @@ class RequestDataSetGeneratorTest extends TestCase
     /**
      * @return array
      */
-    public function getDataSets(): array
+    public static function getDataSets(): array
     {
         $parameter1 = new Parameter();
         $parameter1->name = 'name';

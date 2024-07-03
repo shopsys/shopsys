@@ -20,7 +20,7 @@ final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
-    public function getTestingFiles(): iterable
+    public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.html.twig', __DIR__ . '/wrong/wrong.html.twig'];
 

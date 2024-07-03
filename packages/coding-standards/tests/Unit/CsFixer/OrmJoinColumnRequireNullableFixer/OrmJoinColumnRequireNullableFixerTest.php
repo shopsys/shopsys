@@ -20,7 +20,7 @@ final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
-    public function getTestingFiles(): iterable
+    public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/many_to_one_missing_join_column.php', __DIR__ . '/wrong/many_to_one_missing_join_column.php'];
 

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Test;
 
 use PHPUnit\Framework\Constraint\Constraint;
-use SebastianBergmann\Exporter\Exporter;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 final class IsPriceEqual extends Constraint
 {
-    private Exporter $exporter;
+    private PriceExporter $exporter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $value

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddRoundingMiddleware;
@@ -21,10 +22,10 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
     use SetTranslatorTrait;
 
     /**
-     * @dataProvider noRoundingAddedProvider
      * @param bool $czkRounding
      * @param string $currencyCode
      */
+    #[DataProvider('noRoundingAddedProvider')]
     public function testNoRoundingIsAdded(
         bool $czkRounding,
         string $currencyCode,
@@ -64,7 +65,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
     /**
      * @return iterable
      */
-    public function noRoundingAddedProvider(): iterable
+    public static function noRoundingAddedProvider(): iterable
     {
         yield 'CZK currency without CZK rounding' => [false, Currency::CODE_CZK];
 
@@ -99,11 +100,11 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
     }
 
     /**
-     * @dataProvider roundingProvider
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $inputPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $roundingPrice
      * @param int $expectedRoundingItemsCount
      */
+    #[DataProvider('roundingProvider')]
     public function testProperRoundingIsAdded(
         Price $inputPrice,
         Price $roundingPrice,
@@ -148,7 +149,7 @@ class AddRoundingMiddlewareTest extends MiddlewareTestCase
     /**
      * @return iterable
      */
-    public function roundingProvider(): iterable
+    public static function roundingProvider(): iterable
     {
         yield 'added rounding' => [
             new Price(Money::create('100.89'), Money::create('121.63')),

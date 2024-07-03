@@ -8,6 +8,8 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductListDataFixture;
 use App\Model\Product\Product;
 use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\UnknownProductListTypeException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
@@ -17,11 +19,11 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @dataProvider productListDataProvider
      * @param string $productListType
      * @param string $expectedUuid
      * @param string[] $expectedProductIds
      */
+    #[DataProvider('productListDataProvider')]
     public function testFindProductListByType(
         string $productListType,
         string $expectedUuid,
@@ -38,31 +40,31 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider productListDataProvider
      * @param string $productListType
-     * @param string $uuid
+     * @param string $expectedUuid
      * @param string[] $expectedProductIds
      */
+    #[DataProvider('productListDataProvider')]
     public function testFindProductListByTypeAndUuid(
         string $productListType,
-        string $uuid,
+        string $expectedUuid,
         array $expectedProductIds,
     ): void {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListQuery.graphql', [
-            'uuid' => $uuid,
+            'uuid' => $expectedUuid,
             'type' => $productListType,
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'productList');
 
-        $this->assertSame($uuid, $data['uuid']);
+        $this->assertSame($expectedUuid, $data['uuid']);
         $this->assertSame($productListType, $data['type']);
         $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testFindProductListByTypeAndUuidOfAnotherCustomerUserReturnsNull(
         string $productListType,
     ): void {
@@ -80,14 +82,14 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider productListDataProvider
      * @param string $productListType
-     * @param string $uuid
+     * @param string $expectedUuid
      * @param int[] $expectedProductIds
      */
+    #[DataProvider('productListDataProvider')]
     public function testGetListsByType(
         string $productListType,
-        string $uuid,
+        string $expectedUuid,
         array $expectedProductIds,
     ): void {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListsByTypeQuery.graphql', [
@@ -98,18 +100,18 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         $this->assertIsArray($data);
         $this->assertCount(1, $data);
         $productListData = $data[0];
-        $this->assertSame($uuid, $productListData['uuid']);
+        $this->assertSame($expectedUuid, $productListData['uuid']);
         $this->assertSame($productListType, $productListData['type']);
         $this->assertSame($expectedProductIds, array_column($productListData['products'], 'id'));
     }
 
     /**
-     * @dataProvider productListDataProvider
      * @param string $productListType
      * @param string $expectedUuid
      * @param array $expectedProductIds
      * @throws \JsonException
      */
+    #[DataProvider('productListDataProvider')]
     public function testAddNewProductToExistingList(
         string $productListType,
         string $expectedUuid,
@@ -130,10 +132,10 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      * @throws \JsonException
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testAddProductCreatesNewListWhenNewUuidIsProvided(string $productListType): void
     {
         $newUuid = Uuid::uuid4()->toString();
@@ -152,9 +154,9 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testAddProductCreatesNewListWithNewUuidWhenUuidOfAnonymousListIsProvided(
         string $productListType,
     ): void {
@@ -174,14 +176,14 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider productListDataProvider
      * @param string $productListType
-     * @param string $uuid
+     * @param string $expectedUuid
      * @param array $expectedProductIds
      */
+    #[DataProvider('productListDataProvider')]
     public function testProductAlreadyInListUserError(
         string $productListType,
-        string $uuid,
+        string $expectedUuid,
         array $expectedProductIds,
     ): void {
         $productToAddId = $expectedProductIds[0];
@@ -197,9 +199,9 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductFromListProductNotFoundUserError(string $productListType): void
     {
         $notExistingProductUuid = Uuid::uuid4()->toString();
@@ -215,10 +217,10 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      * @throws \JsonException
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductFromListProductNotInListUserError(string $productListType): void
     {
         $productThatIsNotInList = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 69, Product::class);
@@ -234,9 +236,9 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param string $productListType
      */
+    #[DataProviderExternal(ProductListTypesDataProvider::class, 'getProductListTypes')]
     public function testRemoveProductList(string $productListType): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductListMutation.graphql', [
@@ -249,7 +251,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     /**
      * @return \Iterator
      */
-    public function productListDataProvider(): Iterator
+    public static function productListDataProvider(): Iterator
     {
         yield [
             'productListType' => ProductListTypeEnum::COMPARISON,

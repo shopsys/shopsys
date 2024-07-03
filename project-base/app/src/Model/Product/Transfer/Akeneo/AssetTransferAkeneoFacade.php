@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
-use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class AssetTransferAkeneoFacade
 {
     /**
-     * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
+     * @param \Akeneo\Pim\ApiClient\AkeneoPimClientInterface $akeneoClient
      */
-    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimClientInterface $akeneoClient)
     {
     }
 
     /**
-     * @return \Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetApiInterface
+     * @return \Akeneo\Pim\ApiClient\Api\AssetManager\AssetApiInterface
      */
     private function getAssetManagerApiEndpoint()
     {

@@ -18,26 +18,9 @@ abstract class AbstractSniffTestCase extends TestCase
     abstract protected function getSniffClassName(): string;
 
     /**
-     * @return iterable
-     */
-    public function getWrongFiles(): iterable
-    {
-        return [];
-    }
-
-    /**
-     * @return iterable
-     */
-    public function getCorrectFiles(): iterable
-    {
-        return [];
-    }
-
-    /**
      * @param string $fileToTest
-     * @dataProvider getWrongFiles
      */
-    public function testWrongFiles(string $fileToTest): void
+    public function runWrongFilesTest(string $fileToTest): void
     {
         $file = $this->doRunSniff($fileToTest);
 
@@ -46,9 +29,8 @@ abstract class AbstractSniffTestCase extends TestCase
 
     /**
      * @param string $fileToTest
-     * @dataProvider getCorrectFiles
      */
-    public function testCorrectFiles(string $fileToTest): void
+    public function runCorrectFilesTest(string $fileToTest): void
     {
         $file = $this->doRunSniff($fileToTest);
 

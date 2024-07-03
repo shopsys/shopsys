@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Payment;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -25,7 +26,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PaymentPriceCalculationTest extends TestCase
 {
-    public function calculateIndependentPriceProvider()
+    public static function calculateIndependentPriceProvider()
     {
         return [
             [
@@ -45,7 +46,7 @@ class PaymentPriceCalculationTest extends TestCase
         ];
     }
 
-    public function calculatePriceProvider()
+    public static function calculatePriceProvider()
     {
         return [
             [
@@ -68,13 +69,13 @@ class PaymentPriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider calculateIndependentPriceProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      */
+    #[DataProvider('calculateIndependentPriceProvider')]
     public function testCalculateIndependentPrice(
         int $inputPriceType,
         Money $inputPrice,
@@ -83,7 +84,7 @@ class PaymentPriceCalculationTest extends TestCase
         Money $priceWithVat,
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType'])
+            ->onlyMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock
@@ -134,7 +135,6 @@ class PaymentPriceCalculationTest extends TestCase
     }
 
     /**
-     * @dataProvider calculatePriceProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param string $vatPercent
@@ -142,6 +142,7 @@ class PaymentPriceCalculationTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      */
+    #[DataProvider('calculatePriceProvider')]
     public function testCalculatePrice(
         int $inputPriceType,
         Money $inputPrice,
@@ -152,7 +153,7 @@ class PaymentPriceCalculationTest extends TestCase
     ) {
         $priceLimit = Money::create(1000);
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
-            ->setMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])
+            ->onlyMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])
             ->disableOriginalConstructor()
             ->getMock();
         $pricingSettingMock
