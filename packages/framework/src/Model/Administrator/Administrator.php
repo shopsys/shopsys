@@ -12,7 +12,6 @@ use Ramsey\Uuid\Uuid;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
-use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
@@ -485,25 +484,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         foreach ($administratorRoles as $role) {
             $this->roles->add($role);
         }
-
-        $this->checkRolesContainAdminRole();
-    }
-
-    protected function checkRolesContainAdminRole(): void
-    {
-        foreach ($this->roles->getValues() as $role) {
-            if (in_array($role->getRole(), Roles::getMandatoryAdministratorRoles(), true)) {
-                return;
-            }
-        }
-
-        $message = sprintf(
-            'There is no mandatory role for administrator with ID `%s`. One of this role is expected: %s.',
-            $this->id,
-            implode(', ', Roles::getMandatoryAdministratorRoles()),
-        );
-
-        throw new MandatoryAdministratorRoleIsMissingException($message);
     }
 
     /**

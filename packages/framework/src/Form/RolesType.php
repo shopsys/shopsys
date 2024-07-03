@@ -14,14 +14,17 @@ class RolesType extends AbstractType
     /**
      * @var array<array<string, string>>
      */
-    private array $rolesChoices = [];
+    private array $rolesChoices;
 
-    public function __construct()
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Security\Roles $roles
+     */
+    public function __construct(Roles $roles)
     {
-        $rolesGrid = Roles::getAvailableAdministratorRolesGrid();
+        $rolesGrid = $roles->getAvailableAdministratorRolesGrid();
 
-        foreach ($rolesGrid as &$roles) {
-            $roles = array_flip($roles);
+        foreach ($rolesGrid as &$rolesRow) {
+            $rolesRow = array_flip($rolesRow);
         }
 
         $this->rolesChoices = $rolesGrid;

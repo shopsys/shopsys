@@ -914,6 +914,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting: ~
 
+    Shopsys\FrameworkBundle\Model\Security\Roles: ~
+
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
         arguments:
             - '@event_dispatcher'

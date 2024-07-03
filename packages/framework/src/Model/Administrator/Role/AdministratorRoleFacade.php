@@ -26,11 +26,18 @@ class AdministratorRoleFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param string[] $roles
      */
-    public function refreshAdministratorRoles(Administrator $administrator, array $roles)
+    public function refreshAdministratorRoles(Administrator $administrator, array $roles): void
     {
         $roles = $this->addAdminRoleIfMissing($administrator, $roles);
 
         $this->removeAllByAdministrator($administrator);
+
+        if ($administrator->getRoleGroup() !== null) {
+            $administrator->setRolesChangedNow();
+            $this->em->flush();
+
+            return;
+        }
 
         $newRoles = [];
 

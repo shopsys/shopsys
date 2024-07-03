@@ -34,10 +34,12 @@ class AdministratorFormType extends AbstractType
     /**
      * @param \Symfony\Component\Security\Core\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Security\Roles $roles
      */
     public function __construct(
         private readonly Security $security,
         private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+        private readonly Roles $roles,
     ) {
     }
 
@@ -129,7 +131,7 @@ class AdministratorFormType extends AbstractType
 
             $builderSettingsGroup->add('roles', ChoiceType::class, [
                 'required' => false,
-                'choices' => Roles::getAvailableAdministratorRolesChoices(),
+                'choices' => $this->roles->getAvailableAdministratorRolesChoices(),
                 'placeholder' => t('-- Select a role --'),
                 'multiple' => true,
                 'label' => t('Role'),
@@ -160,7 +162,7 @@ class AdministratorFormType extends AbstractType
      */
     private function getAdministratorRolesList(Administrator $administrator): string
     {
-        $allAvailableRoleChoices = Roles::getAvailableAdministratorRolesChoices();
+        $allAvailableRoleChoices = $this->roles->getAvailableAdministratorRolesChoices();
         $intersection = array_intersect($allAvailableRoleChoices, $administrator->getRoles());
 
         return implode(', ', array_keys($intersection));

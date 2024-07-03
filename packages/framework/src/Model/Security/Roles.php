@@ -158,15 +158,15 @@ class Roles
     /**
      * @return array<string, string>
      */
-    public static function getAvailableAdministratorRolesChoices(): array
+    public function getAvailableAdministratorRolesChoices(): array
     {
-        return array_flip(static::getAvailableAdministratorRoles());
+        return array_flip($this->getAvailableAdministratorRoles());
     }
 
     /**
      * @return array<array<string, string>>
      */
-    public static function getAvailableAdministratorRolesGrid(): array
+    public function getAvailableAdministratorRolesGrid(): array
     {
         return [
             [
@@ -369,16 +369,8 @@ class Roles
     /**
      * @return array<string, string>
      */
-    protected static function getAvailableAdministratorRoles(): array
+    protected function getAvailableAdministratorRoles(): array
     {
-        return array_merge(...static::getAvailableAdministratorRolesGrid());
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getMandatoryAdministratorRoles(): array
-    {
-        return [static::ROLE_ADMIN, static::ROLE_SUPER_ADMIN];
+        return array_merge(...$this->getAvailableAdministratorRolesGrid());
     }
 }
