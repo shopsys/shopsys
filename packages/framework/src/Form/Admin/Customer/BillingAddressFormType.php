@@ -108,8 +108,11 @@ class BillingAddressFormType extends AbstractType
 
         $builderAddressGroup
             ->add('street', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter street',
+                    ]),
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
@@ -118,8 +121,11 @@ class BillingAddressFormType extends AbstractType
                 'label' => t('Street'),
             ])
             ->add('city', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter city',
+                    ]),
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
@@ -128,8 +134,11 @@ class BillingAddressFormType extends AbstractType
                 'label' => t('City'),
             ])
             ->add('postcode', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter zip code',
+                    ]),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
@@ -138,10 +147,15 @@ class BillingAddressFormType extends AbstractType
                 'label' => t('Postcode'),
             ])
             ->add('country', ChoiceType::class, [
-                'required' => false,
+                'required' => true,
                 'choices' => $countries,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please choose country',
+                    ]),
+                ],
                 'label' => t('Country'),
             ]);
 
