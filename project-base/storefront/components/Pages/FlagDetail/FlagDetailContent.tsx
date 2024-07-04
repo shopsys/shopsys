@@ -14,7 +14,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     return (
         <>
             <Webline>
-                <h1 className="mb-3">{flag.name}</h1>
+                <h1>{flag.name}</h1>
             </Webline>
             <Webline>
                 <div className="scroll-mt-5" ref={paginationScrollTargetRef}>

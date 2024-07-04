@@ -48,7 +48,7 @@ h6,
 
 h1,
 .h1 {
-    @apply text-3xl/tight tracking-tight lg:text-4xl/tight;
+    @apply mb-3 text-3xl/tight tracking-tight lg:text-4xl/tight vl:mb-5;
 }
 
 h2,

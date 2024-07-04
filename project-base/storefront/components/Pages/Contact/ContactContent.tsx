@@ -52,7 +52,7 @@ export const ContactContent: FC = () => {
     return (
         <div className="mb-8">
             <Webline>
-                <h1 className="mb-3">{t('Write to us')}</h1>
+                <h1>{t('Write to us')}</h1>
                 {settingsData?.settings?.contactFormMainText !== undefined && (
                     <div
                         className="mb-4"

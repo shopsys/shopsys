@@ -17,7 +17,7 @@ export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory
     return (
         <Webline>
             <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-                <h1 className="mb-3">{title}</h1>
+                <h1>{title}</h1>
                 <div className="mb-16 flex flex-col vl:flex-row">
                     <div className="order-2 mb-16 flex w-full flex-col vl:order-1 vl:flex-1">
                         <BlogCategoryArticlesWrapper

@@ -33,9 +33,7 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children,
                 <UserNavigation />
                 <div className="w-full">
                     {pageHeading && (
-                        <h1 className={twMergeCustom('mb-4 text-dark vl:mb-6', !isUserLoggedIn && 'mt-0 vl:mt-4')}>
-                            {pageHeading}
-                        </h1>
+                        <h1 className={twMergeCustom('text-dark', !isUserLoggedIn && 'mt-0 vl:mt-4')}>{pageHeading}</h1>
                     )}
                     {children}
                 </div>

@@ -16,7 +16,7 @@ export const ProductComparison: FC = () => {
 
     return (
         <Webline>
-            <h1 className="mb-8">{title}</h1>
+            <h1>{title}</h1>
 
             {isProductListFetching && <SkeletonModuleComparison />}
 

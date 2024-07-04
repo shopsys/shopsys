@@ -26,9 +26,9 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
     return (
         <>
             <Webline className="mb-2">
-                <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
+                <div className="flex flex-col items-center justify-between lg:flex-row">
                     <div className="w-1/5" />
-                    <h1 className="mb-3 lg:mb-0" tid={TIDs.order_detail_number}>
+                    <h1 tid={TIDs.order_detail_number}>
                         {t('Order number')} {order.number}
                     </h1>
                     <div className="flex items-center justify-end lg:w-1/5">

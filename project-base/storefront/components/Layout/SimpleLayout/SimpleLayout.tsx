@@ -7,7 +7,7 @@ type SimpleLayoutProps = {
 
 export const SimpleLayout: FC<SimpleLayoutProps> = ({ heading, children, standardWidth }) => (
     <Webline>
-        <h1 className="mb-3 text-center">{heading}</h1>
+        <h1 className="text-center">{heading}</h1>
 
         {standardWidth ? (
             children

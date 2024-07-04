@@ -23,7 +23,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults }) => {
 
     return (
         <>
-            <h1 className="mb-3" tid={TIDs.search_results_heading}>{`${t(
+            <h1 tid={TIDs.search_results_heading}>{`${t(
                 'Search results for',
             )} "${getStringFromUrlQuery(router.query.q)}"`}</h1>
             {!!searchResults.articlesSearch.length && (
