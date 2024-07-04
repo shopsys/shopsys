@@ -22,7 +22,7 @@
                                         {{ icon('move') }}
                                     </span>
                                 {% endif %}
-                                {% if not isRemoved %}
+                                {% if not isRemoved and not hide_delete_button %}
                                     <button class="js-file-upload-delete-button btn-no-style list-files__item__remove" type="button" title="{{ 'Delete'|trans }}">
                                         {{ icon('delete') }}
                                     </button>

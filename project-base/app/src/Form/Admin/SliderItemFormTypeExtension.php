@@ -62,6 +62,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
+                'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
             ]);
 
         $builderImageGroup
@@ -83,6 +84,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
+                'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
             ]);
     }
 

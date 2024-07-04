@@ -49,6 +49,7 @@ class ImageUploadType extends AbstractType
             'multiple' => null,
             'image_entity_class' => null,
             'extensions' => ImageProcessor::SUPPORTED_EXTENSIONS,
+            'hide_delete_button' => false,
         ]);
 
         $resolver->setNormalizer(
@@ -79,6 +80,7 @@ class ImageUploadType extends AbstractType
         $view->vars['images_by_id'] = $this->getImagesIndexedById($options);
         $view->vars['image_type'] = $options['image_type'];
         $view->vars['multiple'] = $this->isMultiple($options);
+        $view->vars['hide_delete_button'] = $options['hide_delete_button'];
     }
 
     /**
