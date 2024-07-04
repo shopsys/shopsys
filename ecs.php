@@ -102,6 +102,7 @@ return ECSConfig::configure()
             CyclomaticComplexitySniff::class => [
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version20240403091822.php',
+                __DIR__ . '/packages/framework/src/Migrations/Version20240704143616.php',
                 __DIR__ . '/packages/framework/src/Model/Blog/Article/Elasticsearch/BlogArticleElasticsearchDataFetcher.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/ProductExportRepository.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php',
