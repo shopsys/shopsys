@@ -109,19 +109,6 @@ class MailTemplateFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
-     */
-    public function delete(MailTemplate $mailTemplate): void
-    {
-        if ($mailTemplate->getName() !== MailTemplate::ORDER_STATUS_NAME) {
-            throw new Exception\DeleteMailTemplateException();
-        }
-
-        $this->em->remove($mailTemplate);
-        $this->em->flush();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
      */

@@ -143,7 +143,6 @@ class MailTemplateRepository
         OrderStatus $orderStatus,
     ): ?MailTemplate {
         return $this->getMailTemplateRepository()->findOneBy([
-            'name' => MailTemplate::ORDER_STATUS_NAME,
             'domainId' => $domainId,
             'orderStatus' => $orderStatus,
         ]);

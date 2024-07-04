@@ -8,36 +8,20 @@ use App\Form\Admin\GrapesJsMailType;
 use App\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Form\Constraints\Contains;
-use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\Transformers\EmptyWysiwygTransformer;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MailTemplateFormTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
-     */
-    public function __construct(
-        private OrderStatusFacade $orderStatusFacade,
-    ) {
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var \App\Model\Mail\MailTemplate|null $mailTemplate */
-        $mailTemplate = $options['entity'];
-        $isOrderStatusTemplate = $mailTemplate === null || $mailTemplate->getName() === MailTemplate::ORDER_STATUS_NAME;
-
         $builder->remove('body');
 
         $builder->add(
@@ -50,34 +34,6 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
                 ])
                 ->addModelTransformer(new EmptyWysiwygTransformer()),
         );
-
-        if ($mailTemplate === null) {
-            $builder->add('domainId', DomainType::class, [
-                'required' => true,
-                'label' => t('Domain'),
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'position' => ['after' => 'subject'],
-            ]);
-        }
-
-        if ($isOrderStatusTemplate === true) {
-            $builder
-                ->add('orderStatus', ChoiceType::class, [
-                    'required' => true,
-                    'label' => t('Order status'),
-                    'multiple' => false,
-                    'expanded' => false,
-                    'choices' => $this->orderStatusFacade->getAll(),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                    'position' => ['after' => 'bccEmail'],
-                ]);
-        }
     }
 
     /**

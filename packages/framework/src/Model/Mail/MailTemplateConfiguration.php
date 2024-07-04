@@ -130,6 +130,11 @@ class MailTemplateConfiguration
                 OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS,
                 t('Payment instructions'),
                 MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_TRACKING_INSTRUCTIONS,
+                t('Tracking instructions'),
+                MailTemplateVariables::CONTEXT_BODY,
             );
     }
 

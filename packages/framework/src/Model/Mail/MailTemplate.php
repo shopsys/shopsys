@@ -21,7 +21,6 @@ class MailTemplate
     public const RESET_PASSWORD_NAME = 'reset_password';
     public const PERSONAL_DATA_ACCESS_NAME = 'personal_data_access';
     public const PERSONAL_DATA_EXPORT_NAME = 'personal_data_export';
-    public const ORDER_STATUS_NAME = 'order_status';
 
     /**
      * @var int
