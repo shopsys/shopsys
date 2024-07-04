@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
+use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @ORM\Table(name="uploaded_files", indexes={@ORM\Index(columns={"entity_name", "entity_id"})})
  * @ORM\Entity
+ * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
  */
-class UploadedFile implements EntityFileUploadInterface
+class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploadInterface
 {
     protected const UPLOAD_KEY = 'uploadedFile';
 
@@ -83,6 +87,12 @@ class UploadedFile implements EntityFileUploadInterface
     protected $position;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation>
+     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation")
+     */
+    protected $translations;
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param string $type
@@ -104,6 +114,7 @@ class UploadedFile implements EntityFileUploadInterface
         $this->setTemporaryFilename($temporaryFilename);
         $this->setNameAndSlug($uploadedFilename);
         $this->position = $position;
+        $this->translations = new ArrayCollection();
     }
 
     /**
@@ -316,5 +327,22 @@ class UploadedFile implements EntityFileUploadInterface
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation
+     */
+    protected function createTranslation()
+    {
+        return new UploadedFileTranslation();
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getTranslatedName(?string $locale = null): ?string
+    {
+        return $this->translation($locale)->getName();
     }
 }
