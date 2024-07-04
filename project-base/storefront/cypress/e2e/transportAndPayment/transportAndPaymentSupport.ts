@@ -21,7 +21,7 @@ export const changeSelectionOfPaymentByName = (paymentName: string) => {
 };
 
 export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {
-    cy.intercept('POST', '/graphql/TransportsQuery', (req) => {
+    cy.intercept('POST', '/graphql/TransportsFullQuery', (req) => {
         req.reply((response) => {
             response?.body?.data?.transports?.forEach(
                 (transport: TypeTransportWithAvailablePaymentsAndStoresFragment) => {

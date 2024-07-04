@@ -8,12 +8,12 @@ import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TransportAndPaymentProps = {
-    transport: TypeTransportWithAvailablePaymentsAndStoresFragment | null;
+    transport: TypeTransportWithAvailablePaymentsFragment | null;
     payment: TypeSimplePaymentFragment | null;
     roundingPrice: TypePriceFragment | null;
 };

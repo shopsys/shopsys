@@ -1,15 +1,15 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TransportWithAvailablePaymentsFragment } from '../fragments/TransportWithAvailablePaymentsFragment.generated';
+import { TransportStoresFragment } from '../fragments/TransportStoresFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeTransportsQueryVariables = Types.Exact<{
-  cartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+export type TypeTransportStoresQueryVariables = Types.Exact<{
+  uuid: Types.Scalars['Uuid']['input'];
 }>;
 
 
-export type TypeTransportsQuery = { __typename?: 'Query', transports: Array<{ __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, isPersonalPickup: boolean, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, transportType: { __typename: 'TransportType', code: string } }> };
+export type TypeTransportStoresQuery = { __typename?: 'Query', transport: { __typename: 'Transport', uuid: string, stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, identifier: string, openingHours: { __typename?: 'OpeningHours', isOpen: boolean, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string } } | null } | null> | null } | null } | null };
 
 
       export interface PossibleTypesResultData {
@@ -89,14 +89,14 @@ export type TypeTransportsQuery = { __typename?: 'Query', transports: Array<{ __
       export default result;
     
 
-export const TransportsQueryDocument = gql`
-    query TransportsQuery($cartUuid: Uuid) {
-  transports(cartUuid: $cartUuid) {
-    ...TransportWithAvailablePaymentsFragment
+export const TransportStoresQueryDocument = gql`
+    query TransportStoresQuery($uuid: Uuid!) {
+  transport(uuid: $uuid) {
+    ...TransportStoresFragment
   }
 }
-    ${TransportWithAvailablePaymentsFragment}`;
+    ${TransportStoresFragment}`;
 
-export function useTransportsQuery(options?: Omit<Urql.UseQueryArgs<TypeTransportsQueryVariables>, 'query'>) {
-  return Urql.useQuery<TypeTransportsQuery, TypeTransportsQueryVariables>({ query: TransportsQueryDocument, ...options });
+export function useTransportStoresQuery(options: Omit<Urql.UseQueryArgs<TypeTransportStoresQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeTransportStoresQuery, TypeTransportStoresQueryVariables>({ query: TransportStoresQueryDocument, ...options });
 };

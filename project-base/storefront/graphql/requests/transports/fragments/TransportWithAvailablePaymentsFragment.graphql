@@ -1,4 +1,4 @@
-fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
+fragment TransportWithAvailablePaymentsFragment on Transport {
     __typename
     uuid
     name
@@ -13,9 +13,6 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
         ...SimplePaymentFragment
     }
     daysUntilDelivery
-    stores {
-        ...ListedStoreConnectionFragment
-    }
     transportType {
         __typename
         code
