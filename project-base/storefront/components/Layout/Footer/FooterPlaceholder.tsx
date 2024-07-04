@@ -10,6 +10,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [userConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/user-consent', '/contact'], url);
+    const currentYear = new Date().getFullYear();
 
     return (
         <>
@@ -41,7 +42,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                     ))}
                 </>
             )}
-            {t('Copyright © 2021, Shopsys s.r.o. All rights reserved.')}
+            {t('Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.', { currentYear })}
             {t('Customized E-shop by')}
             <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                 <Image alt="footer logo" src={imageLogo} />

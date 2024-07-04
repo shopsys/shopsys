@@ -4,11 +4,12 @@ import useTranslation from 'next-translate/useTranslation';
 
 export const FooterCopyright: FC = () => {
     const { t } = useTranslation();
+    const currentYear = new Date().getFullYear();
 
     return (
         <div className="flex flex-col items-center text-center">
             <div className="flex items-center text-sm text-graySlate">
-                {t('Copyright © 2021, Shopsys s.r.o. All rights reserved.')}
+                {t('Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.', { currentYear })}
             </div>
             <div className="flex items-center text-sm text-graySlate">
                 {t('Customized E-shop by')}
