@@ -652,6 +652,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~
 
+    Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker: ~
+
     Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:

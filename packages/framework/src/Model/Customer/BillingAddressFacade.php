@@ -12,11 +12,13 @@ class BillingAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository $billingAddressRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker $uniqueBillingAddressChecker
      */
     public function __construct(
         protected readonly BillingAddressFactory $billingAddressFactory,
         protected readonly BillingAddressRepository $billingAddressRepository,
         protected readonly EntityManagerInterface $em,
+        protected readonly UniqueBillingAddressChecker $uniqueBillingAddressChecker,
     ) {
     }
 
@@ -27,6 +29,10 @@ class BillingAddressFacade
     public function edit(int $billingAddressId, BillingAddressData $billingAddressData): void
     {
         $billingAddress = $this->getById($billingAddressId);
+
+        $domainId = $billingAddressData->customer->getDomainId();
+        $this->uniqueBillingAddressChecker->checkUniqueBillingAddressDataIgnoringBillingAddress($billingAddressData, $billingAddress, $domainId);
+
         $billingAddress->edit($billingAddressData);
 
         $this->em->flush();
@@ -38,6 +44,9 @@ class BillingAddressFacade
      */
     public function create(BillingAddressData $billingAddressData): BillingAddress
     {
+        $domainId = $billingAddressData->customer->getDomainId();
+        $this->uniqueBillingAddressChecker->checkUniqueBillingAddressData($billingAddressData, $domainId);
+
         $billingAddress = $this->billingAddressFactory->create($billingAddressData);
 
         $this->em->persist($billingAddress);
