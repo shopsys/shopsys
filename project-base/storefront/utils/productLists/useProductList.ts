@@ -7,6 +7,7 @@ import { useProductListQuery } from 'graphql/requests/productLists/queries/Produ
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 
 export const useProductList = (
@@ -20,6 +21,8 @@ export const useProductList = (
         removeProductError: () => void;
     },
 ) => {
+    const isProductListHydrated = useSessionStore((s) => s.isProductListHydrated);
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const authLoading = usePersistStore((s) => s.authLoading);
     const updateProductListUuid = useUpdateProductListUuid(productListType);
@@ -37,8 +40,12 @@ export const useProductList = (
                 uuid: productListUuid,
             },
         },
-        pause: (!productListUuid && !isUserLoggedIn) || authLoading !== null,
+        pause: !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null,
     });
+
+    useEffect(() => {
+        updatePageLoadingState({ isProductListHydrated: true });
+    }, []);
 
     useEffect(() => {
         if (productListData?.productList?.uuid) {
@@ -108,5 +115,11 @@ export const useProductList = (
         }
     };
 
-    return { productListData, isProductInList, removeList, toggleProductInList, isProductListFetching };
+    return {
+        productListData,
+        isProductInList,
+        removeList,
+        toggleProductInList,
+        isProductListFetching,
+    };
 };
