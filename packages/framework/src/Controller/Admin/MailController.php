@@ -115,15 +115,22 @@ class MailController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/mail/setting/')]
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         $mailSettingData = [
             'email' => $this->mailSettingFacade->getMainAdminMail($selectedDomainId),
             'name' => $this->mailSettingFacade->getMainAdminMailName($selectedDomainId),
+            'facebookUrl' => $this->mailSettingFacade->getFacebookUrl($selectedDomainId),
+            'instagramUrl' => $this->mailSettingFacade->getInstagramUrl($selectedDomainId),
+            'youtubeUrl' => $this->mailSettingFacade->getYoutubeUrl($selectedDomainId),
+            'linkedinUrl' => $this->mailSettingFacade->getLinkedInUrl($selectedDomainId),
+            'tiktokUrl' => $this->mailSettingFacade->getTiktokUrl($selectedDomainId),
+            'footerText' => $this->mailSettingFacade->getFooterTextUrl($selectedDomainId),
         ];
 
         $form = $this->createForm(MailSettingFormType::class, $mailSettingData);
@@ -134,6 +141,12 @@ class MailController extends AdminBaseController
 
             $this->mailSettingFacade->setMainAdminMail($mailSettingData['email'], $selectedDomainId);
             $this->mailSettingFacade->setMainAdminMailName($mailSettingData['name'], $selectedDomainId);
+            $this->mailSettingFacade->setFacebookUrl($mailSettingData['facebookUrl'], $selectedDomainId);
+            $this->mailSettingFacade->setInstagramUrl($mailSettingData['instagramUrl'], $selectedDomainId);
+            $this->mailSettingFacade->setYoutubeUrl($mailSettingData['youtubeUrl'], $selectedDomainId);
+            $this->mailSettingFacade->setLinkedInUrl($mailSettingData['linkedinUrl'], $selectedDomainId);
+            $this->mailSettingFacade->setTiktokUrl($mailSettingData['tiktokUrl'], $selectedDomainId);
+            $this->mailSettingFacade->setFooterText($mailSettingData['footerText'], $selectedDomainId);
 
             $this->addSuccessFlash(t('Email settings modified.'));
         }

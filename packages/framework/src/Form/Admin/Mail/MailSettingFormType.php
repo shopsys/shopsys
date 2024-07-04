@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
@@ -41,8 +42,32 @@ class MailSettingFormType extends AbstractType
                 'label' => t('Email name'),
             ]);
 
+        $footerGroup = $builder->create('footerGroup', GroupType::class, [
+            'label' => t('Footer'),
+        ]);
+
+        $footerGroup->add('facebookUrl', TextType::class, [
+            'label' => t('Facebook URL'),
+        ]);
+        $footerGroup->add('instagramUrl', TextType::class, [
+            'label' => t('Instagram URL'),
+        ]);
+        $footerGroup->add('youtubeUrl', TextType::class, [
+            'label' => t('Youtube URL'),
+        ]);
+        $footerGroup->add('linkedinUrl', TextType::class, [
+            'label' => t('LinkedIn URL'),
+        ]);
+        $footerGroup->add('tiktokUrl', TextType::class, [
+            'label' => t('TikTok URL'),
+        ]);
+        $footerGroup->add('footerText', CKEditorType::class, [
+            'label' => t('Footer Text'),
+        ]);
+
         $builder
             ->add($builderSettingsGroup)
+            ->add($footerGroup)
             ->add('save', SubmitType::class);
     }
 
