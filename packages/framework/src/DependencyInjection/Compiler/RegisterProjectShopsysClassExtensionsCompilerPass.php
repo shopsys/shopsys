@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPassInterface
+class RegisterProjectShopsysClassExtensionsCompilerPass implements CompilerPassInterface
 {
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
@@ -49,14 +49,14 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
                 continue;
             }
 
-            $frameworkClassBetterReflection = ReflectionObject::createFromName($serviceId);
+            $shopsysClassBetterReflection = ReflectionObject::createFromName($serviceId);
 
-            if ($frameworkClassBetterReflection->isInterface() && !$this->isProjectClass($aliasId)) {
+            if ($shopsysClassBetterReflection->isInterface() && !$this->isProjectClass($aliasId)) {
                 continue;
             }
 
             $classExtensionRegistryDefinition->addMethodCall('addExtendedService', [$serviceId, $aliasId]);
-            $this->addAllVariantsOfServiceToClassExtension($frameworkClassBetterReflection, $classExtensionRegistryDefinition, $aliasId);
+            $this->addAllVariantsOfServiceToClassExtension($shopsysClassBetterReflection, $classExtensionRegistryDefinition, $aliasId);
         }
     }
 
@@ -118,25 +118,25 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
     }
 
     /**
-     * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkClassBetterReflection
+     * @param \Roave\BetterReflection\Reflection\ReflectionClass $shopsysClassBetterReflection
      * @param \Symfony\Component\DependencyInjection\Definition $classExtensionRegistryDefinition
      * @param string $aliasId
      */
     private function addAllVariantsOfServiceToClassExtension(
-        ReflectionClass $frameworkClassBetterReflection,
+        ReflectionClass $shopsysClassBetterReflection,
         Definition $classExtensionRegistryDefinition,
         string $aliasId,
     ): void {
-        if ($frameworkClassBetterReflection->isInterface()) {
-            $className = preg_replace('/Interface$/', '', $frameworkClassBetterReflection->getName());
+        if ($shopsysClassBetterReflection->isInterface()) {
+            $className = preg_replace('/Interface$/', '', $shopsysClassBetterReflection->getName());
 
             if ($className !== $aliasId && class_exists($className)) {
                 $classExtensionRegistryDefinition->addMethodCall('addExtendedService', [$className, $aliasId]);
             }
         } else {
-            $interfaceName = $frameworkClassBetterReflection->getName() . 'Interface';
+            $interfaceName = $shopsysClassBetterReflection->getName() . 'Interface';
 
-            if ($interfaceName !== $aliasId && interface_exists($interfaceName) && in_array($interfaceName, $frameworkClassBetterReflection->getInterfaceNames(), true)) {
+            if ($interfaceName !== $aliasId && interface_exists($interfaceName) && in_array($interfaceName, $shopsysClassBetterReflection->getInterfaceNames(), true)) {
                 $classExtensionRegistryDefinition->addMethodCall('addExtendedService', [$interfaceName, $aliasId]);
             }
         }

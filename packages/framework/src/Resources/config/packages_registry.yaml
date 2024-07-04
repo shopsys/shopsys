@@ -1,0 +1,20 @@
+parameters:
+    shopsys.packages.registry:
+        article-feed-luigis-box': { path: '%shopsys.framework.root_dir%/../article-feed-luigis-box', namespace: 'Shopsys\ArticleFeed\LuigisBoxBundle', app_namespace: 'App\ArticleFeed\LuigisBox' }
+        brand-feed-luigis-box: { path: '%shopsys.framework.root_dir%/../brand-feed-luigis-box', namespace: 'Shopsys\BrandFeed\LuigisBoxBundle', app_namespace: 'App\BrandFeed\LuigisBox' }
+        category-feed-luigis-box: { path: '%shopsys.framework.root_dir%/../category-feed-luigis-box', namespace: 'Shopsys\CategoryFeed\LuigisBoxBundle', app_namespace: 'App\CategoryFeed\LuigisBox' }
+        coding-standards: { path: '%shopsys.framework.root_dir%/../coding-standards', namespace: 'Shopsys\CodingStandards', app_namespace: 'App\CodingStandards' }
+        form-types-bundle: { path: '%shopsys.framework.root_dir%/../form-types-bundle', namespace: 'Shopsys\FormTypesBundle', app_namespace: 'App\FormTypes' }
+        framework: { path: '%shopsys.framework.root_dir%', namespace: 'Shopsys\FrameworkBundle', app_namespace: 'App' }
+        frontend-api: { path: '%shopsys.framework.root_dir%/../frontend-api', namespace: 'Shopsys\FrontendApiBundle', app_namespace: 'App\FrontendApi' }
+        google-cloud-bundle: { path: '%shopsys.framework.root_dir%/../google-cloud-bundle', namespace: 'Shopsys\GoogleCloudBundle', app_namespace: 'App\GoogleCloud' }
+        http-smoke-testing: { path: '%shopsys.framework.root_dir%/../http-smoke-testing', namespace: 'Shopsys\HttpSmokeTesting', app_namespace: 'App\HttpSmokeTesting' }
+        luigis-box: { path: '%shopsys.framework.root_dir%/../luigis-box', namespace: 'Shopsys\LuigisBoxBundle', app_namespace: 'App\LuigisBox' }
+        migrations: { path: '%shopsys.framework.root_dir%/../migrations', namespace: 'Shopsys\MigrationBundle', app_namespace: 'App\Migration' }
+        plugin-interface: { path: '%shopsys.framework.root_dir%/../plugin-interface', namespace: 'Shopsys\Plugin', app_namespace: 'App\Plugin' }
+        product-feed-google: { path: '%shopsys.framework.root_dir%/../product-feed-google', namespace: 'Shopsys\ProductFeed\GoogleBundle', app_namespace: 'App\ProductFeed\Google' }
+        product-feed-heureka: { path: '%shopsys.framework.root_dir%/../product-feed-heureka', namespace: 'Shopsys\ProductFeed\HeurekaBundle', app_namespace: 'App\ProductFeed\Heureka' }
+        product-feed-heureka-delivery: { path: '%shopsys.framework.root_dir%/../product-feed-heureka-delivery', namespace: 'Shopsys\ProductFeed\HeurekaDeliveryBundle', app_namespace: 'App\ProductFeed\HeurekaDelivery' }
+        product-feed-luigis-box: {path: '%shopsys.framework.root_dir%/../product-feed-heureka-delivery', namespace: 'Shopsys\ProductFeed\LuigisBoxBundle', app_namespace: 'App\ProductFeed\LuigisBox' }
+        product-feed-zbozi: { path: '%shopsys.framework.root_dir%/../product-feed-zbozi', namespace: 'Shopsys\ProductFeed\ZboziBundle', app_namespace: 'App\ProductFeed\Zbozi' }
+        s3-bridge: { path: '%shopsys.framework.root_dir%/../s3-bridge', namespace: 'Shopsys\S3Bridge', app_namespace: 'App\S3Bridge' }

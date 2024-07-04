@@ -26,6 +26,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
      *      /.github/monorepo/monorepo_functions.sh
      *      /docs/introduction/monorepo.md
      *      /CHANGELOG-XX.X.md
+     *      /packages/framework/src/Resources/config/packages_registry.yaml
      *      "replace" section in monorepo's composer.json as well
      *
      * @var string[]

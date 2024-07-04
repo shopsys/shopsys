@@ -40,20 +40,4 @@ class AnnotationsReplacementsMap
 
         return $replacements;
     }
-
-    /**
-     * This method assumes that {@see AnnotationsReplacementsMap::getPatterns()} doesn't use modifiers after delimiter
-     *
-     * @return string
-     */
-    public function getPatternForAny(): string
-    {
-        $patternsWithoutDelimiters = [];
-
-        foreach ($this->getPatterns() as $pattern) {
-            $patternsWithoutDelimiters[] = substr($pattern, 1, -1);
-        }
-
-        return '/' . implode('|', $patternsWithoutDelimiters) . '/';
-    }
 }

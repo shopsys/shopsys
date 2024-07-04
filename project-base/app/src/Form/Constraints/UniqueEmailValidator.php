@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+ * @method __construct(\App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  */
 class UniqueEmailValidator extends BaseUniqueEmailValidator
 {

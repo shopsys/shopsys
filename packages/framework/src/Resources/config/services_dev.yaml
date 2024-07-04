@@ -1,5 +1,7 @@
-services:
+imports:
+    - { resource: packages_registry.yaml }
 
+services:
     _defaults:
         autoconfigure: true
         autowire: true
@@ -11,8 +13,8 @@ services:
 
     Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
         arguments:
-            $frameworkRootDir: '%shopsys.framework.root_dir%'
             $entityExtensionMap: '%shopsys.entity_extension.map%'
+            $packagesRegistry: '%shopsys.packages.registry%'
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector:
         tags:

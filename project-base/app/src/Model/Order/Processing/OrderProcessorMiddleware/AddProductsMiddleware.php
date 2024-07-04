@@ -10,6 +10,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddProductsMiddleware as BaseAddProductsMiddleware;
 
+/**
+ * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation, \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory)
+ */
 class AddProductsMiddleware extends BaseAddProductsMiddleware
 {
     /**

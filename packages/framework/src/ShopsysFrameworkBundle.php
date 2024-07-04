@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterMultiDesignFile
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
-use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectFrameworkClassExtensionsCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectShopsysClassExtensionsCompilerPass;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -48,7 +48,7 @@ class ShopsysFrameworkBundle extends Bundle
             return;
         }
 
-        $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
+        $container->addCompilerPass(new RegisterProjectShopsysClassExtensionsCompilerPass());
 
         $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Component'));
         $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Model'));

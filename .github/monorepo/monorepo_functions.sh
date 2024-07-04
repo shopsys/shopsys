@@ -13,6 +13,7 @@ NC="\e[0m"
 #   \Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker
 #   /docs/introduction/monorepo.md
 #   /CHANGELOG.md
+#   /packages/framework/src/Resources/config/packages_registry.yaml
 #   "replace" section in monorepo's composer.json
 get_all_packages() {
     echo "administration \

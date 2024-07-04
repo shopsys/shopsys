@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use LimitIterator;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
@@ -40,7 +41,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.',
             )
             ->setHelp('What does the command do exactly?
-- Replaces the framework with the project annotations in all project files when there exists a project extension of a given framework class.
+- Replaces the shopsys with the project annotations in all project files when there exists a project extension of a given shopsys class.
 - Adds @property annotations to project classes when there exists a property in parent class that is extended in the project.
 - Adds @method annotations to project classes when there exists a method in parent class that accepts as a parameter or returns an instance of a class that is extended in the project.');
     }
@@ -73,18 +74,18 @@ class ExtendedClassesAnnotationsCommand extends Command
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $isDryRun = (bool)$input->getOption(static::DRY_RUN);
-        $filesForReplacingAnnotations = $this->replaceFrameworkWithProjectAnnotations($isDryRun);
+        $filesForReplacingAnnotations = $this->replaceShopsysWithProjectAnnotations($isDryRun);
 
         if (count($filesForReplacingAnnotations) > 0) {
             if ($isDryRun) {
                 $symfonyStyle->error('Following files need fixing annotations:');
-                $symfonyStyle->listing($filesForReplacingAnnotations);
             } else {
-                $symfonyStyle->note(
-                    ['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations,
-                );
+                $symfonyStyle->note('Annotations were fixed in the following files:');
             }
+
+            $symfonyStyle->listing($filesForReplacingAnnotations);
         }
+
         $filesForAddingPropertyOrMethodAnnotations = $this->addPropertyAndMethodAnnotationsToProjectClasses($isDryRun);
 
         if (count($this->methodAnnotationsAdder->getWarnings()) > 0) {
@@ -123,22 +124,35 @@ class ExtendedClassesAnnotationsCommand extends Command
      * @param bool $isDryRun
      * @return string[]
      */
-    protected function replaceFrameworkWithProjectAnnotations(bool $isDryRun): array
+    protected function replaceShopsysWithProjectAnnotations(bool $isDryRun): array
     {
         $finder = $this->getFinderForReplacingAnnotations();
         $filesForReplacingAnnotations = [];
+        $i = 0;
 
-        foreach ($finder as $file) {
-            $pathname = $file->getPathname();
-            $filesForReplacingAnnotations[] = $file->getRealPath();
+        do {
+            $page = $i * 100;
+            $limitIterator = new LimitIterator($finder->getIterator(), $page, 100);
 
-            if ($isDryRun) {
-                continue;
+            foreach ($limitIterator as $file) {
+                $pathname = $file->getPathname();
+
+                $originalContent = file_get_contents($pathname);
+                $replacedContent = $this->annotationsReplacer->replaceIn($originalContent);
+
+                if ($originalContent === $replacedContent) {
+                    continue;
+                }
+
+                $filesForReplacingAnnotations[] = $file->getRealPath();
+
+                if (!$isDryRun) {
+                    file_put_contents($pathname, $replacedContent);
+                }
             }
 
-            $replacedContent = $this->annotationsReplacer->replaceIn(file_get_contents($pathname));
-            file_put_contents($pathname, $replacedContent);
-        }
+            $i++;
+        } while ($page <= $limitIterator->getPosition());
 
         return $filesForReplacingAnnotations;
     }
@@ -155,8 +169,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $this->projectRootDirectory . '/app',
                 $this->projectRootDirectory . '/src',
             ])
-            ->name('*.php')
-            ->contains($this->annotationsReplacementsMap->getPatternForAny());
+            ->name('*.php');
     }
 
     /**
@@ -168,8 +181,8 @@ class ExtendedClassesAnnotationsCommand extends Command
         $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
         $filesForAddingPropertyOrMethodAnnotations = [];
 
-        foreach ($classExtensionMap as $frameworkClass => $projectClass) {
-            $frameworkClassBetterReflection = ReflectionObject::createFromName($frameworkClass);
+        foreach ($classExtensionMap as $shopsysClass => $projectClass) {
+            $shopsysClassBetterReflection = ReflectionObject::createFromName($shopsysClass);
             $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
 
             if (str_starts_with($projectClass, 'App') === false) {
@@ -177,11 +190,11 @@ class ExtendedClassesAnnotationsCommand extends Command
             }
 
             $projectClassNecessaryPropertyAnnotationsLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
-                $frameworkClassBetterReflection,
+                $shopsysClassBetterReflection,
                 $projectClassBetterReflection,
             );
             $projectClassNecessaryMethodAnnotationsLines = $this->methodAnnotationsAdder->getProjectClassNecessaryMethodAnnotationsLines(
-                $frameworkClassBetterReflection,
+                $shopsysClassBetterReflection,
                 $projectClassBetterReflection,
             );
 
