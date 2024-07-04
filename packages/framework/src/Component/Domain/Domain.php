@@ -207,4 +207,12 @@ class Domain implements DomainIdsProviderInterface
     {
         return $this->getCurrentDomainConfig()->getDateTimeZone();
     }
+
+    /**
+     * @return bool
+     */
+    public function isB2b(): bool
+    {
+        return $this->getCurrentDomainConfig()->isB2b();
+    }
 }

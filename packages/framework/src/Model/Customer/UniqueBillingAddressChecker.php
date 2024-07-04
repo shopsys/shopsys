@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressCompanyNumberIsNotUniqueException;
 
 class UniqueBillingAddressChecker
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository $billingAddressRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(protected readonly BillingAddressRepository $billingAddressRepository)
-    {
+    public function __construct(
+        protected readonly BillingAddressRepository $billingAddressRepository,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**
@@ -22,6 +26,11 @@ class UniqueBillingAddressChecker
     public function checkUniqueBillingAddressData(BillingAddressData $billingAddressData, int $domainId): void
     {
         $companyNumber = $billingAddressData->companyNumber;
+        $domain = $this->domain->getDomainConfigById($domainId);
+
+        if (!$domain->isB2b()) {
+            return;
+        }
 
         if ($companyNumber === null) {
             return;
@@ -49,6 +58,11 @@ class UniqueBillingAddressChecker
         int $domainId,
     ): void {
         $companyNumber = $billingAddressData->companyNumber;
+        $domain = $this->domain->getDomainConfigById($domainId);
+
+        if (!$domain->isB2b()) {
+            return;
+        }
 
         if ($companyNumber === null) {
             return;

@@ -16,6 +16,7 @@ class DomainsConfigDefinition implements ConfigurationInterface
     public const CONFIG_TIMEZONE = 'timezone';
     public const CONFIG_STYLES_DIRECTORY = 'styles_directory';
     public const CONFIG_DESIGN_ID = 'design_id';
+    public const CONFIG_TYPE = 'type';
 
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
@@ -40,6 +41,9 @@ class DomainsConfigDefinition implements ConfigurationInterface
                                 DomainConfig::STYLES_DIRECTORY_DEFAULT,
                             )->end()
                             ->scalarNode(self::CONFIG_DESIGN_ID)->defaultNull()->end()
+                            ->scalarNode(self::CONFIG_TYPE)->defaultValue(
+                                DomainConfig::TYPE_B2C,
+                            )->end()
                         ->end()
                     ->end()
                 ->end()

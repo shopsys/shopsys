@@ -10,6 +10,9 @@ class DomainConfig
 {
     public const STYLES_DIRECTORY_DEFAULT = 'common';
 
+    public const TYPE_B2C = 'b2c';
+    public const TYPE_B2B = 'b2b';
+
     /**
      * @param int $id
      * @param string $url
@@ -18,6 +21,7 @@ class DomainConfig
      * @param \DateTimeZone $dateTimeZone
      * @param string $stylesDirectory
      * @param string|null $designId
+     * @param string $type
      */
     public function __construct(
         protected int $id,
@@ -27,6 +31,7 @@ class DomainConfig
         protected DateTimeZone $dateTimeZone,
         protected string $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
         protected ?string $designId = null,
+        protected string $type = self::TYPE_B2C,
     ) {
     }
 
@@ -92,5 +97,21 @@ class DomainConfig
     public function getDateTimeZone(): DateTimeZone
     {
         return $this->dateTimeZone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isB2b(): bool
+    {
+        return $this->type === self::TYPE_B2B;
     }
 }
