@@ -1474,6 +1474,9 @@ msgstr "Externí indentifikátor transakce"
 msgid "External transaction status"
 msgstr "Externí status transakce"
 
+msgid "Facebook URL"
+msgstr "Facebook URL"
+
 msgid "Feed"
 msgstr "Feed"
 
@@ -1548,6 +1551,12 @@ msgstr "Přehled příznaků"
 
 msgid "Following expressions are allowed in whitelist: %whitelist%."
 msgstr "Ve whitelistu jsou povoleny následující výrazy: %whitelist%."
+
+msgid "Footer"
+msgstr "Patička"
+
+msgid "Footer Text"
+msgstr "Text v patičce"
 
 msgid "For deleting rate \"%name%\" you have to choose other one to be set everywhere where the existing one is used. After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. Which unit you want to set instead?"
 msgstr "Pro odstranění sazby \"%name% musíte zvolit, která se má všude, kde je aktuálně používaná nastavit. Po změně sazby DPH dojde k přepočtu cen zboží - základní cena s DPH zůstane zachována. Jakou sazbu místo ní chcete nastavit?"
@@ -1750,6 +1759,9 @@ msgstr "Vstupní cena s DPH"
 msgid "Input price without VAT"
 msgstr "Vstupní cena bez DPH"
 
+msgid "Instagram URL"
+msgstr "Instagram URL"
+
 msgid "Instructions"
 msgstr "Pokyny"
 
@@ -1839,6 +1851,9 @@ msgstr "Odkaz na export osobních údajů"
 
 msgid "Link to the personal information overview"
 msgstr "Odkaz na přehled osobních údajů"
+
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Seznam zboží v objednávce (název, množství, cena za jednotku s DPH, celková cena za položku s DPH)"
@@ -2310,6 +2325,9 @@ msgstr "Pořadí se nepodařilo uložit"
 
 msgid "Order sent page content"
 msgstr "Obsah stránky po odeslání objednávky"
+
+msgid "Order status"
+msgstr "Stav objednávky"
 
 msgid "Order statuses - full"
 msgstr "Stavy objednávek - vše"
@@ -3193,6 +3211,9 @@ msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky při�
 msgid "Thursday"
 msgstr "Čtvrtek"
 
+msgid "TikTok URL"
+msgstr "TikTok URL"
+
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr "Aby bylo možné tuto hodnotu smazat, je třeba nastavit novou, která se použije místo ní. Bohužel není za co nahrazovat, před smazáním musíte nějdřív vytvořit novou."
 
@@ -3609,6 +3630,9 @@ msgstr "Musíte nejdřív nějakou dopravu vytvořit."
 
 msgid "You have unsaved changes!"
 msgstr "Máte neuložené změny!"
+
+msgid "Youtube URL"
+msgstr "Youtube URL"
 
 msgid "above footer"
 msgstr "nad patičkou"

@@ -1474,6 +1474,9 @@ msgstr ""
 msgid "External transaction status"
 msgstr ""
 
+msgid "Facebook URL"
+msgstr ""
+
 msgid "Feed"
 msgstr ""
 
@@ -1547,6 +1550,12 @@ msgid "Flags overview"
 msgstr ""
 
 msgid "Following expressions are allowed in whitelist: %whitelist%."
+msgstr ""
+
+msgid "Footer"
+msgstr ""
+
+msgid "Footer Text"
 msgstr ""
 
 msgid "For deleting rate \"%name%\" you have to choose other one to be set everywhere where the existing one is used. After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. Which unit you want to set instead?"
@@ -1750,6 +1759,9 @@ msgstr ""
 msgid "Input price without VAT"
 msgstr ""
 
+msgid "Instagram URL"
+msgstr ""
+
 msgid "Instructions"
 msgstr ""
 
@@ -1838,6 +1850,9 @@ msgid "Link to the personal information export"
 msgstr ""
 
 msgid "Link to the personal information overview"
+msgstr ""
+
+msgid "LinkedIn URL"
 msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
@@ -2309,6 +2324,9 @@ msgid "Order saving failed"
 msgstr ""
 
 msgid "Order sent page content"
+msgstr ""
+
+msgid "Order status"
 msgstr ""
 
 msgid "Order statuses - full"
@@ -3193,6 +3211,9 @@ msgstr ""
 msgid "Thursday"
 msgstr ""
 
+msgid "TikTok URL"
+msgstr ""
+
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr ""
 
@@ -3608,6 +3629,9 @@ msgid "You have to create some shipping first."
 msgstr ""
 
 msgid "You have unsaved changes!"
+msgstr ""
+
+msgid "Youtube URL"
 msgstr ""
 
 msgid "above footer"

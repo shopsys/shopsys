@@ -64,9 +64,6 @@ msgstr "Bannery"
 msgid "Basic information"
 msgstr "Základní informace"
 
-msgid "Billing address - name, last name, company, company number, tax number and billing address"
-msgstr "Faktuřní adresa - jméno, příjmení, společnost, IČ, DIČ a fakturační adresa"
-
 msgid "Blog article"
 msgstr "Článek blogu"
 
@@ -118,12 +115,6 @@ msgstr "Zvolit tuto kategorii a pokračovat"
 msgid "Choose type of redirect"
 msgstr "Vyberte typ přesměrování"
 
-msgid "Chosen payment name"
-msgstr "Název vybrané platby"
-
-msgid "Chosen shipping name"
-msgstr "Název vybrané dopravy"
-
 msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
@@ -160,14 +151,8 @@ msgstr "Vytvořit nový banner"
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
 
-msgid "Date and time of order creation"
-msgstr "Datum a čas vytvoření objednávky"
-
 msgid "Delete category with SEO mix"
 msgstr "Smazat kategorii i seo mix"
-
-msgid "Delivery address"
-msgstr "Dodací adresa"
 
 msgid "Description"
 msgstr "Popis"
@@ -208,9 +193,6 @@ msgstr "Opravdu chcete odebrat tento parametr? Smazáním parametru dojde k odeb
 msgid "Domain"
 msgstr "Doména"
 
-msgid "E-shop URL address"
-msgstr "URL adresa e-shopu"
-
 msgid "Edit"
 msgstr "Upravit"
 
@@ -240,9 +222,6 @@ msgstr "Editace notifikační lišty"
 
 msgid "Editing page"
 msgstr "Editace stránky"
-
-msgid "Email settings modified."
-msgstr "Nastavení emailu bylo upraveno."
 
 msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Byla upravena e-mailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
@@ -286,9 +265,6 @@ msgstr "Rozšířená SEO kategorie - filtry"
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
 
-msgid "Facebook URL"
-msgstr "Facebook URL"
-
 msgid "File"
 msgstr "Soubor"
 
@@ -318,12 +294,6 @@ msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upra
 
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr "Příznak <strong>{{ name }}</strong> byl smazán"
-
-msgid "Footer"
-msgstr "Patička"
-
-msgid "Footer Text"
-msgstr "Text v patičce"
 
 msgid "Forgotten password"
 msgstr "Zapomenuté heslo"
@@ -373,9 +343,6 @@ msgstr "Skladem"
 msgid "Inside layout"
 msgstr "Rozložení uvnitř"
 
-msgid "Instagram URL"
-msgstr "URL Instagramu"
-
 msgid "Integrations"
 msgstr "Integrace"
 
@@ -424,17 +391,11 @@ msgstr "Odkaz textu pod bannerem"
 msgid "Linked categories"
 msgstr "Propojené kategorie"
 
-msgid "LinkedIn URL"
-msgstr "LinkedIn URL"
-
 msgid "List of language constants"
 msgstr "Přehled jazykových konstant"
 
 msgid "List of products"
 msgstr "Seznam produktů"
-
-msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr "Seznam produktů v objednávce (název, množství, cena za jednotku včetně DPH, celková cena za položku včetně DPH)"
 
 msgid "Login"
 msgstr "Přihlášení"
@@ -514,9 +475,6 @@ msgstr "Nebyla nalezena žádná stránka."
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
 
-msgid "Note"
-msgstr "Poznámka"
-
 msgid "Notification bar"
 msgstr "Notifikační lišta"
 
@@ -537,18 +495,6 @@ msgstr "Stránka s potvrzením objednávky"
 
 msgid "Order detail"
 msgstr "Detail objednávky"
-
-msgid "Order detail URL address"
-msgstr "URL adresa detailu objednávky"
-
-msgid "Order number"
-msgstr "Číslo objednávky"
-
-msgid "Order status"
-msgstr "Stav objednávky"
-
-msgid "Order status changed"
-msgstr "Změna stavu objednávky"
 
 msgid "Ordering"
 msgstr "Řazení"
@@ -585,9 +531,6 @@ msgstr "Heslo musí obsahovat velké, malé písmena, číslice a musí být del
 
 msgid "Path to file"
 msgstr "Cesta k souboru"
-
-msgid "Payment instructions"
-msgstr "Pokyny k platbě"
 
 msgid "Personal data access"
 msgstr "Přístup k osobním údajům"
@@ -688,9 +631,6 @@ msgstr "Seo"
 msgid "Settings"
 msgstr "Nastavení"
 
-msgid "Shipping instructions"
-msgstr "Přepravní instrukce"
-
 msgid "Short description of category"
 msgstr "Krátký popis kategorie"
 
@@ -738,15 +678,6 @@ msgstr "Vybraný příznak nelze smazat."
 
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
-
-msgid "TikTok URL"
-msgstr "TikTok URL"
-
-msgid "Total order price (including VAT)"
-msgstr "Celková cena za objednávku (s DPH)"
-
-msgid "Tracking instructions"
-msgstr "Instrukce pro sledování zásilky"
 
 msgid "Transport types"
 msgstr "Typy doprav"
@@ -843,9 +774,6 @@ msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
 msgid "Youtube ID"
 msgstr ""
-
-msgid "Youtube URL"
-msgstr "Youtube URL"
 
 msgid "e.g. Sale-04-20-2020"
 msgstr "např. Akce-04-20-2020"

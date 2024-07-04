@@ -64,9 +64,6 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
-msgid "Billing address - name, last name, company, company number, tax number and billing address"
-msgstr ""
-
 msgid "Blog article"
 msgstr ""
 
@@ -118,12 +115,6 @@ msgstr ""
 msgid "Choose type of redirect"
 msgstr ""
 
-msgid "Chosen payment name"
-msgstr ""
-
-msgid "Chosen shipping name"
-msgstr ""
-
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
@@ -160,13 +151,7 @@ msgstr ""
 msgid "Create notification bar"
 msgstr ""
 
-msgid "Date and time of order creation"
-msgstr ""
-
 msgid "Delete category with SEO mix"
-msgstr ""
-
-msgid "Delivery address"
 msgstr ""
 
 msgid "Description"
@@ -208,9 +193,6 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-msgid "E-shop URL address"
-msgstr ""
-
 msgid "Edit"
 msgstr ""
 
@@ -239,9 +221,6 @@ msgid "Editing notification bar"
 msgstr ""
 
 msgid "Editing page"
-msgstr ""
-
-msgid "Email settings modified."
 msgstr ""
 
 msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
@@ -286,9 +265,6 @@ msgstr ""
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr ""
 
-msgid "Facebook URL"
-msgstr ""
-
 msgid "File"
 msgstr ""
 
@@ -317,12 +293,6 @@ msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Flag <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Footer"
-msgstr ""
-
-msgid "Footer Text"
 msgstr ""
 
 msgid "Forgotten password"
@@ -373,9 +343,6 @@ msgstr ""
 msgid "Inside layout"
 msgstr ""
 
-msgid "Instagram URL"
-msgstr ""
-
 msgid "Integrations"
 msgstr ""
 
@@ -424,16 +391,10 @@ msgstr ""
 msgid "Linked categories"
 msgstr ""
 
-msgid "LinkedIn URL"
-msgstr ""
-
 msgid "List of language constants"
 msgstr ""
 
 msgid "List of products"
-msgstr ""
-
-msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr ""
 
 msgid "Login"
@@ -514,9 +475,6 @@ msgstr ""
 msgid "No products are set. Please add some in the component settings."
 msgstr ""
 
-msgid "Note"
-msgstr ""
-
 msgid "Notification bar"
 msgstr ""
 
@@ -536,18 +494,6 @@ msgid "Order confirmation page"
 msgstr ""
 
 msgid "Order detail"
-msgstr ""
-
-msgid "Order detail URL address"
-msgstr ""
-
-msgid "Order number"
-msgstr ""
-
-msgid "Order status"
-msgstr ""
-
-msgid "Order status changed"
 msgstr ""
 
 msgid "Ordering"
@@ -584,9 +530,6 @@ msgid "Password has to include uppercase letters, lowercase letters, numbers and
 msgstr ""
 
 msgid "Path to file"
-msgstr ""
-
-msgid "Payment instructions"
 msgstr ""
 
 msgid "Personal data access"
@@ -688,9 +631,6 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-msgid "Shipping instructions"
-msgstr ""
-
 msgid "Short description of category"
 msgstr ""
 
@@ -737,15 +677,6 @@ msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "This flag can not be deleted as it is used in definition of"
-msgstr ""
-
-msgid "TikTok URL"
-msgstr ""
-
-msgid "Total order price (including VAT)"
-msgstr ""
-
-msgid "Tracking instructions"
 msgstr ""
 
 msgid "Transport types"
@@ -842,9 +773,6 @@ msgid "You have to set redirect code for redirect."
 msgstr ""
 
 msgid "Youtube ID"
-msgstr ""
-
-msgid "Youtube URL"
 msgstr ""
 
 msgid "e.g. Sale-04-20-2020"
