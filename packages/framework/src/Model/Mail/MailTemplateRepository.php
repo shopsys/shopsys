@@ -9,7 +9,6 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class MailTemplateRepository
 {
@@ -131,20 +130,5 @@ class MailTemplateRepository
             ->setParameter('locale', $this->localization->getAdminLocale());
 
         return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
-     */
-    public function findOrderStatusMailTemplate(
-        int $domainId,
-        OrderStatus $orderStatus,
-    ): ?MailTemplate {
-        return $this->getMailTemplateRepository()->findOneBy([
-            'domainId' => $domainId,
-            'orderStatus' => $orderStatus,
-        ]);
     }
 }

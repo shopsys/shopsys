@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use Override;
-use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
 
 /**
@@ -43,26 +41,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
  * @method updateTrackingNumber(\App\Model\Order\Order $order, string $trackingNumber)
  * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType(\Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType)
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository, \App\Model\Order\OrderRepository $orderRepository, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator, \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository, \App\Model\Order\Mail\OrderMailFacade $orderMailFacade, \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade, \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade, \App\Model\Cart\CartFacade $cartFacade, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory, \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \App\Model\Order\Item\OrderItemFactory $orderItemFactory, \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade, \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory, \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade, \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory, \App\Model\Order\OrderDataFactory $orderDataFactory)
+ * @method \App\Model\Order\Order edit(int $orderId, \App\Model\Order\OrderData $orderData)
  */
 class OrderFacade extends BaseOrderFacade
 {
-    /**
-     * @param int $orderId
-     * @param \App\Model\Order\OrderData $orderData
-     * @return \App\Model\Order\Order
-     */
-    #[Override]
-    public function edit(int $orderId, BaseOrderData $orderData): Order
-    {
-        $order = $this->orderRepository->getById($orderId);
-        $oldOrderStatus = $order->getStatus();
-
-        parent::edit($orderId, $orderData);
-
-        if ($oldOrderStatus !== $order->getStatus()) {
-            $this->orderMailFacade->sendOrderStatusMailByOrder($order);
-        }
-
-        return $order;
-    }
 }

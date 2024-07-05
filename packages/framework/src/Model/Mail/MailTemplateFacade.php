@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
-use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class MailTemplateFacade
 {
@@ -106,27 +105,5 @@ class MailTemplateFacade
     public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate[]
-     */
-    public function getOrderStatusTemplatesByOrder(Order $order): array
-    {
-        $mailTemplates = [];
-        $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
-            $order->getDomainId(),
-            $order->getStatus(),
-        );
-
-        if ($mailTemplate !== null) {
-            $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($order->getDomainId(), $mailTemplate->getBody()));
-            $this->em->detach($mailTemplate);
-
-            $mailTemplates[] = $mailTemplate;
-        }
-
-        return $mailTemplates;
     }
 }

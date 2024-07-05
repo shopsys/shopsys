@@ -53,18 +53,4 @@ class OrderMailFacade
 
         return $this->mailTemplateFacade->get($templateName, $domainId);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     */
-    public function sendOrderStatusMailByOrder(Order $order): void
-    {
-        $mailTemplates = $this->mailTemplateFacade->getOrderStatusTemplatesByOrder($order);
-
-        foreach ($mailTemplates as $mailTemplate) {
-            $messageData = $this->orderMail->createMessage($mailTemplate, $order);
-            $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
-            $this->mailer->sendForDomain($messageData, $order->getDomainId());
-        }
-    }
 }

@@ -129,7 +129,6 @@ class OrderFacade
     public function edit(int $orderId, OrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
-        $originalOrderStatus = $order->getStatus();
 
         $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId());
         $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId());
