@@ -862,9 +862,6 @@ msgstr "Příjmení zákazníka"
 msgid "Customer name"
 msgstr "Jméno zákazníka"
 
-msgid "Customer not found."
-msgstr "Zákazník nenalezen."
-
 msgid "Customer orders"
 msgstr "Objednávky zákazníka"
 
@@ -1869,9 +1866,6 @@ msgstr "Umístění"
 
 msgid "Log in"
 msgstr "Přihlásit se"
-
-msgid "Log in as user"
-msgstr "Přihlásit za uživatele"
 
 msgid "Log in failed."
 msgstr "Přihlášení se nepodařilo."

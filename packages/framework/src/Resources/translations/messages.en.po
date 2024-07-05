@@ -862,9 +862,6 @@ msgstr ""
 msgid "Customer name"
 msgstr ""
 
-msgid "Customer not found."
-msgstr ""
-
 msgid "Customer orders"
 msgstr ""
 
@@ -1868,9 +1865,6 @@ msgid "Location"
 msgstr ""
 
 msgid "Log in"
-msgstr ""
-
-msgid "Log in as user"
 msgstr ""
 
 msgid "Log in failed."

@@ -13,6 +13,12 @@ msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
+msgid "Email is not filled"
+msgstr "Email není vyplněn"
+
+msgid "Email is not valid"
+msgstr "E-mail není platný"
+
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 

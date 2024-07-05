@@ -43,12 +43,6 @@ msgstr "EAN nesmí být delší než {{ limit }} znaků"
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
-msgid "Email is not filled"
-msgstr "Email není vyplněn"
-
-msgid "Email is not valid"
-msgstr "E-mail není platný"
-
 msgid "Email subject cannot be longer than {{ limit }} characters"
 msgstr "Předmět e-mailu nesmí být delší než {{ limit }} znaků"
 

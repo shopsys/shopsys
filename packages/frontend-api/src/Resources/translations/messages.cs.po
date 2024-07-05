@@ -1,0 +1,12 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "Customer not found."
+msgstr "Zákazník nenalezen."
+
+msgid "Log in as user"
+msgstr "Přihlásit za uživatele"
+
