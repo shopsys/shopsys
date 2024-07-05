@@ -906,11 +906,6 @@ services:
             - '%shopsys.filemanager_upload_dir%'
         public: true
 
-    Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
-        arguments:
-            - '@security.token_storage'
-            - '@event_dispatcher'
-
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
@@ -939,14 +934,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory
-
-    Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
-        arguments:
-            $socialNetworkLoginConfig: '%social_network_login_config%'
-
-    Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkFacade:
-        arguments:
-            $logger: '@monolog.logger.socialNetwork'
 
     Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter: ~
 

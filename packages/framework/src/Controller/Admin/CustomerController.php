@@ -17,18 +17,13 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
-use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AdminBaseController
 {
@@ -41,7 +36,6 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -55,7 +49,6 @@ class CustomerController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly OrderFacade $orderFacade,
-        protected readonly LoginAsUserFacade $loginAsUserFacade,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         protected readonly Domain $domain,
@@ -106,7 +99,6 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 
@@ -221,53 +213,5 @@ class CustomerController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_customer_list');
-    }
-
-    /**
-     * @param int $customerUserId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    #[Route(path: '/customer/login-as-user/{customerUserId}/')]
-    public function loginAsCustomerUserAction(int $customerUserId): Response
-    {
-        try {
-            return $this->render('@ShopsysFramework/Admin/Content/Login/loginAsCustomerUser.html.twig', [
-                'tokens' => $this->loginAsUserFacade->loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken($customerUserId),
-                'url' => $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            ]);
-        } catch (CustomerUserNotFoundException $e) {
-            $this->addErrorFlash(t('Customer not found.'));
-
-            return $this->redirectToRoute('admin_customer_list');
-        } catch (LoginAsRememberedUserException $e) {
-            throw $this->createAccessDeniedException('Access denied', $e);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return string
-     */
-    protected function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser)
-    {
-        $customerDomainRouter = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
-        $loginAsUserUrl = $customerDomainRouter->generate(
-            'admin_customer_loginascustomeruser',
-            [
-                'customerUserId' => $customerUser->getId(),
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
-
-        $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
-
-        return $mainAdminDomainRouter->generate(
-            'admin_login_sso',
-            [
-                LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
-                LoginController::ORIGINAL_REFERER_PARAMETER_NAME => $loginAsUserUrl,
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
     }
 }

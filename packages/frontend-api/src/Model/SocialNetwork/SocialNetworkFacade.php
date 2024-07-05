@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\SocialNetwork;
+namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 
 use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
 use Hybridauth\User\Profile;
-use Shopsys\FrameworkBundle\Controller\Front\SocialNetworkController;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade;
-use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
-use Shopsys\FrameworkBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
+use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
+use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
+use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Constraints\Email;
@@ -26,12 +26,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SocialNetworkFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
+     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      */
@@ -68,7 +68,7 @@ class SocialNetworkFacade
 
             try {
                 $customerUser = $this->registrationFacade->register($registrationData);
-            } catch (DuplicateUserNameException $exception) {
+            } catch (DuplicateUserNameException) {
                 $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
             }
             $adapter->disconnect();

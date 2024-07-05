@@ -11,13 +11,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
-use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
-use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataApiFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
@@ -40,11 +39,10 @@ class CustomerUserMutation extends BaseTokenMutation
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataApiFactory $registrationDataApiFactory
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -60,7 +58,6 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly RegistrationDataFactory $registrationDataFactory,
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly OrderApiFacade $orderFacade,
-        protected readonly RegistrationDataApiFactory $registrationDataApiFactory,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -124,7 +121,7 @@ class CustomerUserMutation extends BaseTokenMutation
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
 
-        $registrationData = $this->registrationDataApiFactory->createWithArgument($argument);
+        $registrationData = $this->registrationDataFactory->createWithArgument($argument);
         $customerUser = $this->registrationFacade->register($registrationData);
 
         if ($argument['input']['cartUuid'] !== null) {

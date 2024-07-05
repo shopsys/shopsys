@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\SocialNetwork;
+namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 
 class SocialNetworkConfigFactory
 {

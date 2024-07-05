@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Controller\Front;
+namespace Shopsys\FrontendApiBundle\Controller;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
-use Shopsys\FrameworkBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
-use Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkConfigFactory;
-use Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
+use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
+use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory;
+use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,10 +28,10 @@ class SocialNetworkController extends AbstractController
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
-     * @param \Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\SocialNetwork\SocialNetworkFacade $socialNetworkFacade
+     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade $socialNetworkFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
@@ -59,7 +59,7 @@ class SocialNetworkController extends AbstractController
             $redirectUrl = $this->generateUrl('front_social_network_login', ['type' => $type], UrlGeneratorInterface::ABSOLUTE_URL);
             $tokens = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
 
-            return $this->render('@ShopsysFramework/Admin/Content/Login/loginAsCustomerUser.html.twig', [
+            return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
                 'tokens' => $tokens,
                 'url' => $this->getRefererUrl($request, $type, false),
             ]);
@@ -90,7 +90,7 @@ class SocialNetworkController extends AbstractController
             return;
         }
 
-        $shouldOverwriteCustomerUserCart = $request->query->get(self::PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART);
+        $shouldOverwriteCustomerUserCart = $request->query->getBoolean(self::PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART);
         $session->set(self::SHOULD_OVERWRITE_CART, $shouldOverwriteCustomerUserCart);
     }
 

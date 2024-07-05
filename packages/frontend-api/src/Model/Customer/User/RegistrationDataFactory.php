@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Customer\User;
+namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
 use Hybridauth\User\Profile;
+use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -22,8 +23,30 @@ class RegistrationDataFactory
     }
 
     /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
+     */
+    public function createWithArgument(Argument $argument): RegistrationData
+    {
+        $input = $argument['input'];
+
+        $domainId = $this->domain->getId();
+        $registrationData = $this->createForDomainId($domainId);
+
+        foreach ($input as $key => $value) {
+            if (property_exists(get_class($registrationData), $key)) {
+                $registrationData->{$key} = $value;
+            }
+        }
+
+        $registrationData->country = $this->countryFacade->findByCode($input['country']);
+
+        return $registrationData;
+    }
+
+    /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationData
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
      */
     public function createForDomainId(int $domainId): RegistrationData
     {
@@ -34,7 +57,7 @@ class RegistrationDataFactory
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationData
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
      */
     public function create(): RegistrationData
     {
@@ -43,7 +66,7 @@ class RegistrationDataFactory
 
     /**
      * @param \Hybridauth\User\Profile $profile
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationData
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData
      */
     public function createFromSocialNetworkProfile(Profile $profile): RegistrationData
     {

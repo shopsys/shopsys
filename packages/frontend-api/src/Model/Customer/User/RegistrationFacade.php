@@ -2,16 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\Customer\User;
+namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 class RegistrationFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -25,7 +28,7 @@ class RegistrationFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationData $registrationData
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData $registrationData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function register(RegistrationData $registrationData): CustomerUser
@@ -57,7 +60,7 @@ class RegistrationFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\RegistrationData $registrationData
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData $registrationData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     protected function mapRegistrationDataToCustomerUserUpdateData(

@@ -7,8 +7,8 @@ namespace Tests\App\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 use App\Model\Administrator\Administrator;
 use App\Model\Administrator\AdministratorData;
 use App\Model\Order\Processing\OrderProcessorMiddleware\SetOrderDataAsAdministratorMiddleware;
-use App\Model\Security\LoginAsUserFacade;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 
 class SetOrderDataAsAdministratorMiddlewareTest extends MiddlewareTestCase

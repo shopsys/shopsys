@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Processing\OrderProcessorMiddleware;
 
-use App\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
+use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
 
 class SetOrderDataAsAdministratorMiddleware implements OrderProcessorMiddlewareInterface
 {
     /**
-     * @param \App\Model\Security\LoginAsUserFacade $loginAsUserFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      */
     public function __construct(
         protected readonly LoginAsUserFacade $loginAsUserFacade,

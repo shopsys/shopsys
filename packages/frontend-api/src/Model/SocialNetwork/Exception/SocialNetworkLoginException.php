@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Model\SocialNetwork\Exception;
+namespace Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception;
 
 use Exception;
 

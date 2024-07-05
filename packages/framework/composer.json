@@ -62,7 +62,6 @@
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
-        "hybridauth/hybridauth": "^3.11",
         "jms/metadata": "^2.6.1",
         "jms/translation-bundle": "^2.2.1",
         "knplabs/knp-menu-bundle": "^3.2",

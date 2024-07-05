@@ -16,5 +16,5 @@ front_homepage:
     path: /
 
 front_social_network_login:
-    defaults: { _controller: Shopsys\FrameworkBundle\Controller\Front\SocialNetworkController::loginAction }
+    defaults: { _controller: Shopsys\FrontendApiBundle\Controller\SocialNetworkController::loginAction }
     path: /social-network/login/{type}

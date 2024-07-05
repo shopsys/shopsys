@@ -374,7 +374,7 @@ class RouteConfigCustomization
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
             })
-            ->customizeByRouteName(['admin_customer_loginascustomeruser'], function (RouteConfig $config) {
+            ->customizeByRouteName(['admin_customeruser_loginascustomeruser'], function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet()->setExpectedStatusCode(403);
             })
             ->customizeByRouteName('admin_languageconstant_edit', function (RouteConfig $config) {

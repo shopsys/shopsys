@@ -6,25 +6,35 @@ namespace App\FrontendApi\Model\Customer\User;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory as BaseCustomerUserUpdateDataFactory;
 
 /**
  * @property \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+ * @property \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
+ * @property \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
+ * @method \App\Model\Customer\User\CustomerUserUpdateData createFromCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Customer\User\CustomerUserUpdateData createFromRegistrationData(\Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData $registrationData)
  */
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
     /**
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
+     * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        BillingAddressDataFactory $billingAddressDataFactory,
+        CustomerUserDataFactory $customerUserDataFactory,
         protected readonly CountryFacade $countryFacade,
     ) {
-        parent::__construct($customerUserUpdateDataFactory);
+        parent::__construct($customerUserUpdateDataFactory, $billingAddressDataFactory, $customerUserDataFactory);
     }
 
     /**
