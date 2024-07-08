@@ -97,7 +97,9 @@ describe('Cart login tests', () => {
         logoutFromHeader();
         checkAndHideSuccessToast('Successfully logged out');
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'cart page after logout');
+        takeSnapshotAndCompare(this.test?.title, 'cart page after logout', {
+            blackout: [{ tid: TIDs.footer_social_links }],
+        });
 
         goToHomepageFromHeader();
         addProductToCartFromPromotedProductsOnHomepage(products.lg47LA790VFHD.catnum);
