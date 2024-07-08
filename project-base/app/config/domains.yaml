@@ -11,4 +11,4 @@ domains:
         name: 2.shopsys
         styles_directory: domain2
         timezone: Europe/Prague
-        type: b2c
+        type: b2b
