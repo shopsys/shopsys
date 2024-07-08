@@ -82,7 +82,7 @@ export const AutocompleteSearch: FC = () => {
             >
                 <SearchInput
                     className="w-full border-2 border-white"
-                    label={t("Write what you are looking for...")}
+                    label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}
                     value={searchQueryValue}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}

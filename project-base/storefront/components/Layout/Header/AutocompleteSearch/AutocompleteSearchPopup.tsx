@@ -99,7 +99,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                         <div className="flex justify-center">
                             <Button
                                 className="w-full md:w-fit"
-                                variant="secondary"
+                                variant="secondaryOutlined"
                                 onClick={() => {
                                     onClosePopupCallback();
                                     router.push({
