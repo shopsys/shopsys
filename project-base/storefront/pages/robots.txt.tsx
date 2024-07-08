@@ -5,7 +5,11 @@ import {
 } from 'graphql/requests/robotsTxt/RobotsTxtQuery.generated';
 import { createClient } from 'urql/createClient';
 import { getDomainConfig } from 'utils/domain/domainConfig';
-import { FILTER_QUERY_PARAMETER_NAME, LOAD_MORE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -72,6 +76,7 @@ const getRobotsTxtContent = (
 Disallow: ${customerUrl}/*
 Disallow: *?${FILTER_QUERY_PARAMETER_NAME}=
 Disallow: *?${LOAD_MORE_QUERY_PARAMETER_NAME}=
+Disallow: *?${SORT_QUERY_PARAMETER_NAME}=
 ${robotsTxtContentFromAdmin || ''}
 
 Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap.xml
