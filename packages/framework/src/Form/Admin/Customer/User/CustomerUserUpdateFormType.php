@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueBillingAddress;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressListType;
 use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -75,6 +76,11 @@ class CustomerUserUpdateFormType extends AbstractType
             ->setDefaults([
                 'empty_data' => $this->customerUserUpdateDataFactory->create(),
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new UniqueBillingAddress([
+                        'errorPath' => 'billingAddressData.companyNumber',
+                    ]),
+                ],
             ]);
     }
 }
