@@ -141,7 +141,7 @@
         "scheb/2fa-google-authenticator": "^5.7",
         "scheb/2fa-qr-code": "^5.7",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/deployment": "~3.0.2",
+        "shopsys/deployment": "~3.1.0",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/ordered-form": "^5.2",
         "snc/redis-bundle": "^4.4.1",
