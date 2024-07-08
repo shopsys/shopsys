@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
  * )
  * @ORM\Entity
  * @property \App\Model\Product\Product $product
- * @property \Doctrine\Common\Collections\ArrayCollection<int, \App\Model\Product\Flag\Flag> $flags
  * @method \App\Model\Product\Flag\Flag[] getFlags()
  * @method setFlags(\App\Model\Product\Flag\Flag[] $flags)
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Flag\Flag> $flags
