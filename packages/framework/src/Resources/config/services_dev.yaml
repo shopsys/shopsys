@@ -18,7 +18,7 @@ services:
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector:
         tags:
-            - { name: 'data_collector', template: '@ShopsysFramework/Debug/Elasticsearch/template.html.twig', id: 'shopsys.elasticsearch_collector' }
+            - { name: 'data_collector', template: '@ShopsysFramework/Components/Collector/elasticSearch.html.twig', id: 'shopsys.elasticsearch_collector' }
 
     Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection:
 
