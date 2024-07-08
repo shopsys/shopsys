@@ -41,7 +41,7 @@ class IconExtension extends AbstractExtension
         $attributes['data'] = $attributes['data'] ?? [];
 
         return $this->twigEnvironment->render(
-            '@ShopsysFramework/Common/Inline/Icon/icon.html.twig',
+            '@ShopsysFramework/Components/Icon/icon.html.twig',
             [
                 'name' => $iconName,
                 'attr' => $attributes,
