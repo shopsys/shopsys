@@ -28,7 +28,6 @@ twig:
         - '@ShopsysFramework/Admin/Form/rolesType.html.twig'
         - '@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/warningMessage.html.twig'
-        - '@ShopsysFramework/Common/Form/theme.html.twig'
         - 'Admin/Form/grapesJsMailType.html.twig'
         - 'Admin/Form/grapesJsType.html.twig'
         - 'Admin/Form/languageConstantFormTheme.html.twig'
