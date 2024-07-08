@@ -1,6 +1,6 @@
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
-import { Loader } from 'components/Basic/Loader/Loader';
+import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
@@ -44,34 +44,33 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded border-2 border-white bg-white pr-20 pl-4 text-dark placeholder:text-skyBlue placeholder:opacity-100 focus:outline-none [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
-                    value ? 'pr-20' : 'pr-12',
+                    'peer mb-0 h-12 w-full rounded-md border-2 border-white bg-white pr-20 pl-11 text-dark placeholder:text-skyBlue placeholder:opacity-100 focus:outline-none [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
+                    value ? 'pr-7' : 'pr-4',
                     className,
                 )}
                 onChange={onChange}
                 onKeyUp={enterKeyPressHandler}
             />
 
-            {shouldShowSpinnerInInput ? (
-                <Loader className="absolute right-4 top-1/2 w-5 -translate-y-1/2 text-dark" />
-            ) : (
-                <button
-                    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer border-none"
-                    title={t('Search')}
-                    type="submit"
-                    onClick={onSearch}
-                >
-                    <SearchIcon className="w-5" />
-                </button>
-            )}
+            <button
+                className="absolute flex items-center left-3 top-1/2 -translate-y-1/2"
+                title={t('Search')}
+                type="submit"
+                onClick={onSearch}
+            >
+                <SearchIcon className="w-[18px]" />
+            </button>
 
-            {!!value && (
+            {!!value && !shouldShowSpinnerInInput && (
                 <div
-                    className="absolute right-11 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-primaryLight text-whiteSnow p-2"
+                    className="absolute right-2 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center text-whiteSnow p-1.5"
                     onClick={onClear}
                 >
-                    <CloseIcon />
+                    <CloseIcon className="w-3 text-skyBlue" />
                 </div>
+            )}
+            {shouldShowSpinnerInInput && (
+                <SpinnerIcon className="absolute right-4 top-1/2 w-5 -translate-y-1/2 text-dark" />
             )}
         </div>
     );
