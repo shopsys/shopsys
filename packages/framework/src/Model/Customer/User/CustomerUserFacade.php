@@ -142,7 +142,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    protected function createCustomerUser(
+    public function createCustomerUser(
         Customer $customer,
         CustomerUserData $customerUserData,
     ): CustomerUser {
@@ -293,7 +293,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    protected function createCustomerWithBillingAddress(
+    public function createCustomerWithBillingAddress(
         int $domainId,
         BillingAddressData $billingAddressData,
     ): Customer {
