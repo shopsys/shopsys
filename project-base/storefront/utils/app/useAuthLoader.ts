@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { getIsHttps } from 'utils/requestProtocol';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -18,7 +19,7 @@ export const useAuthLoader = () => {
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
 
     useEffect(() => {
-        const cookies = getCookies();
+        const cookies = getCookies({ secure: getIsHttps() });
         const isWithUserTokens = !!(cookies.accessToken && cookies.refreshToken);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
