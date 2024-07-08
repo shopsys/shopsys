@@ -1,13 +1,21 @@
 import { ProductPrice } from './ProductPrice';
+import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceholder';
 import { ProductsSliderProps } from './ProductsSlider';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import useTranslation from 'next-translate/useTranslation';
 
-type ProductsSliderPlaceholderProps = Pick<ProductsSliderProps, 'products' | 'isWithSimpleCards'>;
+type ProductsSliderPlaceholderProps = {
+    size?: ProductItemProps['size'];
+    visibleItemsConfig?: ProductItemProps['visibleItemsConfig'];
+} & Pick<ProductsSliderProps, 'products'>;
 
-export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({ products, isWithSimpleCards }) => {
+export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
+    products,
+    visibleItemsConfig,
+    size,
+}) => {
     const { t } = useTranslation();
 
     return (
@@ -34,8 +42,10 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({ 
                     index < 4 ? (
                         <ProductListItemPlaceholder
                             key={product.uuid}
-                            isSimpleCard={isWithSimpleCards}
+                            className="mx-1.5 first:ml-0 last:mr-0"
                             product={product}
+                            size={size}
+                            visibleItemsConfig={visibleItemsConfig}
                         />
                     ) : (
                         <ExtendedNextLink key={product.uuid} href={product.slug}>

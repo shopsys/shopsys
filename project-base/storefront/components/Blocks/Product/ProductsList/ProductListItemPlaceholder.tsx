@@ -1,5 +1,6 @@
+import { PREDEFINED_VISIBLE_ITEMS_CONFIGS, ProductItemProps } from './ProductListItem';
+import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -7,16 +8,22 @@ import Skeleton from 'react-loading-skeleton';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
 
-type ProductItemProps = {
+type ProductListItemPlaceholderProps = {
     product: TypeListedProductFragment;
-    isSimpleCard?: boolean;
+    size?: ProductItemProps['size'];
+    visibleItemsConfig?: ProductItemProps['visibleItemsConfig'];
 } & FunctionComponentProps;
 
-export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, className, isSimpleCard }) => {
+export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = ({
+    product,
+    className,
+    visibleItemsConfig = PREDEFINED_VISIBLE_ITEMS_CONFIGS.largeItem,
+    size = 'extraLarge',
+}) => {
     return (
         <li
             className={twMergeCustom(
-                'relative flex select-none flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
+                'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-full bg-grayLight hover:bg-gray transition',
                 className,
             )}
         >
@@ -26,22 +33,13 @@ export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, clas
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
-                <div className="relative flex h-56 items-center justify-center">
-                    <Image
-                        alt={product.mainImage?.name || product.fullName}
-                        className="max-h-full object-contain"
-                        draggable={false}
-                        height={isSimpleCard ? 150 : 250}
-                        src={product.mainImage?.url}
-                        width={isSimpleCard ? 150 : 250}
-                    />
-                </div>
+                <ProductListItemImage product={product} size={size} visibleItemsConfig={{ flags: false }} />
 
                 <div className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark">{product.fullName}</div>
 
                 <ProductPrice productPrice={product.price} />
 
-                {!isSimpleCard && (
+                {visibleItemsConfig.storeAvailability && (
                     <div className="flex flex-col gap-1 text-sm text-black">
                         <div>{product.availability.name}</div>
                         <ProductAvailableStoresCount
@@ -52,7 +50,7 @@ export const ProductListItemPlaceholder: FC<ProductItemProps> = ({ product, clas
                 )}
             </ExtendedNextLink>
 
-            {!isSimpleCard && (
+            {visibleItemsConfig.productListButtons && (
                 <div className="flex justify-end gap-2">
                     <Skeleton className="w-8 h-8" />
                     <Skeleton className="w-8 h-8" />

@@ -1,3 +1,4 @@
+import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
 import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -7,6 +8,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { wait } from 'utils/wait';
 
@@ -14,24 +16,28 @@ export type ProductsSliderProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin?: GtmMessageOriginType;
-    isWithSimpleCards?: boolean;
+    isWithArrows?: boolean;
+    wrapperClassName?: string;
+    productItemProps?: Partial<ProductItemProps>;
 };
 
-const productTwClass = 'snap-center border-b-0 md:snap-start';
+const productTwClass = 'snap-center border-b-0 md:snap-start mx-1.5 first:ml-0 last:mr-0';
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,
     gtmProductListName,
     gtmMessageOrigin = GtmMessageOriginType.other,
     tid,
-    isWithSimpleCards,
+    wrapperClassName,
+    isWithArrows = true,
+    productItemProps,
 }) => {
     const { t } = useTranslation();
-    const maxVisibleSlides = isWithSimpleCards ? 3 : 4;
+    const maxVisibleSlides = 4;
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
-    const isWithControls = products.length > maxVisibleSlides;
+    const isWithControls = products.length > maxVisibleSlides && isWithArrows;
 
     useEffect(() => {
         setProductElementRefs(
@@ -39,19 +45,21 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 .fill(null)
                 .map(() => createRef()),
         );
-    }, []);
+    }, [products.length]);
 
     useEffect(() => {
         handleScroll(activeIndex);
     }, [activeIndex]);
 
     const handleScroll = async (selectedActiveIndex: number) => {
-        if (productElementRefs && !isWholeElementVisible(productElementRefs[selectedActiveIndex].current!)) {
+        const selectedElement = productElementRefs?.[selectedActiveIndex]?.current;
+
+        if (selectedElement && !isWholeElementVisible(selectedElement)) {
             sliderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
             await wait(350);
         }
 
-        productElementRefs?.[selectedActiveIndex].current?.scrollIntoView({
+        selectedElement?.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
             inline: 'start',
@@ -82,7 +90,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     return (
         <div className="relative" tid={tid}>
             {isWithControls && (
-                <div className="absolute -top-8 right-0 hidden items-center justify-center vl:flex gap-2">
+                <div className="absolute -top-10 right-0 hidden items-center justify-center vl:flex gap-2">
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
                     <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
                 </div>
@@ -90,16 +98,19 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
             <div ref={sliderRef}>
                 <ProductsListContent
-                    classNameProduct={productTwClass}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
                     productRefs={productElementRefs}
                     products={products}
                     swipeHandlers={handlers}
-                    className={twJoin([
-                        "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] [&::-webkit-scrollbar]:hidden",
-                        !isWithSimpleCards && 'vl:auto-cols-[25%]',
+                    className={twMergeCustom([
+                        "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] [&::-webkit-scrollbar]:hidden vl:auto-cols-[25%]",
+                        wrapperClassName,
                     ])}
+                    productItemProps={{
+                        className: twMergeCustom(productTwClass, productItemProps?.className),
+                        ...productItemProps,
+                    }}
                 />
             </div>
         </div>

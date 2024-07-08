@@ -1,11 +1,10 @@
+import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
-import { Image } from 'components/Basic/Image/Image';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
-import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -18,7 +17,17 @@ import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
 
-type ProductItemProps = {
+export type ProductVisibleItemsConfigType = {
+    addToCart?: boolean;
+    productListButtons?: boolean;
+    storeAvailability?: boolean;
+    price?: boolean;
+    flags?: boolean;
+    wishlistRemoveButton?: boolean;
+    priceFromWord?: boolean;
+};
+
+export type ProductItemProps = {
     product: TypeListedProductFragment;
     listIndex: number;
     gtmProductListName: GtmProductListNameType;
@@ -27,7 +36,9 @@ type ProductItemProps = {
     isProductInWishlist: boolean;
     toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
-    isSimpleCard?: boolean;
+    visibleItemsConfig?: ProductVisibleItemsConfigType;
+    size?: 'small' | 'medium' | 'large' | 'extraLarge';
+    onClick?: (product: TypeListedProductFragment, index: number) => void;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -42,7 +53,9 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             toggleProductInComparison,
             toggleProductInWishlist,
             className,
-            isSimpleCard,
+            visibleItemsConfig = PREDEFINED_VISIBLE_ITEMS_CONFIGS.largeItem,
+            size = 'extraLarge',
+            onClick,
         },
         ref,
     ) => {
@@ -54,11 +67,11 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'relative flex select-none flex-col justify-between gap-3 border-b border-graySlate p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
+                    'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-full bg-grayLight hover:bg-gray transition',
                     className,
                 )}
             >
-                {!isSimpleCard && gtmProductListName === GtmProductListNameType.wishlist && (
+                {visibleItemsConfig.wishlistRemoveButton && (
                     <button
                         className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whiteSnow p-0 outline-none transition hover:bg-graySlate"
                         title={t('Remove from wishlist')}
@@ -69,53 +82,44 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex h-full select-none flex-col gap-3 no-underline hover:no-underline"
+                    className="flex h-full select-none flex-col justify-between no-underline hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
-                    onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
+                    onClick={() => {
+                        onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url);
+                        onClick?.(product, listIndex);
+                    }}
                 >
-                    <div
-                        tid={TIDs.product_list_item_image}
-                        className={twMergeCustom([
-                            'relative flex h-56 items-center justify-center',
-                            isSimpleCard && 'h-44',
-                        ])}
-                    >
-                        <Image
-                            alt={product.mainImage?.name || product.fullName}
-                            className="max-h-full object-contain"
-                            draggable={false}
-                            height={isSimpleCard ? 150 : 250}
-                            src={product.mainImage?.url}
-                            width={isSimpleCard ? 150 : 250}
-                        />
+                    <div className="flex flex-col gap-2">
+                        <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                        {!!product.flags.length && (
-                            <div className="absolute top-3 left-4 flex flex-col">
-                                <ProductFlags flags={product.flags} />
+                        <div className="text-sm font-semibold text-dark font-secondary group-hover:underline group-hover:text-primary mb-4">
+                            {product.fullName}
+                        </div>
+                    </div>
+
+                    <div>
+                        {visibleItemsConfig.price && (
+                            <ProductPrice
+                                isPriceFromVisible={visibleItemsConfig.priceFromWord}
+                                productPrice={product.price}
+                            />
+                        )}
+
+                        {visibleItemsConfig.storeAvailability && (
+                            <div className="flex flex-col justify-between text-sm text-black h-16">
+                                <div>{product.availability.name}</div>
+                                <ProductAvailableStoresCount
+                                    availableStoresCount={product.availableStoresCount}
+                                    isMainVariant={product.isMainVariant}
+                                />
                             </div>
                         )}
                     </div>
-
-                    <div className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark font-secondary">
-                        {product.fullName}
-                    </div>
-
-                    <ProductPrice productPrice={product.price} />
-
-                    {!isSimpleCard && (
-                        <div className="flex flex-col gap-1 text-sm text-black">
-                            <div>{product.availability.name}</div>
-                            <ProductAvailableStoresCount
-                                availableStoresCount={product.availableStoresCount}
-                                isMainVariant={product.isMainVariant}
-                            />
-                        </div>
-                    )}
                 </ExtendedNextLink>
 
-                {!isSimpleCard && (
+                {visibleItemsConfig.productListButtons && (
                     <div className="flex justify-end gap-2">
                         <ProductCompareButton
                             isProductInComparison={isProductInComparison}
@@ -128,15 +132,34 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     </div>
                 )}
 
-                <ProductAction
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    gtmProductListName={gtmProductListName}
-                    listIndex={listIndex}
-                    product={product}
-                />
+                {visibleItemsConfig.addToCart && (
+                    <ProductAction
+                        gtmMessageOrigin={gtmMessageOrigin}
+                        gtmProductListName={gtmProductListName}
+                        listIndex={listIndex}
+                        product={product}
+                    />
+                )}
             </li>
         );
     },
 );
 
 ProductListItem.displayName = 'ProductItem';
+
+export const PREDEFINED_VISIBLE_ITEMS_CONFIGS = {
+    largeItem: {
+        productListButtons: true,
+        addToCart: true,
+        flags: true,
+        price: true,
+        storeAvailability: true,
+        priceFromWord: true,
+    } as ProductVisibleItemsConfigType,
+    mediumItem: {
+        flags: true,
+        price: true,
+        storeAvailability: true,
+        priceFromWord: true,
+    } as ProductVisibleItemsConfigType,
+} as const;
