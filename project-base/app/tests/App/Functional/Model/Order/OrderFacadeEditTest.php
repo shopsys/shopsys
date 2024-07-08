@@ -21,8 +21,8 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 {
     private const int ORDER_ID = 10;
     private const int PRODUCT_ITEM_ID = 45;
-    private const int PAYMENT_ITEM_ID = 46;
-    private const int TRANSPORT_ITEM_ID = 47;
+    private const int TRANSPORT_ITEM_ID = 46;
+    private const int PAYMENT_ITEM_ID = 47;
 
     private Order $order;
 

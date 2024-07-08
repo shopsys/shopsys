@@ -493,4 +493,12 @@ class OrderItem
     {
         $this->relatedItems->add($relatedItem);
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getRelatedItems()
+    {
+        return $this->relatedItems->getValues();
+    }
 }

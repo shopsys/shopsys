@@ -5,7 +5,7 @@
         <th>{% trans into orderLocale %}Unit price including VAT{% endtrans %}</th>
         <th>{% trans into orderLocale %}Total item price including VAT{% endtrans %}</th>
     </tr>
-    {% for item in order.items %}
+    {% for item in order.itemsSortedWithRelatedItems %}
         <tr>
             <td style="font-weight: bold;">{{ item.name }}</td>
             <td style="text-align: right;">{{ item.quantity|formatNumber(orderLocale) }} {{ item.unitName }}</td>
