@@ -71,4 +71,13 @@ class CustomerFacade
 
         return $domainConfig->isB2b() && $customer->isCompanyCustomer();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
+     */
+    public function getCustomerUsers(Customer $customer): array
+    {
+        return $this->customerRepository->getCustomerUsers($customer);
+    }
 }

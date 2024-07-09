@@ -1,0 +1,30 @@
+{% block customer_user_list_row %}
+    <div class="wrap-divider">
+        <h2>{{ 'Customer users'|trans }}</h2>
+
+        {% if customerUsers|length == 0 %}
+            {{ 'Customer has no customer users.'|trans }}
+        {% else %}
+            <table class="table-main">
+                <thead>
+                    <tr>
+                        <th>{{ 'First name'|trans }}</th>
+                        <th>{{ 'Last name'|trans }}</th>
+                        <th>{{ 'Email'|trans }}</th>
+                        <th>{{ 'Phone'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customerUser in customerUsers %}
+                        <tr>
+                            <td>{{ customerUser.firstName }}</td>
+                            <td>{{ customerUser.lastName }}</td>
+                            <td>{{ customerUser.email }}</td>
+                            <td>{{ customerUser.telephone }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
