@@ -43,6 +43,7 @@ class BillingAddressController extends AdminBaseController
         $form = $this->createForm(BillingAddressAndRelatedInfoFormType::class, $billingAddressData, [
             'customer' => $billingAddress->getCustomer(),
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+            'disableCompanyCustomerCheckbox' => true,
         ]);
         $form->handleRequest($request);
 
