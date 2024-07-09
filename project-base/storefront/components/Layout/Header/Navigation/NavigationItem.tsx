@@ -12,13 +12,11 @@ type NavigationItemProps = {
 export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = !!navigationItem.categoriesByColumns.length;
-    const isCatalogLink = navigationItem.link === `/#`;
 
     return (
         <li className="group" onMouseEnter={() => setIsMenuOpened(true)} onMouseLeave={() => setIsMenuOpened(false)}>
             <ExtendedNextLink
                 href={navigationItem.link}
-                type={isCatalogLink ? 'homepage' : 'category'}
                 className={twJoin(
                     'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-secondary hover:no-underline group-hover:text-secondary group-hover:no-underline vl:text-base',
                 )}
