@@ -136,6 +136,26 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
+        $customerEdit->addChild('customerUserEdit', [
+            'route' => 'admin_customer_user_edit',
+            'display' => false,
+        ]);
+        $customerEdit->addChild('customerUserNew', [
+            'route' => 'admin_customer_new_customer_user',
+            'label' => t('Add customer user'),
+            'display' => false,
+        ]);
+
+        $customerEdit->addChild('deliverAddressEdit', [
+            'route' => 'admin_delivery_address_edit',
+            'display' => false,
+        ]);
+        $customerEdit->addChild('deliverAddressNew', [
+            'route' => 'admin_delivery_address_new',
+            'label' => t('New delivery address'),
+            'display' => false,
+        ]);
+
         $menu->addChild('newsletter', [
             'route' => 'admin_newsletter_list',
             'label' => t('Email newsletter'),
