@@ -63,7 +63,7 @@
     "Contact information": "Contact information",
     "Contact to the department store": "Contact to the department store",
     "ContactInformationInfo": "By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>.",
-    "Copyright © 2021, Shopsys s.r.o. All rights reserved.": "Copyright © 2021, Shopsys s.r.o. All rights reserved.",
+    "Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.": "Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.",
     "Could not connect to server. Check your network.": "Could not connect to server. Check your network.",
     "Could not create account": "Could not create account",
     "Could not create order": "Could not create order",
