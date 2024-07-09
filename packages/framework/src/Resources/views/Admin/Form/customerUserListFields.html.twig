@@ -23,6 +23,9 @@
                             <td>{{ customerUser.email }}</td>
                             <td>{{ customerUser.telephone }}</td>
                             <td>
+                                {% if allowEdit %}
+                                    <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}"></a>
+                                {% endif %}
                                 {% if allowDelete %}
                                     {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
                                     {% set deleteUrl = url('admin_customer_delete', {

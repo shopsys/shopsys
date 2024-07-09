@@ -208,8 +208,13 @@ class CustomerUserFormType extends AbstractType
 
         /** @var \Symfony\Component\Form\Form $form */
         $form = $context->getRoot();
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData */
-        $customerUserData = $form->getData()->customerUserData;
+
+        if ($form->getData() instanceof CustomerUserData) {
+            $customerUserData = $form->getData();
+        } else {
+            /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData */
+            $customerUserData = $form->getData()->customerUserData;
+        }
 
         $domainId = $customerUserData->domainId;
         $existingCustomerWithEmail = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $domainId);

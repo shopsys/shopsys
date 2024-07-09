@@ -25,6 +25,7 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
             ->add('customerUsers', CustomerUserListType::class, [
                 'customer' => $options['customer'],
                 'allowDelete' => true,
+                'allowEdit' => true,
                 'deleteConfirmMessage' => t('Do you really want to remove this customer?'),
             ])
             ->add('deliveryAddresses', DeliveryAddressListType::class, [

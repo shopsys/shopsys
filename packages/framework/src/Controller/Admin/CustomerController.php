@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -24,7 +25,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CustomerController extends AdminBaseController
@@ -106,6 +109,58 @@ class CustomerController extends AdminBaseController
             'customerUser' => $customerUser,
             'orders' => $orders,
             'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/customer/edit-customer-user/{id}', name: 'admin_customer_user_edit', requirements: ['id' => '\d+'])]
+    public function editCustomerUserAction(Request $request, int $id): Response
+    {
+        $customerUser = $this->customerUserFacade->getCustomerUserById($id);
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+
+        $form = $this->createForm(CustomerUserFormType::class, $customerUserUpdateData->customerUserData, [
+            'customerUser' => $customerUser,
+            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+        ]);
+        $form->add('save', SubmitType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
+
+            $this->addSuccessFlashTwig(
+                t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                [
+                    'name' => $customerUser->getFullName(),
+                    'url' => $this->generateUrl('admin_customer_user_edit', ['id' => $customerUser->getId()]),
+                ],
+            );
+
+            $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+            return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing customer - %name%', ['%name%' => $customerUser->getCustomerUserFullName()]),
+        );
+
+        $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
+
+        return $this->render('@ShopsysFramework/Admin/Content/Customer/User/edit.html.twig', [
+            'form' => $form->createView(),
+            'customerUser' => $customerUser,
+            'orders' => $orders,
+            'ssoLoginAsUserUrl' => $this->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 
