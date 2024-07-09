@@ -55,7 +55,7 @@ class DeliveryAddressController extends AdminBaseController
             $this->addSuccessFlashTwig(
                 t('Delivery address <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                 [
-                    'name' => $deliveryAddress->getCity(),
+                    'name' => $deliveryAddress->getFullAddress(),
                     'url' => $this->generateUrl('admin_delivery_address_edit', ['id' => $deliveryAddress->getId()]),
                 ],
             );
@@ -104,7 +104,7 @@ class DeliveryAddressController extends AdminBaseController
             $this->addSuccessFlashTwig(
                 t('Delivery address <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [
-                    'name' => $deliveryAddress->getCity(),
+                    'name' => $deliveryAddress->getFullAddress(),
                     'url' => $this->generateUrl('admin_delivery_address_edit', ['id' => $deliveryAddress->getId()]),
                 ],
             );
@@ -128,7 +128,7 @@ class DeliveryAddressController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing delivery address - %name%', ['%name%' => $deliveryAddress->getCity()]),
+            t('Editing delivery address - %name%', ['%name%' => $deliveryAddress->getFullAddress()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/edit.html.twig', [
@@ -145,15 +145,16 @@ class DeliveryAddressController extends AdminBaseController
     #[Route(path: '/delivery-address/delete/{id}', name: 'admin_delivery_address_delete', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): RedirectResponse
     {
+        $deliveryAddress = $this->deliveryAddressFacade->getById($id);
         try {
-            $city = $this->deliveryAddressFacade->getById($id)->getCity();
+            $deliveryAddressFullAddress = $deliveryAddress->getFullAddress();
 
             $this->deliveryAddressFacade->delete($id);
 
             $this->addSuccessFlashTwig(
-                t('Delivery address <strong>{{ city }}</strong> deleted'),
+                t('Delivery address <strong>{{ deliveryAddressFullAddress }}</strong> deleted'),
                 [
-                    'city' => $city,
+                    'deliveryAddressFullAddress' => $deliveryAddressFullAddress,
                 ],
             );
         } catch (DeliveryAddressNotFoundException $ex) {
