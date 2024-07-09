@@ -311,6 +311,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
+     * @return string
+     */
+    public function getCustomerUserFullName()
+    {
+        return $this->lastName . ' ' . $this->firstName;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getCreatedAt()
