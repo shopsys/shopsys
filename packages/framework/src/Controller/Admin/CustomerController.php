@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -41,6 +42,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      */
     public function __construct(
         protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
@@ -55,6 +57,7 @@ class CustomerController extends AdminBaseController
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         protected readonly Domain $domain,
         protected readonly LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider,
+        protected readonly CustomerFacade $customerFacade,
     ) {
     }
 
@@ -75,7 +78,7 @@ class CustomerController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->customerUserFacade->editByAdmin($id, $customerUserUpdateData);
+            $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
 
             $this->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
@@ -120,7 +123,11 @@ class CustomerController extends AdminBaseController
             $quickSearchForm->getData(),
         );
 
-        $innerDataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
+        $innerDataSource = new QueryBuilderWithRowManipulatorDataSource(
+            $queryBuilder,
+            'id',
+            $this->manipulateRow(...),
+        );
         $dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
 
         $grid = $this->gridFactory->create('customerList', $dataSource);
@@ -217,5 +224,18 @@ class CustomerController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_customer_list');
+    }
+
+    /**
+     * @param array $row
+     * @return array
+     */
+    protected function manipulateRow(array $row): array
+    {
+        $domain = $this->domain->getDomainConfigById($row['domainId']);
+
+        $row['showEditBillingAddressLink'] = $domain->isB2b() && $row['isCompanyCustomer'];
+
+        return $row;
     }
 }

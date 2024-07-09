@@ -38,12 +38,24 @@ class UniqueBillingAddressValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueBillingAddress::class);
         }
 
-        if (!$value instanceof CustomerUserUpdateData) {
-            throw new UnexpectedTypeException($value, CustomerUserUpdateData::class);
+        $billingAddressData = null;
+        $domainId = null;
+
+        if ($value instanceof CustomerUserUpdateData) {
+            $billingAddressData = $value->billingAddressData;
+            $domainId = $value->customerUserData->domainId;
         }
 
-        $billingAddressData = $value->billingAddressData;
-        $domainId = $value->customerUserData->domainId;
+        if ($value instanceof BillingAddressData) {
+            $billingAddressData = $value;
+            $domainId = $value->customer->getDomainId();
+        }
+
+        if ($billingAddressData === null && $domainId === null) {
+            $expectedType = sprintf('%s | %s', CustomerUserUpdateData::class, BillingAddressData::class);
+
+            throw new UnexpectedTypeException($value, $expectedType);
+        }
 
         try {
             $this->checkUniqueBillingAddress($billingAddressData, $domainId);

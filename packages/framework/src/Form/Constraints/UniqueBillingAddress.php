@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Symfony\Component\Validator\Constraint;
 
 /**

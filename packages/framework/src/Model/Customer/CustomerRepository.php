@@ -51,7 +51,16 @@ class CustomerRepository
      */
     public function isWithoutCustomerUsers(Customer $customer): bool
     {
-        $count = (int)$this->em
+        return $this->getCustomerUsersCount($customer) === 0;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return int
+     */
+    protected function getCustomerUsersCount(Customer $customer): int
+    {
+        return (int)$this->em
             ->createQueryBuilder()
             ->select('count(c.id)')
             ->from(Customer::class, 'c')
@@ -60,7 +69,5 @@ class CustomerRepository
             ->setParameter('customer', $customer)
             ->getQuery()
             ->getSingleScalarResult();
-
-        return $count === 0;
     }
 }
