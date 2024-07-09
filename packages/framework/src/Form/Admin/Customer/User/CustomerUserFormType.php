@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -194,6 +195,10 @@ class CustomerUserFormType extends AbstractType
             ->add($builderSystemDataGroup)
             ->add($builderPersonalDataGroup)
             ->add($builderRegisteredCustomerGroup);
+
+        if ($options['renderSaveButton']) {
+            $builder->add('save', SubmitType::class);
+        }
     }
 
     /**
@@ -231,8 +236,10 @@ class CustomerUserFormType extends AbstractType
     {
         $resolver
             ->setRequired(['customerUser', 'domain_id'])
+            ->setDefined('renderSaveButton')
             ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setAllowedTypes('domain_id', 'int')
+            ->setAllowedTypes('renderSaveButton', 'bool')
             ->setDefaults([
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
@@ -250,6 +257,7 @@ class CustomerUserFormType extends AbstractType
                         'message' => 'Password cannot be same as part of email before at sign',
                     ]),
                 ],
+                'renderSaveButton' => false,
             ]);
     }
 }

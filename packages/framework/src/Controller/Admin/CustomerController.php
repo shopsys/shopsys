@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -126,8 +125,8 @@ class CustomerController extends AdminBaseController
         $form = $this->createForm(CustomerUserFormType::class, $customerUserUpdateData->customerUserData, [
             'customerUser' => $customerUser,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+            'renderSaveButton' => true,
         ]);
-        $form->add('save', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -270,8 +269,8 @@ class CustomerController extends AdminBaseController
         $form = $this->createForm(CustomerUserFormType::class, $customerUserData, [
             'customerUser' => null,
             'domain_id' => $customer->getDomainId(),
+            'renderSaveButton' => true,
         ]);
-        $form->add('save', SubmitType::class);
         $form->handleRequest($request);
 
         $billingAddress = $customer->getBillingAddress();
