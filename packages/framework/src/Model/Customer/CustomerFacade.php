@@ -80,4 +80,13 @@ class CustomerFacade
     {
         return $this->customerRepository->getCustomerUsers($customer);
     }
+
+    /**
+     * @param int $customerId
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    public function getById(int $customerId): Customer
+    {
+        return $this->customerRepository->getById($customerId);
+    }
 }

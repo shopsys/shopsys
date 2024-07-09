@@ -27,15 +27,17 @@ class CustomerUserListType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(['customer'])
-            ->setDefined(['allowDelete', 'deleteConfirmMessage', 'allowEdit'])
+            ->setDefined(['allowDelete', 'deleteConfirmMessage', 'allowEdit', 'allowAdd'])
             ->setAllowedTypes('customer', [Customer::class])
             ->setAllowedTypes('allowDelete', 'bool')
             ->setAllowedTypes('allowEdit', 'bool')
+            ->setAllowedTypes('allowAdd', 'bool')
             ->setAllowedTypes('deleteConfirmMessage', ['string', 'null'])
             ->setDefaults([
                 'mapped' => false,
                 'allowDelete' => false,
                 'allowEdit' => false,
+                'allowAdd' => false,
                 'deleteConfirmMessage' => null,
             ]);
     }
@@ -52,7 +54,9 @@ class CustomerUserListType extends AbstractType
         $view->vars['customerUsers'] = $this->customerFacade->getCustomerUsers($options['customer']);
         $view->vars['allowDelete'] = $options['allowDelete'];
         $view->vars['allowEdit'] = $options['allowEdit'];
+        $view->vars['allowAdd'] = $options['allowAdd'];
         $view->vars['deleteConfirmMessage'] = $options['deleteConfirmMessage'];
+        $view->vars['customer'] = $options['customer'];
     }
 
     /**

@@ -1,7 +1,16 @@
 {% block customer_user_list_row %}
     <div class="wrap-divider">
-        <h2>{{ 'Customer users'|trans }}</h2>
-
+        <div class="wrap-bar">
+            <h2 class="wrap-bar__heading">{{ 'Customer users'|trans }}</h2>
+            {% if allowAdd %}
+                <div class="wrap-bar__buttons">
+                    <a href="{{ url('admin_customer_new_customer_user', {customerId: customer.id}) }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                        <i class="btn__icon">+</i>
+                        {{ 'Add new customer user'|trans }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
         {% if customerUsers|length == 0 %}
             {{ 'Customer has no customer users.'|trans }}
         {% else %}

@@ -257,6 +257,54 @@ class CustomerController extends AdminBaseController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $customerId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/customer/new-customer-user/{customerId}/', name: 'admin_customer_new_customer_user', requirements: ['customerId' => '\d+'])]
+    public function newCustomerUserAction(Request $request, int $customerId): Response
+    {
+        $customer = $this->customerFacade->getById($customerId);
+        $customerUserData = $this->customerUserDataFactory->createForCustomer($customer);
+
+        $form = $this->createForm(CustomerUserFormType::class, $customerUserData, [
+            'customerUser' => null,
+            'domain_id' => $customer->getDomainId(),
+        ]);
+        $form->add('save', SubmitType::class);
+        $form->handleRequest($request);
+
+        $billingAddress = $customer->getBillingAddress();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $customerUser = $this->customerUserFacade->createCustomerUser($customer, $customerUserData);
+            $this->addSuccessFlashTwig(
+                t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                [
+                    'name' => $customerUser->getCustomerUserFullName(),
+                    'url' => $this->generateUrl('admin_customer_user_edit', ['id' => $customerUser->getId()]),
+                ],
+            );
+
+
+            return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Add new customer user to %companyName%', ['%companyName%' => $billingAddress->getCompanyName()]),
+        );
+
+        return $this->render('@ShopsysFramework/Admin/Content/Customer/User/new.html.twig', [
+            'form' => $form->createView(),
+            'billingAddress' => $billingAddress,
+        ]);
+    }
+
+    /**
      * @CsrfProtection
      * @param int $id
      */
