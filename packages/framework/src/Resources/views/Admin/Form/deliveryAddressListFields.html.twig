@@ -16,6 +16,7 @@
                         <th>{{ 'City'|trans }}</th>
                         <th>{{ 'Postcode'|trans }}</th>
                         <th>{{ 'Country'|trans }}</th>
+                        <th>{{ 'Action'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,21 @@
                             <td>{{ deliveryAddress.city }}</td>
                             <td>{{ deliveryAddress.postcode }}</td>
                             <td>{{ deliveryAddress.country.name|default }}</td>
+                            <td>
+                                {% if allowDelete %}
+                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_delivery_address_delete' %}
+                                    {% set deleteUrl = url('admin_delivery_address_delete', {
+                                        id: deliveryAddress.id,
+                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                    }) %}
+                                    <a
+                                        class="in-icon in-icon--delete svg svg-trash table-action"
+                                            data-confirm-window
+                                            data-confirm-message="{{ deleteConfirmMessage }}"
+                                            data-confirm-contiue-url="{{ deleteUrl }}"
+                                    ></a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
