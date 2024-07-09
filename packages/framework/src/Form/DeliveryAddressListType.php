@@ -20,16 +20,18 @@ class DeliveryAddressListType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(['customer', 'customerUser', 'allowDelete', 'deleteConfirmMessage'])
+        $resolver->setDefined(['customer', 'customerUser', 'allowDelete', 'deleteConfirmMessage', 'allowEdit'])
             ->setAllowedTypes('customer', [Customer::class, 'null'])
             ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setAllowedTypes('allowDelete', 'bool')
             ->setAllowedTypes('deleteConfirmMessage', ['string', 'null'])
+            ->setAllowedTypes('allowEdit', 'bool')
             ->setDefaults([
                 'customer' => null,
                 'customerUser' => null,
                 'allowDelete' => false,
                 'deleteConfirmMessage' => null,
+                'allowEdit' => false,
                 'mapped' => false,
             ]);
     }
@@ -57,6 +59,7 @@ class DeliveryAddressListType extends AbstractType
         $view->vars['deliveryAddresses'] = $deliveryAddresses;
         $view->vars['allowDelete'] = $options['allowDelete'];
         $view->vars['deleteConfirmMessage'] = $options['deleteConfirmMessage'];
+        $view->vars['allowEdit'] = $options['allowEdit'];
     }
 
     /**

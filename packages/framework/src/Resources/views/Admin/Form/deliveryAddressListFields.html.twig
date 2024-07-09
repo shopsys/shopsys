@@ -31,6 +31,9 @@
                             <td>{{ deliveryAddress.postcode }}</td>
                             <td>{{ deliveryAddress.country.name|default }}</td>
                             <td>
+                                {% if allowEdit %}
+                                    <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_delivery_address_edit', {id: deliveryAddress.id}) }}" title="{{ 'Edit'|trans }}"></a>
+                                {% endif %}
                                 {% if allowDelete %}
                                     {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_delivery_address_delete' %}
                                     {% set deleteUrl = url('admin_delivery_address_delete', {

@@ -32,6 +32,7 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
             ->add('deliveryAddresses', DeliveryAddressListType::class, [
                 'customer' => $options['customer'],
                 'allowDelete' => true,
+                'allowEdit' => true,
                 'deleteConfirmMessage' => t('Do you really want to remove this delivery address?'),
             ])
             ->add('save', SubmitType::class);
