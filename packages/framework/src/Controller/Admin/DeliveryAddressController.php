@@ -34,6 +34,56 @@ class DeliveryAddressController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $customerId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/delivery-address/new/{customerId}', name: 'admin_delivery_address_new', requirements: ['customerId' => '\d+'])]
+    public function newAction(Request $request, int $customerId): Response
+    {
+        $customer = $this->customerFacade->getById($customerId);
+        $deliveryAddressData = $this->deliveryAddressDataFactory->createForCustomer($customer);
+        $deliveryAddressData->addressFilled = true;
+
+        $form = $this->createForm(DeliveryAddressFormType::class, $deliveryAddressData, [
+            'domain_id' => $customer->getDomainId(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled($deliveryAddressData);
+
+            $this->addSuccessFlashTwig(
+                t('Delivery address <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
+                [
+                    'name' => $deliveryAddress->getCity(),
+                    'url' => $this->generateUrl('admin_delivery_address_edit', ['id' => $deliveryAddress->getId()]),
+                ],
+            );
+
+            if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+                $billingAddress = $customer->getBillingAddress();
+
+                return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
+            }
+
+            $customerUsers = $this->customerFacade->getCustomerUsers($customer);
+            $firstCustomerUser = reset($customerUsers);
+
+            return $this->redirectToRoute('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/new.html.twig', [
+            'form' => $form->createView(),
+            'customer' => $customer,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -52,7 +102,7 @@ class DeliveryAddressController extends AdminBaseController
             $this->deliveryAddressFacade->edit($id, $deliveryAddressData);
 
             $this->addSuccessFlashTwig(
-                t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                t('Delivery address <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [
                     'name' => $deliveryAddress->getCity(),
                     'url' => $this->generateUrl('admin_delivery_address_edit', ['id' => $deliveryAddress->getId()]),
@@ -67,7 +117,10 @@ class DeliveryAddressController extends AdminBaseController
                 return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
             }
 
-            return $this->redirectToRoute('admin_customer_list');
+            $customerUsers = $this->customerFacade->getCustomerUsers($customer);
+            $firstCustomerUser = reset($customerUsers);
+
+            return $this->redirectToRoute('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

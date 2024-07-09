@@ -20,18 +20,20 @@ class DeliveryAddressListType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(['customer', 'customerUser', 'allowDelete', 'deleteConfirmMessage', 'allowEdit'])
+        $resolver->setDefined(['customer', 'customerUser', 'allowDelete', 'deleteConfirmMessage', 'allowEdit', 'allowAdd'])
             ->setAllowedTypes('customer', [Customer::class, 'null'])
             ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setAllowedTypes('allowDelete', 'bool')
             ->setAllowedTypes('deleteConfirmMessage', ['string', 'null'])
             ->setAllowedTypes('allowEdit', 'bool')
+            ->setAllowedTypes('allowAdd', 'bool')
             ->setDefaults([
                 'customer' => null,
                 'customerUser' => null,
                 'allowDelete' => false,
                 'deleteConfirmMessage' => null,
                 'allowEdit' => false,
+                'allowAdd' => false,
                 'mapped' => false,
             ]);
     }
@@ -49,6 +51,10 @@ class DeliveryAddressListType extends AbstractType
             throw new InvalidOptionException('An option "customer" or "customerUser" must be set.');
         }
 
+        if ($options['allowAdd'] && $options['customer'] === null) {
+            throw new InvalidOptionException('An option "customer" must be provided, when adding is allowed.');
+        }
+
         $deliveryAddresses = [];
 
         if ($options['customer'] !== null) {
@@ -60,6 +66,8 @@ class DeliveryAddressListType extends AbstractType
         $view->vars['allowDelete'] = $options['allowDelete'];
         $view->vars['deleteConfirmMessage'] = $options['deleteConfirmMessage'];
         $view->vars['allowEdit'] = $options['allowEdit'];
+        $view->vars['allowAdd'] = $options['allowAdd'];
+        $view->vars['customer'] = $options['customer'];
     }
 
     /**
