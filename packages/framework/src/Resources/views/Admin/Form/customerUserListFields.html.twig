@@ -12,6 +12,7 @@
                         <th>{{ 'Last name'|trans }}</th>
                         <th>{{ 'Email'|trans }}</th>
                         <th>{{ 'Phone'|trans }}</th>
+                        <th>{{ 'Action'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +22,21 @@
                             <td>{{ customerUser.lastName }}</td>
                             <td>{{ customerUser.email }}</td>
                             <td>{{ customerUser.telephone }}</td>
+                            <td>
+                                {% if allowDelete %}
+                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
+                                    {% set deleteUrl = url('admin_customer_delete', {
+                                        id: customerUser.id,
+                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                    }) %}
+                                    <a
+                                        class="in-icon in-icon--delete svg svg-trash table-action"
+                                            data-confirm-window
+                                            data-confirm-message="{{ deleteConfirmMessage }}"
+                                            data-confirm-contiue-url="{{ deleteUrl }}"
+                                    ></a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

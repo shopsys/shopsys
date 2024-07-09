@@ -27,9 +27,14 @@ class CustomerUserListType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(['customer'])
+            ->setDefined(['allowDelete', 'deleteConfirmMessage'])
             ->setAllowedTypes('customer', [Customer::class])
+            ->setAllowedTypes('allowDelete', 'bool')
+            ->setAllowedTypes('deleteConfirmMessage', ['string', 'null'])
             ->setDefaults([
                 'mapped' => false,
+                'allowDelete' => false,
+                'deleteConfirmMessage' => null,
             ]);
     }
 
@@ -43,6 +48,8 @@ class CustomerUserListType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars['customerUsers'] = $this->customerFacade->getCustomerUsers($options['customer']);
+        $view->vars['allowDelete'] = $options['allowDelete'];
+        $view->vars['deleteConfirmMessage'] = $options['deleteConfirmMessage'];
     }
 
     /**
