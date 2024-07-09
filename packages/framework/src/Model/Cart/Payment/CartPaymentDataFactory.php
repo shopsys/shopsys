@@ -7,21 +7,21 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 
 class CartPaymentDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
      */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
-        protected readonly CartPriceProvider $cartPriceProvider,
+        protected readonly PaymentPriceProvider $paymentPriceProvider,
     ) {
     }
 
@@ -53,7 +53,7 @@ class CartPaymentDataFactory
      */
     protected function getPaymentWatchedPriceWithVat(int $domainId, Cart $cart, Payment $payment): Money
     {
-        return $this->cartPriceProvider->getPaymentPrice(
+        return $this->paymentPriceProvider->getPaymentPrice(
             $cart,
             $payment,
             $this->domain->getDomainConfigById($domainId),

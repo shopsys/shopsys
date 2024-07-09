@@ -6,10 +6,10 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
@@ -23,14 +23,14 @@ class TransportValidationFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
      */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
-        protected readonly CartPriceProvider $cartPriceProvider,
+        protected readonly TransportPriceProvider $transportPriceProvider,
     ) {
     }
 
@@ -67,7 +67,7 @@ class TransportValidationFacade
      */
     public function checkTransportPrice(Transport $transport, Cart $cart): void
     {
-        $calculatedTransportPrice = $this->cartPriceProvider->getTransportPrice(
+        $calculatedTransportPrice = $this->transportPriceProvider->getTransportPrice(
             $cart,
             $transport,
             $this->domain->getCurrentDomainConfig(),

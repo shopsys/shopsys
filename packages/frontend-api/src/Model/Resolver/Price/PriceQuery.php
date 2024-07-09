@@ -6,10 +6,10 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use ArrayObject;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
@@ -36,7 +37,8 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
      */
     public function __construct(
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -48,7 +50,8 @@ class PriceQuery extends AbstractQuery
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly OrderApiFacade $orderApiFacade,
-        protected readonly CartPriceProvider $cartPriceProvider,
+        protected readonly TransportPriceProvider $transportPriceProvider,
+        protected readonly PaymentPriceProvider $paymentPriceProvider,
     ) {
     }
 
@@ -108,7 +111,7 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentPaymentPrice($payment);
         }
 
-        return $this->cartPriceProvider->getPaymentPrice($cart, $payment, $this->domain->getCurrentDomainConfig());
+        return $this->paymentPriceProvider->getPaymentPrice($cart, $payment, $this->domain->getCurrentDomainConfig());
     }
 
     /**
@@ -149,7 +152,7 @@ class PriceQuery extends AbstractQuery
             return $this->calculateIndependentTransportPrice($transport);
         }
 
-        return $this->cartPriceProvider->getTransportPrice($cart, $transport, $this->domain->getCurrentDomainConfig());
+        return $this->transportPriceProvider->getTransportPrice($cart, $transport, $this->domain->getCurrentDomainConfig());
     }
 
     /**

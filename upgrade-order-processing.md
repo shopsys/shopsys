@@ -236,7 +236,7 @@ For more information about the order processing system, you may see the [Order P
 -    protected readonly Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade,
 -    protected readonly Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory,
 -    protected readonly Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation,
-+    protected readonly Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider,
++    protected readonly Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider,
  )
 ```
 
@@ -250,7 +250,7 @@ For more information about the order processing system, you may see the [Order P
 -    protected readonly Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade,
 -    protected readonly Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory,
 -    protected readonly Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation,
-+    protected readonly Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider,
++    protected readonly Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider,
  )
 ```
 
@@ -289,7 +289,7 @@ For more information about the order processing system, you may see the [Order P
 -    protected readonly Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory,
      protected readonly Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser,
      protected readonly Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade,
-+    protected readonly Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider,
++    protected readonly Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider,
  )
 ```
 
@@ -303,7 +303,7 @@ For more information about the order processing system, you may see the [Order P
 -    protected readonly Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory,
      protected readonly Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser,
      protected readonly Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade,
-+    protected readonly Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider,
++    protected readonly Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider,
  )
 ```
 
@@ -348,7 +348,8 @@ For more information about the order processing system, you may see the [Order P
     -    protected readonly OrderPreviewFactory $orderPreviewFactory,
          protected readonly CartApiFacade $cartApiFacade,
          protected readonly OrderApiFacade $orderApiFacade,
-    +    protected readonly CartPriceProvider $cartPriceProvider,
+    +    protected readonly TransportPriceProvider $transportPriceProvider,
+    +    protected readonly PaymentPriceProvider $paymentPriceProvider,
      )
     ```
 
