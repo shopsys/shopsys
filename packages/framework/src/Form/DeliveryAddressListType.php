@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Form\Exception\InvalidOptionException;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -18,9 +20,12 @@ class DeliveryAddressListType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired('customerUser')
-            ->setAllowedTypes('customerUser', CustomerUser::class)
+        $resolver->setDefined(['customer', 'customerUser'])
+            ->setAllowedTypes('customer', [Customer::class, 'null'])
+            ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setDefaults([
+                'customer' => null,
+                'customerUser' => null,
                 'mapped' => false,
             ]);
     }
@@ -34,7 +39,18 @@ class DeliveryAddressListType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars['deliveryAddresses'] = $options['customerUser']->getCustomer()->getDeliveryAddresses();
+        if ($options['customer'] === null && $options['customerUser'] === null) {
+            throw new InvalidOptionException('An option "customer" or "customerUser" must be set.');
+        }
+
+        $deliveryAddresses = [];
+
+        if ($options['customer'] !== null) {
+            $deliveryAddresses = $options['customer']->getDeliveryAddresses();
+        } elseif ($options['customerUser'] !== null) {
+            $deliveryAddresses = $options['customerUser']->getCustomer()->getDeliveryAddresses();
+        }
+        $view->vars['deliveryAddresses'] = $deliveryAddresses;
     }
 
     /**

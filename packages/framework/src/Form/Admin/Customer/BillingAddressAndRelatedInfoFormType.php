@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueBillingAddress;
+use Shopsys\FrameworkBundle\Form\DeliveryAddressListType;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,6 +21,9 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('deliveryAddresses', DeliveryAddressListType::class, [
+                'customer' => $options['customer'],
+            ])
             ->add('save', SubmitType::class);
     }
 
