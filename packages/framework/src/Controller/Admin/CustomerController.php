@@ -310,8 +310,11 @@ class CustomerController extends AdminBaseController
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction($id)
     {
+        $customerUser = $this->customerUserFacade->getCustomerUserById($id);
+        $customer = $customerUser->getCustomer();
+
         try {
-            $fullName = $this->customerUserFacade->getCustomerUserById($id)->getFullName();
+            $fullName = $customerUser->getFullName();
 
             $this->customerUserFacade->delete($id);
 
@@ -323,6 +326,12 @@ class CustomerController extends AdminBaseController
             );
         } catch (CustomerUserNotFoundException $ex) {
             $this->addErrorFlash(t('Selected customer doesn\'t exist.'));
+        }
+
+        if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+            $billingAddress = $customer->getBillingAddress();
+
+            return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
         }
 
         return $this->redirectToRoute('admin_customer_list');
