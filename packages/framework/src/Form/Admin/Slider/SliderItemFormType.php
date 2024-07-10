@@ -113,6 +113,7 @@ class SliderItemFormType extends AbstractType
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
+                'hide_delete_button' => $options['scenario'] === self::SCENARIO_EDIT,
             ]);
 
         $builder
