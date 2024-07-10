@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Twig;
 
-use DateTimeZone;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -50,28 +48,59 @@ class PriceExtensionTest extends FunctionalTestCase
      */
     private AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    protected function setUp(): void
+    /**
+     * @return array[]
+     */
+    public static function priceFilterSingledomainDataProvider(): array
     {
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig1 = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com', 'example', 'en', $defaultTimeZone);
-        $domainConfig2 = new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example', 'cs', $defaultTimeZone);
-
-        /** @var \Shopsys\FrameworkBundle\Component\Setting\Setting|\PHPUnit\Framework\MockObject\MockObject $settingMock */
-        $settingMock = $this->getMockBuilder(Setting::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getForDomain'])
-            ->getMock();
-        $settingMock
-            ->method('getForDomain')
-            ->with($this->equalTo(Setting::DOMAIN_DATA_CREATED))
-            ->willReturn(true);
-
-        $this->domain = new Domain([$domainConfig1, $domainConfig2], $settingMock);
-
-        parent::setUp();
+        return [
+            [
+                'input' => Money::create(12),
+                'result' => 'CZK12.00',
+            ], [
+                'input' => Money::create('12.00'),
+                'result' => 'CZK12.00',
+            ], [
+                'input' => Money::create('12.600'),
+                'result' => 'CZK12.60',
+            ], [
+                'input' => Money::create('12.630000'),
+                'result' => 'CZK12.63',
+            ], [
+                'input' => Money::create('12.638000'),
+                'result' => 'CZK12.638',
+            ], [
+                'input' => Money::create('12.630000'),
+                'result' => 'CZK12.63',
+            ], [
+                'input' => Money::create('123456789.123456789'),
+                'result' => 'CZK123,456,789.123456789',
+            ], [
+                'input' => Money::create('123456789.123456789123456789'),
+                'result' => 'CZK123,456,789.1234567891',
+            ],
+        ];
     }
 
-    public static function priceFilterDataProvider()
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
+     * @param string $result
+     */
+    #[DataProvider('priceFilterSingledomainDataProvider')]
+    #[Group('multidomain')]
+    public function testPriceFilterSingledomain(Money $input, string $result): void
+    {
+        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+
+        $priceExtension = $this->getPriceExtensionWithMockedConfiguration();
+
+        $this->assertSame($result, $priceExtension->priceFilter($input));
+    }
+
+    /**
+     * @return array[]
+     */
+    public static function priceFilterMultidomainDataProvider(): array
     {
         return [
             ['input' => Money::create(12), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
@@ -122,12 +151,13 @@ class PriceExtensionTest extends FunctionalTestCase
     }
 
     /**
-     * @param mixed $input
-     * @param mixed $domainId
-     * @param mixed $result
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
+     * @param int $domainId
+     * @param string $result
      */
-    #[DataProvider('priceFilterDataProvider')]
-    public function testPriceFilter($input, $domainId, $result)
+    #[DataProvider('priceFilterMultidomainDataProvider')]
+    #[Group('multidomain')]
+    public function testPriceFilterMultidomain(Money $input, int $domainId, string $result): void
     {
         $this->domain->switchDomainById($domainId);
 

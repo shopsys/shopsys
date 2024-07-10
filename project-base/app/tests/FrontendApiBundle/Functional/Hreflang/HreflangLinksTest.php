@@ -12,6 +12,7 @@ use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\SeoPageDataFixture;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -139,13 +140,13 @@ class HreflangLinksTest extends GraphQlTestCase
     }
 
     /**
-     * @group multidomain
      * @param string $entityReference
      * @param string $routeName
      * @param string $graphQlFileName
      * @param string $graphQlType
      */
     #[DataProvider('getHreflangEntitiesDataProvider')]
+    #[Group('multidomain')]
     public function testAlternateDomainLanguages(
         string $entityReference,
         string $routeName,
