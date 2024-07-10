@@ -389,7 +389,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     public function getRoles(): array
     {
-        return [Roles::ROLE_LOGGED_CUSTOMER];
+        return [CustomerUserRole::ROLE_API_LOGGED_CUSTOMER];
     }
 
     /**
