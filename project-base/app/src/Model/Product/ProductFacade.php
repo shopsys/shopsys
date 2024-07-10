@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -49,6 +50,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\ProductFactory $productFactory
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
+ * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -73,6 +75,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
+     * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(
@@ -96,6 +99,7 @@ class ProductFacade extends BaseProductFacade
         ProductRecalculationDispatcher $productRecalculationDispatcher,
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade,
+        UploadedFileFacade $uploadedFileFacade,
         private readonly ProductVideoFacade $productVideoFacade,
     ) {
         parent::__construct(
@@ -119,6 +123,7 @@ class ProductFacade extends BaseProductFacade
             $productRecalculationDispatcher,
             $productStockFacade,
             $stockFacade,
+            $uploadedFileFacade,
         );
     }
 

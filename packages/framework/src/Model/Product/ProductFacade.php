@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
@@ -49,6 +50,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -71,6 +73,7 @@ class ProductFacade
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly ProductStockFacade $productStockFacade,
         protected readonly StockFacade $stockFacade,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 
@@ -128,6 +131,8 @@ class ProductFacade
         $this->refreshProductAccessories($product, $productData->accessories);
 
         $this->imageFacade->manageImages($product, $productData->images);
+        $this->uploadedFileFacade->manageFiles($product, $productData->files);
+
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
     }
@@ -166,6 +171,8 @@ class ProductFacade
         $this->em->flush();
 
         $this->imageFacade->manageImages($product, $productData->images);
+        $this->uploadedFileFacade->manageFiles($product, $productData->files);
+
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
 
