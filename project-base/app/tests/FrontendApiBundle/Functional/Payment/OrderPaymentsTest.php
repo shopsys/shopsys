@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -43,12 +44,12 @@ class OrderPaymentsTest extends GraphQlTestCase
     }
 
     /**
-     * @group multidomain
      * @param string $orderReferenceName
      * @param string $expectedCurrentPaymentReferenceName
      * @param array $expectedAvailablePaymentReferenceNames
      */
     #[DataProvider('getOrderPaymentsMultidomainDataProvider')]
+    #[Group('multidomain')]
     public function testGetOrderPaymentsMultidomain(
         string $orderReferenceName,
         string $expectedCurrentPaymentReferenceName,
@@ -58,12 +59,12 @@ class OrderPaymentsTest extends GraphQlTestCase
     }
 
     /**
-     * @group singledomain
      * @param string $orderReferenceName
      * @param string $expectedCurrentPaymentReferenceName
      * @param array $expectedAvailablePaymentReferenceNames
      */
     #[DataProvider('getOrderPaymentsSingledomainDataProvider')]
+    #[Group('singledomain')]
     public function testGetOrderPaymentsSingledomain(
         string $orderReferenceName,
         string $expectedCurrentPaymentReferenceName,

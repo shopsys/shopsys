@@ -6,6 +6,7 @@ namespace Tests\App\Performance\Page;
 
 use Doctrine\DBAL\Logging\LoggerChain;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
@@ -37,9 +38,7 @@ class AllPagesTest extends KernelTestCase
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
 
-    /**
-     * @group warmup
-     */
+    #[Group('warmup')]
     public function testAdminPagesWarmup()
     {
         $this->doWarmupPagesWithProgress(
@@ -47,9 +46,7 @@ class AllPagesTest extends KernelTestCase
         );
     }
 
-    /**
-     * @group warmup
-     */
+    #[Group('warmup')]
     public function testFrontPagesWarmup()
     {
         $this->doWarmupPagesWithProgress(
