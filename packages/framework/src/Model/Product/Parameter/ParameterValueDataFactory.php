@@ -55,6 +55,7 @@ class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
     protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue)
     {
         $parameterValueData->text = $parameterValue->getText();
+        $parameterValueData->numericValue = $parameterValue->getNumericValue();
         $parameterValueData->locale = $parameterValue->getLocale();
         $parameterValueData->uuid = $parameterValue->getUuid();
         $parameterValueData->rgbHex = $parameterValue->getRgbHex();

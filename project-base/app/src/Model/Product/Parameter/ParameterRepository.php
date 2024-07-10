@@ -31,6 +31,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
  * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersByIds(int[] $parameterIds, string $locale)
+ * @method \App\Model\Product\Product[] getFirstTenProductsWithSliderParameterValuesWithoutTheirsNumericValueFilled(string $locale)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] getParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method updateParameterValueInProductsByConversion(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue)
+ * @method \App\Model\Product\Parameter\Parameter[] getSliderParametersWithoutTheirsNumericValueFilled()
+ * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -229,6 +234,7 @@ class ParameterRepository extends BaseParameterRepository
                 pt.name as parameter_name,
                 pv.uuid as parameter_value_uuid,
                 pv.text as parameter_value_text,
+                pv.numericValue as parameter_value_numeric_value,
                 pgt.name as parameter_group,
                 put.name as parameter_unit',
             )

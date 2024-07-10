@@ -8,10 +8,12 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\ParameterValueFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value\SliderParameterValuesUpdateFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +28,7 @@ class ParameterValueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionDataFactory $parameterValueConversionDataFactory
      */
     public function __construct(
         protected readonly GridFactory $gridFactory,
@@ -34,6 +37,7 @@ class ParameterValueController extends AdminBaseController
         protected readonly ParameterFacade $parameterFacade,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly ParameterValueConversionDataFactory $parameterValueConversionDataFactory,
     ) {
     }
 
@@ -101,6 +105,52 @@ class ParameterValueController extends AdminBaseController
             [
                 'parameterValue' => $parameterValue,
                 'form' => $form->createView(),
+            ],
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/parameter-values/edit/{id}', name: 'admin_parametervalues_edit', requirements: ['id' => '\d+'])]
+    public function parameterValuesEditAction(Request $request, int $id): Response
+    {
+        $parameter = $this->parameterFacade->getById($id);
+        $parameterValues = $this->parameterFacade->getParameterValuesByParameter($parameter);
+        $parameterValuesConversionDataIndexedByParameterValueId = $this->parameterValueConversionDataFactory->createForNumericConversion($parameterValues);
+
+        $form = $this->createForm(SliderParameterValuesUpdateFormType::class, $parameterValuesConversionDataIndexedByParameterValueId, [
+            'data' => $parameterValuesConversionDataIndexedByParameterValueId,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->parameterFacade->updateParameterValuesByConversion($parameter, $parameterValuesConversionDataIndexedByParameterValueId);
+            $this->addSuccessFlashTwig(
+                t('Parameter values associated with parameter - <strong><a href="{{ url }}">{{ parameterName }}</a></strong> modified.'),
+                [
+                    'parameterName' => $parameter->getName(),
+                    'url' => $this->generateUrl('admin_parametervalues_edit', ['id' => $parameter->getId()]),
+                ],
+            );
+
+            return $this->redirectToRoute('admin_parameter_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(t('Convert values associated with parameter - %name%', ['%name%' => $parameter->getName()]));
+
+        return $this->render(
+            '@ShopsysFramework/Admin/Content/ParameterValue/values.html.twig',
+            [
+                'form' => $form->createView(),
+                'parameter' => $parameter,
+                'type' => t('numbers'),
             ],
         );
     }

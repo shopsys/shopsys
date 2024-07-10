@@ -3673,6 +3673,9 @@ msgstr "Nelze vybrat zboží, které je variantou"
 msgid "You don't have permission to perform this action."
 msgstr "Nemáte oprávnění k provedení této akce."
 
+msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
+msgstr "Změnili jste typ parametru, což vyžaduje převod jeho hodnot na %type%. Zde je seznam hodnot, které je třeba zkontrolovat."
+
 msgid "You have made changes, don't forget to save them!"
 msgstr "Provedli jste změny, nezapomeňte je uložit!"
 
@@ -3777,6 +3780,9 @@ msgstr "není"
 
 msgid "not entered"
 msgstr "není zadáno"
+
+msgid "numbers"
+msgstr "čísla"
 
 msgid "or"
 msgstr "nebo"

@@ -3673,6 +3673,9 @@ msgstr ""
 msgid "You don't have permission to perform this action."
 msgstr ""
 
+msgid "You have changed a parameter type which requires conversion of parameter values to a %type%. Here is a list of values, that needs to be reviewed."
+msgstr ""
+
 msgid "You have made changes, don't forget to save them!"
 msgstr ""
 
@@ -3776,6 +3779,9 @@ msgid "not"
 msgstr ""
 
 msgid "not entered"
+msgstr ""
+
+msgid "numbers"
 msgstr ""
 
 msgid "or"

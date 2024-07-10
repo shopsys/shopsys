@@ -20,6 +20,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/mailWhitelistFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/orderItems.html.twig'
         - '@ShopsysFramework/Admin/Form/orderlistFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/parameterValueConversionList.html.twig'
         - '@ShopsysFramework/Admin/Form/paymentTransactionsFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/priceandvattableByDomainsFields.html.twig'
         - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'

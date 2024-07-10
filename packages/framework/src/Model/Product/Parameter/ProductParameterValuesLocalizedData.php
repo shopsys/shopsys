@@ -15,4 +15,9 @@ class ProductParameterValuesLocalizedData
      * @var string[]
      */
     public $valueTextsByLocale = [];
+
+    /**
+     * @var string|null
+     */
+    public $numericValue;
 }

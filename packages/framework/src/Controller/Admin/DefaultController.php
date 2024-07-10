@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
@@ -44,6 +45,7 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         protected readonly StatisticsFacade $statisticsFacade,
@@ -59,6 +61,7 @@ class DefaultController extends AdminBaseController
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly TransferIssueFacade $transferIssueFacade,
         protected readonly Domain $domain,
+        protected readonly ParameterFacade $parameterFacade,
     ) {
     }
 
@@ -137,64 +140,11 @@ class DefaultController extends AdminBaseController
 
     protected function addWarningMessagesOnDashboard(): void
     {
-        if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
-            $this->addErrorFlashTwig(
-                t('<a href="{{ url }}">Some required email templates are not fully set.</a>'),
-                [
-                    'url' => $this->generateUrl('admin_mail_template'),
-                ],
-            );
-        }
-
-        if (!$this->unitFacade->isAtLeastOneUnitCreated()) {
-            $this->addErrorFlashTwig(
-                t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
-                [
-                    'url' => $this->generateUrl('admin_unit_list'),
-                ],
-            );
-        }
-
-        if ($this->setting->get(Setting::DEFAULT_UNIT) === 0) {
-            $this->addErrorFlashTwig(
-                t('<a href="{{ url }}">Default unit is not set.</a>'),
-                [
-                    'url' => $this->generateUrl('admin_unit_list'),
-                ],
-            );
-        }
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
-                $this->addErrorFlashTwig(
-                    t('<a href="{{ url }}">Terms and conditions article for domain {{ domainName }} is not set.</a>'),
-                    [
-                        'url' => $this->generateUrl('admin_legalconditions_termsandconditions'),
-                        'domainName' => $domainConfig->getName(),
-                    ],
-                );
-            }
-
-            if ($this->setting->getForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
-                $this->addErrorFlashTwig(
-                    t('<a href="{{ url }}">Privacy policy article for domain {{ domainName }} is not set.</a>'),
-                    [
-                        'url' => $this->generateUrl('admin_legalconditions_privacypolicy'),
-                        'domainName' => $domainConfig->getName(),
-                    ],
-                );
-            }
-
-            if ($this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
-                $this->addErrorFlashTwig(
-                    t('<a href="{{ url }}">User consent policy article for domain {{ domainName }} is not set.</a>'),
-                    [
-                        'url' => $this->generateUrl('admin_userconsentpolicy_setting'),
-                        'domainName' => $domainConfig->getName(),
-                    ],
-                );
-            }
-        }
+        $this->checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled();
+        $this->checkAtLeastOneUnitExists();
+        $this->checkDefaultUnitIsSet();
+        $this->checkMandatoryArticlesExist();
+        $this->checkAllSliderNumericValuesAreSet();
     }
 
     /**
@@ -426,5 +376,102 @@ class DefaultController extends AdminBaseController
                 'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
             ],
         );
+    }
+
+    protected function checkEnabledMailTemplatesHaveTheirBodyAndSubjectFilled(): void
+    {
+        if ($this->mailTemplateFacade->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()) {
+            $this->addErrorFlashTwig(
+                t('<a href="{{ url }}">Some required email templates are not fully set.</a>'),
+                [
+                    'url' => $this->generateUrl('admin_mail_template'),
+                ],
+            );
+        }
+    }
+
+    protected function checkAtLeastOneUnitExists(): void
+    {
+        if (count($this->unitFacade->getAll()) === 0) {
+            $this->addErrorFlashTwig(
+                t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
+                [
+                    'url' => $this->generateUrl('admin_unit_list'),
+                ],
+            );
+        }
+    }
+
+    protected function checkDefaultUnitIsSet(): void
+    {
+        if ($this->setting->get(Setting::DEFAULT_UNIT) === 0) {
+            $this->addErrorFlashTwig(
+                t('<a href="{{ url }}">Default unit is not set.</a>'),
+                [
+                    'url' => $this->generateUrl('admin_unit_list'),
+                ],
+            );
+        }
+    }
+
+    protected function checkMandatoryArticlesExist(): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
+                $this->addErrorFlashTwig(
+                    t('<a href="{{ url }}">Terms and conditions article for domain {{ domainName }} is not set.</a>'),
+                    [
+                        'url' => $this->generateUrl('admin_legalconditions_termsandconditions'),
+                        'domainName' => $domainConfig->getName(),
+                    ],
+                );
+            }
+
+            if ($this->setting->getForDomain(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
+                $this->addErrorFlashTwig(
+                    t('<a href="{{ url }}">Privacy policy article for domain {{ domainName }} is not set.</a>'),
+                    [
+                        'url' => $this->generateUrl('admin_legalconditions_privacypolicy'),
+                        'domainName' => $domainConfig->getName(),
+                    ],
+                );
+            }
+
+            if ($this->setting->getForDomain(Setting::USER_CONSENT_POLICY_ARTICLE_ID, $domainConfig->getId()) === null) {
+                $this->addErrorFlashTwig(
+                    t('<a href="{{ url }}">User consent policy article for domain {{ domainName }} is not set.</a>'),
+                    [
+                        'url' => $this->generateUrl('admin_userconsentpolicy_setting'),
+                        'domainName' => $domainConfig->getName(),
+                    ],
+                );
+            }
+        }
+    }
+
+    protected function checkAllSliderNumericValuesAreSet(): void
+    {
+        $countOfSliderParametersWithoutNumericValueSet = $this->parameterFacade->getCountOfSliderParametersWithoutTheirsNumericValueFilled();
+
+        if ($countOfSliderParametersWithoutNumericValueSet <= 0) {
+            return;
+        }
+
+        $this->addErrorFlashTwig(
+            t(
+                '{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in.',
+                [
+                    '%count%' => $countOfSliderParametersWithoutNumericValueSet,
+                ],
+            ),
+        );
+
+        $sliderParametersWithoutTheirsNumericValueFilled = $this->parameterFacade->getSliderParametersWithoutTheirsNumericValueFilled();
+
+        foreach ($sliderParametersWithoutTheirsNumericValueFilled as $parameter) {
+            $this->addErrorFlashTwig(
+                sprintf('<a href="%s">%s</a>', $this->generateUrl('admin_parametervalues_edit', ['id' => $parameter->getId()]), $parameter->getName()),
+            );
+        }
     }
 }

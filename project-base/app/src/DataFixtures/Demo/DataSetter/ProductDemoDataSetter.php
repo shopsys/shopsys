@@ -109,6 +109,7 @@ class ProductDemoDataSetter
     public function setProductParameterValues(ProductData $productData, array $parametersValues): void
     {
         foreach ($parametersValues as $parameterValues) {
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterValues['parameter'];
 
             foreach ($parameterValues['values'] as $locale => $parameterValue) {
@@ -117,6 +118,10 @@ class ProductDemoDataSetter
                 $parameterValueData = $this->parameterValueDataFactory->create();
                 $parameterValueData->text = $parameterValue;
                 $parameterValueData->locale = $locale;
+
+                if ($parameter->isSlider()) {
+                    $parameterValueData->numericValue = $parameterValue;
+                }
 
                 $productParameterValueData->parameterValueData = $parameterValueData;
                 $productParameterValueData->parameter = $parameter;

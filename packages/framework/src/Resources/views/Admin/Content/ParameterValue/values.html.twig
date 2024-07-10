@@ -1,0 +1,23 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Convert values associated with parameter - %name%'|trans({'%name%': parameter.name}) }}{% endblock %}
+{% block h1 %}{{ 'Convert values associated with parameter - %name%'|trans({'%name%': parameter.name}) }}{% endblock %}
+
+{% block main_content %}
+
+    <p>{{ 'You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed.'|trans({'%type%': type}) }}</p>
+    <p>&nbsp;</p>
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_parameter_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_save(parameter|default(null), form) }}
+        {% endblock %}
+    {% endembed %}
+
+    {{ form_end(form) }}
+
+{% endblock %}

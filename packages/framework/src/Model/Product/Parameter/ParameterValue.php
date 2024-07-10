@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
+use Webmozart\Assert\Assert;
 
 /**
  * @ORM\Table(name="parameter_values")
@@ -35,6 +36,12 @@ class ParameterValue
     protected $text;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="decimal", precision=20, scale=6, nullable=true)
+     */
+    protected $numericValue;
+
+    /**
      * @var string
      * @ORM\Column(type="string")
      */
@@ -57,6 +64,7 @@ class ParameterValue
     public function __construct(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;
+        $this->numericValue = $parameterData->numericValue;
         $this->locale = $parameterData->locale;
         $this->uuid = $parameterData->uuid ?: Uuid::uuid4()->toString();
         $this->rgbHex = $parameterData->rgbHex;
@@ -69,6 +77,7 @@ class ParameterValue
     public function edit(ParameterValueData $parameterData)
     {
         $this->text = $parameterData->text;
+        $this->numericValue = $parameterData->numericValue;
         $this->rgbHex = $parameterData->rgbHex;
         $this->colourIcon = $parameterData->colourIcon;
     }
@@ -119,5 +128,23 @@ class ParameterValue
     public function getColourIcon(): UploadedFileData
     {
         return $this->colourIcon;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNumericValue()
+    {
+        return $this->numericValue;
+    }
+
+    /**
+     * @param string $numericValue
+     */
+    public function setNumericValue($numericValue)
+    {
+        Assert::numeric($numericValue);
+
+        $this->numericValue = $numericValue;
     }
 }

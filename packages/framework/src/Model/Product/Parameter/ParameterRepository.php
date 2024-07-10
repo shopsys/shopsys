@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -418,5 +419,107 @@ class ParameterRepository
         }
 
         return $parameterValue;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByParameter(Parameter $parameter): array
+    {
+        return $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->select('pv')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value')
+            ->join(Parameter::class, 'p', Join::WITH, 'ppv.parameter = p')
+            ->where('ppv.parameter = :parameter')
+            ->setParameter(':parameter', $parameter)
+            ->groupBy('pv')
+            ->orderBy('pv.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue
+     */
+    public function updateParameterValueInProductsByConversion(
+        Parameter $parameter,
+        ParameterValue $oldParameterValue,
+        ParameterValue $newParameterValue,
+    ): void {
+        $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->update(ProductParameterValue::class, 'ppv')
+            ->set('ppv.value', ':newParameterValue')
+            ->where('ppv.parameter = :parameter')
+            ->andWhere('ppv.value = :oldParameterValue')
+            ->setParameter(':parameter', $parameter)
+            ->setParameter(':oldParameterValue', $oldParameterValue)
+            ->setParameter(':newParameterValue', $newParameterValue)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountOfSliderParametersWithoutTheirsNumericValueFilled(): int
+    {
+        try {
+            return $this->getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder()
+                ->select('COUNT(DISTINCT ppv.value)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException) {
+            return 0;
+        }
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getSliderParametersWithoutTheirsNumericValueFilled(): array
+    {
+        return $this->getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder()
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('DISTINCT p')
+            ->from(Parameter::class, 'p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.parameter = p')
+            ->join('ppv.value', 'pv')
+            ->where('pv.numericValue IS NULL')
+            ->andWhere('p.parameterType = :type')
+            ->setParameter('type', Parameter::PARAMETER_TYPE_SLIDER);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return int
+     */
+    public function getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(Parameter $parameter): int
+    {
+        try {
+            return $this->em->createQueryBuilder()
+                ->select('COUNT(DISTINCT ppv.value)')
+                ->from(Parameter::class, 'p')
+                ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.parameter = p')
+                ->join('ppv.value', 'pv')
+                ->where('pv.numericValue IS NULL')
+                ->andWhere('p = :parameter')
+                ->setParameter('parameter', $parameter)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException) {
+            return 0;
+        }
     }
 }

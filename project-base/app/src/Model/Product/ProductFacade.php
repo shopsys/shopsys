@@ -179,6 +179,11 @@ class ProductFacade extends BaseProductFacade
                 $parameterValueData,
             );
 
+            if ($productParameterValueData->parameter->isSlider()) {
+                $parameterValue->setNumericValue($productParameterValueData->parameterValueData->numericValue);
+                $toFlush[] = $parameterValue;
+            }
+
             $productParameterValue = $this->productParameterValueFactory->create(
                 $product,
                 $productParameterValueData->parameter,

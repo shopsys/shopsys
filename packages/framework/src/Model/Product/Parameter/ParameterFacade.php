@@ -20,6 +20,8 @@ class ParameterFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -28,6 +30,8 @@ class ParameterFacade
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterRepository $categoryParameterRepository,
         protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
+        protected readonly ParameterValueFactory $parameterValueFactory,
     ) {
     }
 
@@ -233,5 +237,63 @@ class ParameterFacade
     public function getParameterValueById(int $parameterValueId): ParameterValue
     {
         return $this->parameterRepository->getParameterValueById($parameterValueId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByParameter(Parameter $parameter): array
+    {
+        return $this->parameterRepository->getParameterValuesByParameter($parameter);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionData[] $parameterValuesConversionDataIndexedByParameterValueId
+     */
+    public function updateParameterValuesByConversion(
+        Parameter $parameter,
+        array $parameterValuesConversionDataIndexedByParameterValueId,
+    ): void {
+        foreach ($parameterValuesConversionDataIndexedByParameterValueId as $parameterValueId => $parameterValueConversionData) {
+            $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
+            $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
+
+            $parameterValueData->uuid = null;
+            $parameterValueData->text = $parameterValueConversionData->newValueText;
+            $parameterValueData->numericValue = $parameterValueConversionData->newValueText;
+
+            $newParameterValue = $this->parameterValueFactory->create($parameterValueData);
+            $this->em->persist($newParameterValue);
+            $this->em->flush();
+
+            $this->parameterRepository->updateParameterValueInProductsByConversion($parameter, $parameterValue, $newParameterValue);
+        }
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getSliderParametersWithoutTheirsNumericValueFilled(): array
+    {
+        return $this->parameterRepository->getSliderParametersWithoutTheirsNumericValueFilled();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountOfSliderParametersWithoutTheirsNumericValueFilled(): int
+    {
+        return $this->parameterRepository->getCountOfSliderParametersWithoutTheirsNumericValueFilled();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return int
+     */
+    public function getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(Parameter $parameter): int
+    {
+        return $this->parameterRepository->getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder($parameter);
     }
 }
