@@ -21,6 +21,7 @@
                         <th>{{ 'Last name'|trans }}</th>
                         <th>{{ 'Email'|trans }}</th>
                         <th>{{ 'Phone'|trans }}</th>
+                        <th>{{ 'Role'|trans }}</th>
                         <th>{{ 'Action'|trans }}</th>
                     </tr>
                 </thead>
@@ -31,6 +32,7 @@
                             <td>{{ customerUser.lastName }}</td>
                             <td>{{ customerUser.email }}</td>
                             <td>{{ customerUser.telephone }}</td>
+                            <td>{{ customerUser.roleGroup.name }}</td>
                             <td>
                                 {% if allowEdit %}
                                     <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}"></a>
