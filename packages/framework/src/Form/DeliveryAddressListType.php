@@ -68,6 +68,7 @@ class DeliveryAddressListType extends AbstractType
         $view->vars['allowEdit'] = $options['allowEdit'];
         $view->vars['allowAdd'] = $options['allowAdd'];
         $view->vars['customer'] = $options['customer'];
+        $view->vars['showActionColumn'] = $options['allowEdit'] || $options['allowDelete'];
     }
 
     /**
