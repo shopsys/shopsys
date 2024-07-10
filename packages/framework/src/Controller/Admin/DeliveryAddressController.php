@@ -146,6 +146,7 @@ class DeliveryAddressController extends AdminBaseController
     public function deleteAction(int $id): RedirectResponse
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);
+        $customer = $deliveryAddress->getCustomer();
 
         try {
             $deliveryAddressFullAddress = $deliveryAddress->getFullAddress();
@@ -160,6 +161,12 @@ class DeliveryAddressController extends AdminBaseController
             );
         } catch (DeliveryAddressNotFoundException $ex) {
             $this->addErrorFlash(t('Selected delivery address doesn\'t exist.'));
+        }
+
+        if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+            $billingAddress = $customer->getBillingAddress();
+
+            return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
         }
 
         return $this->redirectToRoute('admin_customer_list');
