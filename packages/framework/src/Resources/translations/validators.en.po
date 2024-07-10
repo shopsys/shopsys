@@ -13,6 +13,9 @@ msgstr ""
 msgid "At least two domains must be selected"
 msgstr ""
 
+msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
+msgstr ""
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -326,6 +329,9 @@ msgid "Please enter parameter value"
 msgstr ""
 
 msgid "Please enter password"
+msgstr ""
+
+msgid "Please enter postcode"
 msgstr ""
 
 msgid "Please enter price"

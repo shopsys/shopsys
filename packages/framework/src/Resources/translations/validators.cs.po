@@ -13,6 +13,9 @@ msgstr "Tato částka musí být větší nebo rovna nule."
 msgid "At least two domains must be selected"
 msgstr "Musí být vybrány alespoň dvě domény"
 
+msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
+msgstr "IČO {{ company_number }} již pro doménu {{ domain_id }} existuje."
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
@@ -327,6 +330,9 @@ msgstr "Prosím vyplňte hodnotu parametru"
 
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
+
+msgid "Please enter postcode"
+msgstr ""
 
 msgid "Please enter price"
 msgstr "Prosím vyplňte cenu"

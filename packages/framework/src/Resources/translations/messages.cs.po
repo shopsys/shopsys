@@ -94,6 +94,9 @@ msgstr "Přidat další parametr"
 msgid "Add country"
 msgstr "Přidat stát"
 
+msgid "Add customer user"
+msgstr "Přidat zákaznický účet"
+
 msgid "Add item"
 msgstr "Přidat položku"
 
@@ -102,6 +105,12 @@ msgstr "Přidat kombinaci jazyků"
 
 msgid "Add limit"
 msgstr "Přidat limit"
+
+msgid "Add new customer user"
+msgstr "Přidat nový zákaznický účet"
+
+msgid "Add new customer user to %companyName%"
+msgstr "Přidat nový zákaznický účet do %companyName%"
 
 msgid "Add opening hours"
 msgstr "Přidat otevírací dobu"
@@ -343,6 +352,9 @@ msgstr "Průměrné trvání všech cronů za posledních sedm dní"
 msgid "Avg duration (mm:ss)"
 msgstr "Prům. trvání (mm:ss)"
 
+msgid "Back to customer {{ name }}"
+msgstr "Zpět k zákazníkovi {{ name }}"
+
 msgid "Back to dashboard"
 msgstr "Zpět na nástěnku"
 
@@ -384,6 +396,9 @@ msgstr "Fakturační adresa"
 
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr "Fakturační adresa - jméno, příjmení, firma, ič, dič a fakt. adresa"
+
+msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Fakturační údaje <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byly změněny"
 
 msgid "Billing data"
 msgstr "Fakturační údaje"
@@ -610,6 +625,9 @@ msgstr "Firma"
 msgid "Company data"
 msgstr "Firemní údaje"
 
+msgid "Company detail"
+msgstr "Detail firmy"
+
 msgid "Company name"
 msgstr "Název firmy"
 
@@ -729,6 +747,9 @@ msgstr "Vytvořit nový stát"
 
 msgid "Create new customer"
 msgstr "Vytvořit nového zákazníka"
+
+msgid "Create new delivery address"
+msgstr "Vytvořit novou adresu"
 
 msgid "Create new holiday or internal day"
 msgstr "Vytvořit nový svátek nebo interní den"
@@ -850,6 +871,9 @@ msgstr "Karta zákazníka"
 msgid "Customer email address"
 msgstr "E-mailová adresa zákazníka"
 
+msgid "Customer has no customer users."
+msgstr "Zákazník nemá žádné zákaznické uživatele."
+
 msgid "Customer has no delivery addresses."
 msgstr "Zákazník nemá žádné doručovací adresy."
 
@@ -870,6 +894,9 @@ msgstr "Telefonní číslo zákazníka"
 
 msgid "Customer street"
 msgstr "Ulice zákazníka"
+
+msgid "Customer users"
+msgstr "Uživatelé"
 
 msgid "Customers"
 msgstr "Zákazníci"
@@ -957,6 +984,18 @@ msgstr "Smazat a nastavit"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
+
+msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Dodací adresa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+
+msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Dodací adresa <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla změněna"
+
+msgid "Delivery address <strong>{{ deliveryAddressFullAddress }}</strong> deleted"
+msgstr "Doručovací adresa <strong>{{ deliveryAddressFullAddress }}</strong> byla smazána"
+
+msgid "Delivery address detail"
+msgstr "Detail dodací adresy"
 
 msgid "Delivery address is the same as billing address"
 msgstr "Doručovací adresa je stejná jako fakturační adresa"
@@ -1065,6 +1104,9 @@ msgstr "Opravdu chcete odstranit tuto značku? Pokud je někde použita, bude od
 
 msgid "Do you really want to remove this customer?"
 msgstr "Opravdu chcete odstranit tohoto zákazníka?"
+
+msgid "Do you really want to remove this delivery address?"
+msgstr "Opravdu chcete odstranit tuto doručovací adresu?"
 
 msgid "Do you really want to remove this flag?"
 msgstr "Opravdu chcete odstranit tento příznak?"
@@ -1210,6 +1252,9 @@ msgstr "Editace článku - %name%"
 msgid "Editing bestseller"
 msgstr "Editace nejprodávanějšího zboží"
 
+msgid "Editing billing address - %name%"
+msgstr "Úprava fakturační adresy – %name%"
+
 msgid "Editing blog article"
 msgstr "Editace článku blogu"
 
@@ -1245,6 +1290,12 @@ msgstr "Editace zákazníka"
 
 msgid "Editing customer - %name%"
 msgstr "Editace zákazníka - %name%"
+
+msgid "Editing delivery address"
+msgstr "Úprava dodací adresy"
+
+msgid "Editing delivery address - %name%"
+msgstr "Úprava dodací adresy - %name%"
 
 msgid "Editing domain"
 msgstr "Editace domény"
@@ -2052,6 +2103,9 @@ msgstr "Nový stát"
 
 msgid "New customer"
 msgstr "Nový zákazník"
+
+msgid "New delivery address"
+msgstr "Nová doručovací adresa"
 
 msgid "New item"
 msgstr "Nová položka"
@@ -2905,6 +2959,9 @@ msgstr "Zvolená měna neexistuje."
 msgid "Selected customer doesn't exist."
 msgstr "Zvolený zákazník neexistuje"
 
+msgid "Selected delivery address doesn't exist."
+msgstr "Zvolená doručovací adresa neexistuje."
+
 msgid "Selected flag doesn't exist."
 msgstr "Zvolený příznak neexistuje."
 
@@ -3184,6 +3241,9 @@ msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u 
 msgid "This email was sent from the contact form located below the panel of categories."
 msgstr "Tento e-mail byl odeslán z kontaktního formuláře umístěného pod panelem kategorií."
 
+msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
+msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
+
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 
@@ -3198,6 +3258,9 @@ msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčno
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým objednávkám."
+
+msgid "This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?"
+msgstr "Tím se odstraní všechna související data (uživatelé, adresy atd.). Opravdu chcete odstranit tuto firmu?"
 
 msgid "Thursday"
 msgstr "Čtvrtek"
