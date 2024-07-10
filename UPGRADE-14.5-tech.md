@@ -224,3 +224,7 @@ For commands not covered by Make targets (e.g., `exec`, `logs`, `restart`), use 
 #### pin jQuery version to 3.x major ([#4428](https://github.com/shopsys/shopsys/pull/4428))
 
 -   see #project-base-diff to update your project
+
+#### fix tests on single domain ([#4429](https://github.com/shopsys/shopsys/pull/4429))
+
+-   see #project-base-diff to update your project
