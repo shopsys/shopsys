@@ -146,6 +146,7 @@ class DeliveryAddressController extends AdminBaseController
     public function deleteAction(int $id): RedirectResponse
     {
         $deliveryAddress = $this->deliveryAddressFacade->getById($id);
+
         try {
             $deliveryAddressFullAddress = $deliveryAddress->getFullAddress();
 

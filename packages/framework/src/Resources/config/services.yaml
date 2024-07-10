@@ -671,6 +671,8 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
 
+    Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting: ~
+
     Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory
 

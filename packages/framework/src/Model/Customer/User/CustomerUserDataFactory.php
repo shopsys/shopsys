@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      */
-    public function __construct(protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade)
-    {
+    public function __construct(
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
+    ) {
     }
 
     /**
@@ -29,7 +33,10 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      */
     public function create(): CustomerUserData
     {
-        return $this->createInstance();
+        $customerUserData = $this->createInstance();
+        $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
+
+        return $customerUserData;
     }
 
     /**
@@ -40,6 +47,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     {
         $customerUserData = $this->createInstance();
         $customerUserData->customer = $customer;
+        $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
 
         return $customerUserData;
     }
@@ -51,6 +59,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     public function createForDomainId(int $domainId): CustomerUserData
     {
         $customerUserData = $this->createInstance();
+        $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
         $this->fillForDomainId($customerUserData, $domainId);
 
         return $customerUserData;
@@ -96,5 +105,6 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
         $customerUserData->customer = $customerUser->getCustomer();
         $customerUserData->defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
         $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
+        $customerUserData->roleGroup = $customerUser->getRoleGroup();
     }
 }

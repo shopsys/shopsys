@@ -8,28 +8,25 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory as BaseUserDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 /**
  * @method fillForDomainId(\App\Model\Customer\User\CustomerUserData $customerUserData, int $domainId)
  * @method fillFromUser(\App\Model\Customer\User\CustomerUserData $customerUserData, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Customer\User\CustomerUserData create()
  */
 class CustomerUserDataFactory extends BaseUserDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      */
-    public function __construct(PricingGroupSettingFacade $pricingGroupSettingFacade)
-    {
-        parent::__construct($pricingGroupSettingFacade);
-    }
-
-    /**
-     * @return \App\Model\Customer\User\CustomerUserData
-     */
-    public function create(): BaseUserData
-    {
-        return $this->createInstance();
+    public function __construct(
+        PricingGroupSettingFacade $pricingGroupSettingFacade,
+        CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
+    ) {
+        parent::__construct($pricingGroupSettingFacade, $customerUserRoleGroupFacade);
     }
 
     /**

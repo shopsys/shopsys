@@ -16,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 
@@ -39,6 +41,11 @@ class TestCustomerProvider
         $pricingGroupData->name = 'name';
         $pricingGroup = new PricingGroup($pricingGroupData, Domain::FIRST_DOMAIN_ID);
 
+        $customerUserRoleGroupData = new CustomerUserRoleGroupData();
+        $customerUserRoleGroupData->names = ['cs' => 'Správce'];
+        $customerUserRoleGroupData->roles = ['ROLE_USER'];
+        $customerUserRoleGroup = new CustomerUserRoleGroup($customerUserRoleGroupData);
+
         $customerData = new CustomerData();
         $customerData->domainId = Domain::FIRST_DOMAIN_ID;
         $customer = new Customer($customerData);
@@ -52,6 +59,7 @@ class TestCustomerProvider
         $customerUserData->customer = $customer;
         $customerUserData->pricingGroup = $pricingGroup;
         $customerUserData->createdAt = new DateTime();
+        $customerUserData->roleGroup = $customerUserRoleGroup;
 
         $billingAddressData = self::getBillingAddressData($customer, $isCompany);
         $customerData->billingAddress = new BillingAddress($billingAddressData);

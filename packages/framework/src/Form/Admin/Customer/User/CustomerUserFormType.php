@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
@@ -11,10 +12,12 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
@@ -38,11 +41,17 @@ class CustomerUserFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         private readonly CustomerUserFacade $customerUserFacade,
+        private readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
+        private readonly Domain $domain,
+        private readonly CustomerFacade $customerFacade,
     ) {
     }
 
@@ -53,6 +62,7 @@ class CustomerUserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->customerUser = $options['customerUser'];
+        $domain = $this->domain->getDomainConfigById($options['domain_id']);
 
         $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
             'label' => t('System data'),
@@ -101,6 +111,21 @@ class CustomerUserFormType extends AbstractType
                     'data-js-toggle-opt-group-control' => '.js-toggle-opt-group-control',
                 ],
             ]);
+
+        if (
+            ($domain->isB2b() && $this->customerUser === null) ||
+            ($this->customerUser !== null && $this->customerFacade->isB2bFeaturesEnabledByCustomer($this->customerUser->getCustomer()))
+        ) {
+            $roleGroups = $this->customerUserRoleGroupFacade->getAll();
+            $builderSystemDataGroup
+                ->add('roleGroup', ChoiceType::class, [
+                    'required' => true,
+                    'choices' => $roleGroups,
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'label' => t('Role'),
+                ]);
+        }
 
         $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
             'label' => t('Personal data'),
