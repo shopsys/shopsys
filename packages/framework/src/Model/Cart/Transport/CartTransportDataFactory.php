@@ -7,21 +7,21 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
 
 class CartTransportDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly TransportFacade $transportFacade,
-        protected readonly CartPriceProvider $cartPriceProvider,
+        protected readonly TransportPriceProvider $transportPriceProvider,
     ) {
     }
 
@@ -56,7 +56,7 @@ class CartTransportDataFactory
      */
     protected function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
     {
-        return $this->cartPriceProvider->getTransportPrice(
+        return $this->transportPriceProvider->getTransportPrice(
             $cart,
             $transport,
             $this->domain->getDomainConfigById($domainId),

@@ -119,6 +119,14 @@ class OrderInput
     }
 
     /**
+     * @param string $key
+     */
+    public function cleanAdditionalData(string $key): void
+    {
+        unset($this->additionalData[$key]);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
     public function getPromoCodes(): array

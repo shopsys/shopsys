@@ -6,9 +6,9 @@ namespace Shopsys\FrontendApiBundle\Model\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
@@ -19,13 +19,13 @@ class PaymentValidationFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartPriceProvider $cartPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
-        protected readonly CartPriceProvider $cartPriceProvider,
+        protected readonly PaymentPriceProvider $paymentPriceProvider,
     ) {
     }
 
@@ -35,7 +35,7 @@ class PaymentValidationFacade
      */
     public function checkPaymentPrice(Payment $payment, Cart $cart): void
     {
-        $calculatedPaymentPrice = $this->cartPriceProvider->getPaymentPrice(
+        $calculatedPaymentPrice = $this->paymentPriceProvider->getPaymentPrice(
             $cart,
             $payment,
             $this->domain->getCurrentDomainConfig(),
