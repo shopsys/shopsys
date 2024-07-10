@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
@@ -46,6 +47,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
      */
@@ -62,6 +64,7 @@ class ProductDataFactory extends BaseProductDataFactory
         StockFacade $stockFacade,
         ProductStockDataFactory $productStockDataFactory,
         ProductInputPriceDataFactory $productInputPriceDataFactory,
+        UploadedFileDataFactory $uploadedFileDataFactory,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly ProductVideoRepository $productVideoRepository,
     ) {
@@ -78,6 +81,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $stockFacade,
             $productStockDataFactory,
             $productInputPriceDataFactory,
+            $uploadedFileDataFactory,
         );
     }
 
@@ -88,6 +92,7 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         $productData = new ProductData();
         $productData->images = $this->imageUploadDataFactory->create();
+        $productData->files = $this->uploadedFileDataFactory->create();
 
         return $productData;
     }
@@ -151,6 +156,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->nameSufix[$locale] = $translation->getNameSufix();
         }
 
+        $productData->files = $this->uploadedFileDataFactory->createByEntity($product);
         $productData->relatedProducts = $product->getRelatedProducts();
     }
 
