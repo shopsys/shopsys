@@ -1573,6 +1573,9 @@ msgstr ""
 msgid "File will be deleted after saving."
 msgstr ""
 
+msgid "Files"
+msgstr ""
+
 msgid "Fill missing settings to enable creating products. More information here."
 msgstr ""
 

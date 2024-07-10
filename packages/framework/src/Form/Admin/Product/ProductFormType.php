@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
@@ -120,6 +121,7 @@ class ProductFormType extends AbstractType
         $builder->add($this->createParametersGroup($builder));
         $builder->add($this->createSeoGroup($builder, $product));
         $builder->add($this->createImagesGroup($builder, $options));
+        $builder->add($this->createFilesGroup($builder, $options));
         $builder->add($this->createAccessoriesGroup($builder, $product));
         $builder->add('save', SubmitType::class);
         $this->pluginDataFormExtensionFacade->extendForm($builder, 'product', 'pluginData');
@@ -796,5 +798,34 @@ class ProductFormType extends AbstractType
             ]);
 
         return $builderShortDescriptionsUspGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createFilesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        $builderFileGroup = $builder->create('fileGroup', GroupType::class, [
+            'label' => t('Files'),
+        ]);
+
+        $builderFileGroup
+            ->add('files', MultiLocaleFileUploadType::class, [
+                'required' => false,
+                'file_entity_class' => Product::class,
+                'file_constraints' => [
+                    new Constraints\File([
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Uploaded file is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an file is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'entity' => $options['product'],
+                'label' => t('Files'),
+            ]);
+
+        return $builderFileGroup;
     }
 }
