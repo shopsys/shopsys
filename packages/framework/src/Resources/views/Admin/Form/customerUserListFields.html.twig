@@ -22,7 +22,9 @@
                         <th>{{ 'Email'|trans }}</th>
                         <th>{{ 'Phone'|trans }}</th>
                         <th>{{ 'Role'|trans }}</th>
-                        <th>{{ 'Action'|trans }}</th>
+                        {% if showActionColumn %}
+                            <th>{{ 'Action'|trans }}</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -33,24 +35,26 @@
                             <td>{{ customerUser.email }}</td>
                             <td>{{ customerUser.telephone }}</td>
                             <td>{{ customerUser.roleGroup.name }}</td>
-                            <td>
-                                {% if allowEdit %}
-                                    <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}"></a>
-                                {% endif %}
-                                {% if allowDelete %}
-                                    {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
-                                    {% set deleteUrl = url('admin_customer_delete', {
-                                        id: customerUser.id,
-                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
-                                    }) %}
-                                    <a
-                                        class="in-icon in-icon--delete svg svg-trash table-action"
-                                            data-confirm-window
-                                            data-confirm-message="{{ deleteConfirmMessage }}"
-                                            data-confirm-contiue-url="{{ deleteUrl }}"
-                                    ></a>
-                                {% endif %}
-                            </td>
+                            {% if showActionColumn %}
+                                <td>
+                                    {% if allowEdit %}
+                                        <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}"></a>
+                                    {% endif %}
+                                    {% if allowDelete %}
+                                            {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
+                                            {% set deleteUrl = url('admin_customer_delete', {
+                                                id: customerUser.id,
+                                                (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                            }) %}
+                                            <a
+                                                class="in-icon in-icon--delete svg svg-trash table-action"
+                                                    data-confirm-window
+                                                    data-confirm-message="{{ deleteConfirmMessage }}"
+                                                    data-confirm-contiue-url="{{ deleteUrl }}"
+                                            ></a>
+                                    {%endif %}
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -57,6 +57,7 @@ class CustomerUserListType extends AbstractType
         $view->vars['allowAdd'] = $options['allowAdd'];
         $view->vars['deleteConfirmMessage'] = $options['deleteConfirmMessage'];
         $view->vars['customer'] = $options['customer'];
+        $view->vars['showActionColumn'] = $options['allowEdit'] || $options['allowDelete'];
     }
 
     /**
