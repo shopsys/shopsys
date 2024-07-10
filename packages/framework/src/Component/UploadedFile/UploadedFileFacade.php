@@ -47,9 +47,15 @@ class UploadedFileFacade
         $uploadedFiles = $uploadedFileData->uploadedFiles;
         $uploadedFilenames = $uploadedFileData->uploadedFilenames;
         $orderedFiles = $uploadedFileData->orderedFiles;
+        $namesIndexedByFileIdAndLocale = $uploadedFileData->namesIndexedById;
 
         $this->updateFilesOrder($orderedFiles);
         $this->updateFilenamesAndSlugs($uploadedFileData->currentFilenamesIndexedById);
+
+        foreach ($namesIndexedByFileIdAndLocale as $fileId => $names) {
+            $file = $this->getById($fileId);
+            $file->setTranslatedNames($names);
+        }
 
         if ($uploadedFileTypeConfig->isMultiple()) {
             $this->uploadFiles(
@@ -58,6 +64,7 @@ class UploadedFileFacade
                 $type,
                 $uploadedFiles,
                 $uploadedFilenames,
+                $uploadedFileData->names,
                 count($orderedFiles),
             );
         } else {
@@ -74,6 +81,7 @@ class UploadedFileFacade
                 $type,
                 array_pop($uploadedFiles),
                 array_pop($uploadedFilenames),
+                array_pop($uploadedFileData->names),
             );
         }
 
@@ -86,6 +94,7 @@ class UploadedFileFacade
      * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
+     * @param array $namesIndexedByFileIdAndLocale
      */
     protected function uploadFile(
         object $entity,
@@ -93,6 +102,7 @@ class UploadedFileFacade
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
+        array $namesIndexedByFileIdAndLocale,
     ): void {
         $entityId = $this->getEntityId($entity);
 
@@ -102,6 +112,8 @@ class UploadedFileFacade
             $type,
             $temporaryFilename,
             $uploadedFilename,
+            0,
+            $namesIndexedByFileIdAndLocale,
         );
 
         $this->em->persist($newUploadedFile);
@@ -114,6 +126,7 @@ class UploadedFileFacade
      * @param string $type
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
+     * @param array $namesIndexedByFileIdAndLocale
      * @param int $existingFilesCount
      */
     protected function uploadFiles(
@@ -122,6 +135,7 @@ class UploadedFileFacade
         string $type,
         array $temporaryFilenames,
         array $uploadedFilenames,
+        array $namesIndexedByFileIdAndLocale,
         int $existingFilesCount,
     ): void {
         if (count($temporaryFilenames) > 0) {
@@ -133,6 +147,7 @@ class UploadedFileFacade
                 $temporaryFilenames,
                 $uploadedFilenames,
                 $existingFilesCount,
+                $namesIndexedByFileIdAndLocale,
             );
 
             foreach ($files as $file) {

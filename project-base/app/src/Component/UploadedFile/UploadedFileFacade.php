@@ -30,6 +30,13 @@ class UploadedFileFacade extends BaseUploadedFileFacade
 
         $this->deleteAllUploadedFilesByEntity($entity);
 
-        $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $type, array_pop($uploadedFiles), array_pop($uploadedFilenames));
+        $this->uploadFile(
+            $entity,
+            $uploadedFileEntityConfig->getEntityName(),
+            $type,
+            array_pop($uploadedFiles),
+            array_pop($uploadedFilenames),
+            array_pop($uploadedFileData->names),
+        );
     }
 }

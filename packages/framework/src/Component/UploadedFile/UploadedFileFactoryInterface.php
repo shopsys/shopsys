@@ -13,6 +13,7 @@ interface UploadedFileFactoryInterface
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      * @param int $position
+     * @param array $namesIndexedByLocale
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
     public function create(
@@ -22,6 +23,7 @@ interface UploadedFileFactoryInterface
         string $temporaryFilename,
         string $uploadedFilename,
         int $position = 0,
+        array $namesIndexedByLocale = [],
     ): UploadedFile;
 
     /**
@@ -31,6 +33,7 @@ interface UploadedFileFactoryInterface
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
      * @param int $existingFilesCount
+     * @param array $names
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public function createMultiple(
@@ -40,5 +43,6 @@ interface UploadedFileFactoryInterface
         array $temporaryFilenames,
         array $uploadedFilenames,
         int $existingFilesCount,
+        array $names,
     ): array;
 }

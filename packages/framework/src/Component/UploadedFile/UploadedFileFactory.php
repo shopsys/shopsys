@@ -26,6 +26,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      * @param int $position
+     * @param array $namesIndexedByLocale
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
     public function create(
@@ -35,6 +36,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
         string $temporaryFilename,
         string $uploadedFilename,
         int $position = 0,
+        array $namesIndexedByLocale = [],
     ): UploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
@@ -43,7 +45,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
         return new $entityClassName($entityName, $entityId, $type, pathinfo(
             $temporaryFilepath,
             PATHINFO_BASENAME,
-        ), $uploadedFilename, $position);
+        ), $uploadedFilename, $position, $namesIndexedByLocale);
     }
 
     /**
@@ -53,6 +55,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
      * @param int $existingFilesCount
+     * @param array $names
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public function createMultiple(
@@ -62,6 +65,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
         array $temporaryFilenames,
         array $uploadedFilenames,
         int $existingFilesCount,
+        array $names = [],
     ): array {
         $files = [];
 
@@ -73,6 +77,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
                 $temporaryFilename,
                 $uploadedFilenames[$key],
                 $existingFilesCount++,
+                $names[$key] ?? [],
             );
         }
 

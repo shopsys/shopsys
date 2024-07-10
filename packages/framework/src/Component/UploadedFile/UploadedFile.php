@@ -99,6 +99,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      * @param int $position
+     * @param array<string, string> $namesIndexedByLocale
      */
     public function __construct(
         string $entityName,
@@ -107,6 +108,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
         string $temporaryFilename,
         string $uploadedFilename,
         int $position,
+        array $namesIndexedByLocale,
     ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -115,6 +117,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
         $this->setNameAndSlug($uploadedFilename);
         $this->position = $position;
         $this->translations = new ArrayCollection();
+        $this->setTranslatedNames($namesIndexedByLocale);
     }
 
     /**
@@ -344,5 +347,29 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     public function getTranslatedName(?string $locale = null): ?string
     {
         return $this->translation($locale)->getName();
+    }
+
+    /**
+     * @param string[] $names
+     */
+    public function setTranslatedNames(array $names): void
+    {
+        foreach ($names as $locale => $name) {
+            $this->translation($locale)->setName($name);
+        }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getTranslatedNames(): array
+    {
+        $namesByLocale = [];
+
+        foreach ($this->translations as $translation) {
+            $namesByLocale[$translation->getLocale()] = $translation->getName();
+        }
+
+        return $namesByLocale;
     }
 }
