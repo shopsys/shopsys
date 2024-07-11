@@ -15,12 +15,12 @@ type LoginHandler = (
 ) => Promise<OperationResult<TypeLoginMutation, TypeLoginMutationVariables>>;
 
 export const useLogin = () => {
-    const [, TypeLoginMutation] = useLoginMutation();
+    const [, loginMutation] = useLoginMutation();
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const handleActionsAfterLogin = useHandleActionsAfterLogin();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
-        const loginResult = await TypeLoginMutation({
+        const loginResult = await loginMutation({
             ...variables,
             productListsUuids: Object.values(productListUuids),
         });
