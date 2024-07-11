@@ -14,7 +14,6 @@ export type TypeAutocompleteSearchQueryVariables = Types.Exact<{
   maxCategoryCount: Types.InputMaybe<Types.Scalars['Int']['input']>;
   isAutocomplete: Types.Scalars['Boolean']['input'];
   userIdentifier: Types.Scalars['Uuid']['input'];
-  parameters?: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;
 }>;
 
 
@@ -99,25 +98,25 @@ export type TypeAutocompleteSearchQuery = { __typename?: 'Query', articlesSearch
     
 
 export const AutocompleteSearchQueryDocument = gql`
-    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $parameters: [Uuid!] = []) {
+    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
   articlesSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
   ) {
     ...SimpleArticleInterfaceFragment
   }
   brandSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
   ) {
     ...SimpleBrandFragment
   }
   categoriesSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
     first: $maxCategoryCount
   ) {
     ...SimpleCategoryConnectionFragment
   }
   productsSearch: productsSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
     first: $maxProductCount
   ) {
     orderingMode

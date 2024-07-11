@@ -728,6 +728,14 @@ input EditCustomerUserPersonalDataInput {
   telephone: String!
 }
 
+"Represents a downloadable file"
+type File {
+  "Clickable text for a hyperlink"
+  anchorText: String!
+  "Url to download the file"
+  url: String!
+}
+
 "Represents a flag"
 type Flag implements Hreflang & Slug & Breadcrumb & ProductListable {
   "Hierarchy of the current element in relation to the structure"
@@ -866,6 +874,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
@@ -1491,6 +1500,7 @@ interface Product {
   description: String
   "EAN"
   ean: String
+  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
@@ -1919,6 +1929,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
@@ -2215,6 +2226,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
+  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"

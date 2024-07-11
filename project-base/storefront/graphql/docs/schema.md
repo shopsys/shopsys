@@ -39,6 +39,7 @@
     * [CreateOrderResult](#createorderresult)
     * [CustomerUserRoleGroup](#customeruserrolegroup)
     * [DeliveryAddress](#deliveryaddress)
+    * [File](#file)
     * [Flag](#flag)
     * [FlagFilterOption](#flagfilteroption)
     * [GoPayBankSwift](#gopaybankswift)
@@ -3991,6 +3992,41 @@ UUID
 </tbody>
 </table>
 
+### File
+
+Represents a downloadable file
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>anchorText</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Clickable text for a hyperlink
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>url</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Url to download the file
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Flag
 
 Represents a flag
@@ -4586,6 +4622,11 @@ List of categories
 EAN
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
@@ -7022,6 +7063,11 @@ EAN
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
@@ -8204,6 +8250,11 @@ List of categories
 EAN
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
@@ -10886,6 +10937,11 @@ List of categories
 EAN
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>

@@ -863,6 +863,15 @@ export type TypeEditCustomerUserPersonalDataInput = {
   telephone: Scalars['String']['input'];
 };
 
+/** Represents a downloadable file */
+export type TypeFile = {
+  __typename?: 'File';
+  /** Clickable text for a hyperlink */
+  anchorText: Scalars['String']['output'];
+  /** Url to download the file */
+  url: Scalars['String']['output'];
+};
+
 /** Represents a flag */
 export type TypeFlag = TypeBreadcrumb & TypeHreflang & TypeProductListable & TypeSlug & {
   __typename?: 'Flag';
@@ -1032,6 +1041,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -1876,6 +1886,7 @@ export type TypeProduct = {
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -2548,6 +2559,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -2897,6 +2909,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
+  files: Array<TypeFile>;
   /** List of flags */
   flags: Array<TypeFlag>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
