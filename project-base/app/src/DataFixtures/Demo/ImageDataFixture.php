@@ -16,39 +16,37 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
-use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
-class ImageDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
+class ImageDataFixture extends AbstractFileFixture implements DependentFixtureInterface
 {
     public const IMAGES_TABLE_NAME = 'images';
     public const IMAGES_TRANSLATIONS_TABLE_NAME = 'images_translations';
     public const IMAGE_TYPE = 'jpg';
 
     /**
-     * @param string $dataFixturesImagesDirectory
-     * @param string $targetImagesDirectory
-     * @param string $targetDomainImagesDirectory
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param string $dataFixturesImagesDirectory
+     * @param string $targetImagesDirectory
+     * @param string $targetDomainImagesDirectory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
+        FilesystemOperator $filesystem,
+        Filesystem $localFilesystem,
+        MountManager $mountManager,
+        EntityManagerInterface $em,
         private readonly string $dataFixturesImagesDirectory,
         private readonly string $targetImagesDirectory,
         private readonly string $targetDomainImagesDirectory,
-        private readonly FilesystemOperator $filesystem,
-        private readonly Filesystem $localFilesystem,
-        private readonly MountManager $mountManager,
-        private readonly EntityManagerInterface $em,
         private readonly Domain $domain,
     ) {
+        parent::__construct($filesystem, $localFilesystem, $mountManager, $em);
     }
 
     /**
@@ -56,7 +54,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     public function load(ObjectManager $manager)
     {
-        $this->truncateImagesFromDb();
+        $this->truncateDatabaseTables([self::IMAGES_TABLE_NAME, self::IMAGES_TRANSLATIONS_TABLE_NAME]);
 
         if (!file_exists($this->dataFixturesImagesDirectory)) {
             return;
@@ -82,7 +80,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->processProductsImages();
         $this->processSliderItemsImages();
         $this->processStoresImages();
-        $this->restartImagesIdsDbSequence();
+
+        $this->syncDatabaseSequences(['images.id']);
     }
 
     private function processBrandsImages()
@@ -358,45 +357,6 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ],
             );
         }
-    }
-
-    /**
-     * @param string $origin
-     * @param string $target
-     */
-    private function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target)
-    {
-        $finder = new Finder();
-        $finder->files()->in($origin);
-
-        foreach ($finder as $file) {
-            $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
-
-            if (!$this->localFilesystem->exists($filepath)) {
-                continue;
-            }
-
-            $newFilepath = $target . $file->getRelativePathname();
-
-            if ($this->filesystem->has($newFilepath)) {
-                $this->filesystem->delete($newFilepath);
-            }
-            $this->mountManager->copy('local://' . $filepath, 'main://' . $newFilepath);
-        }
-    }
-
-    private function truncateImagesFromDb()
-    {
-        $this->em->getConnection()->executeStatement(
-            'TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME . ', ' . self::IMAGES_TRANSLATIONS_TABLE_NAME,
-        );
-    }
-
-    private function restartImagesIdsDbSequence()
-    {
-        $this->em->getConnection()->executeStatement(
-            'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)',
-        );
     }
 
     /**
