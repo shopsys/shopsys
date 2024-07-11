@@ -78,6 +78,12 @@ services:
             $targetDomainImagesDirectory: '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
+    App\DataFixtures\Demo\UploadedFileDataFixture:
+        arguments:
+            $dataFixturesFilesDirectory: '%shopsys.data_fixtures_uploaded_files.resources_dir%'
+            $targetFilesDirectory: '%shopsys.uploaded_file_dir%'
+        tags: ['doctrine.fixture.orm']
+
     App\DataFixtures\Performance\CategoryDataFixture:
         arguments:
             - "%shopsys.performance_data.category.counts_by_level%"
