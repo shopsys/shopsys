@@ -9,10 +9,11 @@ import {
     validateCustomer,
     validateEmail,
     validateFirstName,
-    validateFirstPassword,
     validateLastName,
+    validatePassword,
     validatePostcode,
-    validateSecondPassword,
+    validatePrivacyPolicy,
+    validatePasswordConfirm,
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
@@ -31,8 +32,8 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof RegistrationFormType, any>>({
             email: validateEmail(t),
-            passwordFirst: validateFirstPassword(t),
-            passwordSecond: validateSecondPassword(t),
+            password: validatePassword(t),
+            passwordConfirm: validatePasswordConfirm(t),
             customer: validateCustomer(),
             telephone: validateTelephoneRequired(t),
             firstName: validateFirstName(t),
@@ -56,14 +57,14 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                 then: validateCompanyTaxNumber(t),
                 otherwise: Yup.string(),
             }),
-            gdprAgreement: Yup.boolean().isTrue(t('You have to agree with our privacy policy')),
+            gdprAgreement: validatePrivacyPolicy(t),
             newsletterSubscription: Yup.boolean(),
         }),
     );
     const defaultValues = {
         email: '',
-        passwordFirst: '',
-        passwordSecond: '',
+        password: '',
+        passwordConfirm: '',
         customer: CustomerTypeEnum.CommonCustomer,
         telephone: '',
         firstName: '',
@@ -89,20 +90,9 @@ type RegistrationFormMetaType = {
         successAndLogged: string;
     };
     fields: {
-        [key in keyof Omit<RegistrationFormType, 'passwordFirst' | 'passwordSecond'>]: {
+        [key in keyof RegistrationFormType]: {
             name: key;
             label: string | JSX.Element;
-            errorMessage: string | undefined;
-        };
-    } & {
-        passwordFirst: {
-            name: 'passwordFirst';
-            label: string;
-            errorMessage: string | undefined;
-        };
-        passwordSecond: {
-            name: 'passwordSecond';
-            label: string;
             errorMessage: string | undefined;
         };
     };
@@ -138,15 +128,15 @@ export const useRegistrationFormMeta = (
                     label: t('Your email'),
                     errorMessage: errors.email?.message,
                 },
-                passwordFirst: {
-                    name: 'passwordFirst' as const,
+                password: {
+                    name: 'password' as const,
                     label: t('Password'),
-                    errorMessage: errors.passwordFirst?.message,
+                    errorMessage: errors.password?.message,
                 },
-                passwordSecond: {
-                    name: 'passwordSecond' as const,
+                passwordConfirm: {
+                    name: 'passwordConfirm' as const,
                     label: t('Password again'),
-                    errorMessage: errors.passwordSecond?.message,
+                    errorMessage: errors.passwordConfirm?.message,
                 },
                 [customerFieldName]: {
                     name: customerFieldName,
@@ -235,8 +225,8 @@ export const useRegistrationFormMeta = (
         [
             t,
             errors.email?.message,
-            errors.passwordFirst?.message,
-            errors.passwordSecond?.message,
+            errors.password?.message,
+            errors.passwordConfirm?.message,
             errors.customer?.message,
             errors.telephone?.message,
             errors.firstName?.message,

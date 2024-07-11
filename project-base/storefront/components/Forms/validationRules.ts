@@ -148,9 +148,13 @@ export const validateCompanyTaxNumber = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateFirstPassword = (t: Translate): BaseSchema => {
+export const validatePrivacyPolicy = (t: Translate): BaseSchema => {
+    return Yup.boolean().isTrue(t('You have to agree with our privacy policy'));
+};
+
+const passwordValidationSchema = (t: Translate, requiredMessage: string) => {
     return Yup.string()
-        .required(t('Please enter first password'))
+        .required(requiredMessage)
         .min(
             VALIDATION_CONSTANTS.passwordMinLength,
             t('Password must be at least {{ count }} characters long', {
@@ -159,14 +163,24 @@ export const validateFirstPassword = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateSecondPassword = (t: Translate): BaseSchema => {
+const passwordConfirmValidationSchema = (t: Translate, passwordFieldName: string, requiredMessage: string) => {
     return Yup.string()
-        .required(t('Please enter second password'))
-        .min(
-            VALIDATION_CONSTANTS.passwordMinLength,
-            t('Password must be at least {{ count }} characters long', {
-                count: VALIDATION_CONSTANTS.passwordMinLength,
-            }),
-        )
-        .oneOf([Yup.ref('passwordFirst'), null], t('Passwords must match'));
+        .required(requiredMessage)
+        .oneOf([Yup.ref(passwordFieldName), null], t('Passwords must match'));
+};
+
+export const validatePassword = (t: Translate): BaseSchema => {
+    return passwordValidationSchema(t, t('Please enter password'));
+};
+
+export const validatePasswordConfirm = (t: Translate): BaseSchema => {
+    return passwordConfirmValidationSchema(t, 'password', t('Please enter password again'));
+};
+
+export const validateNewPassword = (t: Translate): BaseSchema => {
+    return passwordValidationSchema(t, t('Please enter new password'));
+};
+
+export const validateNewPasswordConfirm = (t: Translate): BaseSchema => {
+    return passwordConfirmValidationSchema(t, 'newPassword', t('Please enter new password again'));
 };

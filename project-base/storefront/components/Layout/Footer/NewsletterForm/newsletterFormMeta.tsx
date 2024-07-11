@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -14,8 +15,8 @@ export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, Newslet
     const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof { email: string; privacyPolicy: boolean }, any>>({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            privacyPolicy: Yup.bool().oneOf([true], t('You have to agree with our privacy policy')),
+            email: validateEmail(t),
+            privacyPolicy: validatePrivacyPolicy(t),
         }),
     );
     const defaultValues = { email: '', privacyPolicy: false };
@@ -44,6 +45,7 @@ export const useNewsletterFormMeta = (
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
+    const errors = formProviderMethods.formState.errors;
 
     const formMeta = useMemo(
         () => ({
@@ -56,7 +58,7 @@ export const useNewsletterFormMeta = (
                 email: {
                     name: 'email' as const,
                     label: t('Your email'),
-                    errorMessage: formProviderMethods.formState.errors.email?.message,
+                    errorMessage: errors.email?.message,
                 },
                 privacyPolicy: {
                     name: 'privacyPolicy' as const,
@@ -73,16 +75,11 @@ export const useNewsletterFormMeta = (
                             }}
                         />
                     ),
-                    errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
+                    errorMessage: errors.privacyPolicy?.message,
                 },
             },
         }),
-        [
-            t,
-            formProviderMethods.formState.errors.email?.message,
-            formProviderMethods.formState.errors.privacyPolicy?.message,
-            privacyPolicyArticleUrl,
-        ],
+        [t, errors.email?.message, errors.privacyPolicy?.message, privacyPolicyArticleUrl],
     );
 
     return formMeta;

@@ -7,12 +7,12 @@ import {
     validateCountry,
     validateEmail,
     validateFirstName,
-    validateFirstPassword,
     validateLastName,
+    validateNewPassword,
     validatePostcode,
-    validateSecondPassword,
     validateStreet,
     validateTelephoneRequired,
+    validateNewPasswordConfirm,
 } from 'components/Forms/validationRules';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -29,14 +29,15 @@ export const useCustomerChangeProfileForm = (
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof CustomerChangeProfileFormType, any>>({
             email: validateEmail(t),
-            passwordFirst: Yup.string().when('passwordOld', {
-                is: (passwordOld: string) => passwordOld.length > 0,
-                then: validateFirstPassword(t),
+            oldPassword: Yup.string(),
+            newPassword: Yup.string().when('oldPassword', {
+                is: (oldPassword: string) => oldPassword.length > 0,
+                then: validateNewPassword(t),
                 otherwise: Yup.string(),
             }),
-            passwordSecond: Yup.string().when('passwordFirst', {
-                is: (passwordFirst: string) => passwordFirst.length > 0,
-                then: validateSecondPassword(t),
+            newPasswordConfirm: Yup.string().when('newPassword', {
+                is: (newPassword: string) => newPassword.length > 0,
+                then: validateNewPasswordConfirm(t),
                 otherwise: Yup.string(),
             }),
             telephone: validateTelephoneRequired(t),
@@ -61,7 +62,6 @@ export const useCustomerChangeProfileForm = (
                 then: validateCompanyTaxNumber(t),
                 otherwise: Yup.string(),
             }),
-            passwordOld: Yup.string(),
             newsletterSubscription: Yup.boolean(),
             companyCustomer: Yup.boolean(),
         }),
@@ -109,20 +109,20 @@ export const useCustomerChangeProfileFormMeta = (
                     label: t('Your email'),
                     errorMessage: errors.email?.message,
                 },
-                passwordOld: {
-                    name: 'passwordOld' as const,
+                oldPassword: {
+                    name: 'oldPassword' as const,
                     label: t('Current password'),
-                    errorMessage: errors.passwordOld?.message,
+                    errorMessage: errors.oldPassword?.message,
                 },
-                passwordFirst: {
-                    name: 'passwordFirst' as const,
+                newPassword: {
+                    name: 'newPassword' as const,
                     label: t('New password'),
-                    errorMessage: errors.passwordFirst?.message,
+                    errorMessage: errors.newPassword?.message,
                 },
-                passwordSecond: {
-                    name: 'passwordSecond' as const,
+                newPasswordConfirm: {
+                    name: 'newPasswordConfirm' as const,
                     label: t('New password again'),
-                    errorMessage: errors.passwordSecond?.message,
+                    errorMessage: errors.newPasswordConfirm?.message,
                 },
                 telephone: {
                     name: 'telephone' as const,
@@ -183,9 +183,9 @@ export const useCustomerChangeProfileFormMeta = (
         }),
         [
             errors.email?.message,
-            errors.passwordOld?.message,
-            errors.passwordFirst?.message,
-            errors.passwordSecond?.message,
+            errors.oldPassword?.message,
+            errors.newPassword?.message,
+            errors.newPasswordConfirm?.message,
             errors.telephone?.message,
             errors.firstName?.message,
             errors.lastName?.message,

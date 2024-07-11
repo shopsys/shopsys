@@ -102,11 +102,11 @@ export const fillInRegstrationForm = (custmerType: 'commonCustomer' | 'companyCu
 };
 
 export const clearAndFillInRegistrationFormPasswords = (password: string) => {
-    cy.get('#registration-form-passwordFirst')
+    cy.get('#registration-form-password')
         .should('have.attr', 'placeholder', placeholder.password)
         .clear()
         .type(password);
-    cy.get('#registration-form-passwordSecond')
+    cy.get('#registration-form-passwordConfirm')
         .should('have.attr', 'placeholder', placeholder.passwordAgain)
         .clear({ force: true })
         .type(password);
@@ -114,8 +114,8 @@ export const clearAndFillInRegistrationFormPasswords = (password: string) => {
 
 export const checkRegistrationValidationErrorsPopup = () => {
     cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter email').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter first password').should('exist');
-    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter second password').should('exist');
+    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter password').should('exist');
+    cy.getByTID([TIDs.layout_popup]).contains('li', 'Please enter password again').should('exist');
     cy.getByTID([TIDs.layout_popup])
         .contains('li', 'Telephone number cannot be shorter than 9 characters')
         .should('exist');

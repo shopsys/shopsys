@@ -18,7 +18,7 @@ export type PasswordResetFormType = {
 
 export type NewPasswordFormType = {
     newPassword: string;
-    newPasswordAgain: string;
+    newPasswordConfirm: string;
 };
 
 export type PersonalDataOverviewFormType = {
@@ -32,9 +32,9 @@ export type PersonalDataExportFormType = {
 export type CustomerChangeProfileFormType = {
     companyCustomer: boolean;
     email: string;
-    passwordOld: string;
-    passwordFirst: string;
-    passwordSecond: string;
+    oldPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
     telephone: string;
     firstName: string;
     lastName: string;
@@ -57,8 +57,8 @@ export type ContactFormType = {
 
 export type RegistrationFormType = {
     email: string;
-    passwordFirst: string;
-    passwordSecond: string;
+    password: string;
+    passwordConfirm: string;
     customer: CustomerTypeEnum;
     telephone: string;
     firstName: string;
