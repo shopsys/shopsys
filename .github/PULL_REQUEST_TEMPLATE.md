@@ -1,7 +1,7 @@
-| Q             | A
-| ------------- | ---
-|Description, reason for the PR| ...
-|New feature| Yes/No <!-- Do not forget to update docs/ -->
-|[BC breaks](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/)| Yes/No <!-- Do not forget to update UPGRADE.md -->
-|Fixes issues| ... <!-- Write "closes #123" for the issue to be closed automatically during merge -->
-|Have you read and signed our [License Agreement for contributions](https://www.shopsys.com/license-agreement)?| Yes/No
+| Q                                                                                                              | A
+|----------------------------------------------------------------------------------------------------------------| ---
+| Description, the reason for the PR                                                                             | ...
+| New feature                                                                                                    | Yes/No <!-- Do not forget to update docs/ -->
+| [BC breaks](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/)                   | Yes/No <!-- Do not forget to update UPGRADE.md -->
+| Fixes issues                                                                                                   | ... <!-- Write "closes #123" for the issue to be closed automatically during merge -->
+| Have you read and signed our [License Agreement for contributions](https://www.shopsys.com/license-agreement)? | Yes/No
