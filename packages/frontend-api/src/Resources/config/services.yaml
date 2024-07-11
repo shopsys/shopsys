@@ -4,6 +4,7 @@ services:
         autowire: true
         bind:
             Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $filesBatchLoader: '@files_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader: '@first_image_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
