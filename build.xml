@@ -461,6 +461,12 @@
 
     <target name="upgrade-generate" description="Creates empty file(s) for upgrade notes.">
         <input message="Which one?" propertyName="upgradeType" validArgs="backend,storefront,both"/>
+
+        <exec executable="php" outputProperty="currentDate">
+            <arg value="-r"/>
+            <arg value="echo date('Ymd_His');"/>
+        </exec>
+
         <if>
             <or>
                 <equals arg1="${upgradeType}" arg2="backend"/>
@@ -469,7 +475,11 @@
             <then>
                 <exec executable="php">
                     <arg value="-r"/>
-                    <arg value="copy('${path.upgrade-notes}/_template.md', '${path.upgrade-notes}/backend_' . date('Ymd_His') . '.md');"/>
+                    <arg value="copy('${path.upgrade-notes}/_template.md', '${path.upgrade-notes}/backend_${currentDate}.md');"/>
+                </exec>
+                <exec executable="php" escape="false" passthru="true">
+                    <arg value="-r"/>
+                    <arg value="echo 'File generated: ${path.upgrade-notes}/backend_${currentDate}.md';"/>
                 </exec>
             </then>
         </if>
@@ -481,7 +491,11 @@
             <then>
                 <exec executable="php">
                     <arg value="-r"/>
-                    <arg value="copy('${path.upgrade-notes}/_template.md', '${path.upgrade-notes}/storefront_' . date('Ymd_His') . '.md');"/>
+                    <arg value="copy('${path.upgrade-notes}/_template.md', '${path.upgrade-notes}/storefront_${currentDate}.md');"/>
+                </exec>
+                <exec executable="php" escape="false" passthru="true">
+                    <arg value="-r"/>
+                    <arg value="echo 'File generated: ${path.upgrade-notes}/storefront_${currentDate}.md');"/>
                 </exec>
             </then>
         </if>
