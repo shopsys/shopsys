@@ -40,4 +40,9 @@ class UploadedFileData
      * @var array<int, array<string, string>>
      */
     public $namesIndexedById = [];
+
+    /**
+     * @var int[]
+     */
+    public $relations = [];
 }

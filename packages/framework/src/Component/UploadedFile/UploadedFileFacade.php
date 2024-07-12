@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 class UploadedFileFacade
 {
@@ -20,6 +21,8 @@ class UploadedFileFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -28,6 +31,8 @@ class UploadedFileFacade
         protected readonly FilesystemOperator $filesystem,
         protected readonly UploadedFileLocator $uploadedFileLocator,
         protected readonly UploadedFileFactoryInterface $uploadedFileFactory,
+        protected readonly UploadedFileRelationFactory $uploadedFileRelationFactory,
+        protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
     ) {
     }
 
@@ -49,7 +54,15 @@ class UploadedFileFacade
         $orderedFiles = $uploadedFileData->orderedFiles;
         $namesIndexedByFileIdAndLocale = $uploadedFileData->namesIndexedById;
 
-        $this->updateFilesOrder($orderedFiles);
+        $entityName = $uploadedFileEntityConfig->getEntityName();
+
+        $currentRelations = $this->uploadedFileRelationRepository->getRelationsForUploadedFiles(
+            $entityName,
+            $this->getEntityId($entity),
+            $orderedFiles,
+        );
+
+        $this->updateFilesOrder($orderedFiles, $currentRelations);
         $this->updateFilenamesAndSlugs($uploadedFileData->currentFilenamesIndexedById);
 
         foreach ($namesIndexedByFileIdAndLocale as $fileId => $names) {
@@ -57,15 +70,18 @@ class UploadedFileFacade
             $file->setTranslatedNames($names);
         }
 
+        $existingFilesCount = count($orderedFiles);
+        $uploadedFilesCount = count($uploadedFiles);
+
         if ($uploadedFileTypeConfig->isMultiple()) {
             $this->uploadFiles(
                 $entity,
-                $uploadedFileEntityConfig->getEntityName(),
+                $entityName,
                 $type,
                 $uploadedFiles,
                 $uploadedFilenames,
                 $uploadedFileData->names,
-                count($orderedFiles),
+                $existingFilesCount,
             );
         } else {
             if (count($orderedFiles) > 1) {
@@ -77,11 +93,30 @@ class UploadedFileFacade
 
             $this->uploadFile(
                 $entity,
-                $uploadedFileEntityConfig->getEntityName(),
+                $entityName,
                 $type,
                 array_pop($uploadedFiles),
                 array_pop($uploadedFilenames),
                 array_pop($uploadedFileData->names),
+            );
+        }
+
+        $relations = $uploadedFileData->relations;
+
+        $position = $existingFilesCount + $uploadedFilesCount;
+
+        foreach ($relations as $relation) {
+            $relation = (int)$relation;
+
+            if ($relation <= 0) {
+                continue;
+            }
+
+            $this->createRelation(
+                $entityName,
+                $entity->getId(),
+                $this->getById($relation),
+                $position++,
             );
         }
 
@@ -150,8 +185,13 @@ class UploadedFileFacade
                 $namesIndexedByFileIdAndLocale,
             );
 
+            $i = 0;
+
             foreach ($files as $file) {
                 $this->em->persist($file);
+
+                $position = $existingFilesCount + $i++;
+                $this->createRelation($entityName, $entityId, $file, $position);
             }
 
             $this->em->flush();
@@ -179,8 +219,20 @@ class UploadedFileFacade
         $entityName = $this->uploadedFileConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
 
+        $owningUploadedFiles = $this->uploadedFileRelationRepository
+            ->getUploadedFileIdsByEntityNameIdAndNameAndUploadedFiles($entityName, $entityId, $uploadedFiles);
+
         foreach ($uploadedFiles as $uploadedFile) {
-            $uploadedFile->checkForDelete($entityName, $entityId);
+            if (!in_array($uploadedFile->getId(), $owningUploadedFiles, true)) {
+                throw new FileNotFoundException(
+                    sprintf(
+                        'Entity "%s" with ID "%s" does not have relation to file with ID "%s"',
+                        $entityName,
+                        $entityId,
+                        $uploadedFile->getId(),
+                    ),
+                );
+            }
         }
 
         foreach ($uploadedFiles as $uploadedFile) {
@@ -267,13 +319,23 @@ class UploadedFileFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation[] $relations
      */
-    protected function updateFilesOrder(array $uploadedFiles): void
+    protected function updateFilesOrder(array $uploadedFiles, array $relations): void
     {
         $i = 0;
 
+        $relationsIndexedByUploadedFileId = [];
+
+        foreach ($relations as $relation) {
+            $relationsIndexedByUploadedFileId[$relation->getUploadedFile()->getId()] = $relation;
+        }
+
         foreach ($uploadedFiles as $uploadedFile) {
-            $uploadedFile->setPosition($i++);
+            $relation = $relationsIndexedByUploadedFileId[$uploadedFile->getId()];
+            $relation->setPosition($i++);
+
+            $this->em->persist($relation);
         }
 
         $this->em->flush();
@@ -309,5 +371,17 @@ class UploadedFileFacade
             $uploadedFileSlug,
             $uploadedFileExtension,
         );
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
+     * @param int $position
+     */
+    protected function createRelation(string $entityName, int $entityId, UploadedFile $file, int $position): void
+    {
+        $relation = $this->uploadedFileRelationFactory->create($entityName, $entityId, $file, $position);
+        $this->em->persist($relation);
     }
 }

@@ -7,7 +7,7 @@ namespace Shopsys\FrontendApiBundle\Component\Files;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation;
 
 class FileApiRepository
 {
@@ -44,12 +44,13 @@ class FileApiRepository
             ->andWhere('ur.entityId IN (:entities)')->setParameter('entities', $entityIds)
             ->join('u.translations', 't', 'WITH', 't.locale = :locale AND t.name IS NOT NULL')
             ->setParameter('locale', $locale)
-            ->addOrderBy('u.position', 'asc')
+            ->addOrderBy('ur.position', 'asc')
             ->addOrderBy('u.id', 'asc');
 
-        /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file */
-        foreach ($queryBuilder->getQuery()->execute() as $file) {
-            $filesByEntityId[$file->getEntityId()][] = $file;
+
+        /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation $fileRelation */
+        foreach ($queryBuilder->getQuery()->execute() as $fileRelation) {
+            $filesByEntityId[$fileRelation->getEntityId()][] = $fileRelation->getUploadedFile();
         }
 
         return $filesByEntityId;

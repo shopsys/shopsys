@@ -98,4 +98,12 @@ class UploadedFileRelation
     {
         return $this->position;
     }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position): void
+    {
+        $this->position = $position;
+    }
 }
