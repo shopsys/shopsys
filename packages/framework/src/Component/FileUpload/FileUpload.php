@@ -91,7 +91,7 @@ class FileUpload
      * @param string $filename
      * @return string
      */
-    protected function getTemporaryFilename($filename)
+    public function getTemporaryFilename($filename)
     {
         return TransformString::safeFilename(uniqid('', true) . '__' . $filename);
     }
