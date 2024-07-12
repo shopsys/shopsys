@@ -6,6 +6,10 @@
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
+    <div class="in-message in-message--info">
+        {{ 'Number of selected products is not limited, however only 30 will be displayed on frontend.'|trans }}
+    </div>
+
     {{ form_start(form) }}
 
         {{ form_errors(form) }}

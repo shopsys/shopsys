@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class TopProductRepository
@@ -43,10 +44,14 @@ class TopProductRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup)
-    {
+    public function getOfferedProductsForTopProductsOnDomain(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        ?int $limit = null,
+    ): array {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
 
         $queryBuilder
@@ -54,7 +59,8 @@ class TopProductRepository
             ->andWhere('tp.domainId = :domainId')
             ->andWhere('tp.domainId = prv.domainId')
             ->orderBy('tp.position')
-            ->setParameter('domainId', $domainId);
+            ->setParameter('domainId', $domainId)
+            ->setMaxResults($limit);
 
         return $queryBuilder->getQuery()->execute();
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class TopProductFacade
 {
@@ -32,11 +33,12 @@ class TopProductFacade
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedProducts($domainId, $pricingGroup)
+    public function getOfferedProducts(int $domainId, PricingGroup $pricingGroup, ?int $limit): array
     {
-        return $this->topProductRepository->getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup);
+        return $this->topProductRepository->getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup, $limit);
     }
 
     /**
