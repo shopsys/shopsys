@@ -57,11 +57,11 @@ class SocialNetworkController extends AbstractController
 
         try {
             $redirectUrl = $this->generateUrl('front_social_network_login', ['type' => $type], UrlGeneratorInterface::ABSOLUTE_URL);
-            $tokens = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
+            $loginResultData = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
 
             return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
-                'tokens' => $tokens,
-                'url' => $this->getRefererUrl($request, $type, false),
+                'tokens' => $loginResultData->tokens,
+                'url' => $this->getRefererUrl($request, $type, false, $loginResultData->showCartMergeInfo),
             ]);
         } catch (SocialNetworkLoginException $exception) {
             return $this->redirect($this->getRefererUrl($request, $type, true));
@@ -98,16 +98,22 @@ class SocialNetworkController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $type
      * @param bool $addExceptionMessage
+     * @param bool $showCartMergeInfo
      * @return string
      */
-    protected function getRefererUrl(Request $request, string $type, bool $addExceptionMessage): string
-    {
+    protected function getRefererUrl(
+        Request $request,
+        string $type,
+        bool $addExceptionMessage,
+        bool $showCartMergeInfo = false,
+    ): string {
         $homepageUrl = $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $refererUrl = $request->getSession()->get(self::REFERER_URL);
         $refererUrl = $refererUrl ?? $homepageUrl;
         $request->getSession()->remove(self::REFERER_URL);
         $refererUrl = str_replace($this->domain->getUrl(), '', $refererUrl);
         $url = '/social-login?redirect=' . $refererUrl;
+        $url .= '&showCartMergeInfo=' . ($showCartMergeInfo ? 'true' : 'false');
 
         if ($addExceptionMessage) {
             $url .= '&exceptionType=socialNetworkLoginException&socialNetwork=' . $type;

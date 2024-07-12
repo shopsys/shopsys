@@ -24,7 +24,7 @@ For every social network, you need `app_id` and `app_secret`. Below you have inf
 -   create service and first data are `app_id` and `app_secret`
 
 Every social network require URL for backward redirect to you app.
-In Shopsys platform, you have to add url `{eshop_domain}/social-network/login/{type}` where `{eshop_domain}` is your domain and `{type}` is social network name, e.g.: `google`, `facebook`, `seznam`, etc. 
+In Shopsys platform, you have to add url `{eshop_domain}/social-network/login/{type}` where `{eshop_domain}` is your domain and `{type}` is social network name, e.g.: `google`, `facebook`, `seznam`, etc.
 For local development, social networks usually require https.
 
 P.S.: If you are owner of the Facebook application, and you log in with this owner account, email will not come after login, more info: https://github.com/hybridauth/hybridauth/issues/1372#issuecomment-1542447803

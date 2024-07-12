@@ -15,6 +15,8 @@ use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -34,6 +36,7 @@ class SocialNetworkFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
      */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -44,6 +47,7 @@ class SocialNetworkFacade
         protected readonly LoginAsUserFacade $loginAsUserFacade,
         protected readonly ValidatorInterface $validator,
         protected readonly MergeCartFacade $mergeCartFacade,
+        protected readonly LoginResultDataFactory $loginResultDataFactory,
     ) {
     }
 
@@ -51,9 +55,9 @@ class SocialNetworkFacade
      * @param string $type
      * @param string $redirectUrl
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @return array{accessToken: string, refreshToken: string}
+     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
      */
-    public function login(string $type, string $redirectUrl, SessionInterface $session): array
+    public function login(string $type, string $redirectUrl, SessionInterface $session): LoginResultData
     {
         try {
             $config = $this->socialNetworkConfigFactory->createConfig($redirectUrl);
@@ -76,17 +80,23 @@ class SocialNetworkFacade
             $cartUuid = $session->get(SocialNetworkController::CART_UUID);
             $shouldOverwriteCustomerUserCart = $session->get(SocialNetworkController::SHOULD_OVERWRITE_CART);
 
+            $showCartMergeInfo = false;
+
             if ($cartUuid !== null) {
                 if ($shouldOverwriteCustomerUserCart) {
                     $this->mergeCartFacade->overwriteCustomerCartWithCartByUuid($cartUuid, $customerUser);
                 } else {
                     $this->mergeCartFacade->mergeCartByUuidToCustomerCart($cartUuid, $customerUser);
+                    $showCartMergeInfo = true;
                 }
             }
             $session->remove(SocialNetworkController::CART_UUID);
             $session->remove(SocialNetworkController::SHOULD_OVERWRITE_CART);
 
-            return $this->loginAsUserFacade->loginAndReturnAccessAndRefreshToken($customerUser);
+            return $this->loginResultDataFactory->create(
+                $this->loginAsUserFacade->loginAndReturnAccessAndRefreshToken($customerUser),
+                $showCartMergeInfo,
+            );
         } catch (InvalidArgumentException | UnexpectedValueException $exception) {
             $message = sprintf('Login via %s doesn\'t work', $type);
             $this->logger->error($message, ['exception' => $exception]);

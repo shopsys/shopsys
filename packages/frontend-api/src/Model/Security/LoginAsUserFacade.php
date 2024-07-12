@@ -25,6 +25,7 @@ class LoginAsUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator $tokenAuthenticator
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
      */
     public function __construct(
         protected readonly CustomerUserRepository $customerUserRepository,
@@ -33,14 +34,15 @@ class LoginAsUserFacade
         protected readonly TokenAuthenticator $tokenAuthenticator,
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly TokenFacade $tokenFacade,
+        protected readonly TokensDataFactory $tokensDataFactory,
     ) {
     }
 
     /**
      * @param int $customerUserId
-     * @return array{accessToken: string, refreshToken: string}
+     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
      */
-    public function loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken(int $customerUserId): array
+    public function loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken(int $customerUserId): TokensData
     {
         if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
             throw new LoginAsRememberedUserException('Access denied');
@@ -50,10 +52,10 @@ class LoginAsUserFacade
         $user = $this->customerUserRepository->getCustomerUserById($customerUserId);
         $administrator = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
 
-        return [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId, $administrator),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user, $deviceId, $administrator),
-        ];
+        return $this->tokensDataFactory->create(
+            $this->tokenFacade->createAccessTokenAsString($user, $deviceId, $administrator),
+            $this->tokenFacade->createRefreshTokenAsString($user, $deviceId, $administrator),
+        );
     }
 
     /**
@@ -84,15 +86,15 @@ class LoginAsUserFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return array{accessToken: string, refreshToken: string}
+     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
      */
-    public function loginAndReturnAccessAndRefreshToken(CustomerUser $customerUser): array
+    public function loginAndReturnAccessAndRefreshToken(CustomerUser $customerUser): TokensData
     {
         $deviceId = Uuid::uuid4()->toString();
 
-        return [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
-        ];
+        return $this->tokensDataFactory->create(
+            $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+            $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+        );
     }
 }

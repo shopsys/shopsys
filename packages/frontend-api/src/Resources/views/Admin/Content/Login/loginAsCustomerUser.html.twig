@@ -2,8 +2,8 @@
     var date = new Date();
     date.setTime(date.getTime() + 14 * 24 * 60 * 60 * 1000); // 14 days
 
-    document.cookie = "accessToken=" + "{{ tokens['accessToken'] }}" + "; secure; path=/";
-    document.cookie = "refreshToken=" + "{{ tokens['refreshToken'] }}"  + "; expires=" + date.toUTCString() + "; secure; path=/";
+    document.cookie = "accessToken=" + "{{ tokens.accessToken }}" + "; secure; path=/";
+    document.cookie = "refreshToken=" + "{{ tokens.refreshToken }}"  + "; expires=" + date.toUTCString() + "; secure; path=/";
 
-    window.location.replace('{{ url }}');
+    window.location.replace('{{ url|raw }}');
 </script>
