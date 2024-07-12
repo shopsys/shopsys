@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Security\LoginAsUserFacade;
@@ -39,6 +41,8 @@ class SocialNetworkFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserSocialNetworkLoginDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserSocialNetworkLoginFacade
      */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -51,6 +55,8 @@ class SocialNetworkFacade
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly LoginResultDataFactory $loginResultDataFactory,
         protected readonly ProductListFacade $productListFacade,
+        protected readonly CustomerUserLoginTypeDataFactory $customerUserSocialNetworkLoginDataFactory,
+        protected readonly CustomerUserLoginTypeFacade $customerUserSocialNetworkLoginFacade,
     ) {
     }
 
@@ -104,10 +110,16 @@ class SocialNetworkFacade
             $session->remove(SocialNetworkController::SHOULD_OVERWRITE_CART);
             $session->remove(SocialNetworkController::PRODUCT_LIST_UUIDS);
 
-            return $this->loginResultDataFactory->create(
+            $loginResultData = $this->loginResultDataFactory->create(
                 $this->loginAsUserFacade->loginAndReturnAccessAndRefreshToken($customerUser),
                 $showCartMergeInfo,
             );
+
+            $this->customerUserSocialNetworkLoginFacade->updateCustomerUserLoginTypes(
+                $this->customerUserSocialNetworkLoginDataFactory->create($customerUser, $type),
+            );
+
+            return $loginResultData;
         } catch (InvalidArgumentException | UnexpectedValueException $exception) {
             $message = sprintf('Login via %s doesn\'t work', $type);
             $this->logger->error($message, ['exception' => $exception]);

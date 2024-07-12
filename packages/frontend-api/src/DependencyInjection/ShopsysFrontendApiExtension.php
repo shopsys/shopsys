@@ -39,6 +39,12 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
                 $fileLocator->locate('ShopsysFrameworkBundle') => 'ShopsysFramework',
             ],
         ]);
+
+        $container->prependExtensionConfig('doctrine_migrations', [
+            'migrations_paths' => [
+                'Shopsys\FrontendApiBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
     }
 
     /**
