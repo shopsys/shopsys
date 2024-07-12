@@ -423,4 +423,14 @@ class CustomerUserFacade
 
         $this->customerMailFacade->sendActivationMail($customerUser);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
+     */
+    public function setDefaultDeliveryAddress(CustomerUser $customerUser, DeliveryAddress $deliveryAddress): void
+    {
+        $customerUser->setDefaultDeliveryAddress($deliveryAddress);
+        $this->em->flush();
+    }
 }

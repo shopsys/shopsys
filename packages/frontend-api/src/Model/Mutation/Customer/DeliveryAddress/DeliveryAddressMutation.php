@@ -84,9 +84,7 @@ class DeliveryAddressMutation extends BaseTokenMutation
             throw new DeliveryAddressNotFoundUserError($exception->getMessage());
         }
 
-        $customerData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
-
-        $this->customerUserFacade->edit($customerUser->getId(), $customerData, $deliveryAddress);
+        $this->customerUserFacade->setDefaultDeliveryAddress($customerUser, $deliveryAddress);
 
         return $customerUser;
     }
