@@ -31,7 +31,8 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey;
+        const mouseWheelClick = e.button === 1;
+        const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick;
 
         if (isWithoutOpeningInNewTab) {
             onClick?.(e);
