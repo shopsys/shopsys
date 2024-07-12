@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\EntityManagerInterface;
-use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 
 class DeliveryAddressFacade
 {

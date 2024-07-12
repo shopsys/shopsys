@@ -4,111 +4,19 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Customer;
 
-use App\FrontendApi\Mutation\Customer\Exception\DeliveryAddressNotFoundUserError;
-use App\Model\Customer\DeliveryAddressFacade;
-use App\Model\Customer\User\CustomerUser;
-use App\Model\Customer\User\CustomerUserFacade;
-use App\Model\Customer\User\CustomerUserUpdateDataFactory;
-use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory;
-use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
-use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidCredentialsUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\DeliveryAddressMutation as BaseDeliveryAddressMutation;
 
-class DeliveryAddressMutation extends AbstractMutation
+/**
+ * @property \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @property \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+ * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+ * @method __construct(\Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage, \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade, \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\DeliveryAddressApiDataFactory $deliveryAddressDataApiFactory)
+ * @method \App\Model\Customer\DeliveryAddress[] deleteDeliveryAddressMutation(\Overblog\GraphQLBundle\Definition\Argument $argument)
+ * @method \App\Model\Customer\DeliveryAddress[] editDeliveryAddressMutation(\Overblog\GraphQLBundle\Definition\Argument $argument)
+ * @method \App\Model\Customer\User\CustomerUser setDefaultDeliveryAddressMutation(string $deliveryAddressUuid)
+ * @method \App\Model\Customer\DeliveryAddress[] createDeliveryAddressMutation(\Overblog\GraphQLBundle\Definition\Argument $argument)
+ */
+class DeliveryAddressMutation extends BaseDeliveryAddressMutation
 {
-    /**
-     * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory
-     */
-    public function __construct(
-        private readonly DeliveryAddressFacade $deliveryAddressFacade,
-        private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        private readonly CustomerUserFacade $customerUserFacade,
-        private readonly DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory,
-    ) {
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \App\Model\Customer\DeliveryAddress[]
-     */
-    public function deleteDeliveryAddressMutation(Argument $argument): array
-    {
-        $deliveryAddressUuid = $argument['deliveryAddressUuid'];
-
-        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if ($customerUser === null) {
-            throw new InvalidCredentialsUserError('You need to be logged in.');
-        }
-
-        $this->deliveryAddressFacade->deleteByUuidAndCustomer($deliveryAddressUuid, $customerUser->getCustomer());
-
-        /** @var \App\Model\Customer\DeliveryAddress[] $deliveryAddresses */
-        $deliveryAddresses = $customerUser->getCustomer()->getDeliveryAddresses();
-
-        return $deliveryAddresses;
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \App\Model\Customer\DeliveryAddress[]
-     */
-    public function editDeliveryAddressMutation(Argument $argument): array
-    {
-        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if ($customerUser === null) {
-            throw new InvalidCredentialsUserError('You need to be logged in.');
-        }
-
-        /** @var \App\Model\Customer\DeliveryAddressData $deliveryAddress */
-        $deliveryAddress = $this->deliveryAddressDataApiFactory
-            ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
-
-        $this->deliveryAddressFacade->editByCustomer($customerUser->getCustomer(), $deliveryAddress);
-
-        /** @var \App\Model\Customer\DeliveryAddress[] $deliveryAddresses */
-        $deliveryAddresses = $customerUser->getCustomer()->getDeliveryAddresses();
-
-        return $deliveryAddresses;
-    }
-
-    /**
-     * @param string $deliveryAddressUuid
-     * @return \App\Model\Customer\User\CustomerUser
-     */
-    public function setDefaultDeliveryAddressMutation(string $deliveryAddressUuid): CustomerUser
-    {
-        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if ($customerUser === null) {
-            throw new InvalidCredentialsUserError('You need to be logged in.');
-        }
-
-        try {
-            /** @var \App\Model\Customer\DeliveryAddress $deliveryAddress */
-            $deliveryAddress = $this->deliveryAddressFacade->getByUuidAndCustomer(
-                $deliveryAddressUuid,
-                $customerUser->getCustomer(),
-            );
-        } catch (DeliveryAddressNotFoundException $exception) {
-            throw new DeliveryAddressNotFoundUserError($exception->getMessage());
-        }
-
-        $customerData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
-
-        $this->customerUserFacade->edit($customerUser->getId(), $customerData, $deliveryAddress);
-
-        return $customerUser;
-    }
 }
