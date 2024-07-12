@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Customer;
 
 use App\FrontendApi\Mutation\Customer\Exception\DeliveryAddressNotFoundUserError;
-use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundExce
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidCredentialsUserError;
 
 class DeliveryAddressMutation extends AbstractMutation
 {

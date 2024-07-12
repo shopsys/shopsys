@@ -1,0 +1,7 @@
+LoginResultDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            tokens: "Token!"
+            showCartMergeInfo: "Boolean!"

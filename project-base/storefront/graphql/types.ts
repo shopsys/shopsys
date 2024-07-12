@@ -1075,7 +1075,7 @@ export type TypeMutation = {
   DeleteDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Edit delivery address by Uuid */
   EditDeliveryAddress: Array<TypeDeliveryAddress>;
-  /** Login customer user */
+  /** Login user and return login result data (consisting of access and refresh tokens, and information about cart merge) */
   Login: TypeLoginResult;
   /** Logout user */
   Logout: Scalars['Boolean']['output'];

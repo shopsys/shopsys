@@ -900,7 +900,7 @@ type Mutation {
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
   "Edit delivery address by Uuid"
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
-  "Login customer user"
+  "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
   Login(input: LoginInput!): LoginResult!
   "Logout user"
   Logout: Boolean!

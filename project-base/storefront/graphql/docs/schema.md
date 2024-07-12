@@ -1338,7 +1338,7 @@ Edit delivery address by Uuid
 <td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
-Login customer user
+Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)
 
 </td>
 </tr>

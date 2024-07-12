@@ -11,6 +11,7 @@ use Overblog\GraphQLBundle\Definition\ArgumentFactory;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 
 class CustomerUserPasswordRecoveryMutation extends AbstractMutation
 {
@@ -45,9 +46,9 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return array
+     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
      */
-    public function recoverPasswordMutation(Argument $argument, InputValidator $validator): array
+    public function recoverPasswordMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
         $validator->validate();
 
@@ -64,6 +65,6 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
         /** @var \Overblog\GraphQLBundle\Definition\Argument $newArgument */
         $newArgument = $this->argumentFactory->create($argumentData);
 
-        return $this->loginMutation->loginWithResultMutation($newArgument);
+        return $this->loginMutation->loginMutation($newArgument);
     }
 }
