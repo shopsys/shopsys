@@ -38,12 +38,16 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
-            $store = $this->storeFacade->getStoresByDomainId($domainId)[0];
+            $stores = $this->storeFacade->getStoresByDomainId($domainId);
+
+            if (!array_key_exists(0, $stores)) {
+                continue;
+            }
 
             foreach ($this->getClosedDays($domainConfig) as [$date, $name]) {
                 $closedDayData = $this->closedDayDataFactory->create();
                 $closedDayData->domainId = $domainId;
-                $closedDayData->excludedStores = [$store];
+                $closedDayData->excludedStores = [$stores[0]];
                 $closedDayData->date = $date;
                 $closedDayData->name = $name;
                 $this->closedDayFacade->create($closedDayData);
