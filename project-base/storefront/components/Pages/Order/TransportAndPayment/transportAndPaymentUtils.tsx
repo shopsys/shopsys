@@ -12,7 +12,7 @@ import {
     TypeStoreQueryVariables,
     StoreQueryDocument,
 } from 'graphql/requests/stores/queries/StoreQuery.generated';
-import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import { Maybe } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmPickupPlaceFromLastOrder } from 'gtm/mappers/getGtmPickupPlaceFromLastOrder';
@@ -65,7 +65,7 @@ export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCa
 };
 
 export const useTransportChangeInSelect = (
-    transports: TypeTransportWithAvailablePaymentsAndStoresFragment[] | undefined,
+    transports: TypeTransportWithAvailablePaymentsFragment[] | undefined,
     lastOrderPickupPlace: TypeListedStoreFragment | null,
     changeTransportHandler: ChangeTransportInCart,
     changePaymentHandler: ChangePaymentInCart,
@@ -115,7 +115,7 @@ export const useTransportChangeInSelect = (
         }
     };
 
-    const openPacketeryPopup = (newTransport: TypeTransportWithAvailablePaymentsAndStoresFragment) => {
+    const openPacketeryPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
         if (!currentPickupPlace) {
             const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
 
@@ -138,7 +138,7 @@ export const useTransportChangeInSelect = (
         }
     };
 
-    const openPersonalPickupPopup = (newTransport: TypeTransportWithAvailablePaymentsAndStoresFragment) => {
+    const openPersonalPickupPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
         if (newTransport.transportType.code === 'packetery') {
             openPacketeryPopup(newTransport);
 
@@ -147,16 +147,13 @@ export const useTransportChangeInSelect = (
 
         clearPacketeryPickupPoint();
         updatePortalContent(
-            <PickupPlacePopup transport={newTransport} onChangePickupPlaceCallback={changePickupPlace} />,
+            <PickupPlacePopup transportUuid={newTransport.uuid} onChangePickupPlaceCallback={changePickupPlace} />,
         );
     };
 
-    const changePickupPlace = (
-        transport: TypeTransportWithAvailablePaymentsAndStoresFragment,
-        selectedPickupPlace: TypeListedStoreFragment | null,
-    ) => {
+    const changePickupPlace = (transportUuid: string, selectedPickupPlace: TypeListedStoreFragment | null) => {
         if (selectedPickupPlace) {
-            changeTransportHandler(transport.uuid, selectedPickupPlace);
+            changeTransportHandler(transportUuid, selectedPickupPlace);
         } else {
             changeTransport(null);
             clearPacketeryPickupPoint();
@@ -207,7 +204,7 @@ type TransportAndPaymentErrorsType = {
 };
 
 export const getTransportAndPaymentValidationMessages = (
-    transport: Maybe<TypeTransportWithAvailablePaymentsAndStoresFragment>,
+    transport: Maybe<TypeTransportWithAvailablePaymentsFragment>,
     pickupPlace: Maybe<TypeListedStoreFragment>,
     payment: Maybe<TypeSimplePaymentFragment>,
     paymentGoPayBankSwift: Maybe<string>,
@@ -249,16 +246,6 @@ export const getTransportAndPaymentValidationMessages = (
 
     return errors;
 };
-
-export const getPickupPlaceDetail = (
-    selectedTransport: Maybe<TypeTransportWithAvailablePaymentsAndStoresFragment>,
-    selectedPickupPlace: TypeListedStoreFragment | null,
-    transportItem: TypeTransportWithAvailablePaymentsAndStoresFragment,
-) =>
-    selectedTransport?.uuid === transportItem.uuid &&
-    transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === selectedPickupPlace?.identifier)
-        ? selectedPickupPlace!
-        : undefined;
 
 export const useLoadTransportAndPaymentFromLastOrder = (
     changeTransportInCart: ChangeTransportInCart,

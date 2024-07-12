@@ -6,7 +6,6 @@ import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import {
     getIsGoPayBankTransferPayment,
-    getPickupPlaceDetail,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
@@ -15,7 +14,8 @@ import { TIDs } from 'cypress/tids';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { TypeTransportStoresFragment } from 'graphql/requests/transports/fragments/TransportStoresFragment.generated';
+import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
@@ -24,7 +24,7 @@ import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 type TransportAndPaymentSelectProps = {
-    transports: TypeTransportWithAvailablePaymentsAndStoresFragment[];
+    transports: TypeTransportWithAvailablePaymentsFragment[];
     lastOrderPickupPlace: TypeListedStoreFragment | null;
     changeTransportInCart: ChangeTransportInCart;
     changePaymentInCart: ChangePaymentInCart;
@@ -55,7 +55,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 
     const renderTransportListItem = (
-        transportItem: TypeTransportWithAvailablePaymentsAndStoresFragment,
+        transportItem:
+            | (TypeTransportWithAvailablePaymentsFragment & TypeTransportStoresFragment)
+            | TypeTransportWithAvailablePaymentsFragment,
         isActive: boolean,
     ) => (
         <TransportAndPaymentListItem key={transportItem.uuid} isActive={isActive}>
@@ -70,7 +72,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         description={transportItem.description}
                         image={transportItem.mainImage}
                         name={transportItem.name}
-                        pickupPlaceDetail={getPickupPlaceDetail(transport, pickupPlace, transportItem)}
+                        pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}
                         price={transportItem.price}
                     />
                 }

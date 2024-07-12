@@ -213,7 +213,7 @@ export const getGtmPaymentChangeEvent = (
 ```ts
 export const getGtmTransportChangeEvent = (
   gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information, if available
-  updatedTransport: TransportWithAvailablePaymentsAndStoresFragment, // transport method newly updated by the user
+  updatedTransport: TransportWithAvailablePaymentsFragment, // transport method newly updated by the user
   updatedPickupPlace: ListedStoreFragment | null, // pickup place method newly updated by the user, if available
   paymentName: string | undefined // name of the selected payment method
 ): GtmTransportChangeEventType => {

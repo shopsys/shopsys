@@ -1,0 +1,5 @@
+query TransportStoresQuery($uuid: Uuid!) {
+    transport(uuid: $uuid) {
+        ...TransportStoresFragment
+    }
+}

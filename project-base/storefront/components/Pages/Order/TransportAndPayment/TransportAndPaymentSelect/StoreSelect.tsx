@@ -1,22 +1,19 @@
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
+import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
-import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { useMemo } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type StoreSelectProps = {
     selectedStoreUuid: string;
-    transport: TypeTransportWithAvailablePaymentsAndStoresFragment;
+    stores: TypeListedStoreConnectionFragment;
     onSelectStoreCallback: (newStoreUuid: string | null) => void;
 };
 
-export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport, onSelectStoreCallback }) => {
-    const mappedStores = useMemo(
-        () => mapConnectionEdges<TypeListedStoreFragment>(transport.stores?.edges),
-        [transport.stores?.edges],
-    );
+export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, onSelectStoreCallback }) => {
+    const mappedStores = useMemo(() => mapConnectionEdges<TypeListedStoreFragment>(stores.edges), [stores.edges]);
 
     return (
         <ul className="max-h-[70dvh] overflow-y-auto">
