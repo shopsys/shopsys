@@ -1,0 +1,6 @@
+RegularCustomerUserDecorator:
+    type: object
+    decorator: true
+    config:
+        interfaces:
+            - 'CustomerUser'

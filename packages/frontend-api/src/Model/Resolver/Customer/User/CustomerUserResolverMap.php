@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Customer\User;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
 use App\Model\Customer\User\CustomerUser;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
