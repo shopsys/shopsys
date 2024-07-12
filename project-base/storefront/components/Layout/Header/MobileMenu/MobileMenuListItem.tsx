@@ -16,7 +16,6 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
             <ExtendedNextLink
                 className="flex-1 font-bold text-dark no-underline uppercase"
                 href={navigationItem.link}
-                type="category"
                 onClick={onNavigate}
             >
                 {navigationItem.name}
