@@ -34,6 +34,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
+    const productListUuids: string[] = Object.values(usePersistStore((store) => store.productListUuids));
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
 
@@ -45,10 +46,15 @@ export const LoginForm: FC<LoginFormProps> = ({
         socialNetwork: 'facebook' | 'google' | 'seznam',
         cartUuid: string | null,
         shouldOverwriteCustomerUserCart: boolean | undefined,
+        productListUuids: string[],
     ) => {
         let url = `/social-network/login/${socialNetwork}`;
         if (cartUuid) {
             url += `?cartUuid=${cartUuid}&shouldOverwriteCustomerUserCart=${shouldOverwriteCustomerUserCart ? 'true' : 'false'}`;
+        }
+        if (productListUuids.length > 0) {
+            const separator = cartUuid ? '&' : '?';
+            url += `${separator}productListUuids=${productListUuids.join(',')}`;
         }
 
         return url;
@@ -110,19 +116,34 @@ export const LoginForm: FC<LoginFormProps> = ({
 
                             <div className="flex gap-2 lg:order-2 w-full justify-center">
                                 <SocialNetworkLoginLink
-                                    href={getSocialNetworkLoginUrl('facebook', cartUuid, shouldOverwriteCustomerUserCart)}
+                                    href={getSocialNetworkLoginUrl(
+                                        'facebook',
+                                        cartUuid,
+                                        shouldOverwriteCustomerUserCart,
+                                        productListUuids,
+                                    )}
                                 >
                                     <FacebookIcon className="w-7 text-[#1877f2]" />
                                 </SocialNetworkLoginLink>
 
                                 <SocialNetworkLoginLink
-                                    href={getSocialNetworkLoginUrl('google', cartUuid, shouldOverwriteCustomerUserCart)}
+                                    href={getSocialNetworkLoginUrl(
+                                        'google',
+                                        cartUuid,
+                                        shouldOverwriteCustomerUserCart,
+                                        productListUuids,
+                                    )}
                                 >
                                     <GoogleIcon className="w-6" />
                                 </SocialNetworkLoginLink>
 
                                 <SocialNetworkLoginLink
-                                    href={getSocialNetworkLoginUrl('seznam', cartUuid, shouldOverwriteCustomerUserCart)}
+                                    href={getSocialNetworkLoginUrl(
+                                        'seznam',
+                                        cartUuid,
+                                        shouldOverwriteCustomerUserCart,
+                                        productListUuids,
+                                    )}
                                 >
                                     <SeznamIcon className="w-6" />
                                 </SocialNetworkLoginLink>
@@ -136,7 +157,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                     </div>
                                 </ExtendedNextLink>
                             </div>
-                        </div>
+                        </FormButtonWrapper>
                     </FormBlockWrapper>
                 </FormContentWrapper>
             </Form>

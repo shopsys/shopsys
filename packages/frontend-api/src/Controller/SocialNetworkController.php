@@ -21,9 +21,12 @@ class SocialNetworkController extends AbstractController
 {
     protected const string REFERER_URL = 'refererUrl';
     public const string CART_UUID = 'cartUuid';
+    public const string PRODUCT_LIST_UUIDS = 'productListUuids';
     public const string SHOULD_OVERWRITE_CART = 'shouldOverwriteCart';
 
     protected const string PARAMETER_CART_UUID = 'cartUuid';
+
+    protected const string PARAMETER_PRODUCT_LIST_UUIDS = 'productListUuids';
     protected const string PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART = 'shouldOverwriteCustomerUserCart';
 
     /**
@@ -84,6 +87,11 @@ class SocialNetworkController extends AbstractController
         if ($request->query->has(self::PARAMETER_CART_UUID)) {
             $cartUuid = $request->query->get(self::PARAMETER_CART_UUID);
             $session->set(self::CART_UUID, $cartUuid);
+        }
+
+        if ($request->query->has(self::PARAMETER_PRODUCT_LIST_UUIDS)) {
+            $productListsUuids = $request->query->get(self::PARAMETER_PRODUCT_LIST_UUIDS);
+            $session->set(self::PRODUCT_LIST_UUIDS, $productListsUuids);
         }
 
         if (!$request->query->has(self::PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART)) {

@@ -10,6 +10,7 @@ use Hybridauth\Hybridauth;
 use Hybridauth\User\Profile;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
@@ -37,6 +38,7 @@ class SocialNetworkFacade
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -48,6 +50,7 @@ class SocialNetworkFacade
         protected readonly ValidatorInterface $validator,
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly LoginResultDataFactory $loginResultDataFactory,
+        protected readonly ProductListFacade $productListFacade,
     ) {
     }
 
@@ -90,8 +93,16 @@ class SocialNetworkFacade
                     $showCartMergeInfo = true;
                 }
             }
+
+            $productListsUuids = $session->get(SocialNetworkController::PRODUCT_LIST_UUIDS);
+
+            if ($productListsUuids !== null) {
+                $this->productListFacade->mergeProductListsToCustomerUser(explode(',', $productListsUuids), $customerUser);
+            }
+
             $session->remove(SocialNetworkController::CART_UUID);
             $session->remove(SocialNetworkController::SHOULD_OVERWRITE_CART);
+            $session->remove(SocialNetworkController::PRODUCT_LIST_UUIDS);
 
             return $this->loginResultDataFactory->create(
                 $this->loginAsUserFacade->loginAndReturnAccessAndRefreshToken($customerUser),
