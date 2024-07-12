@@ -88,4 +88,22 @@ class DeliveryAddressMutation extends BaseTokenMutation
 
         return $customerUser;
     }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
+     */
+    public function createDeliveryAddressMutation(Argument $argument): array
+    {
+        $user = $this->runCheckUserIsLogged();
+        $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
+
+        $deliveryAddressData = $this->deliveryAddressDataApiFactory
+            ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
+
+        $deliveryAddressData->addressFilled = true;
+        $this->deliveryAddressFacade->createIfAddressFilled($deliveryAddressData);
+
+        return $customerUser->getCustomer()->getDeliveryAddresses();
+    }
 }

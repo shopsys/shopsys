@@ -25,3 +25,11 @@ DeliveryAddressMutationDecorator:
                     deliveryAddressUuid:
                         type: Uuid!
                 resolve: "@=mutation('setDefaultDeliveryAddressMutation', args['deliveryAddressUuid'])"
+            CreateDeliveryAddress:
+                type: "[DeliveryAddress!]!"
+                description: "Create a new delivery address"
+                args:
+                    input:
+                        type: DeliveryAddressInput!
+                        validation: cascade
+                resolve: "@=mutation('createDeliveryAddressMutation', args)"
