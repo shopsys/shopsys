@@ -54,6 +54,9 @@
         <div class="display-none">
             {{ form_widget(form.filesToDelete) }}
         </div>
+
+        {{ form_widget(form.relations) }}
+
     {% endif %}
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}

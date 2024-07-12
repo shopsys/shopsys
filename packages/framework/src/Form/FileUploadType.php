@@ -103,7 +103,16 @@ class FileUploadType extends AbstractType
             ->add('file', FileType::class, [
                 'multiple' => $this->isMultiple($options),
                 'mapped' => false,
-            ]);
+            ])
+            ->add(
+                $builder->create('relations', CollectionType::class, [
+                    'required' => false,
+                    'allow_add' => true,
+                    'prototype' => true,
+                    'data' => [''],
+                    'entry_type' => TextType::class,
+                ]),
+            );
     }
 
     /**
