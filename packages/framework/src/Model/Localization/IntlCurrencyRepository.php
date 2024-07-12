@@ -137,7 +137,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'SEK',
         'SGD',
         'SHP',
-        'SLL',
+        'SLE',
         'SOS',
         'SRD',
         'SSP',
