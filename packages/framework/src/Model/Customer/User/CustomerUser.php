@@ -61,8 +61,8 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $email;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $password;
 
@@ -295,7 +295,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->password ?? '';
     }
 
     /**
@@ -350,7 +350,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'password' => $this->password,
+            'password' => $this->getPassword(),
             'timestamp' => time(), // lastActivity
             'domainId' => $this->domainId,
         ];

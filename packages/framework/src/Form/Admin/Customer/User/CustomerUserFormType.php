@@ -156,12 +156,16 @@ class CustomerUserFormType extends AbstractType
         $builderRegisteredCustomerGroup
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'required' => $options['customerUser'] === null,
+                'required' => false,
                 'options' => [
                     'attr' => ['autocomplete' => 'new-password'],
                 ],
                 'first_options' => [
-                    'constraints' => $this->getFirstPasswordConstraints($options['customerUser'] === null),
+                    'constraints' => [
+                        new Constraints\Length(
+                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
+                        ),
+                    ],
                     'label' => t('Password'),
                 ],
                 'second_options' => [
@@ -213,27 +217,6 @@ class CustomerUserFormType extends AbstractType
         if ($existingCustomerWithEmail !== null && $existingCustomerWithEmail !== $this->customerUser) {
             $context->addViolation('The email is already registered on given domain.');
         }
-    }
-
-    /**
-     * @param bool $isCreatingNewUser
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    private function getFirstPasswordConstraints($isCreatingNewUser)
-    {
-        $constraints = [
-            new Constraints\Length(
-                ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
-            ),
-        ];
-
-        if ($isCreatingNewUser) {
-            $constraints[] = new Constraints\NotBlank([
-                'message' => 'Please enter password',
-            ]);
-        }
-
-        return $constraints;
     }
 
     /**

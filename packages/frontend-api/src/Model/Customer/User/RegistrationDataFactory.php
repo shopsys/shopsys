@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 use Hybridauth\User\Profile;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 
 class RegistrationDataFactory
@@ -80,7 +79,6 @@ class RegistrationDataFactory
         $registrationData->city = '';
         $registrationData->postcode = '';
         $registrationData->country = $countries[0];
-        $registrationData->password = HashGenerator::generateStrongPassword();
 
         return $registrationData;
     }
