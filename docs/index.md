@@ -46,7 +46,6 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 * [Introduction to LESS](./frontend/introduction-to-less.md)
 * [Frontend Troubleshooting](./frontend/frontend-troubleshooting.md)
 * [Understanding the Style Directory](./frontend/understanding-the-style-directory.md)
-* [Basic Design Styleguide](frontend/basic-design-styleguide.md)
 
 ## FAQ
 See [FAQ and Common Issues](./introduction/faq-and-common-issues.md).
