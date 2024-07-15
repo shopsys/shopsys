@@ -33,7 +33,7 @@ class LuigisBoxBatchLoadDataFactory
      * @param int $page
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param array $luigisBoxFilter
-     * @param string[] $facets
+     * @param string[] $facetNames
      * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
     public function createForSearch(
@@ -42,7 +42,7 @@ class LuigisBoxBatchLoadDataFactory
         int $page,
         Argument $argument,
         array $luigisBoxFilter = [],
-        array $facets = [],
+        array $facetNames = [],
     ): LuigisBoxBatchLoadData {
         $this->typeInLuigisBoxEnum->validateCase($type);
 
@@ -55,8 +55,6 @@ class LuigisBoxBatchLoadDataFactory
         $endpoint = $argument['searchInput']['isAutocomplete'] === true ? LuigisBoxEndpointEnum::AUTOCOMPLETE : LuigisBoxEndpointEnum::SEARCH;
         $userIdentifier = $argument['searchInput']['userIdentifier'];
 
-        $facets = array_unique([...$facets, ...$this->facetFactory->getDefaultFacetNamesByType($type)], SORT_REGULAR);
-
         return new LuigisBoxSearchBatchLoadData(
             $type,
             $endpoint,
@@ -66,7 +64,7 @@ class LuigisBoxBatchLoadDataFactory
             $page,
             $luigisBoxFilter,
             $orderingMode,
-            $facets,
+            array_unique([...$this->facetFactory->getDefaultFacetNamesByType($type), ...$facetNames], SORT_REGULAR),
         );
     }
 

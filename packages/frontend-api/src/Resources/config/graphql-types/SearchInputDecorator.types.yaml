@@ -12,3 +12,7 @@ SearchInputDecorator:
             isAutocomplete:
                 type: "Boolean!"
                 defaultValue: false
+            parameters:
+                type: "[Uuid!]"
+                defaultValue: []
+                description: "Ordered list of parameters used in Luigi's Box to ensure same order of parameters in search results"

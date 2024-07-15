@@ -1919,6 +1919,8 @@ input RemovePromoCodeFromCartInput {
 "Represents search input object"
 input SearchInput {
   isAutocomplete: Boolean! = false
+  "Ordered list of parameters used in Luigi's Box to ensure same order of parameters in search results"
+  parameters: [Uuid!] = []
   search: String!
   "Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/)"
   userIdentifier: Uuid!

@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderInterface;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper;
@@ -30,6 +31,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
      * @param \Shopsys\LuigisBoxBundle\Model\Facet\FacetFactory $facetFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         string $enabledDomainIds,
@@ -41,6 +43,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
         protected readonly ProductFilterDataMapper $productFilterDataMapper,
         protected readonly FacetFactory $facetFactory,
+        protected readonly ParameterFacade $parameterFacade,
     ) {
         parent::__construct($enabledDomainIds);
     }
@@ -55,10 +58,17 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         $orderingMode = $argument['orderingMode'];
         $productFilterData = $this->productFilterDataMapper->mapFrontendApiFilterToProductFilterData($argument['filter'] ?? []);
         $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(TypeInLuigisBoxEnum::PRODUCT, $productFilterData, $this->domain);
-        $facets = $this->facetFactory->mapFacetsFromProductFilterData($productFilterData);
+        $parameterUuids = $argument['parameters'];
+        $facetNames = [];
+
+        foreach ($this->parameterFacade->getParametersByUuids($parameterUuids) as $parameter) {
+            $facetNames[] = $parameter->getName();
+        }
+
+        $facetNames = array_unique([...$facetNames, ...$this->facetFactory->mapFacetsFromProductFilterData($productFilterData)], SORT_REGULAR);
 
         return $this->productConnectionFactory->createConnectionPromiseForSearch(
-            function ($offset, $limit) use ($argument, $luigisBoxFilter, $facets) {
+            function ($offset, $limit) use ($argument, $luigisBoxFilter, $facetNames) {
                 return $this->luigisBoxBatchLoader->load(
                     $this->luigisBoxBatchLoadDataFactory->createForSearch(
                         TypeInLuigisBoxEnum::PRODUCT,
@@ -66,7 +76,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
                         $offset,
                         $argument,
                         $luigisBoxFilter,
-                        $facets,
+                        $facetNames,
                     ),
                 );
             },

@@ -437,9 +437,12 @@ class LuigisBoxClient
         LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData,
     ): int {
         if ($luigisBoxBatchLoadData->getType() === TypeInLuigisBoxEnum::PRODUCT) {
-            return static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS - (
-                count($luigisBoxBatchLoadData->getFacetNames()) -
-                count(LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES)
+            return max(
+                0,
+                static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS - (
+                    count($luigisBoxBatchLoadData->getFacetNames()) -
+                    count(LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES)
+                ),
             );
         }
 
