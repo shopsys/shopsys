@@ -46,6 +46,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
         $administratorData->roles = $administrator->getRoles();
         $administratorData->transferIssuesLastSeenDateTime = $administrator->getTransferIssuesLastSeenDateTime();
         $administratorData->roleGroup = $administrator->getRoleGroup();
+        $administratorData->displayOnlyDomainIds = $administrator->getDisplayOnlyDomainIds();
 
         if ($administrator->getRoleGroup() !== null) {
             $administratorData->roles = [];

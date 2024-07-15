@@ -1,0 +1,10 @@
+{{ form_start(form, {'action': path('admin_domains_filter'), 'method': 'POST'}) }}
+    <ul class="js-toggle-menu-submenu box-dropdown__options multi-column-list">
+        {% for child in form.domains %}
+            <li class="box-dropdown__options__item">
+                {{ form_row(child) }}
+            </li>
+        {% endfor %}
+        {{ form_row(form.apply) }}
+    </ul>
+{{ form_end(form) }}

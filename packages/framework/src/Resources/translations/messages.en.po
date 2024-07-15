@@ -286,6 +286,9 @@ msgstr ""
 msgid "Applicable variables for Subject"
 msgstr ""
 
+msgid "Apply"
+msgstr ""
+
 msgid "Apply according to customer"
 msgstr ""
 
@@ -1307,6 +1310,9 @@ msgid "Domain %domainName%"
 msgstr ""
 
 msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can't see the new icon."
+msgstr ""
+
+msgid "Domain filter"
 msgstr ""
 
 msgid "Domain name"
@@ -2890,6 +2896,9 @@ msgstr ""
 msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
 msgstr ""
 
+msgid "Please select at least one domain."
+msgstr ""
+
 msgid "Please use the button below to send the one-time passcode to your email address."
 msgstr ""
 
@@ -4281,4 +4290,3 @@ msgstr ""
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""
-
