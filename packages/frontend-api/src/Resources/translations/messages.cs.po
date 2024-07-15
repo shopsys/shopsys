@@ -7,6 +7,3 @@ msgstr ""
 msgid "Customer not found."
 msgstr "Zákazník nenalezen."
 
-msgid "Log in as user"
-msgstr "Přihlásit za uživatele"
-

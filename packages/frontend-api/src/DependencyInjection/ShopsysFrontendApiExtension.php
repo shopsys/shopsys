@@ -32,13 +32,6 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
         ];
 
         $container->prependExtensionConfig('overblog_graphql', $config);
-        $fileLocator = (new FileLocator(__DIR__ . '/../Resources/views/bundles'));
-
-        $container->loadFromExtension('twig', [
-            'paths' => [
-                $fileLocator->locate('ShopsysFrameworkBundle') => 'ShopsysFramework',
-            ],
-        ]);
 
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [

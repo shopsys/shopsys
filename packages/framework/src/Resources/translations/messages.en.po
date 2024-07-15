@@ -1867,6 +1867,9 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
+msgid "Log in as user"
+msgstr ""
+
 msgid "Log in failed."
 msgstr ""
 

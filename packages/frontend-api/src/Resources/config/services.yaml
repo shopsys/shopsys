@@ -21,6 +21,9 @@ services:
     Lcobucci\JWT\Configuration:
         factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
 
+    Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider:
+        alias: Shopsys\FrontendApiBundle\Model\Security\LoginAdministratorAsUserUrlProvider
+
     Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker:
         arguments:
             $enabledDomainIds: '%shopsys.frontend_api.domains%'
@@ -104,5 +107,3 @@ services:
         alias: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
-
-    Shopsys\FrontendApiBundle\Twig\LoginAsUserExtension: ~

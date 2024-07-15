@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,6 +40,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider
      */
     public function __construct(
         protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
@@ -52,6 +54,7 @@ class CustomerController extends AdminBaseController
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         protected readonly Domain $domain,
+        protected readonly LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider,
     ) {
     }
 
@@ -99,6 +102,7 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
+            'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 

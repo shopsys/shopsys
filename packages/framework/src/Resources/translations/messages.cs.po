@@ -1867,6 +1867,9 @@ msgstr "Umístění"
 msgid "Log in"
 msgstr "Přihlásit se"
 
+msgid "Log in as user"
+msgstr "Přihlásit za uživatele"
+
 msgid "Log in failed."
 msgstr "Přihlášení se nepodařilo."
 
