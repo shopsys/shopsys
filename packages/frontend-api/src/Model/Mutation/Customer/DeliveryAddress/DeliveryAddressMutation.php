@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundExce
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
-use Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\Exception\DeliveryAddressNotFoundUserError;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -22,7 +21,7 @@ class DeliveryAddressMutation extends BaseTokenMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
