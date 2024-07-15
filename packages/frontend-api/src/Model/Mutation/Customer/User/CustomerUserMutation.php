@@ -20,6 +20,9 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
+use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -43,6 +46,8 @@ class CustomerUserMutation extends BaseTokenMutation
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -58,6 +63,8 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly RegistrationDataFactory $registrationDataFactory,
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly OrderApiFacade $orderFacade,
+        protected readonly LoginResultDataFactory $loginResultDataFactory,
+        protected readonly TokensDataFactory $tokensDataFactory,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -114,9 +121,9 @@ class CustomerUserMutation extends BaseTokenMutation
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return array{tokens: array{accessToken: string, refreshToken: string}, showCartMergeInfo: bool}
+     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
      */
-    public function registerMutation(Argument $argument, InputValidator $validator): array
+    public function registerMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
@@ -136,13 +143,13 @@ class CustomerUserMutation extends BaseTokenMutation
 
         $deviceId = Uuid::uuid4()->toString();
 
-        return [
-            'tokens' => [
-                'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
-                'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
-            ],
-            'showCartMergeInfo' => $this->mergeCartFacade->shouldShowCartMergeInfo(),
-        ];
+        return $this->loginResultDataFactory->create(
+            $this->tokensDataFactory->create(
+                $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+                $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+            ),
+            $this->mergeCartFacade->shouldShowCartMergeInfo(),
+        );
     }
 
     /**

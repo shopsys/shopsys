@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundExcepti
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Security\TokensData;
+use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
@@ -20,19 +22,21 @@ class RefreshTokensMutation extends AbstractMutation
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
      */
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        protected readonly TokensDataFactory $tokensDataFactory,
     ) {
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array
+     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
      */
-    public function refreshTokensMutation(Argument $argument): array
+    public function refreshTokensMutation(Argument $argument): TokensData
     {
         $refreshToken = $argument['input']['refreshToken'];
         $token = $this->tokenFacade->getTokenByString($refreshToken);
@@ -60,18 +64,18 @@ class RefreshTokensMutation extends AbstractMutation
             throw new InvalidTokenUserMessageException();
         }
 
-        $tokens = [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString(
+        $tokens = $this->tokensDataFactory->create(
+            $this->tokenFacade->createAccessTokenAsString(
                 $customerUser,
                 $customerUserValidRefreshTokenChain->getDeviceId(),
                 $customerUserValidRefreshTokenChain->getAdministrator(),
             ),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString(
+            $this->tokenFacade->createRefreshTokenAsString(
                 $customerUser,
                 $customerUserValidRefreshTokenChain->getDeviceId(),
                 $customerUserValidRefreshTokenChain->getAdministrator(),
             ),
-        ];
+        );
 
         $this->customerUserRefreshTokenChainFacade->removeCustomerRefreshTokenChain(
             $customerUserValidRefreshTokenChain,

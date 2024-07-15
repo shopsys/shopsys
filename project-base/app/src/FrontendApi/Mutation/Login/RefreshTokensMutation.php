@@ -9,7 +9,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation as Base
 /**
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
- * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+ * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory)
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
  */
 class RefreshTokensMutation extends BaseRefreshTokensMutation
