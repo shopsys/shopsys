@@ -1292,6 +1292,20 @@ Send message to the site owner
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>CreateDeliveryAddress</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+Create a new delivery address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#deliveryaddressinput">DeliveryAddressInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>CreateOrder</strong></td>
 <td valign="top"><a href="#createorderresult">CreateOrderResult</a>!</td>
 <td>
@@ -1522,11 +1536,7 @@ Set default delivery address by Uuid
 <tr>
 <td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-Set delivery address by Uuid
-
-</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>UpdatePaymentStatus</strong></td>

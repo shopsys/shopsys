@@ -898,6 +898,8 @@ type Mutation {
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "Send message to the site owner"
   ContactForm(input: ContactFormInput!): Boolean!
+  "Create a new delivery address"
+  CreateDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
   "Delete delivery address by Uuid"
@@ -931,10 +933,7 @@ type Mutation {
   "Request access to personal data"
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
   "Set default delivery address by Uuid"
-  SetDefaultDeliveryAddress(
-    "Set delivery address by Uuid"
-    deliveryAddressUuid: Uuid!
-  ): CustomerUser!
+  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
   "check payment status of order after callback from payment service"
   UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
 }
