@@ -1,4 +1,23 @@
 <ul class="js-toggle-menu navig navig--side">
+
+    <li class="js-toggle-menu-item navig__item">
+        <div class="box-dropdown">
+            <div
+                    class="box-dropdown__select box-dropdown__select--menu"
+                    title="{{ 'Domain filter'|trans }}"
+            >
+                <i class="svg svg-menu"></i>
+                <span class="box-dropdown__select__text">
+                    {{ 'Domain filter'|trans }}
+                </span>
+                <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
+                <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
+            </div>
+
+            {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\SelectAdminDomainsController::renderFormAction')) }}
+        </div>
+    </li>
+
     <li class="js-toggle-menu-item navig__item">
         <div class="box-dropdown">
             <div
@@ -12,13 +31,15 @@
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
             </div>
-            <ul class="js-toggle-menu-submenu box-dropdown__options multi-column-list">
-                {% for domainConfig in domainConfigs %}
-                    <li class="box-dropdown__options__item">
-                        <a href="{{ domainConfig.url }}" target="_blank" class="box-dropdown__options__item__link" title="{{ domainConfig.name }}">{{ domainConfig.url }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+            <div class="js-toggle-menu-submenu box-dropdown__options">
+                <ul class="multi-column-list">
+                    {% for domainConfig in domainConfigs %}
+                        <li class="box-dropdown__options__item">
+                            <a href="{{ domainConfig.url }}" target="_blank" class="box-dropdown__options__item__link" title="{{ domainConfig.name }}">{{ domainConfig.url }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </li>
 
