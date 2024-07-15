@@ -12,7 +12,7 @@
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--up"></i>
                 <i class="box-dropdown__select__arrow box-dropdown__select__arrow--down"></i>
             </div>
-            <ul class="js-toggle-menu-submenu box-dropdown__options">
+            <ul class="js-toggle-menu-submenu box-dropdown__options multi-column-list">
                 {% for domainConfig in domainConfigs %}
                     <li class="box-dropdown__options__item">
                         <a href="{{ domainConfig.url }}" target="_blank" class="box-dropdown__options__item__link" title="{{ domainConfig.name }}">{{ domainConfig.url }}</a>

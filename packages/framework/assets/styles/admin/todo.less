@@ -30,6 +30,23 @@
   float: right;
 }
 
+.multi-column-list {
+    .form-choice {
+        padding: 10px 10px 10px 18px;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0;
+    background-color: white;
+    padding: 0;
+}
+
+.multi-column-list .box-dropdown__options__item {
+    box-sizing: border-box;
+    break-inside: avoid;
+}
+
 .table-form-cell-short {
   width: 335px;
 }
