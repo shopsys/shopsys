@@ -66,7 +66,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     });
 
     return (
-        <div className="fixed inset-0 z-aboveOverlay flex select-none flex-col bg-dark p-2" onClick={onCloseModal}>
+        <div className="fixed inset-0 flex select-none flex-col bg-dark p-2 z-maximum" onClick={onCloseModal}>
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
                     <SpinnerIcon className="absolute -z-above w-16 text-white opacity-50" />
@@ -74,13 +74,12 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                     {isImage && (
                         <Image
                             key={selectedIndex}
+                            fill
                             alt={selectedGalleryItem.name || `${galleryName}-${selectedIndex}`}
                             className="max-h-full object-contain"
                             draggable={false}
-                            height={1200}
                             sizes="(max-width: 768px) 100vw, 1200px"
                             src={selectedGalleryItem.url}
-                            width={1200}
                             onLoad={() => setIsLoaded(true)}
                         />
                     )}
