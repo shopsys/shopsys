@@ -596,6 +596,10 @@
     </div>
 {% endblock products_widget %}
 
+{% block files_widget %}
+   {% include '@ShopsysFramework/Admin/Form/picker.html.twig' %}
+{% endblock files_widget %}
+
 {% block categories_widget %}
     <div class="form-line__{% if display_as_row == true %}side{% else %}line{% endif %}">
         <div
