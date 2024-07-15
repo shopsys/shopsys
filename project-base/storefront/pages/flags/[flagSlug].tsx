@@ -1,3 +1,4 @@
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
@@ -32,12 +33,16 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
+import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
+    const currentFilter = useCurrentFilterQuery();
+    const currentSort = useCurrentSortQuery();
     const orderingMode = getProductListSortFromUrlQuery(router.query[SORT_QUERY_PARAMETER_NAME]);
     const filter = getMappedProductFilter(router.query[FILTER_QUERY_PARAMETER_NAME]);
 
@@ -55,15 +60,19 @@ const FlagDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, isFlagFetching);
 
     return (
-        <CommonLayout
-            breadcrumbs={flagDetailData?.flag?.breadcrumb}
-            breadcrumbsType="category"
-            hreflangLinks={flagDetailData?.flag?.hreflangLinks}
-            isFetchingData={!filter && isFlagFetching && !flagDetailData}
-            title={seoTitle}
-        >
-            {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
-        </CommonLayout>
+        <>
+            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
+
+            <CommonLayout
+                breadcrumbs={flagDetailData?.flag?.breadcrumb}
+                breadcrumbsType="category"
+                hreflangLinks={flagDetailData?.flag?.hreflangLinks}
+                isFetchingData={!filter && isFlagFetching && !flagDetailData}
+                title={seoTitle}
+            >
+                {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
+            </CommonLayout>
+        </>
     );
 };
 

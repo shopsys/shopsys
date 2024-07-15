@@ -31,12 +31,14 @@ import {
     LOAD_MORE_QUERY_PARAMETER_NAME,
 } from 'utils/queryParamNames';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
+import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
 const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
     const currentFilter = useCurrentFilterQuery();
+    const currentSort = useCurrentSortQuery();
     const { categoryData, isFetchingVisible } = useCategoryDetailData(currentFilter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
@@ -50,7 +52,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
 
     return (
         <PageDefer>
-            {!!currentFilter && <MetaRobots content="noindex, follow" />}
+            {(!!currentFilter || !!currentSort) && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
                 breadcrumbs={categoryData?.breadcrumb}
