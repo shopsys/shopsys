@@ -100,6 +100,9 @@ msgstr "Zadejte prosím nové heslo"
 msgid "Please enter old password"
 msgstr "Zadejte staré heslo"
 
+msgid "Please enter only numbers and the + character"
+msgstr "Prosím, zadávejte pouze čísla a znak +"
+
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
 
@@ -162,6 +165,9 @@ msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Telefon nesmí být delší než {{ limit }} znaků"
+
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
 
 msgid "The payment is not allowed in combination with already selected transport"
 msgstr "Platba není povolena v kombinaci s již vybranou dopravou"

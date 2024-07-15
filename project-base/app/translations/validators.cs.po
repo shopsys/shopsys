@@ -67,9 +67,6 @@ msgstr "Vyberte prosím obrázek"
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
 
-msgid "Please enter city"
-msgstr "Vyplňte prosím město"
-
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název společnosti"
 
@@ -100,17 +97,11 @@ msgstr "Vyplňte prosím nové heslo"
 msgid "Please enter notification bar content"
 msgstr "Vyplňte prosím obsah notifikační lišty"
 
-msgid "Please enter only numbers and the + character"
-msgstr "Prosím, zadávejte pouze čísla a znak +"
-
 msgid "Please enter only numbers and the + sign"
 msgstr "Prosím vyplňte čísla a znak +"
 
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
-
-msgid "Please enter street"
-msgstr "Vyplňte prosím ulici"
 
 msgid "Please enter telephone number"
 msgstr "Vyplňte prosím telefonní číslo"
@@ -132,9 +123,6 @@ msgstr "Prosím vyplňte vaše PSČ"
 
 msgid "Please enter your street"
 msgstr "Prosím vyplňte vaši ulici s popisným číslem."
-
-msgid "Please enter zip code"
-msgstr "Vyplňte prosím PSČ"
 
 msgid "Please fill in numbers only"
 msgstr "Prosím vyplňte pouze čísla"
@@ -166,9 +154,6 @@ msgstr "Ulice a číslo popisná musí obsahovat znaky"
 msgid "Street cannot be longer than {{ limit }} characters"
 msgstr "Ulice a č. popisné nesmí být delší než {{ limit }} znaků"
 
-msgid "Street name cannot be longer than {{ limit }} characters"
-msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
-
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 
@@ -189,7 +174,4 @@ msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
 
 msgid "Variable {{ needle }} is required"
 msgstr "Proměnná {{ needle }} je povinná"
-
-msgid "Zip code cannot be longer than {{ limit }} characters"
-msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 
