@@ -24,4 +24,5 @@ fragment CustomerUserFragment on CustomerUser {
         companyTaxNumber
     }
     pricingGroup
+    hasPasswordSet
 }

@@ -15,7 +15,10 @@ import {
 } from 'components/Pages/Customer/customerChangeProfileFormMeta';
 import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
+import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
+import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
@@ -34,6 +37,7 @@ type EditProfileContentProps = {
 export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustomerUser }) => {
     const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutation();
+    const [, resetPassword] = usePasswordRecoveryMutation();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
@@ -57,6 +61,15 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
         onChangeProfileHandler(customerChangeProfileFormData);
         onChangePasswordHandler(customerChangeProfileFormData);
+    };
+
+    const onResetPasswordHandler = async () => {
+        const resetPasswordResult = await resetPassword({ email: currentCustomerUser.email });
+
+        if (resetPasswordResult.data?.RequestPasswordRecovery !== undefined) {
+            showSuccessMessage(t('We sent an email with further steps to your address'));
+            onGtmSendFormEventHandler(GtmFormType.forgotten_password);
+        }
     };
 
     const onChangeProfileHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {

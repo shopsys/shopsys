@@ -46,3 +46,6 @@ CurrentCustomerUserDecorator:
             pricingGroup:
                 type: "String!"
                 description: "The name of the customer pricing group"
+            hasPasswordSet:
+                type: "Boolean!"
+                description: "Whether the customer user has password set or not"

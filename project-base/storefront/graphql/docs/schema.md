@@ -3626,6 +3626,15 @@ First name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -6698,6 +6707,15 @@ Email address
 <td>
 
 First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
 
 </td>
 </tr>
@@ -10232,6 +10250,15 @@ Email address
 <td>
 
 First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
 
 </td>
 </tr>

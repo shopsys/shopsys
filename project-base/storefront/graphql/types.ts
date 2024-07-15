@@ -699,6 +699,8 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   email: Scalars['String']['output'];
   /** First name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Whether customer user receives newsletters or not */
@@ -754,6 +756,8 @@ export type TypeCustomerUser = {
   email: Scalars['String']['output'];
   /** First name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Whether customer user receives newsletters or not */
@@ -2423,6 +2427,8 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   email: Scalars['String']['output'];
   /** First name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
   /** Whether customer user receives newsletters or not */

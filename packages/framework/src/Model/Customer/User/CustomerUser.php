@@ -463,4 +463,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     {
         return $this->getCustomer()->getBillingAddress()->isActivated();
     }
+
+    /**
+     * @return bool
+     */
+    public function hasPasswordSet(): bool
+    {
+        return $this->password !== null;
+    }
 }

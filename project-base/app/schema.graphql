@@ -565,6 +565,8 @@ type CompanyCustomerUser implements CustomerUser {
   email: String!
   "First name"
   firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
   "Last name"
   lastName: String
   "Whether customer user receives newsletters or not"
@@ -618,6 +620,8 @@ interface CustomerUser {
   email: String!
   "First name"
   firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
   "Last name"
   lastName: String
   "Whether customer user receives newsletters or not"
@@ -1819,6 +1823,8 @@ type RegularCustomerUser implements CustomerUser {
   email: String!
   "First name"
   firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
   "Last name"
   lastName: String
   "Whether customer user receives newsletters or not"
