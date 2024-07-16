@@ -40,6 +40,7 @@ class SideMenuBuilder
         $menu->addChild($this->createProductsMenu());
         $menu->addChild($this->createPricingMenu());
         $menu->addChild($this->createMarketingMenu());
+        $menu->addChild($this->createFilesMenu());
         $menu->addChild($this->createAdministratorsMenu());
         $menu->addChild($this->createSettingsMenu());
 
@@ -337,6 +338,33 @@ class SideMenuBuilder
         $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
+
+        return $menu;
+    }
+
+    /**
+     * @return \Knp\Menu\ItemInterface
+     */
+    protected function createFilesMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem(
+            'files',
+            ['label' => t('Files')],
+        );
+        $menu->setExtra('icon', 'file-all');
+
+        $menu->addChild(
+            'products',
+            ['route' => 'admin_uploadedfile_list', 'label' => t('Files overview')],
+        );
+        //        $menu->addChild(
+        //            'new',
+        //            ['route' => 'admin_product_new', 'label' => t('New file'), 'display' => false],
+        //        );
+        //        $menu->addChild(
+        //            'edit',
+        //            ['route' => 'admin_product_edit', 'label' => t('Editing file'), 'display' => false],
+        //        );
 
         return $menu;
     }
