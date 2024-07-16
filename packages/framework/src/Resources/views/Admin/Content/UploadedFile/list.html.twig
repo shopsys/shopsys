@@ -1,0 +1,28 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% block title %}- {{ 'Files'|trans }}{% endblock %}
+{% block h1 %}{{ 'Files'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(quickSearchForm) }}
+        <div class="in-tab js-tabs">
+            <div class="in-tab__heading">
+                <a href="#"
+                    class="in-tab__heading__item js-tabs-button active"
+                    data-tab-id="quick"
+                >
+                    {{ 'Quick search'|trans }}
+                </a>
+            </div>
+            <div class="in-tab__content">
+                <div class="in-tab__content__in js-tabs-content" data-tab-id="quick">
+                    {% include '@ShopsysFramework/Admin/Content/FilePicker/quickSearchFormContent.html.twig' with {quickSearchForm: quickSearchForm} %}
+                </div>
+            </div>
+        </div>
+
+        {{ gridView.render() }}
+        {{ gridView.renderHiddenInputs('page') }}
+
+    {{ form_end(quickSearchForm) }}
+
+{% endblock %}
