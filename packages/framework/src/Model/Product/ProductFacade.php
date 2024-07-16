@@ -32,7 +32,6 @@ class ProductFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
@@ -55,7 +54,6 @@ class ProductFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
-        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly Domain $domain,
         protected readonly ImageFacade $imageFacade,
