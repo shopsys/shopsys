@@ -11,6 +11,10 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\MultipleFilesNotAllowedException;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
+use Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory;
 
 class UploadedFileFacade
 {
