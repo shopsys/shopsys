@@ -31,7 +31,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     if (variants.length === 0) {
-        return <p>{t('None of the product variants are available for purchase.')}</p>;
+        return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
     }
 
     return (
