@@ -110,16 +110,10 @@ class UploadedFileFacade
         $position = $existingFilesCount + $uploadedFilesCount;
 
         foreach ($relations as $relation) {
-            $relation = (int)$relation;
-
-            if ($relation <= 0) {
-                continue;
-            }
-
             $this->createRelation(
                 $entityName,
                 $entity->getId(),
-                $this->getById($relation),
+                $relation,
                 $position++,
             );
         }
@@ -300,6 +294,15 @@ class UploadedFileFacade
     public function getById(int $uploadedFileId): UploadedFile
     {
         return $this->uploadedFileRepository->getById($uploadedFileId);
+    }
+
+    /**
+     * @param int[] $uploadedFileIds
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     */
+    public function getByIds(array $uploadedFileIds): array
+    {
+        return $this->uploadedFileRepository->getByIds($uploadedFileIds);
     }
 
     /**

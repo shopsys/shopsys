@@ -42,7 +42,7 @@ class UploadedFileData
     public $namesIndexedById = [];
 
     /**
-     * @var int[]
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public $relations = [];
 }

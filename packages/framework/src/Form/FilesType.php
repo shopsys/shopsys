@@ -4,53 +4,47 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class FilesType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
+     * @param \Symfony\Component\PropertyAccess\PropertyAccessorInterface $propertyAccessor
      */
     public function __construct(
         protected readonly RouterInterface $router,
+        protected readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
+        protected readonly PropertyAccessorInterface $propertyAccessor,
     ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $view->vars['items'] = $form->getData();
-        $view->vars['sortable'] = $options['sortable'];
-        $view->vars['label_button_add'] = $options['label_button_add'];
-        $view->vars['top_info_title'] = $options['top_info_title'];
-        $view->vars['picker_url'] = $this->router->generate(
-            'admin_filepicker_pickmultiple',
-            ['jsInstanceId' => '__js_instance_id__'],
-        );
+        $builder->addModelTransformer($this->filesIdsToFilesTransformer);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'entry_type' => HiddenType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'delete_empty' => true,
-            'error_bubbling' => false,
-            'sortable' => false,
             'label_button_add' => t('Add files'),
-            'top_info_title' => '',
+            'picker_url' => $this->router->generate(
+                'admin_filepicker_pickmultiple',
+                ['jsInstanceId' => '__js_instance_id__'],
+            ),
+            'item_name' => 'nameWithExtension',
         ]);
     }
 
@@ -59,6 +53,6 @@ class FilesType extends AbstractType
      */
     public function getParent(): ?string
     {
-        return CollectionType::class;
+        return AbstractMultiplePickerType::class;
     }
 }

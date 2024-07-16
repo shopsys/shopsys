@@ -116,4 +116,27 @@ class UploadedFileRepository
 
         return $uploadedFile;
     }
+
+    /**
+     * @param int[] $uploadedFileIds
+     * @throws \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     */
+    public function getByIds(array $uploadedFileIds): array
+    {
+        $uploadedFiles = $this->getUploadedFileRepository()->findBy(['id' => $uploadedFileIds]);
+
+        if (count($uploadedFileIds) !== count($uploadedFiles)) {
+            $foundUploadedFileIds = array_map(fn (UploadedFile $uploadedFile) => $uploadedFile->getId(), $uploadedFiles);
+
+            throw new FileNotFoundException(
+                sprintf(
+                    'UploadedFiles with IDs %s do not exist.',
+                    implode(', ', array_diff($uploadedFileIds, $foundUploadedFileIds)),
+                ),
+            );
+        }
+
+        return $uploadedFiles;
+    }
 }
