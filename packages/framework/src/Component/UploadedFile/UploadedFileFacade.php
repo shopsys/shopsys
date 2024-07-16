@@ -12,9 +12,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\MultipleFilesNotAllowedException;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
-use Shopsys\FrontendApiBundle\Model\Order\CreateOrderResultFactory;
 
 class UploadedFileFacade
 {
@@ -390,5 +388,30 @@ class UploadedFileFacade
     {
         $relation = $this->uploadedFileRelationFactory->create($entityName, $entityId, $file, $position);
         $this->em->persist($relation);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
+     * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData $uploadedFileFormData
+     */
+    public function edit(UploadedFile $file, UploadedFileFormData $uploadedFileFormData)
+    {
+        $uploadedFiles = $uploadedFileFormData->files->uploadedFiles;
+        $filesCount = count($uploadedFiles);
+
+        if ($filesCount > 1) {
+            throw new MultipleFilesNotAllowedException('Too many files uploaded, only single file is expected.');
+        }
+
+        if ($filesCount === 1) {
+            $replacementUploadedFile = array_pop($uploadedFiles);
+            $file->setTemporaryFilename($replacementUploadedFile);
+        }
+
+        $file->setTranslatedNames($uploadedFileFormData->names);
+        $file->setNameAndSlug($uploadedFileFormData->name);
+
+        $this->em->persist($file);
+        $this->em->flush();
     }
 }

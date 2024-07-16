@@ -1,0 +1,57 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'File'|trans }}{% endblock %}
+
+{% block h1 %}{{ 'File'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_uploadedfile_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_save(entity|default(uploadedFile), form) }}
+        {% endblock %}
+    {% endembed %}
+
+    <div class="flex-reverse-column">
+        <div class="flex-row form-bg-color">
+            <div class="width-50-percent">
+                <div class="form-line">
+                    <span class="form-line__label padding-left-20">{{ 'File'|trans }}:</span>
+                    <div class="list-files__wrap">
+                        <ul class="list-files">
+                            <li class="list-files__item full-width">
+                                <div class="list-files__item__in">
+                                    <div class="list-files__item__file">
+                                        {% if uploadedFileExists(uploadedFile) %}
+                                            <a href="{{ uploadedFileUrl(uploadedFile) }}" target="_blank">
+                                                    {{ uploadedFilePreview(uploadedFile) }}
+                                            </a>
+                                        {% else %}
+                                                {{ uploadedFilePreview(uploadedFile) }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="list-files__item__info">
+                                        <span>{{ uploadedFile.nameWithExtension }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="width-50-percent">
+                {{ form_row(form.files) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_rest(form) }}
+        </div>
+    </div>
+
+
+    {{ form_end(form) }}
+{% endblock %}

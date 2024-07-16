@@ -44,7 +44,7 @@ class MultiLocaleFileUploadType extends AbstractType
                         'entry_options' => [
                             'constraints' => [
                                 new Constraints\Length([
-                                    'max' => 245,
+                                    'max' => 255,
                                     'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
                                 ]),
                             ],

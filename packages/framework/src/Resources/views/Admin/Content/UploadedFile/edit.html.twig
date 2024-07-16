@@ -1,0 +1,13 @@
+{% extends '@ShopsysFramework/Admin/Content/UploadedFile/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing file'|trans }} - {{ uploadedFile.getNameWithExtension() }}{% endblock %}
+{% block h1 %}{{ 'Editing file'|trans }} - {{ uploadedFile.getNameWithExtension() }}{% endblock %}
+
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ uploadedFileUrl(uploadedFile) }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">⇩</i>{{ 'Download'|trans }}
+        </a>
+    </div>
+{% endblock %}

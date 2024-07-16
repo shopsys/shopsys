@@ -356,15 +356,10 @@ class SideMenuBuilder
         $menu->addChild(
             'products',
             ['route' => 'admin_uploadedfile_list', 'label' => t('Files overview')],
+        )->addChild(
+            'edit',
+            ['route' => 'admin_uploadedfile_edit', 'label' => t('Editing file'), 'display' => false],
         );
-        //        $menu->addChild(
-        //            'new',
-        //            ['route' => 'admin_product_new', 'label' => t('New file'), 'display' => false],
-        //        );
-        //        $menu->addChild(
-        //            'edit',
-        //            ['route' => 'admin_product_edit', 'label' => t('Editing file'), 'display' => false],
-        //        );
 
         return $menu;
     }
