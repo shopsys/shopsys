@@ -10,6 +10,7 @@ import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
 
 export type ProductsSliderProps = {
@@ -38,6 +39,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
     const isWithControls = products.length > maxVisibleSlides && isWithArrows;
+    const isMobile = !useMediaMin('vl');
 
     useEffect(() => {
         setProductElementRefs(
@@ -68,7 +70,13 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handlePrevious = () => {
         const prevIndex = activeIndex - 1;
-        const newActiveIndex = prevIndex >= 0 ? prevIndex : productElementRefs!.length - 4;
+        const isFirstSlide = activeIndex === 0;
+
+        if (isMobile && isFirstSlide) {
+            return;
+        }
+
+        const newActiveIndex = isFirstSlide ? productElementRefs!.length - 4 : prevIndex;
 
         setActiveIndex(newActiveIndex);
     };
@@ -76,6 +84,11 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     const handleNext = () => {
         const nextIndex = activeIndex + 1;
         const isEndSlide = nextIndex + maxVisibleSlides > productElementRefs!.length;
+
+        if (isMobile && isEndSlide) {
+            return;
+        }
+
         const newActiveIndex = isEndSlide ? 0 : nextIndex;
 
         setActiveIndex(newActiveIndex);
