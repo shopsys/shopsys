@@ -40,7 +40,7 @@ class LocalizedType extends AbstractType
         $defaultLocaleOptions['required'] = $options['required'];
         $otherLocaleOptions['required'] = $options['required'] && $otherLocaleOptions['required'];
 
-        foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
+        foreach ($this->localization->getAdminEnabledLocales() as $locale) {
             if ($locale === $this->localization->getAdminLocale()) {
                 $builder->add(
                     $locale,
