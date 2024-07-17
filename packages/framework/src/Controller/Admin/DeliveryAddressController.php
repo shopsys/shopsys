@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
@@ -79,6 +80,8 @@ class DeliveryAddressController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/new.html.twig', [
             'form' => $form->createView(),
             'customer' => $customer,
+            'backUrl' => $this->resolveBackUrl($customer),
+            'backUrlText' => $this->resolveBackUrlText($customer),
         ]);
     }
 
@@ -134,6 +137,8 @@ class DeliveryAddressController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/edit.html.twig', [
             'form' => $form->createView(),
             'deliveryAddress' => $deliveryAddress,
+            'backUrl' => $this->resolveBackUrl($deliveryAddress->getCustomer()),
+            'backUrlText' => $this->resolveBackUrlText($deliveryAddress->getCustomer()),
         ]);
     }
 
@@ -170,5 +175,41 @@ class DeliveryAddressController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_customer_list');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return string
+     */
+    protected function resolveBackUrl(Customer $customer): string
+    {
+        if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+            $billingAddress = $customer->getBillingAddress();
+
+            return $this->generateUrl('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
+        }
+
+        $customerUsers = $this->customerFacade->getCustomerUsers($customer);
+        $firstCustomerUser = reset($customerUsers);
+
+        return $this->generateUrl('admin_customer_edit', ['id' => $firstCustomerUser->getId()]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return string
+     */
+    protected function resolveBackUrlText(Customer $customer): string
+    {
+        if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+            $billingAddress = $customer->getBillingAddress();
+
+            return t('Back to customer {{ name }}', ['{{ name }}' => $billingAddress->getCompanyName()]);
+        }
+
+        $customerUsers = $this->customerFacade->getCustomerUsers($customer);
+        $firstCustomerUser = reset($customerUsers);
+
+        return t('Back to customer {{ name }}', ['{{ name }}' => $firstCustomerUser->getCustomerUserFullName()]);
     }
 }
