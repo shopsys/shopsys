@@ -20,4 +20,9 @@ class UploadedFileFormData
      * @var string[]
      */
     public $names = [];
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public $products = [];
 }

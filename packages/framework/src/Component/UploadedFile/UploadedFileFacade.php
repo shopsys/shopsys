@@ -58,7 +58,7 @@ class UploadedFileFacade
 
         $entityName = $uploadedFileEntityConfig->getEntityName();
 
-        $currentRelations = $this->uploadedFileRelationRepository->getRelationsForUploadedFiles(
+        $currentRelations = $this->uploadedFileRelationRepository->getByEntityNameAndIdAndUploadedFiles(
             $entityName,
             $this->getEntityId($entity),
             $orderedFiles,
@@ -103,18 +103,8 @@ class UploadedFileFacade
             );
         }
 
-        $relations = $uploadedFileData->relations;
-
         $position = $existingFilesCount + $uploadedFilesCount;
-
-        foreach ($relations as $relation) {
-            $this->createRelation(
-                $entityName,
-                $entity->getId(),
-                $relation,
-                $position++,
-            );
-        }
+        $this->createRelations($uploadedFileData, $currentRelations, $entityName, $entity, $position);
 
         $this->deleteFiles($entity, $uploadedFileData->filesToDelete);
     }
@@ -411,6 +401,8 @@ class UploadedFileFacade
         $file->setTranslatedNames($uploadedFileFormData->names);
         $file->setNameAndSlug($uploadedFileFormData->name);
 
+        $this->updateRelationsForUploadedFileByEntities($file, $uploadedFileFormData->products);
+
         $this->em->persist($file);
         $this->em->flush();
     }
@@ -422,5 +414,78 @@ class UploadedFileFacade
     {
         $this->em->remove($uploadedFile);
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
+     * @return int[]
+     */
+    public function getEntityIdsForUploadedFile(UploadedFile $uploadedFile): array
+    {
+        return $this->uploadedFileRelationRepository->getEntityIdsForUploadedFile($uploadedFile);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
+     * @param object[] $entities
+     */
+    protected function updateRelationsForUploadedFileByEntities(UploadedFile $file, array $entities): void
+    {
+        $currentRelationsEntityIds = $this->uploadedFileRelationRepository->getEntityIdsForUploadedFile($file);
+
+        $relationsEntityIds = array_unique(array_map(fn (object $entity) => $this->getEntityId($entity), $entities));
+        $idsToAdd = array_diff($relationsEntityIds, $currentRelationsEntityIds);
+        $idsToRemove = array_diff($currentRelationsEntityIds, $relationsEntityIds);
+
+        $positions = array_fill_keys($idsToAdd, -1);
+        $positions = array_replace(
+            $positions,
+            $this->uploadedFileRelationRepository->maxPositionsByEntityNameAndIds($file->getEntityName(), $idsToAdd),
+        );
+
+        foreach ($idsToAdd as $id) {
+            $this->createRelation($file->getEntityName(), $id, $file, ++$positions[$id]);
+        }
+
+        $this->uploadedFileRelationRepository->deleteRelationsByEntityNameAndIdsAndUploadedFile(
+            $file->getEntityName(),
+            $idsToRemove,
+            $file,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelation[] $currentRelations
+     * @param string $entityName
+     * @param object $entity
+     * @param int $startPosition
+     */
+    protected function createRelations(
+        UploadedFileData $uploadedFileData,
+        array $currentRelations,
+        string $entityName,
+        object $entity,
+        int $startPosition,
+    ): void {
+        $relations = $uploadedFileData->relations;
+
+        $currentRelationsIds = array_map(
+            fn (UploadedFileRelation $relation) => $relation->getUploadedFile()->getId(),
+            $currentRelations,
+        );
+
+        foreach ($relations as $uploadedFile) {
+            if (in_array($uploadedFile->getId(), $currentRelationsIds, true)) {
+                continue;
+            }
+
+            $this->createRelation(
+                $entityName,
+                $entity->getId(),
+                $uploadedFile,
+                $startPosition++,
+            );
+        }
     }
 }
