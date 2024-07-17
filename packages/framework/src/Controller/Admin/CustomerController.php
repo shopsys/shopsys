@@ -338,6 +338,34 @@ class CustomerController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/customer/delete-all/{id}', name: 'admin_customer_delete_all', requirements: ['id' => '\d+'])]
+    public function deleteAllAction(int $id): Response
+    {
+        $customer = $this->customerFacade->getById($id);
+
+        try {
+            $fullName = $customer->getBillingAddress()->getCompanyName();
+
+            $this->customerFacade->deleteAll($customer);
+
+            $this->addSuccessFlashTwig(
+                t('Customer <strong>{{ name }}</strong> deleted'),
+                [
+                    'name' => $fullName,
+                ],
+            );
+        } catch (CustomerUserNotFoundException $ex) {
+            $this->addErrorFlash(t('Selected customer doesn\'t exist.'));
+        }
+
+        return $this->redirectToRoute('admin_customer_list');
+    }
+
+    /**
      * @param array $row
      * @return array
      */
