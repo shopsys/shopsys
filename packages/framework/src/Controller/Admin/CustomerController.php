@@ -314,7 +314,7 @@ class CustomerController extends AdminBaseController
         $customer = $customerUser->getCustomer();
 
         try {
-            $fullName = $customerUser->getFullName();
+            $fullName = $customerUser->getCustomerUserFullName();
 
             $this->customerUserFacade->delete($id);
 
