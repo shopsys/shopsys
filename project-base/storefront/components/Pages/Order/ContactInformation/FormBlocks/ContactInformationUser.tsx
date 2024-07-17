@@ -1,3 +1,4 @@
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -14,35 +15,15 @@ export const ContactInformationUser: FC = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
 
     return (
-        <>
-            <div className="h4 mb-3">{t('Customer information')}</div>
-            <TextInputControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.telephone.name}
-                render={(textInput) => (
-                    <FormLine bottomGap className="flex-none lg:w-[65%]">
-                        {textInput}
-                    </FormLine>
-                )}
-                textInputProps={{
-                    label: formMeta.fields.telephone.label,
-                    required: true,
-                    type: 'tel',
-                    autoComplete: 'tel',
-                    onChange: (event) => updateContactInformation({ telephone: event.currentTarget.value }),
-                }}
-            />
-            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+        <FormBlockWrapper>
+            <FormHeading>{t('Customer information')}</FormHeading>
+
+            <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.firstName.name}
-                    render={(textInput) => (
-                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                            {textInput}
-                        </FormLine>
-                    )}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -55,11 +36,7 @@ export const ContactInformationUser: FC = () => {
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.lastName.name}
-                    render={(textInput) => (
-                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                            {textInput}
-                        </FormLine>
-                    )}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
@@ -69,6 +46,19 @@ export const ContactInformationUser: FC = () => {
                     }}
                 />
             </FormColumn>
-        </>
+            <TextInputControlled
+                control={formProviderMethods.control}
+                formName={formMeta.formName}
+                name={formMeta.fields.telephone.name}
+                render={(textInput) => <FormLine>{textInput}</FormLine>}
+                textInputProps={{
+                    label: formMeta.fields.telephone.label,
+                    required: true,
+                    type: 'tel',
+                    autoComplete: 'tel',
+                    onChange: (event) => updateContactInformation({ telephone: event.currentTarget.value }),
+                }}
+            />
+        </FormBlockWrapper>
     );
 };

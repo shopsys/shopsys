@@ -75,40 +75,41 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     };
 
     return (
-        <div className="flex w-full flex-col">
+        <div className="grid vl:grid-cols-2 w-full gap-4">
             {deliveryAddresses.map((address) => (
                 <div
                     key={address.uuid}
                     className={twJoin(
-                        'mb-5 flex w-full items-center justify-between rounded border border-skyBlue p-5',
+                        'relative flex w-full justify-between rounded-md bg-white border-2 border-skyBlue p-4',
                         defaultDeliveryAddress?.uuid === address.uuid
                             ? 'border-primary bg-whiteSnow'
                             : 'cursor-pointer',
                     )}
                     onClick={() => setDefaultItemHandler(address.uuid)}
                 >
-                    <div>
+                    <div className="flex flex-col">
                         <strong className="mr-1">
                             {address.firstName} {address.lastName}
                         </strong>
-                        {address.companyName}
-                        <br />
-                        {address.street}, {address.city}, {address.postcode}
-                        <br />
-                        {address.country}
-                        <br />
+                        <span>{address.companyName}</span>
+                        <span>
+                            {address.street}, {address.city}, {address.postcode}
+                        </span>
+                        <span>{address.country}</span>
                         {address.telephone && (
-                            <>
-                                <PhoneIcon className="mr-1" />
+                            <div className="flex gap-2 items-center">
                                 {address.telephone}
-                            </>
+                                <PhoneIcon className="w-4" />
+                            </div>
                         )}
                     </div>
 
-                    <RemoveIcon
-                        className="w-7 shrink-0 cursor-pointer p-2 text-graySlate hover:text-red"
-                        onClick={() => openDeleteAddressPopup(address.uuid)}
-                    />
+                    <button className="px-2 h-fit absolute right-1 top-1">
+                        <RemoveIcon
+                            className="w-3 h-3 shrink-0 cursor-pointer text-red"
+                            onClick={() => openDeleteAddressPopup(address.uuid)}
+                        />
+                    </button>
                 </div>
             ))}
         </div>

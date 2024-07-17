@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { Translate } from 'next-translate';
@@ -45,36 +45,44 @@ export const LoginContent: FC = () => {
     };
 
     return (
-        <SimpleLayout heading={t('Login')}>
+        <Webline className="flex flex-col items-center">
+            <h1 className="max-w-3xl w-full">{t('Login')}</h1>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
-                    <TextInputControlled
-                        control={formProviderMethods.control}
-                        formName="login-form"
-                        name="email"
-                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                        textInputProps={{
-                            label: t('Your email'),
-                            required: true,
-                            type: 'email',
-                            autoComplete: 'email',
-                        }}
-                    />
-                    <PasswordInputControlled
-                        control={formProviderMethods.control}
-                        formName="login-form"
-                        name="password"
-                        render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                        passwordInputProps={{
-                            label: t('Password'),
-                        }}
-                    />
-                    <div className="mt-8 flex w-full justify-center">
-                        <SubmitButton tid={TIDs.pages_login_submit}>{t('Log in')}</SubmitButton>
-                    </div>
+                <Form
+                    className="w-full flex justify-center"
+                    onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}
+                >
+                    <FormContentWrapper>
+                        <FormBlockWrapper>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName="login-form"
+                                name="email"
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: t('Your email'),
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
+                            />
+                            <PasswordInputControlled
+                                control={formProviderMethods.control}
+                                formName="login-form"
+                                name="password"
+                                render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                                passwordInputProps={{
+                                    label: t('Password'),
+                                }}
+                            />
+                            <FormButtonWrapper>
+                                <SubmitButton tid={TIDs.pages_login_submit}>{t('Log in')}</SubmitButton>
+                            </FormButtonWrapper>
+                        </FormBlockWrapper>
+                    </FormContentWrapper>
                 </Form>
             </FormProvider>
-        </SimpleLayout>
+        </Webline>
     );
 };
 

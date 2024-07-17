@@ -14,7 +14,7 @@ export const Wishlist: FC = () => {
 
     return (
         <>
-            <h1 className="mb-3">{title}</h1>
+            <h1>{title}</h1>
 
             {isProductListFetching && <SkeletonModuleWishlist />}
 

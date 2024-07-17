@@ -79,7 +79,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <div className="flex flex-1 flex-col">
                     <Adverts className="mt-6" currentCategory={category} positionName="productList" />
 
-                    <h1 className="mb-3">{title}</h1>
+                    <h1>{title}</h1>
 
                     {!!category.description && currentPage === 1 && (
                         <div dangerouslySetInnerHTML={{ __html: category.description }} />

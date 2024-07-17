@@ -1,5 +1,5 @@
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -36,90 +36,83 @@ export const ContactInformationDeliveryAddress: FC = () => {
     }
 
     return (
-        <>
-            <div className="h4 mb-3">{t('Delivery address')}</div>
+        <FormBlockWrapper>
+            <FormHeading>{t('Delivery address')}</FormHeading>
 
             <CheckboxControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.isDeliveryAddressDifferentFromBilling.name}
+                render={(checkbox) => <FormLine>{checkbox}</FormLine>}
                 checkboxProps={{
                     label: formMeta.fields.isDeliveryAddressDifferentFromBilling.label,
                 }}
-                render={(checkbox) => (
-                    <FormLine className="flex-none lg:w-[65%]">
-                        <ChoiceFormLine>{checkbox}</ChoiceFormLine>
-                    </FormLine>
-                )}
                 onChange={(event) =>
                     updateContactInformation({ isDeliveryAddressDifferentFromBilling: event.target.checked })
                 }
             />
 
-            <div className="pb-10">
+            <div>
                 {isDeliveryAddressDifferentFromBilling && (
                     <div>
                         {showAddressSelection && (
-                            <FormLine bottomGap className="flex-none lg:w-[65%]">
-                                <div className="flex w-full flex-col">
-                                    <RadiobuttonGroup
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.deliveryAddressUuid.name}
-                                        radiobuttons={[
-                                            ...user.deliveryAddresses.map((deliveryAddress) => ({
-                                                label: (
-                                                    <p>
-                                                        <strong className="mr-1">
-                                                            {deliveryAddress.firstName} {deliveryAddress.lastName}
-                                                        </strong>
-                                                        {deliveryAddress.companyName}
-                                                        <br />
-                                                        {deliveryAddress.telephone}
-                                                        <br />
+                            <div className="flex w-full flex-col">
+                                <RadiobuttonGroup
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.deliveryAddressUuid.name}
+                                    radiobuttons={[
+                                        ...user.deliveryAddresses.map((deliveryAddress) => ({
+                                            label: (
+                                                <p className="flex flex-col">
+                                                    <strong className="mr-1">
+                                                        {deliveryAddress.firstName} {deliveryAddress.lastName}
+                                                    </strong>
+                                                    <span>{deliveryAddress.companyName}</span>
+                                                    <span>{deliveryAddress.telephone}</span>
+                                                    <span>
                                                         {deliveryAddress.street}, {deliveryAddress.city},{' '}
-                                                        {deliveryAddress.postcode}, {deliveryAddress.country}
-                                                    </p>
-                                                ),
-                                                value: deliveryAddress.uuid,
-                                            })),
-                                            {
-                                                label: (
-                                                    <p>
-                                                        <strong>{t('Different delivery address')}</strong>
-                                                    </p>
-                                                ),
-                                                value: 'new-delivery-address',
-                                                id: '-new-delivery-address',
-                                            },
-                                        ]}
-                                        render={(radiobutton, key) => (
-                                            <div
-                                                key={key}
-                                                className="relative mt-4 flex w-full flex-wrap rounded border-2 border-skyBlue p-5"
-                                            >
-                                                {radiobutton}
-                                            </div>
-                                        )}
-                                        onChange={(event) =>
-                                            updateContactInformation({ deliveryAddressUuid: event.currentTarget.value })
-                                        }
-                                    />
-                                </div>
-                            </FormLine>
+                                                        {deliveryAddress.postcode}
+                                                    </span>
+                                                    <span>{deliveryAddress.country}</span>
+                                                </p>
+                                            ),
+                                            value: deliveryAddress.uuid,
+                                            labelWrapperClassName: 'flex-row-reverse',
+                                        })),
+                                        {
+                                            label: (
+                                                <p>
+                                                    <strong>{t('Different delivery address')}</strong>
+                                                </p>
+                                            ),
+                                            value: 'new-delivery-address',
+                                            id: '-new-delivery-address',
+                                            labelWrapperClassName: 'flex-row-reverse',
+                                        },
+                                    ]}
+                                    render={(radiobutton, key) => (
+                                        <div
+                                            key={key}
+                                            className="relative mt-4 flex w-full flex-wrap rounded p-5 bg-white border-2 border-skyBlue"
+                                        >
+                                            {radiobutton}
+                                        </div>
+                                    )}
+                                    onChange={(event) =>
+                                        updateContactInformation({ deliveryAddressUuid: event.currentTarget.value })
+                                    }
+                                />
+                            </div>
                         )}
                         {(!user?.deliveryAddresses.length || isNewDeliveryAddressSelected || !!pickupPlace) && (
                             <>
-                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                <FormColumn className="mt-4">
                                     <TextInputControlled
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.deliveryFirstName.name}
-                                        render={(textInput) => (
-                                            <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                                {textInput}
-                                            </FormLine>
-                                        )}
+                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.deliveryFirstName.label,
                                             required: true,
@@ -137,11 +130,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.deliveryLastName.name}
-                                        render={(textInput) => (
-                                            <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                                {textInput}
-                                            </FormLine>
-                                        )}
+                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.deliveryLastName.label,
                                             required: true,
@@ -160,11 +149,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         name={formMeta.fields.deliveryCompanyName.name}
-                                        render={(textInput) => (
-                                            <FormLine bottomGap className="flex-none lg:w-[65%]">
-                                                {textInput}
-                                            </FormLine>
-                                        )}
+                                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                         textInputProps={{
                                             label: formMeta.fields.deliveryCompanyName.label,
                                             type: 'text',
@@ -181,11 +166,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
                                     name={formMeta.fields.deliveryTelephone.name}
-                                    render={(textInput) => (
-                                        <FormLine bottomGap className="flex-none lg:w-[65%]">
-                                            {textInput}
-                                        </FormLine>
-                                    )}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.deliveryTelephone.label,
                                         required: true,
@@ -204,11 +185,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             control={formProviderMethods.control}
                                             formName={formMeta.formName}
                                             name={formMeta.fields.deliveryStreet.name}
-                                            render={(textInput) => (
-                                                <FormLine bottomGap className="flex-none lg:w-[65%]">
-                                                    {textInput}
-                                                </FormLine>
-                                            )}
+                                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                             textInputProps={{
                                                 label: formMeta.fields.deliveryStreet.label,
                                                 required: true,
@@ -221,7 +198,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             }}
                                         />
 
-                                        <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormColumn>
                                             <TextInputControlled
                                                 control={formProviderMethods.control}
                                                 formName={formMeta.formName}
@@ -244,7 +221,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 formName={formMeta.formName}
                                                 name={formMeta.fields.deliveryPostcode.name}
                                                 render={(textInput) => (
-                                                    <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
+                                                    <FormLine bottomGap isSmallInput>
                                                         {textInput}
                                                     </FormLine>
                                                 )}
@@ -261,7 +238,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             />
                                         </FormColumn>
 
-                                        <FormLine className="flex-none lg:w-[65%]">
+                                        <FormLine>
                                             <Controller
                                                 name={formMeta.fields.deliveryCountry.name}
                                                 render={({ fieldState: { invalid, error }, field }) => (
@@ -305,6 +282,6 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     </div>
                 )}
             </div>
-        </>
+        </FormBlockWrapper>
     );
 };

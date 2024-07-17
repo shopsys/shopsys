@@ -21,7 +21,7 @@ const PersonalDataOverviewPage: FC = () => {
     const [personalDataOverviewUrl] = getInternationalizedStaticUrls(['/personal-data-overview'], url);
     const [personalDataPageTextResult] = usePersonalDataPageTextQuery();
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Personal Data Overview'), slug: personalDataOverviewUrl },
+        { __typename: 'Link', name: t('Personal data overview'), slug: personalDataOverviewUrl },
     ];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
@@ -30,7 +30,7 @@ const PersonalDataOverviewPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal Data Overview')}>
+            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal data overview')}>
                 <PersonalDataOverviewContent
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
                 />

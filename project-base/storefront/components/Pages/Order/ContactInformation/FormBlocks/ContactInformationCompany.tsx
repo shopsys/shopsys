@@ -1,3 +1,4 @@
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -13,17 +14,13 @@ export const ContactInformationCompany: FC = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
 
     return (
-        <>
-            <div className="h4 mb-3">{t('Company data')}</div>
+        <FormBlockWrapper>
+            <FormHeading>{t('Company data')}</FormHeading>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.companyName.name}
-                render={(textInput) => (
-                    <FormLine bottomGap className="flex-none lg:w-[65%]">
-                        {textInput}
-                    </FormLine>
-                )}
+                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.companyName.label,
                     required: true,
@@ -36,11 +33,7 @@ export const ContactInformationCompany: FC = () => {
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.companyNumber.name}
-                render={(textInput) => (
-                    <FormLine bottomGap className="flex-none lg:w-[65%]">
-                        {textInput}
-                    </FormLine>
-                )}
+                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.companyNumber.label,
                     required: true,
@@ -52,11 +45,7 @@ export const ContactInformationCompany: FC = () => {
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.companyTaxNumber.name}
-                render={(textInput) => (
-                    <FormLine bottomGap className="flex-none lg:w-[65%]">
-                        {textInput}
-                    </FormLine>
-                )}
+                render={(textInput) => <FormLine>{textInput}</FormLine>}
                 textInputProps={{
                     label: formMeta.fields.companyTaxNumber.label,
                     required: false,
@@ -64,6 +53,6 @@ export const ContactInformationCompany: FC = () => {
                     onChange: (event) => updateContactInformation({ companyTaxNumber: event.currentTarget.value }),
                 }}
             />
-        </>
+        </FormBlockWrapper>
     );
 };

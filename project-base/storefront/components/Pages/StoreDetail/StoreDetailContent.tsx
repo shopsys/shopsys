@@ -34,7 +34,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
         <Webline className="mb-10">
             <div className="flex flex-col vl:flex-row vl:gap-5">
                 <div className="text-center vl:order-2 vl:flex-1">
-                    <h1 className="mb-3">{store.storeName}</h1>
+                    <h1>{store.storeName}</h1>
 
                     <OpeningStatus isOpen={store.openingHours.isOpen} />
 

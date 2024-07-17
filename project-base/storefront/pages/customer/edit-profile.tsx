@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { CommonLayout } from 'components/Layout/CommonLayout';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfileContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -32,13 +31,11 @@ const EditProfilePage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout breadcrumbs={breadcrumbs} title={t('Edit profile')}>
-                <SimpleLayout heading={t('Edit profile')}>
-                    {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
-                        <EditProfileContent currentCustomerUser={currentCustomerUserData} />
-                    )}
-                </SimpleLayout>
-            </CommonLayout>
+            <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('Edit profile')} title={t('Edit profile')}>
+                {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
+                    <EditProfileContent currentCustomerUser={currentCustomerUserData} />
+                )}
+            </CustomerLayout>
         </>
     );
 };

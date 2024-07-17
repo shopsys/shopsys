@@ -1,8 +1,7 @@
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form } from 'components/Forms/Form/Form';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
+import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TIDs } from 'cypress/tids';
@@ -115,44 +114,47 @@ export const RegistrationAfterOrder: FC = () => {
 
             <div className="flex w-full flex-col items-center justify-center p-5 lg:w-1/2 lg:px-10 lg:py-8">
                 <div className="w-full lg:max-w-sm">
-                    <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
-                        <FormProvider {...formProviderMethods}>
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.password.name}
-                                passwordInputProps={{
-                                    label: formMeta.fields.password.label,
-                                }}
-                                render={(passwordInput) => (
-                                    <div className="mb-7">
-                                        <FormLine>{passwordInput}</FormLine>
-                                    </div>
-                                )}
-                            />
-                            <CheckboxControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.privacyPolicy.name}
-                                checkboxProps={{
-                                    label: formMeta.fields.privacyPolicy.label,
-                                }}
-                                render={(checkbox) => (
-                                    <div className="mb-7">
-                                        <ChoiceFormLine>{checkbox}</ChoiceFormLine>
-                                    </div>
-                                )}
-                            />
+                    <FormProvider {...formProviderMethods}>
+                        <Form
+                            className="flex flex-col gap-5"
+                            onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
+                        >
+                            <FormContentWrapper className="vl:px-5">
+                                <FormBlockWrapper>
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.password.name}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.password.label,
+                                        }}
+                                        render={(passwordInput) => (
+                                            <div className="mb-7">
+                                                <FormLine>{passwordInput}</FormLine>
+                                            </div>
+                                        )}
+                                    />
+                                    <CheckboxControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.privacyPolicy.name}
+                                        render={(checkbox) => <FormLine>{checkbox}</FormLine>}
+                                        checkboxProps={{
+                                            label: formMeta.fields.privacyPolicy.label,
+                                        }}
+                                    />
+                                </FormBlockWrapper>
+                            </FormContentWrapper>
                             <SubmitButton
+                                className="w-full"
                                 isDisabled={isInvalidRegistrationRef.current}
                                 isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                style={{ width: '100%' }}
                                 tid={TIDs.registration_after_order_submit_button}
                             >
                                 {t('Create account')}
                             </SubmitButton>
-                        </FormProvider>
-                    </Form>
+                        </Form>
+                    </FormProvider>
                 </div>
             </div>
         </div>

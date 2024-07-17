@@ -48,7 +48,7 @@ h6,
 
 h1,
 .h1 {
-    @apply text-3xl/tight tracking-tight lg:text-4xl/tight;
+    @apply mb-3 text-3xl/tight tracking-tight lg:text-4xl/tight vl:mb-5;
 }
 
 h2,
@@ -127,7 +127,7 @@ input[type='number'] {
 }
 
 .select__control {
-    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded !border-2 !border-skyBlue !shadow-none hover:!border-2 hover:!border-skyBlue;
+    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-md !border-2 !border-skyBlue !shadow-none hover:!border-2 hover:!border-skyBlue;
 }
 
 .select__indicator {
@@ -135,7 +135,7 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !z-[3] !m-0 !overflow-hidden !rounded-b !border-2 !border-t-0 !border-skyBlue !shadow-none;
+    @apply !z-[3] !m-0 !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-skyBlue !shadow-none;
 }
 
 .select__menu-list {

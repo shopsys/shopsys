@@ -19,7 +19,7 @@ export const CustomerContent: FC = () => {
         <>
             <Webline>
                 <div className="text-center">
-                    <h1 className="mb-3">{t('Customer')}</h1>
+                    <h1>{t('Customer')}</h1>
                 </div>
             </Webline>
 

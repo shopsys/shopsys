@@ -1,3 +1,4 @@
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
@@ -15,13 +16,14 @@ export const ContactInformationCustomer: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
 
     return (
-        <>
-            <div className="h4 mb-3">{formMeta.fields.customer.label}</div>
-            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+        <FormBlockWrapper>
+            <FormHeading>{formMeta.fields.customer.label}</FormHeading>
+            <FormColumn className="gap-2 vl:gap-0">
                 <RadiobuttonGroup
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     name={formMeta.fields.customer.name}
+                    render={(radiobutton, key) => <FormLine key={key}>{radiobutton}</FormLine>}
                     radiobuttons={[
                         {
                             label: t('Private person'),
@@ -32,11 +34,6 @@ export const ContactInformationCustomer: FC = () => {
                             value: CustomerTypeEnum.CompanyCustomer,
                         },
                     ]}
-                    render={(radiobutton, key) => (
-                        <FormLine key={key} bottomGap className="w-full flex-none lg:w-1/2">
-                            {radiobutton}
-                        </FormLine>
-                    )}
                     onChange={(event) =>
                         updateContactInformation({
                             customer:
@@ -47,6 +44,6 @@ export const ContactInformationCustomer: FC = () => {
                     }
                 />
             </FormColumn>
-        </>
+        </FormBlockWrapper>
     );
 };

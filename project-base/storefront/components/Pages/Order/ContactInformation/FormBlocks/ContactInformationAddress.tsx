@@ -1,3 +1,4 @@
+import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -19,9 +20,9 @@ export const ContactInformationAddress: FC = () => {
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     return (
-        <>
-            <div className="h4 mb-3">{t('Billing address')}</div>
-            <FormLine className="flex-none lg:w-[65%]">
+        <FormBlockWrapper>
+            <FormHeading>{t('Billing address')}</FormHeading>
+            <FormLine>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
@@ -36,7 +37,7 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormLine>
-            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+            <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
@@ -55,7 +56,7 @@ export const ContactInformationAddress: FC = () => {
                     formName={formMeta.formName}
                     name={formMeta.fields.postcode.name}
                     render={(textInput) => (
-                        <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
+                        <FormLine bottomGap isSmallInput>
                             {textInput}
                         </FormLine>
                     )}
@@ -68,7 +69,7 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormColumn>
-            <FormLine className="flex-none lg:w-[65%]">
+            <FormLine>
                 <Controller
                     name={formMeta.fields.country.name}
                     render={({ fieldState: { invalid, error }, field }) => (
@@ -90,6 +91,6 @@ export const ContactInformationAddress: FC = () => {
                     )}
                 />
             </FormLine>
-        </>
+        </FormBlockWrapper>
     );
 };

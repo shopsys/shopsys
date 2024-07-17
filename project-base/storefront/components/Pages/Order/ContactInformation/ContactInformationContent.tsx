@@ -9,7 +9,7 @@ import {
 } from './contactInformationUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
-import { Form } from 'components/Forms/Form/Form';
+import { Form, FormContentWrapper } from 'components/Forms/Form/Form';
 import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
@@ -30,12 +30,11 @@ export const ContactInformationWrapper: FC = () => {
         <OrderContentWrapper activeStep={3}>
             <FormProvider {...formProviderMethods}>
                 <Form tid={TIDs.contact_information_form} onSubmit={formProviderMethods.handleSubmit(createOrder)}>
-                    <ContactInformationEmail />
-
-                    {shouldDisplayContactInformationForm && <ContactInformationFormContent />}
-
+                    <FormContentWrapper>
+                        <ContactInformationEmail />
+                        {shouldDisplayContactInformationForm && <ContactInformationFormContent />}
+                    </FormContentWrapper>
                     <ContactInformationSendOrderButton />
-
                     <OrderAction
                         withGapBottom
                         backStepClickHandler={goToPreviousStepFromContactInformationPage}
