@@ -2536,6 +2536,8 @@ export type TypeRemovePromoCodeFromCartInput = {
 /** Represents search input object */
 export type TypeSearchInput = {
   isAutocomplete: Scalars['Boolean']['input'];
+  /** Ordered list of parameters used in Luigi's Box to ensure same order of parameters in search results */
+  parameters: InputMaybe<Array<Scalars['Uuid']['input']>>;
   search: Scalars['String']['input'];
   /** Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/) */
   userIdentifier: Scalars['Uuid']['input'];

@@ -14,6 +14,7 @@ use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxRecommendationBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData;
 use Shopsys\LuigisBoxBundle\Model\Endpoint\LuigisBoxEndpointEnum;
+use Shopsys\LuigisBoxBundle\Model\Product\Filter\LuigisBoxFacetsToProductFilterOptionsMapper;
 use Shopsys\LuigisBoxBundle\Model\Type\TypeInLuigisBoxEnum;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 use Symfony\Bridge\Monolog\Logger;
@@ -22,7 +23,7 @@ use Throwable;
 
 class LuigisBoxClient
 {
-    protected const int COUNT_OF_DYNAMIC_PARAMETER_FILTERS = 5;
+    protected const int COUNT_OF_DYNAMIC_PARAMETER_FILTERS = 15;
 
     /**
      * @param string $luigisBoxApiUrl
@@ -201,7 +202,7 @@ class LuigisBoxClient
                 '&q=' . urlencode($luigisBoxBatchLoadData->getQuery()) .
                 '&remove_fields=nested' .
                 '&size=' . $this->getMainTypeLimit($limitsByType) .
-                '&dynamic_facets_size=' . static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS;
+                '&dynamic_facets_size=' . $this->getNumberOfDynamicalFacetsWithoutAppliedFilterFacets($luigisBoxBatchLoadData);
 
             if ($luigisBoxBatchLoadData->getPage() > 0) {
                 $url .= '&from=' . $luigisBoxBatchLoadData->getPage();
@@ -426,5 +427,25 @@ class LuigisBoxClient
         }
 
         return implode(',', $luigisBoxLimits);
+    }
+
+    /**
+     * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData
+     * @return int
+     */
+    protected function getNumberOfDynamicalFacetsWithoutAppliedFilterFacets(
+        LuigisBoxSearchBatchLoadData $luigisBoxBatchLoadData,
+    ): int {
+        if ($luigisBoxBatchLoadData->getType() === TypeInLuigisBoxEnum::PRODUCT) {
+            return max(
+                0,
+                static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS - (
+                    count($luigisBoxBatchLoadData->getFacetNames()) -
+                    count(LuigisBoxFacetsToProductFilterOptionsMapper::PRODUCT_FACET_NAMES)
+                ),
+            );
+        }
+
+        return static::COUNT_OF_DYNAMIC_PARAMETER_FILTERS;
     }
 }
