@@ -12,10 +12,6 @@ services:
         autowire: true
         public: false
 
-    Akeneo\Pim\ApiClient\AkeneoPimClientInterface:
-        factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
-        lazy: true
-
     App\:
         exclude:
             - '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
@@ -28,14 +24,6 @@ services:
     App\Command\ReplaceCdnDomainUrlCommand:
         arguments:
             $cdnDomainUrl: '%env(CDN_DOMAIN)%'
-
-    App\Component\Akeneo\AkeneoClientFactory: ~
-
-    App\Component\Akeneo\AkeneoConfig:
-        arguments:
-            $akeneoConfig: "%akeneo_config%"
-
-    App\Component\Akeneo\Transfer\AkeneoImportTransferDependency: ~
 
     App\Component\DataBridge\BridgeConfig:
         arguments:
@@ -162,8 +150,6 @@ services:
     App\Model\Product\Search\FilterQueryFactory: ~
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
-
-    App\Model\Product\Transfer\Akeneo\TransferredProductProcessor: ~
 
     App\Model\Sitemap\SitemapFacade:
         arguments:
@@ -582,18 +568,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer:
         alias: App\Model\Product\Search\ProductFilterDataToQueryTransformer
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory:
-        alias: App\Model\Product\Unit\UnitDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade:
-        alias: App\Model\Product\Unit\UnitFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory:
-        alias: App\Model\Product\Unit\UnitGridFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository:
-        alias: App\Model\Product\Unit\UnitRepository
 
     Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
         alias: App\Model\Security\LoginAsUserFacade

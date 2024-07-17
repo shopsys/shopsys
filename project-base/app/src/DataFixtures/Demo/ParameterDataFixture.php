@@ -10,7 +10,6 @@ use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroup;
-use App\Model\Product\Unit\Unit;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
@@ -21,6 +20,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -239,7 +239,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                     $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
                     $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
                 ],
-                Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
             ),
             self::PARAM_MATERIAL => new ParameterDataFixtureData(
                 t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -247,7 +246,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                     $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
                     $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class),
                 ],
-                akeneoType: Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
             ),
             self::PARAM_WARRANTY_IN_YEARS => new ParameterDataFixtureData(
                 t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -284,7 +282,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                     $parameterNamesByLocale,
                     $parameterDataValue->asFilterInCategories,
                     $parameterDataValue->parameterType,
-                    $parameterDataValue->akeneoType,
                     $parameterDataValue->parameterGroup,
                     $parameterDataValue->unit,
                 );
@@ -304,9 +301,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string[] $namesByLocale
      * @param \App\Model\Category\Category[] $asFilterInCategories
      * @param string|null $parameterType
-     * @param string|null $akeneoType
      * @param \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup
-     * @param \App\Model\Product\Unit\Unit|null $unit
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
      * @return \App\Model\Product\Parameter\Parameter
      */
     private function createParameter(
@@ -314,7 +310,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         array $namesByLocale,
         array $asFilterInCategories = [],
         ?string $parameterType = null,
-        ?string $akeneoType = null,
         ?ParameterGroup $parameterGroup = null,
         ?Unit $unit = null,
     ): Parameter {
@@ -326,7 +321,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $parameterData->parameterType = $parameterType;
         }
 
-        $parameterData->akeneoType = $akeneoType;
         $parameterData->name = $namesByLocale;
         $parameterData->group = $parameterGroup;
         $parameterData->unit = $unit;

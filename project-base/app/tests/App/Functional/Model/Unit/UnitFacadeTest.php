@@ -9,9 +9,9 @@ use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Unit\Unit;
-use App\Model\Product\Unit\UnitData;
-use App\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
+use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
+use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class UnitFacadeTest extends TransactionFunctionalTestCase

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Product\Unit\Unit;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -29,8 +29,8 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const UNIT_METER = 'unit_meter';
 
     /**
-     * @param \App\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \App\Model\Product\Unit\UnitDataFactory $unitDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
@@ -62,62 +62,53 @@ class UnitDataFixture extends AbstractReferenceFixture
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'GRAM';
         $this->createUnit($unitData, self::UNIT_GRAM);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('cm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'CENTIMETER';
         $this->createUnit($unitData, self::UNIT_CENTIMETER);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'INCH';
         $this->createUnit($unitData, self::UNIT_INCH);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('t', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'TON';
         $this->createUnit($unitData, self::UNIT_TON);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('kW', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'KILOWATT';
         $this->createUnit($unitData, self::UNIT_KILOWATT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'KILOGRAM';
         $this->createUnit($unitData, self::UNIT_KILOGRAM);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'WATT';
         $this->createUnit($unitData, self::UNIT_WATT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('V', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'VOLT';
         $this->createUnit($unitData, self::UNIT_VOLT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('m', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $unitData->akeneoCode = 'METER';
         $this->createUnit($unitData, self::UNIT_METER);
 
         $this->setPiecesAsDefaultUnit();
     }
 
     /**
-     * @param \App\Model\Product\Unit\UnitData $unitData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @param string|null $referenceName
      */
     private function createUnit(UnitData $unitData, ?string $referenceName = null)

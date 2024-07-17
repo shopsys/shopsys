@@ -27,34 +27,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @method setTranslations(\App\Model\Category\CategoryData $categoryData)
  * @method setDomains(\App\Model\Category\CategoryData $categoryData)
  * @method createDomains(\App\Model\Category\CategoryData $categoryData)
+ * @method __construct(\App\Model\Category\CategoryData $categoryData)
  */
 class Category extends BaseCategory
 {
     private const CATEGORY_LEVEL_0 = 0;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
-     */
-    protected $akeneoCode;
-
-    /**
-     * @param \App\Model\Category\CategoryData $categoryData
-     */
-    public function __construct(BaseCategoryData $categoryData)
-    {
-        parent::__construct($categoryData);
-
-        $this->akeneoCode = $categoryData->akeneoCode;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAkeneoCode(): ?string
-    {
-        return $this->akeneoCode;
-    }
 
     /**
      * @param \App\Model\Category\CategoryData $categoryData

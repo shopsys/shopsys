@@ -96,7 +96,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     {
         parent::fillFromCategory($categoryData, $category);
 
-        $categoryData->akeneoCode = $category->getAkeneoCode();
         /** @var \App\Model\Product\Parameter\Parameter[] $parameters */
         $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->parametersCollapsed = $parameters;

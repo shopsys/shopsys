@@ -81,20 +81,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Dispatches all products to be recalculated and exported" }
 
-    # Akeneo import products
-
-    App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: importAkeneoProduct, readableName: 'Import category tree from Akeneo' }
-
-    App\Model\Product\Transfer\Akeneo\AkeneoImportProductCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoProduct, readableName: 'Import products from Akeneo' }
-
-    App\Model\Product\Transfer\Akeneo\AkeneoImportFlagCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '20', instanceName: importAkeneoProduct, readableName: 'Import flags from Akeneo' }
-
     # GoPay
 
     Shopsys\FrameworkBundle\Model\GoPay\GoPayAvailablePaymentsCronModule:

@@ -13,33 +13,10 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
  * @ORM\Table(name="flags")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Flag\FlagData $flagData)
+ * @method __construct(\App\Model\Product\Flag\FlagData $flagData)
  */
 class Flag extends BaseFlag
 {
-    public const AKENEO_CODE_NEW = 'flag__product_new';
-    public const AKENEO_CODE_ACTION = 'flag__product_action';
-    public const AKENEO_CODE_HIT = 'flag__product_hit';
-    public const AKENEO_CODE_SALE = 'flag__product_sale';
-    public const AKENEO_CODE_MADE_IN_CZ = 'flag__product_made_in_cz';
-    public const AKENEO_CODE_MADE_IN_DE = 'flag__product_made_in_de';
-    public const AKENEO_CODE_MADE_IN_SK = 'flag__product_made_in_sk';
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
-     */
-    private $akeneoCode;
-
-    /**
-     * @param \App\Model\Product\Flag\FlagData $flagData
-     */
-    public function __construct(FlagData $flagData)
-    {
-        parent::__construct($flagData);
-
-        $this->akeneoCode = $flagData->akeneoCode ?? '';
-    }
-
     /**
      * @param \App\Model\Product\Flag\FlagData $flagData
      */
@@ -54,14 +31,6 @@ class Flag extends BaseFlag
     public function setData(FlagData $flagData): void
     {
         parent::setData($flagData);
-    }
-
-    /**
-     * @return string
-     */
-    public function getAkeneoCode(): ?string
-    {
-        return $this->akeneoCode;
     }
 
     /**

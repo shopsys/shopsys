@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\UnitDataFixture;
-use App\Model\Product\Unit\Unit;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Tests\App\Test\ApplicationTestCase;

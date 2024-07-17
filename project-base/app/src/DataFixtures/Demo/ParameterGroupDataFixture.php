@@ -8,7 +8,6 @@ use App\Model\Product\Parameter\ParameterGroup;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
 use App\Model\Product\Parameter\ParameterGroupFacade;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Generator;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,13 +22,11 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
-     * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly ParameterGroupFacade $parameterGroupFacade,
         private readonly ParameterGroupDataFactory $parameterGroupDataFactory,
-        private readonly Generator $faker,
         private readonly Domain $domain,
     ) {
     }
@@ -86,7 +83,6 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     {
         $parameterGroupData = $this->parameterGroupDataFactory->create();
         $parameterGroupData->names = $parameterGroupNameByLocale;
-        $parameterGroupData->akeneoCode = $this->faker->lexify('???????');
 
         return $this->parameterGroupFacade->create($parameterGroupData);
     }

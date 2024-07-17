@@ -72,44 +72,6 @@ class FlagFacade extends BaseFlagFacade
     }
 
     /**
-     * @param string $akeneoCode
-     * @return \App\Model\Product\Flag\Flag|null
-     */
-    public function findByAkeneoCode(string $akeneoCode): ?Flag
-    {
-        return $this->flagRepository->findByAkeneoCode($akeneoCode);
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
-     * @return array
-     */
-    public function getAllFlagAkeneoCodes(): array
-    {
-        return $this->flagRepository->getAllFlagAkeneoCodes();
-    }
-
-    /**
-     * @param string $akeneoCode
-     * @throws \RuntimeException
-     * @return bool
-     */
-    public function deleteByAkeneoCode(string $akeneoCode): bool
-    {
-        $flag = $this->flagRepository->findByAkeneoCode($akeneoCode);
-
-        if ($flag !== null) {
-            $this->em->remove($flag);
-            $this->em->flush();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * @param string $locale
      * @return \App\Model\Product\Flag\Flag[]
      */

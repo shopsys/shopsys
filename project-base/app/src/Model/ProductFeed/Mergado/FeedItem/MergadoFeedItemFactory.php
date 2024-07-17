@@ -6,7 +6,6 @@ namespace App\Model\ProductFeed\Mergado\FeedItem;
 
 use App\Component\Image\ImageFacade;
 use App\Model\Category\CategoryFacade;
-use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -64,8 +63,6 @@ class MergadoFeedItemFactory
             $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
         );
 
-        $flags = $this->extractProductFlags($product, $domainId);
-
         return new MergadoFeedItem(
             $product->getId(),
             $product->getCatnum(),
@@ -80,52 +77,12 @@ class MergadoFeedItemFactory
             $currency->getCode(),
             $product->getDescription($domainId),
             $productPrice,
-            $flags,
+            [],
             $this->mapStockStatusToAvailability($this->availabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId)),
             $product->getBrand(),
             $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
         );
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string[]
-     */
-    private function extractProductFlags(product $product, int $domainId): array
-    {
-        $flags = MergadoFeedItem::FLAGS_MAP;
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $domainId) === false) {
-            unset($flags[1]);
-        }
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $domainId) === false) {
-            unset($flags[2]);
-        }
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_NEW, $domainId) === false) {
-            unset($flags[3]);
-        }
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $domainId) === false) {
-            unset($flags[4]);
-        }
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_CZ, $domainId) === false) {
-            unset($flags[5]);
-        }
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_DE, $domainId) === false) {
-            unset($flags[6]);
-        }
-
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_SK, $domainId) === false) {
-            unset($flags[7]);
-        }
-
-        return $flags;
     }
 
     /**

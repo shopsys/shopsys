@@ -43,13 +43,6 @@ function deploy() {
         ["GOPAY_CS_CLIENTID"]=${GOPAY_CS_CLIENTID}
         ["GOPAY_CS_CLIENTSECRET"]=${GOPAY_CS_CLIENTSECRET}
 
-        ["AKENEO_ENABLED"]=${AKENEO_ENABLED}
-        ["AKENEO_BASE_URI"]=${AKENEO_BASE_URI}
-        ["AKENEO_CLIENT_ID"]=${AKENEO_CLIENT_ID}
-        ["AKENEO_SECRET"]=${AKENEO_SECRET}
-        ["AKENEO_USER"]=${AKENEO_USER}
-        ["AKENEO_PASSWORD"]=${AKENEO_PASSWORD}
-
         ["DATA_BRIDGE_ENABLED"]=${DATA_BRIDGE_ENABLED}
         ["DATA_BRIDGE_BASE_URI"]=${DATA_BRIDGE_BASE_URI}
         ["DATA_BRIDGE_USER"]=${DATA_BRIDGE_USER}
@@ -95,7 +88,6 @@ function deploy() {
         ["cron-service"]='*/5 * * * *'
         ["cron-export"]='*/5 * * * *'
         ["cron-products"]='*/5 * * * *'
-        ["cron-import-akeneo-product"]='*/5 * * * *'
         ["cron-gopay"]='*/5 * * * *'
         ["cron-data-bridge-import"]='*/5 * * * *'
         ["cron-packetery"]='*/5 * * * *'

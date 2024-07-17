@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData as BaseFlagData;
 class FlagData extends BaseFlagData
 {
     /**
-     * @var string|null
-     */
-    public $akeneoCode;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
      */
     public $urls;

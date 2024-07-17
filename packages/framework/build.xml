@@ -1612,7 +1612,6 @@
             <arg value="--exclude-dir=admin"/>
             <arg value="--exclude-dir=Admin"/>
             <arg value="--exclude-dir=DataFixtures/Demo"/>
-            <arg value="--exclude-dir=Transfer/Akeneo"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.root}/translations-frontend"/>
             <arg line="${translations.dump.flags}"/>
