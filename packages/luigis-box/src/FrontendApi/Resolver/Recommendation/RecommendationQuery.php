@@ -18,6 +18,8 @@ use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 
 class RecommendationQuery extends AbstractQuery
 {
+    protected const RECOMMENDED_PRODUCTS_FRONTEND_LIMIT = 30;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
@@ -41,7 +43,7 @@ class RecommendationQuery extends AbstractQuery
     public function recommendationQuery(Argument $argument): array
     {
         $type = $argument['recommendationType'];
-        $limit = $argument['limit'];
+        $limit = min($argument['limit'], static::RECOMMENDED_PRODUCTS_FRONTEND_LIMIT);
         $userIdentifier = $argument['userIdentifier'];
         $itemIds = [];
 
