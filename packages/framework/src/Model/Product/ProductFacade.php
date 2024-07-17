@@ -382,4 +382,13 @@ class ProductFacade
             $productData->productStockData,
         );
     }
+
+    /**
+     * @param int[] $ids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getAllByIds(array $ids): array
+    {
+        return $this->productRepository->getAllByIds($ids);
+    }
 }

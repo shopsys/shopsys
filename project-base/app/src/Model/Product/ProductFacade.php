@@ -51,6 +51,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+ * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  */
 class ProductFacade extends BaseProductFacade
 {
