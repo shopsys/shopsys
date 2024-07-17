@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
@@ -41,7 +40,6 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider
@@ -56,7 +54,6 @@ class CustomerController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly OrderFacade $orderFacade,
-        protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         protected readonly Domain $domain,
         protected readonly LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider,
@@ -160,7 +157,7 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->getSsoLoginAsCustomerUserUrl($customerUser),
+            'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
             'backUrl' => $this->resolveBackUrl($customerUser->getCustomer()),
             'backUrlText' => $this->resolveBackUrlText($customerUser->getCustomer()),
         ]);
