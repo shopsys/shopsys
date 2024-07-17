@@ -31,22 +31,25 @@ class CachedBestsellingProductFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $limit
      * @return int[]
      */
-    public function getAllOfferedBestsellingProductIds(
+    public function getOfferedBestsellingProductIds(
         int $domainId,
         Category $category,
         PricingGroup $pricingGroup,
+        int $limit,
     ): array {
         $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
 
         return $this->cache->get(
             $cacheId,
-            function () use ($domainId, $category, $pricingGroup) {
-                $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
+            function () use ($domainId, $category, $pricingGroup, $limit) {
+                $bestsellingProducts = $this->bestsellingProductFacade->getOfferedBestsellingProducts(
                     $domainId,
                     $category,
                     $pricingGroup,
+                    $limit,
                 );
 
                 return array_map(

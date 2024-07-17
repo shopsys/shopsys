@@ -16,6 +16,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BestsellingProductsQuery extends AbstractQuery
 {
+    protected const BESTSELLING_PRODUCTS_FRONTEND_LIMIT = 30;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -23,10 +25,10 @@ class BestsellingProductsQuery extends AbstractQuery
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      */
     public function __construct(
-        private readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
-        private readonly Domain $domain,
-        private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
+        protected readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
     ) {
     }
 
@@ -34,8 +36,9 @@ class BestsellingProductsQuery extends AbstractQuery
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function bestSellingProductsByCategoryOrReadyCategorySeoMixQuery(Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix): Promise
-    {
+    public function bestSellingProductsByCategoryOrReadyCategorySeoMixQuery(
+        Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
+    ): Promise {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
@@ -50,10 +53,11 @@ class BestsellingProductsQuery extends AbstractQuery
             );
         }
 
-        $bestsellingProductsIds = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProductIds(
+        $bestsellingProductsIds = $this->cachedBestsellingProductFacade->getOfferedBestsellingProductIds(
             $this->domain->getId(),
             $category,
             $this->currentCustomerUser->getPricingGroup(),
+            static::BESTSELLING_PRODUCTS_FRONTEND_LIMIT,
         );
 
         return $this->productsSellableByIdsBatchLoader->load($bestsellingProductsIds);
