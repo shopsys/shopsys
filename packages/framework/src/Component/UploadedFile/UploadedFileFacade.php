@@ -394,7 +394,7 @@ class UploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $file
      * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData $uploadedFileFormData
      */
-    public function edit(UploadedFile $file, UploadedFileFormData $uploadedFileFormData)
+    public function edit(UploadedFile $file, UploadedFileFormData $uploadedFileFormData): void
     {
         $uploadedFiles = $uploadedFileFormData->files->uploadedFiles;
         $filesCount = count($uploadedFiles);
@@ -412,6 +412,15 @@ class UploadedFileFacade
         $file->setNameAndSlug($uploadedFileFormData->name);
 
         $this->em->persist($file);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
+     */
+    public function deleteFile(UploadedFile $uploadedFile): void
+    {
+        $this->em->remove($uploadedFile);
         $this->em->flush();
     }
 }

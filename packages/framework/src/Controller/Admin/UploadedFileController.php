@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -70,6 +72,8 @@ class UploadedFileController extends AdminBaseController
         $grid->addColumn('extension', 'u.extension', t('Ext.'), true);
 
         $grid->addEditActionColumn('admin_uploadedfile_edit', ['id' => 'u.id']);
+        $grid->addDeleteActionColumn('admin_uploadedfile_delete', ['id' => 'u.id'])
+            ->setConfirmMessage(t('Do you really want to delete this files? It will be permanently deleted and unassigned from related records.'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/UploadedFile/listGrid.html.twig');
 
@@ -120,5 +124,30 @@ class UploadedFileController extends AdminBaseController
             'form' => $form->createView(),
             'uploadedFile' => $uploadedFile,
         ]);
+    }
+
+    /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/uploaded-file/delete/{id}', requirements: ['id' => '\d+'])]
+    public function deleteAction(int $id): Response
+    {
+        try {
+            $uploadedFile = $this->uploadedFileFacade->getById($id);
+            $this->uploadedFileFacade->deleteFile($uploadedFile);
+
+            $this->addSuccessFlashTwig(
+                t('File <strong>{{ fileName }}</strong> deleted'),
+                [
+                    'fileName' => $uploadedFile->getNameWithExtension(),
+                ],
+            );
+        } catch (FileNotFoundException $ex) {
+            $this->addErrorFlash(t('Selected file doesn\'t exist.'));
+        }
+
+        return $this->redirectToRoute('admin_uploadedfile_list');
     }
 }
