@@ -28,6 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% set customerUserCount = customerUsers|length %}
                     {% for customerUser in customerUsers %}
                         <tr>
                             <td>{{ customerUser.firstName }}</td>
@@ -41,6 +42,7 @@
                                         <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}"></a>
                                     {% endif %}
                                     {% if allowDelete %}
+                                        {% if customerUserCount > 1 %}
                                             {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete' %}
                                             {% set deleteUrl = url('admin_customer_delete', {
                                                 id: customerUser.id,
@@ -52,6 +54,20 @@
                                                     data-confirm-message="{{ deleteConfirmMessage }}"
                                                     data-confirm-contiue-url="{{ deleteUrl }}"
                                             ></a>
+                                        {% else %}
+                                            {% set customerId = customerUser.customer.id %}
+                                            {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
+                                            {% set deleteUrl = url('admin_customer_delete_all', {
+                                                id: customerId,
+                                                (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                            }) %}
+                                            <a class="in-icon in-icon--delete svg svg-trash table-action"
+                                               href="{{ deleteUrl }}"
+                                               title={{ 'Delete'|trans }}
+                                               data-confirm-window=""
+                                               data-confirm-message="{{ 'This is the last customer user. It will remove all its related data. Do you really want to delete it ?'|trans }}"
+                                               data-confirm-contiue-url="{{ deleteUrl }}"></a>
+                                        {% endif %}
                                     {%endif %}
                                 </td>
                             {% endif %}
