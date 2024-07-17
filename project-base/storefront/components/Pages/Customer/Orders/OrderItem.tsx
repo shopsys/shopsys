@@ -123,7 +123,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <Button
                         size="small"
                         tid={TIDs.order_list_repeat_order_button}
-                        variant="secondary"
+                        variant="primaryOutlined"
                         onClick={() => addOrderItemsToEmptyCart(order.uuid)}
                     >
                         {t('Repeat order')}

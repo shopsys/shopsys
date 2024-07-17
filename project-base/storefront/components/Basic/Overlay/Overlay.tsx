@@ -1,4 +1,6 @@
-import { MouseEventHandler, useEffect } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
+import { MouseEventHandler } from 'react';
+import { fadeAnimation } from 'utils/animations/animationVariants';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OverlayProps = {
@@ -8,34 +10,29 @@ type OverlayProps = {
 };
 
 export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, children }) => {
-    useEffect(() => {
-        if (isActive) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-    }, [isActive]);
-
     return (
-        <div
-            className={twMergeCustom(
-                'fixed inset-0 z-overlay flex cursor-pointer items-center justify-center bg-black bg-opacity-60 opacity-0 transition-opacity',
-                isActive ? 'opacity-100' : 'pointer-events-none opacity-0',
-                isHiddenOnDesktop && 'vl:hidden',
+        <AnimatePresence>
+            {isActive && (
+                <m.div
+                    animate="visible"
+                    exit="hidden"
+                    initial="hidden"
+                    variants={fadeAnimation}
+                    className={twMergeCustom(
+                        'fixed inset-0 z-overlay flex cursor-pointer items-center justify-center bg-black bg-opacity-60',
+                        isHiddenOnDesktop && 'vl:hidden',
+                    )}
+                    onClick={onClick}
+                    onMouseDown={(event) => {
+                        event.stopPropagation();
+                    }}
+                    onTouchMove={(event) => {
+                        event.stopPropagation();
+                    }}
+                >
+                    {children}
+                </m.div>
             )}
-            onClick={onClick}
-            onMouseDown={(event) => {
-                event.stopPropagation();
-            }}
-            onTouchMove={(event) => {
-                event.stopPropagation();
-            }}
-        >
-            {children}
-        </div>
+        </AnimatePresence>
     );
 };

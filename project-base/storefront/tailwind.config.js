@@ -23,6 +23,7 @@ module.exports = {
             secondarySlate: '#CCF5F2',
             dark: '#25283D',
             grayLight: '#FAFAFA',
+            gray: '#ECECEC',
             graySlate: '#A3ACBD',
             skyBlue: '#7892BC',
             whiteSnow: '#F4FAFF',

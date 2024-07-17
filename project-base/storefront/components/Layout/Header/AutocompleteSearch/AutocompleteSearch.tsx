@@ -1,6 +1,7 @@
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { AnimatePresence } from 'framer-motion';
 import {
     TypeAutocompleteSearchQuery,
     useAutocompleteSearchQuery,
@@ -58,7 +59,8 @@ export const AutocompleteSearch: FC = () => {
         }
     }, [searchQueryValue]);
 
-    const isSearchResultsPopupVisible = isSearchResultsPopupOpen && isWithValidSearchQuery && !!searchData;
+    const isSearchResultsPopupVisible =
+        isSearchResultsPopupOpen && isWithValidSearchQuery && (!!searchData || areAutocompleteSearchDataFetching);
 
     const handleSearch = () => {
         if (isWithValidSearchQuery) {
@@ -80,7 +82,7 @@ export const AutocompleteSearch: FC = () => {
             >
                 <SearchInput
                     className="w-full border-2 border-white"
-                    label={t("Type what you're looking for")}
+                    label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}
                     value={searchQueryValue}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
@@ -88,22 +90,16 @@ export const AutocompleteSearch: FC = () => {
                     onSearch={handleSearch}
                 />
 
-                <div
-                    className={twJoin(
-                        'absolute left-0 -bottom-3 z-aboveOverlay flex w-full origin-top translate-y-full scale-y-90 flex-col gap-6 rounded bg-white p-5 px-7 pb-6 shadow-md transition-all lg:rounded',
-                        isSearchResultsPopupVisible
-                            ? 'pointer-events-auto scale-y-100 opacity-100'
-                            : 'pointer-events-none opacity-0',
-                    )}
-                >
+                <AnimatePresence>
                     {isSearchResultsPopupVisible && (
                         <AutocompleteSearchPopup
+                            areAutocompleteSearchDataFetching={areAutocompleteSearchDataFetching}
                             autocompleteSearchQueryValue={searchQueryValue}
                             autocompleteSearchResults={searchData}
-                            onClickLink={() => setIsSearchResultsPopupOpen(false)}
+                            onClosePopupCallback={() => setIsSearchResultsPopupOpen(false)}
                         />
                     )}
-                </div>
+                </AnimatePresence>
             </div>
 
             <Overlay isActive={isSearchResultsPopupVisible} onClick={() => setIsSearchResultsPopupOpen(false)} />

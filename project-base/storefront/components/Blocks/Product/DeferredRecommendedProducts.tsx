@@ -49,18 +49,30 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
         return null;
     }
 
+    const productItemStyleProps = {
+        size: recommendationType === TypeRecommendationType.BasketPopup ? ('medium' as const) : ('large' as const),
+        visibleItemsConfig:
+            recommendationType === TypeRecommendationType.BasketPopup
+                ? { price: true, addToCart: true, flags: true, storeAvailability: true }
+                : undefined,
+    };
+
     return shouldRender
         ? render(
               <ProductsSlider
                   gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
-                  isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
                   products={recommendedProductsData.recommendedProducts}
+                  productItemProps={{
+                      size: productItemStyleProps.size,
+                      visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
+                  }}
               />,
           )
         : render(
               <ProductsSliderPlaceholder
-                  isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
                   products={recommendedProductsData.recommendedProducts}
+                  size={productItemStyleProps.size}
+                  visibleItemsConfig={productItemStyleProps.visibleItemsConfig}
               />,
           );
 };

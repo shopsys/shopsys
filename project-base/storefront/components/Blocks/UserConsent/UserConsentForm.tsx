@@ -97,7 +97,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     {t('Accept all')}
                 </Button>
 
-                <Button size="small" variant="secondary" onClick={rejectUserConsent}>
+                <Button size="small" variant="primaryOutlined" onClick={rejectUserConsent}>
                     {t('Reject all')}
                 </Button>
             </div>

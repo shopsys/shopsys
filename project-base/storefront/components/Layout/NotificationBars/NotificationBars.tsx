@@ -74,7 +74,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                                             size="small"
                                             style={{ marginLeft: '10px' }}
                                             type="button"
-                                            variant="secondary"
+                                            variant="primaryOutlined"
                                             onClick={logout}
                                         />
                                     ),
