@@ -9,5 +9,13 @@
         <a href="{{ uploadedFileUrl(uploadedFile) }}" class="btn btn--primary btn--plus wrap-bar__btn">
             <i class="btn__icon">⇩</i>{{ 'Download'|trans }}
         </a>
+        <a href="#"
+           class="btn btn--secondary wrap-bar__btn"
+           data-confirm-window
+           data-confirm-message="{{ 'Do you really want to delete this files? It will be permanently deleted and unassigned from related records.'|trans }}"
+           data-confirm-contiue-url="{{ deleteUrl }}"
+        >
+            <i class="svg svg-trash btn__icon"></i>{{ 'Delete file'|trans }}
+        </a>
     </div>
 {% endblock %}

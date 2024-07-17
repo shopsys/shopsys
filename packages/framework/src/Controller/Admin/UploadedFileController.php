@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
@@ -29,6 +30,7 @@ class UploadedFileController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory $uploadedFileFormDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
@@ -37,6 +39,7 @@ class UploadedFileController extends AdminBaseController
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly UploadedFileFormDataFactory $uploadedFileFormDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 
@@ -120,9 +123,15 @@ class UploadedFileController extends AdminBaseController
             sprintf('%s - %s', t('Editing file'), $uploadedFile->getNameWithExtension()),
         );
 
+        $deleteUrl = $this->generateUrl('admin_uploadedfile_delete', [
+            'id' => $uploadedFile->getId(),
+            RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute('admin_uploadedfile_delete'),
+        ]);
+
         return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/edit.html.twig', [
             'form' => $form->createView(),
             'uploadedFile' => $uploadedFile,
+            'deleteUrl' => $deleteUrl,
         ]);
     }
 
