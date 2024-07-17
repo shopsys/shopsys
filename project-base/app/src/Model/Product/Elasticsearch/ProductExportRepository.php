@@ -138,7 +138,7 @@ class ProductExportRepository extends BaseProductExportRepository
             ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS => $this->extractSearchingShortDescriptions($product, $domainId),
             ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId())->getSlug(),
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
-            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsId($product),
+            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractTopRelatedProductsId($product),
             ProductExportFieldProvider::BREADCRUMB => $this->extractBreadcrumb($product, $domainId, $locale),
             ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
                 return [
@@ -489,11 +489,11 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @return int[]
      */
-    private function extractRelatedProductsId(Product $product): array
+    private function extractTopRelatedProductsId(Product $product): array
     {
         $relatedProductsId = [];
 
-        foreach ($product->getRelatedProducts() as $relatedProduct) {
+        foreach ($product->getRelatedProducts(Product::RELATED_PRODUCTS_FRONTEND_LIMIT) as $relatedProduct) {
             $relatedProductsId[] = $relatedProduct->getId();
         }
 
