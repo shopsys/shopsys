@@ -19,4 +19,5 @@ fragment BlogArticleDetailFragment on BlogArticle {
     hreflangLinks {
         ...HreflangLinksFragment
     }
+    mainBlogCategoryUuid
 }

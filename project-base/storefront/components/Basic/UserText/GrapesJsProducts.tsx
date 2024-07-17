@@ -30,7 +30,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
     if (areProductsFetching) {
         return (
             <div className="flex">
-                {createEmptyArray(4).map((_, index) => (
+                {createEmptyArray(3).map((_, index) => (
                     <SkeletonModuleProductListItem key={index} />
                 ))}
             </div>
@@ -46,6 +46,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
             gtmMessageOrigin={GtmMessageOriginType.other}
             gtmProductListName={GtmProductListNameType.other}
             products={products}
+            wrapperClassName="md:auto-cols-[50%] xl:auto-cols-[33.3%]"
         />
     );
 };

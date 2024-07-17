@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogCategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -24,12 +25,14 @@ class BlogCategoryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly BlogCategoryDataFactory $blogCategoryDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -38,7 +41,7 @@ class BlogCategoryController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/blog/category/edit/{id}', requirements: ['id' => '\d+'], name: 'admin_blogcategory_edit')]
+    #[Route(path: '/blog/category/edit/{id}', name: 'admin_blogcategory_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $blogCategory = $this->blogCategoryFacade->getById($id);
@@ -66,6 +69,8 @@ class BlogCategoryController extends AdminBaseController
         if ($form->isSubmitted() && !$form->isValid()) {
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing blog category - %name%', ['%name%' => $blogCategory->getName()]));
 
@@ -107,6 +112,8 @@ class BlogCategoryController extends AdminBaseController
         if ($form->isSubmitted() && !$form->isValid()) {
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
 
         return $this->render('@ShopsysFramework/Admin/Content/Blog/Category/new.html.twig', [
             'form' => $form->createView(),
@@ -154,6 +161,8 @@ class BlogCategoryController extends AdminBaseController
 
         $this->blogCategoryFacade->reorderByNestedSetValues($categoriesOrderingData);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+
         return new Response('OK - dummy');
     }
 
@@ -162,13 +171,15 @@ class BlogCategoryController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/blog/category/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_blogcategory_delete')]
+    #[Route(path: '/blog/category/delete/{id}', name: 'admin_blogcategory_delete', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
             $fullName = $this->blogCategoryFacade->getById($id)->getName();
 
             $this->blogCategoryFacade->deleteById($id);
+
+            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
 
             $this->addSuccessFlashTwig(
                 t('Blog category <strong>{{ name }}</strong> has been removed'),
@@ -188,7 +199,7 @@ class BlogCategoryController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    #[Route(path: '/blog/category/branch/{domainId}/{id}', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()', name: 'admin_blogcategory_loadbranchjson')]
+    #[Route(path: '/blog/category/branch/{domainId}/{id}', name: 'admin_blogcategory_loadbranchjson', requirements: ['domainId' => '\d+', 'id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
     public function loadBranchJsonAction(int $domainId, int $id): JsonResponse
     {
         $blogParentCategory = $this->blogCategoryFacade->getById($id);

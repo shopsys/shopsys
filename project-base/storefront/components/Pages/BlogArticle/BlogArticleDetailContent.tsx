@@ -1,6 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
-import { Webline } from 'components/Layout/Webline/Webline';
+import { BlogLayout } from 'components/Layout/BlogLayout';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
@@ -13,10 +13,10 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
     const { formatDate } = useFormatDate();
 
     return (
-        <Webline>
+        <BlogLayout activeCategoryUuid={blogArticle.mainBlogCategoryUuid}>
             <ArticleTitle>{blogArticle.seoH1 || blogArticle.name}</ArticleTitle>
             <div className="px-5">
-                <div className="mb-12 flex w-full flex-col">
+                <div className="mb-12 flex flex-col">
                     {blogArticle.mainImage && (
                         <div className="mb-10 flex overflow-hidden">
                             <Image
@@ -36,6 +36,6 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                     {!!blogArticle.text && <GrapesJsParser text={blogArticle.text} />}
                 </div>
             </div>
-        </Webline>
+        </BlogLayout>
     );
 };

@@ -1,4 +1,4 @@
-query BlogCategories {
+query BlogCategories @redisCache(ttl: 3600) {
     blogCategories {
         ...BlogCategoriesFragment
     }

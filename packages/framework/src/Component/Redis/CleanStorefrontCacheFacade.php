@@ -8,10 +8,11 @@ use Redis;
 
 class CleanStorefrontCacheFacade
 {
-    public const NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
-    public const BLOG_ARTICLES_QUERY_KEY_PART = 'BlogArticlesQuery';
-    public const ARTICLES_QUERY_KEY_PART = 'ArticlesQuery';
-    public const SETTINGS_QUERY_KEY_PART = 'SettingsQuery';
+    public const string NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
+    public const string BLOG_ARTICLES_QUERY_KEY_PART = 'BlogArticlesQuery';
+    public const string BLOG_CATEGORIES_QUERY_KEY_PART = 'BlogCategories';
+    public const string ARTICLES_QUERY_KEY_PART = 'ArticlesQuery';
+    public const string SETTINGS_QUERY_KEY_PART = 'SettingsQuery';
 
     /**
      * @param \Redis $storefrontGraphqlQueryClient

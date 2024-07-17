@@ -251,6 +251,8 @@ export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHrefla
   images: Array<TypeImage>;
   /** The blog article absolute URL */
   link: Scalars['String']['output'];
+  /** The UUID of the main blog category of the blog article */
+  mainBlogCategoryUuid: Scalars['Uuid']['output'];
   /** Blog article image by params */
   mainImage: Maybe<TypeImage>;
   /** The blog article title */

@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { ImageFragment } from '../../../images/fragments/ImageFragment.generated';
 import { BreadcrumbFragment } from '../../../breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { HreflangLinksFragment } from '../../../hreflangLinks/fragments/HreflangLinksFragment.generated';
-export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, seoTitle: string | null, seoMetaDescription: string | null, seoH1: string | null, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }> };
+export type TypeBlogArticleDetailFragment = { __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, seoTitle: string | null, seoMetaDescription: string | null, seoH1: string | null, mainBlogCategoryUuid: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }> };
 
 
       export interface PossibleTypesResultData {
@@ -105,6 +105,7 @@ export const BlogArticleDetailFragment = gql`
   hreflangLinks {
     ...HreflangLinksFragment
   }
+  mainBlogCategoryUuid
 }
     ${ImageFragment}
 ${BreadcrumbFragment}

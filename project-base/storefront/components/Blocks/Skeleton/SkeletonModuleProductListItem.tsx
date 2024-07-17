@@ -6,7 +6,7 @@ type SkeletonModuleProductListItemProps = {
 };
 
 export const SkeletonModuleProductListItem: FC<SkeletonModuleProductListItemProps> = ({ isSimpleCard }) => (
-    <div className="p-3">
+    <div className="p-3 w-full">
         <Skeleton
             className="h-full rounded-none lg:mb-24 w-full sm:w-2/3"
             containerClassName={twMergeCustom([

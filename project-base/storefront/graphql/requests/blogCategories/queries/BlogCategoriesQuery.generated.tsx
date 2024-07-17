@@ -88,7 +88,7 @@ export type TypeBlogCategories = { __typename?: 'Query', blogCategories: Array<{
     
 
 export const BlogCategoriesDocument = gql`
-    query BlogCategories {
+    query BlogCategories @redisCache(ttl: 3600) {
   blogCategories {
     ...BlogCategoriesFragment
   }

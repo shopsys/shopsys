@@ -189,6 +189,9 @@
                         "type": "keyword"
                     }
                 }
+            },
+            "mainBlogCategoryUuid": {
+                "type": "keyword"
             }
         }
     }
