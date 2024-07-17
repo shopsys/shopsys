@@ -2296,6 +2296,9 @@ msgstr "Počet objednávek"
 msgid "Number of products in filter"
 msgstr "Počty zboží ve filtru"
 
+msgid "Number of selected products is not limited, however only 30 will be displayed on frontend."
+msgstr "Počet vybraných produktů není omezen, ale na frontendu jich bude zobrazeno maximálně 30."
+
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
 msgstr "Pokusili jste se přihlásit výchozími přihlašovacími údaji. V produkčním prostředí toto není dovoleno. Pokud jste hacker, běžte prosím jinam. Pokud jste oprávněný uživatel, použijte jiný účet nebo kontaktujte vývojáře, aby vám změnili heslo."
 
