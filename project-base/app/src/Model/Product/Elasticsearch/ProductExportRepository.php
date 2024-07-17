@@ -43,12 +43,13 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
- * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
+ * @method array extractAccessoriesIds(\App\Model\Product\Product $product, int $domainId, int|null $limit)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @property \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
  * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
+ * @method array extractTopOfferedAccessoriesIds(\App\Model\Product\Product $product, int $domainId, int|null $limit)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {

@@ -6,19 +6,19 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
-use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
 class ProductEntityFieldMapper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -100,10 +100,11 @@ class ProductEntityFieldMapper
      */
     public function getAccessories(Product $product): array
     {
-        return $this->productAccessoryFacade->getAllAccessories(
+        return $this->productAccessoryFacade->getOfferedAccessories(
             $product,
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
+            ProductAccessoryFacade::PRODUCT_ACCESSORIES_FRONTEND_LIMIT,
         );
     }
 
