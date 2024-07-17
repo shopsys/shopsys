@@ -58,7 +58,7 @@ class ProductSearchResultsProvider extends SearchResultsProvider implements Prod
         $orderingMode = $argument['orderingMode'];
         $productFilterData = $this->productFilterDataMapper->mapFrontendApiFilterToProductFilterData($argument['filter'] ?? []);
         $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->map(TypeInLuigisBoxEnum::PRODUCT, $productFilterData, $this->domain);
-        $parameterUuids = $argument['parameters'];
+        $parameterUuids = $argument['parameters'] ?? [];
         $facetNames = [];
 
         foreach ($this->parameterFacade->getParametersByUuids($parameterUuids) as $parameter) {
