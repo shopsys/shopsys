@@ -9,7 +9,7 @@
         {{ form_errors(form) }}
             {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
             {% block fixed_bar_content %}
-                <a href="{{ url('admin_customer_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                <a href="{{ backUrl }}" class="btn-link-style">{{ backUrlText }}</a>
                 {{ form_save(customerUser|default(null), form) }}
             {% endblock %}
         {% endembed %}
