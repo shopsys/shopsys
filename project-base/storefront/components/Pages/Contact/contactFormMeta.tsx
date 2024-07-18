@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
-import { validateEmail } from 'components/Forms/validationRules';
+import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
@@ -21,7 +21,7 @@ export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormTy
             email: validateEmail(t),
             name: Yup.string().required(t('Please enter your name')),
             message: Yup.string().required(t('Please enter a message')),
-            privacyPolicy: Yup.boolean().isTrue(t('You have to agree with our privacy policy')),
+            privacyPolicy: validatePrivacyPolicy(t),
         }),
     );
     const defaultValues = {

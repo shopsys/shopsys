@@ -2,7 +2,7 @@ import { TextInput } from './TextInput';
 import eyeIcon from '/public/svg/eye.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
+import { InputHTMLAttributes, ReactElement, ReactNode, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -10,7 +10,7 @@ import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefau
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name'>;
 
 type PasswordInputProps = NativeProps & {
-    label: string;
+    label: ReactNode;
     inputSize?: 'small' | 'default';
 };
 

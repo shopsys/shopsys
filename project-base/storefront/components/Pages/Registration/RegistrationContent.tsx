@@ -33,7 +33,7 @@ export const RegistrationContent: FC = () => {
         blurInput();
         const registrationError = await register({
             ...registrationFormData,
-            password: registrationFormData.passwordFirst,
+            password: registrationFormData.password,
             cartUuid,
             country: registrationFormData.country.value,
             companyCustomer: registrationFormData.customer === 'companyCustomer',

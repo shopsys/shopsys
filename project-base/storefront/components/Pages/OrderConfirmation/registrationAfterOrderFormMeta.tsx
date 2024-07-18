@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { validatePassword, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -16,15 +17,8 @@ export const useRegistrationAfterOrderForm = (): [
     const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof RegistrationAfterOrderFormType, any>>({
-            password: Yup.string()
-                .required(t('Please enter password'))
-                .min(
-                    6,
-                    t('Password must be at least {{ count }} characters long', {
-                        count: 6,
-                    }),
-                ),
-            privacyPolicy: Yup.boolean().isTrue(t('You have to agree with our privacy policy')),
+            password: validatePassword(t),
+            privacyPolicy: validatePrivacyPolicy(t),
         }),
     );
     const defaultValues = { password: '', privacyPolicy: false };
@@ -54,6 +48,7 @@ export const useRegistrationAfterOrderFormMeta = (
     const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const termsAndConditionUrl = settingsData?.settings?.termsAndConditionsArticleUrl;
+    const errors = formProviderMethods.formState.errors;
 
     const formMeta = useMemo(
         () => ({
@@ -62,7 +57,7 @@ export const useRegistrationAfterOrderFormMeta = (
                 password: {
                     name: 'password' as const,
                     label: t('Password'),
-                    errorMessage: formProviderMethods.formState.errors.password?.message,
+                    errorMessage: errors.password?.message,
                 },
                 privacyPolicy: {
                     name: 'privacyPolicy' as const,
@@ -79,16 +74,11 @@ export const useRegistrationAfterOrderFormMeta = (
                             }}
                         />
                     ),
-                    errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
+                    errorMessage: errors.privacyPolicy?.message,
                 },
             },
         }),
-        [
-            formProviderMethods.formState.errors.password?.message,
-            formProviderMethods.formState.errors.privacyPolicy?.message,
-            termsAndConditionUrl,
-            t,
-        ],
+        [errors.password?.message, errors.privacyPolicy?.message, termsAndConditionUrl, t],
     );
 
     return formMeta;

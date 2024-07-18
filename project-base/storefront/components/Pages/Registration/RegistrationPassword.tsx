@@ -19,19 +19,19 @@ export const RegistrationPassword: FC = () => {
                 <PasswordInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    name={formMeta.fields.passwordFirst.name}
+                    name={formMeta.fields.password.name}
                     render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                     passwordInputProps={{
-                        label: formMeta.fields.passwordFirst.label,
+                        label: formMeta.fields.password.label,
                     }}
                 />
                 <PasswordInputControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
-                    name={formMeta.fields.passwordSecond.name}
+                    name={formMeta.fields.passwordConfirm.name}
                     render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                     passwordInputProps={{
-                        label: formMeta.fields.passwordSecond.label,
+                        label: formMeta.fields.passwordConfirm.label,
                     }}
                 />
             </FormColumn>

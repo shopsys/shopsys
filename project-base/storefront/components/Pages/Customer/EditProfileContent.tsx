@@ -85,14 +85,17 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     };
 
     const onChangePasswordHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
-        if (customerChangeProfileFormData.passwordFirst === '' || customerChangeProfileFormData.passwordSecond === '') {
+        if (
+            customerChangeProfileFormData.newPassword === '' ||
+            customerChangeProfileFormData.newPasswordConfirm === ''
+        ) {
             return;
         }
 
         const changePasswordResult = await changePassword({
             email: customerChangeProfileFormData.email,
-            oldPassword: customerChangeProfileFormData.passwordOld,
-            newPassword: customerChangeProfileFormData.passwordFirst,
+            oldPassword: customerChangeProfileFormData.oldPassword,
+            newPassword: customerChangeProfileFormData.newPassword,
         });
 
         handleUpdateResult(
@@ -116,9 +119,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         if (isResultOk) {
             if (messages.success !== undefined) {
                 showSuccessMessage(messages.success);
-                formProviderMethods.setValue('passwordOld', '', { shouldValidate: true });
-                formProviderMethods.setValue('passwordFirst', '', { shouldValidate: true });
-                formProviderMethods.setValue('passwordSecond', '', { shouldValidate: true });
+                formProviderMethods.setValue('oldPassword', '', { shouldValidate: true });
+                formProviderMethods.setValue('newPassword', '', { shouldValidate: true });
+                formProviderMethods.setValue('newPasswordConfirm', '', { shouldValidate: true });
             }
             if (callbacks?.success !== undefined) {
                 callbacks.success();
@@ -230,9 +233,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         <PasswordInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
-                            name={formMeta.fields.passwordOld.name}
+                            name={formMeta.fields.oldPassword.name}
                             passwordInputProps={{
-                                label: formMeta.fields.passwordOld.label,
+                                label: formMeta.fields.oldPassword.label,
                             }}
                             render={(passwordInput) => (
                                 <FormColumn>
@@ -244,19 +247,19 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
-                                name={formMeta.fields.passwordFirst.name}
+                                name={formMeta.fields.newPassword.name}
                                 render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
                                 passwordInputProps={{
-                                    label: formMeta.fields.passwordFirst.label,
+                                    label: formMeta.fields.newPassword.label,
                                 }}
                             />
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
-                                name={formMeta.fields.passwordSecond.name}
+                                name={formMeta.fields.newPasswordConfirm.name}
                                 render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
                                 passwordInputProps={{
-                                    label: formMeta.fields.passwordSecond.label,
+                                    label: formMeta.fields.newPasswordConfirm.label,
                                 }}
                             />
                         </FormColumn>

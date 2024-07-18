@@ -32,9 +32,9 @@ export type CurrentCustomerType = {
     companyName: string;
     companyNumber: string;
     companyTaxNumber: string;
-    passwordOld: string;
-    passwordFirst: string;
-    passwordSecond: string;
+    oldPassword: string;
+    newPassword: string;
+    newPasswordConfirm: string;
     defaultDeliveryAddress: DeliveryAddressType | undefined;
     deliveryAddresses: DeliveryAddressType[];
     pricingGroup: string;

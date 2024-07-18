@@ -24,9 +24,9 @@ export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined
             ? mapDeliveryAddress(currentCustomerUser.defaultDeliveryAddress)
             : undefined,
         deliveryAddresses: mapDeliveryAddresses(currentCustomerUser.deliveryAddresses),
-        passwordOld: '',
-        passwordFirst: '',
-        passwordSecond: '',
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirm: '',
     };
 };
 

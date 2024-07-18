@@ -39,7 +39,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
     const {
         fieldState: { invalid: isNewPasswordInvalid },
         field: { value: newPasswordValue },
-    } = useController({ name: formMeta.fields.newPasswordAgain.name, control: formProviderMethods.control });
+    } = useController({ name: formMeta.fields.newPasswordConfirm.name, control: formProviderMethods.control });
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
@@ -123,10 +123,10 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                             <PasswordInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
-                                name={formMeta.fields.newPasswordAgain.name}
+                                name={formMeta.fields.newPasswordConfirm.name}
                                 render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                                 passwordInputProps={{
-                                    label: formMeta.fields.newPasswordAgain.label,
+                                    label: formMeta.fields.newPasswordConfirm.label,
                                 }}
                             />
                             <FormButtonWrapper>

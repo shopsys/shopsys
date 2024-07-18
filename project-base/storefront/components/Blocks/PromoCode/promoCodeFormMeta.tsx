@@ -34,6 +34,7 @@ type PromoCodeFormMetaType = {
 
 export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCodeFormType>): PromoCodeFormMetaType => {
     const { t } = useTranslation();
+    const errors = formProviderMethods.formState.errors;
 
     const formMeta = useMemo(
         () => ({
@@ -42,11 +43,11 @@ export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCod
                 promoCode: {
                     name: 'promoCode' as const,
                     label: t('Coupon'),
-                    errorMessage: formProviderMethods.formState.errors.promoCode?.message,
+                    errorMessage: errors.promoCode?.message,
                 },
             },
         }),
-        [t, formProviderMethods.formState.errors.promoCode?.message],
+        [t, errors.promoCode?.message],
     );
 
     return formMeta;
