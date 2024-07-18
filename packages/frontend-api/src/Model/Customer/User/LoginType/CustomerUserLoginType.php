@@ -42,6 +42,12 @@ class CustomerUserLoginType
     protected $lastLoggedInAt;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $externalId;
+
+    /**
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeData $customerUserLoginTypeData
      */
     public function __construct(
@@ -49,6 +55,7 @@ class CustomerUserLoginType
     ) {
         $this->customerUser = $customerUserLoginTypeData->customerUser;
         $this->loginType = $customerUserLoginTypeData->loginType;
+        $this->externalId = $customerUserLoginTypeData->externalId;
         $this->setLastLoggedNow();
     }
 

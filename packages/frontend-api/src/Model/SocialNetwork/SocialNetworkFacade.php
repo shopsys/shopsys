@@ -116,7 +116,7 @@ class SocialNetworkFacade
             );
 
             $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
-                $this->customerUserLoginTypeDataFactory->create($customerUser, $type),
+                $this->customerUserLoginTypeDataFactory->create($customerUser, $type, (string)$userProfile->identifier),
             );
 
             return $loginResultData;

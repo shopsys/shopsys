@@ -15,4 +15,9 @@ class CustomerUserLoginTypeData
      * @var string
      */
     public $loginType;
+
+    /**
+     * @var string|null
+     */
+    public $externalId;
 }
