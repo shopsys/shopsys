@@ -67,6 +67,13 @@ class MailTemplate
     protected $sendMail;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $orderStatus;
+
+    /**
      * @param string $name
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
@@ -87,6 +94,7 @@ class MailTemplate
         $this->subject = $mailTemplateData->subject;
         $this->body = $mailTemplateData->body;
         $this->sendMail = $mailTemplateData->sendMail;
+        $this->orderStatus = $mailTemplateData->orderStatus;
     }
 
     /**
@@ -143,5 +151,21 @@ class MailTemplate
     public function isSendMail()
     {
         return $this->sendMail;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     */
+    public function getOrderStatus()
+    {
+        return $this->orderStatus;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body): void
+    {
+        $this->body = $body;
     }
 }

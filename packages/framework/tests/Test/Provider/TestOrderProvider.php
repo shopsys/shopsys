@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Test\Provider;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
+use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeData;
 
 class TestOrderProvider
 {
@@ -52,6 +59,7 @@ class TestOrderProvider
 
         $transportData = static::createTransportDataInstance();
         $transportData->name = ['cs' => 'transportName'];
+        $transportData->transportType = static::createTransportTypeInstance();
         $orderData->transport = static::createTransportInstance($transportData);
 
         $paymentData = static::createPaymentDataInstance();
@@ -61,6 +69,22 @@ class TestOrderProvider
         $orderData->currency = TestCurrencyProvider::getTestCurrency();
 
         return $orderData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public static function createOrderTransport(Order $order): OrderItem
+    {
+        $orderTransport = self::createOrderTransportInstance($order);
+
+        $transportData = static::createTransportDataInstance();
+        $transportData->name = ['cs' => 'transportName'];
+        $transportData->transportType = static::createTransportTypeInstance();
+        $orderTransport->setTransport(static::createTransportInstance($transportData));
+
+        return $orderTransport;
     }
 
     /**
@@ -148,5 +172,39 @@ class TestOrderProvider
         $countryData->names = ['cs' => 'Slovenská republika'];
 
         return static::createCountryInstance($countryData);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeData
+     */
+    public static function createTransportTypeDataInstance(): TransportTypeData
+    {
+        return new TransportTypeData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
+     */
+    public static function createTransportTypeInstance(): TransportType
+    {
+        return new TransportType(static::createTransportTypeDataInstance());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public static function createOrderTransportInstance(Order $order): OrderItem
+    {
+        return new OrderItem(
+            $order,
+            '',
+            new Price(Money::create(10), Money::create(12)),
+            '0.2',
+            1,
+            OrderItemTypeEnum::TYPE_TRANSPORT,
+            null,
+            null,
+        );
     }
 }

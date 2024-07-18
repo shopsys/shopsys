@@ -15,7 +15,12 @@ export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined
     return {
         ...currentCustomerUser,
         companyCustomer: isCompanyCustomer,
-        telephone: currentCustomerUser.telephone ? currentCustomerUser.telephone : '',
+        firstName: currentCustomerUser.firstName ?? '',
+        lastName: currentCustomerUser.lastName ?? '',
+        street: currentCustomerUser.street ?? '',
+        city: currentCustomerUser.city ?? '',
+        postcode: currentCustomerUser.postcode ?? '',
+        telephone: currentCustomerUser.telephone ?? '',
         companyName: isCompanyCustomer && currentCustomerUser.companyName ? currentCustomerUser.companyName : '',
         companyNumber: isCompanyCustomer && currentCustomerUser.companyNumber ? currentCustomerUser.companyNumber : '',
         companyTaxNumber:

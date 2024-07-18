@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 
 class DeliveryAddressFacade
 {
@@ -81,5 +82,46 @@ class DeliveryAddressFacade
     public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
     {
         return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     */
+    public function deleteByUuidAndCustomer(string $uuid, Customer $customer): void
+    {
+        $deliveryAddress = $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
+
+        if (!$deliveryAddress) {
+            return;
+        }
+
+        $this->em->remove($deliveryAddress);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
+     */
+    public function editByCustomer(Customer $customer, DeliveryAddressData $deliveryAddressData): void
+    {
+        if ($deliveryAddressData->uuid === null) {
+            throw new InvalidArgumentException('UUID is missing in DeliveryAddressData');
+        }
+
+        $deliveryAddress = $this->getByUuidAndCustomer($deliveryAddressData->uuid, $customer);
+
+        $this->edit($deliveryAddress->getId(), $deliveryAddressData);
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+     */
+    public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress
+    {
+        return $this->deliveryAddressRepository->getByUuidAndCustomer($uuid, $customer);
     }
 }

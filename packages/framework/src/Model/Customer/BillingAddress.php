@@ -53,28 +53,34 @@ class BillingAddress
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $street;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $city;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=false)
      */
     protected $postcode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id", nullable=false)
      */
     protected $country;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $activated;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
@@ -82,6 +88,7 @@ class BillingAddress
     public function __construct(BillingAddressData $billingAddressData)
     {
         $this->customer = $billingAddressData->customer;
+        $this->activated = $billingAddressData->activated;
         $this->setData($billingAddressData);
     }
 
@@ -193,5 +200,18 @@ class BillingAddress
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActivated()
+    {
+        return $this->activated;
+    }
+
+    public function activate(): void
+    {
+        $this->activated = true;
     }
 }

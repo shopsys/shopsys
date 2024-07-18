@@ -43,9 +43,6 @@ msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro parametry jiného typu než \"slider\". Namísto toho použijte \"values\"."
 
-msgid "Name cannot be longer than {{ limit }} characters"
-msgstr "Jméno nesmí být delší než {{ limit }} znaků"
-
 msgid "New password must be at least {{ limit }} characters long"
 msgstr "Nové heslo musí být alespoň {{ limit }} znaků dlouhé"
 
@@ -73,9 +70,6 @@ msgstr "Prosím vyplňte GTM ID"
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
 
-msgid "Please enter code"
-msgstr "Vyplňte prosím kód"
-
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název společnosti"
 
@@ -99,9 +93,6 @@ msgstr "Prosím vyplňte IČ"
 
 msgid "Please enter last name"
 msgstr "Vyplňte prosím příjmení"
-
-msgid "Please enter name"
-msgstr "Vyplňte prosím jméno"
 
 msgid "Please enter new password"
 msgstr "Vyplňte prosím nové heslo"

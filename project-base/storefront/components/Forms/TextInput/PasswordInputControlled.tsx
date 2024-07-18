@@ -7,7 +7,7 @@ import { Control, useController } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name'>;
+type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name' | 'autoComplete'>;
 
 type PasswordInputProps = NativeProps & {
     label: ReactNode;
@@ -45,6 +45,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         <>
             <TextInput
                 required
+                autoComplete={passwordInputProps.autoComplete}
                 hasError={invalid}
                 id={passwordInputId}
                 inputSize={passwordInputProps.inputSize}

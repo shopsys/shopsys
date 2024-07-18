@@ -24,7 +24,7 @@ export const Button: FC<ButtonProps> = forwardRef(
             isWithDisabledLook,
             size = 'medium',
             variant = 'primary',
-            type,
+            type = 'button',
             ...props
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -41,6 +41,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItem getPaymentItem()
  * @method \App\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
  * @method editData(\App\Model\Order\OrderData $orderData)
+ * @method setCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
  */
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order extends BaseOrder
@@ -58,23 +59,5 @@ class Order extends BaseOrder
         ?CustomerUser $customerUser = null,
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
-
-        if ($orderData->isCompanyCustomer === true) {
-            $this->companyName = $orderData->companyName;
-            $this->companyNumber = $orderData->companyNumber;
-            $this->companyTaxNumber = $orderData->companyTaxNumber;
-        } else {
-            $this->companyName = null;
-            $this->companyNumber = null;
-            $this->companyTaxNumber = null;
-        }
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     */
-    public function setCustomerUser(?CustomerUser $customerUser): void
-    {
-        $this->customerUser = $customerUser;
     }
 }

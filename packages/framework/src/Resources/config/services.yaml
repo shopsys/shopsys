@@ -519,6 +519,7 @@ services:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator }
 
     Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator:
+        public: true
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator }
 
@@ -546,6 +547,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory
+
+    Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
 
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
@@ -642,6 +645,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail: ~
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail: ~
 
@@ -901,14 +906,13 @@ services:
             - '%shopsys.filemanager_upload_dir%'
         public: true
 
-    Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
-        arguments:
-            - '@security.token_storage'
-            - '@event_dispatcher'
-
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
+    Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting: ~
+
+    Shopsys\FrameworkBundle\Model\Security\Roles: ~
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
         arguments:

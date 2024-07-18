@@ -10,8 +10,11 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundExcepti
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Security\TokensData;
+use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 
 class RefreshTokensMutation extends AbstractMutation
 {
@@ -19,26 +22,28 @@ class RefreshTokensMutation extends AbstractMutation
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
      */
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        protected readonly TokensDataFactory $tokensDataFactory,
     ) {
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array
+     * @return \Shopsys\FrontendApiBundle\Model\Security\TokensData
      */
-    public function refreshTokensMutation(Argument $argument): array
+    public function refreshTokensMutation(Argument $argument): TokensData
     {
         $refreshToken = $argument['input']['refreshToken'];
         $token = $this->tokenFacade->getTokenByString($refreshToken);
 
         $this->assertClaimsExists($token->claims());
 
-        $userUuid = $token->claims()->get('uuid');
+        $userUuid = $token->claims()->get(FrontendApiUser::CLAIM_UUID);
 
         try {
             $customerUser = $this->customerUserFacade->getByUuid($userUuid);
@@ -46,26 +51,37 @@ class RefreshTokensMutation extends AbstractMutation
             throw new InvalidTokenUserMessageException();
         }
 
-        $tokenSecretChain = $token->claims()->get('secretChain');
-        $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->findCustomersTokenChainByCustomerUserAndSecretChain(
+        $tokenSecretChain = $token->claims()->get(FrontendApiUser::CLAIM_SECRET_CHAIN);
+        $deviceId = $token->claims()->get(FrontendApiUser::CLAIM_DEVICE_ID);
+
+        $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId(
             $customerUser,
             $tokenSecretChain,
+            $deviceId,
         );
 
         if ($customerUserValidRefreshTokenChain === null) {
             throw new InvalidTokenUserMessageException();
         }
 
-        return [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString(
+        $tokens = $this->tokensDataFactory->create(
+            $this->tokenFacade->createAccessTokenAsString(
                 $customerUser,
                 $customerUserValidRefreshTokenChain->getDeviceId(),
+                $customerUserValidRefreshTokenChain->getAdministrator(),
             ),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString(
+            $this->tokenFacade->createRefreshTokenAsString(
                 $customerUser,
                 $customerUserValidRefreshTokenChain->getDeviceId(),
+                $customerUserValidRefreshTokenChain->getAdministrator(),
             ),
-        ];
+        );
+
+        $this->customerUserRefreshTokenChainFacade->removeCustomerRefreshTokenChain(
+            $customerUserValidRefreshTokenChain,
+        );
+
+        return $tokens;
     }
 
     /**
@@ -73,7 +89,7 @@ class RefreshTokensMutation extends AbstractMutation
      */
     protected function assertClaimsExists(DataSet $claims): void
     {
-        if (!$claims->has('uuid') || !$claims->has('secretChain')) {
+        if (!$claims->has(FrontendApiUser::CLAIM_UUID) || !$claims->has(FrontendApiUser::CLAIM_SECRET_CHAIN) || !$claims->has(FrontendApiUser::CLAIM_DEVICE_ID)) {
             throw new InvalidTokenUserMessageException();
         }
     }

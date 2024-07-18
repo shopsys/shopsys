@@ -61,8 +61,8 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $email;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $password;
 
@@ -134,6 +134,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $refreshTokenChain;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $newsletterSubscription;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(CustomerUserData $customerUserData)
@@ -170,6 +176,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->pricingGroup = $customerUserData->pricingGroup;
         $this->telephone = $customerUserData->telephone;
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
+        $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
 
     /**
@@ -288,7 +295,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->password ?? '';
     }
 
     /**
@@ -343,7 +350,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'password' => $this->password,
+            'password' => $this->getPassword(),
             'timestamp' => time(), // lastActivity
             'domainId' => $this->domainId,
         ];
@@ -439,5 +446,29 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function addRefreshTokenChain(CustomerUserRefreshTokenChain $customerUserRefreshTokenChain): void
     {
         $this->refreshTokenChain->add($customerUserRefreshTokenChain);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNewsletterSubscription()
+    {
+        return $this->newsletterSubscription;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActivated()
+    {
+        return $this->getCustomer()->getBillingAddress()->isActivated();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPasswordSet(): bool
+    {
+        return $this->password !== null;
     }
 }

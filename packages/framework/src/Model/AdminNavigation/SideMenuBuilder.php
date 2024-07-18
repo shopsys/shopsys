@@ -322,17 +322,34 @@ class SideMenuBuilder
     {
         $menu = $this->menuFactory->createItem(
             'administrators',
-            ['route' => 'admin_administrator_list', 'label' => t('Administrators')],
+            ['label' => t('Administrators')],
         );
         $menu->setExtra('icon', 'person-door-man');
 
-        $menu->addChild(
+        $administratorViewMenu = $menu->addChild('administrators_overview', ['route' => 'admin_administrator_list', 'label' => t('Administrators overview')]);
+
+        $administratorViewMenu->addChild(
             'new',
             ['route' => 'admin_administrator_new', 'label' => t('New administrator'), 'display' => false],
         );
-        $menu->addChild(
+        $administratorViewMenu->addChild(
             'edit',
             ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false],
+        );
+
+        $administratorRoleGroupMenu = $menu->addChild('role_groups', ['route' => 'admin_administratorrolegroup_list', 'label' => t('Role Groups')]);
+
+        $administratorRoleGroupMenu->addChild(
+            'new',
+            ['route' => 'admin_administratorrolegroup_new', 'label' => t('New administrator role group'), 'display' => false],
+        );
+        $administratorRoleGroupMenu->addChild(
+            'edit',
+            ['route' => 'admin_administratorrolegroup_edit', 'label' => t('Editing administrator role group'), 'display' => false],
+        );
+        $administratorRoleGroupMenu->addChild(
+            'copy',
+            ['route' => 'admin_administratorrolegroup_copy', 'label' => t('Copy administrator role group'), 'display' => false],
         );
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS, $menu);

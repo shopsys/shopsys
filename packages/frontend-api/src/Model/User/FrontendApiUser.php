@@ -14,6 +14,7 @@ class FrontendApiUser implements UserInterface
     public const CLAIM_ROLES = 'roles';
     public const CLAIM_SECRET_CHAIN = 'secretChain';
     public const CLAIM_DEVICE_ID = 'deviceId';
+    public const CLAIM_ADMINISTRATOR_UUID = 'administratorUuid';
 
     /**
      * @param string $uuid
@@ -21,6 +22,7 @@ class FrontendApiUser implements UserInterface
      * @param string $email
      * @param string $deviceId
      * @param string[] $roles
+     * @param string|null $administratorUuid
      */
     public function __construct(
         protected readonly string $uuid,
@@ -28,6 +30,7 @@ class FrontendApiUser implements UserInterface
         protected readonly string $email,
         protected readonly string $deviceId,
         protected readonly array $roles,
+        protected readonly ?string $administratorUuid,
     ) {
     }
 
@@ -97,5 +100,13 @@ class FrontendApiUser implements UserInterface
     public function getDeviceId(): string
     {
         return $this->deviceId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdministratorUuid(): ?string
+    {
+        return $this->administratorUuid;
     }
 }

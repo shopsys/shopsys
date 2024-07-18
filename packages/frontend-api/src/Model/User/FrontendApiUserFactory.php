@@ -24,6 +24,7 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
             $token->claims()->get(FrontendApiUser::CLAIM_EMAIL),
             $token->claims()->get(FrontendApiUser::CLAIM_DEVICE_ID),
             $token->claims()->get(FrontendApiUser::CLAIM_ROLES),
+            $token->claims()->get(FrontendApiUser::CLAIM_ADMINISTRATOR_UUID),
         );
     }
 
@@ -37,7 +38,8 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
             !$claims->has(FrontendApiUser::CLAIM_FULL_NAME) ||
             !$claims->has(FrontendApiUser::CLAIM_EMAIL) ||
             !$claims->has(FrontendApiUser::CLAIM_DEVICE_ID) ||
-            !$claims->has(FrontendApiUser::CLAIM_ROLES)
+            !$claims->has(FrontendApiUser::CLAIM_ROLES) ||
+            !$claims->has(FrontendApiUser::CLAIM_ADMINISTRATOR_UUID)
         ) {
             throw new InvalidTokenUserMessageException();
         }

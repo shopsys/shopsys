@@ -12,10 +12,17 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
+use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
+use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
+use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -23,6 +30,8 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class CustomerUserMutation extends BaseTokenMutation
 {
+    protected const string VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
+
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
@@ -33,6 +42,12 @@ class CustomerUserMutation extends BaseTokenMutation
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -44,6 +59,12 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly CustomerUserDataFactory $customerUserDataFactory,
         protected readonly TokenFacade $tokenFacade,
         protected readonly ProductListFacade $productListFacade,
+        protected readonly RegistrationFacade $registrationFacade,
+        protected readonly RegistrationDataFactory $registrationDataFactory,
+        protected readonly MergeCartFacade $mergeCartFacade,
+        protected readonly OrderApiFacade $orderFacade,
+        protected readonly LoginResultDataFactory $loginResultDataFactory,
+        protected readonly TokensDataFactory $tokensDataFactory,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -84,7 +105,8 @@ class CustomerUserMutation extends BaseTokenMutation
     {
         $user = $this->runCheckUserIsLogged();
 
-        $validator->validate();
+        $validationGroups = $this->computeValidationGroups($argument);
+        $validator->validate($validationGroups);
 
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument(
@@ -99,22 +121,50 @@ class CustomerUserMutation extends BaseTokenMutation
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return string[]
+     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
      */
-    public function registerMutation(Argument $argument, InputValidator $validator): array
+    public function registerMutation(Argument $argument, InputValidator $validator): LoginResultData
     {
-        $validator->validate();
+        $validationGroups = $this->computeValidationGroups($argument);
+        $validator->validate($validationGroups);
 
-        $customerUserData = $this->customerUserDataFactory->createWithArgument($argument);
-        $customerUser = $this->customerUserFacade->register($customerUserData);
+        $registrationData = $this->registrationDataFactory->createWithArgument($argument);
+        $customerUser = $this->registrationFacade->register($registrationData);
 
-        $deviceId = Uuid::uuid4()->toString();
+        if ($argument['input']['cartUuid'] !== null) {
+            $this->mergeCartFacade->mergeCartByUuidToCustomerCart($argument['input']['cartUuid'], $customerUser);
+        }
+
+        if ($argument['input']['lastOrderUuid'] !== null) {
+            $this->orderFacade->pairCustomerUserWithOrderByOrderUuid($customerUser, $argument['input']['lastOrderUuid']);
+        }
 
         $this->productListFacade->mergeProductListsToCustomerUser($argument['input']['productListsUuids'], $customerUser);
 
-        return [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
-        ];
+        $deviceId = Uuid::uuid4()->toString();
+
+        return $this->loginResultDataFactory->create(
+            $this->tokensDataFactory->create(
+                $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+                $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+            ),
+            $this->mergeCartFacade->shouldShowCartMergeInfo(),
+        );
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string[]
+     */
+    protected function computeValidationGroups(Argument $argument): array
+    {
+        $input = $argument['input'];
+        $validationGroups = ['Default'];
+
+        if ($input[self::VALIDATION_GROUP_COMPANY_CUSTOMER] === true) {
+            $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
+        }
+
+        return $validationGroups;
     }
 }

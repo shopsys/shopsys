@@ -1,3 +1,8 @@
+admin_customeruser_loginascustomeruser:
+    defaults:
+        _controller: Shopsys\FrontendApiBundle\Controller\CustomerUserController::loginAsCustomerUserAction
+    path: /%admin_url%/customer/login-as-user/{customerUserId}/
+
 shopsys_frontend_api:
     prefix: /graphql
     resource: "@ShopsysFrontendApiBundle/Resources/config/routing.yaml"

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Customer;
 
 use App\FrontendApi\Mutation\Customer\Exception\DeliveryAddressNotFoundUserError;
-use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
-use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
@@ -14,23 +12,25 @@ use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidCredentialsUserError;
 
 class DeliveryAddressMutation extends AbstractMutation
 {
     /**
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory
      */
     public function __construct(
         private readonly DeliveryAddressFacade $deliveryAddressFacade,
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
         private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         private readonly CustomerUserFacade $customerUserFacade,
+        private readonly DeliveryAddressDataApiFactory $deliveryAddressDataApiFactory,
     ) {
     }
 
@@ -70,7 +70,8 @@ class DeliveryAddressMutation extends AbstractMutation
             throw new InvalidCredentialsUserError('You need to be logged in.');
         }
 
-        $deliveryAddress = $this->deliveryAddressDataFactory
+        /** @var \App\Model\Customer\DeliveryAddressData $deliveryAddress */
+        $deliveryAddress = $this->deliveryAddressDataApiFactory
             ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
 
         $this->deliveryAddressFacade->editByCustomer($customerUser->getCustomer(), $deliveryAddress);
@@ -95,6 +96,7 @@ class DeliveryAddressMutation extends AbstractMutation
         }
 
         try {
+            /** @var \App\Model\Customer\DeliveryAddress $deliveryAddress */
             $deliveryAddress = $this->deliveryAddressFacade->getByUuidAndCustomer(
                 $deliveryAddressUuid,
                 $customerUser->getCustomer(),

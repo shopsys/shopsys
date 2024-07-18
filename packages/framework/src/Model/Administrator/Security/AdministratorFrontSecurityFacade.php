@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
-use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -51,18 +50,6 @@ class AdministratorFrontSecurityFacade
         }
 
         return $this->accessDecisionManager->decide($token, [Roles::ROLE_ADMIN]);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAdministratorLoggedAsCustomer(): bool
-    {
-        try {
-            return $this->requestStack->getSession()->has(LoginAsUserFacade::SESSION_LOGIN_AS);
-        } catch (SessionNotFoundException) {
-            return false;
-        }
     }
 
     /**

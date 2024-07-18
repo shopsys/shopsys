@@ -1,3 +1,4 @@
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormHeading, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -14,7 +15,10 @@ import {
 } from 'components/Pages/Customer/customerChangeProfileFormMeta';
 import { useChangePasswordMutation } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
+import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
+import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
@@ -33,6 +37,7 @@ type EditProfileContentProps = {
 export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustomerUser }) => {
     const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutation();
+    const [, resetPassword] = usePasswordRecoveryMutation();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
@@ -56,6 +61,15 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
         onChangeProfileHandler(customerChangeProfileFormData);
         onChangePasswordHandler(customerChangeProfileFormData);
+    };
+
+    const onResetPasswordHandler = async () => {
+        const resetPasswordResult = await resetPassword({ email: currentCustomerUser.email });
+
+        if (resetPasswordResult.data?.RequestPasswordRecovery !== undefined) {
+            showSuccessMessage(t('We sent an email with further steps to your address'));
+            onGtmSendFormEventHandler(GtmFormType.forgotten_password);
+        }
     };
 
     const onChangeProfileHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
@@ -230,39 +244,47 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
                     <FormBlockWrapper>
                         <FormHeading>{t('Change password')}</FormHeading>
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            formName={formMeta.formName}
-                            name={formMeta.fields.oldPassword.name}
-                            passwordInputProps={{
-                                label: formMeta.fields.oldPassword.label,
-                            }}
-                            render={(passwordInput) => (
+                        {currentCustomerUser.hasPasswordSet ? (
+                            <>
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.oldPassword.name}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.oldPassword.label,
+                                    }}
+                                    render={(passwordInput) => (
+                                        <FormColumn>
+                                            <FormLine bottomGap>{passwordInput}</FormLine>
+                                        </FormColumn>
+                                    )}
+                                />
                                 <FormColumn>
-                                    <FormLine bottomGap>{passwordInput}</FormLine>
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.newPassword.name}
+                                        render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.newPassword.label,
+                                        }}
+                                    />
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        name={formMeta.fields.newPasswordConfirm.name}
+                                        render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.newPasswordConfirm.label,
+                                        }}
+                                    />
                                 </FormColumn>
-                            )}
-                        />
-                        <FormColumn>
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPassword.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPassword.label,
-                                }}
-                            />
-                            <PasswordInputControlled
-                                control={formProviderMethods.control}
-                                formName={formMeta.formName}
-                                name={formMeta.fields.newPasswordConfirm.name}
-                                render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                                passwordInputProps={{
-                                    label: formMeta.fields.newPasswordConfirm.label,
-                                }}
-                            />
-                        </FormColumn>
+                            </>
+                        ) : (
+                            <Button size="small" onClick={onResetPasswordHandler}>
+                                {t('Send me a link to set a new password')}
+                            </Button>
+                        )}
                     </FormBlockWrapper>
 
                     {currentCustomerUser.companyCustomer && (

@@ -19,6 +19,7 @@ class MailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -28,6 +29,7 @@ class MailTemplateFacade
         protected readonly MailTemplateFactoryInterface $mailTemplateFactory,
         protected readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
         protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider,
+        protected readonly MailTemplateBuilder $mailTemplateBuilder,
     ) {
     }
 
@@ -38,7 +40,14 @@ class MailTemplateFacade
      */
     public function get($templateName, $domainId)
     {
-        return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
+        $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
+
+        if ($mailTemplate !== null) {
+            $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($domainId, $mailTemplate->getBody()));
+            $this->em->detach($mailTemplate);
+        }
+
+        return $mailTemplate;
     }
 
     /**

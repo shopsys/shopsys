@@ -40,7 +40,8 @@ class Version20240527121326 extends AbstractMigration
             ],
         );
 
-        $renameInRoleGroupSql = 'UPDATE administrator_role_groups
+        if ($this->tableExists('administrator_role_groups')) {
+            $renameInRoleGroupSql = 'UPDATE administrator_role_groups
             SET roles = (
                 SELECT jsonb_agg(
                     CASE 
@@ -52,21 +53,22 @@ class Version20240527121326 extends AbstractMigration
             )
             WHERE :oldRole = ANY (SELECT jsonb_array_elements_text(roles::jsonb)::text)';
 
-        $this->sql(
-            $renameInRoleGroupSql,
-            [
-                'oldRole' => 'ROLE_COOKIES_FULL',
-                'newRole' => 'ROLE_USER_CONSENT_POLICY_FULL',
-            ],
-        );
+            $this->sql(
+                $renameInRoleGroupSql,
+                [
+                    'oldRole' => 'ROLE_COOKIES_FULL',
+                    'newRole' => 'ROLE_USER_CONSENT_POLICY_FULL',
+                ],
+            );
 
-        $this->sql(
-            $renameInRoleGroupSql,
-            [
-                'oldRole' => 'ROLE_COOKIES_VIEW',
-                'newRole' => 'ROLE_USER_CONSENT_POLICY_VIEW',
-            ],
-        );
+            $this->sql(
+                $renameInRoleGroupSql,
+                [
+                    'oldRole' => 'ROLE_COOKIES_VIEW',
+                    'newRole' => 'ROLE_USER_CONSENT_POLICY_VIEW',
+                ],
+            );
+        }
     }
 
     /**

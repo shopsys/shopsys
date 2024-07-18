@@ -8,8 +8,4 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData as BaseBillingAddr
 
 class BillingAddressData extends BaseBillingAddressData
 {
-    /**
-     * @var bool
-     */
-    public $activated = true;
 }

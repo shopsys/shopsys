@@ -21,6 +21,9 @@ services:
     Lcobucci\JWT\Configuration:
         factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
 
+    Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider:
+        alias: Shopsys\FrontendApiBundle\Model\Security\LoginAdministratorAsUserUrlProvider
+
     Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker:
         arguments:
             $enabledDomainIds: '%shopsys.frontend_api.domains%'
@@ -30,8 +33,14 @@ services:
 
     Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~
 
+    Shopsys\FrontendApiBundle\Controller\CustomerUserController:
+        tags: [ 'controller.service_arguments' ]
+
     Shopsys\FrontendApiBundle\Controller\FrontendApiController:
         tags: ['controller.service_arguments']
+
+    Shopsys\FrontendApiBundle\Controller\SocialNetworkController:
+        tags: [ 'controller.service_arguments' ]
 
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
@@ -81,6 +90,14 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProviderResolver:
         arguments:
             $productSearchResultsProviders: !tagged 'shopsys.frontend_api.products_search_results_provider'
+
+    Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
+        arguments:
+            $socialNetworkLoginConfig: '%social_network_login_config%'
+
+    Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade:
+        arguments:
+            $logger: '@monolog.logger.socialNetwork'
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
 

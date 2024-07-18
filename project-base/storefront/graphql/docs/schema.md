@@ -1338,7 +1338,7 @@ Edit delivery address by Uuid
 <td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
-Login customer user
+Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)
 
 </td>
 </tr>
@@ -3546,7 +3546,7 @@ Represents an currently logged customer user
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address city name
@@ -3618,7 +3618,7 @@ Email address
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 First name
@@ -3626,8 +3626,17 @@ First name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Last name
@@ -3645,7 +3654,7 @@ Whether customer user receives newsletters or not
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address zip code
@@ -3663,7 +3672,7 @@ The name of the customer pricing group
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address street name
@@ -6649,7 +6658,7 @@ Represents an currently logged customer user
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address city name
@@ -6694,7 +6703,7 @@ Email address
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 First name
@@ -6702,8 +6711,17 @@ First name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Last name
@@ -6721,7 +6739,7 @@ Whether customer user receives newsletters or not
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address zip code
@@ -6739,7 +6757,7 @@ The name of the customer pricing group
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address street name
@@ -10183,7 +10201,7 @@ Represents an currently logged customer user
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address city name
@@ -10228,7 +10246,7 @@ Email address
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 First name
@@ -10236,8 +10254,17 @@ First name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Last name
@@ -10255,7 +10282,7 @@ Whether customer user receives newsletters or not
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address zip code
@@ -10273,7 +10300,7 @@ The name of the customer pricing group
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Billing address street name

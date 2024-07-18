@@ -110,10 +110,15 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
             $order,
             $billingAddress,
         );
-        $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
-            $order,
-            $deliveryAddress,
-        );
+
+        $transport = $order->getTransport();
+
+        if (!$transport->isPersonalPickup()) {
+            $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
+                $order,
+                $deliveryAddress,
+            );
+        }
 
         return $customerUserUpdateData;
     }
@@ -128,7 +133,6 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 
         if ($billingAddress->getStreet() === null) {
-            $billingAddressData->companyCustomer = $order->getCompanyNumber() !== null;
             $billingAddressData->companyName = $order->getCompanyName();
             $billingAddressData->companyNumber = $order->getCompanyNumber();
             $billingAddressData->companyTaxNumber = $order->getCompanyTaxNumber();

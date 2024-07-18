@@ -28,7 +28,9 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
 
         $customerUser = new $entityClassName($customerUserData);
 
-        $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserData->password);
+        if ($customerUserData->password !== null) {
+            $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserData->password);
+        }
 
         return $customerUser;
     }

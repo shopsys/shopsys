@@ -4,28 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
-use App\Model\Administrator\Administrator;
-use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
-use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 /**
  * @property \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
@@ -49,122 +28,11 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
  * @method updateCustomerUserByOrder(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Order\Order $order, string|null $deliveryAddressUuid, bool $isSubscribeToNewsletter)
  * @method \App\Model\Customer\DeliveryAddress|null resolveDeliveryAddress(string|null $deliveryAddressUuid, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Customer\DeliveryAddress|null createDeliveryAddressForAmendingCustomerUserData(\App\Model\Order\Order $order)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository, \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory, \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade, \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory, \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade, \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade, \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade, \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory, \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory, \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory, \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade, \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator)
+ * @method \App\Model\Customer\User\CustomerUser edit(int $customerUserId, \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData, \App\Model\Customer\DeliveryAddress|null $deliveryAddress = null)
+ * @method addRefreshTokenChain(\App\Model\Customer\User\CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, \DateTime $tokenExpiration, \App\Model\Administrator\Administrator|null $administrator)
+ * @method sendActivationMail(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory $customerUserFactory
-     * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory $customerDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
-     * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
-     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     */
-    public function __construct(
-        EntityManagerInterface $em,
-        CustomerUserRepository $customerUserRepository,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        CustomerMailFacade $customerMailFacade,
-        BillingAddressDataFactoryInterface $billingAddressDataFactory,
-        CustomerUserFactoryInterface $customerUserFactory,
-        CustomerUserPasswordFacade $customerUserPasswordFacade,
-        CustomerFacade $customerFacade,
-        DeliveryAddressFacade $deliveryAddressFacade,
-        CustomerDataFactoryInterface $customerDataFactory,
-        BillingAddressFacade $billingAddressFacade,
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
-        DeliveryAddressFactory $deliveryAddressFactory,
-        DeliveryAddressDataFactory $deliveryAddressDataFactory,
-        private readonly NewsletterFacade $newsletterFacade,
-        private readonly HashGenerator $hashGenerator,
-    ) {
-        parent::__construct(
-            $em,
-            $customerUserRepository,
-            $customerUserUpdateDataFactory,
-            $customerMailFacade,
-            $billingAddressDataFactory,
-            $customerUserFactory,
-            $customerUserPasswordFacade,
-            $customerFacade,
-            $deliveryAddressFacade,
-            $customerDataFactory,
-            $billingAddressFacade,
-            $customerUserRefreshTokenChainFacade,
-            $deliveryAddressFactory,
-            $deliveryAddressDataFactory,
-        );
-    }
-
-    /**
-     * @param int $customerUserId
-     * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \App\Model\Customer\User\CustomerUser
-     */
-    public function edit(
-        $customerUserId,
-        CustomerUserUpdateData $customerUserUpdateData,
-        ?DeliveryAddress $deliveryAddress = null,
-    ) {
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = parent::edit($customerUserId, $customerUserUpdateData, $deliveryAddress);
-
-        if ($customerUser->isNewsletterSubscription()) {
-            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
-        } else {
-            $this->newsletterFacade->deleteSubscribedEmailIfExists($customerUser->getEmail(), $customerUser->getDomainId());
-        }
-
-        return $customerUser;
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param string $refreshTokenChain
-     * @param string $deviceId
-     * @param \DateTime $tokenExpiration
-     * @param \App\Model\Administrator\Administrator|null $administrator
-     */
-    public function addRefreshTokenChain(
-        BaseCustomerUser $customerUser,
-        string $refreshTokenChain,
-        string $deviceId,
-        DateTime $tokenExpiration,
-        ?Administrator $administrator = null,
-    ): void {
-        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
-            $customerUser,
-            $refreshTokenChain,
-            $deviceId,
-            $tokenExpiration,
-            $administrator,
-        );
-
-        $customerUser->addRefreshTokenChain($refreshTokenChain);
-
-        $this->em->flush();
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     */
-    public function sendActivationMail(CustomerUser $customerUser): void
-    {
-        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
-        $customerUser->setResetPasswordHash($resetPasswordHash);
-        $this->em->flush();
-
-        $this->customerMailFacade->sendActivationMail($customerUser);
-    }
 }

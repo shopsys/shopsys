@@ -498,11 +498,15 @@ class Order
         $this->note = $orderData->note;
         $this->trackingNumber = $orderData->trackingNumber;
 
-        $this->setCompanyInfo(
-            $orderData->companyName,
-            $orderData->companyNumber,
-            $orderData->companyTaxNumber,
-        );
+        if ($orderData->isCompanyCustomer === true) {
+            $this->setCompanyInfo(
+                $orderData->companyName,
+                $orderData->companyNumber,
+                $orderData->companyTaxNumber,
+            );
+        } else {
+            $this->setCompanyInfo();
+        }
 
         $this->status = $orderData->status;
         $this->heurekaAgreement = $orderData->heurekaAgreement;
@@ -1160,5 +1164,13 @@ class Order
     public function getPromoCode()
     {
         return $this->promoCode;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     */
+    public function setCustomerUser($customerUser): void
+    {
+        $this->customerUser = $customerUser;
     }
 }

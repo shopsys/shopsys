@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Table(name="delivery_addresses")
@@ -77,11 +78,18 @@ class DeliveryAddress
     protected $country;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      */
     public function __construct(DeliveryAddressData $deliveryAddressData)
     {
         $this->customer = $deliveryAddressData->customer;
+        $this->uuid = $deliveryAddressData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($deliveryAddressData);
     }
 
@@ -186,5 +194,13 @@ class DeliveryAddress
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }

@@ -6,4 +6,3 @@ Mutation:
         - 'PersonalDataMutation'
         - 'CustomerMutation'
         - 'RegisterMutation'
-        - 'LoginMutation'

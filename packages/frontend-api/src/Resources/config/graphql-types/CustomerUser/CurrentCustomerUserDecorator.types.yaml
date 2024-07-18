@@ -1,0 +1,51 @@
+CurrentCustomerUserDecorator:
+    type: interface
+    decorator: true
+    heirs:
+        - 'CompanyCustomerUser'
+        - 'RegularCustomerUser'
+    config:
+        description: "Represents an currently logged customer user"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            firstName:
+                type: "String"
+                description: "First name"
+            lastName:
+                type: "String"
+                description: "Last name"
+            email:
+                type: "String!"
+                description: "Email address"
+            telephone:
+                type: "String"
+                description: "Phone number"
+            newsletterSubscription:
+                type: "Boolean!"
+                description: "Whether customer user receives newsletters or not"
+            street:
+                type: "String"
+                description: "Billing address street name"
+            city:
+                type: "String"
+                description: "Billing address city name"
+            postcode:
+                type: "String"
+                description: "Billing address zip code"
+            country:
+                type: "Country!"
+                description: "Billing address country"
+            defaultDeliveryAddress:
+                type: "DeliveryAddress"
+                description: "Default customer delivery addresses"
+            deliveryAddresses:
+                type: "[DeliveryAddress!]!"
+                description: "List of delivery addresses"
+            pricingGroup:
+                type: "String!"
+                description: "The name of the customer pricing group"
+            hasPasswordSet:
+                type: "Boolean!"
+                description: "Whether the customer user has password set or not"

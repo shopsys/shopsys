@@ -1,7 +1,7 @@
 export enum TIDs {
     my_account_link = 'my_account_link',
     header_logout = 'header_logout',
-    pages_login_submit = 'pages_login_submit',
+    login_form_submit_button = 'login_form_submit_button',
     customer_page_logout = 'customer_page_logout',
     layout_header_menuiconic_login_link_popup = 'layout_header_menuiconic_login_link_popup',
     layout_popup = 'layout_popup',

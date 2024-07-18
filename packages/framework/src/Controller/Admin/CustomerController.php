@@ -17,21 +17,17 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
+use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AdminBaseController
 {
-    protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
@@ -41,10 +37,10 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider
      */
     public function __construct(
         protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
@@ -55,10 +51,10 @@ class CustomerController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly OrderFacade $orderFacade,
-        protected readonly LoginAsUserFacade $loginAsUserFacade,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         protected readonly Domain $domain,
+        protected readonly LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider,
     ) {
     }
 
@@ -106,7 +102,7 @@ class CustomerController extends AdminBaseController
             'form' => $form->createView(),
             'customerUser' => $customerUser,
             'orders' => $orders,
-            'ssoLoginAsUserUrl' => $this->getSsoLoginAsCustomerUserUrl($customerUser),
+            'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
         ]);
     }
 
@@ -135,6 +131,7 @@ class CustomerController extends AdminBaseController
         $grid->addColumn('city', 'city', t('City'), true);
         $grid->addColumn('telephone', 'u.telephone', t('Telephone'), true);
         $grid->addColumn('email', 'u.email', t('Email'), true);
+        $grid->addColumn('isActivated', 'isActivated', t('Active'), true);
         $grid->addColumn('pricingGroup', 'pricingGroup', t('Pricing group'), true);
         $grid->addColumn('orders_count', 'ordersCount', t('Number of orders'), true)->setClassAttribute('text-right');
         $grid->addColumn('orders_sum_price', 'ordersSumPrice', t('Orders value'), true)
@@ -220,49 +217,5 @@ class CustomerController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_customer_list');
-    }
-
-    /**
-     * @param int $customerUserId
-     */
-    #[Route(path: '/customer/login-as-user/{customerUserId}/', requirements: ['id' => '\d+'])]
-    public function loginAsUserAction($customerUserId)
-    {
-        $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
-
-        if ($this->domain->getId() !== $customerUser->getDomainId()) {
-            return $this->redirectToRoute('admin_customer_edit', ['id' => $customerUserId]);
-        }
-
-        $this->loginAsUserFacade->rememberLoginAsUser($customerUser);
-
-        return $this->redirectToRoute('front_customer_login_as_remembered_user');
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return string
-     */
-    protected function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser)
-    {
-        $customerDomainRouter = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
-        $loginAsUserUrl = $customerDomainRouter->generate(
-            'admin_customer_loginasuser',
-            [
-                'customerUserId' => $customerUser->getId(),
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
-
-        $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
-
-        return $mainAdminDomainRouter->generate(
-            'admin_login_sso',
-            [
-                LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
-                LoginController::ORIGINAL_REFERER_PARAMETER_NAME => $loginAsUserUrl,
-            ],
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
     }
 }

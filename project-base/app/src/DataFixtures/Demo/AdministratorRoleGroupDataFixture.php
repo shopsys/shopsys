@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
-use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 
 class AdministratorRoleGroupDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
     public function __construct(private AdministratorRoleGroupFacade $administratorRoleGroupFacade)
     {

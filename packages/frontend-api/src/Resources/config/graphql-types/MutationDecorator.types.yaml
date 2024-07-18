@@ -12,8 +12,8 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('createOrderMutation', args, validator)"
             Login:
-                type: Token!
-                description: "Login user and return access and refresh tokens"
+                type: LoginResult!
+                description: "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
                 args:
                     input:
                         type: LoginInput!

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 /**
  * @method fillForDomainId(\App\Model\Customer\User\CustomerUserData $customerUserData, int $domainId)
+ * @method fillFromUser(\App\Model\Customer\User\CustomerUserData $customerUserData, \App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerUserDataFactory extends BaseUserDataFactory
 {
@@ -73,16 +74,5 @@ class CustomerUserDataFactory extends BaseUserDataFactory
         $this->fillFromUser($customerUserData, $customerUser);
 
         return $customerUserData;
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     */
-    protected function fillFromUser(BaseUserData $customerUserData, BaseUser $customerUser)
-    {
-        $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
-
-        parent::fillFromUser($customerUserData, $customerUser);
     }
 }

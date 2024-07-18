@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Controller\Admin\MailController as baseMailController;
-use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,49 +84,6 @@ class MailController extends baseMailController
             'requiredSubjectVariables' => $mailTemplateVariables->getRequiredSubjectVariables(),
             'labeledVariables' => $mailTemplateVariables->getLabeledVariables(),
             'entity' => $mailTemplate,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    #[Route(path: '/mail/setting/')]
-    public function settingAction(Request $request): Response
-    {
-        $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-
-        $mailSettingData = [
-            'email' => $this->mailSettingFacade->getMainAdminMail($selectedDomainId),
-            'name' => $this->mailSettingFacade->getMainAdminMailName($selectedDomainId),
-            'facebookUrl' => $this->mailSettingFacade->getFacebookUrl($selectedDomainId),
-            'instagramUrl' => $this->mailSettingFacade->getInstagramUrl($selectedDomainId),
-            'youtubeUrl' => $this->mailSettingFacade->getYoutubeUrl($selectedDomainId),
-            'linkedinUrl' => $this->mailSettingFacade->getLinkedInUrl($selectedDomainId),
-            'tiktokUrl' => $this->mailSettingFacade->getTiktokUrl($selectedDomainId),
-            'footerText' => $this->mailSettingFacade->getFooterTextUrl($selectedDomainId),
-        ];
-
-        $form = $this->createForm(MailSettingFormType::class, $mailSettingData);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mailSettingData = $form->getData();
-
-            $this->mailSettingFacade->setMainAdminMail($mailSettingData['email'], $selectedDomainId);
-            $this->mailSettingFacade->setMainAdminMailName($mailSettingData['name'], $selectedDomainId);
-            $this->mailSettingFacade->setFacebookUrl($mailSettingData['facebookUrl'], $selectedDomainId);
-            $this->mailSettingFacade->setInstagramUrl($mailSettingData['instagramUrl'], $selectedDomainId);
-            $this->mailSettingFacade->setYoutubeUrl($mailSettingData['youtubeUrl'], $selectedDomainId);
-            $this->mailSettingFacade->setLinkedInUrl($mailSettingData['linkedinUrl'], $selectedDomainId);
-            $this->mailSettingFacade->setTiktokUrl($mailSettingData['tiktokUrl'], $selectedDomainId);
-            $this->mailSettingFacade->setFooterText($mailSettingData['footerText'], $selectedDomainId);
-
-            $this->addSuccessFlash(t('Email settings modified.'));
-        }
-
-        return $this->render('@ShopsysFramework/Admin/Content/Mail/setting.html.twig', [
-            'form' => $form->createView(),
         ]);
     }
 

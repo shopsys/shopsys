@@ -548,7 +548,7 @@ input ChangeTransportInCartInput {
 "Represents an currently logged customer user"
 type CompanyCustomerUser implements CustomerUser {
   "Billing address city name"
-  city: String!
+  city: String
   "The customer’s company name (only when customer is a company)"
   companyName: String
   "The customer’s company identification number (only when customer is a company)"
@@ -564,17 +564,19 @@ type CompanyCustomerUser implements CustomerUser {
   "Email address"
   email: String!
   "First name"
-  firstName: String!
+  firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
   "Last name"
-  lastName: String!
+  lastName: String
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
   "Billing address zip code"
-  postcode: String!
+  postcode: String
   "The name of the customer pricing group"
   pricingGroup: String!
   "Billing address street name"
-  street: String!
+  street: String
   "Phone number"
   telephone: String
   "UUID"
@@ -607,7 +609,7 @@ type CreateOrderResult {
 "Represents an currently logged customer user"
 interface CustomerUser {
   "Billing address city name"
-  city: String!
+  city: String
   "Billing address country"
   country: Country!
   "Default customer delivery addresses"
@@ -617,17 +619,19 @@ interface CustomerUser {
   "Email address"
   email: String!
   "First name"
-  firstName: String!
+  firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
   "Last name"
-  lastName: String!
+  lastName: String
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
   "Billing address zip code"
-  postcode: String!
+  postcode: String
   "The name of the customer pricing group"
   pricingGroup: String!
   "Billing address street name"
-  street: String!
+  street: String
   "Phone number"
   telephone: String
   "UUID"
@@ -900,7 +904,7 @@ type Mutation {
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
   "Edit delivery address by Uuid"
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
-  "Login customer user"
+  "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
   Login(input: LoginInput!): LoginResult!
   "Logout user"
   Logout: Boolean!
@@ -1808,7 +1812,7 @@ input RegistrationDataInput {
 "Represents an currently logged customer user"
 type RegularCustomerUser implements CustomerUser {
   "Billing address city name"
-  city: String!
+  city: String
   "Billing address country"
   country: Country!
   "Default customer delivery addresses"
@@ -1818,17 +1822,19 @@ type RegularCustomerUser implements CustomerUser {
   "Email address"
   email: String!
   "First name"
-  firstName: String!
+  firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
   "Last name"
-  lastName: String!
+  lastName: String
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
   "Billing address zip code"
-  postcode: String!
+  postcode: String
   "The name of the customer pricing group"
   pricingGroup: String!
   "Billing address street name"
-  street: String!
+  street: String
   "Phone number"
   telephone: String
   "UUID"

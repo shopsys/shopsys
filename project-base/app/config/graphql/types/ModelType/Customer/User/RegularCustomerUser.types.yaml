@@ -1,5 +1,4 @@
 RegularCustomerUser:
     type: object
-    config:
-        interfaces:
-            - 'CustomerUser'
+    inherits:
+        - 'RegularCustomerUserDecorator'

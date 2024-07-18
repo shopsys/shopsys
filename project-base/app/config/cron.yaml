@@ -24,7 +24,7 @@ services:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: service, readableName: 'Delete old customer carts' }
 
-    App\Model\Customer\User\RemoveOldCustomerUserRefreshTokenChainsCronModule:
+    Shopsys\FrameworkBundle\Model\Customer\User\RemoveOldCustomerUserRefreshTokenChainsCronModule:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '0', instanceName: service, readableName: 'Remove old customer user refresh token chains' }
 

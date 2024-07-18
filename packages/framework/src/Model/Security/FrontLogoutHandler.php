@@ -25,7 +25,6 @@ class FrontLogoutHandler
     public function onLogoutSuccess(Request $request)
     {
         $url = $this->router->generate('front_homepage');
-        $request->getSession()->remove(LoginAsUserFacade::SESSION_LOGIN_AS);
         $request->getSession()->migrate();
 
         return new RedirectResponse($url);

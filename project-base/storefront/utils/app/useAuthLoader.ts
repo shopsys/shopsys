@@ -6,6 +6,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { getIsHttps } from 'utils/requestProtocol';
+import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -28,6 +29,18 @@ export const useAuthLoader = () => {
     }, [slug]);
 
     useEffect(() => {
+        if (typeof authLoading === 'object' && authLoading?.authLoadingStatus === 'social-login-fail') {
+            if (authLoading.socialNetworkType) {
+                showErrorMessage(
+                    t('Login via {{ socialNetworkType }} is not possible. Please register.', {
+                        socialNetworkType: authLoading.socialNetworkType,
+                    }),
+                );
+            } else {
+                showErrorMessage(t('Login via the selected social network is not possible. Please register.'));
+            }
+        }
+
         if (authLoading === 'logout-loading') {
             showSuccessMessage(t('Successfully logged out'));
         }

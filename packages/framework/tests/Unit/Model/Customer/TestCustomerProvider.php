@@ -111,6 +111,7 @@ class TestCustomerProvider
         $deliveryAddressData->telephone = 'deliveryTelephone';
         $deliveryAddressData->country = $deliveryCountry;
         $deliveryAddressData->customer = $customer;
+        $deliveryAddressData->uuid = '1f339571-4066-4c77-99ab-7b5172fbc2e9';
 
         return $deliveryAddressData;
     }

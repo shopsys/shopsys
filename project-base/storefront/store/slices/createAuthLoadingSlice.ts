@@ -1,11 +1,12 @@
 import { StateCreator } from 'zustand';
 
-type AuthLoadingStatus =
+export type AuthLoadingStatus =
     | 'login-loading'
     | 'login-loading-with-cart-modifications'
     | 'logout-loading'
     | 'registration-loading'
-    | 'registration-loading-with-cart-modifications';
+    | 'registration-loading-with-cart-modifications'
+    | { authLoadingStatus: 'social-login-fail'; socialNetworkType?: string };
 
 type AuthLoadingState = {
     authLoading: AuthLoadingStatus | null;

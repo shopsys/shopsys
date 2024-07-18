@@ -94,6 +94,7 @@
             <arg path="${path.packages}/**/*.md"/>
             <arg path="${project.basedir}/docs/**/*.md"/>
             <arg path="${project.basedir}/*.md"/>
+            <arg path="${project.basedir}/upgrade-notes/*.md"/>
         </exec>
     </target>
 
@@ -106,6 +107,7 @@
             <arg path="${path.packages}/**/*.md"/>
             <arg path="${project.basedir}/docs/**/*.md"/>
             <arg path="${project.basedir}/*.md"/>
+            <arg path="${project.basedir}/upgrade-notes/*.md"/>
         </exec>
     </target>
 

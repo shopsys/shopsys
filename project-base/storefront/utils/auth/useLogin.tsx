@@ -15,17 +15,12 @@ type LoginHandler = (
 ) => Promise<OperationResult<TypeLoginMutation, TypeLoginMutationVariables>>;
 
 export const useLogin = () => {
-    const [, TypeLoginMutation] = useLoginMutation();
-
-    const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
-    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+    const [, loginMutation] = useLoginMutation();
     const productListUuids = usePersistStore((s) => s.productListUuids);
-    const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
-
-    const router = useRouter();
+    const handleActionsAfterLogin = useHandleActionsAfterLogin();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
-        const loginResult = await TypeLoginMutation({
+        const loginResult = await loginMutation({
             ...variables,
             productListsUuids: Object.values(productListUuids),
         });
@@ -36,23 +31,34 @@ export const useLogin = () => {
 
             setTokensToCookies(accessToken, refreshToken);
 
-            updateCartUuid(null);
-            updateProductListUuids({});
-
-            updateAuthLoadingState(
-                loginResult.data.Login.showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading',
-            );
-
-            dispatchBroadcastChannel('reloadPage');
-            if (rewriteUrl) {
-                router.replace(rewriteUrl).then(() => router.reload());
-            } else {
-                router.reload();
-            }
+            handleActionsAfterLogin(loginResult.data.Login.showCartMergeInfo, rewriteUrl);
         }
 
         return loginResult;
     };
 
     return login;
+};
+
+export const useHandleActionsAfterLogin = () => {
+    const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+    const router = useRouter();
+    const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
+
+    const handleActionsAfterLogin = (showCartMergeInfo: boolean, rewriteUrl: string | undefined) => {
+        updateCartUuid(null);
+        updateProductListUuids({});
+
+        updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
+
+        dispatchBroadcastChannel('reloadPage');
+        if (rewriteUrl) {
+            router.replace(rewriteUrl).then(() => router.reload());
+        } else {
+            router.reload();
+        }
+    };
+
+    return handleActionsAfterLogin;
 };

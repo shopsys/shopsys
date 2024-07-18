@@ -51,8 +51,14 @@ class BillingAddressData
      */
     public $customer;
 
+    /**
+     * @var bool
+     */
+    public $activated;
+
     public function __construct()
     {
         $this->companyCustomer = false;
+        $this->activated = true;
     }
 }

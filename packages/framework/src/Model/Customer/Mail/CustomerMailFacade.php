@@ -17,12 +17,14 @@ class CustomerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail $registrationMail
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail $customerActivationMail
      */
     public function __construct(
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly RegistrationMail $registrationMail,
         protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly CustomerActivationMail $customerActivationMail,
     ) {
     }
 
@@ -36,6 +38,17 @@ class CustomerMailFacade
             $customerUser->getDomainId(),
         );
         $messageData = $this->registrationMail->createMessage($mailTemplate, $customerUser);
+        $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
+        $this->mailer->sendForDomain($messageData, $customerUser->getDomainId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function sendActivationMail(CustomerUser $customerUser): void
+    {
+        $mailTemplate = $this->mailTemplateFacade->get(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $customerUser->getDomainId());
+        $messageData = $this->customerActivationMail->createMessage($mailTemplate, $customerUser);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
         $this->mailer->sendForDomain($messageData, $customerUser->getDomainId());
     }

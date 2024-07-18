@@ -1,3 +1,4 @@
+import './AdministratorForm';
 import './AdvancedSearch';
 import './AjaxConfirm';
 import './Article';
@@ -46,6 +47,7 @@ import './ProductsPickerWindow';
 import './PromoCodeFlags';
 import './PromoCodeGroup';
 import './PromoCodeLimits';
+import './RoleGroups';
 import './initSelect2';
 import './SelectToggle';
 import './SideMenu';

@@ -56,6 +56,11 @@ class DeliveryAddressData
      */
     public $customer;
 
+    /**
+     * @var string|null
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->addressFilled = false;

@@ -32,6 +32,12 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
         ];
 
         $container->prependExtensionConfig('overblog_graphql', $config);
+
+        $container->prependExtensionConfig('doctrine_migrations', [
+            'migrations_paths' => [
+                'Shopsys\FrontendApiBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
     }
 
     /**

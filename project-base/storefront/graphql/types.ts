@@ -682,7 +682,7 @@ export type TypeChangeTransportInCartInput = {
 export type TypeCompanyCustomerUser = TypeCustomerUser & {
   __typename?: 'CompanyCustomerUser';
   /** Billing address city name */
-  city: Scalars['String']['output'];
+  city: Maybe<Scalars['String']['output']>;
   /** The customer’s company name (only when customer is a company) */
   companyName: Maybe<Scalars['String']['output']>;
   /** The customer’s company identification number (only when customer is a company) */
@@ -698,17 +698,19 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   /** Email address */
   email: Scalars['String']['output'];
   /** First name */
-  firstName: Scalars['String']['output'];
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
-  lastName: Scalars['String']['output'];
+  lastName: Maybe<Scalars['String']['output']>;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** Billing address zip code */
-  postcode: Scalars['String']['output'];
+  postcode: Maybe<Scalars['String']['output']>;
   /** The name of the customer pricing group */
   pricingGroup: Scalars['String']['output'];
   /** Billing address street name */
-  street: Scalars['String']['output'];
+  street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
   /** UUID */
@@ -743,7 +745,7 @@ export type TypeCreateOrderResult = {
 /** Represents an currently logged customer user */
 export type TypeCustomerUser = {
   /** Billing address city name */
-  city: Scalars['String']['output'];
+  city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
   country: TypeCountry;
   /** Default customer delivery addresses */
@@ -753,17 +755,19 @@ export type TypeCustomerUser = {
   /** Email address */
   email: Scalars['String']['output'];
   /** First name */
-  firstName: Scalars['String']['output'];
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
-  lastName: Scalars['String']['output'];
+  lastName: Maybe<Scalars['String']['output']>;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** Billing address zip code */
-  postcode: Scalars['String']['output'];
+  postcode: Maybe<Scalars['String']['output']>;
   /** The name of the customer pricing group */
   pricingGroup: Scalars['String']['output'];
   /** Billing address street name */
-  street: Scalars['String']['output'];
+  street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
   /** UUID */
@@ -1075,7 +1079,7 @@ export type TypeMutation = {
   DeleteDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Edit delivery address by Uuid */
   EditDeliveryAddress: Array<TypeDeliveryAddress>;
-  /** Login customer user */
+  /** Login user and return login result data (consisting of access and refresh tokens, and information about cart merge) */
   Login: TypeLoginResult;
   /** Logout user */
   Logout: Scalars['Boolean']['output'];
@@ -2412,7 +2416,7 @@ export type TypeRegistrationDataInput = {
 export type TypeRegularCustomerUser = TypeCustomerUser & {
   __typename?: 'RegularCustomerUser';
   /** Billing address city name */
-  city: Scalars['String']['output'];
+  city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
   country: TypeCountry;
   /** Default customer delivery addresses */
@@ -2422,17 +2426,19 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   /** Email address */
   email: Scalars['String']['output'];
   /** First name */
-  firstName: Scalars['String']['output'];
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
-  lastName: Scalars['String']['output'];
+  lastName: Maybe<Scalars['String']['output']>;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** Billing address zip code */
-  postcode: Scalars['String']['output'];
+  postcode: Maybe<Scalars['String']['output']>;
   /** The name of the customer pricing group */
   pricingGroup: Scalars['String']['output'];
   /** Billing address street name */
-  street: Scalars['String']['output'];
+  street: Maybe<Scalars['String']['output']>;
   /** Phone number */
   telephone: Maybe<Scalars['String']['output']>;
   /** UUID */

@@ -4,22 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Model\Security\MenuItemsGrantedRolesSetting;
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Security;
 
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @param \Symfony\Component\Security\Core\Security $security
-     */
-    public function __construct(
-        private readonly Security $security,
-    ) {
-    }
-
     /**
      * @return array
      */
@@ -29,7 +19,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
-            ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS => 'configureAdministratorMenu',
         ];
     }
 
@@ -40,7 +29,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
         $rootMenu->addChild($this->createIntegrationsMenu($event));
-        $this->removeNotGrantedItemsFromMenu($rootMenu);
     }
 
     /**
@@ -149,84 +137,5 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
 
         return $integrationsMenu;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
-    public function configureAdministratorMenu(ConfigureMenuEvent $event): void
-    {
-        $administratorMenu = $event->getMenu();
-
-        $administratorMenu->setUri(null);
-        $administratorExtras = $administratorMenu->getExtras();
-        unset($administratorExtras['routes']);
-        $administratorMenu->setExtras($administratorExtras);
-
-        $administratorViewMenu = $administratorMenu->addChild('administrator_view', ['route' => 'admin_administrator_list', 'label' => t('Administrators overview')]);
-        $administratorViewMenu->addChild(
-            'new',
-            ['route' => 'admin_administrator_new', 'label' => t('New administrator'), 'display' => false],
-        );
-        $administratorViewMenu->addChild(
-            'edit',
-            ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false],
-        );
-
-        $administratorRoleGroupMenu = $administratorMenu->addChild('role_groups', ['route' => 'admin_administratorrolegroup_list', 'label' => t('Role Groups')]);
-
-        $administratorRoleGroupMenu->addChild(
-            'new',
-            ['route' => 'admin_administratorrolegroup_new', 'label' => t('New administrator role group'), 'display' => false],
-        );
-        $administratorRoleGroupMenu->addChild(
-            'edit',
-            ['route' => 'admin_administratorrolegroup_edit', 'label' => t('Editing administrator role group'), 'display' => false],
-        );
-        $administratorRoleGroupMenu->addChild(
-            'copy',
-            ['route' => 'admin_administratorrolegroup_copy', 'label' => t('Copy administrator role group'), 'display' => false],
-        );
-    }
-
-    /**
-     * @param \Knp\Menu\ItemInterface $rootMenu
-     */
-    public function removeNotGrantedItemsFromMenu(ItemInterface $rootMenu): void
-    {
-        foreach (MenuItemsGrantedRolesSetting::getGrantedRolesByMenuItems() as $menuItemPath => $grantedRoles) {
-            $isGranted = array_reduce(
-                $grantedRoles,
-                fn ($isGranted, $role) => $isGranted || $this->security->isGranted($role),
-                false,
-            );
-
-            if (!$isGranted) {
-                $this->removeItemFromMenu($menuItemPath, $rootMenu);
-            }
-        }
-    }
-
-    /**
-     * @param string $itemToRemovePath
-     * @param \Knp\Menu\ItemInterface $rootMenu
-     */
-    private function removeItemFromMenu(string $itemToRemovePath, ItemInterface $rootMenu): void
-    {
-        $itemToRemovePathExploded = explode(MenuItemsGrantedRolesSetting::MENU_ITEM_PATH_SEPARATOR, $itemToRemovePath);
-        $itemToRemoveName = end($itemToRemovePathExploded);
-
-        foreach ($itemToRemovePathExploded as $itemName) {
-            if ($rootMenu === null) {
-                break;
-            }
-
-            if ($itemName === $itemToRemoveName) {
-                $rootMenu->removeChild($itemName);
-
-                break;
-            }
-            $rootMenu = $rootMenu->getChild($itemName);
-        }
     }
 }

@@ -102,6 +102,7 @@ return ECSConfig::configure()
             CyclomaticComplexitySniff::class => [
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version20240403091822.php',
+                __DIR__ . '/packages/framework/src/Migrations/Version20240704143616.php',
                 __DIR__ . '/packages/framework/src/Model/Blog/Article/Elasticsearch/BlogArticleElasticsearchDataFetcher.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/ProductExportRepository.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php',
@@ -129,6 +130,8 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/Scope/ProductExportScopeConfig.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
                 __DIR__ . '/packages/framework/src/Model/Product/ProductVisibilityRepository.php',
+                __DIR__ . '/packages/framework/src/Model/Security/MenuItemsGrantedRolesSetting.php',
+                __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
                 __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainDataCreatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Mail/EnvelopeListenerTest.php',

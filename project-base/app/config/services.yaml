@@ -95,13 +95,7 @@ services:
         arguments:
             - "%shopsys.performance_data.product.total_count%"
 
-    App\Form\Constraints\UniqueEmailValidator:
-        class: App\Form\Constraints\UniqueEmailValidator
-        public: true
-
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
-
-    App\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
 
     App\Model\Cart\CartFacade:
         lazy: true
@@ -116,16 +110,6 @@ services:
         tags: [ 'doctrine.event_subscriber' ]
 
     App\Model\Customer\User\CurrentCustomerUser: ~
-
-    App\Model\Customer\User\RegistrationDataFactory: ~
-
-    App\Model\Customer\User\RegistrationDataFactoryInterface:
-        alias: App\Model\Customer\User\RegistrationDataFactory
-
-    App\Model\Customer\User\RegistrationFacade: ~
-
-    App\Model\Customer\User\RegistrationFacadeInterface:
-        alias: App\Model\Customer\User\RegistrationFacade
 
     App\Model\LanguageConstant\LanguageConstantFacade:
         arguments:
@@ -276,6 +260,9 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository:
         alias: App\Model\Administrator\AdministratorRepository
 
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade:
+        class: App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade
+
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
 
@@ -338,6 +325,9 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressRepository:
         alias: App\Model\Customer\DeliveryAddressRepository
 
+    Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail:
+        alias: App\Model\Customer\Mail\CustomerActivationMail
+
     Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade:
         alias: App\Model\Customer\Mail\CustomerMailFacade
 
@@ -373,6 +363,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory
+
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder:
+        class: App\Model\Mail\MailTemplateBuilder
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration:
         class: App\Model\Mail\MailTemplateConfiguration
@@ -569,9 +562,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer:
         alias: App\Model\Product\Search\ProductFilterDataToQueryTransformer
 
-    Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
-        alias: App\Model\Security\LoginAsUserFacade
-
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade:
         alias: App\Model\Sitemap\SitemapFacade
 
@@ -667,6 +657,6 @@ services:
             - {
                 'Symfony\Component\Validator\Constraints\ImageValidator': 'app.component.validator.image_validator',
                 'Symfony\Component\Validator\Constraints\FileValidator': 'app.component.validator.file_validator',
-                'Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator': App\Form\Constraints\UniqueEmailValidator
+                'Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator': Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator
             }
         class: 'App\Component\Validator\ContainerConstraintValidatorFactory'

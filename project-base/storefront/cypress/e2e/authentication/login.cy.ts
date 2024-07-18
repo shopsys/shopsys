@@ -2,7 +2,7 @@ import {
     loginFromHeader,
     fillInEmailAndPasswordOnLoginPage,
     logoutFromHeader,
-    submitLoginFormOnLoginPage,
+    submitLoginForm,
     logoutFromCustomerPage,
 } from './authenticationSupport';
 import { customer1, password, url } from 'fixtures/demodata';
@@ -23,7 +23,7 @@ describe('Login tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.login);
 
         fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, password);
-        submitLoginFormOnLoginPage();
+        submitLoginForm();
         checkAndHideSuccessToast('Successfully logged in');
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after login', {

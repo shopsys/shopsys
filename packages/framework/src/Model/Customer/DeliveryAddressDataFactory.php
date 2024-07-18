@@ -51,5 +51,6 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
         $deliveryAddressData->postcode = $deliveryAddress->getPostcode();
         $deliveryAddressData->country = $deliveryAddress->getCountry();
         $deliveryAddressData->customer = $deliveryAddress->getCustomer();
+        $deliveryAddressData->uuid = $deliveryAddress->getUuid();
     }
 }
