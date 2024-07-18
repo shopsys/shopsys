@@ -19,6 +19,9 @@ use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
@@ -58,6 +61,8 @@ class CustomerUserMutation extends BaseTokenMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -78,6 +83,8 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
         protected readonly CustomerFacade $customerFacade,
         protected readonly Domain $domain,
+        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
+        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -155,6 +162,10 @@ class CustomerUserMutation extends BaseTokenMutation
         $this->productListFacade->mergeProductListsToCustomerUser($argument['input']['productListsUuids'], $customerUser);
 
         $deviceId = Uuid::uuid4()->toString();
+
+        $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
+            $this->customerUserLoginTypeDataFactory->create($customerUser, CustomerUserLoginType::TYPE_WEB),
+        );
 
         return $this->loginResultDataFactory->create(
             $this->tokensDataFactory->create(

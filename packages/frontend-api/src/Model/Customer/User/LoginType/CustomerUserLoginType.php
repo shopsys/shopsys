@@ -18,6 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CustomerUserLoginType
 {
+    public const string TYPE_WEB = 'web';
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      * @ORM\Id
