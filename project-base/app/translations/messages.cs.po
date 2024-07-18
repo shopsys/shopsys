@@ -457,9 +457,6 @@ msgstr "Nová prodejna"
 msgid "New warehouse"
 msgstr "Nový sklad"
 
-msgid "No"
-msgstr "Ne"
-
 msgid "No combinations of SEO categories found."
 msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
 
@@ -759,9 +756,6 @@ msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
 
 msgid "XML Feeds"
 msgstr "XML Feedy"
-
-msgid "Yes"
-msgstr "Ano"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"

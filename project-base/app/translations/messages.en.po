@@ -457,9 +457,6 @@ msgstr ""
 msgid "New warehouse"
 msgstr ""
 
-msgid "No"
-msgstr ""
-
 msgid "No combinations of SEO categories found."
 msgstr ""
 
@@ -758,9 +755,6 @@ msgid "We have nothing to show you at this url."
 msgstr ""
 
 msgid "XML Feeds"
-msgstr ""
-
-msgid "Yes"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"
