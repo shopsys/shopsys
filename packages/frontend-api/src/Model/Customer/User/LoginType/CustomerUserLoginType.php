@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,6 +34,12 @@ class CustomerUserLoginType
     protected $loginType;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $lastLoggedInAt;
+
+    /**
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeData $customerUserLoginTypeData
      */
     public function __construct(
@@ -40,5 +47,11 @@ class CustomerUserLoginType
     ) {
         $this->customerUser = $customerUserLoginTypeData->customerUser;
         $this->loginType = $customerUserLoginTypeData->loginType;
+        $this->setLastLoggedNow();
+    }
+
+    public function setLastLoggedNow(): void
+    {
+        $this->lastLoggedInAt = new DateTime();
     }
 }

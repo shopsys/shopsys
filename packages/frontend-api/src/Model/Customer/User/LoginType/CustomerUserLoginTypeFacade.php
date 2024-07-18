@@ -26,17 +26,20 @@ class CustomerUserLoginTypeFacade
     public function updateCustomerUserLoginTypes(
         CustomerUserLoginTypeData $customerUserLoginTypeData,
     ): void {
-        $customerUserLoginTypeExists = $this->customerUserLoginTypeRepository->existsByCustomerUserAndType(
+        $existingCustomerUserLoginType = $this->customerUserLoginTypeRepository->findByCustomerUserAndType(
             $customerUserLoginTypeData->customerUser,
             $customerUserLoginTypeData->loginType,
         );
 
-        if ($customerUserLoginTypeExists === true) {
+        if ($existingCustomerUserLoginType !== null) {
+            $existingCustomerUserLoginType->setLastLoggedNow();
+            $this->entityManager->flush();
+
             return;
         }
 
-        $customerUserLoginType = $this->customerUserLoginTypeFactory->create($customerUserLoginTypeData);
-        $this->entityManager->persist($customerUserLoginType);
+        $newCustomerUserLoginType = $this->customerUserLoginTypeFactory->create($customerUserLoginTypeData);
+        $this->entityManager->persist($newCustomerUserLoginType);
 
         $this->entityManager->flush();
     }

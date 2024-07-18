@@ -20,16 +20,16 @@ class CustomerUserLoginTypeRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $loginType
-     * @return bool
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType|null
      */
-    public function existsByCustomerUserAndType(
+    public function findByCustomerUserAndType(
         CustomerUser $customerUser,
         string $loginType,
-    ): bool {
+    ): ?CustomerUserLoginType {
         return $this->entityManager->getRepository(CustomerUserLoginType::class)
-            ->count([
+            ->findOneBy([
                 'customerUser' => $customerUser,
                 'loginType' => $loginType,
-            ]) > 0;
+            ]);
     }
 }
