@@ -78,9 +78,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
 
-    Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
-        alias: App\FrontendApi\Model\Product\ProductFacade
-
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery:
         alias: App\FrontendApi\Resolver\Brand\BrandsQuery
         public: true
@@ -119,8 +116,4 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
         alias: App\FrontendApi\Resolver\Products\ProductsQuery
-        public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsQuery:
-        alias: App\FrontendApi\Resolver\Products\PromotedProductsQuery
         public: true
