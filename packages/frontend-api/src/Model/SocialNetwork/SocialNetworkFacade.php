@@ -41,8 +41,8 @@ class SocialNetworkFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserSocialNetworkLoginDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserSocialNetworkLoginFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
      */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -55,8 +55,8 @@ class SocialNetworkFacade
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly LoginResultDataFactory $loginResultDataFactory,
         protected readonly ProductListFacade $productListFacade,
-        protected readonly CustomerUserLoginTypeDataFactory $customerUserSocialNetworkLoginDataFactory,
-        protected readonly CustomerUserLoginTypeFacade $customerUserSocialNetworkLoginFacade,
+        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
+        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
     ) {
     }
 
@@ -115,8 +115,8 @@ class SocialNetworkFacade
                 $showCartMergeInfo,
             );
 
-            $this->customerUserSocialNetworkLoginFacade->updateCustomerUserLoginTypes(
-                $this->customerUserSocialNetworkLoginDataFactory->create($customerUser, $type),
+            $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
+                $this->customerUserLoginTypeDataFactory->create($customerUser, $type),
             );
 
             return $loginResultData;
