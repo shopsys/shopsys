@@ -27,7 +27,7 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
     }
 
     /**
-     * @param \App\Model\Administrator\Administrator $administrator
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
     public function sendAuthCode(TwoFactorInterface $administrator): void
     {
