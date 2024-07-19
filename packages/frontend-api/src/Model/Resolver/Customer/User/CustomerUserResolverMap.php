@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
-use App\Model\Customer\User\CustomerUser;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserResolverMap extends ResolverMap
 {
