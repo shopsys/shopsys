@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\SocialNetwork;
+namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 
 use Hybridauth\Data;
 use Hybridauth\Exception\UnexpectedApiResponseException;
