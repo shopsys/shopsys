@@ -1,0 +1,23 @@
+{% extends '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig' %}
+
+{% block multi_locale_basic_file_upload_widget %}
+    {% embed "@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig" %}
+        {% block widget_attributes %}
+            {{ block("widget_attributes", "@ShopsysFramework/Admin/Form/theme.html.twig") }}
+        {% endblock %}
+
+        {% block abstract_file_upload_widget_uploaded_files %}
+            <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none', [form.names.vars.prototype])|escape }}">#}
+                {% for key, uploadedFile in form.uploadedFiles %}
+                    {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
+                    {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri, '', [form.names[key]])}}
+                {% else %}
+                    <li>
+                        {% do form.children.uploadedFiles.setRendered %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

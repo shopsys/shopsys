@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Form\Admin\UploadedFile\UploadedFileFormType;
+use Shopsys\FrameworkBundle\Form\MultiLocaleBasicFileUploadType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,6 +36,7 @@ class UploadedFileController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory $uploadedFileFormDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
@@ -40,6 +46,7 @@ class UploadedFileController extends AdminBaseController
         protected readonly UploadedFileFormDataFactory $uploadedFileFormDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
+        protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
     ) {
     }
 
@@ -70,6 +77,9 @@ class UploadedFileController extends AdminBaseController
         $grid = $this->gridFactory->create('uploadedFiles', $dataSource);
         $grid->enablePaging();
 
+        $grid->setDefaultOrder('id', DataSourceInterface::ORDER_DESC);
+
+        $grid->addColumn('id', 'u.id', t('ID'));
         $grid->addColumn('filename', 'filename', t('Filename'));
         $grid->addColumn('translatedName', 'ut.name', t('Name'), true);
         $grid->addColumn('extension', 'u.extension', t('Ext.'), true);
@@ -82,9 +92,46 @@ class UploadedFileController extends AdminBaseController
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
+
+        $uploadedFileData = $this->uploadedFileDataFactory->create();
+        $uploadForm = $this->createForm(MultiLocaleBasicFileUploadType::class, $uploadedFileData, [
+            'required' => false,
+            'multiple' => true,
+        ])->add('save', SubmitType::class, [
+            'label' => t('Upload'),
+        ]);
+
+        $uploadForm->handleRequest($request);
+
+        if ($uploadForm->isSubmitted() && $uploadForm->isValid()) {
+            /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $data */
+            $data = $uploadForm->getData();
+
+            $uploadedFiles = $this->uploadedFileFacade->uploadFilesWithoutRelations(
+                $data->uploadedFiles,
+                $data->uploadedFilenames,
+                $data->names,
+            );
+
+            $this->addSuccessFlashTwig(sprintf('%s<br /><br />%s', t('Files uploaded:'), implode(
+                '<br />',
+                array_map(
+                    fn (UploadedFile $uploadedFile) => sprintf(
+                        '<a href="%s">%s</a>',
+                        $this->generateUrl('admin_uploadedfile_edit', ['id' => $uploadedFile->getId()]),
+                        $uploadedFile->getNameWithExtension(),
+                    ),
+                    $uploadedFiles,
+                ),
+            )));
+
+            return $this->redirectToRoute('admin_uploadedfile_list');
+        }
+
         return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
+            'uploadForm' => $uploadForm->createView(),
         ]);
     }
 

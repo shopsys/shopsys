@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
-class BasicFileUploadType extends AbstractType implements DataTransformerInterface
+class MultiLocaleBasicFileUploadType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -37,9 +37,9 @@ class BasicFileUploadType extends AbstractType implements DataTransformerInterfa
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => UploadedFileData::class,
             'multiple' => false,
-            'allow_filenames_input' => false,
-            'allow_localized_names' => false,
+            'allow_filenames_input' => true,
         ]);
     }
 
@@ -59,46 +59,29 @@ class BasicFileUploadType extends AbstractType implements DataTransformerInterfa
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->resetModelTransformers();
-        $builder->addModelTransformer($this);
 
-        if (!$options['allow_filenames_input']) {
-            $builder->add('uploadedFilenames', CollectionType::class, [
-                'entry_type' => HiddenType::class,
-                'allow_add' => true,
-            ]);
-        }
-
-        $builder->add('file', FileType::class, [
-            'multiple' => $options['multiple'],
-            'mapped' => false,
-        ]);
-    }
-
-    /**
-     * @param array $value
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
-    public function reverseTransform($value)
-    {
-        $uploadedFileData = $this->uploadedFileDataFactory->create();
-
-        foreach ($value as $field => $fieldValue) {
-            $uploadedFileData->{$field} = $fieldValue;
-        }
-
-        return $uploadedFileData;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $value
-     * @return array
-     */
-    public function transform($value): array
-    {
-        return (array)$value;
+        $builder
+            ->add(
+                $builder->create('names', CollectionType::class, [
+                    'required' => false,
+                    'entry_type' => LocalizedType::class,
+                    'allow_add' => true,
+                    'entry_options' => [
+                        'label' => '',
+                        'entry_options' => [
+                            'constraints' => [
+                                new Constraints\Length([
+                                    'max' => 255,
+                                    'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
+                                ]),
+                            ],
+                        ],
+                    ],
+                ]),
+            );
     }
 
     /**
@@ -106,6 +89,6 @@ class BasicFileUploadType extends AbstractType implements DataTransformerInterfa
      */
     public function getParent(): ?string
     {
-        return AbstractFileUploadType::class;
+        return BasicFileUploadType::class;
     }
 }

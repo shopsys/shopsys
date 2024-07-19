@@ -3,6 +3,10 @@
 {% block h1 %}{{ 'Files'|trans }}{% endblock %}
 
 {% block main_content %}
+    {{ form_start(uploadForm) }}
+    {{ form_row(uploadForm) }}
+    {{ form_end(uploadForm) }}
+
     {{ form_start(quickSearchForm) }}
         <div class="in-tab js-tabs">
             <div class="in-tab__heading">

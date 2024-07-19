@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
 /**
  * @ORM\Table(name="uploaded_files_relations")
@@ -46,17 +47,30 @@ class UploadedFileRelation
     protected $position;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $type;
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @param int $position
+     * @param string $type
      */
-    public function __construct(string $entityName, int $entityId, UploadedFile $uploadedFile, int $position = 0)
-    {
+    public function __construct(
+        string $entityName,
+        int $entityId,
+        UploadedFile $uploadedFile,
+        int $position = 0,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->uploadedFile = $uploadedFile;
         $this->position = $position;
+        $this->type = $type;
     }
 
     /**
@@ -105,5 +119,13 @@ class UploadedFileRelation
     public function setPosition($position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

@@ -29,7 +29,7 @@ class UploadedFileLocator
      */
     public function getRelativeUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
-        return $this->getRelativeFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
+        return $this->getRelativeFilePath($uploadedFile->getFilename());
     }
 
     /**
@@ -38,7 +38,7 @@ class UploadedFileLocator
      */
     public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
     {
-        return $this->getAbsoluteFilePath($uploadedFile->getEntityName()) . '/' . $uploadedFile->getFilename();
+        return $this->getAbsoluteFilePath($uploadedFile->getFilename());
     }
 
     /**

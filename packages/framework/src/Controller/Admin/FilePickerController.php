@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
@@ -81,6 +82,9 @@ class FilePickerController extends AdminBaseController
         $grid = $this->gridFactory->create('filePicker', $dataSource);
         $grid->enablePaging();
 
+        $grid->setDefaultOrder('id', DataSourceInterface::ORDER_DESC);
+
+        $grid->addColumn('id', 'u.id', t('ID'));
         $grid->addColumn('filename', 'filename', t('Filename'));
         $grid->addColumn('translatedName', 'ut.name', t('Name'), true);
         $grid->addColumn('extension', 'u.extension', t('Ext.'), true);

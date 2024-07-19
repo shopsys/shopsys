@@ -53,7 +53,7 @@ class UploadedFileRepository
             ->from(UploadedFile::class, 'u')
             ->join(UploadedFileRelation::class, 'ur', Join::WITH, 'u = ur.uploadedFile')
             ->select('u')
-            ->andWhere('u.type = :type')
+            ->andWhere('ur.type = :type')
             ->setParameter('type', $type)
             ->andWhere('ur.entityName = :entityName')
             ->setParameter('entityName', $entityName)

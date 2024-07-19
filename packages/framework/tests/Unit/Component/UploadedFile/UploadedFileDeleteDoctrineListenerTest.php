@@ -17,7 +17,7 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
 {
     public function testPreRemoveDeleteFile()
     {
-        $uploadedFile = new UploadedFile('entityName', 1, 'default', 'dummy.txt', 'dummy.txt', 0, ['en' => 'dummy']);
+        $uploadedFile = new UploadedFile('dummy.txt', 'dummy.txt', ['en' => 'dummy']);
 
         $uploadedFileConfig = new UploadedFileConfig([]);
 

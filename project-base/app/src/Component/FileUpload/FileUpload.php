@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Component\FileUpload;
 
 use App\Component\Image\ImageRepository;
-use App\Component\UploadedFile\UploadedFileRepository;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
@@ -33,7 +32,6 @@ class FileUpload extends BaseFileUpload implements ResetInterface
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \App\Component\Image\ImageRepository $imageRepository
-     * @param \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
      */
     public function __construct(
         $temporaryDir,
@@ -44,7 +42,6 @@ class FileUpload extends BaseFileUpload implements ResetInterface
         FilesystemOperator $filesystem,
         ParameterBagInterface $parameterBag,
         private readonly ImageRepository $imageRepository,
-        private readonly UploadedFileRepository $uploadedFileRepository,
     ) {
         parent::__construct(
             $temporaryDir,
@@ -64,7 +61,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
     {
         parent::preFlushEntity($entity);
 
-        if ($entity->getPosition() === null) {
+        if ($entity instanceof Image && $entity->getPosition() === null) {
             $entity->setPosition($this->getPositionForNewEntity($entity));
         }
     }
@@ -86,19 +83,11 @@ class FileUpload extends BaseFileUpload implements ResetInterface
             return $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type];
         }
 
-        if ($uploadEntityType === 'image') {
-            $position = $this->imageRepository->getImagesCountByEntityIndexedById(
-                $entityName,
-                $entityId,
-                $type,
-            );
-        } else {
-            $position = $this->uploadedFileRepository->getUploadedFilesCountByEntityIndexedById(
-                $entityName,
-                $entityId,
-                $type,
-            );
-        }
+        $position = $this->imageRepository->getImagesCountByEntityIndexedById(
+            $entityName,
+            $entityId,
+            $type,
+        );
 
         $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type] = $position;
 

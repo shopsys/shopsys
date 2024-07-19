@@ -13,11 +13,10 @@ use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyExcepti
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="uploaded_files", indexes={@ORM\Index(columns={"entity_name", "entity_id"})})
+ * @ORM\Table(name="uploaded_files")})
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
  */
@@ -47,18 +46,6 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $entityName;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    protected $entityId;
-
-    /**
-     * @var string
      * @ORM\Column(type="string", length=5)
      */
     protected $extension;
@@ -70,21 +57,9 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     protected $modifiedAt;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $type;
-
-    /**
      * @var string|null
      */
     protected $temporaryFilename;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    protected $position;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation>
@@ -93,29 +68,17 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     protected $translations;
 
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
-     * @param int $position
      * @param array<string, string> $namesIndexedByLocale
      */
     public function __construct(
-        string $entityName,
-        int $entityId,
-        string $type,
         string $temporaryFilename,
         string $uploadedFilename,
-        int $position,
         array $namesIndexedByLocale,
     ) {
-        $this->entityName = $entityName;
-        $this->entityId = $entityId;
-        $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
         $this->setNameAndSlug($uploadedFilename);
-        $this->position = $position;
         $this->translations = new ArrayCollection();
         $this->setTranslatedNames($namesIndexedByLocale);
     }
@@ -131,7 +94,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
             $files[static::UPLOAD_KEY] = new FileForUpload(
                 $this->temporaryFilename,
                 false,
-                $this->entityName,
+                '',
                 null,
                 FileNamingConvention::TYPE_ID,
             );
@@ -250,59 +213,9 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     /**
      * @return string
      */
-    public function getEntityName()
-    {
-        return $this->entityName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getEntityId()
-    {
-        return $this->entityId;
-    }
-
-    /**
-     * @return string
-     */
     public function getExtension()
     {
         return $this->extension;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     */
-    public function checkForDelete(string $entityName, int $entityId): void
-    {
-        if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
-            throw new FileNotFoundException(
-                sprintf(
-                    'Entity "%s" with ID "%s" does not own file with ID "%s"',
-                    $entityName,
-                    $entityId,
-                    $this->id,
-                ),
-            );
-        }
-    }
-
-    /**
-     * @param int $position
-     */
-    public function setPosition($position): void
-    {
-        $this->position = $position;
     }
 
     /**
@@ -322,14 +235,6 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     public function getModifiedAt()
     {
         return $this->modifiedAt;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
     }
 
     /**
