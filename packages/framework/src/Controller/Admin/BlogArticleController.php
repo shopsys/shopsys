@@ -59,7 +59,7 @@ class BlogArticleController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/blog/article/edit/{id}', requirements: ['id' => '\d+'], name: 'admin_blogarticle_edit')]
+    #[Route(path: '/blog/article/edit/{id}', name: 'admin_blogarticle_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response
     {
         $blogArticle = $this->blogArticleFacade->getById($id);
@@ -140,7 +140,7 @@ class BlogArticleController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/blog/article/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_blogarticle_delete')]
+    #[Route(path: '/blog/article/delete/{id}', name: 'admin_blogarticle_delete', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {
@@ -165,7 +165,7 @@ class BlogArticleController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/blog/article/delete-confirm/{id}', requirements: ['id' => '\d+'], name: 'admin_blogarticle_deleteconfirm')]
+    #[Route(path: '/blog/article/delete-confirm/{id}', name: 'admin_blogarticle_deleteconfirm', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction(int $id): Response
     {
         $message = t('Do you really want to remove this blog article?');

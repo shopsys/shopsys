@@ -386,7 +386,7 @@ class AdministratorController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/administrator/disable-two-factor-authentication/{id}', requirements: ['id' => '\d+'], name: 'admin_administrator_disable-two-factor-authentication')]
+    #[Route(path: '/administrator/disable-two-factor-authentication/{id}', name: 'admin_administrator_disable-two-factor-authentication', requirements: ['id' => '\d+'])]
     public function disableTwoFactorAuthenticationAction(Request $request, int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
