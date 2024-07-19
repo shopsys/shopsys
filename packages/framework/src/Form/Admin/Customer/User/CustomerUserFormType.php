@@ -92,6 +92,7 @@ class CustomerUserFormType extends AbstractType
                     'attr' => [
                         'class' => 'js-toggle-opt-group-control',
                     ],
+                    'disabled' => !$options['allowEditSystemData'],
                 ]);
             $pricingGroups = $this->pricingGroupFacade->getAll();
         }
@@ -110,14 +111,20 @@ class CustomerUserFormType extends AbstractType
                     'class' => 'js-toggle-opt-group',
                     'data-js-toggle-opt-group-control' => '.js-toggle-opt-group-control',
                 ],
+                'disabled' => !$options['allowEditSystemData'],
             ]);
+
+
+        $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
+            'label' => t('Personal data'),
+        ]);
 
         if (
             ($domain->isB2b() && $this->customerUser === null) ||
             ($this->customerUser !== null && $this->customerFacade->isB2bFeaturesEnabledByCustomer($this->customerUser->getCustomer()))
         ) {
             $roleGroups = $this->customerUserRoleGroupFacade->getAll();
-            $builderSystemDataGroup
+            $builderPersonalDataGroup
                 ->add('roleGroup', ChoiceType::class, [
                     'required' => true,
                     'choices' => $roleGroups,
@@ -126,10 +133,6 @@ class CustomerUserFormType extends AbstractType
                     'label' => t('Role'),
                 ]);
         }
-
-        $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
-            'label' => t('Personal data'),
-        ]);
 
         $builderPersonalDataGroup
             ->add('firstName', TextType::class, [
@@ -261,10 +264,11 @@ class CustomerUserFormType extends AbstractType
     {
         $resolver
             ->setRequired(['customerUser', 'domain_id'])
-            ->setDefined('renderSaveButton')
+            ->setDefined(['renderSaveButton', 'allowEditSystemData'])
             ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setAllowedTypes('domain_id', 'int')
             ->setAllowedTypes('renderSaveButton', 'bool')
+            ->setAllowedTypes('allowEditSystemData', 'bool')
             ->setDefaults([
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
@@ -283,6 +287,7 @@ class CustomerUserFormType extends AbstractType
                     ]),
                 ],
                 'renderSaveButton' => false,
+                'allowEditSystemData' => true,
             ]);
     }
 }

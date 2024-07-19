@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
@@ -13,10 +14,12 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
      */
     public function __construct(
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
+        protected readonly CustomerRepository $customerRepository,
     ) {
     }
 
@@ -48,6 +51,21 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
         $customerUserData = $this->createInstance();
         $customerUserData->customer = $customer;
         $customerUserData->roleGroup = $this->customerUserRoleGroupFacade->getDefaultCustomerUserRoleGroup();
+
+        return $customerUserData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
+     */
+    public function createForCustomerWithPresetPricingGroup(Customer $customer): CustomerUserData
+    {
+        $customerUserData = $this->createForCustomer($customer);
+        $customerUsers = $this->customerRepository->getCustomerUsers($customer);
+        $customerUser = reset($customerUsers);
+        $customerUserData->pricingGroup = $customerUser->getPricingGroup();
+        $customerUserData->domainId = $customerUser->getDomainId();
 
         return $customerUserData;
     }

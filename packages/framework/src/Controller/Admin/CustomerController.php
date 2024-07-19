@@ -264,12 +264,13 @@ class CustomerController extends AdminBaseController
     public function newCustomerUserAction(Request $request, int $customerId): Response
     {
         $customer = $this->customerFacade->getById($customerId);
-        $customerUserData = $this->customerUserDataFactory->createForCustomer($customer);
+        $customerUserData = $this->customerUserDataFactory->createForCustomerWithPresetPricingGroup($customer);
 
         $form = $this->createForm(CustomerUserFormType::class, $customerUserData, [
             'customerUser' => null,
             'domain_id' => $customer->getDomainId(),
             'renderSaveButton' => true,
+            'allowEditSystemData' => false,
         ]);
         $form->handleRequest($request);
 

@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerRepository;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -121,7 +122,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         return new CustomerUserUpdateDataFactory(
             new BillingAddressDataFactory(),
             new DeliveryAddressDataFactory(),
-            new CustomerUserDataFactory($this->createMock(PricingGroupSettingFacade::class), $this->createMock(CustomerUserRoleGroupFacade::class)),
+            new CustomerUserDataFactory(
+                $this->createMock(PricingGroupSettingFacade::class),
+                $this->createMock(CustomerUserRoleGroupFacade::class),
+                $this->createMock(CustomerRepository::class),
+            ),
         );
     }
 }
