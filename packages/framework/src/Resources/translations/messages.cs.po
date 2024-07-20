@@ -3175,9 +3175,6 @@ msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
 msgid "There is no warehouse on this domain yet."
 msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
 
-msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
-msgstr "Během odhlašování došlo k chybě. Pokud se chcete opravdu odhlásit, zkuste to prosím znovu."
-
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 

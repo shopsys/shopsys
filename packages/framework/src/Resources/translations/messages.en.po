@@ -3175,9 +3175,6 @@ msgstr ""
 msgid "There is no warehouse on this domain yet."
 msgstr ""
 
-msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
-msgstr ""
-
 msgid "There was an error while saving. The order isn't saved."
 msgstr ""
 

@@ -10,14 +10,12 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class LogoutListener implements EventSubscriberInterface
 {
-    protected const ADMINISTRATION_TOKEN = 'administration';
+    protected const string ADMINISTRATION_TOKEN = 'administration';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler $frontLogoutHandler
      * @param \Shopsys\FrameworkBundle\Model\Security\AdminLogoutHandler $adminLogoutHandler
      */
     public function __construct(
-        protected readonly FrontLogoutHandler $frontLogoutHandler,
         protected readonly AdminLogoutHandler $adminLogoutHandler,
     ) {
     }
@@ -34,11 +32,11 @@ class LogoutListener implements EventSubscriberInterface
         /** @var \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken $token */
         $token = $event->getToken();
 
-        if ($token->getFirewallName() === static::ADMINISTRATION_TOKEN) {
-            $response = $this->adminLogoutHandler->onLogoutSuccess($event->getRequest());
-        } else {
-            $response = $this->frontLogoutHandler->onLogoutSuccess($event->getRequest());
+        if ($token->getFirewallName() !== static::ADMINISTRATION_TOKEN) {
+            return;
         }
+
+        $response = $this->adminLogoutHandler->onLogoutSuccess($event->getRequest());
 
         $event->setResponse($response);
     }
