@@ -23,13 +23,10 @@
     "require": {
         "php": "^8.3",
         "phpunit/phpunit": "^11.2.1",
-        "symfony/framework-bundle": "^3.4|^4.0|^5.0",
-        "symfony/http-foundation": "^3.4|^4.0|^5.0",
-        "symfony/dependency-injection": "^3.4|^4.0|^5.0",
-        "symfony/routing": "^3.4|^4.0|^5.0",
+        "symfony/framework-bundle": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/routing": "^5.4",
         "doctrine/annotations": "^1.10.4"
-    },
-    "conflict": {
-        "symfony/dependency-injection": "3.4.15 || 3.4.16"
     }
 }

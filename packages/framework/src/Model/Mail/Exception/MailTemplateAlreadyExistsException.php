@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
-use App\Model\Mail\MailTemplate;
 use Exception;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Throwable;
 
 class MailTemplateAlreadyExistsException extends Exception
 {
     /**
-     * @param \App\Model\Mail\MailTemplate $mailTemplate
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      * @param \Throwable|null $previous
      */
     public function __construct(protected MailTemplate $mailTemplate, ?Throwable $previous = null)
@@ -27,7 +27,7 @@ class MailTemplateAlreadyExistsException extends Exception
     }
 
     /**
-     * @return \App\Model\Mail\MailTemplate
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
     public function getMailTemplate(): MailTemplate
     {

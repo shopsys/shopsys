@@ -17,4 +17,4 @@ parameters:
                     id: '%env(SEZNAM_CLIENT_ID)%'
                     secret: '%env(SEZNAM_CLIENT_SECRET)%'
                 scope: 'identity'
-                adapter: Shopsys\FrameworkBundle\Component\SocialNetwork\Seznam
+                adapter: Shopsys\FrontendApiBundle\Model\SocialNetwork\Seznam
