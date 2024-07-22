@@ -15,5 +15,5 @@ TelephoneInputObjectDecorator:
                             max: 30
                             maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
                     -   Regex:
-                            pattern: '/^[0-9\+]+$/' # see \App\Component\Validator\RegexValidationRule::TELEPHONE_REGEX
+                            pattern: '/^[0-9\+]+$/'
                             message: "Please enter only numbers and the + sign"

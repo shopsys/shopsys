@@ -1073,6 +1073,8 @@ export type TypeMutation = {
   ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
   ContactForm: Scalars['Boolean']['output'];
+  /** Create a new delivery address */
+  CreateDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
   /** Delete delivery address by Uuid */
@@ -1159,6 +1161,11 @@ export type TypeMutationChangeTransportInCartArgs = {
 
 export type TypeMutationContactFormArgs = {
   input: TypeContactFormInput;
+};
+
+
+export type TypeMutationCreateDeliveryAddressArgs = {
+  input: TypeDeliveryAddressInput;
 };
 
 

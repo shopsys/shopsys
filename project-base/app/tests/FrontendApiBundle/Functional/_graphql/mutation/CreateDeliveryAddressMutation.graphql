@@ -1,0 +1,33 @@
+mutation CreateDeliveryAddress(
+    $firstName: String!,
+    $lastName: String!,
+    $street: String!,
+    $city: String!,
+    $postcode: String!,
+    $country: String!,
+    $companyName: String,
+    $telephone: String,
+) {
+    CreateDeliveryAddress(input: {
+        firstName: $firstName
+        lastName: $lastName
+        street: $street
+        city: $city
+        postcode: $postcode
+        country: $country
+        companyName: $companyName
+        telephone: $telephone
+    }) {
+        firstName
+        lastName
+        street
+        city
+        postcode
+        country {
+            code
+            name
+        }
+        companyName
+        telephone
+    }
+}

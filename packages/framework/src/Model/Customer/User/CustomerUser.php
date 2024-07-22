@@ -471,4 +471,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     {
         return $this->password !== null;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $defaultDeliveryAddress
+     */
+    public function setDefaultDeliveryAddress($defaultDeliveryAddress): void
+    {
+        $this->defaultDeliveryAddress = $defaultDeliveryAddress;
+    }
 }

@@ -1,0 +1,82 @@
+DeliveryAddressInputObjectDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid"
+                description: "UUID"
+                defaultValue: null
+            firstName:
+                type: "String!"
+                description: "Delivery address first name"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String!"
+                description: "Delivery address last name"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
+            companyName:
+                type: "String"
+                description: "Delivery address company name"
+                defaultValue: null
+                validation:
+                    -   Length:
+                            max: 100
+                            maxMessage: "Company name cannot be longer than {{ limit }} characters"
+            street:
+                type: "String!"
+                description: "Delivery address street name"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter street"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Street name cannot be longer than {{ limit }} characters"
+            city:
+                type: "String!"
+                description: "Delivery address city name"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter city"
+                    -   Length:
+                            max: 100
+                            maxMessage: "City name cannot be longer than {{ limit }} characters"
+            postcode:
+                type: "String!"
+                description: "Delivery address zip code"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter zip code"
+                    -   Length:
+                            max: 30
+                            maxMessage: "Zip code cannot be longer than {{ limit }} characters"
+            telephone:
+                type: "String"
+                description: "Delivery address telephone"
+                defaultValue: null
+                validation:
+                    -   Length:
+                            min: 9
+                            minMessage: "Telephone number cannot be shorter than {{ limit }} characters"
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[0-9\+]+$/'
+                            message: "Please enter only numbers and the + character"
+            country:
+                type: "String!"
+                description: "Delivery address country"
+                validation:
+                    -   NotBlank:
+                            message: "Please choose country"
+                    -   \Shopsys\FrameworkBundle\Form\Constraints\Country: ~

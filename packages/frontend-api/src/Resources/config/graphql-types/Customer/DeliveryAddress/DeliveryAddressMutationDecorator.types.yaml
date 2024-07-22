@@ -1,0 +1,35 @@
+DeliveryAddressMutationDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            DeleteDeliveryAddress:
+                type: "[DeliveryAddress!]!"
+                description: "Delete delivery address by Uuid"
+                args:
+                    deliveryAddressUuid:
+                        type: Uuid!
+                resolve: "@=mutation('deleteDeliveryAddressMutation', args)"
+            EditDeliveryAddress:
+                type: "[DeliveryAddress!]!"
+                description: "Edit delivery address by Uuid"
+                args:
+                    input:
+                        type: DeliveryAddressInput!
+                        validation: cascade
+                resolve: "@=mutation('editDeliveryAddressMutation', args)"
+            SetDefaultDeliveryAddress:
+                type: "CustomerUser!"
+                description: "Set default delivery address by Uuid"
+                args:
+                    deliveryAddressUuid:
+                        type: Uuid!
+                resolve: "@=mutation('setDefaultDeliveryAddressMutation', args['deliveryAddressUuid'])"
+            CreateDeliveryAddress:
+                type: "[DeliveryAddress!]!"
+                description: "Create a new delivery address"
+                args:
+                    input:
+                        type: DeliveryAddressInput!
+                        validation: cascade
+                resolve: "@=mutation('createDeliveryAddressMutation', args)"

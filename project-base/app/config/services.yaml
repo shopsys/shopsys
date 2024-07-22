@@ -598,6 +598,9 @@ services:
     Shopsys\FrontendApiBundle\Model\Category\CategoryRepository:
         alias: App\FrontendApi\Model\Category\CategoryRepository
 
+    Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\DeliveryAddressMutation:
+        alias: App\FrontendApi\Mutation\Customer\DeliveryAddressMutation
+
     Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader:
         alias: App\FrontendApi\Model\Product\ProductsBatchLoader
 

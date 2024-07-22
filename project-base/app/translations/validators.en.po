@@ -67,9 +67,6 @@ msgstr ""
 msgid "Please enter GTM ID"
 msgstr ""
 
-msgid "Please enter city"
-msgstr ""
-
 msgid "Please enter company name"
 msgstr ""
 
@@ -100,16 +97,10 @@ msgstr ""
 msgid "Please enter notification bar content"
 msgstr ""
 
-msgid "Please enter only numbers and the + character"
-msgstr ""
-
 msgid "Please enter only numbers and the + sign"
 msgstr ""
 
 msgid "Please enter password"
-msgstr ""
-
-msgid "Please enter street"
 msgstr ""
 
 msgid "Please enter telephone number"
@@ -131,9 +122,6 @@ msgid "Please enter your postal code"
 msgstr ""
 
 msgid "Please enter your street"
-msgstr ""
-
-msgid "Please enter zip code"
 msgstr ""
 
 msgid "Please fill in numbers only"
@@ -166,9 +154,6 @@ msgstr ""
 msgid "Street cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Street name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -188,8 +173,5 @@ msgid "User with provided email address does not exist."
 msgstr ""
 
 msgid "Variable {{ needle }} is required"
-msgstr ""
-
-msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
 

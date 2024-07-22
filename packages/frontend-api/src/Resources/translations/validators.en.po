@@ -100,6 +100,9 @@ msgstr ""
 msgid "Please enter old password"
 msgstr ""
 
+msgid "Please enter only numbers and the + character"
+msgstr ""
+
 msgid "Please enter password"
 msgstr ""
 
@@ -161,6 +164,9 @@ msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Telephone number cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr ""
 
 msgid "The payment is not allowed in combination with already selected transport"

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Customer;
+namespace Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress;
 
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Argument;
