@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
@@ -37,7 +37,7 @@ class RegistrationFacade
 
         if ($customerUser !== null) {
             if ($customerUser->isActivated() === true) {
-                throw new DuplicateUserNameException($registrationData->email);
+                throw new DuplicateEmailException($registrationData->email);
             }
 
             $customerUserUpdateData = $this->mapRegistrationDataToCustomerUserUpdateData($customerUser, $registrationData);

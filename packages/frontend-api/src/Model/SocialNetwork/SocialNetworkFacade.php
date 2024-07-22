@@ -8,7 +8,7 @@ use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
 use Hybridauth\User\Profile;
-use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
@@ -81,7 +81,7 @@ class SocialNetworkFacade
 
             try {
                 $customerUser = $this->registrationFacade->register($registrationData);
-            } catch (DuplicateUserNameException) {
+            } catch (DuplicateEmailException) {
                 $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
             }
             $adapter->disconnect();
