@@ -95,7 +95,7 @@ services:
         arguments:
             $productSearchResultsProviders: !tagged 'shopsys.frontend_api.products_search_results_provider'
 
-    Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
+    Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigProvider:
         arguments:
             $socialNetworkLoginConfig: '%social_network_login_config%'
 

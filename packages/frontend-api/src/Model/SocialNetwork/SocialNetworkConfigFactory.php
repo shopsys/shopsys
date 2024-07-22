@@ -7,10 +7,10 @@ namespace Shopsys\FrontendApiBundle\Model\SocialNetwork;
 class SocialNetworkConfigFactory
 {
     /**
-     * @param array $socialNetworkLoginConfig
+     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigProvider $socialNetworkConfigProvider
      */
     public function __construct(
-        protected array $socialNetworkLoginConfig,
+        protected readonly SocialNetworkConfigProvider $socialNetworkConfigProvider,
     ) {
     }
 
@@ -20,6 +20,6 @@ class SocialNetworkConfigFactory
      */
     public function createConfig(string $redirectUrl): array
     {
-        return array_merge(['callback' => $redirectUrl], $this->socialNetworkLoginConfig);
+        return array_merge(['callback' => $redirectUrl], $this->socialNetworkConfigProvider->getSocialNetworkLoginConfig());
     }
 }

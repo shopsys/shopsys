@@ -7581,6 +7581,15 @@ Settings related to SEO
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>socialNetworkLoginConfig</strong></td>
+<td valign="top">[<a href="#logintypeenum">LoginTypeEnum</a>!]!</td>
+<td>
+
+Returns available social network logins
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>termsAndConditionsArticleUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>

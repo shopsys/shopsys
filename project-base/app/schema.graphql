@@ -2081,6 +2081,8 @@ type Settings {
   privacyPolicyArticleUrl: String
   "Settings related to SEO"
   seo: SeoSetting!
+  "Returns available social network logins"
+  socialNetworkLoginConfig: [LoginTypeEnum!]!
   "Returns Terms and Conditions article's url"
   termsAndConditionsArticleUrl: String
   "Returns User consent policy article's url"
