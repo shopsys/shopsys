@@ -30,6 +30,10 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
     const formatPrice = useFormatPrice();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
+    if (variants.length === 0) {
+        return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
+    }
+
     return (
         <ul className="grid grid-cols-1 gap-2 divide-graySlate md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
             {variants.map((variant, index) => (
