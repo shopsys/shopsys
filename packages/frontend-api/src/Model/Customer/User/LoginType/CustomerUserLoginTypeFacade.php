@@ -32,7 +32,7 @@ class CustomerUserLoginTypeFacade
         );
 
         if ($existingCustomerUserLoginType !== null) {
-            $existingCustomerUserLoginType->setLastLoggedNow();
+            $existingCustomerUserLoginType->setLastLoggedInAt($customerUserLoginTypeData->lastLoggedInAt);
             $this->entityManager->flush();
 
             return;

@@ -196,4 +196,12 @@ class CustomerUserRepository
 
         return $customerUser;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
+     */
+    public function getAll(): array
+    {
+        return $this->getCustomerUserRepository()->findAll();
+    }
 }

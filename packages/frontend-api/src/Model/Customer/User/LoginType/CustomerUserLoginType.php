@@ -56,11 +56,14 @@ class CustomerUserLoginType
         $this->customerUser = $customerUserLoginTypeData->customerUser;
         $this->loginType = $customerUserLoginTypeData->loginType;
         $this->externalId = $customerUserLoginTypeData->externalId;
-        $this->setLastLoggedNow();
+        $this->lastLoggedInAt = $customerUserLoginTypeData->lastLoggedInAt;
     }
 
-    public function setLastLoggedNow(): void
+    /**
+     * @param \DateTime $dateTime
+     */
+    public function setLastLoggedInAt($dateTime): void
     {
-        $this->lastLoggedInAt = new DateTime();
+        $this->lastLoggedInAt = $dateTime;
     }
 }

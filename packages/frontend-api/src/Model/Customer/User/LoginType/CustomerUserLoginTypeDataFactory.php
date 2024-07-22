@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
+use DateTime;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserLoginTypeDataFactory
@@ -24,6 +25,7 @@ class CustomerUserLoginTypeDataFactory
         $customerUserLoginTypeData->customerUser = $customerUser;
         $customerUserLoginTypeData->loginType = $loginType;
         $customerUserLoginTypeData->externalId = $externalId;
+        $customerUserLoginTypeData->lastLoggedInAt = new DateTime();
 
         return $customerUserLoginTypeData;
     }
