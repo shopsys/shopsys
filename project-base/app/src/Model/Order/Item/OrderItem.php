@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
-use App\Model\Order\Item\Exception\OrderItemRelatedException;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 
 /**
  * @ORM\Table(name="order_items")
@@ -27,26 +25,11 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
  * @method setPayment(\App\Model\Payment\Payment $payment)
  * @method setProduct(\App\Model\Product\Product|null $product)
  * @method __construct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string $type, string|null $unitName, string|null $catnum)
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Order\Item\OrderItem> $relatedItems
+ * @method addRelatedItem(\App\Model\Order\Item\OrderItem $relatedItem)
+ * @method \App\Model\Order\Item\OrderItem[] getRelatedItems()
  */
 #[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem extends BaseOrderItem
 {
-    /**
-     * @var \App\Model\Order\Item\OrderItem|null
-     * @ORM\OneToOne(targetEntity="App\Model\Order\Item\OrderItem")
-     * @ORM\JoinColumn(name="related_order_item_id", referencedColumnName="id", nullable=true)
-     */
-    private $relatedOrderItem;
-
-    /**
-     * @param \App\Model\Order\Item\OrderItem|null $relatedOrderItem
-     */
-    public function setRelatedOrderItem(?self $relatedOrderItem): void
-    {
-        if ($this->type !== OrderItemTypeEnum::TYPE_PRODUCT) {
-            throw new OrderItemRelatedException('This kind of relation is not supported.', 500);
-        }
-
-        $this->relatedOrderItem = $relatedOrderItem;
-    }
 }

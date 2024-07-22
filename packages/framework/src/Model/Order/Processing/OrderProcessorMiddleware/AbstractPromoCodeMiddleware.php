@@ -62,6 +62,8 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
                 continue;
             }
 
+            $orderData->promoCode = $appliedPromoCode->getCode();
+
             $this->createAndAddOrderItemData(
                 $orderData,
                 $validProductIds,

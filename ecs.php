@@ -97,6 +97,7 @@ return ECSConfig::configure()
             ],
             ClassLengthSniff::class => [
                 __DIR__ . '/packages/framework/src/Form/Admin/Product/ProductFormType.php',
+                __DIR__ . '/packages/framework/src/Model/Order/Order.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
             ],
             CyclomaticComplexitySniff::class => [

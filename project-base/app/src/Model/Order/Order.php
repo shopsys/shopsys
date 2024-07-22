@@ -42,6 +42,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItem[] getItemsWithoutTransportAndPayment()
  * @method editData(\App\Model\Order\OrderData $orderData)
  * @method setCustomerUser(\App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @method \App\Model\Order\Item\OrderItem[] getItemsSortedWithRelatedItems()
  */
 #[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order extends BaseOrder

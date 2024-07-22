@@ -31,7 +31,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataInCategory(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $searchText = "")
  * @property \App\Model\Category\CategoryRepository $categoryRepository
- * @property \App\Model\Product\Brand\BrandRepository $brandRepository
  * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade

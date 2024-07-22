@@ -28,7 +28,6 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
      */
     public function __construct(
         protected readonly OrderStatusRepository $orderStatusRepository,
@@ -41,7 +40,6 @@ class PlaceOrderFacade
         protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly OrderItemTypeEnum $orderItemTypeEnum,
     ) {
     }
 
@@ -117,13 +115,43 @@ class PlaceOrderFacade
      */
     protected function fillOrderItems(Order $order, OrderData $orderData): void
     {
-        foreach ($this->orderItemTypeEnum->getAllCasesSortedByPriority() as $orderItemType) {
-            foreach ($orderData->getItemsByType($orderItemType) as $orderItemData) {
-                $orderItem = $this->createSpecificOrderItem($orderItemData, $order);
+        $alreadyCreatedOrderItems = [];
 
-                $this->em->persist($orderItem);
+        foreach ($orderData->items as $orderItemData) {
+            if (array_key_exists($this->generateCacheKey($orderItemData), $alreadyCreatedOrderItems)) {
+                continue;
+            }
+
+            $orderItem = $this->createSpecificOrderItem($orderItemData, $order);
+            $alreadyCreatedOrderItems[$this->generateCacheKey($orderItemData)] = $orderItem;
+
+            $this->em->persist($orderItem);
+
+            foreach ($orderItemData->relatedOrderItemsData as $relatedOrderItemData) {
+                if (array_key_exists($this->generateCacheKey($relatedOrderItemData), $alreadyCreatedOrderItems)) {
+                    $relatedOrderItem = $alreadyCreatedOrderItems[$this->generateCacheKey($relatedOrderItemData)];
+                    $orderItem->addRelatedItem($relatedOrderItem);
+
+                    continue;
+                }
+
+                $relatedOrderItem = $this->createSpecificOrderItem($relatedOrderItemData, $order);
+                $alreadyCreatedOrderItems[$this->generateCacheKey($relatedOrderItemData)] = $relatedOrderItem;
+
+                $this->em->persist($relatedOrderItem);
+
+                $orderItem->addRelatedItem($relatedOrderItem);
             }
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @return string
+     */
+    protected function generateCacheKey(OrderItemData $orderItemData): string
+    {
+        return spl_object_hash($orderItemData);
     }
 
     /**

@@ -30,6 +30,14 @@ class Order
 {
     public const int MAX_TRANSACTION_COUNT = 2;
 
+    protected const array SORTED_TYPES = [
+        OrderItemTypeEnum::TYPE_PRODUCT,
+        OrderItemTypeEnum::TYPE_DISCOUNT,
+        OrderItemTypeEnum::TYPE_PAYMENT,
+        OrderItemTypeEnum::TYPE_TRANSPORT,
+        OrderItemTypeEnum::TYPE_ROUNDING,
+    ];
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -778,6 +786,38 @@ class Order
     public function getItems()
     {
         return $this->items->getValues();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getItemsSortedWithRelatedItems(): array
+    {
+        $itemsSortedWithRelatedItems = [];
+
+        $items = clone $this->items;
+
+        foreach (static::SORTED_TYPES as $orderItemType) {
+            foreach ($this->getItemsByType($orderItemType) as $orderItem) {
+                if (!$items->contains($orderItem)) {
+                    continue;
+                }
+
+                $itemsSortedWithRelatedItems[] = $orderItem;
+                $items->removeElement($orderItem);
+
+                foreach ($orderItem->getRelatedItems() as $relatedOrderItem) {
+                    if (!$items->contains($relatedOrderItem)) {
+                        continue;
+                    }
+
+                    $itemsSortedWithRelatedItems[] = $relatedOrderItem;
+                    $items->removeElement($relatedOrderItem);
+                }
+            }
+        }
+
+        return $itemsSortedWithRelatedItems;
     }
 
     /**
