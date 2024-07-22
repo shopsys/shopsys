@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
+use GraphQL\Executor\Promise\Promise;
+use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider;
 
 class ProductArrayFieldMapper
 {
@@ -19,6 +22,8 @@ class ProductArrayFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -26,6 +31,8 @@ class ProductArrayFieldMapper
         protected readonly BrandFacade $brandFacade,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
+        protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
+        protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
     ) {
     }
 
@@ -119,11 +126,17 @@ class ProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function getAccessories(array $data): array
+    public function getAccessoriesPromise(array $data): Promise
     {
-        return $this->productElasticsearchProvider->getSellableProductArrayByIds($data['accessories']);
+        return $this->productsSellableByIdsBatchLoader->load(
+            array_slice(
+                $data['accessories'],
+                0,
+                $this->productFrontendLimitProvider->getProductAccessoriesFrontendLimit(),
+            ),
+        );
     }
 
     /**

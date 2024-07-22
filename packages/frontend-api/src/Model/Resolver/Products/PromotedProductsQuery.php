@@ -9,23 +9,24 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PromotedProductsQuery extends AbstractQuery
 {
-    protected const PROMOTED_PRODUCTS_FRONTEND_LIMIT = 30;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      */
     public function __construct(
         protected readonly TopProductFacade $topProductFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ProductFacade $productFacade,
+        protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
     ) {
     }
 
@@ -43,6 +44,7 @@ class PromotedProductsQuery extends AbstractQuery
                 },
                 $allSortedPromotedProductsOnDomain,
             ),
+            $this->productFrontendLimitProvider->getPromotedProductsFrontendLimit(),
         );
     }
 }

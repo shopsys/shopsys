@@ -18,11 +18,12 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
-use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
 /**
@@ -39,24 +40,26 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[] getHreflangLinks(\App\Model\Product\Product $product)
  * @method int getOrderingPriority(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
@@ -68,13 +71,14 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ParameterWithValuesFactory $parameterWithValuesFactory,
         ProductAvailabilityFacade $productAvailabilityFacade,
         HreflangLinksFacade $hreflangLinksFacade,
+        ProductFrontendLimitProvider $productFrontendLimitProvider,
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
-        protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
@@ -86,6 +90,8 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $parameterWithValuesFactory,
             $productAvailabilityFacade,
             $hreflangLinksFacade,
+            $productFrontendLimitProvider,
+            $productsSellableByIdsBatchLoader,
         );
     }
 
@@ -291,6 +297,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getRelatedProductsPromise(Product $product): Promise
     {
         $relatedProducts = $product->getRelatedProducts();
+        $relatedProducts = array_slice($relatedProducts, 0, $this->productFrontendLimitProvider->getRelatedProductsFrontendLimit());
         $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
 
         return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);

@@ -83,6 +83,11 @@ class ProductResolverMap extends ResolverMap
 
         foreach ($prefixes as $prefix) {
             $methodCandidate = lcfirst($prefix . ucfirst($fieldName));
+            $methodPromiseCandidate = $methodCandidate . 'Promise';
+
+            if (method_exists($mapper, $methodPromiseCandidate)) {
+                return [$mapper, $methodPromiseCandidate];
+            }
 
             if (method_exists($mapper, $methodCandidate)) {
                 return [$mapper, $methodCandidate];

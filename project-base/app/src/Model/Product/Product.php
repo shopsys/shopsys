@@ -43,7 +43,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class Product extends BaseProduct
 {
     public const PDF_SUFFIX = '.pdf';
-    public const RELATED_PRODUCTS_FRONTEND_LIMIT = 30;
 
     /**
      * @var string
@@ -336,18 +335,11 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param int|null $limit
      * @return \App\Model\Product\Product[]
      */
-    public function getRelatedProducts(?int $limit = null): array
+    public function getRelatedProducts(): array
     {
-        if ($limit === null) {
-            return $this->relatedProducts->getValues();
-        }
-
-        $slicedProducts = $this->relatedProducts->slice(0, $limit);
-
-        return array_values($slicedProducts);
+        return $this->relatedProducts->getValues();
     }
 
     /**

@@ -33,9 +33,9 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
@@ -45,12 +45,12 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
         ProductFrontendLimitProvider $productFrontendLimitProvider,
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
-        private DataLoaderInterface $productsSellableByIdsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
     ) {
-        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory, $productFrontendLimitProvider);
+        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory, $productFrontendLimitProvider, $productsSellableByIdsBatchLoader);
     }
 
     /**
@@ -155,7 +155,10 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      */
     public function getRelatedProducts(array $data): array
     {
-        return $this->productElasticsearchProvider->getSellableProductArrayByIds($data['related_products']);
+        return $this->productElasticsearchProvider->getSellableProductArrayByIds(
+            $data['related_products'],
+            $this->productFrontendLimitProvider->getRelatedProductsFrontendLimit(),
+        );
     }
 
     /**
@@ -189,18 +192,15 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param array $data
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function getAccessoriesPromise(array $data): Promise
-    {
-        return $this->productsSellableByIdsBatchLoader->load($data['accessories']);
-    }
-
-    /**
-     * @param array $data
-     * @return \GraphQL\Executor\Promise\Promise
-     */
     public function getRelatedProductsPromise(array $data): Promise
     {
-        return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
+        return $this->productsSellableByIdsBatchLoader->load(
+            array_slice(
+                $data['related_products'],
+                0,
+                $this->productFrontendLimitProvider->getRelatedProductsFrontendLimit(),
+            ),
+        );
     }
 
     /**

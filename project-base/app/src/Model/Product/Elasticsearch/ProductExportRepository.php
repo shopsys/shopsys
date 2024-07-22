@@ -43,13 +43,12 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
- * @method array extractAccessoriesIds(\App\Model\Product\Product $product, int $domainId, int|null $limit)
+ * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @property \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
  * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
- * @method array extractTopOfferedAccessoriesIds(\App\Model\Product\Product $product, int $domainId, int|null $limit)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -138,7 +137,7 @@ class ProductExportRepository extends BaseProductExportRepository
             ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS => $this->extractSearchingShortDescriptions($product, $domainId),
             ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId())->getSlug(),
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
-            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractTopRelatedProductsId($product),
+            ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsId($product),
             ProductExportFieldProvider::BREADCRUMB => $this->extractBreadcrumb($product, $domainId, $locale),
             ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
                 return [
@@ -489,11 +488,11 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @return int[]
      */
-    private function extractTopRelatedProductsId(Product $product): array
+    private function extractRelatedProductsId(Product $product): array
     {
         $relatedProductsId = [];
 
-        foreach ($product->getRelatedProducts(Product::RELATED_PRODUCTS_FRONTEND_LIMIT) as $relatedProduct) {
+        foreach ($product->getRelatedProducts() as $relatedProduct) {
             $relatedProductsId[] = $relatedProduct->getId();
         }
 

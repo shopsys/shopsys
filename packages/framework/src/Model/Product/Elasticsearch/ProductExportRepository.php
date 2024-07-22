@@ -182,7 +182,7 @@ class ProductExportRepository implements ResetInterface
             ProductExportFieldProvider::SEO_H1 => $product->getSeoH1($domainId),
             ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
-            ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product, $domainId, ProductAccessoryFacade::PRODUCT_ACCESSORIES_FRONTEND_LIMIT),
+            ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
             ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId),
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
@@ -378,19 +378,15 @@ class ProductExportRepository implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @param int|null $limit
      * @return array
      */
-    protected function extractAccessoriesIds(Product $product, int $domainId, ?int $limit): array
+    protected function extractAccessoriesIds(Product $product): array
     {
-        $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-
         $accessoriesIds = [];
-        $accessories = $this->productAccessoryFacade->getOfferedAccessories($product, $domainId, $pricingGroup, $limit);
+        $accessories = $this->productAccessoryFacade->getAllAccessories($product);
 
         foreach ($accessories as $accessory) {
-            $accessoriesIds[] = $accessory->getId();
+            $accessoriesIds[] = $accessory->getAccessory()->getId();
         }
 
         return $accessoriesIds;

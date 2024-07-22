@@ -198,11 +198,12 @@ class ProductFacade
 
     /**
      * @param array $productIds
+     * @param int|null $limit
      * @return array
      */
-    public function getSellableProductsByIds(array $productIds): array
+    public function getSellableProductsByIds(array $productIds, ?int $limit = null): array
     {
-        $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds);
+        $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit);
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 

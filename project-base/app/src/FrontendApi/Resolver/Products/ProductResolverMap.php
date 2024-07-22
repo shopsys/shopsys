@@ -43,29 +43,4 @@ class ProductResolverMap extends BaseProductResolverMap
             },
         ];
     }
-
-    /**
-     * @param object $mapper
-     * @param string $fieldName
-     * @return callable
-     */
-    protected function getObjectMethodForField(object $mapper, string $fieldName): callable
-    {
-        $prefixes = ['get', 'is', ''];
-
-        foreach ($prefixes as $prefix) {
-            $methodCandidate = lcfirst($prefix . ucfirst($fieldName));
-            $methodPromiseCandidate = $methodCandidate . 'Promise';
-
-            if (method_exists($mapper, $methodPromiseCandidate)) {
-                return [$mapper, $methodPromiseCandidate];
-            }
-
-            if (method_exists($mapper, $methodCandidate)) {
-                return [$mapper, $methodCandidate];
-            }
-        }
-
-        throw new MethodNotFoundException($fieldName, $mapper);
-    }
 }

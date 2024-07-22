@@ -9,8 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductAccessoryFacade
 {
-    public const PRODUCT_ACCESSORIES_FRONTEND_LIMIT = 30;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      */
@@ -25,8 +23,12 @@ class ProductAccessoryFacade
      * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, int $limit = null)
-    {
+    public function getOfferedAccessories(
+        Product $product,
+        int $domainId,
+        PricingGroup $pricingGroup,
+        ?int $limit = null,
+    ) {
         return $this->productAccessoryRepository->getOfferedAccessories($product, $domainId, $pricingGroup, $limit);
     }
 
