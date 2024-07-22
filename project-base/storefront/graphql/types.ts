@@ -720,6 +720,8 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */
@@ -782,6 +784,8 @@ export type TypeCustomerUser = {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */
@@ -1002,6 +1006,14 @@ export type TypeLink = {
   name: Scalars['String']['output'];
   /** Target URL slug */
   slug: Scalars['String']['output'];
+};
+
+export type TypeLoginInfo = {
+  __typename?: 'LoginInfo';
+  /** The user ID in the service (facebook, google, etc.) used for login. Null for 'web' login type */
+  externalId: Maybe<Scalars['String']['output']>;
+  /** The type of login (web, facebook, google, etc.) */
+  loginType: Scalars['String']['output'];
 };
 
 export type TypeLoginInput = {
@@ -2524,6 +2536,8 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */

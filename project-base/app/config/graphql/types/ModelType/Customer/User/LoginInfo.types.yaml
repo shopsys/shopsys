@@ -1,0 +1,4 @@
+LoginInfo:
+    type: object
+    inherits:
+        - 'LoginInfoDecorator'

@@ -69,6 +69,10 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             'companyName' => 'Shopsys',
             'companyNumber' => '12345678',
             'companyTaxNumber' => 'CZ65432123',
+            'loginInfo' => [
+                'loginType' => 'web',
+                'externalId' => null,
+            ],
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CurrentCustomerUserQuery.graphql');

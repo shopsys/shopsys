@@ -44,3 +44,6 @@ CurrentCustomerUserDecorator:
             roleGroup:
                 type: "CustomerUserRoleGroup!"
                 description: "The customer user role group"
+            loginInfo:
+                type: "LoginInfo!"
+                description: "Current login information"

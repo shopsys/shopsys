@@ -66,4 +66,20 @@ class CustomerUserLoginType
     {
         $this->lastLoggedInAt = $dateTime;
     }
+
+    /**
+     * @return string
+     */
+    public function getLoginType()
+    {
+        return $this->loginType;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
+    }
 }

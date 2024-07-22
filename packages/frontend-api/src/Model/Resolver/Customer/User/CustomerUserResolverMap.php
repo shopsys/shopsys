@@ -6,9 +6,21 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 
 class CustomerUserResolverMap extends ResolverMap
 {
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory $loginInfoFactory
+     */
+    public function __construct(
+        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
+        protected readonly LoginInfoFactory $loginInfoFactory,
+    ) {
+    }
+
     /**
      * @return array
      */
@@ -38,6 +50,11 @@ class CustomerUserResolverMap extends ResolverMap
             },
             'pricingGroup' => function (CustomerUser $customerUser) {
                 return $customerUser->getPricingGroup()->getName();
+            },
+            'loginInfo' => function (CustomerUser $customerUser) {
+                $mostRecentLoginType = $this->customerUserLoginTypeFacade->getMostRecentLoginType($customerUser);
+
+                return $this->loginInfoFactory->createFromCustomerUserLoginType($mostRecentLoginType);
             },
         ];
 

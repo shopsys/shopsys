@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserLoginTypeFacade
 {
@@ -42,5 +43,14 @@ class CustomerUserLoginTypeFacade
         $this->entityManager->persist($newCustomerUserLoginType);
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType
+     */
+    public function getMostRecentLoginType(CustomerUser $customerUser): CustomerUserLoginType
+    {
+        return $this->customerUserLoginTypeRepository->getMostRecentLoginType($customerUser);
     }
 }

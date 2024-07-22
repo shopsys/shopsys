@@ -1,0 +1,11 @@
+LoginInfoDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            loginType:
+                type: "String!"
+                description: "The type of login (web, facebook, google, etc.)"
+            externalId:
+                type: "String"
+                description: "The user ID in the service (facebook, google, etc.) used for login. Null for 'web' login type"

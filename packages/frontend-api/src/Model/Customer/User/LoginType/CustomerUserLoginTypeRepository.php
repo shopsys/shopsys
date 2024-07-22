@@ -32,4 +32,20 @@ class CustomerUserLoginTypeRepository
                 'loginType' => $loginType,
             ]);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType
+     */
+    public function getMostRecentLoginType(CustomerUser $customerUser): CustomerUserLoginType
+    {
+        return $this->entityManager->getRepository(CustomerUserLoginType::class)
+            ->createQueryBuilder('cult')
+            ->where('cult.customerUser = :customerUser')
+            ->orderBy('cult.lastLoggedInAt', 'DESC')
+            ->setParameter('customerUser', $customerUser)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }
