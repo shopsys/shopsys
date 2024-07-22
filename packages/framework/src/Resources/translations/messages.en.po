@@ -148,6 +148,9 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
+msgid "Additional login info"
+msgstr ""
+
 msgid "Address"
 msgstr ""
 

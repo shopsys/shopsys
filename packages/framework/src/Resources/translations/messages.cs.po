@@ -148,6 +148,9 @@ msgstr "Přidáno"
 msgid "Additional information"
 msgstr "Doplňkové informace"
 
+msgid "Additional login info"
+msgstr "Doplňující informace k přihlášení"
+
 msgid "Address"
 msgstr "Adresa"
 

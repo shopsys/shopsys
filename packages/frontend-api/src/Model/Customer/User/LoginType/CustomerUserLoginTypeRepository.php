@@ -48,4 +48,22 @@ class CustomerUserLoginTypeRepository
             ->getQuery()
             ->getSingleResult();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return string[]
+     */
+    public function getAllLoginTypes(CustomerUser $customerUser): array
+    {
+        $result = $this->entityManager->getRepository(CustomerUserLoginType::class)
+            ->createQueryBuilder('cult')
+            ->select('cult.loginType')
+            ->orderBy('cult.lastLoggedInAt', 'DESC')
+            ->where('cult.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'loginType');
+    }
 }

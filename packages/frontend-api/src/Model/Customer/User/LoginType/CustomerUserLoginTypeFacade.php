@@ -53,4 +53,13 @@ class CustomerUserLoginTypeFacade
     {
         return $this->customerUserLoginTypeRepository->getMostRecentLoginType($customerUser);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return string[]
+     */
+    public function getAllLoginTypes(CustomerUser $customerUser): array
+    {
+        return $this->customerUserLoginTypeRepository->getAllLoginTypes($customerUser);
+    }
 }

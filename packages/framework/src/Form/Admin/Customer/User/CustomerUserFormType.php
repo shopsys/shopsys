@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLastLoginProvider;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -43,7 +43,7 @@ class CustomerUserFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLastLoginProvider $customerUserLastLoginProvider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider $customerUserLoginInformationProvider
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
@@ -52,7 +52,7 @@ class CustomerUserFormType extends AbstractType
         private readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
         private readonly Domain $domain,
         private readonly CustomerFacade $customerFacade,
-        private readonly CustomerUserLastLoginProvider $customerUserLastLoginProvider,
+        private readonly CustomerUserLoginInformationProvider $customerUserLoginInformationProvider,
     ) {
     }
 
@@ -196,12 +196,19 @@ class CustomerUserFormType extends AbstractType
 
             $builderSystemDataGroup->add('lastLogin', DisplayOnlyType::class, [
                 'label' => t('Last login'),
-                'data' => $this->customerUserLastLoginProvider->getLastLogin($this->customerUser) !== null ? $this->dateTimeFormatterExtension->formatDateTime(
-                    $this->customerUserLastLoginProvider->getLastLogin($this->customerUser),
+                'data' => $this->customerUserLoginInformationProvider->getLastLogin($this->customerUser) !== null ? $this->dateTimeFormatterExtension->formatDateTime(
+                    $this->customerUserLoginInformationProvider->getLastLogin($this->customerUser),
                 ) : t(
                     'never',
                 ),
             ]);
+
+            if ($this->customerUserLoginInformationProvider->getAdditionalLoginInfo($this->customerUser) !== null) {
+                $builderSystemDataGroup->add('additionalLoginInfo', DisplayOnlyType::class, [
+                    'label' => t('Additional login info'),
+                    'data' => $this->customerUserLoginInformationProvider->getAdditionalLoginInfo($this->customerUser),
+                ]);
+            }
         }
 
         $builder
