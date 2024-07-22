@@ -82,4 +82,12 @@ class CustomerUserLoginType
     {
         return $this->externalId;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastLoggedInAt()
+    {
+        return $this->lastLoggedInAt;
+    }
 }
