@@ -36,8 +36,8 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_COUNTRY = 'country';
     private const ATTR_CONTACT_INFO = 'contactInfo';
     private const ATTR_SPECIAL_MESSAGE = 'specialMessage';
-    private const ATTR_LOCATION_LATITUDE = 'locationLatitude';
-    private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
+    private const ATTR_LOCATION_LATITUDE = 'latitude';
+    private const ATTR_LOCATION_LONGITUDE = 'longitude';
     private const ATTR_IMAGE = 'image';
     public const STORE_PREFIX = 'store_';
 
@@ -165,8 +165,8 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         $storeData->openingHours = $this->createOpeningHoursData();
         $storeData->contactInfo = $demoRow[self::ATTR_CONTACT_INFO];
         $storeData->specialMessage = $demoRow[self::ATTR_SPECIAL_MESSAGE];
-        $storeData->locationLatitude = $demoRow[self::ATTR_LOCATION_LATITUDE];
-        $storeData->locationLongitude = $demoRow[self::ATTR_LOCATION_LONGITUDE];
+        $storeData->latitude = $demoRow[self::ATTR_LOCATION_LATITUDE];
+        $storeData->longitude = $demoRow[self::ATTR_LOCATION_LONGITUDE];
         $storeData->image = $demoRow[self::ATTR_IMAGE];
 
         return $storeData;

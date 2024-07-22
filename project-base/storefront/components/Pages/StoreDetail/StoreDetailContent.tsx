@@ -106,8 +106,8 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         markers={[
                             {
                                 identifier: store.uuid,
-                                latitude: store.locationLatitude,
-                                longitude: store.locationLongitude,
+                                latitude: store.latitude,
+                                longitude: store.longitude,
                             },
                         ]}
                     />

@@ -11,8 +11,8 @@ query StoreQuery($uuid: Uuid, $slug: String) {
             code
         }
         specialMessage
-        locationLatitude
-        locationLongitude
+        latitude
+        longitude
         breadcrumb {
             name
             slug

@@ -2,8 +2,8 @@ import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/Liste
 
 export const getGtmPickupPlaceFromStore = (store: TypeListedStoreFragment): TypeListedStoreFragment => ({
     __typename: 'Store',
-    locationLatitude: null,
-    locationLongitude: null,
+    latitude: null,
+    longitude: null,
     slug: '',
     identifier: store.identifier,
     name: store.name,

@@ -2032,9 +2032,9 @@ type Store implements Breadcrumb & Slug {
   "Is set as default store"
   isDefault: Boolean!
   "Store location latitude"
-  locationLatitude: String
+  latitude: String
   "Store location longitude"
-  locationLongitude: String
+  longitude: String
   "Store name"
   name: String!
   "Store opening hours"

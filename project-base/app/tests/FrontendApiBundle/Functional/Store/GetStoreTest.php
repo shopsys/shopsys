@@ -92,8 +92,8 @@ class GetStoreTest extends GraphQlTestCase
                     'postcode',
                     'country',
                     'specialMessage',
-                    'locationLatitude',
-                    'locationLongitude',
+                    'latitude',
+                    'longitude',
                     'breadcrumb',
                 ],
                 $responseData,
@@ -154,8 +154,8 @@ class GetStoreTest extends GraphQlTestCase
                     'postcode',
                     'country',
                     'specialMessage',
-                    'locationLatitude',
-                    'locationLongitude',
+                    'latitude',
+                    'longitude',
                     'breadcrumb',
                 ],
                 $responseData,
@@ -399,8 +399,8 @@ class GetStoreTest extends GraphQlTestCase
                 ],
                 'contactInfo' => null,
                 'specialMessage' => null,
-                'locationLatitude' => '49.8574975',
-                'locationLongitude' => '18.2738861',
+                'latitude' => '49.8574975',
+                'longitude' => '18.2738861',
                 'breadcrumb' => [
                     [
                         'name' => t('Department stores', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -425,8 +425,8 @@ class GetStoreTest extends GraphQlTestCase
                 ],
                 'contactInfo' => null,
                 'specialMessage' => null,
-                'locationLatitude' => '50.0346875',
-                'locationLongitude' => '15.7707169',
+                'latitude' => '50.0346875',
+                'longitude' => '15.7707169',
                 'breadcrumb' => [
                     [
                         'name' => t('Department stores', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),

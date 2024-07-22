@@ -111,10 +111,10 @@ class StoreFormType extends AbstractType
             ->add('description', CKEditorType::class, [
                 'required' => false,
             ])
-            ->add('locationLatitude', TextType::class, [
+            ->add('latitude', TextType::class, [
                 'required' => false,
             ])
-            ->add('locationLongitude', TextType::class, [
+            ->add('longitude', TextType::class, [
                 'required' => false,
             ])
             ->add('street', TextType::class, [

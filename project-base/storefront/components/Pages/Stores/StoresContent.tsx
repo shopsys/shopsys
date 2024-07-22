@@ -20,15 +20,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
     const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
     const [activeStoreIdentifier, setActiveStoreIdentifier] = useState<string>();
-    const mappedStores = useMemo(
-        () =>
-            mapConnectionEdges<TypeListedStoreFragment>(stores.edges)?.map((store) => ({
-                ...store,
-                latitude: store.locationLatitude,
-                longitude: store.locationLongitude,
-            })),
-        [stores.edges],
-    );
+    const mappedStores = useMemo(() => mapConnectionEdges<TypeListedStoreFragment>(stores.edges), [stores.edges]);
 
     const activeMarkerHandler = (id: string) => setActiveStoreIdentifier(activeStoreIdentifier !== id ? id : undefined);
 

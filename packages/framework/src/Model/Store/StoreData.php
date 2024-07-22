@@ -76,12 +76,12 @@ class StoreData
     /**
      * @var string|null
      */
-    public $locationLatitude;
+    public $latitude;
 
     /**
      * @var string|null
      */
-    public $locationLongitude;
+    public $longitude;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData|null

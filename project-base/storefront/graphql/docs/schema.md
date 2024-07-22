@@ -7542,7 +7542,7 @@ Is set as default store
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>locationLatitude</strong></td>
+<td colspan="2" valign="top"><strong>latitude</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7551,7 +7551,7 @@ Store location latitude
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>locationLongitude</strong></td>
+<td colspan="2" valign="top"><strong>longitude</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 

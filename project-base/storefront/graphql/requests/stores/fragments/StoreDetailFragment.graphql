@@ -15,8 +15,8 @@ fragment StoreDetailFragment on Store {
     }
     contactInfo
     specialMessage
-    locationLatitude
-    locationLongitude
+    latitude
+    longitude
     breadcrumb {
         ...BreadcrumbFragment
     }
