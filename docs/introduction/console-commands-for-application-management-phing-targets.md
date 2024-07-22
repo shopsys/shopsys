@@ -148,6 +148,13 @@ Generates a new [database migration](database-migrations.md) class when DB schem
 
 When you make changes to ORM entities you should run this command that will generate a new migration file for you.
 
+#### db-migrations-generate-empty
+
+Generates a new empty [database migration](database-migrations.md) class.
+
+When you need to create a database migration that doesn't automatically reflect changes in ORM entities, but rather includes custom SQL or specific schema alterations, you can use this command.
+This will create an empty migration file that you can manually populate with the required database schema changes.
+
 #### db-migrations
 
 Executes [database migrations](database-migrations.md) and checks schema.
