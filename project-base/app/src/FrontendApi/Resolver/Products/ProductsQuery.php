@@ -34,10 +34,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProdu
 
 /**
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
- * @property \App\FrontendApi\Model\Product\ProductFacade $productFacade
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
  * @property \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
- * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
  * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
  * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -45,7 +43,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProdu
 class ProductsQuery extends BaseProductsQuery
 {
     /**
-     * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade

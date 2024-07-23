@@ -195,4 +195,17 @@ class ProductFacade
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }
+
+    /**
+     * @param array $productIds
+     * @return array
+     */
+    public function getSellableProductsByIds(array $productIds): array
+    {
+        $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds);
+
+        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
+
+        return $productsResult->getHits();
+    }
 }
