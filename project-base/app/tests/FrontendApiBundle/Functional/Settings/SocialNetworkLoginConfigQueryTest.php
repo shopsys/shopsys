@@ -16,8 +16,8 @@ class SocialNetworkLoginConfigQueryTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
         $expectedData = [
             'socialNetworkLoginConfig' => [
-                LoginTypeEnum::GOOGLE,
                 LoginTypeEnum::FACEBOOK,
+                LoginTypeEnum::GOOGLE,
                 LoginTypeEnum::SEZNAM,
             ],
         ];
