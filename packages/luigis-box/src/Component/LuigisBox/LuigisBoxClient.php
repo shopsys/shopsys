@@ -102,6 +102,8 @@ class LuigisBoxClient
                 [
                     'exception' => $e,
                     'luigisBoxBatchLoadData' => $luigisBoxBatchLoadData,
+                    'options' => $options,
+                    'response' => isset($response) ? $response->toArray(false) : null,
                 ],
             );
 
