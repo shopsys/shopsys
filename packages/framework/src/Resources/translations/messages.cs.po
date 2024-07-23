@@ -2053,9 +2053,6 @@ msgstr "Nový stát"
 msgid "New customer"
 msgstr "Nový zákazník"
 
-msgid "New delivery address"
-msgstr "Nová doručovací adresa"
-
 msgid "New item"
 msgstr "Nová položka"
 

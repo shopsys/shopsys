@@ -2053,9 +2053,6 @@ msgstr ""
 msgid "New customer"
 msgstr ""
 
-msgid "New delivery address"
-msgstr ""
-
 msgid "New item"
 msgstr ""
 
