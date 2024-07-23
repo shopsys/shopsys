@@ -1,7 +1,9 @@
 import { DeferredProductDetailRelatedProductsTab } from './DeferredProductDetailRelatedProductsTab';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
+import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -10,9 +12,10 @@ export type ProductDetailTabsProps = {
     description: string | null;
     parameters: TypeParameterFragment[];
     relatedProducts: TypeListedProductFragment[];
+    files: TypeFileFragment[];
 };
 
-export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters, relatedProducts }) => {
+export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters, relatedProducts, files }) => {
     const { t } = useTranslation();
 
     const formatParameterValue = (valueText: string, index: number) => {
@@ -27,6 +30,8 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 {!!parameters.length && <TabsListItem>{t('Parameters')}</TabsListItem>}
 
                 {!!relatedProducts.length && <TabsListItem>{t('Related Products')}</TabsListItem>}
+
+                {!!files.length && <TabsListItem>{t('Files')}</TabsListItem>}
             </TabsList>
 
             <TabsContent headingTextMobile={t('Overview')}>
@@ -62,6 +67,21 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
             {!!relatedProducts.length && (
                 <TabsContent headingTextMobile={t('Related Products')}>
                     <DeferredProductDetailRelatedProductsTab relatedProducts={relatedProducts} />{' '}
+                </TabsContent>
+            )}
+
+            {!!files.length && (
+                <TabsContent headingTextMobile={t('Files')}>
+                    <ul>
+                        {files.map((file) => (
+                            <li key={file.url}>
+                                <a className="no-underline" href={file.url}>
+                                    {file.anchorText}
+                                    <ArrowSecondaryIcon className="rotate-180 ml-1" />
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </TabsContent>
             )}
         </Tabs>

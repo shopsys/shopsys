@@ -96,6 +96,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                 <ProductDetailTabs
                     description={product.description}
+                    files={product.files}
                     parameters={product.parameters}
                     relatedProducts={product.relatedProducts}
                 />

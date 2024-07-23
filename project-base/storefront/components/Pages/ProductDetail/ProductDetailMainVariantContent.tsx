@@ -72,6 +72,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
                 <ProductDetailTabs
                     description={product.description}
+                    files={product.files}
                     parameters={product.parameters}
                     relatedProducts={product.relatedProducts}
                 />
