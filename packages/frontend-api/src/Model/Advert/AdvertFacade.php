@@ -26,15 +26,15 @@ class AdvertFacade
 
     /**
      * @param int $domainId
-     * @param string $positionName
+     * @param string[] $positionNames
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
     public function getVisibleAdvertsByDomainIdAndPositionName(
         int $domainId,
-        string $positionName,
+        array $positionNames,
         ?Category $category = null,
     ): array {
-        return $this->advertRepository->getVisibleAdvertsByPositionNameAndDomainId($domainId, $positionName, $category);
+        return $this->advertRepository->getVisibleAdvertsByPositionNameAndDomainId($domainId, $positionNames, $category);
     }
 }

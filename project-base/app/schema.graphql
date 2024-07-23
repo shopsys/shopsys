@@ -1619,8 +1619,8 @@ type Query {
   AdvertImage: AdvertImage
   "Returns list of advert positions."
   advertPositions: [AdvertPosition!]!
-  "Returns list of adverts, optionally filtered by `positionName`"
-  adverts(categoryUuid: Uuid, positionName: String): [Advert!]!
+  "Returns list of adverts, optionally filtered by `positionNames`"
+  adverts(categoryUuid: Uuid, positionNames: [String!]): [Advert!]!
   "Returns article filtered using UUID or URL slug"
   article(urlSlug: String, uuid: Uuid): NotBlogArticleInterface
   ArticleLink: ArticleLink

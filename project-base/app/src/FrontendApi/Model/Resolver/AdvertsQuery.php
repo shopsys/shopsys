@@ -31,19 +31,24 @@ class AdvertsQuery extends BaseAdvertsQuery
     }
 
     /**
-     * @param string|null $positionName
+     * @param string[]|null $positionNames
      * @param string|null $categoryOrSeoCategoryUuid
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
-    public function advertsQuery(?string $positionName = null, ?string $categoryOrSeoCategoryUuid = null): array
+    public function advertsQuery(?array $positionNames = null, ?string $categoryOrSeoCategoryUuid = null): array
     {
-        if ($positionName === AdvertPositionRegistry::POSITION_PRODUCT_LIST && $categoryOrSeoCategoryUuid === null) {
+        if (
+            $categoryOrSeoCategoryUuid === null &&
+            $positionNames &&
+            array_key_exists(AdvertPositionRegistry::POSITION_PRODUCT_LIST, $positionNames)
+        ) {
+            // TODO: Get adverts for the rest of the positions?
             throw new AdvertPositionWithoutCategoryUserError('Cannot retrieve advert on product list page without setting category.');
         }
 
         $domainId = $this->domain->getId();
 
-        if ($positionName === null) {
+        if ($positionNames === null || $positionNames === []) {
             return $this->advertFacade->getVisibleAdvertsByDomainId($domainId);
         }
 
@@ -58,6 +63,6 @@ class AdvertsQuery extends BaseAdvertsQuery
             }
         }
 
-        return $this->advertFacade->getVisibleAdvertsByDomainIdAndPositionName($domainId, $positionName, $category);
+        return $this->advertFacade->getVisibleAdvertsByDomainIdAndPositionName($domainId, $positionNames, $category);
     }
 }

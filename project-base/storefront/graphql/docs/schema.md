@@ -205,7 +205,7 @@ Returns list of advert positions.
 <td valign="top">[<a href="#advert">Advert</a>!]!</td>
 <td>
 
-Returns list of adverts, optionally filtered by `positionName`
+Returns list of adverts, optionally filtered by `positionNames`
 
 </td>
 </tr>
@@ -215,8 +215,8 @@ Returns list of adverts, optionally filtered by `positionName`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">positionName</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">positionNames</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
 <td></td>
 </tr>
 <tr>

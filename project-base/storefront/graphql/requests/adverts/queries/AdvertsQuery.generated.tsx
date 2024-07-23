@@ -6,7 +6,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeAdvertsQueryVariables = Types.Exact<{
   categoryUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  positionName: Types.InputMaybe<Types.Scalars['String']['input']>;
+  positionNames: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
 }>;
 
 
@@ -91,8 +91,8 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
     
 
 export const AdvertsQueryDocument = gql`
-    query AdvertsQuery($categoryUuid: Uuid, $positionName: String) {
-  adverts(categoryUuid: $categoryUuid, positionName: $positionName) {
+    query AdvertsQuery($categoryUuid: Uuid, $positionNames: [String!]) {
+  adverts(categoryUuid: $categoryUuid, positionNames: $positionNames) {
     ...AdvertsFragment
   }
 }

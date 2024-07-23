@@ -33,12 +33,14 @@ export const Adverts: FC<AdvertsProps> = ({
     const [{ data: advertsData }] = useAdvertsQuery({
         variables: {
             categoryUuid: currentCategory?.uuid || null,
-            positionName,
+            positionNames: getPositionNames(positionName),
         },
     });
-    const adverts = advertsData?.adverts ?? [];
+    const advertsForPosition = advertsData?.adverts.filter((advert) => advert.positionName === positionName) ?? [];
     const displayedAdverts =
-        isSingle && adverts.length ? [adverts[Math.floor(Math.random() * adverts.length)]] : adverts;
+        isSingle && advertsForPosition.length
+            ? [advertsForPosition[Math.floor(Math.random() * advertsForPosition.length)]]
+            : advertsForPosition;
 
     const content = !!displayedAdverts.length && (
         <div className={twJoin(withGapBottom && 'mb-8', withGapTop && 'mt-8', !withWebline && className)}>
@@ -57,4 +59,20 @@ export const Adverts: FC<AdvertsProps> = ({
     }
 
     return content || null;
+};
+
+const getPositionNames = (positionName: PositionNameType) => {
+    if (positionName === 'header' || positionName === 'footer') {
+        return ['header', 'footer'];
+    }
+
+    if (
+        positionName === 'productList' ||
+        positionName === 'productListMiddle' ||
+        positionName === 'productListSecondRow'
+    ) {
+        return ['productList', 'productListMiddle', 'productListSecondRow'];
+    }
+
+    return ['cartPreview'];
 };

@@ -2029,7 +2029,7 @@ export type TypeQuery = {
   accessPersonalData: TypePersonalData;
   /** Returns list of advert positions. */
   advertPositions: Array<TypeAdvertPosition>;
-  /** Returns list of adverts, optionally filtered by `positionName` */
+  /** Returns list of adverts, optionally filtered by `positionNames` */
   adverts: Array<TypeAdvert>;
   /** Returns article filtered using UUID or URL slug */
   article: Maybe<TypeNotBlogArticleInterface>;
@@ -2143,7 +2143,7 @@ export type TypeQueryAccessPersonalDataArgs = {
 
 export type TypeQueryAdvertsArgs = {
   categoryUuid: InputMaybe<Scalars['Uuid']['input']>;
-  positionName: InputMaybe<Scalars['String']['input']>;
+  positionNames: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
 

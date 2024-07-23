@@ -111,8 +111,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
                 first: 100,
             },
         },
-        { query: AdvertsQueryDocument, variables: { positionName: 'header', categoryUuid: null } },
-        { query: AdvertsQueryDocument, variables: { positionName: 'footer', categoryUuid: null } },
+        { query: AdvertsQueryDocument, variables: { positionNames: ['header', 'footer'], categoryUuid: null } },
         { query: CurrentCustomerUserQueryDocument },
         { query: SettingsQueryDocument },
         ...(seoPageSlug

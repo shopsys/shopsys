@@ -41,7 +41,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     {
                         query: AdvertsQueryDocument,
                         variables: {
-                            positionName: 'cartPreview',
+                            positionNames: ['cartPreview'],
                             categoryUuid: null,
                         },
                     },

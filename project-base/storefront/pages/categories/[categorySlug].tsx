@@ -145,15 +145,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 prefetchedQueries: [
                     {
                         query: AdvertsQueryDocument,
-                        variables: { positionName: 'productList', categoryUuid },
-                    },
-                    {
-                        query: AdvertsQueryDocument,
-                        variables: { positionName: 'productListMiddle', categoryUuid },
-                    },
-                    {
-                        query: AdvertsQueryDocument,
-                        variables: { positionName: 'productListSecondRow', categoryUuid },
+                        variables: {
+                            positionNames: ['productList', 'productListMiddle', 'productListSecondRow'],
+                            categoryUuid,
+                        },
                     },
                 ],
             });
