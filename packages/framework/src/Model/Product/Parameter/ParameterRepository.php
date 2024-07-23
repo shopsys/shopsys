@@ -113,9 +113,15 @@ class ParameterRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        return $this->getParameterRepository()->findBy([], ['id' => 'asc']);
+        return $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Parameter::class, 'p')
+            ->join('p.translations', 'pt')
+            ->orderBy('p.id')
+            ->getQuery()
+            ->execute();
     }
 
     /**

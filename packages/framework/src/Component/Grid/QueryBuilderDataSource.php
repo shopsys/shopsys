@@ -6,19 +6,21 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult as PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 class QueryBuilderDataSource implements DataSourceInterface
 {
-    protected string $rowIdSourceColumnName;
+    protected ?int $totalCount = null;
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      */
-    public function __construct(protected readonly QueryBuilder $queryBuilder, $rowIdSourceColumnName)
-    {
-        $this->rowIdSourceColumnName = $rowIdSourceColumnName;
+    public function __construct(
+        protected readonly QueryBuilder $queryBuilder,
+        protected readonly string $rowIdSourceColumnName,
+    ) {
     }
 
     /**
@@ -29,11 +31,11 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC,
-    ) {
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC,
+    ): PaginationResult {
         $queryBuilder = clone $this->queryBuilder;
 
         if ($orderSourceColumnName !== null) {
@@ -42,14 +44,14 @@ class QueryBuilderDataSource implements DataSourceInterface
 
         $queryPaginator = new QueryPaginator($queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
 
-        return $queryPaginator->getResult($page, $limit);
+        return $queryPaginator->getResult($page, $limit, $this->getTotalRowsCount());
     }
 
     /**
      * @param int $rowId
      * @return array
      */
-    public function getOneRow($rowId)
+    public function getOneRow(int $rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
         $this->prepareQueryWithOneRow($queryBuilder, $rowId);
@@ -60,11 +62,18 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return int
      */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
-        $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
+        if ($this->totalCount === null) {
+            $queryPaginator = new QueryPaginator(
+                $this->queryBuilder,
+                GroupedScalarHydrator::HYDRATION_MODE,
+            );
 
-        return $queryPaginator->getTotalCount();
+            $this->totalCount = $queryPaginator->getTotalCount();
+        }
+
+        return $this->totalCount;
     }
 
     /**
@@ -72,8 +81,11 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param string $orderSourceColumnName
      * @param string $orderDirection
      */
-    protected function addQueryOrder(QueryBuilder $queryBuilder, $orderSourceColumnName, $orderDirection)
-    {
+    protected function addQueryOrder(
+        QueryBuilder $queryBuilder,
+        string $orderSourceColumnName,
+        string $orderDirection,
+    ): void {
         $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
     }
 
@@ -81,7 +93,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $rowId
      */
-    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId)
+    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int $rowId): void
     {
         $queryBuilder
             ->andWhere($this->rowIdSourceColumnName . ' = :rowId')
@@ -94,7 +106,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;
     }

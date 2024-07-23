@@ -108,6 +108,14 @@ class UnitFacade
     }
 
     /**
+     * @return bool
+     */
+    public function isAtLeastOneUnitCreated(): bool
+    {
+        return $this->unitRepository->isAtLeastOneUnitCreated();
+    }
+
+    /**
      * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */

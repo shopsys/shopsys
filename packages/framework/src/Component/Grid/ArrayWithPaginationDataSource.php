@@ -12,10 +12,10 @@ class ArrayWithPaginationDataSource extends ArrayDataSource
      * {@inheritdoc}
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC,
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC,
     ): PaginationResult {
         $offset = (int)(($page - 1) * $limit);
         $orderSourceColumnNameArray = array_column($this->data, $orderSourceColumnName);

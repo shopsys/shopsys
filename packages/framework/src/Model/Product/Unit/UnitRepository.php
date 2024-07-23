@@ -59,8 +59,9 @@ class UnitRepository
     protected function getAllQueryBuilder()
     {
         return $this->em->createQueryBuilder()
-            ->select('u')
+            ->select('u, ut')
             ->from(Unit::class, 'u')
+            ->join('u.translations', 'ut')
             ->orderBy('u.id');
     }
 
@@ -95,6 +96,14 @@ class UnitRepository
             ->where('p.unit = :unit')->setParameter('unit', $unit);
 
         return $qb->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAtLeastOneUnitCreated(): bool
+    {
+        return $this->getUnitRepository()->count([]) > 0;
     }
 
     /**

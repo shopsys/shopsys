@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+
 interface DataSourceInterface
 {
-    public const ORDER_ASC = 'asc';
-    public const ORDER_DESC = 'desc';
+    public const string ORDER_ASC = 'asc';
+    public const string ORDER_DESC = 'desc';
 
     /**
      * @param int|null $limit
@@ -17,25 +19,25 @@ interface DataSourceInterface
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC,
-    );
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        string $orderDirection = self::ORDER_ASC,
+    ): PaginationResult;
 
     /**
      * @param int $rowId
      * @return array
      */
-    public function getOneRow($rowId);
+    public function getOneRow(int $rowId): array;
 
     /**
      * @return int
      */
-    public function getTotalRowsCount();
+    public function getTotalRowsCount(): int;
 
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName();
+    public function getRowIdSourceColumnName(): string;
 }
