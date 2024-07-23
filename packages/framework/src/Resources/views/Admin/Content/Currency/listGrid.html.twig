@@ -18,7 +18,6 @@
 
 {% block grid_value_cell_edit_id_exchangeRate %}
     <span class="form-edit-block form-edit-block--size-1">
-        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
         {{ form_widget(form.exchangeRate, {attr: {class: "input--small"}}) }}
         <span class="form-edit-block__info relative">
             {% if row is null %}
@@ -51,7 +50,6 @@
 
 {% block grid_value_cell_edit_id_minFractionDigits %}
     <span class="form-edit-block form-edit-block--size-1">
-        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
         {{ form_widget(form.minFractionDigits, {attr: {class: "input--small"}}) }}
     </span>
 {% endblock %}
@@ -71,21 +69,18 @@
 
 {% block grid_value_cell_edit_id_roundingType %}
     <span class="form-edit-block form-edit-block--size-1">
-        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
         {{ form_widget(form.roundingType, {attr: {class: "input--half-width"}}) }}
     </span>
 {% endblock %}
 
 {% block grid_value_cell_edit_id_name %}
     <span class="form-edit-block form-edit-block--size-1">
-        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
         {{ form_widget(form.name, {attr: {class: "input--half-width"}}) }}
     </span>
 {% endblock %}
 
 {% block grid_value_cell_edit_id_code %}
     <span class="form-edit-block form-edit-block--size-1">
-        {% form_theme form '@ShopsysFramework/Admin/Form/theme.html.twig' %}
         {{ form_widget(form.code, {attr: {class: "input--small"}}) }}
     </span>
 {% endblock %}

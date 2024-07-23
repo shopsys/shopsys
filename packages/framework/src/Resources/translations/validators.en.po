@@ -448,9 +448,6 @@ msgstr ""
 msgid "Same title is used on another domain"
 msgstr ""
 
-msgid "Selected delivery address no longer exists"
-msgstr ""
-
 msgid "Status name cannot be longer than {{ limit }} characters"
 msgstr ""
 

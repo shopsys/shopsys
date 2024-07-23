@@ -448,9 +448,6 @@ msgstr "Stejný doplněk titulku už je používán na jiné doméně"
 msgid "Same title is used on another domain"
 msgstr "Stejný titulek už je používán na jiné doméně"
 
-msgid "Selected delivery address no longer exists"
-msgstr "Vybraná doručovací adresa neexistuje"
-
 msgid "Status name cannot be longer than {{ limit }} characters"
 msgstr "Název stavu nesmí být delší než {{ limit }} znaků"
 

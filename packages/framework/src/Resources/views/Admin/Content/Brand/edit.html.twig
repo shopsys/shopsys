@@ -2,7 +2,3 @@
 
 {% block title %}- {{ 'Editing brand'|trans }} - {{ brand.name }}{% endblock %}
 {% block h1 %}{{ 'Editing brand'|trans }} - {{ brand.name }}{% endblock %}
-
-{% block brand_urls %}
-    {{ form_row(form.urls, { label: 'URL addresses'|trans }) }}
-{% endblock %}

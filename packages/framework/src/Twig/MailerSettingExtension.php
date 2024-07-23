@@ -49,7 +49,7 @@ class MailerSettingExtension extends AbstractExtension
      */
     public function getMailerSettingInfo()
     {
-        return $this->twigEnvironment->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
+        return $this->twigEnvironment->render('@ShopsysFramework/Components/MailerSettingInfo/mailerSettingInfo.html.twig', [
             'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
             'isWhitelistEnabled' => $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId()),
             'mailerWhitelistExpressions' => $this->mailerSettingProvider->getWhitelistPatternsAsArray($this->domain->getId()),
