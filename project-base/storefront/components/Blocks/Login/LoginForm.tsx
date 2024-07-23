@@ -10,6 +10,8 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { TypeLoginTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -40,9 +42,10 @@ export const LoginForm: FC<LoginFormProps> = ({
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formProviderMethods);
     const login = useLogin();
+    const [{ data: settingsData }] = useSettingsQuery();
 
     const getSocialNetworkLoginUrl = (
-        socialNetwork: 'facebook' | 'google' | 'seznam',
+        socialNetwork: TypeLoginTypeEnum,
         cartUuid: string | null,
         shouldOverwriteCustomerUserCart: boolean | undefined,
         productListUuids: string[],
@@ -113,40 +116,23 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 <SubmitButton tid={TIDs.login_form_submit_button}>{t('Log-in')}</SubmitButton>
                             </FormButtonWrapper>
 
-                            <div className="flex gap-2 lg:order-2 w-full justify-center">
-                                <SocialNetworkLoginLink
-                                    href={getSocialNetworkLoginUrl(
-                                        'facebook',
-                                        cartUuid,
-                                        shouldOverwriteCustomerUserCart,
-                                        productListUuids,
-                                    )}
-                                >
-                                    <FacebookIcon className="w-7 text-[#1877f2]" />
-                                </SocialNetworkLoginLink>
-
-                                <SocialNetworkLoginLink
-                                    href={getSocialNetworkLoginUrl(
-                                        'google',
-                                        cartUuid,
-                                        shouldOverwriteCustomerUserCart,
-                                        productListUuids,
-                                    )}
-                                >
-                                    <GoogleIcon className="w-6" />
-                                </SocialNetworkLoginLink>
-
-                                <SocialNetworkLoginLink
-                                    href={getSocialNetworkLoginUrl(
-                                        'seznam',
-                                        cartUuid,
-                                        shouldOverwriteCustomerUserCart,
-                                        productListUuids,
-                                    )}
-                                >
-                                    <SeznamIcon className="w-6" />
-                                </SocialNetworkLoginLink>
-                            </div>
+                            {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
+                                settingsData.settings.socialNetworkLoginConfig.length > 0 && (
+                                    <div className="flex gap-2 lg:order-2 w-full justify-center">
+                                        {settingsData.settings.socialNetworkLoginConfig.map((socialNetwork) => (
+                                            <SocialNetworkLoginLink
+                                                key={socialNetwork}
+                                                socialNetwork={socialNetwork}
+                                                href={getSocialNetworkLoginUrl(
+                                                    socialNetwork,
+                                                    cartUuid,
+                                                    shouldOverwriteCustomerUserCart,
+                                                    productListUuids,
+                                                )}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
 
                             <div className="lg:order-3 w-full flex justify-center items-center gap-1 whitespace-nowrap text-sm py-3">
                                 <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
@@ -159,13 +145,26 @@ export const LoginForm: FC<LoginFormProps> = ({
     );
 };
 
-const SocialNetworkLoginLink: FC<{ href: string }> = ({ href, children }) => {
+const SocialNetworkLoginLink: FC<{ href: string; socialNetwork: TypeLoginTypeEnum }> = ({ href, socialNetwork }) => {
     return (
         <ExtendedNextLink
             className="bg-background h-12 w-full shadow-md rounded flex justify-center items-center hover:shadow-greyLight"
             href={href}
         >
-            {children}
+            <SocialNetworkIcon socialNetwork={socialNetwork} />
         </ExtendedNextLink>
     );
+};
+
+const SocialNetworkIcon: FC<{ socialNetwork: TypeLoginTypeEnum }> = ({ socialNetwork }) => {
+    switch (socialNetwork) {
+        case TypeLoginTypeEnum.Facebook:
+            return <FacebookIcon className="w-7 text-[#1877f2]" />;
+        case TypeLoginTypeEnum.Google:
+            return <GoogleIcon className="w-6" />;
+        case TypeLoginTypeEnum.Seznam:
+            return <SeznamIcon className="w-6" />;
+        default:
+            return null;
+    }
 };
