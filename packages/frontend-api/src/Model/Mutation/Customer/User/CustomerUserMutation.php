@@ -19,9 +19,9 @@ use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
-use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
@@ -164,7 +164,7 @@ class CustomerUserMutation extends BaseTokenMutation
         $deviceId = Uuid::uuid4()->toString();
 
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
-            $this->customerUserLoginTypeDataFactory->create($customerUser, CustomerUserLoginType::TYPE_WEB),
+            $this->customerUserLoginTypeDataFactory->create($customerUser, LoginTypeEnum::WEB),
         );
 
         return $this->loginResultDataFactory->create(

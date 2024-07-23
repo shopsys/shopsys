@@ -31,4 +31,6 @@ P.S.: If you are owner of the Facebook application, and you log in with this own
 
 ## How to add next social network
 
-Only what you have to do is add configuration to file `social_network_config.yaml`. It should be enough to inspire configs on Facebook or Google.
+Only what you have to do is add configuration to file `social_network_config.yaml` and add a new value to `LoginTypeEnumDecorator.types.yaml`.
+The provider key (i.e. the name of the social network) in the `social_network_config.yaml` file must be the same as the key in `LoginTypeEnum`.
+It should be enough to get inspired by Facebook or Google configs.

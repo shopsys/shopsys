@@ -8,11 +8,12 @@ use App\Model\Customer\User\CustomerUserFacade;
 use DateTime;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class LoginInfoTest extends GraphQlWithLoginTestCase
 {
-    private const string EXPECTED_LOGIN_TYPE = 'facebook';
+    private const string EXPECTED_LOGIN_TYPE = LoginTypeEnum::FACEBOOK;
     private const string EXPECTED_EXTERNAL_ID = '1234567890';
 
     /**

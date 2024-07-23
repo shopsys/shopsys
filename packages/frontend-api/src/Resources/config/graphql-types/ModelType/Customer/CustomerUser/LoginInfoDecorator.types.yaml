@@ -4,7 +4,7 @@ LoginInfoDecorator:
     config:
         fields:
             loginType:
-                type: "String!"
+                type: "LoginTypeEnum!"
                 description: "The type of login (web, facebook, google, etc.)"
             externalId:
                 type: "String"

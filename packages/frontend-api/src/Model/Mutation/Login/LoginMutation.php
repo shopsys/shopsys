@@ -9,9 +9,9 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
-use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidCredentialsUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\TooManyLoginAttemptsUserError;
@@ -97,7 +97,7 @@ class LoginMutation extends AbstractMutation
         }
 
         $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
-            $this->customerUserLoginTypeDataFactory->create($user, CustomerUserLoginType::TYPE_WEB),
+            $this->customerUserLoginTypeDataFactory->create($user, LoginTypeEnum::WEB),
         );
 
         return $this->loginResultDataFactory->create(
