@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
+use Hybridauth\Hybridauth;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigProvider;
+use Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory;
 
 class SocialNetworkQuery extends AbstractQuery
 {
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigProvider $socialNetworkConfigProvider
+     * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected readonly SocialNetworkConfigProvider $socialNetworkConfigProvider,
+        protected readonly SocialNetworkConfigFactory $socialNetworkConfigFactory,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -22,15 +26,8 @@ class SocialNetworkQuery extends AbstractQuery
      */
     public function socialNetworkLoginConfigQuery(): array
     {
-        $socialNetworkLoginConfig = $this->socialNetworkConfigProvider->getSocialNetworkLoginConfig();
-        $enabledProviders = [];
+        $socialNetworkLoginConfig = $this->socialNetworkConfigFactory->createConfigForDomain($this->domain->getId());
 
-        foreach ($socialNetworkLoginConfig['providers'] ?? [] as $providerName => $providerSetting) {
-            if ($providerSetting['enabled'] === true) {
-                $enabledProviders[] = $providerName;
-            }
-        }
-
-        return $enabledProviders;
+        return (new Hybridauth($socialNetworkLoginConfig))->getProviders();
     }
 }

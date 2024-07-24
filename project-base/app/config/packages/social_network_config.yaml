@@ -2,17 +2,17 @@ parameters:
     social_network_login_config:
         providers:
             facebook:
-                enabled: true
+                enabledOnDomains: [1,2]
                 keys:
                     id: '%env(FACEBOOK_CLIENT_ID)%'
                     secret: '%env(FACEBOOK_CLIENT_SECRET)%'
             google:
-                enabled: true
+                enabledOnDomains: [1,2]
                 keys:
                     id: '%env(GOOGLE_CLIENT_ID)%'
                     secret: '%env(GOOGLE_CLIENT_SECRET)%'
             seznam:
-                enabled: true
+                enabledOnDomains: [1,2]
                 keys:
                     id: '%env(SEZNAM_CLIENT_ID)%'
                     secret: '%env(SEZNAM_CLIENT_SECRET)%'
