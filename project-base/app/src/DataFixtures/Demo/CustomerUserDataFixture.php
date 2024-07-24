@@ -9,6 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
@@ -82,11 +83,11 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
-            if ($domainId === Domain::SECOND_DOMAIN_ID) {
-                $customersDataProvider = $this->getDistinctCustomerUsersDataProvider();
-            } else {
-                $customersDataProvider = $this->getDefaultCustomerUsersDataProvider();
-            }
+            $customersDataProvider = match ($domainId) {
+                Domain::FIRST_DOMAIN_ID => $this->getDefaultCustomerUsersDataProvider(),
+                Domain::SECOND_DOMAIN_ID => $this->getDistinctCustomerUsersDataProvider(),
+                default => $this->getOtherDomainsCustomerUserDataProvider($domainId),
+            };
 
             foreach ($customersDataProvider as $customerDataProvider) {
                 $customerUserUpdateData = $this->getCustomerUserUpdateData($domainId, $customerDataProvider);
@@ -456,6 +457,34 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param int $domainId
+     * @return array
+     */
+    private function getOtherDomainsCustomerUserDataProvider(int $domainId): array
+    {
+        $customerUsersData = $this->getDistinctCustomerUsersDataProvider();
+
+        foreach ($customerUsersData as $key => $customerUserData) {
+            $customerUsersData[$key][self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_UUID] =
+                Uuid::uuid5($customerUserData[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_UUID], (string)$domainId)->toString();
+
+            if (array_key_exists(self::KEY_ADDRESS_UUID, $customerUserData[self::KEY_BILLING_ADDRESS])) {
+                $customerUsersData[$key][self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_UUID] =
+                    Uuid::uuid5($customerUserData[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_UUID], (string)$domainId)->toString();
+            }
+
+            if (array_key_exists(self::KEY_DELIVERY_ADDRESS, $customerUserData) &&
+                array_key_exists(self::KEY_ADDRESS_UUID, $customerUserData[self::KEY_DELIVERY_ADDRESS])
+            ) {
+                $customerUsersData[$key][self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_UUID] =
+                    Uuid::uuid5($customerUserData[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_UUID], (string)$domainId)->toString();
+            }
+        }
+
+        return $customerUsersData;
     }
 
     /**

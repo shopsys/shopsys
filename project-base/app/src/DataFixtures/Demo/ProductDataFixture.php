@@ -21,7 +21,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const PRODUCT_PREFIX = 'product_';
+    public const string PRODUCT_PREFIX = 'product_';
     private const string UUID_NAMESPACE = '5d92301d-1583-4505-842a-27fe6854f587';
 
     private int $productNo = 1;
