@@ -1,4 +1,3 @@
-import { FooterBoxInfo } from './FooterBoxInfo';
 import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
@@ -13,17 +12,13 @@ export type FooterProps =
     | {
           simpleFooter: true;
           footerArticles?: never;
-          phone?: never;
-          opening?: never;
       }
     | {
           simpleFooter?: never;
           footerArticles?: FooterArticle[];
-          phone: string;
-          opening: string;
       };
 
-export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles, phone, opening }) => {
+export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [settingsResponse] = useSettingsQuery();
@@ -34,7 +29,6 @@ export const Footer: FC<FooterProps> = ({ simpleFooter, footerArticles, phone, o
             <div className="flex flex-col pt-5 pb-11 lg:py-11">
                 {!simpleFooter && (
                     <>
-                        <FooterBoxInfo opening={opening} phone={phone} />
                         {!!footerArticles?.length && (
                             <div className="mb-12 vl:mb-24 vl:flex">
                                 <FooterMenu footerArticles={footerArticles} />
