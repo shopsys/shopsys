@@ -259,3 +259,7 @@ QueryDecorator:
                 type: '[Country!]!'
                 resolve: "@=query('countriesQuery')"
                 description: "Returns available countries"
+            customerUsers:
+                type: '[CustomerUser!]!'
+                resolve: "@=query('customerUsersQuery')"
+                description: "Returns all customer users assigned to the current customer"
