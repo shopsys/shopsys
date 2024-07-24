@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -55,9 +56,14 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     private Localization $localization;
 
     /**
+     * @inject
+     */
+    private ProductInputPriceDataFactory $productInputPriceDataFactory;
+
+    /**
      * @return \App\Model\Product\ProductData
      */
-    private function getDefaultProductData()
+    private function getDefaultProductData(): ProductData
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
@@ -72,8 +78,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
-        $this->setPriceForAllDomains($productData, Money::create(100));
-        $this->setVatsForAllDomains($productData);
+        $this->setPriceAndVatForAllDomains($productData, Money::create(100));
         $this->setDescriptionForAllDomain($productData);
 
         return $productData;
@@ -93,37 +98,44 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
 
     /**
      * @param \App\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $price
      */
-    private function setVatsForAllDomains(ProductData $productData): void
+    private function setPriceAndVatForAllDomains(ProductData $productData, ?Money $price): void
     {
-        $productVats = [];
-
         foreach ($this->domain->getAllIds() as $domainId) {
-            $vatData = new VatData();
-            $vatData->name = 'vat';
-            $vatData->percent = '21';
-            $vat = new Vat($vatData, $domainId);
-            $this->em->persist($vat);
+            $vat = $this->createVatForDomain($domainId);
 
-            $productVats[$domainId] = $vat;
+            $priceByPricingGroupId = [];
+
+            foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
+                if ($pricingGroup->getDomainId() !== $domainId) {
+                    continue;
+                }
+
+                $priceByPricingGroupId[$pricingGroup->getId()] = $price;
+            }
+
+            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(
+                $vat,
+                $priceByPricingGroupId,
+            );
         }
-
-        $productData->vatsIndexedByDomainId = $productVats;
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $price
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    private function setPriceForAllDomains(ProductData $productData, ?Money $price)
+    private function createVatForDomain(int $domainId): Vat
     {
-        $manualInputPrices = [];
+        $vatData = new VatData();
+        $vatData->name = 'vat';
+        $vatData->percent = '21';
 
-        foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $manualInputPrices[$pricingGroup->getId()] = $price;
-        }
+        $vat = new Vat($vatData, $domainId);
+        $this->em->persist($vat);
 
-        $productData->manualInputPricesByPricingGroupId = $manualInputPrices;
+        return $vat;
     }
 
     /**
@@ -259,7 +271,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     public function testIsNotVisibleWhenZeroPrice(): void
     {
         $productData = $this->getDefaultProductData();
-        $this->setPriceForAllDomains($productData, Money::zero());
+        $this->setPriceAndVatForAllDomains($productData, Money::zero());
 
         $productVisibility = $this->createProductAndGetVisibility($productData);
 

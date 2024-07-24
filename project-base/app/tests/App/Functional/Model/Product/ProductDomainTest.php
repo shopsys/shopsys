@@ -11,17 +11,18 @@ use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductDomainTest extends TransactionFunctionalTestCase
 {
-    protected const FIRST_DOMAIN_ID = 1;
-    protected const SECOND_DOMAIN_ID = 2;
-    protected const DEMONSTRATIVE_DESCRIPTION = 'Demonstrative description';
-    protected const DEMONSTRATIVE_SEO_TITLE = 'Demonstrative seo title';
-    protected const DEMONSTRATIVE_SEO_META_DESCRIPTION = 'Demonstrative seo description';
-    protected const DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo H1';
-    protected const DEMONSTRATIVE_SHORT_DESCRIPTION = 'Demonstrative short description';
+    protected const int FIRST_DOMAIN_ID = 1;
+    protected const int SECOND_DOMAIN_ID = 2;
+    protected const string DEMONSTRATIVE_DESCRIPTION = 'Demonstrative description';
+    protected const string DEMONSTRATIVE_SEO_TITLE = 'Demonstrative seo title';
+    protected const string DEMONSTRATIVE_SEO_META_DESCRIPTION = 'Demonstrative seo description';
+    protected const string DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo H1';
+    protected const string DEMONSTRATIVE_SHORT_DESCRIPTION = 'Demonstrative short description';
 
     /**
      * @inject
@@ -38,8 +39,13 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
+    /**
+     * @inject
+     */
+    private ProductInputPriceDataFactory $productInputPriceDataFactory;
+
     #[Group('multidomain')]
-    public function testCreateProductDomainWithData()
+    public function testCreateProductDomainWithData(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -48,13 +54,9 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->seoH1s[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SEO_H1;
         $productData->descriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
-        $productData->manualInputPricesByPricingGroupId = [
-            1 => Money::zero(),
-            2 => Money::zero(),
-        ];
         $productData->catnum = '123';
 
-        $this->setVats($productData);
+        $this->setVatsAndPrices($productData);
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFactory->create($productData);
@@ -80,7 +82,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     }
 
     #[Group('singledomain')]
-    public function testCreateProductDomainWithDataForSingleDomain()
+    public function testCreateProductDomainWithDataForSingleDomain(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -90,7 +92,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->descriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->catnum = '123';
-        $this->setVats($productData);
+        $this->setVatsAndPrices($productData);
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFactory->create($productData);
@@ -114,7 +116,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\Product
      */
-    private function getRefreshedProductFromDatabase(Product $product)
+    private function getRefreshedProductFromDatabase(Product $product): Product
     {
         $this->em->persist($product);
         $this->em->flush();
@@ -129,13 +131,16 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    private function setVats(ProductData $productData): void
+    private function setVatsAndPrices(ProductData $productData): void
     {
-        $productVatsIndexedByDomainId = [];
-
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(
+                $this->vatFacade->getDefaultVatForDomain($domainId),
+                [
+                    1 => Money::zero(),
+                    2 => Money::zero(),
+                ],
+            );
         }
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

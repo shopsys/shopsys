@@ -89,11 +89,6 @@ class ProductData
     public $images;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
-     */
-    public $manualInputPricesByPricingGroupId;
-
-    /**
      * @var string[]|null[]
      */
     public $seoTitles;
@@ -144,11 +139,6 @@ class ProductData
     public $uuid;
 
     /**
-     * @var array<int, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat>
-     */
-    public $vatsIndexedByDomainId;
-
-    /**
      * @var string[]|null[]
      */
     public $shortDescriptionUsp1ByDomainId;
@@ -193,6 +183,11 @@ class ProductData
      */
     public $weight;
 
+    /**
+     * @var array<int, \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData>
+     */
+    public $productInputPricesByDomain;
+
     public function __construct()
     {
         $this->name = [];
@@ -203,7 +198,7 @@ class ProductData
         $this->categoriesByDomainId = [];
         $this->variantAlias = [];
         $this->parameters = [];
-        $this->manualInputPricesByPricingGroupId = [];
+        $this->productInputPricesByDomain = [];
         $this->seoTitles = [];
         $this->seoMetaDescriptions = [];
         $this->descriptions = [];
@@ -213,7 +208,6 @@ class ProductData
         $this->variants = [];
         $this->seoH1s = [];
         $this->pluginData = [];
-        $this->vatsIndexedByDomainId = [];
         $this->orderingPriorityByDomainId = [];
         $this->shortDescriptionUsp1ByDomainId = [];
         $this->shortDescriptionUsp2ByDomainId = [];

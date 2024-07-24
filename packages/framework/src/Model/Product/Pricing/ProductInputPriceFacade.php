@@ -38,17 +38,17 @@ class ProductInputPriceFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
+     * @return array<int, array<int, \Shopsys\FrameworkBundle\Component\Money\Money|null>>
      */
-    public function getManualInputPricesDataIndexedByPricingGroupId(Product $product): array
+    public function getManualInputPricesDataIndexedByDomainIdAndPricingGroupId(Product $product): array
     {
         $manualInputPricesDataByPricingGroupId = [];
 
         $manualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
 
         foreach ($manualInputPrices as $manualInputPrice) {
-            $pricingGroupId = $manualInputPrice->getPricingGroup()->getId();
-            $manualInputPricesDataByPricingGroupId[$pricingGroupId] = $manualInputPrice->getInputPrice();
+            $pricingGroup = $manualInputPrice->getPricingGroup();
+            $manualInputPricesDataByPricingGroupId[$pricingGroup->getDomainId()][$pricingGroup->getId()] = $manualInputPrice->getInputPrice();
         }
 
         return $manualInputPricesDataByPricingGroupId;

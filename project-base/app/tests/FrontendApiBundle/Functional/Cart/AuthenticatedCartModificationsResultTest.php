@@ -497,12 +497,13 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
     private function modifyPriceOfTestingProduct(): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade */
         $pricingGroupFacade = self::getContainer()->get(PricingGroupFacade::class);
 
         $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
 
         foreach ($pricingGroupFacade->getAll() as $pricingGroup) {
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(1);
+            $productData->productInputPricesByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(1);
         }
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);

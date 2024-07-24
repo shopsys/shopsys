@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockRepository;
@@ -35,6 +36,7 @@ class ProductDemoDataSetter
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
      */
     public function __construct(
         private readonly Domain $domain,
@@ -45,21 +47,8 @@ class ProductDemoDataSetter
         private readonly PriceConverter $priceConverter,
         private readonly StockRepository $stockRepository,
         private readonly ProductStockDataFactory $productStockDataFactory,
+        private readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
     ) {
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $vatReference
-     */
-    public function setVat(ProductData $productData, string $vatReference): void
-    {
-        $productVatsIndexedByDomainId = [];
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
-        }
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 
     /**
@@ -134,21 +123,38 @@ class ProductDemoDataSetter
     /**
      * @param \App\Model\Product\ProductData $productData
      * @param string $price
+     * @param string $vatReference
      */
-    public function setPriceForAllPricingGroups(ProductData $productData, string $price): void
-    {
-        foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $vat = $this->persistentReferenceFacade->getReferenceForDomain(VatDataFixture::VAT_HIGH, $pricingGroup->getDomainId(), Vat::class);
-            $currencyCzk = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+    public function setPriceForAllPricingGroups(
+        ProductData $productData,
+        string $price,
+        string $vatReference = VatDataFixture::VAT_HIGH,
+    ): void {
+        $currencyCzk = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $allPricingGroups = $this->pricingGroupFacade->getAll();
 
-            $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
-                Money::create($price),
-                $currencyCzk,
-                $vat->getPercent(),
-                $pricingGroup->getDomainId(),
-            );
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $highVat = $this->persistentReferenceFacade->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
+            $vat = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
 
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
+            $pricesByPricingGroupId = [];
+
+            foreach ($allPricingGroups as $pricingGroup) {
+                if ($pricingGroup->getDomainId() !== $domainId) {
+                    continue;
+                }
+
+                $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                    Money::create($price),
+                    $currencyCzk,
+                    $highVat->getPercent(),
+                    $pricingGroup->getDomainId(),
+                );
+
+                $pricesByPricingGroupId[$pricingGroup->getId()] = $money;
+            }
+
+            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create($vat, $pricesByPricingGroupId);
         }
     }
 
@@ -178,7 +184,7 @@ class ProductDemoDataSetter
      * @param \App\Model\Product\ProductData $productData
      * @param int $quantity
      */
-    public function setStocksQuantity(ProductData $productData, int $quantity)
+    public function setStocksQuantity(ProductData $productData, int $quantity): void
     {
         $stocks = $this->stockRepository->getAllStocks();
 

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -27,7 +28,12 @@ class CartItemTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
-    public function testIsSimilarItemAs()
+    /**
+     * @inject
+     */
+    private ProductInputPriceDataFactory $productInputPriceDataFactory;
+
+    public function testIsSimilarItemAs(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
@@ -36,13 +42,12 @@ class CartItemTest extends TransactionFunctionalTestCase
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
 
-        $productVatsIndexedByDomainId = [];
-
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(
+                $this->vatFacade->getDefaultVatForDomain($domainId),
+                [1 => Money::zero(), 2 => Money::zero()],
+            );
         }
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
-        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
 
         $product1 = Product::create($productData);
         $productData2 = $productData;

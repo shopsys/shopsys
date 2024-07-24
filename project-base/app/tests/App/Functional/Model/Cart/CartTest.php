@@ -13,6 +13,7 @@ use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -28,7 +29,12 @@ class CartTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
-    public function testRemoveItem()
+    /**
+     * @inject
+     */
+    private ProductInputPriceDataFactory $productInputPriceDataFactory;
+
+    public function testRemoveItem(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
@@ -36,8 +42,7 @@ class CartTest extends TransactionFunctionalTestCase
         $productData->name = [];
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES, Unit::class);
-        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
-        $this->setVats($productData);
+        $this->setVatsAndPrices($productData);
         $product1 = Product::create($productData);
         $productData2 = $productData;
         $productData2->catnum = '321';
@@ -64,7 +69,7 @@ class CartTest extends TransactionFunctionalTestCase
         $this->assertSame(1, $cart->getItemsCount());
     }
 
-    public function testCleanMakesCartEmpty()
+    public function testCleanMakesCartEmpty(): void
     {
         $product = $this->createProduct();
 
@@ -83,13 +88,12 @@ class CartTest extends TransactionFunctionalTestCase
     /**
      * @return \App\Model\Product\Product
      */
-    private function createProduct()
+    private function createProduct(): Product
     {
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
-        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
-        $this->setVats($productData);
+        $this->setVatsAndPrices($productData);
 
         return Product::create($productData);
     }
@@ -97,13 +101,13 @@ class CartTest extends TransactionFunctionalTestCase
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    private function setVats(ProductData $productData): void
+    private function setVatsAndPrices(ProductData $productData): void
     {
-        $productVatsIndexedByDomainId = [];
-
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+            $productData->productInputPricesByDomain[$domainId] = $this->productInputPriceDataFactory->create(
+                $this->vatFacade->getDefaultVatForDomain($domainId),
+                [1 => Money::zero(), 2 => Money::zero()],
+            );
         }
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

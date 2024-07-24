@@ -6,10 +6,8 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
-use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
@@ -31,24 +29,19 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private VatFacade $vatFacade;
-
-    /**
-     * @inject
-     */
     private ProductStockDataFactory $productStockDataFactory;
 
     /**
-     * @param mixed $hidden
-     * @param mixed $sellingDenied
-     * @param mixed $calculatedSellingDenied
+     * @param bool $hidden
+     * @param bool $sellingDenied
+     * @param bool $calculatedSellingDenied
      */
     #[DataProvider('getTestSellingDeniedDataProvider')]
     public function testSellingDenied(
-        $hidden,
-        $sellingDenied,
-        $calculatedSellingDenied,
-    ) {
+        bool $hidden,
+        bool $sellingDenied,
+        bool $calculatedSellingDenied,
+    ): void {
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
@@ -61,7 +54,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->productStockData[$stock->getId()] = $productStockData;
 
         $productData->catnum = '123';
-        $this->setVats($productData);
 
         $product = $this->productFacade->create($productData);
 
@@ -74,7 +66,10 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied(), 'Calculated selling denied:');
     }
 
-    public static function getTestSellingDeniedDataProvider()
+    /**
+     * @return array
+     */
+    public static function getTestSellingDeniedDataProvider(): array
     {
         return [
             [
@@ -98,18 +93,5 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
                 'calculatedSellingDenied' => true,
             ],
         ];
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function setVats(ProductData $productData): void
-    {
-        $productVatsIndexedByDomainId = [];
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
-        }
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
     }
 }

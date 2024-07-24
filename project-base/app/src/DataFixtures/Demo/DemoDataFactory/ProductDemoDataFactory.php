@@ -6,7 +6,6 @@ namespace App\DataFixtures\Demo\DemoDataFactory;
 
 use App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter;
 use App\DataFixtures\Demo\UnitDataFixture;
-use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 
@@ -33,7 +32,6 @@ class ProductDemoDataFactory
         $productData->catnum = $catnum;
         $productData->sellingDenied = false;
 
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->productDemoDataSetter->setUnit($productData, UnitDataFixture::UNIT_PIECES);
 
         return $productData;

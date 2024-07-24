@@ -319,6 +319,7 @@ Finally, we can implement the private method for filling data object
 use App\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 
 // ...
 
@@ -328,19 +329,12 @@ const PRICING_GROUP_ID = 1;
 
 // ...
 
-/**
- * @var \App\Model\Pricing\Vat\VatFacade
- */
-private $vatFacade;
-
-// ...
-
 public function __construct(
     // ...
 
-    VatFacade $vatFacade
+    private readonly VatFacade $vatFacade,
+    private readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
 ) {
-    $this->vatFacade = $vatFacade;
 }
 
 
@@ -351,8 +345,10 @@ public function __construct(
 private function fillProductData(ProductData $productData, array $externalProductData)
 {
     $productData->name[self::LOCALE] = $externalProductData['name'];
-    $productData->manualInputPricesByPricingGroupId[self::PRICING_GROUP_ID] = Money::create($externalProductData['price_without_vat']);
-    $productData->vatsIndexedByDomainId[self::DOMAIN_ID] = $this->vatFacade->getVatByPercent($externalProductData['vat_percent']); // will be implemented in next step
+    $productData->productInputPricesByDomain[self::DOMAIN_ID] = $this->productInputPriceDataFactory->create(
+        $this->vatFacade->getVatByPercent($externalProductData['vat_percent']), // will be implemented in next step
+        [self::PRICING_GROUP_ID => Money::create($externalProductData['price_without_vat']),
+    );
     $productData->ean = $externalProductData['ean'];
     $productData->descriptions[self::DOMAIN_ID] = $externalProductData['description'];
     $productData->extId = $externalProductData['id'];

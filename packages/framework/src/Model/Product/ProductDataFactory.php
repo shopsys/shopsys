@@ -8,13 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
@@ -23,8 +19,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 class ProductDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -32,15 +26,13 @@ class ProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
      */
     public function __construct(
-        protected readonly VatFacade $vatFacade,
-        protected readonly ProductInputPriceFacade $productInputPriceFacade,
         protected readonly UnitFacade $unitFacade,
         protected readonly Domain $domain,
         protected readonly ParameterRepository $parameterRepository,
@@ -48,11 +40,11 @@ class ProductDataFactory
         protected readonly ProductAccessoryRepository $productAccessoryRepository,
         protected readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         protected readonly ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly ProductStockFacade $productStockFacade,
         protected readonly StockFacade $stockFacade,
         protected readonly ProductStockDataFactory $productStockDataFactory,
+        protected readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
     ) {
     }
 
@@ -83,10 +75,7 @@ class ProductDataFactory
      */
     protected function fillNew(ProductData $productData): void
     {
-        $productVatsIndexedByDomain = [];
-
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productVatsIndexedByDomain[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
             $productData->shortDescriptionUsp1ByDomainId[$domainId] = null;
             $productData->shortDescriptionUsp2ByDomainId[$domainId] = null;
             $productData->shortDescriptionUsp3ByDomainId[$domainId] = null;
@@ -98,15 +87,13 @@ class ProductDataFactory
             $productData->domainHidden[$domainId] = false;
         }
 
-        $productData->vatsIndexedByDomainId = $productVatsIndexedByDomain;
+        $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createEmptyForAllDomains();
         $productData->unit = $this->unitFacade->getDefaultUnit();
 
         $productParameterValuesData = [];
         $productData->parameters = $productParameterValuesData;
 
         $nullForAllDomains = $this->getNullForAllDomains();
-
-        $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         $productData->seoTitles = $nullForAllDomains;
         $productData->seoH1s = $nullForAllDomains;
         $productData->seoMetaDescriptions = $nullForAllDomains;
@@ -140,12 +127,12 @@ class ProductDataFactory
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
-        $names = [];
-        $variantAliases = [];
 
         foreach ($translations as $translation) {
-            $names[$translation->getLocale()] = $translation->getName();
-            $variantAliases[$translation->getLocale()] = $translation->getVariantAlias();
+            $locale = $translation->getLocale();
+
+            $productData->name[$locale] = $translation->getName();
+            $productData->variantAlias[$locale] = $translation->getVariantAlias();
         }
 
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -154,7 +141,6 @@ class ProductDataFactory
             $productData->seoH1s[$domainId] = $product->getSeoH1($domainId);
             $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
-            $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
             $productData->shortDescriptionUsp1ByDomainId[$domainId] = $product->getShortDescriptionUsp1($domainId);
             $productData->shortDescriptionUsp2ByDomainId[$domainId] = $product->getShortDescriptionUsp2($domainId);
             $productData->shortDescriptionUsp3ByDomainId[$domainId] = $product->getShortDescriptionUsp3($domainId);
@@ -172,8 +158,8 @@ class ProductDataFactory
             );
             $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
-        $productData->name = $names;
-        $productData->variantAlias = $variantAliases;
+
+        $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createFromProductForAllDomains($product);
 
         $productData->catnum = $product->getCatnum();
         $productData->partno = $product->getPartno();
@@ -186,16 +172,7 @@ class ProductDataFactory
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
         $productData->brand = $product->getBrand();
-
         $productData->parameters = $this->getParametersData($product);
-
-        try {
-            $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId(
-                $product,
-            );
-        } catch (MainVariantPriceCalculationException) {
-            $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
-        }
         $productData->accessories = $this->getAccessoriesData($product);
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product);
         $productData->variants = $product->getVariants();
@@ -248,20 +225,6 @@ class ProductDataFactory
         }
 
         return $nullForAllDomains;
-    }
-
-    /**
-     * @return null[]
-     */
-    protected function getNullForAllPricingGroups()
-    {
-        $inputPrices = [];
-
-        foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $inputPrices[$pricingGroup->getId()] = null;
-        }
-
-        return $inputPrices;
     }
 
     /**

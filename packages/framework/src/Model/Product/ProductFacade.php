@@ -124,7 +124,7 @@ class ProductFacade
 
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
-        $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+        $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->productInputPricesByDomain);
         $this->refreshProductAccessories($product, $productData->accessories);
 
         $this->imageFacade->manageImages($product, $productData->images);
@@ -154,7 +154,7 @@ class ProductFacade
         $this->saveParameters($product, $productData->parameters);
 
         if (!$product->isMainVariant()) {
-            $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+            $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->productInputPricesByDomain);
         }
 
         if ($product->isMainVariant()) {
