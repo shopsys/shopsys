@@ -17,6 +17,9 @@
                 data-picker-instance-id="{{ jsInstanceId }}"
                 data-picker-id="{{ row.u.id }}"
                 data-picker-name="{{ row.filename }}"
+                data-picker-filename="{{ row.u.name }}"
+                data-picker-names="{{ row.names|json_encode }}"
+                data-picker-thumbnail="{{ uploadedFilePreview(row.uploadedFile)|escape }}"
         >
             <i class="js-picker-icon btn__icon">+</i>
             <span class="js-picker-label">

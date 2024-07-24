@@ -537,7 +537,15 @@ class UploadedFileFacade
             $currentRelations,
         );
 
-        foreach ($relations as $uploadedFile) {
+        foreach ($relations as $key => $uploadedFile) {
+            $relationFilename = $uploadedFileData->relationsFilenames[$key] ?? null;
+
+            if ($relationFilename) {
+                $uploadedFile->setNameAndSlug($relationFilename);
+            }
+
+            $uploadedFile->setTranslatedNames($uploadedFileData->relationsNames[$key] ?? []);
+
             if (in_array($uploadedFile->getId(), $currentRelationsIds, true)) {
                 continue;
             }
@@ -550,5 +558,21 @@ class UploadedFileFacade
                 $type,
             );
         }
+    }
+
+    /**
+     * @param int $id
+     */
+    public function getTranslationsIndexedByLocaleForUploadedFileId(int $id)
+    {
+        $translations = $this->uploadedFileRepository->getAllTranslationsByUploadedFileId($id);
+
+        $translationsByLocale = [];
+
+        foreach ($translations as $translation) {
+            $translationsByLocale[$translation->getLocale()] = $translation->getName();
+        }
+
+        return $translationsByLocale;
     }
 }

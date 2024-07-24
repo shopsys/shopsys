@@ -1,0 +1,69 @@
+{% block abstract_multiple_picker_widget %}
+    {% macro pickerWidgetItem(item, form, sortable, item_name, item_route) %}
+        <tr class="js-picker-item table-form__row">
+            <td class="table-form__cell">
+                {% if sortable %}
+                <span class="js-picker-item-handle table-form__cell__move">
+                    <span class="in-icon in-icon--move svg svg-move"></span>
+                </span>
+                {% endif %}
+                <span class="js-picker-item-name">
+                {% if item is not null %}
+                    {% if item_route %}
+                        <a href="{{ item_route }}"
+                           target="_blank"
+                           rel="noopener"
+                           class="btn-link-style btn-link-style--iconic-l"
+                        >
+                            <span>{{ item_name }}</span>&nbsp;<i class="svg svg-forward-page"></i>
+                        </a>
+                    {% else %}
+                        <span>{{ item_name }}</span>
+                    {% endif %}
+                {% endif %}
+            </span>
+            </td>
+            <td class="table-form__cell table-form__cell--actions">
+            <span class="cursor-pointer js-picker-item-button-delete">
+                <span class="svg svg-delete-thin in-icon"></span>
+                {{ form_widget(form, {attr: {class: 'js-picker-item-input'}}) }}
+            </span>
+            </td>
+        </tr>
+    {% endmacro %}
+
+    {% block abstract_multiple_picker_widget_items %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-picker')|trim}) %}
+    <div
+            {{ block('widget_attributes') }}
+            data-picker-prototype="{{ _self.pickerWidgetItem(null, form.vars.prototype, form.vars.sortable)|e }}"
+            data-picker-url="{{ picker_url }}"
+    >
+            <table class="table-form">
+                <thead class="js-picker-header">
+                <tr class="table-form__row">
+                    <th class="table-form__cell">{{ 'Name'|trans }}</th>
+                    <th class="table-form__cell table-form__cell--actions"></th>
+                </tr>
+                </thead>
+                <tbody class="js-picker-items">
+                {% for key, formRow in form %}
+                    {{ _self.pickerWidgetItem(form.vars.items[key], formRow, form.vars.sortable, item_names[key], item_routes[key] ?? null) }}
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% block abstract_multiple_picker_widget_buttons %}
+            <div class="form-line form-line--no-top-border">
+                <div class="form-line__line form-line__line--no-space">
+                    <a href="#" class="btn btn--plus js-picker-button-add">
+                        <i class="btn__icon">+</i>
+                        {{ label_button_add|default('Add'|trans) }}
+                    </a>
+                </div>
+            </div>
+        {% endblock %}
+    {% endblock %}
+
+    </div>
+{% endblock abstract_multiple_picker_widget %}

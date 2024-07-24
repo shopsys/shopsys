@@ -106,6 +106,20 @@ class FileUploadType extends AbstractType
             ])
             ->add(
                 $builder->create('relations', FilesType::class),
+            )
+            ->add(
+                $builder->create('relationsFilenames', CollectionType::class, [
+                    'entry_type' => TextType::class,
+                    'allow_add' => true,
+                    'entry_options' => [
+                        'constraints' => [
+                            new Constraints\NotBlank(['message' => 'Please enter the filename']),
+                            new Constraints\Length(
+                                ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
+                            ),
+                        ],
+                    ],
+                ]),
             );
     }
 

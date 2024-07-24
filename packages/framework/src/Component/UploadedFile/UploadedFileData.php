@@ -45,4 +45,14 @@ class UploadedFileData
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public $relations = [];
+
+    /**
+     * @var string[]
+     */
+    public $relationsFilenames = [];
+
+    /**
+     * @var array<int, array<string, string>>
+     */
+    public $relationsNames = [];
 }

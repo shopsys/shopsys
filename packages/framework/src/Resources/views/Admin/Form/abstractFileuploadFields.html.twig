@@ -93,6 +93,8 @@
                 </div>
                 <div class="box-upload__place__button">
                     {{ form_widget(form.children.file) }}
+                    {% block abstract_file_upload_widget_buttons %}
+                    {% endblock  %}
                 </div>
             </div>
         </div>

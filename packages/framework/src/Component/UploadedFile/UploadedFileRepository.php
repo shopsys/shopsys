@@ -139,4 +139,16 @@ class UploadedFileRepository
 
         return $uploadedFiles;
     }
+
+    /**
+     * @param int $id
+     */
+    public function getAllTranslationsByUploadedFileId(int $id)
+    {
+        return $this->em->createQueryBuilder()
+            ->select('ut')
+            ->from(UploadedFileTranslation::class, 'ut')
+            ->where('ut.translatable = :id')
+            ->setParameter('id', $id)->getQuery()->getResult();
+    }
 }

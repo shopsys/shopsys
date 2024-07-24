@@ -15,7 +15,11 @@ export default class Picker {
 
         this.$picker = $Picker;
         this.$header = $Picker.find('.js-picker-header');
-        this.$addButton = $Picker.find('.js-picker-button-add');
+        let s = '[data-picker-target="' + $Picker.attr('id') + '"]';
+        this.$addButton
+            // $Picker.find('.js-picker-button-add') ??
+            = $(s);
+        console.log('addbtn', this.$addButton);
         this.$itemsContainer = $Picker.find('.js-picker-items');
         this.items = [];
 
@@ -109,12 +113,22 @@ export default class Picker {
         return this.findItemIndex(Id) !== null;
     }
 
-    addItem (id, name) {
+    addItem ($selectedElement) {
         const nextIndex = this.$itemsContainer.find('.js-picker-item').length;
+        console.log('ix', nextIndex);
         const itemHtml = this.$picker.data('picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
-        $item.find('.js-picker-item-name').text(name);
-        $item.find('.js-picker-item-input').val(id);
+
+        console.log('selectedElement', $selectedElement.data());
+        $item.find('.js-picker-item-input').val($selectedElement.data('picker-id'));
+        $item.find('.js-picker-item-thumbnail').html($selectedElement.data('picker-thumbnail'));
+        $item.find('.js-picker-item-filename').val($selectedElement.data('picker-filename'));
+        $item.find('.js-picker-item-name').text($selectedElement.data('picker-name'));
+        const names = $selectedElement.data('picker-names');
+        const namesInputs = $item.find('.js-picker-item-names');
+        for (let locale in names) {
+            namesInputs.find('input[data-locale="' + locale + '"]').val(names[locale]);
+        }
         this.$itemsContainer.append($item);
         this.initItem($item);
         this.updateHeader();

@@ -74,6 +74,9 @@ class FilePickerController extends AdminBaseController
             'u.id',
             function ($row) {
                 $row['filename'] = sprintf('%s.%s', $row['u']['name'], $row['u']['extension']);
+                $uploadedFile = $this->uploadedFileFacade->getById($row['u']['id']);
+                $row['uploadedFile'] = $uploadedFile;
+                $row['names'] = $this->uploadedFileFacade->getTranslationsIndexedByLocaleForUploadedFileId($uploadedFile->getId());
 
                 return $row;
             },

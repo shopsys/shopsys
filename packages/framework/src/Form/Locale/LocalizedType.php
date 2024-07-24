@@ -42,9 +42,17 @@ class LocalizedType extends AbstractType
 
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
             if ($locale === $this->localization->getAdminLocale()) {
-                $builder->add($locale, $options['entry_type'], $defaultLocaleOptions);
+                $builder->add(
+                    $locale,
+                    $options['entry_type'],
+                    array_replace_recursive(['attr' => ['data-locale' => $locale]], $defaultLocaleOptions),
+                );
             } else {
-                $builder->add($locale, $options['entry_type'], $otherLocaleOptions);
+                $builder->add(
+                    $locale,
+                    $options['entry_type'],
+                    array_replace_recursive(['attr' => ['data-locale' => $locale]], $otherLocaleOptions),
+                );
             }
         }
     }

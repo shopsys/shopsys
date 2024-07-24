@@ -50,14 +50,11 @@
             {{ form_widget(form.filesToDelete) }}
         </div>
 
-        {% for relation in form.relations %}
-            {{ form_widget(relation) }}
-        {% endfor %}
-
     {% endif %}
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
         {{ form_widget(form) }}
     </div>
+
 {% endblock file_upload_row %}

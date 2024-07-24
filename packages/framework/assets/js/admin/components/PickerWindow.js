@@ -38,10 +38,7 @@ export default class PickerWindow {
         const picker = window.parent.PickerInstances[$(event.currentTarget).data('picker-instance-id')];
         this.markAddButtonAsAdded($(event.currentTarget));
         $(event.currentTarget).off('click.addItem');
-        picker.addItem(
-            $(event.currentTarget).data('picker-id'),
-            $(event.currentTarget).data('picker-name')
-        );
+        picker.addItem($(event.currentTarget));
 
         return false;
     }

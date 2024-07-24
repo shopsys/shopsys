@@ -45,7 +45,24 @@ class MultiLocaleFileUploadType extends AbstractType
                             'constraints' => [
                                 new Constraints\Length([
                                     'max' => 255,
-                                    'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
+                                    'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
+                                ]),
+                            ],
+                        ],
+                    ],
+                ]),
+            )->add(
+                $builder->create('relationsNames', CollectionType::class, [
+                    'required' => false,
+                    'entry_type' => LocalizedType::class,
+                    'allow_add' => true,
+                    'entry_options' => [
+                        'label' => '',
+                        'entry_options' => [
+                            'constraints' => [
+                                new Constraints\Length([
+                                    'max' => 255,
+                                    'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
                                 ]),
                             ],
                         ],

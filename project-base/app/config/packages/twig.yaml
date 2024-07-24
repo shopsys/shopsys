@@ -5,6 +5,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/Product/Price/pricesWithCalculatedSellingPricesType.html.twig'
         - '@ShopsysFramework/Admin/Form/Product/Price/productPricesWithVatSelectType.html.twig'
         - '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/abstractMultiplePicker.html.twig'
         - '@ShopsysFramework/Admin/Form/blogCategoriesType.html.twig'
         - '@ShopsysFramework/Admin/Form/blogCategoryCheckboxType.html.twig'
         - '@ShopsysFramework/Admin/Form/colorpickerFields.html.twig'
