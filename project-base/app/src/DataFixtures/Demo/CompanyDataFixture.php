@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class CompanyDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -48,6 +49,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     private const string KEY_ADDRESS_FIRST_NAME = 'firstName';
     private const string KEY_ADDRESS_LAST_NAME = 'lastName';
     private const string KEY_CUSTOMER_USER_REFERENCE = 'customerUserReference';
+    private const string KEY_CUSTOMER_ROLE_GROUP = 'roleGroup';
 
     /**
      * @param \Faker\Generator $faker
@@ -180,6 +182,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         $customerUserData->defaultDeliveryAddress = $defaultDeliveryAddress;
         $customerUserData->pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, $domainId, PricingGroup::class);
         $customerUserData->domainId = $domainId;
+        $customerUserData->roleGroup = $customerDataProvider[self::KEY_CUSTOMER_ROLE_GROUP];
 
         return $customerUserData;
     }
@@ -198,6 +201,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060605',
                     self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_JOZEF_NOVOTNY,
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_FIRST_NAME => 'Jozef',
@@ -217,6 +221,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_PETER_KOVAC,
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_FIRST_NAME => 'Eva',
@@ -236,6 +241,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060607',
                     self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_MAREK_HORVATH,
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_FIRST_NAME => 'Marek',
