@@ -31,7 +31,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
             {mappedStores && (
                 <>
                     <div className="mb-8 flex w-full flex-col vl:h-[500px] vl:flex-row">
-                        <div className="h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
+                        <div className="flex h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
                             <GoogleMap activeMarkerHandler={activeMarkerHandler} markers={mappedStores} />
                         </div>
                         <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-graySlate p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">

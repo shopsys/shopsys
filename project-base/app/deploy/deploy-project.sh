@@ -88,6 +88,8 @@ function deploy() {
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
 
         ["LUIGIS_BOX_ENABLED_DOMAIN_IDS"]=${LUIGIS_BOX_ENABLED_DOMAIN_IDS}
+
+        ["GOOGLE_MAP_API_KEY"]=${GOOGLE_MAP_API_KEY}
     )
 
     declare -A CRON_INSTANCES=(

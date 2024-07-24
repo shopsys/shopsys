@@ -82,7 +82,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     }, [closeMarkers]);
 
     return (
-        <div className="h-full w-full">
+        <div className="w-full">
             <GoogleMapReact
                 bootstrapURLKeys={{ key: publicRuntimeConfig.googleMapApiKey }}
                 defaultCenter={{ lat: defaultLatitude, lng: defaultLongitude }}

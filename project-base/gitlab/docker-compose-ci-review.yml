@@ -28,6 +28,7 @@ services:
             - services-network
         environment:
             REDIS_PREFIX: ${COMPOSE_PROJECT_NAME}
+            GOOGLE_MAP_API_KEY: ~
 
     php-fpm:
         restart: always

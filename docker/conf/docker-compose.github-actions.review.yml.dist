@@ -155,6 +155,7 @@ services:
             - traefik.enable=false
         environment:
             PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
+            GOOGLE_MAP_API_KEY: GOOGLE_MAP_API_KEY_VALUE
 
     redis:
         image: redis:7.0-alpine

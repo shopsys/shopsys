@@ -97,7 +97,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </div>
                 </div>
 
-                <div className="mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
+                <div className="flex mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
                     <GoogleMap
                         isDetail
                         defaultZoom={15}
