@@ -179,3 +179,11 @@ MutationDecorator:
                         validation: cascade
                 access: "@=isGranted('ROLE_API_ALL')"
                 resolve: "@=mutation('addNewCustomerUserMutation', args, validator)"
+            EditCustomerUserPersonalData:
+                type: "CustomerUser!"
+                description: "edit customer user to customer"
+                args:
+                    input:
+                        type: EditCustomerUserPersonalDataInput!
+                        validation: cascade
+                resolve: "@=mutation('editCustomerUserPersonalDataMutation', args, validator)"

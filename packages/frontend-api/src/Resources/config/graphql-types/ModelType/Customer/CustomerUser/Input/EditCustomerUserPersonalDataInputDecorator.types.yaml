@@ -1,0 +1,14 @@
+EditCustomerUserPersonalDataInputDecorator:
+    type: input-object
+    inherits:
+        - 'ChangePersonalDataInputDecorator'
+        - 'TelephoneInputObjectDecorator'
+    config:
+        fields:
+            customerUserUuid:
+                type: "Uuid"
+                description: "UUID"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter uuid"
+

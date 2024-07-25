@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 
@@ -46,6 +47,20 @@ class CustomerUserDataFactory
         $input = $argument['input'];
 
         $customerUserData = $this->customerUserDataFactory->createForCustomerWithPresetPricingGroup($customer);
+
+        return $this->mapInputDataToCustomerUserData($input, $customerUserData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
+     */
+    public function createForCustomerUserWithArgument(CustomerUser $customerUser, Argument $argument): CustomerUserData
+    {
+        $input = $argument['input'];
+
+        $customerUserData = $this->customerUserDataFactory->createFromCustomerUser($customerUser);
 
         return $this->mapInputDataToCustomerUserData($input, $customerUserData);
     }
