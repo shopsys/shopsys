@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BasicFileUploadType extends AbstractType implements DataTransformerInterface
+class BasicFileUploadType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -37,6 +37,7 @@ class BasicFileUploadType extends AbstractType implements DataTransformerInterfa
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => UploadedFileData::class,
             'multiple' => false,
             'allow_filenames_input' => false,
             'allow_localized_names' => false,
@@ -62,7 +63,6 @@ class BasicFileUploadType extends AbstractType implements DataTransformerInterfa
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->resetModelTransformers();
-        $builder->addModelTransformer($this);
 
         if (!$options['allow_filenames_input']) {
             $builder->add('uploadedFilenames', CollectionType::class, [
@@ -75,30 +75,6 @@ class BasicFileUploadType extends AbstractType implements DataTransformerInterfa
             'multiple' => $options['multiple'],
             'mapped' => false,
         ]);
-    }
-
-    /**
-     * @param array $value
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
-     */
-    public function reverseTransform($value)
-    {
-        $uploadedFileData = $this->uploadedFileDataFactory->create();
-
-        foreach ($value as $field => $fieldValue) {
-            $uploadedFileData->{$field} = $fieldValue;
-        }
-
-        return $uploadedFileData;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $value
-     * @return array
-     */
-    public function transform($value): array
-    {
-        return (array)$value;
     }
 
     /**

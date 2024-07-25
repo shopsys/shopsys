@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
@@ -37,7 +36,6 @@ class MultiLocaleBasicFileUploadType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UploadedFileData::class,
             'multiple' => false,
             'allow_filenames_input' => true,
         ]);
