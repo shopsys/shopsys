@@ -170,3 +170,11 @@ MutationDecorator:
                         type: ContactFormInput!
                         validation: cascade
                 resolve: "@=mutation('contactFormMutation', args, validator)"
+            AddNewCustomerUser:
+                type: "CustomerUser!"
+                description: "Add new customer user to customer"
+                args:
+                    input:
+                        type: AddNewCustomerUserDataInput!
+                        validation: cascade
+                resolve: "@=mutation('addNewCustomerUserMutation', args, validator)"

@@ -167,4 +167,22 @@ class CustomerUserMutation extends BaseTokenMutation
 
         return $validationGroups;
     }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function addNewCustomerUserMutation(Argument $argument, InputValidator $validator): CustomerUser
+    {
+        $user = $this->runCheckUserIsLogged();
+
+        $validator->validate();
+
+        $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
+        $customer = $customerUser->getCustomer();
+        $customerUserData = $this->customerUserDataFactory->createNewForCustomerWithArgument($customer, $argument);
+
+        return $this->customerUserFacade->createCustomerUser($customer, $customerUserData);
+    }
 }
