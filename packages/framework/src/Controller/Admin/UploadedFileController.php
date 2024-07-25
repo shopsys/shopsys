@@ -92,46 +92,9 @@ class UploadedFileController extends AdminBaseController
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
-
-        $uploadedFileData = $this->uploadedFileDataFactory->create();
-        $uploadForm = $this->createForm(MultiLocaleBasicFileUploadType::class, $uploadedFileData, [
-            'required' => false,
-            'multiple' => true,
-        ])->add('save', SubmitType::class, [
-            'label' => t('Upload'),
-        ]);
-
-        $uploadForm->handleRequest($request);
-
-        if ($uploadForm->isSubmitted() && $uploadForm->isValid()) {
-            /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $data */
-            $data = $uploadForm->getData();
-
-            $uploadedFiles = $this->uploadedFileFacade->uploadFilesWithoutRelations(
-                $data->uploadedFiles,
-                $data->uploadedFilenames,
-                $data->names,
-            );
-
-            $this->addSuccessFlashTwig(sprintf('%s<br /><br />%s', t('Files uploaded:'), implode(
-                '<br />',
-                array_map(
-                    fn (UploadedFile $uploadedFile) => sprintf(
-                        '<a href="%s">%s</a>',
-                        $this->generateUrl('admin_uploadedfile_edit', ['id' => $uploadedFile->getId()]),
-                        $uploadedFile->getNameWithExtension(),
-                    ),
-                    $uploadedFiles,
-                ),
-            )));
-
-            return $this->redirectToRoute('admin_uploadedfile_list');
-        }
-
         return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/list.html.twig', [
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
-            'uploadForm' => $uploadForm->createView(),
         ]);
     }
 
@@ -177,8 +140,56 @@ class UploadedFileController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/edit.html.twig', [
             'form' => $form->createView(),
-            'uploadedFile' => $uploadedFile,
+            'entity' => $uploadedFile,
             'deleteUrl' => $deleteUrl,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/uploaded-file/new/')]
+    public function newAction(Request $request): Response
+    {
+        $uploadedFileData = $this->uploadedFileDataFactory->create();
+        $form = $this->createForm(MultiLocaleBasicFileUploadType::class, $uploadedFileData, [
+            'required' => false,
+            'multiple' => true,
+            'label' => false,
+        ])->add('save', SubmitType::class, [
+            'label' => t('Upload'),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileFormData */
+            $uploadedFileFormData = $form->getData();
+
+            $uploadedFiles = $this->uploadedFileFacade->uploadFilesWithoutRelations(
+                $uploadedFileFormData->uploadedFiles,
+                $uploadedFileFormData->uploadedFilenames,
+                $uploadedFileFormData->names,
+            );
+
+            $this->addSuccessFlashTwig(sprintf('%s<br /><br />%s', t('Files uploaded:'), implode(
+                '<br />',
+                array_map(
+                    fn (UploadedFile $uploadedFile) => sprintf(
+                        '<a href="%s">%s</a>',
+                        $this->generateUrl('admin_uploadedfile_edit', ['id' => $uploadedFile->getId()]),
+                        $uploadedFile->getNameWithExtension(),
+                    ),
+                    $uploadedFiles,
+                ),
+            )));
+
+            return $this->redirectToRoute('admin_uploadedfile_list');
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

@@ -3,10 +3,6 @@
 {% block h1 %}{{ 'Files'|trans }}{% endblock %}
 
 {% block main_content %}
-    {{ form_start(uploadForm) }}
-    {{ form_row(uploadForm) }}
-    {{ form_end(uploadForm) }}
-
     {{ form_start(quickSearchForm) }}
         <div class="in-tab js-tabs">
             <div class="in-tab__heading">
@@ -29,4 +25,12 @@
 
     {{ form_end(quickSearchForm) }}
 
+{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_uploadedfile_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Upload files'|trans }}
+        </a>
+    </div>
 {% endblock %}

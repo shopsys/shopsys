@@ -353,12 +353,15 @@ class SideMenuBuilder
         );
         $menu->setExtra('icon', 'file-all');
 
-        $menu->addChild(
-            'products',
-            ['route' => 'admin_uploadedfile_list', 'label' => t('Files overview')],
-        )->addChild(
+        $filesMenu = $menu->addChild('files', ['route' => 'admin_uploadedfile_list', 'label' => t('Files overview')]);
+
+        $filesMenu->addChild(
             'edit',
             ['route' => 'admin_uploadedfile_edit', 'label' => t('Editing file'), 'display' => false],
+        );
+        $filesMenu->addChild(
+            'new',
+            ['route' => 'admin_uploadedfile_new', 'label' => t('Upload files'), 'display' => false],
         );
 
         return $menu;
