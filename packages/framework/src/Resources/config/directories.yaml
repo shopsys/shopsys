@@ -7,8 +7,6 @@ parameters:
         - '%kernel.project_dir%/var/lock'
         - '%kernel.project_dir%/var/log'
         - '%kernel.project_dir%/var/uploadedFiles'
-        - '%shopsys.web_dir%/assets/admin/styles'
-        - '%shopsys.web_dir%/assets/frontend/styles'
         - '%shopsys.web_dir%/assets/scripts'
     shopsys.framework.default_public_directories:
         - '/web/%shopsys.content_dir_name%/feeds'
