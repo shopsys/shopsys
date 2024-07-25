@@ -8,7 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
 /**
- * @ORM\Table(name="uploaded_files_relations")
+ * @ORM\Table(name="uploaded_files_relations",
+ *     indexes={
+ *          @ORM\Index(columns={"entity_name", "entity_id", "type"}),
+ *          @ORM\Index(columns={"entity_name", "entity_id", "type", "uploaded_file_id"}),
+ *     })
  * @ORM\Entity
  */
 class UploadedFileRelation
