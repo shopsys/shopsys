@@ -154,6 +154,9 @@ class Roles
 
     public const string ROLE_TRANSFER_VIEW = 'ROLE_TRANSFER_VIEW';
 
+    public const string ROLE_FILES_FULL = 'ROLE_FILES_FULL';
+    public const string ROLE_FILES_VIEW = 'ROLE_FILES_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -361,6 +364,10 @@ class Roles
             ],
             [
                 static::ROLE_TRANSFER_VIEW => t('Transfers - view'),
+            ],
+            [
+                static::ROLE_FILES_FULL => t('Files - full'),
+                static::ROLE_FILES_VIEW => t('Files - view'),
             ],
         ];
     }
