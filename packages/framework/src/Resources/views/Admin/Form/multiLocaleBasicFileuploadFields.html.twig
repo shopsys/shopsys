@@ -18,6 +18,10 @@
                 {% endfor %}
             </ul>
         {% endblock %}
-
     {% endembed %}
+
+    <div class="display-none">
+        {{ form_widget(form.uploadedFilenames) }}
+        {{ form_widget(form.names) }}
+    </div>
 {% endblock %}
