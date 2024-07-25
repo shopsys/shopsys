@@ -46,10 +46,12 @@
         {% else %}
             {% do form.orderedFiles.setRendered %}
         {% endif %}
+
+        {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}{% endembed %}
+
         <div class="display-none">
             {{ form_widget(form.filesToDelete) }}
         </div>
-
     {% endif %}
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
@@ -58,3 +60,37 @@
     </div>
 
 {% endblock file_upload_row %}
+
+
+{% block file_upload_widget %}
+    {% embed "@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig" %}
+        {% block widget_attributes %}
+            {{ block("widget_attributes", "@ShopsysFramework/Admin/Form/theme.html.twig") }}
+        {% endblock %}
+
+        {% block abstract_file_upload_widget_uploaded_files %}
+            <ul class="list-files js-file-upload-uploaded-files"
+                data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}"
+            >
+                {% for key, uploadedFile in form.uploadedFiles %}
+                    {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
+                    {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri, null) }}
+                {% else %}
+                    <li>
+                        {% do form.children.uploadedFiles.setRendered %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endblock %}
+
+        {% block abstract_file_upload_widget_buttons %}
+            <a href="#" class="btn btn--plus js-picker-button-add margin-left-5"
+               data-picker-target="{{ form.relations.vars.id }}">
+                <i class="btn__icon">+</i>
+                {{ form.relations.vars.label_button_add }}
+            </a>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
