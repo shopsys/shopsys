@@ -40,7 +40,7 @@
                                     </button>
                                 {% endif %}
                                 <span class="list-files__item__overlay js-file-upload-file-overlay{% if isRemoved %} list-files__item__overlay__show{% endif %}">
-                                    {{ 'File will be deleted after saving.'|trans }}
+                                    {{ 'File will be removed from the record after saving.'|trans }}
                                 </span>
                             </div>
                             {{ form_widget(fileForm, { full_name: form.orderedFiles.vars.full_name ~ '[]'}) }}

@@ -89,27 +89,36 @@ class UploadedFileFacade
                 $existingFilesCount,
             );
         } else {
-            if (count($orderedFiles) > 1) {
-                array_shift($orderedFiles);
-                $this->deleteFiles($entity, $orderedFiles, $type);
+            $temporaryFilename = array_pop($uploadedFiles);
+
+            if (count($orderedFiles) > 0) {
+                $existingFile = array_shift($orderedFiles);
+
+                if (count($orderedFiles) > 0) {
+                    $this->deleteRelationsByEntityAndUploadedFiles($entity, $orderedFiles, $type);
+                }
+
+                if ($temporaryFilename) {
+                    $this->deleteRelationsByEntityAndUploadedFiles($entity, [$existingFile], $type);
+                }
             }
 
-            $this->deleteAllUploadedFilesByEntity($entity, $type);
-
-            $this->uploadFile(
-                $entity,
-                $entityName,
-                $type,
-                array_pop($uploadedFiles),
-                array_pop($uploadedFilenames),
-                array_pop($uploadedFileData->names),
-            );
+            if ($temporaryFilename) {
+                $this->uploadFile(
+                    $entity,
+                    $entityName,
+                    $type,
+                    $temporaryFilename,
+                    array_pop($uploadedFilenames),
+                    array_pop($uploadedFileData->names) ?? [],
+                );
+            }
         }
 
         $position = $existingFilesCount + $uploadedFilesCount;
         $this->createRelations($uploadedFileData, $currentRelations, $entityName, $entity, $position, $type);
 
-        $this->deleteFiles($entity, $uploadedFileData->filesToDelete, $type);
+        $this->deleteRelationsByEntityAndUploadedFiles($entity, $uploadedFileData->filesToDelete, $type);
     }
 
     /**
@@ -219,6 +228,24 @@ class UploadedFileFacade
         if ($this->filesystem->has($filepath)) {
             $this->filesystem->delete($filepath);
         }
+    }
+
+    /**
+     * @param object $entity
+     * @param array $uploadedFiles
+     * @param string $type
+     */
+    public function deleteRelationsByEntityAndUploadedFiles(object $entity, array $uploadedFiles, string $type): void
+    {
+        $entityName = $this->uploadedFileConfig->getEntityName($entity);
+        $entityId = $this->getEntityId($entity);
+
+        $this->uploadedFileRelationRepository->deleteRelationsByEntityNameAndIdsAndUploadedFiles(
+            $entityName,
+            [$entityId],
+            $uploadedFiles,
+            $type,
+        );
     }
 
     /**
@@ -506,10 +533,10 @@ class UploadedFileFacade
             $this->createRelation($entityName, $id, $file, ++$positions[$id], $type);
         }
 
-        $this->uploadedFileRelationRepository->deleteRelationsByEntityNameAndIdsAndUploadedFile(
+        $this->uploadedFileRelationRepository->deleteRelationsByEntityNameAndIdsAndUploadedFiles(
             $entityName,
             $idsToRemove,
-            $file,
+            [$file],
             $type,
         );
     }

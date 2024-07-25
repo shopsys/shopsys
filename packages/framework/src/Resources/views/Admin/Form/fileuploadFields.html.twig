@@ -34,7 +34,7 @@
                                     </button>
                                 {% endif %}
                                 <span class="list-files__item__overlay js-file-upload-file-overlay{% if isRemoved %} list-files__item__overlay__show{% endif %}">
-                                    {{ 'File will be deleted after saving.'|trans }}
+                                    {{ 'File will be removed from the record after saving.'|trans }}
                                 </span>
                             </div>
                             {{ form_widget(fileForm, { full_name: form.orderedFiles.vars.full_name ~ '[]'}) }}
@@ -84,11 +84,13 @@
         {% endblock %}
 
         {% block abstract_file_upload_widget_buttons %}
-            <a href="#" class="btn btn--plus js-picker-button-add margin-left-5"
-               data-picker-target="{{ form.relations.vars.id }}">
-                <i class="btn__icon">+</i>
-                {{ form.relations.vars.label_button_add }}
-            </a>
+            {% if multiple %}
+                <a href="#" class="btn btn--plus js-picker-button-add margin-left-5"
+                   data-picker-target="{{ form.relations.vars.id }}">
+                    <i class="btn__icon">+</i>
+                    {{ form.relations.vars.label_button_add }}
+                </a>
+            {% endif  %}
         {% endblock %}
 
     {% endembed %}

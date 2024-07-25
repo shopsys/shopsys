@@ -90,16 +90,16 @@ class UploadedFileRelationRepository
     /**
      * @param string $entityName
      * @param int[] $entityIds
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
      * @param string $type
      */
-    public function deleteRelationsByEntityNameAndIdsAndUploadedFile(
+    public function deleteRelationsByEntityNameAndIdsAndUploadedFiles(
         string $entityName,
         array $entityIds,
-        UploadedFile $uploadedFile,
+        array $uploadedFiles,
         string $type,
     ): void {
-        $this->createQueryBuilderByEntityNameIdAndNameAndUploadedFiles($entityName, $entityIds, [$uploadedFile], $type)
+        $this->createQueryBuilderByEntityNameIdAndNameAndUploadedFiles($entityName, $entityIds, $uploadedFiles, $type)
             ->delete(UploadedFileRelation::class, 'ur')
             ->getQuery()
             ->execute();

@@ -27,8 +27,9 @@ class UploadedFileFacade extends BaseUploadedFileFacade
         $uploadedFiles = $uploadedFileData->uploadedFiles;
         $uploadedFilenames = $uploadedFileData->uploadedFilenames;
         $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
+        $orderedFiles = $uploadedFileData->orderedFiles;
 
-        $this->deleteAllUploadedFilesByEntity($entity, $type);
+        $this->deleteRelationsByEntityAndUploadedFiles($entity, $orderedFiles, $type);
 
         $this->uploadFile(
             $entity,
