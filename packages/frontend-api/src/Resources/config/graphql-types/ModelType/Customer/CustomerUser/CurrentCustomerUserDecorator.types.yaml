@@ -49,3 +49,5 @@ CurrentCustomerUserDecorator:
             hasPasswordSet:
                 type: "Boolean!"
                 description: "Whether the customer user has password set or not"
+            roles:
+                type: "[String!]!"
