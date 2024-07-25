@@ -62,7 +62,7 @@ trait MultidomainMigrationTrait
             $domainLocales[] = $domainConfig->getLocale();
         }
 
-        return $domainLocales;
+        return array_unique($domainLocales);
     }
 
     /**
