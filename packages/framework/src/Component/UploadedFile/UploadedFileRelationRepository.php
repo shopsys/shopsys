@@ -18,27 +18,6 @@ class UploadedFileRelationRepository
     }
 
     /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
-     * @param string $type
-     * @return int[]
-     */
-    public function getUploadedFileIdsByEntityNameIdAndNameAndUploadedFiles(
-        string $entityName,
-        int $entityId,
-        array $uploadedFiles,
-        string $type,
-    ): array {
-        $result = $this->createQueryBuilderByEntityNameIdAndNameAndUploadedFiles($entityName, [$entityId], $uploadedFiles, $type)
-            ->select('IDENTITY(ur.uploadedFile) as uploadedFileId')
-            ->getQuery()
-            ->getResult();
-
-        return array_column($result, 'uploadedFileId');
-    }
-
-    /**
      * @return \Doctrine\ORM\EntityRepository
      */
     protected function getUploadedFileRelationRepository(): EntityRepository

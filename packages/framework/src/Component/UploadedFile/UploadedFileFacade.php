@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
-use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\MultipleFilesNotAllowedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
@@ -246,53 +245,6 @@ class UploadedFileFacade
             $uploadedFiles,
             $type,
         );
-    }
-
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
-     * @param string $type
-     */
-    public function deleteFiles(object $entity, array $uploadedFiles, string $type): void
-    {
-        $entityName = $this->uploadedFileConfig->getEntityName($entity);
-        $entityId = $this->getEntityId($entity);
-
-        $owningUploadedFiles = $this->uploadedFileRelationRepository
-            ->getUploadedFileIdsByEntityNameIdAndNameAndUploadedFiles($entityName, $entityId, $uploadedFiles, $type);
-
-        foreach ($uploadedFiles as $uploadedFile) {
-            if (!in_array($uploadedFile->getId(), $owningUploadedFiles, true)) {
-                throw new FileNotFoundException(
-                    sprintf(
-                        'Entity "%s" with ID "%s" does not have relation to file with ID "%s"',
-                        $entityName,
-                        $entityId,
-                        $uploadedFile->getId(),
-                    ),
-                );
-            }
-        }
-
-        foreach ($uploadedFiles as $uploadedFile) {
-            $this->em->remove($uploadedFile);
-        }
-
-        $this->em->flush();
-    }
-
-    /**
-     * @param object $entity
-     * @param string $type
-     */
-    public function deleteAllUploadedFilesByEntity(object $entity, string $type): void
-    {
-        $uploadedFiles = $this->uploadedFileRepository->getAllUploadedFilesByEntity(
-            $this->uploadedFileConfig->getEntityName($entity),
-            $this->getEntityId($entity),
-        );
-
-        $this->deleteFiles($entity, $uploadedFiles, $type);
     }
 
     /**
