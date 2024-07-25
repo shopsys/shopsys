@@ -1,13 +1,19 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { TypeColumnCategoriesFragment } from 'graphql/requests/navigation/fragments/ColumnCategoriesFragment.generated';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
 type NavigationItemColumnProps = {
     columnCategories: TypeColumnCategoriesFragment[];
+    skeletonType?: PageType;
     onLinkClick: () => void;
 };
 
-export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCategories, onLinkClick }) => (
+export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
+    columnCategories,
+    skeletonType,
+    onLinkClick,
+}) => (
     <>
         {columnCategories.map((columnCategories, columnIndex) => (
             <ul key={columnIndex} className="flex flex-col gap-9">
@@ -16,6 +22,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                         <ExtendedNextLink
                             className="mb-4 flex justify-center rounded bg-whiteSnow p-2"
                             href={columnCategory.slug}
+                            skeletonType={skeletonType}
                             onClick={onLinkClick}
                         >
                             <Image
@@ -30,6 +37,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                         <ExtendedNextLink
                             className="mb-1 block font-bold text-dark no-underline"
                             href={columnCategory.slug}
+                            skeletonType={skeletonType}
                             onClick={onLinkClick}
                         >
                             {columnCategory.name}
@@ -42,6 +50,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                                         <ExtendedNextLink
                                             className="block text-sm text-dark no-underline"
                                             href={columnCategoryChild.slug}
+                                            skeletonType={skeletonType}
                                             onClick={onLinkClick}
                                         >
                                             {columnCategoryChild.name}

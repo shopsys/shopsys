@@ -3,7 +3,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { twJoin } from 'tailwind-merge';
 
-export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation }) => (
+export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation, skeletonType }) => (
     <ul className="relative hidden w-full lg:flex">
         {navigation.map((navigationItem, index) => {
             const hasChildren = !!navigationItem.categoriesByColumns.length;
@@ -12,6 +12,7 @@ export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation }) => (
                 <li key={index} className="group">
                     <ExtendedNextLink
                         href={navigationItem.link}
+                        skeletonType={skeletonType}
                         className={twJoin(
                             'relative m-0 flex items-center px-6 xl:px-5 py-4 group-first-of-type:pl-0 text-sm font-bold uppercase text-white no-underline hover:text-orangeLight hover:no-underline group-hover:text-orangeLight group-hover:no-underline vl:text-base',
                         )}

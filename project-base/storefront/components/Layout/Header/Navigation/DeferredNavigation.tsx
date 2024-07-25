@@ -3,6 +3,8 @@ import { useNavigationQuery } from 'graphql/requests/navigation/queries/Navigati
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
+const DEFAULT_SKELETON_TYPE = 'category';
+
 const NavigationPlaceholder = dynamic(() =>
     import('./NavigationPlaceholder').then((component) => component.NavigationPlaceholder),
 );
@@ -16,8 +18,8 @@ export const DeferredNavigation: FC = () => {
     }
 
     return shouldRender ? (
-        <Navigation navigation={navigationData.navigation} />
+        <Navigation navigation={navigationData.navigation} skeletonType={DEFAULT_SKELETON_TYPE} />
     ) : (
-        <NavigationPlaceholder navigation={navigationData.navigation} />
+        <NavigationPlaceholder navigation={navigationData.navigation} skeletonType={DEFAULT_SKELETON_TYPE} />
     );
 };
