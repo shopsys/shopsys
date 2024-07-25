@@ -96,11 +96,9 @@
             </li>
         {% endmacro %}
 
-        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-picker')|trim}) %}
         <div
                 id="{{ form.relations.vars.id }}"
-                class="js-picker"
-                {#    {{ block('widget_attributes') }} #}
+                class="js-files-picker"
                 data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, form.relationsNames.vars.prototype)|e }}"
                 data-picker-url="{{ form.relations.vars.picker_url }}"
         >
@@ -112,17 +110,8 @@
                 </ul>
             </div>
         </div>
-
-        {#        {% embed "@ShopsysFramework/Admin/Form/abstractMultiplePicker.html.twig" with {'form': form.relations, 'picker_url': form.relations.vars.picker_url} %} #}
-        {#            {% block widget_attributes %} #}
-        {#                {{ block("widget_attributes", "@ShopsysFramework/Admin/Form/theme.html.twig") }} #}
-        {#            {% endblock %} #}
-
-        {#            {% block abstract_multiple_picker_widget_buttons %} #}
-
-        {#            {% endblock %} #}
-        {#        {% endembed %} #}
     {% endif %}
+
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
