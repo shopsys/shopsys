@@ -540,11 +540,12 @@ class UploadedFileFacade
     }
 
     /**
-     * @param int $id
+     * @param int $uploadedFileId
+     * @return array<string, string>
      */
-    public function getTranslationsIndexedByLocaleForUploadedFileId(int $id)
+    public function getTranslationsIndexedByLocaleForUploadedFileId(int $uploadedFileId): array
     {
-        $translations = $this->uploadedFileRepository->getAllTranslationsByUploadedFileId($id);
+        $translations = $this->uploadedFileRepository->getAllTranslationsByUploadedFileId($uploadedFileId);
 
         $translationsByLocale = [];
 

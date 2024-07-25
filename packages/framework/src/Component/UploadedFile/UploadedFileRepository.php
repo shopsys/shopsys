@@ -141,14 +141,16 @@ class UploadedFileRepository
     }
 
     /**
-     * @param int $id
+     * @param int $uploadedFileId
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation[]
      */
-    public function getAllTranslationsByUploadedFileId(int $id)
+    public function getAllTranslationsByUploadedFileId(int $uploadedFileId): array
     {
         return $this->em->createQueryBuilder()
             ->select('ut')
             ->from(UploadedFileTranslation::class, 'ut')
-            ->where('ut.translatable = :id')
-            ->setParameter('id', $id)->getQuery()->getResult();
+            ->andWhere('ut.translatable = :uploadedFileId')->setParameter('uploadedFileId', $uploadedFileId)
+            ->getQuery()
+            ->getResult();
     }
 }
