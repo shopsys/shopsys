@@ -7,20 +7,16 @@ import Register from '../../common/utils/Register';
 
 window.PickerInstances = {};
 
-export default class Picker {
+export default class MultiplePicker {
 
-    constructor ($Picker) {
+    constructor ($picker) {
         this.instanceId = Object.keys(window.PickerInstances).length;
         window.PickerInstances[this.instanceId] = this;
 
-        this.$picker = $Picker;
-        this.$header = $Picker.find('.js-picker-header');
-        let s = '[data-picker-target="' + $Picker.attr('id') + '"]';
-        this.$addButton
-            // $Picker.find('.js-picker-button-add') ??
-            = $(s);
-        console.log('addbtn', this.$addButton);
-        this.$itemsContainer = $Picker.find('.js-picker-items');
+        this.$picker = $picker;
+        this.$header = $picker.find('.js-picker-header');
+        this.$addButton = $picker.find('.js-picker-button-add');
+        this.$itemsContainer = $picker.find('.js-picker-items');
         this.items = [];
 
         const _this = this;
@@ -115,20 +111,12 @@ export default class Picker {
 
     addItem ($selectedElement) {
         const nextIndex = this.$itemsContainer.find('.js-picker-item').length;
-        console.log('ix', nextIndex);
         const itemHtml = this.$picker.data('picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
 
-        console.log('selectedElement', $selectedElement.data());
         $item.find('.js-picker-item-input').val($selectedElement.data('picker-id'));
-        $item.find('.js-picker-item-thumbnail').html($selectedElement.data('picker-thumbnail'));
-        $item.find('.js-picker-item-filename').val($selectedElement.data('picker-filename'));
         $item.find('.js-picker-item-name').text($selectedElement.data('picker-name'));
-        const names = $selectedElement.data('picker-names');
-        const namesInputs = $item.find('.js-picker-item-names');
-        for (let locale in names) {
-            namesInputs.find('input[data-locale="' + locale + '"]').val(names[locale]);
-        }
+
         this.$itemsContainer.append($item);
         this.initItem($item);
         this.updateHeader();
@@ -138,7 +126,7 @@ export default class Picker {
     static init ($container) {
         $container.filterAllNodes('.js-picker').each(function () {
             // eslint-disable-next-line no-new
-            new Picker($(this));
+            new MultiplePicker($(this));
         });
 
         $('.js-picker-close').click(() => {
@@ -147,4 +135,4 @@ export default class Picker {
     }
 }
 
-(new Register().registerCallback(Picker.init, 'Picker.init'));
+(new Register().registerCallback(MultiplePicker.init, 'MultiplePicker.init'));

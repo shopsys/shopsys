@@ -45,7 +45,7 @@ import './ProductPicker';
 import './productsPicker';
 import './ProductsPickerWindow';
 import './Picker';
-import './multiplePicker';
+import './MultiplePicker';
 import './PickerWindow';
 import './PromoCodeFlags';
 import './PromoCodeGroup';

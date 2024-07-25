@@ -4,6 +4,13 @@ import Translator from 'bazinga-translator';
 
 export default class PickerWindow {
     constructor ($addButton) {
+        const picker = window.parent.PickerInstances[$addButton.data('picker-instance-id')];
+        const id = $addButton.data('picker-id');
+
+        if (picker.hasItem(id)) {
+            this.markAddButtonAsAdded($addButton);
+        }
+
         $addButton.on('click.addItem', (event) => this.onClickAddButton(event));
     }
 
