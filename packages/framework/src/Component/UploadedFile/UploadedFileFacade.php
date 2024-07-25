@@ -126,7 +126,7 @@ class UploadedFileFacade
      * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
-     * @param array $namesIndexedByFileIdAndLocale
+     * @param array<string, string> $namesIndexedByLocale
      */
     protected function uploadFile(
         object $entity,
@@ -134,12 +134,12 @@ class UploadedFileFacade
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
-        array $namesIndexedByFileIdAndLocale,
+        array $namesIndexedByLocale,
     ): void {
         $newUploadedFile = $this->uploadedFileFactory->create(
             $temporaryFilename,
             $uploadedFilename,
-            $namesIndexedByFileIdAndLocale,
+            $namesIndexedByLocale,
         );
 
         $this->createRelation($entityName, $this->getEntityId($entity), $newUploadedFile, 0, $type);
@@ -154,7 +154,7 @@ class UploadedFileFacade
      * @param string $type
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
-     * @param array $namesIndexedByFileIdAndLocale
+     * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      * @param int $existingFilesCount
      */
     public function uploadFiles(
@@ -190,7 +190,7 @@ class UploadedFileFacade
     /**
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
-     * @param array $namesIndexedByFileIdAndLocale
+     * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public function uploadFilesWithoutRelations(
@@ -231,7 +231,7 @@ class UploadedFileFacade
 
     /**
      * @param object $entity
-     * @param array $uploadedFiles
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
      * @param string $type
      */
     public function deleteRelationsByEntityAndUploadedFiles(object $entity, array $uploadedFiles, string $type): void
