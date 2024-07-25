@@ -790,7 +790,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         string $paymentReferenceName,
         ?CustomerUser $customerUser = null,
     ): Order {
-        $uniqueOrderHash = '';
+        $uniqueOrderHash = $orderData->domainId . '-';
 
         $transport = $this->getReference($transportReferenceName, Transport::class);
         $payment = $this->getReference($paymentReferenceName, Payment::class);
