@@ -73,7 +73,7 @@ class MultiLocaleBasicFileUploadType extends AbstractType
                             'constraints' => [
                                 new Constraints\Length([
                                     'max' => 255,
-                                    'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
+                                    'maxMessage' => 'Name cannot be longer than {{ limit }} characters',
                                 ]),
                             ],
                         ],
