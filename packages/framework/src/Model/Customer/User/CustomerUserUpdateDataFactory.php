@@ -106,6 +106,10 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
             $customerUser->getLastName(),
             $order->getLastName(),
         );
+        $customerUserUpdateData->customerUserData->telephone = Utils::ifNull(
+            $customerUser->getTelephone(),
+            $order->getTelephone(),
+        );
         $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder(
             $order,
             $billingAddress,

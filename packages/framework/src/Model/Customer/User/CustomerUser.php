@@ -43,14 +43,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $customer;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $firstName;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $lastName;
 
@@ -214,7 +214,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getFirstName()
     {
@@ -267,7 +267,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLastName()
     {

@@ -70,15 +70,10 @@ class RegistrationDataFactory
     public function createFromSocialNetworkProfile(Profile $profile): RegistrationData
     {
         $registrationData = $this->createForDomainId($this->domain->getId());
-        $countries = $this->countryFacade->getAllEnabledOnCurrentDomain();
 
-        $registrationData->firstName = $profile->firstName ?? '';
-        $registrationData->lastName = $profile->lastName ?? '';
+        $registrationData->firstName = $profile->firstName;
+        $registrationData->lastName = $profile->lastName;
         $registrationData->email = $profile->email;
-        $registrationData->street = '';
-        $registrationData->city = '';
-        $registrationData->postcode = '';
-        $registrationData->country = $countries[0];
 
         return $registrationData;
     }

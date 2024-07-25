@@ -114,6 +114,64 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertSame($order->getCountry(), $customerUserUpdateData->deliveryAddressData->country);
     }
 
+    public function testGetAmendedCustomerUserUpdateDataByOrderForSocialNetworkLogin()
+    {
+        $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
+
+        $deliveryCountryData = new CountryData();
+        $deliveryCountryData->names = ['cs' => 'Slovenská republika'];
+
+        $customerUserData = TestCustomerProvider::getEmptyTestCustomerUserData();
+        $customerUserData->email = 'social-network-user@shopsys.com';
+        $customerUser = new CustomerUser($customerUserData);
+
+        $deliveryAddress = $customerUser->getDefaultDeliveryAddress();
+
+        $this->assertNull($customerUser->getFirstName());
+        $this->assertNull($customerUser->getLastName());
+        $this->assertNull($customerUser->getTelephone());
+
+        $orderData = TestOrderProvider::getTestOrderData();
+        $order = new Order(
+            $orderData,
+            '123456',
+            '7ebafe9fe',
+        );
+        $order->setCompanyInfo(
+            'companyName',
+            'companyNumber',
+            'companyTaxNumber',
+        );
+        $order->addItem(TestOrderProvider::createOrderTransport($order));
+
+        $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder(
+            $customerUser,
+            $order,
+            $deliveryAddress,
+        );
+
+        $this->assertSame($order->getFirstName(), $customerUserUpdateData->customerUserData->firstName);
+        $this->assertSame($order->getLastName(), $customerUserUpdateData->customerUserData->lastName);
+        $this->assertSame($order->getTelephone(), $customerUserUpdateData->customerUserData->telephone);
+
+        $this->assertSame($order->getCompanyName(), $customerUserUpdateData->billingAddressData->companyName);
+        $this->assertSame($order->getCompanyNumber(), $customerUserUpdateData->billingAddressData->companyNumber);
+        $this->assertSame($order->getCompanyTaxNumber(), $customerUserUpdateData->billingAddressData->companyTaxNumber);
+        $this->assertSame($order->getStreet(), $customerUserUpdateData->billingAddressData->street);
+        $this->assertSame($order->getCity(), $customerUserUpdateData->billingAddressData->city);
+        $this->assertSame($order->getPostcode(), $customerUserUpdateData->billingAddressData->postcode);
+        $this->assertSame($order->getCountry(), $customerUserUpdateData->billingAddressData->country);
+
+        $this->assertSame($order->getDeliveryStreet(), $customerUserUpdateData->deliveryAddressData->street);
+        $this->assertSame($order->getDeliveryCity(), $customerUserUpdateData->deliveryAddressData->city);
+        $this->assertSame($order->getDeliveryPostcode(), $customerUserUpdateData->deliveryAddressData->postcode);
+        $this->assertSame($order->getDeliveryCountry(), $customerUserUpdateData->deliveryAddressData->country);
+        $this->assertSame($order->getDeliveryCompanyName(), $customerUserUpdateData->deliveryAddressData->companyName);
+        $this->assertSame($order->getDeliveryFirstName(), $customerUserUpdateData->deliveryAddressData->firstName);
+        $this->assertSame($order->getDeliveryLastName(), $customerUserUpdateData->deliveryAddressData->lastName);
+        $this->assertSame($order->getDeliveryTelephone(), $customerUserUpdateData->deliveryAddressData->telephone);
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
      */
