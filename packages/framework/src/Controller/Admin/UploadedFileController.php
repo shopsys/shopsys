@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -60,37 +61,9 @@ class UploadedFileController extends AdminBaseController
         $quickSearchData = new QuickSearchFormData();
 
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, $quickSearchData);
-
         $quickSearchForm->handleRequest($request);
 
-        $queryBuilder = $this->uploadedFileAdminListFacade->getQueryBuilderByQuickSearchData($quickSearchData);
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
-            $queryBuilder,
-            'u.id',
-            function ($row) {
-                $row['filename'] = sprintf('%s.%s', $row['u']['name'], $row['u']['extension']);
-
-                return $row;
-            },
-        );
-
-        $grid = $this->gridFactory->create('uploadedFiles', $dataSource);
-        $grid->enablePaging();
-
-        $grid->setDefaultOrder('id', DataSourceInterface::ORDER_DESC);
-
-        $grid->addColumn('id', 'u.id', t('ID'));
-        $grid->addColumn('filename', 'filename', t('Filename'));
-        $grid->addColumn('translatedName', 'ut.name', t('Name'), true);
-        $grid->addColumn('extension', 'u.extension', t('Ext.'), true);
-
-        $grid->addEditActionColumn('admin_uploadedfile_edit', ['id' => 'u.id']);
-        $grid->addDeleteActionColumn('admin_uploadedfile_delete', ['id' => 'u.id'])
-            ->setConfirmMessage(t('Do you really want to delete this files? It will be permanently deleted and unassigned from related records.'));
-
-        $grid->setTheme('@ShopsysFramework/Admin/Content/UploadedFile/listGrid.html.twig');
-
-        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
+        $grid = $this->getGrid($quickSearchData);
 
         return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -216,5 +189,43 @@ class UploadedFileController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_uploadedfile_list');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getGrid(QuickSearchFormData $quickSearchData): Grid
+    {
+        $queryBuilder = $this->uploadedFileAdminListFacade->getQueryBuilderByQuickSearchData($quickSearchData);
+        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
+            $queryBuilder,
+            'u.id',
+            function ($row) {
+                $row['filename'] = sprintf('%s.%s', $row['u']['name'], $row['u']['extension']);
+
+                return $row;
+            },
+        );
+
+        $grid = $this->gridFactory->create('uploadedFiles', $dataSource);
+        $grid->enablePaging();
+
+        $grid->setDefaultOrder('id', DataSourceInterface::ORDER_DESC);
+
+        $grid->addColumn('id', 'u.id', t('ID'));
+        $grid->addColumn('filename', 'filename', t('Filename'));
+        $grid->addColumn('translatedName', 'ut.name', t('Name'), true);
+        $grid->addColumn('extension', 'u.extension', t('Ext.'), true);
+
+        $grid->addEditActionColumn('admin_uploadedfile_edit', ['id' => 'u.id']);
+        $grid->addDeleteActionColumn('admin_uploadedfile_delete', ['id' => 'u.id'])
+            ->setConfirmMessage(t('Do you really want to delete this files? It will be permanently deleted and unassigned from related records.'));
+
+        $grid->setTheme('@ShopsysFramework/Admin/Content/UploadedFile/listGrid.html.twig');
+
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
+
+        return $grid;
     }
 }
