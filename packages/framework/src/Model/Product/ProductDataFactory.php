@@ -150,14 +150,12 @@ class ProductDataFactory
             $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
-
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
-                $domainId,
-                'front_product_detail',
-                $product->getId(),
-            );
-            $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
+
+        $productData->urls->mainFriendlyUrlsByDomainId = $this->friendlyUrlFacade->getMainFriendlyUrlsIndexedByDomains(
+            'front_product_detail',
+            $product->getId(),
+        );
 
         $productData->productInputPricesByDomain = $this->productInputPriceDataFactory->createFromProductForAllDomains($product);
 

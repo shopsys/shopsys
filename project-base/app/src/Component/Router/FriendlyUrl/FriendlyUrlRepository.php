@@ -28,6 +28,8 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl[] getAllByRouteNameAndEntityId(string $routeName, int $entityId)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl[] getAllByRouteNameAndEntityIdAndDomainId(string $routeName, int $entityId, int $domainId)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl[] getMainFriendlyUrlsByEntitiesIndexedByEntityId(object[]|int[] $entitiesOrEntityIds, string $routeName, int $domainId)
+ * @method array<int,\App\Component\Router\FriendlyUrl\FriendlyUrl|null> getMainFriendlyUrlsIndexedByDomains(string $routeName, int $entityId)
+ * @method \App\Component\Router\FriendlyUrl\FriendlyUrl[] getAllByRouteNameDomainIdAndEntityIds(string $routeName, int $entityId, int[] $domainIds)
  */
 class FriendlyUrlRepository extends BaseFriendlyUrlRepository
 {

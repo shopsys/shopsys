@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
  * @method renewMainFriendlyUrlSlugCache(\App\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl getMainFriendlyUrl(int $domainId, string $routeName, int $entityId)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl|null findByDomainIdAndSlug(int $domainId, string $slug)
+ * @method array<int,\App\Component\Router\FriendlyUrl\FriendlyUrl|null> getMainFriendlyUrlsIndexedByDomains(string $routeName, int $entityId)
  */
 class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 {
