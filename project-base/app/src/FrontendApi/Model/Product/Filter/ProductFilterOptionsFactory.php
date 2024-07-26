@@ -144,13 +144,19 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 );
             }
 
-            $productFilterOptions->parameters[] = $this->createParameterFilterOption(
+            $parameterFilterOption = $this->createParameterFilterOption(
                 $parameter,
                 $parameterValueFilterOptions,
                 in_array($parameter, $collapsedParameters, true),
                 $isSliderSelectable,
                 $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice),
             );
+
+            if ($parameterFilterOption->parameter->isSlider() !== false && $parameterFilterOption->minimalValue === 0.0 && $parameterFilterOption->maximalValue === 0.0) {
+                continue;
+            }
+
+            $productFilterOptions->parameters[] = $parameterFilterOption;
         }
     }
 

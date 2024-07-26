@@ -457,6 +457,8 @@ class SideMenuBuilder
         $listsMenu->addChild('flags', ['route' => 'admin_flag_list', 'label' => t('Flags')]);
 
         $parametersMenu = $listsMenu->addChild('parameters', ['route' => 'admin_parameter_list', 'label' => t('Parameters')]);
+        $parametersMenu->addChild('parameters_new', ['route' => 'admin_parameter_new', 'display' => false, 'label' => t('New parameter')]);
+        $parametersMenu->addChild('parameters_edit', ['route' => 'admin_parameter_edit', 'display' => false, 'label' => t('Editing parameter')]);
         $parametersMenu->addChild('parameters_values_edit', ['route' => 'admin_parametervalues_edit', 'display' => false, 'label' => t('Parameter values')]);
 
         $listsMenu->addChild(

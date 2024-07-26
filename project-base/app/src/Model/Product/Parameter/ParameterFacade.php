@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -43,6 +44,7 @@ class ParameterFacade extends BaseParameterFacade
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
@@ -54,6 +56,7 @@ class ParameterFacade extends BaseParameterFacade
         UploadedFileFacade $uploadedFileFacade,
         ParameterValueDataFactory $parameterValueDataFactory,
         ParameterValueFactory $parameterValueFactory,
+        ProductRecalculationDispatcher $productRecalculationDispatcher,
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
     ) {
         parent::__construct(
@@ -65,6 +68,7 @@ class ParameterFacade extends BaseParameterFacade
             $uploadedFileFacade,
             $parameterValueDataFactory,
             $parameterValueFactory,
+            $productRecalculationDispatcher,
         );
     }
 

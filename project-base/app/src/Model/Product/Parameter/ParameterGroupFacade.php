@@ -14,9 +14,9 @@ class ParameterGroupFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private ParameterGroupFactory $parameterGroupFactory,
-        private ParameterRepository $parameterRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly ParameterGroupFactory $parameterGroupFactory,
+        private readonly ParameterRepository $parameterRepository,
     ) {
     }
 
@@ -46,5 +46,13 @@ class ParameterGroupFacade
         $this->em->flush();
 
         return $parameterGroup;
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\ParameterGroup[]
+     */
+    public function getAll(): array
+    {
+        return $this->parameterRepository->getAllParameterGroups();
     }
 }

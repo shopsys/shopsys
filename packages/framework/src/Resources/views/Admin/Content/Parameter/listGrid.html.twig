@@ -4,13 +4,12 @@
     {{ 'No parameters found. You have to create some first.'|trans }}
 {% endblock %}
 
-{% block grid_pager_totalcount %}
-    {% set entityName = 'parameters'|trans %}
-    {{ parent() }}
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_parameter_edit', { id: row.p.id }) }}">{{ value }}</a>
 {% endblock %}
 
-{% block grid_inline_edit_add_button %}
-    {% set addEntity = 'Create parameter'|trans %}
+{% block grid_pager_totalcount %}
+    {% set entityName = 'parameters'|trans %}
     {{ parent() }}
 {% endblock %}
 

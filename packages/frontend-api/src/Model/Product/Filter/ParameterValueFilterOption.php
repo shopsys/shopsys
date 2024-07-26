@@ -39,9 +39,9 @@ class ParameterValueFilterOption
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getNumericValue(): string
+    public function getNumericValue(): ?string
     {
         return $this->parameterValue->getNumericValue();
     }

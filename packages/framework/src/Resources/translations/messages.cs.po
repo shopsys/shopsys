@@ -3244,6 +3244,9 @@ msgstr "Tento e-mail byl odeslán z kontaktního formuláře umístěného pod p
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
+msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
+msgstr "Toto se používá pro řazení parametrů na kartě produktu a řazení parametrů na stránce vyhledávání při použití Luigi's Boxu. Pro řazení parametrů ve filtru použijte nastavení v kategorii."
+
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 

@@ -36,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method updateParameterValueInProductsByConversion(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue)
  * @method \App\Model\Product\Parameter\Parameter[] getSliderParametersWithoutTheirsNumericValueFilled()
  * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method \App\Model\Product\Product[] getProductsByParameterValues(\Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -280,5 +281,18 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $productParameterValuesIndexedByProductIdAndParameterName;
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\ParameterGroup[]
+     */
+    public function getAllParameterGroups(): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pg')
+            ->from(ParameterGroup::class, 'pg')
+            ->orderBy('pg.orderingPriority', 'ASC')
+            ->getQuery()
+            ->execute();
     }
 }

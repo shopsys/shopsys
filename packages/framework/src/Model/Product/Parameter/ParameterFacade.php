@@ -8,7 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
@@ -22,6 +24,7 @@ class ParameterFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -32,6 +35,7 @@ class ParameterFacade
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly ParameterValueFactory $parameterValueFactory,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -256,6 +260,8 @@ class ParameterFacade
         Parameter $parameter,
         array $parameterValuesConversionDataIndexedByParameterValueId,
     ): void {
+        $newParameterValues = [];
+
         foreach ($parameterValuesConversionDataIndexedByParameterValueId as $parameterValueId => $parameterValueConversionData) {
             $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
             $parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($parameterValue);
@@ -269,7 +275,12 @@ class ParameterFacade
             $this->em->flush();
 
             $this->parameterRepository->updateParameterValueInProductsByConversion($parameter, $parameterValue, $newParameterValue);
+            $newParameterValues[] = $newParameterValue;
         }
+
+        $productsChangedByConversion = $this->parameterRepository->getProductsByParameterValues($newParameterValues);
+
+        $this->productRecalculationDispatcher->dispatchProducts($productsChangedByConversion, exportScopes: [ProductExportScopeConfig::SCOPE_PARAMETERS]);
     }
 
     /**

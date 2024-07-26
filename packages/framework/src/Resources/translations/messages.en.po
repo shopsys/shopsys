@@ -3244,6 +3244,9 @@ msgstr ""
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 
+msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
+msgstr ""
+
 msgid "This item can be set in product detail of a specific variant"
 msgstr ""
 
@@ -3673,7 +3676,7 @@ msgstr ""
 msgid "You don't have permission to perform this action."
 msgstr ""
 
-msgid "You have changed a parameter type which requires conversion of parameter values to a %type%. Here is a list of values, that needs to be reviewed."
+msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
 msgstr ""
 
 msgid "You have made changes, don't forget to save them!"
