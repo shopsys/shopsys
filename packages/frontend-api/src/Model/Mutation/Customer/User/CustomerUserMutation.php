@@ -203,4 +203,21 @@ class CustomerUserMutation extends BaseTokenMutation
 
         return $this->customerUserFacade->editCustomerUser($customerUser->getId(), $customerUserData);
     }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return bool
+     */
+    public function removeCustomerUserMutation(Argument $argument): bool
+    {
+        $this->runCheckUserIsLogged();
+
+        $input = $argument['input'];
+
+        $customerUser = $this->customerUserFacade->getByUuid($input['customerUserUuid']);
+
+        $this->customerUserFacade->delete($customerUser->getId());
+
+        return true;
+    }
 }

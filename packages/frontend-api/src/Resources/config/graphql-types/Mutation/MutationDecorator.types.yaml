@@ -188,3 +188,11 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('editCustomerUserPersonalDataMutation', args, validator)"
                 access: "@=isGranted('can_manage_customer_user_voter', args)"
+            RemoveCustomerUser:
+                type: Boolean!
+                description: "delete customer user"
+                args:
+                    input:
+                        type: "RemoveCustomerUserDataInput!"
+                resolve: "@=mutation('removeCustomerUserMutation', args)"
+                access: "@=isGranted('can_manage_customer_user_voter', args)"
