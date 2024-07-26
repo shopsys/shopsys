@@ -6,6 +6,7 @@ namespace App\Model\Product\Parameter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Grid\ActionColumn;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory as BaseParameterGridFactory;
@@ -20,7 +21,6 @@ class ParameterGridFactory extends BaseParameterGridFactory
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getAdminLocale();
         $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource());
-        $grid->setDefaultOrder('pt.name');
 
         if (count($locales) > 1) {
             $grid->addColumn(
@@ -49,23 +49,9 @@ class ParameterGridFactory extends BaseParameterGridFactory
             );
         }
 
-        $grid->addColumn(
-            'parameterType',
-            'p.parameterType',
-            t('Type'),
-        );
-
-        $grid->addColumn(
-            'parameterGroup',
-            'pgt.name',
-            t('Group'),
-        );
-
-        $grid->addColumn(
-            'parameterUnit',
-            'ut.name',
-            t('Unit'),
-        );
+        $grid->addColumn('parameterType', 'p.parameterType', t('Type'));
+        $grid->addColumn('parameterGroup', 'pgt.name', t('Group'));
+        $grid->addColumn('parameterUnit', 'ut.name', t('Unit'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
@@ -76,6 +62,7 @@ class ParameterGridFactory extends BaseParameterGridFactory
                 . 'remove this parameter from a product where the parameter is assigned. This step is irreversible!'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Parameter/listGrid.html.twig');
+        $grid->setDefaultOrder('p.orderingPosition', DataSourceInterface::ORDER_DESC);
 
         foreach ($grid->getActionColumns() as $actionColumn) {
             if ($actionColumn->getType() === ActionColumn::TYPE_DELETE) {
@@ -105,7 +92,8 @@ class ParameterGridFactory extends BaseParameterGridFactory
             ->leftJoin('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
             ->leftJoin('p.group', 'pg')
             ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->setParameter('locale', $this->localization->getAdminLocale())
+            ->orderBy('p.orderingPriority', 'ASC');
 
         foreach ($locales as $locale) {
             if ($locale !== $this->localization->getAdminLocale()) {

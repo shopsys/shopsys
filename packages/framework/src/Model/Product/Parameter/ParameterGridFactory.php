@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -33,7 +34,6 @@ class ParameterGridFactory implements GridFactoryInterface
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getAdminLocale();
         $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource());
-        $grid->setDefaultOrder('pt.name');
 
         if (count($locales) > 1) {
             $grid->addColumn(
@@ -62,18 +62,8 @@ class ParameterGridFactory implements GridFactoryInterface
             );
         }
 
-        $grid->addColumn(
-            'parameterType',
-            'p.parameterType',
-            t('Type'),
-        );
-
-        $grid->addColumn(
-            'parameterUnit',
-            'ut.name',
-            t('Unit'),
-        );
-
+        $grid->addColumn('parameterType', 'p.parameterType', t('Type'));
+        $grid->addColumn('parameterUnit', 'ut.name', t('Unit'));
         $grid->addColumn('visible', 'p.visible', t('Filter by'), true);
 
         $grid->addEditActionColumn('admin_parameter_edit', ['id' => 'p.id']);
@@ -82,6 +72,7 @@ class ParameterGridFactory implements GridFactoryInterface
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
             ->setConfirmMessage(t('Do you really want to remove this parameter? By deleting this parameter you will '
                 . 'remove this parameter from a product where the parameter is assigned. This step is irreversible!'));
+        $grid->setDefaultOrder('p.orderingPosition', DataSourceInterface::ORDER_DESC);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Parameter/listGrid.html.twig');
 
@@ -101,7 +92,8 @@ class ParameterGridFactory implements GridFactoryInterface
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->leftJoin('p.unit', 'u')
             ->leftJoin('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->setParameter('locale', $this->localization->getAdminLocale())
+            ->orderBy('p.orderingPriority', 'ASC');
 
         foreach ($locales as $locale) {
             if ($locale !== $this->localization->getAdminLocale()) {
