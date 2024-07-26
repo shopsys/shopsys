@@ -107,3 +107,8 @@ services:
         alias: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
+
+    Shopsys\FrontendApiBundle\Voter\:
+        exclude: '../../Voter/Exception'
+        resource: '../../Voter/'
+        tags: [ 'security.voter' ]

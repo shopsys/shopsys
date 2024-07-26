@@ -187,3 +187,4 @@ MutationDecorator:
                         type: EditCustomerUserPersonalDataInput!
                         validation: cascade
                 resolve: "@=mutation('editCustomerUserPersonalDataMutation', args, validator)"
+                access: "@=isGranted('can_manage_customer_user_voter', args)"
