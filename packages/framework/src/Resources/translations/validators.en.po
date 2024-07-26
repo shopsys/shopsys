@@ -136,10 +136,13 @@ msgstr ""
 msgid "Parameter name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Parameter numeric value cannot be longer than {{ limit }} characters"
+msgid "Parameter value cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Parameter value cannot be longer than {{ limit }} characters"
+msgid "Parameter value must be numeric"
+msgstr ""
+
+msgid "Parameter value must be of type {{ type }}"
 msgstr ""
 
 msgid "Parameter {{ parameterName }} is used more than once"
@@ -329,9 +332,6 @@ msgid "Please enter page name"
 msgstr ""
 
 msgid "Please enter parameter name"
-msgstr ""
-
-msgid "Please enter parameter numeric value"
 msgstr ""
 
 msgid "Please enter parameter value"

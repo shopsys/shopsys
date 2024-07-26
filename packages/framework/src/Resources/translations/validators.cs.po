@@ -136,11 +136,14 @@ msgstr "Neplaté nastavení otevírací doby"
 msgid "Parameter name cannot be longer than {{ limit }} characters"
 msgstr "Název parametru nesmí být delší než {{ limit }} znaků"
 
-msgid "Parameter numeric value cannot be longer than {{ limit }} characters"
-msgstr "Číselná hodnota parametru nemsmí být delší než {{ limit }} znaků"
-
 msgid "Parameter value cannot be longer than {{ limit }} characters"
 msgstr "Hodnota parametru nesmí být delší než {{ limit }} znaků"
+
+msgid "Parameter value must be numeric"
+msgstr "Hodnota parametru musí být číselná"
+
+msgid "Parameter value must be of type {{ type }}"
+msgstr "Hodnota parametru musí být typu {{ type }}"
 
 msgid "Parameter {{ parameterName }} is used more than once"
 msgstr "Parametr {{ parameterName }} je použit více než jednou"
@@ -330,9 +333,6 @@ msgstr "Prosím vyplňte název stránky"
 
 msgid "Please enter parameter name"
 msgstr "Vyplňte prosím název parametru"
-
-msgid "Please enter parameter numeric value"
-msgstr "Vyplňte prosím číselnou hodnotu parametru"
 
 msgid "Please enter parameter value"
 msgstr "Prosím vyplňte hodnotu parametru"
