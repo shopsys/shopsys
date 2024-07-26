@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Voter;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -12,9 +13,11 @@ class CustomerUserVoter extends Voter
 {
     /**
      * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         protected readonly Security $security,
+        protected readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 
@@ -70,7 +73,12 @@ class CustomerUserVoter extends Voter
      */
     protected function isRoleApiAllGranted(array $inputData, TokenInterface $token): bool
     {
-        return true;
+        /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */
+        $loggedUser = $token->getUser();
+        $loggedCustomerUser = $this->customerUserFacade->getByUuid($loggedUser->getUuid());
+        $editedCustomerUser = $this->customerUserFacade->getByUuid($inputData['customerUserUuid']);
+
+        return $loggedCustomerUser->getCustomer()->getId() === $editedCustomerUser->getCustomer()->getId();
     }
 
     /**
