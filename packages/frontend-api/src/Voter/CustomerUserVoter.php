@@ -41,7 +41,6 @@ class CustomerUserVoter extends AbstractB2bVoter
      * @param \Overblog\GraphQLBundle\Definition\Argument|null $argument
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return bool
-     * @throws \Shopsys\FrontendApiBundle\Voter\Exception\AccessNotImplementedException
      */
     protected function checkAccess(string $attribute, ?Argument $argument, TokenInterface $token): bool
     {

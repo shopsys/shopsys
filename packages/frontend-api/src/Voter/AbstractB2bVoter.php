@@ -48,6 +48,7 @@ abstract class AbstractB2bVoter extends Voter
         }
 
         $argument = $subject;
+
         return $this->checkAccess($attribute, $argument, $token);
     }
 }
