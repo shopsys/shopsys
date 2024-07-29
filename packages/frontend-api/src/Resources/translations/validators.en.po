@@ -4,10 +4,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Billing address company number {{ company_number }} already exists. Contact customer support."
+msgstr ""
+
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Company name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Customer role group cannot be changed."
 msgstr ""
 
 msgid "Email cannot be longer than {{ limit }} characters"
@@ -115,7 +121,13 @@ msgstr ""
 msgid "Please enter the message"
 msgstr ""
 
+msgid "Please enter uuid"
+msgstr ""
+
 msgid "Please enter valid email"
+msgstr ""
+
+msgid "Please enter your city"
 msgstr ""
 
 msgid "Please enter your email address"
@@ -124,10 +136,19 @@ msgstr ""
 msgid "Please enter your name"
 msgstr ""
 
+msgid "Please enter your postal code"
+msgstr ""
+
+msgid "Please enter your street"
+msgstr ""
+
 msgid "Please enter zip code"
 msgstr ""
 
 msgid "Please fill in numbers only"
+msgstr ""
+
+msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Promo code is already applied in the current cart."
@@ -155,6 +176,15 @@ msgid "Selected transport price has changed"
 msgstr ""
 
 msgid "Selected transport weight limit has been exceeded"
+msgstr ""
+
+msgid "Street and house number must contain a number"
+msgstr ""
+
+msgid "Street and house number must contain letters"
+msgstr ""
+
+msgid "Street cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Street name cannot be longer than {{ limit }} characters"
@@ -200,6 +230,9 @@ msgid "Transport must be set in cart before sending the order"
 msgstr ""
 
 msgid "Transport with provided UUID is not available"
+msgstr ""
+
+msgid "You are not allowed to edit this role group."
 msgstr ""
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"

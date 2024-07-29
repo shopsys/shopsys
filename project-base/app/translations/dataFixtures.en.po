@@ -1852,6 +1852,9 @@ msgstr ""
 msgid "Unleash Your Gaming Potential"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
 msgid "User consent policy"
 msgstr ""
 

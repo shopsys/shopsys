@@ -1852,6 +1852,9 @@ msgstr "Nezapomenutelné příběhy"
 msgid "Unleash Your Gaming Potential"
 msgstr "Povol otěže hraní"
 
+msgid "User"
+msgstr "Uživatel"
+
 msgid "User consent policy"
 msgstr "Správa osobních údajů"
 
