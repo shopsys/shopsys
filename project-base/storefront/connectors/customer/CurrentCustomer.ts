@@ -28,7 +28,10 @@ export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined
         defaultDeliveryAddress: currentCustomerUser.defaultDeliveryAddress
             ? mapDeliveryAddress(currentCustomerUser.defaultDeliveryAddress)
             : undefined,
-        deliveryAddresses: mapDeliveryAddresses(currentCustomerUser.deliveryAddresses),
+        deliveryAddresses:
+            currentCustomerUser.deliveryAddresses.length > 0
+                ? mapDeliveryAddresses(currentCustomerUser.deliveryAddresses)
+                : [],
         oldPassword: '',
         newPassword: '',
         newPasswordConfirm: '',
@@ -45,7 +48,11 @@ const mapDeliveryAddress = (apiDeliveryAddressData: TypeDeliveryAddressFragment)
         telephone: apiDeliveryAddressData.telephone ?? '',
         firstName: apiDeliveryAddressData.firstName ?? '',
         lastName: apiDeliveryAddressData.lastName ?? '',
-        country: apiDeliveryAddressData.country?.name ?? '',
+        country: apiDeliveryAddressData.country ?? {
+            __typename: 'Country',
+            name: '',
+            code: '',
+        },
     };
 };
 

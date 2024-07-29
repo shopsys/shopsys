@@ -1,4 +1,4 @@
-import { CustomerTypeEnum } from './customer';
+import { CustomerTypeEnum, DeliveryAddressType } from './customer';
 import { SelectOptionType } from './selectOptions';
 import { GtmConsentInfoType } from 'gtm/types/objects';
 
@@ -83,4 +83,8 @@ export type PromoCodeFormType = {
 export type LoginFormType = {
     email: string;
     password: string;
+};
+
+export type DeliveryAddressFormType = Omit<DeliveryAddressType, 'uuid' | 'country'> & {
+    country: SelectOptionType;
 };

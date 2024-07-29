@@ -82,7 +82,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
 
     useEffect(() => {
         if (hash === '' || email === '') {
-            showErrorMessage(t('Error occured while loading form data'));
+            showErrorMessage(t('An error occurred while loading form data'));
         }
     }, []);
 
@@ -90,7 +90,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
         return (
             <SimpleLayout heading={t('Set new password')}>
                 <Trans
-                    defaultTrans="Error occured while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
+                    defaultTrans="An error occurred while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
                     i18nKey="ResendRecoveryLink"
                     components={{
                         0: <br />,
