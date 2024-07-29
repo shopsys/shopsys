@@ -24,16 +24,14 @@
 
     {{ form_end(quickSearchForm) }}
 
-    {% if isMultiple %}
-        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-            {% block fixed_bar_content %}
-                <a
-                    href="#"
-                    class="btn btn--small js-products-picker-close"
-                >
-                    {{ 'Finish the assigning'|trans }}
-                </a>
-            {% endblock %}
-        {% endembed %}
-    {% endif %}
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a
+                href="#"
+                class="btn btn--small js-products-picker-close"
+            >
+                {{ 'Finish the assigning'|trans }}
+            </a>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

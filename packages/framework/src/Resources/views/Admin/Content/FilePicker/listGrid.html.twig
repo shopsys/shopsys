@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block grid_value_cell_id_select %}
-    {% if isMultiple %}
         <a
                 class="js-picker-window-add-item btn btn--light btn--plus btn--small"
                 href="#"
@@ -26,18 +25,4 @@
                 {{ 'Add'|trans }}
             </span>
         </a>
-    {% else %}
-        <a
-                href="#"
-                class="btn btn--light btn--plus btn--small js-picker-select"
-                data-instance-id="{{ parentInstanceId }}"
-                data-picker-id="{{ row.u.id }}"
-                data-picker-name="{{ row.ut.name }}"
-        >
-            <i class="js-picker-icon btn__icon">+</i>
-            <span class="js-picker-label">
-                {{ 'Choose'|trans }}
-            </span>
-        </a>
-    {% endif %}
 {% endblock %}

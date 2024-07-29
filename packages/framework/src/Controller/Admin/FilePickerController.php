@@ -60,7 +60,6 @@ class FilePickerController extends AdminBaseController
 
         $viewParameters['gridView'] = $grid->createView();
         $viewParameters['quickSearchForm'] = $quickSearchForm->createView();
-        $viewParameters['isMultiple'] = true;
 
         return $this->render('@ShopsysFramework/Admin/Content/FilePicker/list.html.twig', $viewParameters);
     }

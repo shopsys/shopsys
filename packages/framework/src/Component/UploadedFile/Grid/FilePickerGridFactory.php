@@ -56,7 +56,6 @@ class FilePickerGridFactory extends AbstractUploadedFileGridFactory
             ->setClassAttribute('table-col table-col-15 text-center');
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/FilePicker/listGrid.html.twig', [
-            'isMultiple' => true,
             'jsInstanceId' => $jsInstanceId,
         ]);
 
