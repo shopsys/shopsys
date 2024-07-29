@@ -72,15 +72,14 @@ class ProductVisibilityExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return bool
      */
-    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product)
+    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product): bool
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if (!$this->isVisibleForDefaultPricingGroupOnDomain($product, $domainConfig->getId())) {
-                return false;
-            }
-        }
+        $defaultPricingGroupIdsIndexedByDomainId = $this->pricingGroupSettingFacade->getAllDefaultPricingGroupsIdsIndexedByDomainId();
 
-        return true;
+        return $this->productVisibilityFacade->isProductVisibleOnAllDomains(
+            $product,
+            $defaultPricingGroupIdsIndexedByDomainId,
+        );
     }
 
     /**
@@ -89,12 +88,11 @@ class ProductVisibilityExtension extends AbstractExtension
      */
     public function isVisibleForDefaultPricingGroupOnSomeDomain(Product $product): bool
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($this->isVisibleForDefaultPricingGroupOnDomain($product, $domainConfig->getId())) {
-                return true;
-            }
-        }
+        $defaultPricingGroupIdsIndexedByDomainId = $this->pricingGroupSettingFacade->getAllDefaultPricingGroupsIdsIndexedByDomainId();
 
-        return false;
+        return $this->productVisibilityFacade->isProductVisibleOnSomeDomains(
+            $product,
+            $defaultPricingGroupIdsIndexedByDomainId,
+        );
     }
 }

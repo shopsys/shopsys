@@ -41,6 +41,40 @@ class ProductVisibilityFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
+     * @return bool
+     */
+    public function isProductVisibleOnAllDomains(
+        Product $product,
+        array $defaultPricingGroupIdsIndexedByDomainId,
+    ): bool {
+        $count = $this->productVisibilityRepository->getCountOfDomainsProductIsVisibleOn(
+            $product,
+            $defaultPricingGroupIdsIndexedByDomainId,
+        );
+
+        return $count === count($defaultPricingGroupIdsIndexedByDomainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
+     * @return bool
+     */
+    public function isProductVisibleOnSomeDomains(
+        Product $product,
+        array $defaultPricingGroupIdsIndexedByDomainId,
+    ): bool {
+        $count = $this->productVisibilityRepository->getCountOfDomainsProductIsVisibleOn(
+            $product,
+            $defaultPricingGroupIdsIndexedByDomainId,
+        );
+
+        return $count > 0;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility

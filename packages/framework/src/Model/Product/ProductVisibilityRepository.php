@@ -108,6 +108,27 @@ class ProductVisibilityRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param array<int, int> $defaultPricingGroupIdsIndexedByDomainId
+     * @return int
+     */
+    public function getCountOfDomainsProductIsVisibleOn(
+        Product $product,
+        array $defaultPricingGroupIdsIndexedByDomainId,
+    ): int {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('count(pv.domainId)')
+            ->from(ProductVisibility::class, 'pv')
+            ->where('pv.product = :product')
+            ->andWhere('pv.pricingGroup IN (:pricingGroupIds)')
+            ->andWhere('pv.visible = TRUE')
+            ->setParameter('product', $product)
+            ->setParameter('pricingGroupIds', array_values($defaultPricingGroupIdsIndexedByDomainId));
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
      * @param int[]|null $productIds
      */
     protected function calculateIndependentVisibility(?array $productIds)
