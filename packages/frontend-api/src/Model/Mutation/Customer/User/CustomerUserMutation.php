@@ -173,6 +173,7 @@ class CustomerUserMutation extends BaseTokenMutation
                 $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
             ),
             $this->mergeCartFacade->shouldShowCartMergeInfo(),
+            true,
         );
     }
 

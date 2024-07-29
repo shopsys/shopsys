@@ -64,7 +64,13 @@ class SocialNetworkController extends AbstractController
 
             return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
                 'tokens' => $loginResultData->tokens,
-                'url' => $this->getRefererUrl($request, $type, false, $loginResultData->showCartMergeInfo),
+                'url' => $this->getRefererUrl(
+                    $request,
+                    $type,
+                    false,
+                    $loginResultData->showCartMergeInfo,
+                    $loginResultData->isRegistration,
+                ),
             ]);
         } catch (SocialNetworkLoginException $exception) {
             return $this->redirect($this->getRefererUrl($request, $type, true));
@@ -107,6 +113,7 @@ class SocialNetworkController extends AbstractController
      * @param string $type
      * @param bool $addExceptionMessage
      * @param bool $showCartMergeInfo
+     * @param bool $isRegistration
      * @return string
      */
     protected function getRefererUrl(
@@ -114,6 +121,7 @@ class SocialNetworkController extends AbstractController
         string $type,
         bool $addExceptionMessage,
         bool $showCartMergeInfo = false,
+        bool $isRegistration = false,
     ): string {
         $homepageUrl = $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $refererUrl = $request->getSession()->get(self::REFERER_URL);
@@ -122,6 +130,7 @@ class SocialNetworkController extends AbstractController
         $refererUrl = str_replace($this->domain->getUrl(), '', $refererUrl);
         $url = '/social-login?redirect=' . $refererUrl;
         $url .= '&showCartMergeInfo=' . ($showCartMergeInfo ? 'true' : 'false');
+        $url .= '&isRegistration=' . ($isRegistration ? 'true' : 'false');
 
         if ($addExceptionMessage) {
             $url .= '&exceptionType=socialNetworkLoginException&socialNetwork=' . $type;

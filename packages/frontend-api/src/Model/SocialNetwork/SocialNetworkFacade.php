@@ -79,8 +79,11 @@ class SocialNetworkFacade
 
             $registrationData = $this->registrationDataFactory->createFromSocialNetworkProfile($userProfile);
 
+            $isRegistration = false;
+
             try {
                 $customerUser = $this->registrationFacade->register($registrationData);
+                $isRegistration = true;
             } catch (DuplicateEmailException) {
                 $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
             }
@@ -113,6 +116,7 @@ class SocialNetworkFacade
             $loginResultData = $this->loginResultDataFactory->create(
                 $this->loginAsUserFacade->loginAndReturnAccessAndRefreshToken($customerUser),
                 $showCartMergeInfo,
+                $isRegistration,
             );
 
             $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
