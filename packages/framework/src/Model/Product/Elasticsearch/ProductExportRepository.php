@@ -282,7 +282,7 @@ class ProductExportRepository implements ResetInterface
     protected function extractParameters(string $locale, Product $product): array
     {
         $parameters = [];
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
+        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
             $product,
             $locale,
         );

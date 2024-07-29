@@ -66,7 +66,7 @@ class ProductCachedAttributesFacade implements ResetInterface
         }
         $locale = $locale ?? $this->localization->getLocale();
 
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
+        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
             $product,
             $locale,
         );

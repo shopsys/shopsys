@@ -189,8 +189,10 @@ class ParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(Product $product, $locale)
-    {
+    protected function getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder(
+        Product $product,
+        string $locale,
+    ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
@@ -202,7 +204,8 @@ class ParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->orderBy('pt.name');
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy('pt.name');
     }
 
     /**
@@ -221,9 +224,9 @@ class ParameterRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValuesByProductSortedByName(Product $product, $locale)
+    public function getProductParameterValuesByProductSortedByOrderingPriorityAndName(Product $product, $locale)
     {
-        $queryBuilder = $this->getProductParameterValuesByProductSortedByNameQueryBuilder($product, $locale);
+        $queryBuilder = $this->getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder($product, $locale);
 
         return $queryBuilder->getQuery()->execute();
     }

@@ -25,7 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getAll()
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByOrderingPriorityAndName(\App\Model\Product\Product $product, string $locale)
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
@@ -150,9 +150,9 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(
+    protected function getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder(
         BaseProduct $product,
-        $locale,
+        string $locale,
     ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('ppv')
@@ -166,8 +166,9 @@ class ParameterRepository extends BaseParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
+            ->orderBy('p.orderingPriority', 'DESC')
             ->addOrderBy('pg.orderingPriority', 'DESC')
-            ->addOrderBy('p.orderingPriority', 'DESC');
+            ->addOrderBy('pt.name');
     }
 
     /**
@@ -252,7 +253,7 @@ class ParameterRepository extends BaseParameterRepository
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
             ->orderBy('ordering_priority', 'DESC')
-            ->addOrderBy('parameter_id')
+            ->addOrderBy('parameter_name')
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,

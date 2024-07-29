@@ -43,7 +43,26 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
             }
 
             $category = $this->getReference($constant, Category::class);
-            $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $firstDomainConfig);
+
+            if ($category === $categoryElectronics) {
+                $parameters = [
+                    $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_ERGONOMICS, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_GAMING_MOUSE, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_MATERIAL, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_NUMBER_OF_BUTTONS, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_RESOLUTION, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_SUPPORTED_OS, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class),
+                    $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class),
+                ];
+            } else {
+                $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $firstDomainConfig);
+            }
+
             $parametersId = [];
 
             foreach ($parameters as $parameter) {
