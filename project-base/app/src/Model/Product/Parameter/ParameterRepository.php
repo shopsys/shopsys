@@ -52,7 +52,8 @@ class ParameterRepository extends BaseParameterRepository
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
             ->groupBy('p, pt');
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
@@ -71,7 +72,8 @@ class ParameterRepository extends BaseParameterRepository
             ->select('p')
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
             ->where('p.parameterType != :parameterType')
-            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER);
+            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER)
+            ->orderBy('p.orderingPriority', 'DESC');
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
@@ -164,8 +166,8 @@ class ParameterRepository extends BaseParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->addOrderBy('pg.orderingPriority', 'ASC')
-            ->addOrderBy('p.orderingPriority', 'ASC');
+            ->addOrderBy('pg.orderingPriority', 'DESC')
+            ->addOrderBy('p.orderingPriority', 'DESC');
     }
 
     /**

@@ -120,7 +120,7 @@ class ParameterRepository
             ->select('p')
             ->from(Parameter::class, 'p')
             ->join('p.translations', 'pt')
-            ->orderBy('p.id')
+            ->orderBy('p.orderingPriority', 'DESC')
             ->getQuery()
             ->execute();
     }
@@ -202,8 +202,7 @@ class ParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->orderBy('p.orderingPriority', 'ASC')
-            ->addOrderBy('pt.name');
+            ->orderBy('pt.name');
     }
 
     /**
@@ -321,7 +320,7 @@ class ParameterRepository
     public function getParametersByUuids(array $uuids): array
     {
         $parametersByUuid = [];
-        $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids]);
+        $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids], ['orderingPriority' => 'DESC']);
 
         foreach ($parameters as $parameter) {
             $parametersByUuid[$parameter->getUuid()] = $parameter;
@@ -359,7 +358,8 @@ class ParameterRepository
             ->where('p.id IN (:parameterIds)')
             ->setParameter('parameterIds', $parameterIds)
             ->setParameter('locale', $locale)
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
 
         return $parametersQueryBuilder->getQuery()->getResult();
     }

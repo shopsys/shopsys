@@ -6,7 +6,6 @@ namespace App\Model\Product\Parameter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Grid\ActionColumn;
-use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory as BaseParameterGridFactory;
@@ -62,7 +61,6 @@ class ParameterGridFactory extends BaseParameterGridFactory
                 . 'remove this parameter from a product where the parameter is assigned. This step is irreversible!'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Parameter/listGrid.html.twig');
-        $grid->setDefaultOrder('p.orderingPosition', DataSourceInterface::ORDER_DESC);
 
         foreach ($grid->getActionColumns() as $actionColumn) {
             if ($actionColumn->getType() === ActionColumn::TYPE_DELETE) {
@@ -93,7 +91,8 @@ class ParameterGridFactory extends BaseParameterGridFactory
             ->leftJoin('p.group', 'pg')
             ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale())
-            ->orderBy('p.orderingPriority', 'ASC');
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy('pt.name', 'ASC');
 
         foreach ($locales as $locale) {
             if ($locale !== $this->localization->getAdminLocale()) {
