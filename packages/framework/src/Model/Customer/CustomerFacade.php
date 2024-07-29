@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting;
 
 class CustomerFacade
 {
@@ -14,12 +15,14 @@ class CustomerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting $customerUserRoleGroupSetting
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerFactoryInterface $customerFactory,
         protected readonly CustomerRepository $customerRepository,
         protected readonly Domain $domain,
+        protected readonly CustomerUserRoleGroupSetting $customerUserRoleGroupSetting,
     ) {
     }
 
@@ -109,5 +112,16 @@ class CustomerFacade
     public function getById(int $customerId): Customer
     {
         return $this->customerRepository->getById($customerId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return bool
+     */
+    public function hasMultipleCustomerUsersWithDefaultCustomerUserRoleGroup(Customer $customer): bool
+    {
+        $defaultCustomerUserRoleGroup = $this->customerUserRoleGroupSetting->getDefaultCustomerUserRoleGroup();
+
+        return $this->customerRepository->getCountOfCustomerUsersByCustomerUserRoleGroup($customer, $defaultCustomerUserRoleGroup) > 1;
     }
 }
