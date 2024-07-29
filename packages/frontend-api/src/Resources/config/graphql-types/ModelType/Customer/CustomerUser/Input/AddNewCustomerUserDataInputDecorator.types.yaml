@@ -18,3 +18,6 @@ AddNewCustomerUserDataInputDecorator:
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
                     -   Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail:
                             message: "This email is already registered"
+            roleGroupUuid:
+                type: "Uuid!"
+                description: "Customer user role group uuid."

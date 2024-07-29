@@ -46,4 +46,19 @@ class CustomerUserRoleGroupRepository
 
         return $roleGroup;
     }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     */
+    public function getByUuid(string $uuid): CustomerUserRoleGroup
+    {
+        $roleGroup = $this->getCustomerUserRoleGroupRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($roleGroup === null) {
+            throw new CustomerUserRoleGroupNotFoundException('Role group with UUID ' . $uuid . ' not found.');
+        }
+
+        return $roleGroup;
+    }
 }
