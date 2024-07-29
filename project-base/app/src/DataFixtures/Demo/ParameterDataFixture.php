@@ -153,6 +153,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_TECHNOLOGY => new ParameterDataFixtureData(
                 t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 parameterGroup: $mainInformationParameterGroup,
+                orderingPriority: 1,
             ),
             self::PARAM_RESOLUTION => new ParameterDataFixtureData(
                 t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -284,6 +285,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                     $parameterDataValue->parameterType,
                     $parameterDataValue->parameterGroup,
                     $parameterDataValue->unit,
+                    $parameterDataValue->orderingPriority,
                 );
             } else {
                 $parameter = $this->createParameter(
@@ -303,6 +305,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string|null $parameterType
      * @param \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
+     * @param int $orderingPriority
      * @return \App\Model\Product\Parameter\Parameter
      */
     private function createParameter(
@@ -312,6 +315,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         ?string $parameterType = null,
         ?ParameterGroup $parameterGroup = null,
         ?Unit $unit = null,
+        int $orderingPriority = 0,
     ): Parameter {
         $parameterData = $this->parameterDataFactory->create();
         $parameterData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
@@ -324,6 +328,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterData->name = $namesByLocale;
         $parameterData->group = $parameterGroup;
         $parameterData->unit = $unit;
+        $parameterData->orderingPriority = $orderingPriority;
 
         $parameter = $this->parameterFacade->findParameterByNames($namesByLocale);
 
