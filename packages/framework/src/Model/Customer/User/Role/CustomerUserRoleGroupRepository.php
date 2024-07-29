@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception\CustomerUserRoleGroupNotFoundException;
 
-class CustomerUserRoleGroupDataRepository
+class CustomerUserRoleGroupRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -10,11 +10,11 @@ class CustomerUserRoleGroupSetting
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataRepository $customerUserRoleGroupDataRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupRepository $customerUserRoleGroupRepository
      */
     public function __construct(
         protected readonly Setting $setting,
-        protected readonly CustomerUserRoleGroupDataRepository $customerUserRoleGroupDataRepository,
+        protected readonly CustomerUserRoleGroupRepository $customerUserRoleGroupRepository,
     ) {
     }
 
@@ -25,6 +25,6 @@ class CustomerUserRoleGroupSetting
     {
         $defaultCustomerUserRoleGroupId = $this->setting->get(Setting::CUSTOMER_USER_DEFAULT_GROUP_ROLE_ID);
 
-        return $this->customerUserRoleGroupDataRepository->getById($defaultCustomerUserRoleGroupId);
+        return $this->customerUserRoleGroupRepository->getById($defaultCustomerUserRoleGroupId);
     }
 }
