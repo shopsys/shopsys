@@ -14,40 +14,37 @@ use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION = 'ready_category_seo_electronics_without_hdmi_promotion';
-    public const READY_CATEGORY_SEO_TV_FROM_CHEAPEST = 'ready_category_seo_tv_from_cheapest';
-    public const READY_CATEGORY_SEO_TV_IN_SALE = 'ready_category_seo_tv_in_sale';
-    public const READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI = 'ready_category_seo_tv_plasma_with_hdmi';
-    public const READY_CATEGORY_SEO_PC_NEW_WITH_USB = 'ready_category_seo_pc_new_with_usb';
-    public const READY_CATEGORY_SEO_BLACK_ELECTRONICS = 'ready_category_seo_black_electronics';
+    public const string READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION = 'ready_category_seo_electronics_without_hdmi_promotion';
+    public const string READY_CATEGORY_SEO_TV_FROM_CHEAPEST = 'ready_category_seo_tv_from_cheapest';
+    public const string READY_CATEGORY_SEO_TV_IN_SALE = 'ready_category_seo_tv_in_sale';
+    public const string READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI = 'ready_category_seo_tv_plasma_with_hdmi';
+    public const string READY_CATEGORY_SEO_PC_NEW_WITH_USB = 'ready_category_seo_pc_new_with_usb';
+    public const string READY_CATEGORY_SEO_BLACK_ELECTRONICS = 'ready_category_seo_black_electronics';
 
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        private ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
-        private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        private Domain $domain,
-        private ParameterFacade $parameterFacade,
+        private readonly ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
+        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private readonly ParameterFacade $parameterFacade,
     ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        $firstDomain = $this->domain->getDomainConfigById(1);
+        $firstDomain = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig();
         $firstDomainId = $firstDomain->getId();
         $firstDomainLocale = $firstDomain->getLocale();
 
@@ -329,7 +326,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CategoryDataFixture::class,

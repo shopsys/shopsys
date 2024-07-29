@@ -16,22 +16,18 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
-        private readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             if ($domainId !== Domain::SECOND_DOMAIN_ID) {
                 $productsIndexedByPosition = [
                     0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class),
@@ -52,7 +48,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

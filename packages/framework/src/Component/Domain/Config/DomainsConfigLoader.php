@@ -96,6 +96,7 @@ class DomainsConfigLoader
             $domainConfig[DomainsConfigDefinition::CONFIG_STYLES_DIRECTORY],
             $domainConfig[DomainsConfigDefinition::CONFIG_DESIGN_ID],
             $domainConfig[DomainsConfigDefinition::CONFIG_TYPE],
+            $domainConfig[DomainsConfigDefinition::CONFIG_LOAD_DEMO_DATA],
         );
     }
 

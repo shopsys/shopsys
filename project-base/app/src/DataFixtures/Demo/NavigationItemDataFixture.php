@@ -8,7 +8,6 @@ use App\Model\Category\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
@@ -21,14 +20,12 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        private NavigationItemFacade $navigationItemFacade,
-        private NavigationItemDataFactory $navigationItemDataFactory,
-        protected Domain $domain,
-        protected DomainRouterFactory $domainRouterFactory,
+        private readonly NavigationItemFacade $navigationItemFacade,
+        private readonly NavigationItemDataFactory $navigationItemDataFactory,
+        private readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -37,7 +34,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
      */
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 

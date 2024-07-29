@@ -12,7 +12,6 @@ use App\Model\Order\Status\OrderStatus;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
@@ -22,21 +21,19 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory
      * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly MailTemplateFactoryInterface $mailTemplateFactory,
         private readonly MailTemplateDataFactory $mailTemplateDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $mailTemplateData = $this->mailTemplateDataFactory->create();
             $mailTemplateData->sendMail = true;
 
@@ -155,7 +152,7 @@ team of {domain}
         string $name,
         MailTemplateData $mailTemplateData,
         int $domainId,
-    ) {
+    ): void {
         $repository = $manager->getRepository(MailTemplate::class);
 
         $mailTemplate = $repository->findOneBy([
@@ -182,7 +179,7 @@ team of {domain}
     /**
      * @return string[]
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             TransportDataFixture::class,

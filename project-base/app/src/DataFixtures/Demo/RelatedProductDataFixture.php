@@ -18,15 +18,15 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
      * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        private ProductDataFactory $productDataFactory,
-        private ProductFacade $productFacade,
+        private readonly ProductDataFactory $productDataFactory,
+        private readonly ProductFacade $productFacade,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $products = [
             $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class),
@@ -49,7 +49,7 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

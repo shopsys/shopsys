@@ -11,7 +11,6 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -53,7 +52,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
@@ -62,7 +60,6 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     public function __construct(
         private readonly Generator $faker,
-        private readonly Domain $domain,
         private readonly BillingAddressDataFactory $billingAddressDataFactory,
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
@@ -74,9 +71,9 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             if (!$domainConfig->isB2b()) {
                 continue;
             }
@@ -88,7 +85,10 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    public function getDependencies()
+    /**
+     * {@inheritdoc}
+     */
+    public function getDependencies(): array
     {
         return [
             CountryDataFixture::class,
@@ -151,7 +151,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         $deliveryAddressData->telephone = $deliveryAddressArrayData[self::KEY_ADDRESS_TELEPHONE];
         $deliveryAddressData->uuid = Uuid::uuid5(
             self::UUID_NAMESPACE_DELIVERY_ADDRESS,
-            $deliveryAddressArrayData[self::KEY_ADDRESS_FIRST_NAME],
+            $customer->getDomainId() . $deliveryAddressArrayData[self::KEY_ADDRESS_FIRST_NAME],
         )->toString();
 
         return $this->deliveryAddressFacade->createIfAddressFilled($deliveryAddressData);
@@ -176,7 +176,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         $customerUserData->telephone = $customerDataProvider[self::KEY_CUSTOMER_USER_DATA_TELEPHONE];
         $customerUserData->uuid = Uuid::uuid5(
             self::UUID_NAMESPACE_CUSTOMER,
-            $customerDataProvider[self::KEY_CUSTOMER_USER_DATA_FIRST_NAME],
+            $domainId . $customerDataProvider[self::KEY_CUSTOMER_USER_DATA_FIRST_NAME],
         )->toString();
         $customerUserData->createdAt = $this->faker->dateTimeBetween('-1 week');
         $customerUserData->defaultDeliveryAddress = $defaultDeliveryAddress;

@@ -8,8 +8,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
@@ -24,27 +22,26 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
 {
     private const string UUID_NAMESPACE = '6ffdbcc0-fd5d-4f60-bf8d-1349366b3d93';
 
-    private const ATTR_NAME = 'name';
-    private const ATTR_STOCK = 'stockId';
-    private const ATTR_IS_DEFAULT = 'isDefault';
-    private const ATTR_DOMAIN_ID = 'domainId';
-    private const ATTR_DESCRIPTION = 'description';
-    private const ATTR_EXTERNAL_ID = 'externalId';
-    private const ATTR_STREET = 'street';
-    private const ATTR_CITY = 'city';
-    private const ATTR_POSTCODE = 'postcode';
-    private const ATTR_COUNTRY = 'country';
-    private const ATTR_CONTACT_INFO = 'contactInfo';
-    private const ATTR_SPECIAL_MESSAGE = 'specialMessage';
-    private const ATTR_LOCATION_LATITUDE = 'latitude';
-    private const ATTR_LOCATION_LONGITUDE = 'longitude';
-    private const ATTR_IMAGE = 'image';
-    public const STORE_PREFIX = 'store_';
+    private const string ATTR_NAME = 'name';
+    private const string ATTR_STOCK = 'stockId';
+    private const string ATTR_IS_DEFAULT = 'isDefault';
+    private const string ATTR_DOMAIN_ID = 'domainId';
+    private const string ATTR_DESCRIPTION = 'description';
+    private const string ATTR_EXTERNAL_ID = 'externalId';
+    private const string ATTR_STREET = 'street';
+    private const string ATTR_CITY = 'city';
+    private const string ATTR_POSTCODE = 'postcode';
+    private const string ATTR_COUNTRY = 'country';
+    private const string ATTR_CONTACT_INFO = 'contactInfo';
+    private const string ATTR_SPECIAL_MESSAGE = 'specialMessage';
+    private const string ATTR_LOCATION_LATITUDE = 'latitude';
+    private const string ATTR_LOCATION_LONGITUDE = 'longitude';
+    private const string ATTR_IMAGE = 'image';
+    public const string STORE_PREFIX = 'store_';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreDataFactory $storeDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
@@ -52,7 +49,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     public function __construct(
         private readonly StoreFacade $storeFacade,
         private readonly StoreDataFactory $storeDataFactory,
-        private readonly Domain $domain,
         private readonly ImageUploadDataFactory $imageUploadDataFactory,
         private readonly OpeningHoursDataFactory $openingHourDataFactory,
         private readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
@@ -62,7 +58,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->getDemoData() as $demoRow) {
             $store = $this->storeFacade->create($this->initStoreData($demoRow));
@@ -75,20 +71,13 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function getDemoData(): array
     {
-        $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
-
-        try {
-            $secondDomainConfig = $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID);
-            $isSecondDomainAvailable = true;
-        } catch (InvalidDomainIdException) {
-            $isSecondDomainAvailable = false;
-        }
+        $firstDomainConfig = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig();
 
         $stores = [
             [
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
-                self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
+                self::ATTR_DOMAIN_ID => $firstDomainConfig->getId(),
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4, Stock::class),
                 self::ATTR_DESCRIPTION => t('Store in Ostrava Přívoz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -104,7 +93,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ], [
                 self::ATTR_NAME => 'Pardubice',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
+                self::ATTR_DOMAIN_ID => $firstDomainConfig->getId(),
                 self::ATTR_STOCK => null,
                 self::ATTR_DESCRIPTION => t('Store v Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -120,13 +109,17 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
         ];
 
-        if ($isSecondDomainAvailable) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            if ($domainConfig === $firstDomainConfig) {
+                continue;
+            }
+
             $stores[] = [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_DOMAIN_ID => Domain::SECOND_DOMAIN_ID,
+                self::ATTR_DOMAIN_ID => $domainConfig->getId(),
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14, Stock::class),
-                self::ATTR_DESCRIPTION => t('Store in Žilina', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $secondDomainConfig->getLocale()),
+                self::ATTR_DESCRIPTION => t('Store in Žilina', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
                 self::ATTR_STREET => 'Pribinova 62',
                 self::ATTR_CITY => 'Žilina',
@@ -138,6 +131,8 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_LOCATION_LONGITUDE => '18.7499042',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
             ];
+
+            break;
         }
 
         return $stores;
@@ -172,7 +167,10 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $storeData;
     }
 
-    public function getDependencies()
+    /**
+     * @return array
+     */
+    public function getDependencies(): array
     {
         return [
             StocksDataFixture::class,

@@ -8,7 +8,6 @@ use App\Model\Category\Category;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
@@ -18,34 +17,32 @@ class CategoryDataFixture extends AbstractReferenceFixture
 {
     private const string UUID_NAMESPACE = '7ba89a28-77ab-419a-b154-ef747d7a98ce';
 
-    public const CATEGORY_ELECTRONICS = 'category_electronics';
-    public const CATEGORY_TV = 'category_tv';
-    public const CATEGORY_PHOTO = 'category_photo';
-    public const CATEGORY_PRINTERS = 'category_printers';
-    public const CATEGORY_PC = 'category_pc';
-    public const CATEGORY_PHONES = 'category_phones';
-    public const CATEGORY_COFFEE = 'category_coffee';
-    public const CATEGORY_BOOKS = 'category_books';
-    public const CATEGORY_TOYS = 'category_toys';
-    public const CATEGORY_GARDEN_TOOLS = 'category_garden_tools';
-    public const CATEGORY_FOOD = 'category_food';
+    public const string CATEGORY_ELECTRONICS = 'category_electronics';
+    public const string CATEGORY_TV = 'category_tv';
+    public const string CATEGORY_PHOTO = 'category_photo';
+    public const string CATEGORY_PRINTERS = 'category_printers';
+    public const string CATEGORY_PC = 'category_pc';
+    public const string CATEGORY_PHONES = 'category_phones';
+    public const string CATEGORY_COFFEE = 'category_coffee';
+    public const string CATEGORY_BOOKS = 'category_books';
+    public const string CATEGORY_TOYS = 'category_toys';
+    public const string CATEGORY_GARDEN_TOOLS = 'category_garden_tools';
+    public const string CATEGORY_FOOD = 'category_food';
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
         private readonly CategoryDataFactoryInterface $categoryDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * Root category is created in database migration.
@@ -56,7 +53,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $rootCategory = $this->categoryFacade->getRootCategory();
         $categoryData = $this->categoryDataFactory->create();
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -92,7 +89,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
         $categoryData = $this->categoryDataFactory->create();
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -107,7 +104,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $categoryData->parent = $categoryElectronics;
         $this->createCategory($categoryData, self::CATEGORY_TV);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -120,7 +117,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $this->createCategory($categoryData, self::CATEGORY_PHOTO);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -133,7 +130,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $this->createCategory($categoryData, self::CATEGORY_PRINTERS);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -148,7 +145,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $this->createCategory($categoryData, self::CATEGORY_PC);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -163,7 +160,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $this->createCategory($categoryData, self::CATEGORY_PHONES);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -179,7 +176,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $this->createCategory($categoryData, self::CATEGORY_COFFEE);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -195,7 +192,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $categoryData->parent = $rootCategory;
         $this->createCategory($categoryData, self::CATEGORY_BOOKS);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -209,7 +206,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $this->createCategory($categoryData, self::CATEGORY_TOYS);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -222,7 +219,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
         }
         $categoryGardenTools = $this->createCategory($categoryData, self::CATEGORY_GARDEN_TOOLS);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
@@ -248,16 +245,14 @@ class CategoryDataFixture extends AbstractReferenceFixture
      * @param string $referenceName
      * @return \App\Model\Category\Category
      */
-    private function createCategory(CategoryData $categoryData, string $referenceName)
+    private function createCategory(CategoryData $categoryData, string $referenceName): Category
     {
         $categoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);
 
-        if ($referenceName !== null) {
-            $this->addReference($referenceName, $category);
-        }
+        $this->addReference($referenceName, $category);
 
         return $category;
     }

@@ -10,7 +10,6 @@ use App\Model\Product\Parameter\ParameterGroupFacade;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ParameterGroupDataFixture extends AbstractReferenceFixture
@@ -22,12 +21,10 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly ParameterGroupFacade $parameterGroupFacade,
         private readonly ParameterGroupDataFactory $parameterGroupDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
@@ -66,7 +63,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
         foreach ($parameterGroupKeys as $parameterGroupKey) {
             $parameterGroupNamesByLocale = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $parameterGroupNamesByLocale[$locale] = self::getParameterGroupNameByReferenceName($parameterGroupKey, $locale);
             }
 

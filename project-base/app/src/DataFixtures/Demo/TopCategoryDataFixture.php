@@ -8,23 +8,22 @@ use App\Model\Category\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 
 class TopCategoryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private readonly TopCategoryFacade $topCategoryFacade, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly TopCategoryFacade $topCategoryFacade,
+    ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $categories = [
             $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class),
@@ -32,7 +31,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
             $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class),
         ];
 
-        foreach ($this->domain->getAllIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $this->topCategoryFacade->saveTopCategoriesForDomain($domainId, $categories);
         }
     }
@@ -40,7 +39,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CategoryDataFixture::class,

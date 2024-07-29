@@ -11,29 +11,34 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 
 class CartDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const CART_UUID = '1007c9a3-f570-484a-b84e-4a4f49bb35c0';
+    public const string CART_UUID = '1007c9a3-f570-484a-b84e-4a4f49bb35c0';
 
     /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private CartFacade $cartFacade,
-        protected CustomerUserIdentifierFactory $customerUserIdentifierFactory,
-        private EntityManagerInterface $em,
+        private readonly CartFacade $cartFacade,
+        private readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
+        private readonly EntityManagerInterface $em,
+        private readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
+        $this->domain->switchDomainById($this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getId());
+
         $this->createAnonymousCart();
         $this->createCartForCustomerUser();
     }

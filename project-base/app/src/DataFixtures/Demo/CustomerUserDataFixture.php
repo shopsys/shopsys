@@ -60,7 +60,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
@@ -69,7 +68,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         private readonly Generator $faker,
         private readonly EntityManagerInterface $em,
         private readonly HashGenerator $hashGenerator,
-        private readonly Domain $domain,
         private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         private readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
     ) {
@@ -78,11 +76,9 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $customersDataProvider = match ($domainId) {
                 Domain::FIRST_DOMAIN_ID => $this->getDefaultCustomerUsersDataProvider(),
                 Domain::SECOND_DOMAIN_ID => $this->getDistinctCustomerUsersDataProvider(),
@@ -490,7 +486,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CountryDataFixture::class,
@@ -500,7 +496,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \App\Model\Customer\User\CustomerUser $customer
      */
-    private function resetPassword(CustomerUser $customer)
+    private function resetPassword(CustomerUser $customer): void
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(
             CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH,

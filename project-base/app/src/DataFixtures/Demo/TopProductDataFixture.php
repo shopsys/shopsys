@@ -15,16 +15,16 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private readonly TopProductFacade $topProductFacade, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly TopProductFacade $topProductFacade,
+    ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $defaultTopProductReferenceNames = [
             ProductDataFixture::PRODUCT_PREFIX . '1',
@@ -48,9 +48,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
             ProductDataFixture::PRODUCT_PREFIX . '7',
         ];
 
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $this->createTopProductsForDomain($distinctTopProductReferenceNames, $domainId);
             } else {
@@ -77,7 +75,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

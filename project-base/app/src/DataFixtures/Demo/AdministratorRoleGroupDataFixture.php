@@ -14,14 +14,15 @@ class AdministratorRoleGroupDataFixture extends AbstractReferenceFixture
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
-    public function __construct(private AdministratorRoleGroupFacade $administratorRoleGroupFacade)
-    {
+    public function __construct(
+        private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+    ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $administratorRoleGroupData = new AdministratorRoleGroupData();
         $administratorRoleGroupData->name = 'Blogger';

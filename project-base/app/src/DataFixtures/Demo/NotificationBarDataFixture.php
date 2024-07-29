@@ -9,7 +9,6 @@ use App\Model\NotificationBar\NotificationBarFacade;
 use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class NotificationBarDataFixture extends AbstractReferenceFixture
@@ -17,21 +16,19 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
      * @param \App\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly NotificationBarFacade $notificationBarFacade,
         private readonly NotificationBarDataFactory $notificationBarDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $notificationBarData = $this->notificationBarDataFactory->create();
 
             $notificationBarData->domainId = $domainConfig->getId();

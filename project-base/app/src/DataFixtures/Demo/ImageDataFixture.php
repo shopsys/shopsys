@@ -16,15 +16,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ImageDataFixture extends AbstractFileFixture implements DependentFixtureInterface
 {
-    public const IMAGES_TABLE_NAME = 'images';
-    public const IMAGES_TRANSLATIONS_TABLE_NAME = 'images_translations';
-    public const IMAGE_TYPE = 'jpg';
+    public const string IMAGES_TABLE_NAME = 'images';
+    public const string IMAGES_TRANSLATIONS_TABLE_NAME = 'images_translations';
+    public const string IMAGE_TYPE = 'jpg';
 
     /**
      * @param \League\Flysystem\FilesystemOperator $filesystem
@@ -34,7 +33,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
      * @param string $dataFixturesImagesDirectory
      * @param string $targetImagesDirectory
      * @param string $targetDomainImagesDirectory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         FilesystemOperator $filesystem,
@@ -44,7 +42,6 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         private readonly string $dataFixturesImagesDirectory,
         private readonly string $targetImagesDirectory,
         private readonly string $targetDomainImagesDirectory,
-        private readonly Domain $domain,
     ) {
         parent::__construct($filesystem, $localFilesystem, $mountManager, $em);
     }
@@ -52,7 +49,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->truncateDatabaseTables([self::IMAGES_TABLE_NAME, self::IMAGES_TRANSLATIONS_TABLE_NAME]);
 
@@ -71,7 +68,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processDbImagesChanges();
     }
 
-    private function processDbImagesChanges()
+    private function processDbImagesChanges(): void
     {
         $this->processBrandsImages();
         $this->processCategoriesImages();
@@ -84,7 +81,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->syncDatabaseSequences(['images.id']);
     }
 
-    private function processBrandsImages()
+    private function processBrandsImages(): void
     {
         $brandsImagesData = [
             79 => BrandDataFixture::BRAND_APPLE,
@@ -118,7 +115,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
 
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = $brandName;
             }
 
@@ -126,7 +123,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processCategoriesImages()
+    private function processCategoriesImages(): void
     {
         $categoriesImagesData = [
             68 => CategoryDataFixture::CATEGORY_ELECTRONICS,
@@ -147,7 +144,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
 
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = $categoryName;
             }
 
@@ -155,12 +152,12 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processPaymentsImages()
+    private function processPaymentsImages(): void
     {
         $paymentsImagesData = [
             53 => PaymentDataFixture::PAYMENT_CARD,
-            55 => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
             54 => PaymentDataFixture::PAYMENT_CASH,
+            55 => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
         ];
 
         foreach ($paymentsImagesData as $imageId => $paymentName) {
@@ -168,7 +165,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
 
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = $paymentName;
             }
 
@@ -176,7 +173,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processTransportsImages()
+    private function processTransportsImages(): void
     {
         $transportsImagesData = [
             56 => TransportDataFixture::TRANSPORT_CZECH_POST,
@@ -189,7 +186,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
 
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = $transportName;
             }
 
@@ -197,7 +194,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processProductsImages()
+    private function processProductsImages(): void
     {
         $productsIdsWithImageIdSameAsProductId = [
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -220,7 +217,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
 
@@ -231,7 +228,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
 
@@ -240,7 +237,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processSliderItemsImages()
+    private function processSliderItemsImages(): void
     {
         $imagesIdsIndexedBySliderItemsIds = [
             1 => 59,
@@ -254,7 +251,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = 'Slider item ' . $sliderItemId . ' image';
             }
 
@@ -274,7 +271,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = 'Slider item ' . $sliderItemId . ' image';
             }
 
@@ -294,7 +291,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             $store = $this->getReference(StoreDataFixture::STORE_PREFIX . '1', Store::class);
             $names = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $names[$locale] = sprintf('%s - %s', $store->getName(), $store->getDescription());
             }
 
@@ -317,7 +314,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         array $names = [],
         ?string $type = null,
         ?int $position = null,
-    ) {
+    ): void {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)
             VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at)',
@@ -341,7 +338,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
             ],
         );
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $this->em->getConnection()->executeStatement(
                 'INSERT INTO images_translations ( translatable_id, name, locale)
                 VALUES (:translatable_id, :name, :locale)',
@@ -362,7 +359,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             BrandDataFixture::class,

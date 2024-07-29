@@ -6,7 +6,6 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface;
@@ -14,18 +13,16 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 
 class CountryDataFixture extends AbstractReferenceFixture
 {
-    public const COUNTRY_CZECH_REPUBLIC = 'country_czech_republic';
-    public const COUNTRY_SLOVAKIA = 'country_slovakia';
+    public const string COUNTRY_CZECH_REPUBLIC = 'country_czech_republic';
+    public const string COUNTRY_SLOVAKIA = 'country_slovakia';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory $countryDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly CountryFacade $countryFacade,
         private readonly CountryDataFactoryInterface $countryDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
@@ -36,7 +33,7 @@ class CountryDataFixture extends AbstractReferenceFixture
     {
         $countryData = $this->countryDataFactory->create();
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $countryData->names[$locale] = t('Czech republic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -45,7 +42,7 @@ class CountryDataFixture extends AbstractReferenceFixture
 
         $countryData = $this->countryDataFactory->create();
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $countryData->names[$locale] = t('Slovakia', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
@@ -58,7 +55,7 @@ class CountryDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @param string $referenceName
      */
-    private function createCountry(CountryData $countryData, $referenceName): void
+    private function createCountry(CountryData $countryData, string $referenceName): void
     {
         $country = $this->countryFacade->create($countryData);
         $this->addReference($referenceName, $country);

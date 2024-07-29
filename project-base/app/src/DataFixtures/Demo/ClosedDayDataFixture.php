@@ -9,7 +9,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
@@ -18,13 +17,11 @@ use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 class ClosedDayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
      */
     public function __construct(
-        private readonly Domain $domain,
         private readonly StoreFacade $storeFacade,
         private readonly ClosedDayFacade $closedDayFacade,
         private readonly ClosedDayDataFactory $closedDayDataFactory,
@@ -36,7 +33,7 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
      */
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $stores = $this->storeFacade->getStoresByDomainId($domainId);
 

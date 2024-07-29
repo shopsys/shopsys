@@ -14,6 +14,8 @@ abstract class AbstractReferenceFixture implements FixtureInterface
 {
     protected PersistentReferenceFacade $persistentReferenceFacade;
 
+    protected DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
@@ -32,16 +34,26 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      */
     #[Required]
-    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade)
+    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade): void
     {
         $this->persistentReferenceFacade = $persistentReferenceFacade;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider $domainsForDataFixtureProvider
+     */
+    #[Required]
+    public function autowireDomainsForDataFixturesProvider(
+        DomainsForDataFixtureProvider $domainsForDataFixtureProvider,
+    ): void {
+        $this->domainsForDataFixtureProvider = $domainsForDataFixtureProvider;
     }
 
     /**
      * @param string $name
      * @param object $object
      */
-    public function addReference($name, $object)
+    public function addReference(string $name, object $object): void
     {
         $this->persistentReferenceFacade->persistReference($name, $object);
     }
@@ -52,7 +64,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    public function getReference($name, ?string $entityClassName = null)
+    public function getReference(string $name, ?string $entityClassName = null)
     {
         return $this->persistentReferenceFacade->getReference($name, $entityClassName);
     }
@@ -62,7 +74,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param object $object
      * @param int $domainId
      */
-    public function addReferenceForDomain(string $name, $object, int $domainId): void
+    public function addReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $this->persistentReferenceFacade->persistReferenceForDomain($name, $object, $domainId);
     }

@@ -1,5 +1,6 @@
 domains:
     -   id: 1
+        load_demo_data: true
         locale: en
         name: shopsys
         styles_directory: common
@@ -7,6 +8,7 @@ domains:
         type: b2c
 
     -   id: 2
+        load_demo_data: true
         locale: cs
         name: 2.shopsys
         styles_directory: domain2

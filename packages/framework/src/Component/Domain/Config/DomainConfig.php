@@ -22,6 +22,7 @@ class DomainConfig
      * @param string $stylesDirectory
      * @param string|null $designId
      * @param string $type
+     * @param bool $loadDemoData
      */
     public function __construct(
         protected int $id,
@@ -32,6 +33,7 @@ class DomainConfig
         protected string $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
         protected ?string $designId = null,
         protected string $type = self::TYPE_B2C,
+        protected readonly bool $loadDemoData = true,
     ) {
     }
 
@@ -113,5 +115,13 @@ class DomainConfig
     public function isB2b(): bool
     {
         return $this->type === self::TYPE_B2B;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAllowedInDataFixtures(): bool
+    {
+        return $this->loadDemoData;
     }
 }
