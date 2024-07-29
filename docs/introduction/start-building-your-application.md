@@ -48,6 +48,37 @@ When you install new project, locales are set like this
 
 In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
+## Set up domain type
+
+Each domain can be configured with a type.
+The type can be either `b2c` (Business-to-Consumer) or `b2b` (Business-to-Business).
+This option is set using the `type` parameter in the domain configuration.
+
+By default, if the `type` parameter is not present, the domain is considered as `b2c`.
+
+Here is an example of how to set up the domain type:
+
+```yaml
+domains:
+    - id: 1
+      name: shopsys
+      locale: en
+      url: http://127.0.0.1:8000
+      type: b2c
+    - id: 2
+      name: 2.shopsys
+      locale: cs
+      url: http://127.0.0.2:8000
+      type: b2b
+```
+
+In this example, the first domain is set as B2C and the second domain is set as B2B.
+
+!!! note
+
+    Switching a domain to `b2b` brings some new features. For example, the company number becomes unique throughout the domain.
+    This means that no two companies on the same domain can have the same company number.
+
 ## Set up Elasticsearch
 
 We use Elasticsearch on the frontend for product searching, filtering and for fast listing of products to provide better performance.
