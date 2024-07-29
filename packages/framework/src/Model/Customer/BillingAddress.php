@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Table(name="billing_addresses")
@@ -83,12 +84,19 @@ class BillingAddress
     protected $activated;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      */
     public function __construct(BillingAddressData $billingAddressData)
     {
         $this->customer = $billingAddressData->customer;
         $this->activated = $billingAddressData->activated;
+        $this->uuid = $billingAddressData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($billingAddressData);
     }
 
@@ -213,5 +221,13 @@ class BillingAddress
     public function activate(): void
     {
         $this->activated = true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }

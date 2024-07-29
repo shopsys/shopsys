@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
-use Overblog\GraphQLBundle\Validator\ValidationNode;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressCompanyNumberIsNotUniqueException;
 use Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker;

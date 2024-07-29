@@ -51,5 +51,6 @@ class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
         $billingAddressData->customer = $billingAddress->getCustomer();
         $billingAddressData->activated = $billingAddress->isActivated();
         $billingAddressData->id = $billingAddress->getId();
+        $billingAddressData->uuid = $billingAddress->getUuid();
     }
 }

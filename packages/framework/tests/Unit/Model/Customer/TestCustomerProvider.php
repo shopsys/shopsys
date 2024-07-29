@@ -119,6 +119,7 @@ class TestCustomerProvider
         $billingAddressData->postcode = 'postcode';
         $billingAddressData->country = $billingCountry;
         $billingAddressData->customer = $customer;
+        $billingAddressData->uuid = '683213c6-8879-4b65-a429-b5f17c98ac96';
 
         if ($isCompany) {
             $billingAddressData->companyCustomer = true;
