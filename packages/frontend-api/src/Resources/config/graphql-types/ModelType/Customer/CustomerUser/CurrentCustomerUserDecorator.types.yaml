@@ -41,3 +41,6 @@ CurrentCustomerUserDecorator:
                 description: "Whether the customer user has password set or not"
             roles:
                 type: "[String!]!"
+            roleGroup:
+                type: "CustomerUserRoleGroup!"
+                description: "The customer user role group"
