@@ -24,6 +24,7 @@ export type CurrentCustomerType = {
     lastName: string;
     email: string;
     telephone: string;
+    billingAddressUuid: string;
     street: string;
     city: string;
     postcode: string;

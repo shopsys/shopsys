@@ -59,6 +59,7 @@ export const RegistrationAfterOrder: FC = () => {
             companyCustomer: parsedRegistrationData.current.customer === 'companyCustomer',
             cartUuid: null,
             lastOrderUuid: orderUuid,
+            billingAddressUuid: null,
         });
 
         if (registrationError) {

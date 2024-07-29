@@ -84,6 +84,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     const onChangeProfileHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
         const changeProfileResult = await customerEditProfile({
             input: {
+                billingAddressUuid: currentCustomerUser.billingAddressUuid,
                 firstName: customerChangeProfileFormData.firstName,
                 lastName: customerChangeProfileFormData.lastName,
                 telephone: customerChangeProfileFormData.telephone,

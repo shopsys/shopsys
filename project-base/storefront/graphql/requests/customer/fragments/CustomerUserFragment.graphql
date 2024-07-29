@@ -5,6 +5,7 @@ fragment CustomerUserFragment on CustomerUser {
     lastName
     email
     telephone
+    billingAddressUuid
     street
     city
     postcode
