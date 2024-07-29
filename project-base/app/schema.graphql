@@ -1,3 +1,16 @@
+input AddNewCustomerUserDataInput {
+  "Customer user email."
+  email: String!
+  "Customer user first name"
+  firstName: String!
+  "Customer user last name"
+  lastName: String!
+  "Customer user role group uuid."
+  roleGroupUuid: Uuid!
+  "The customer's telephone number"
+  telephone: String!
+}
+
 input AddOrderItemsToCartInput {
   "Cart identifier or null if customer is logged in"
   cartUuid: Uuid = null
@@ -510,6 +523,8 @@ input ChangePaymentInOrderInput {
 }
 
 input ChangePersonalDataInput {
+  "UUID"
+  billingAddressUuid: Uuid = null
   "Billing address city name (will be on the tax invoice)"
   city: String!
   "Determines whether the customer is a company or not."
@@ -547,7 +562,9 @@ input ChangeTransportInCartInput {
 
 "Represents an currently logged customer user"
 type CompanyCustomerUser implements CustomerUser {
-  "Billing address city name"
+  "UUID"
+  billingAddressUuid: Uuid!
+  "city name"
   city: String
   "The customer’s company name (only when customer is a company)"
   companyName: String
@@ -571,11 +588,14 @@ type CompanyCustomerUser implements CustomerUser {
   lastName: String
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
-  "Billing address zip code"
+  "zip code"
   postcode: String
   "The name of the customer pricing group"
   pricingGroup: String!
-  "Billing address street name"
+  "The customer user role group"
+  roleGroup: CustomerUserRoleGroup!
+  roles: [String!]!
+  "street name"
   street: String
   "Phone number"
   telephone: String
@@ -608,7 +628,9 @@ type CreateOrderResult {
 
 "Represents an currently logged customer user"
 interface CustomerUser {
-  "Billing address city name"
+  "UUID"
+  billingAddressUuid: Uuid!
+  "city name"
   city: String
   "Billing address country"
   country: Country!
@@ -626,14 +648,24 @@ interface CustomerUser {
   lastName: String
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
-  "Billing address zip code"
+  "zip code"
   postcode: String
   "The name of the customer pricing group"
   pricingGroup: String!
-  "Billing address street name"
+  "The customer user role group"
+  roleGroup: CustomerUserRoleGroup!
+  roles: [String!]!
+  "street name"
   street: String
   "Phone number"
   telephone: String
+  "UUID"
+  uuid: Uuid!
+}
+
+type CustomerUserRoleGroup {
+  "Customer user group name"
+  name: String!
   "UUID"
   uuid: Uuid!
 }
@@ -681,6 +713,19 @@ input DeliveryAddressInput {
   telephone: String = null
   "UUID"
   uuid: Uuid = null
+}
+
+input EditCustomerUserPersonalDataInput {
+  "UUID"
+  customerUserUuid: Uuid
+  "Customer user first name"
+  firstName: String!
+  "Customer user last name"
+  lastName: String!
+  "Customer user role group uuid."
+  roleGroupUuid: Uuid!
+  "The customer's telephone number"
+  telephone: String!
 }
 
 "Represents a flag"
@@ -878,6 +923,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
 scalar Money
 
 type Mutation {
+  "Add new customer user to customer"
+  AddNewCustomerUser(input: AddNewCustomerUserDataInput!): CustomerUser!
   "Fills cart based on a given order, possibly merging it with the current cart"
   AddOrderItemsToCart(input: AddOrderItemsToCartInput!): Cart!
   "Adds a product to a product list"
@@ -904,6 +951,8 @@ type Mutation {
   CreateOrder(input: OrderInput!): CreateOrderResult!
   "Delete delivery address by Uuid"
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
+  "edit customer user to customer"
+  EditCustomerUserPersonalData(input: EditCustomerUserPersonalDataInput!): CustomerUser!
   "Edit delivery address by Uuid"
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
   "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
@@ -920,6 +969,8 @@ type Mutation {
   RefreshTokens(input: RefreshTokenInput!): Token!
   "Register new customer user"
   Register(input: RegistrationDataInput!): LoginResult!
+  "delete customer user"
+  RemoveCustomerUser(input: RemoveCustomerUserDataInput!): Boolean!
   "Remove product from cart"
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
   "Removes a product from a product list"
@@ -1663,6 +1714,10 @@ type Query {
   countries: [Country!]!
   "Returns currently logged in customer user"
   currentCustomerUser: CustomerUser
+  "Returns all customer user role groups"
+  customerUserRoleGroups: [CustomerUserRoleGroup!]!
+  "Returns all customer users assigned to the current customer"
+  customerUsers: [CustomerUser!]!
   "Returns a flag by uuid or url slug"
   flag(urlSlug: String, uuid: Uuid): Flag
   "Returns a complete list of the flags"
@@ -1772,6 +1827,8 @@ input RefreshTokenInput {
 
 "Represents the main input object to register customer user"
 input RegistrationDataInput {
+  "UUID"
+  billingAddressUuid: Uuid = null
   "Uuid of the cart that should be merged to the cart of the newly registered user"
   cartUuid: Uuid = null
   "Billing address city name (will be on the tax invoice)"
@@ -1810,7 +1867,9 @@ input RegistrationDataInput {
 
 "Represents an currently logged customer user"
 type RegularCustomerUser implements CustomerUser {
-  "Billing address city name"
+  "UUID"
+  billingAddressUuid: Uuid!
+  "city name"
   city: String
   "Billing address country"
   country: Country!
@@ -1828,11 +1887,14 @@ type RegularCustomerUser implements CustomerUser {
   lastName: String
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
-  "Billing address zip code"
+  "zip code"
   postcode: String
   "The name of the customer pricing group"
   pricingGroup: String!
-  "Billing address street name"
+  "The customer user role group"
+  roleGroup: CustomerUserRoleGroup!
+  roles: [String!]!
+  "street name"
   street: String
   "Phone number"
   telephone: String
@@ -1907,6 +1969,11 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   usps: [String!]!
   "UUID"
   uuid: Uuid!
+}
+
+input RemoveCustomerUserDataInput {
+  "Customer user UUID"
+  customerUserUuid: Uuid!
 }
 
 input RemoveFromCartInput {
