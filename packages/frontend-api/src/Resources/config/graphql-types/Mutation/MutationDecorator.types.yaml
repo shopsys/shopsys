@@ -44,6 +44,7 @@ MutationDecorator:
                     input:
                         type: ChangePersonalDataInput!
                         validation: cascade
+                access: "@=isGranted('ROLE_API_ALL')"
                 resolve: "@=mutation('changePersonalDataMutation', args, validator)"
             Register:
                 type: Token!
