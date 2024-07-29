@@ -156,13 +156,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $expectedParameterFilterOptions = [
             [
                 'isCollapsed' => false,
-                'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
-                'unit' => null,
-                'values' => $materials,
-            ],
-            [
-                'isCollapsed' => false,
                 'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterColorFilterOption',
                 'unit' => null,
@@ -170,16 +163,43 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'isCollapsed' => false,
-                'name' => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'name' => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterCheckboxFilterOption',
                 'unit' => null,
                 'values' => [
                     [
-                        'text' => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'text' => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 1,
                         'isAbsolute' => true,
                     ],
                 ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => true,
+                'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => $hdmiValues,
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => $materials,
             ],
             [
                 'isCollapsed' => false,
@@ -196,13 +216,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'isCollapsed' => false,
-                'name' => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterCheckboxFilterOption',
                 'unit' => null,
                 'values' => [
                     [
-                        'text' => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 1,
+                        'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 3,
                         'isAbsolute' => true,
                     ],
                 ],
@@ -217,21 +237,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 'values' => $screenSizes,
             ],
             [
-                'isCollapsed' => true,
-                'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
-                'unit' => null,
-                'values' => $hdmiValues,
-            ],
-            [
                 'isCollapsed' => false,
-                'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'name' => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterCheckboxFilterOption',
                 'unit' => null,
                 'values' => [
                     [
-                        'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 3,
+                        'text' => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
                         'isAbsolute' => true,
                     ],
                 ],
@@ -251,25 +264,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
             [
                 'isCollapsed' => false,
-                'name' => t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                 '__typename' => 'ParameterCheckboxFilterOption',
                 'unit' => null,
                 'values' => [
                     [
                         'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                        'count' => 1,
-                        'isAbsolute' => true,
-                    ],
-                ],
-            ],
-            [
-                'isCollapsed' => false,
-                'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                '__typename' => 'ParameterCheckboxFilterOption',
-                'unit' => null,
-                'values' => [
-                    [
-                        'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
                         'count' => 3,
                         'isAbsolute' => true,
                     ],
@@ -292,7 +292,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $this->assertArrayElements($expectedFlagFilterOptions, $data['products']['productFilterOptions']['flags']);
         $this->assertArrayElements($expectedBrandFilterOptions, $data['products']['productFilterOptions']['brands']);
-        $this->assertArrayElements($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
+        $this->assertSame($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
     }
 
     public function testGetElectronicsBrandFilterOptionsWithAppliedFilter(): void
