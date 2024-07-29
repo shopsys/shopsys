@@ -264,3 +264,7 @@ QueryDecorator:
                 resolve: "@=query('customerUsersQuery')"
                 access: "@=isGranted('ROLE_API_ALL')"
                 description: "Returns all customer users assigned to the current customer"
+            customerUserRoleGroups:
+                type: '[CustomerUserRoleGroup!]!'
+                resolve: "@=query('customerUserRoleGroupsQuery')"
+                description: "Returns all customer user role groups"

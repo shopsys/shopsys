@@ -1,0 +1,11 @@
+CustomerUserRoleGroupDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Customer user group name"
