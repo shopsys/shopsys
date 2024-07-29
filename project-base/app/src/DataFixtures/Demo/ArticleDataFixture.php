@@ -185,8 +185,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      */
     private function createArticleFromArray(array $data, int $domainId): void
     {
-        $articleData = $this->articleDataFactory->create();
-        $articleData->domainId = $domainId;
+        $articleData = $this->articleDataFactory->create($domainId);
         $articleData->name = $data[self::ATTRIBUTE_NAME_KEY];
         $articleData->text = '<div class="gjs-text-ckeditor">' . $data[self::ATTRIBUTE_TEXT_KEY] . '</div>';
         $articleData->placement = $data[self::ATTRIBUTE_PLACEMENT_KEY];

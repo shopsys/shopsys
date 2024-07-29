@@ -7,9 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 interface ArticleDataFactoryInterface
 {
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
      */
-    public function create(): ArticleData;
+    public function create(int $domainId): ArticleData;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\Article $article

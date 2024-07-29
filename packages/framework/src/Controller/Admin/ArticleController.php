@@ -120,11 +120,12 @@ class ArticleController extends AdminBaseController
     #[Route(path: '/article/new/')]
     public function newAction(Request $request): Response
     {
-        $articleData = $this->articleDataFactory->create();
+        $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $articleData = $this->articleDataFactory->create($selectedDomainId);
 
         $form = $this->createForm(ArticleFormType::class, $articleData, [
             'article' => null,
-            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+            'domain_id' => $selectedDomainId,
         ]);
         $form->handleRequest($request);
 
