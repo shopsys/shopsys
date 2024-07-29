@@ -22,8 +22,8 @@ export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inE
 export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): TypeListedStoreFragment => ({
     __typename: 'Store',
     slug: '',
-    locationLatitude: null,
-    locationLongitude: null,
+    latitude: null,
+    longitude: null,
     identifier: packeteryExtendedPoint.id.toString(),
     description: packeteryExtendedPoint.directions,
     name: packeteryExtendedPoint.name,

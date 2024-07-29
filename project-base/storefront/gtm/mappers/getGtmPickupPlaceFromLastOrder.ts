@@ -6,8 +6,8 @@ export const getGtmPickupPlaceFromLastOrder = (
     lastOrder: TypeLastOrderFragment,
 ): TypeListedStoreFragment => ({
     __typename: 'Store',
-    locationLatitude: null,
-    locationLongitude: null,
+    latitude: null,
+    longitude: null,
     slug: '',
     identifier: pickupPlaceIdentifier,
     name: '',

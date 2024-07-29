@@ -41,10 +41,10 @@ Store:
             specialMessage:
                 type: "String"
                 description: ""
-            locationLatitude:
+            latitude:
                 type: "String"
                 description: "Store location latitude"
-            locationLongitude:
+            longitude:
                 type: "String"
                 description: "Store location longitude"
             breadcrumb:

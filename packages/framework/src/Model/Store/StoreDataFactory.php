@@ -59,8 +59,8 @@ class StoreDataFactory
         $storeData->openingHours = $this->openingHourDataFactory->createWholeWeekOpeningHours($store->getOpeningHours());
         $storeData->contactInfo = $store->getContactInfo();
         $storeData->specialMessage = $store->getSpecialMessage();
-        $storeData->locationLatitude = $store->getLocationLatitude();
-        $storeData->locationLongitude = $store->getLocationLongitude();
+        $storeData->latitude = $store->getLatitude();
+        $storeData->longitude = $store->getLongitude();
         $storeData->image = $this->imageUploadDataFactory->createFromEntityAndType($store);
 
         foreach ($this->domain->getAllIds() as $domainId) {

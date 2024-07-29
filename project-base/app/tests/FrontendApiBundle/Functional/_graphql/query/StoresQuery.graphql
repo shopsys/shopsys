@@ -14,8 +14,8 @@ query Stores ($first: Int, $last: Int) {
                     code
                 }
                 specialMessage
-                locationLatitude
-                locationLongitude
+                latitude
+                longitude
             }
         }
     }

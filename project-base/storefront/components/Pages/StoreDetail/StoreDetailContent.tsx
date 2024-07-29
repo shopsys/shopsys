@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -11,7 +11,6 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { createMapMarker } from 'utils/createMapMarker';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const ModalGallery = dynamic(() =>
@@ -24,7 +23,6 @@ type StoreDetailContentProps = {
 
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const { t } = useTranslation();
-    const storeCoordinates = createMapMarker(store.locationLatitude, store.locationLongitude);
     const { url } = useDomainConfig();
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
@@ -99,11 +97,19 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </div>
                 </div>
 
-                <div className="mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
-                    <SeznamMap
-                        center={storeCoordinates}
-                        markers={storeCoordinates ? [storeCoordinates] : []}
-                        zoom={15}
+                <div className="flex mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
+                    <GoogleMap
+                        isDetail
+                        defaultZoom={15}
+                        latitude={store.latitude}
+                        longitude={store.longitude}
+                        markers={[
+                            {
+                                identifier: store.uuid,
+                                latitude: store.latitude,
+                                longitude: store.longitude,
+                            },
+                        ]}
                     />
                 </div>
             </div>

@@ -1,17 +1,15 @@
 import { StoreInfoBox } from './StoreInfoBox';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { Image } from 'components/Basic/Image/Image';
-import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { MapMarker } from 'types/map';
-import { createMapMarker } from 'utils/createMapMarker';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type StoresContentProps = {
@@ -21,40 +19,20 @@ type StoresContentProps = {
 export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
     const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
-    const [activeStoreIndex, setActiveStoreIndex] = useState<number>();
+    const [activeStoreIdentifier, setActiveStoreIdentifier] = useState<string>();
     const mappedStores = useMemo(() => mapConnectionEdges<TypeListedStoreFragment>(stores.edges), [stores.edges]);
 
-    const markers = useMemo(() => {
-        const validMarkers: Array<MapMarker> = [];
-        mappedStores?.forEach(({ locationLatitude, locationLongitude, slug }) => {
-            const marker = createMapMarker(locationLatitude, locationLongitude, slug);
-            if (marker) {
-                validMarkers.push(marker);
-            }
-        });
+    const activeMarkerHandler = (id: string) => setActiveStoreIdentifier(activeStoreIdentifier !== id ? id : undefined);
 
-        return validMarkers;
-    }, [mappedStores]);
-
-    const activeMarkerHandler = useCallback((markerId: string) => {
-        const newStoreIndex = mappedStores?.findIndex((store) => store.slug === markerId);
-
-        setActiveStoreIndex(activeStoreIndex !== newStoreIndex ? newStoreIndex : undefined);
-    }, []);
-
-    const selectedStore = activeStoreIndex !== undefined ? mappedStores?.[activeStoreIndex] : undefined;
+    const selectedStore = mappedStores?.find((store) => store.identifier === activeStoreIdentifier);
 
     return (
         <SimpleLayout standardWidth heading={t('Stores')}>
             {mappedStores && (
                 <>
                     <div className="mb-8 flex w-full flex-col vl:h-[500px] vl:flex-row">
-                        <div className="h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
-                            <SeznamMap
-                                activeMarkerHandler={activeMarkerHandler}
-                                activeMarkerId={selectedStore?.slug}
-                                markers={markers}
-                            />
+                        <div className="flex h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
+                            <GoogleMap activeMarkerHandler={activeMarkerHandler} markers={mappedStores} />
                         </div>
                         <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-graySlate p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
                             <div className="relative">
@@ -75,7 +53,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
 
                             {selectedStore && (
                                 <StoreInfoBox
-                                    closeInfoBoxCallback={() => setActiveStoreIndex(undefined)}
+                                    closeInfoBoxCallback={() => setActiveStoreIdentifier(undefined)}
                                     store={selectedStore}
                                 />
                             )}

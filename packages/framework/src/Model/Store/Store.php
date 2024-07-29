@@ -116,13 +116,13 @@ class Store implements OrderableEntityInterface
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $locationLatitude;
+    protected $latitude;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $locationLongitude;
+    protected $longitude;
 
     /**
      * @var int
@@ -174,8 +174,8 @@ class Store implements OrderableEntityInterface
         $this->country = $storeData->country;
         $this->contactInfo = $storeData->contactInfo;
         $this->specialMessage = $storeData->specialMessage;
-        $this->locationLatitude = $storeData->locationLatitude;
-        $this->locationLongitude = $storeData->locationLongitude;
+        $this->latitude = $storeData->latitude;
+        $this->longitude = $storeData->longitude;
         $this->domainId = $storeData->domainId;
     }
 
@@ -294,17 +294,17 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getLocationLatitude()
+    public function getLatitude()
     {
-        return $this->locationLatitude;
+        return $this->latitude;
     }
 
     /**
      * @return string|null
      */
-    public function getLocationLongitude()
+    public function getLongitude()
     {
-        return $this->locationLongitude;
+        return $this->longitude;
     }
 
     /**

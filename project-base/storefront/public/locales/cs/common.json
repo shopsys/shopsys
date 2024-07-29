@@ -118,7 +118,6 @@
     "Enter the delivery information": "Zadat dodací údaje",
     "Error occured while changing your password": "Při změně hesla nastala chyba",
     "Error occured while loading form data": "Nastala chyba při načítání formuláře",
-    "Error occured while loading seznam maps": "Nastala chyba při načítání mapy",
     "Error occured while saving your profile": "Při ukládání Vašeho profilu došlo k chybě",
     "Exclusive products as a part of the loyalty program": "Exkluzivní produkty ve věrnostním programu",
     "Favorite categories": "Oblíbené kategorie",
@@ -461,7 +460,5 @@
     "Your profile has been changed successfully": "Váš profil byl úspěšně změněn",
     "Your purchase": "Váš nákup",
     "Your transport and payment selection has been removed.": "Vaše volba dopravy a platby byla zrušena.",
-    "Zip code cannot be longer than {{ postcodeLength }} characters": "PSČ nesmí být delší než {{ postcodeLength }} znaků",
-    "Zoom in": "Přiblížit",
-    "Zoom out": "Oddálit"
+    "Zip code cannot be longer than {{ postcodeLength }} characters": "PSČ nesmí být delší než {{ postcodeLength }} znaků"
 }

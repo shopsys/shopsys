@@ -760,6 +760,7 @@ jobs:
                     sed -i "s#GOOGLE_CLIENTSECRET#${{ secrets.GOOGLE_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
                     sed -i "s#SEZNAM_CLIENTID#${{ secrets.SEZNAM_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
                     sed -i "s#SEZNAM_CLIENTSECRET#${{ secrets.SEZNAM_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
+                    sed -i "s#GOOGLE_MAP_API_KEY_VALUE#${{ secrets.GOOGLE_MAP_API_KEY }}#" "${BRANCH_NAME}/docker-compose.yml"
             -   name: Start project
                 run: |
                     cd ${BRANCH_NAME}

@@ -2671,9 +2671,9 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   /** Is set as default store */
   isDefault: Scalars['Boolean']['output'];
   /** Store location latitude */
-  locationLatitude: Maybe<Scalars['String']['output']>;
+  latitude: Maybe<Scalars['String']['output']>;
   /** Store location longitude */
-  locationLongitude: Maybe<Scalars['String']['output']>;
+  longitude: Maybe<Scalars['String']['output']>;
   /** Store name */
   name: Scalars['String']['output'];
   /** Store opening hours */

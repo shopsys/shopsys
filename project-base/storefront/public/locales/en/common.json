@@ -114,7 +114,6 @@
     "Enter the delivery information": "Enter the delivery information",
     "Error occured while changing your password": "Error occured while changing your password",
     "Error occured while loading form data": "Error occured while loading form data",
-    "Error occured while loading seznam maps": "Error occured while loading seznam maps",
     "Error occured while saving your profile": "Error occured while saving your profile",
     "Exclusive products as a part of the loyalty program": "Exclusive products as a part of the loyalty program",
     "Favorite categories": "Favorite categories",
@@ -445,7 +444,5 @@
     "Your profile has been changed successfully": "Your profile has been changed successfully",
     "Your purchase": "Your purchase",
     "Your transport and payment selection has been removed.": "Your transport and payment selection has been removed.",
-    "Zip code cannot be longer than {{ postcodeLength }} characters": "Zip code cannot be longer than {{ postcodeLength }} characters",
-    "Zoom in": "Zoom in",
-    "Zoom out": "Zoom out"
+    "Zip code cannot be longer than {{ postcodeLength }} characters": "Zip code cannot be longer than {{ postcodeLength }} characters"
 }

@@ -1,8 +1,11 @@
-export type LatLngLiteral = {
-    lat: number;
-    lng: number;
+export type MapMarkerNullable = {
+    identifier?: string;
+    latitude: string | null;
+    longitude: string | null;
 };
 
-export type MapMarker = LatLngLiteral & {
-    id: string | false;
+export type MapMarker = {
+    identifier?: string;
+    latitude: string;
+    longitude: string;
 };

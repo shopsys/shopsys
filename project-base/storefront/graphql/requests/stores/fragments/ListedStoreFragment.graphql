@@ -7,8 +7,8 @@ fragment ListedStoreFragment on Store {
     openingHours {
         ...OpeningHoursFragment
     }
-    locationLatitude
-    locationLongitude
+    latitude
+    longitude
     street
     postcode
     city
