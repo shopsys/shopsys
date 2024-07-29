@@ -1069,7 +1069,7 @@ msgstr ""
 msgid "Do you really want to delete this category?"
 msgstr ""
 
-msgid "Do you really want to delete this files? It will be permanently deleted and unassigned from related records."
+msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
 msgstr ""
 
 msgid "Do you really want to discard all changes?"

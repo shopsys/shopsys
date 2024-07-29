@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
-use Shopsys\FrameworkBundle\Component\Grid\Grid;
-use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Grid\UploadedFileGridFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -31,23 +27,21 @@ class UploadedFileController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileAdminListFacade $uploadedFileAdminListFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory $uploadedFileFormDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Grid\UploadedFileGridFactory $uploadedFileGridFactory
      */
     public function __construct(
         protected readonly UploadedFileFacade $uploadedFileFacade,
-        protected readonly UploadedFileAdminListFacade $uploadedFileAdminListFacade,
-        protected readonly GridFactory $gridFactory,
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly UploadedFileFormDataFactory $uploadedFileFormDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
+        protected readonly UploadedFileGridFactory $uploadedFileGridFactory,
     ) {
     }
 
@@ -63,7 +57,9 @@ class UploadedFileController extends AdminBaseController
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, $quickSearchData);
         $quickSearchForm->handleRequest($request);
 
-        $grid = $this->getGrid($quickSearchData);
+        $grid = $this->uploadedFileGridFactory->createWithSearch($quickSearchData);
+
+        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
         return $this->render('@ShopsysFramework/Admin/Content/UploadedFile/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -189,43 +185,5 @@ class UploadedFileController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_uploadedfile_list');
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    protected function getGrid(QuickSearchFormData $quickSearchData): Grid
-    {
-        $queryBuilder = $this->uploadedFileAdminListFacade->getQueryBuilderByQuickSearchData($quickSearchData);
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
-            $queryBuilder,
-            'u.id',
-            function ($row) {
-                $row['filename'] = sprintf('%s.%s', $row['u']['name'], $row['u']['extension']);
-
-                return $row;
-            },
-        );
-
-        $grid = $this->gridFactory->create('uploadedFiles', $dataSource);
-        $grid->enablePaging();
-
-        $grid->setDefaultOrder('id', DataSourceInterface::ORDER_DESC);
-
-        $grid->addColumn('id', 'u.id', t('ID'));
-        $grid->addColumn('filename', 'filename', t('Filename'));
-        $grid->addColumn('translatedName', 'ut.name', t('Name'), true);
-        $grid->addColumn('extension', 'u.extension', t('Ext.'), true);
-
-        $grid->addEditActionColumn('admin_uploadedfile_edit', ['id' => 'u.id']);
-        $grid->addDeleteActionColumn('admin_uploadedfile_delete', ['id' => 'u.id'])
-            ->setConfirmMessage(t('Do you really want to delete this files? It will be permanently deleted and unassigned from related records.'));
-
-        $grid->setTheme('@ShopsysFramework/Admin/Content/UploadedFile/listGrid.html.twig');
-
-        $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
-
-        return $grid;
     }
 }

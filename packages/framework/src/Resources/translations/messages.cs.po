@@ -1069,7 +1069,7 @@ msgstr "Opravdu chcete %action% %count% zboží?"
 msgid "Do you really want to delete this category?"
 msgstr "Opravdu chcete smazat tuto kategorii?"
 
-msgid "Do you really want to delete this files? It will be permanently deleted and unassigned from related records."
+msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
 msgstr "Opravdu chcete smazat tento soubor? Soubor bude nevratně odstraněn a odebrán z přiřažených záznamů."
 
 msgid "Do you really want to discard all changes?"
