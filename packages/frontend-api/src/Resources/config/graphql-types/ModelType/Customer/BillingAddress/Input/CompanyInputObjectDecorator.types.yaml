@@ -2,6 +2,8 @@ CompanyInputObjectDecorator:
     type: input-object
     decorator: true
     config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi: ~
         fields:
             companyCustomer:
                 type: "Boolean"

@@ -26,6 +26,16 @@ class UniqueBillingAddressChecker
     public function checkUniqueBillingAddressData(BillingAddressData $billingAddressData, int $domainId): void
     {
         $companyNumber = $billingAddressData->companyNumber;
+
+        $this->checkUniqueBillingAddressByNumber($companyNumber, $domainId);
+    }
+
+    /**
+     * @param string|null $companyNumber
+     * @param int $domainId
+     */
+    public function checkUniqueBillingAddressByNumber(?string $companyNumber, int $domainId): void
+    {
         $domain = $this->domain->getDomainConfigById($domainId);
 
         if (!$domain->isB2b()) {
