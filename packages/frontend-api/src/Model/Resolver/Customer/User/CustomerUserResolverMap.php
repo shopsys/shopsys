@@ -15,6 +15,9 @@ class CustomerUserResolverMap extends ResolverMap
     protected function map(): array
     {
         $commonCustomerResolverFields = [
+            'billingAddressUuid' => function (CustomerUser $customerUser) {
+                return $customerUser->getCustomer()->getBillingAddress()->getUuid();
+            },
             'street' => function (CustomerUser $customerUser) {
                 return $customerUser->getCustomer()->getBillingAddress()->getStreet();
             },

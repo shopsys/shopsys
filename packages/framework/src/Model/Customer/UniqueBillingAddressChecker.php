@@ -68,6 +68,20 @@ class UniqueBillingAddressChecker
         int $domainId,
     ): void {
         $companyNumber = $billingAddressData->companyNumber;
+
+        $this->checkUniqueBillingAddressCompanyNumberIgnoringBillingAddress($companyNumber, $ignoredBillingAddress, $domainId);
+    }
+
+    /**
+     * @param string|null $companyNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $ignoredBillingAddress
+     * @param int $domainId
+     */
+    public function checkUniqueBillingAddressCompanyNumberIgnoringBillingAddress(
+        ?string $companyNumber,
+        BillingAddress $ignoredBillingAddress,
+        int $domainId,
+    ): void {
         $domain = $this->domain->getDomainConfigById($domainId);
 
         if (!$domain->isB2b()) {

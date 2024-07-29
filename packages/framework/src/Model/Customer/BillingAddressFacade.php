@@ -63,4 +63,13 @@ class BillingAddressFacade
     {
         return $this->billingAddressRepository->getById($billingAddressId);
     }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
+     */
+    public function getByUuid(string $uuid): BillingAddress
+    {
+        return $this->billingAddressRepository->getByUuid($uuid);
+    }
 }

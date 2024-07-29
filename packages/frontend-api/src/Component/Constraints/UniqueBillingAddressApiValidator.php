@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressCompanyNumberIsNotUniqueException;
 use Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker;
 use Symfony\Component\Validator\Constraint;
@@ -16,10 +17,12 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker $uniqueBillingAddressChecker
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository $billingAddressRepository
      */
     public function __construct(
         protected readonly UniqueBillingAddressChecker $uniqueBillingAddressChecker,
         protected readonly Domain $domain,
+        protected readonly BillingAddressRepository $billingAddressRepository,
     ) {
     }
 
@@ -46,10 +49,24 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
     /**
      * @param mixed $billingAddressApiData
      */
-    protected function checkUniqueBillingAddress(
-        mixed $billingAddressApiData,
-    ): void {
+    protected function checkUniqueBillingAddress(mixed $billingAddressApiData): void
+    {
+        $billingAddress = null;
         $domainId = $this->domain->getId();
-        $this->uniqueBillingAddressChecker->checkUniqueBillingAddressByNumber($billingAddressApiData->companyNumber, $domainId);
+        $companyNumber = $billingAddressApiData->companyNumber;
+
+        if ($billingAddressApiData->uuid !== null) {
+            $billingAddress = $this->billingAddressRepository->getByUuid($billingAddressApiData->uuid);
+        }
+
+        if ($billingAddress !== null) {
+            $this->uniqueBillingAddressChecker->checkUniqueBillingAddressCompanyNumberIgnoringBillingAddress(
+                $companyNumber,
+                $billingAddress,
+                $domainId,
+            );
+        } else {
+            $this->uniqueBillingAddressChecker->checkUniqueBillingAddressByNumber($companyNumber, $domainId);
+        }
     }
 }

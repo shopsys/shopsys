@@ -3,6 +3,9 @@ BillingAddressDecorator:
     decorator: true
     config:
         fields:
+            billingAddressUuid:
+                type: "Uuid!"
+                description: "UUID"
             street:
                 type: "String"
                 description: "street name"
