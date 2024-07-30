@@ -147,6 +147,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             }
         }
         $this->setting->set(BaseSetting::IMAGE_STRUCTURE_MIGRATED_FOR_PROXY, true);
+        $this->setting->set(BaseSetting::FILE_STRUCTURE_MIGRATED_FOR_RELATIONS, true);
     }
 
     /**

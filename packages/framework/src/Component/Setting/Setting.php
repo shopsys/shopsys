@@ -26,6 +26,7 @@ class Setting
     public const TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
     public const IMAGE_STRUCTURE_MIGRATED_FOR_PROXY = 'imageStructureMigratedForProxy';
     public const CUSTOMER_USER_DEFAULT_GROUP_ROLE_ID = 'customerUserDefaultGroupRoleId';
+    public const FILE_STRUCTURE_MIGRATED_FOR_RELATIONS = 'fileStructureMigratedForRelations';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]
