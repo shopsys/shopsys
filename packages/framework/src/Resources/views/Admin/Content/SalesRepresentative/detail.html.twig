@@ -1,0 +1,17 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% import '@ShopsysFramework/Admin/Form/seoFormRowMacros.html.twig' as seoFormRowMacros %}
+
+{% block title %}- {{ 'Sales representative'|trans }}{% endblock %}
+{% block h1 %}{{ 'Sales representative'|trans }}{% endblock %}
+{% block main_content %}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <a href="{{ url('admin_salesrepresentative_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                {{ form_save(salesRepresentative|default(null), form) }}
+            {% endblock %}
+        {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}
