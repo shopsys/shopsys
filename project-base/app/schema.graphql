@@ -847,7 +847,7 @@ type LoginInfo {
   "The user ID in the service (facebook, google, etc.) used for login. Null for 'web' login type"
   externalId: String
   "The type of login (web, facebook, google, etc.)"
-  loginType: LoginTypeEnum!
+  loginType: String!
 }
 
 input LoginInput {
@@ -866,14 +866,6 @@ input LoginInput {
 type LoginResult {
   showCartMergeInfo: Boolean!
   tokens: Token!
-}
-
-"One of the possible methods of the customer user login"
-enum LoginTypeEnum {
-  facebook
-  google
-  seznam
-  web
 }
 
 "Represents a product"

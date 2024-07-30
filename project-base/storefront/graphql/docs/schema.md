@@ -131,7 +131,6 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
-    * [LoginTypeEnum](#logintypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -4549,7 +4548,7 @@ The user ID in the service (facebook, google, etc.) used for login. Null for 'we
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>loginType</strong></td>
-<td valign="top"><a href="#logintypeenum">LoginTypeEnum</a>!</td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 The type of login (web, facebook, google, etc.)
@@ -10274,35 +10273,6 @@ Product availability status in stock
 Product availability status out of stock
 
 </td>
-</tr>
-</tbody>
-</table>
-
-### LoginTypeEnum
-
-One of the possible methods of the customer user login
-
-<table>
-<thead>
-<th align="left">Value</th>
-<th align="left">Description</th>
-</thead>
-<tbody>
-<tr>
-<td valign="top"><strong>facebook</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>google</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>seznam</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>web</strong></td>
-<td></td>
 </tr>
 </tbody>
 </table>
