@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\GrapesJs;
 
 use DOMText;
+use InvalidArgumentException;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
@@ -48,7 +49,11 @@ class GrapesJsParser
             }
         });
 
-        $newText = str_replace(['<body>', '</body>'], '', $crawler->html());
+        try {
+            $newText = str_replace(['<body>', '</body>'], '', $crawler->html());
+        } catch (InvalidArgumentException) {
+            return null;
+        }
 
         return $this->getConfiguredSanitizer()->sanitize($newText);
     }
