@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
@@ -51,16 +52,45 @@ class CustomerRepository
      */
     public function isWithoutCustomerUsers(Customer $customer): bool
     {
-        $count = (int)$this->em
+        return $this->getCustomerUsersCount($customer) === 0;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return int
+     */
+    protected function getCustomerUsersCount(Customer $customer): int
+    {
+        return $this->getCustomerUsersQueryBuilder($customer)
+            ->select('count(cu.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
+     */
+    public function getCustomerUsers(Customer $customer): array
+    {
+        return
+            $this->getCustomerUsersQueryBuilder($customer)
+            ->select('cu')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getCustomerUsersQueryBuilder(Customer $customer): QueryBuilder
+    {
+        return $this->em
             ->createQueryBuilder()
-            ->select('count(c.id)')
             ->from(Customer::class, 'c')
             ->join(CustomerUser::class, 'cu', Join::WITH, 'cu.customer = c')
             ->where('c = :customer')
-            ->setParameter('customer', $customer)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        return $count === 0;
+            ->setParameter('customer', $customer);
     }
 }

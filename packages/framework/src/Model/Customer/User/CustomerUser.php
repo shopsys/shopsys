@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -140,6 +140,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $newsletterSubscription;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup")
+     * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=false)
+     */
+    protected $roleGroup;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(CustomerUserData $customerUserData)
@@ -177,6 +184,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->telephone = $customerUserData->telephone;
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
+        $this->roleGroup = $customerUserData->roleGroup;
     }
 
     /**
@@ -311,6 +319,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
+     * @return string
+     */
+    public function getCustomerUserFullName()
+    {
+        return $this->lastName . ' ' . $this->firstName;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -381,7 +397,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     public function getRoles(): array
     {
-        return [Roles::ROLE_LOGGED_CUSTOMER];
+        $roles = [CustomerUserRole::ROLE_API_LOGGED_CUSTOMER];
+
+        foreach ($this->roleGroup->getRoles() as $role) {
+            $roles[] = $role;
+        }
+
+        return $roles;
     }
 
     /**
@@ -478,5 +500,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function setDefaultDeliveryAddress($defaultDeliveryAddress): void
     {
         $this->defaultDeliveryAddress = $defaultDeliveryAddress;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     */
+    public function getRoleGroup()
+    {
+        return $this->roleGroup;
     }
 }

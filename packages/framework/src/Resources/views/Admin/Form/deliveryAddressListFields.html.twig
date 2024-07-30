@@ -1,6 +1,16 @@
 {% block delivery_address_list_row %}
     <div class="wrap-divider">
-        <h2>{{ 'Customer delivery addresses'|trans }}</h2>
+       <div class="wrap-bar">
+            <h2 class="wrap-bar__heading">{{ 'Customer delivery addresses'|trans }}</h2>
+            {% if allowAdd %}
+                <div class="wrap-bar__buttons">
+                    <a href="{{ url('admin_delivery_address_new', {customerId: customer.id}) }}" class="btn btn--primary btn--plus wrap-bar__btn">
+                        <i class="btn__icon">+</i>
+                        {{ 'Create new delivery address'|trans }}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
 
         {% if deliveryAddresses|length == 0 %}
             {{ 'Customer has no delivery addresses.'|trans }}
@@ -16,6 +26,9 @@
                         <th>{{ 'City'|trans }}</th>
                         <th>{{ 'Postcode'|trans }}</th>
                         <th>{{ 'Country'|trans }}</th>
+                        {% if showActionColumn %}
+                            <th>{{ 'Action'|trans }}</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +42,26 @@
                             <td>{{ deliveryAddress.city }}</td>
                             <td>{{ deliveryAddress.postcode }}</td>
                             <td>{{ deliveryAddress.country.name|default }}</td>
+                            {% if showActionColumn %}
+                                <td>
+                                    {% if allowEdit %}
+                                        <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_delivery_address_edit', {id: deliveryAddress.id}) }}" title="{{ 'Edit'|trans }}"></a>
+                                    {% endif %}
+                                    {% if allowDelete %}
+                                        {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_delivery_address_delete' %}
+                                        {% set deleteUrl = url('admin_delivery_address_delete', {
+                                            id: deliveryAddress.id,
+                                            (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                        }) %}
+                                        <a
+                                            class="in-icon in-icon--delete svg svg-trash table-action"
+                                                data-confirm-window
+                                                data-confirm-message="{{ deleteConfirmMessage }}"
+                                                data-confirm-contiue-url="{{ deleteUrl }}"
+                                        ></a>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

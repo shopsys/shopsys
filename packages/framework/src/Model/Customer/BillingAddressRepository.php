@@ -42,4 +42,20 @@ class BillingAddressRepository
 
         return $billingAddress;
     }
+
+    /**
+     * @param string $companyNumber
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress|null
+     */
+    public function findByCompanyNumberAndDomainId(string $companyNumber, int $domainId): ?BillingAddress
+    {
+        return $this->getBillingAddressRepository()->createQueryBuilder('ba')
+            ->join('ba.customer', 'c')
+            ->where('ba.companyNumber = :companyNumber')
+            ->andWhere('c.domainId = :domainId')
+            ->setParameter('companyNumber', $companyNumber)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()->getOneOrNullResult();
+    }
 }

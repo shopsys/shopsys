@@ -95,6 +95,7 @@ class DomainsConfigLoader
             new DateTimeZone($domainConfig[DomainsConfigDefinition::CONFIG_TIMEZONE]),
             $domainConfig[DomainsConfigDefinition::CONFIG_STYLES_DIRECTORY],
             $domainConfig[DomainsConfigDefinition::CONFIG_DESIGN_ID],
+            $domainConfig[DomainsConfigDefinition::CONFIG_TYPE],
         );
     }
 

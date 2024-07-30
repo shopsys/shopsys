@@ -48,6 +48,7 @@ class BillingAddressFormType extends AbstractType
                     'data-checkbox-toggle-container-class' => 'js-company-fields',
                     'class' => 'js-checkbox-toggle',
                 ],
+                'disabled' => $options['disableCompanyCustomerCheckbox'],
                 'label' => t('I buy on company behalf'),
             ])
             ->add(
@@ -172,8 +173,11 @@ class BillingAddressFormType extends AbstractType
         $resolver
             ->setRequired('domain_id')
             ->addAllowedTypes('domain_id', 'int')
+            ->setDefined('disableCompanyCustomerCheckbox')
+            ->setAllowedTypes('disableCompanyCustomerCheckbox', 'bool')
             ->setDefaults([
                 'data_class' => BillingAddressData::class,
+                'disableCompanyCustomerCheckbox' => false,
                 'attr' => ['novalidate' => 'novalidate'],
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];

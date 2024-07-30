@@ -154,7 +154,7 @@ class StoreController extends AdminBaseController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/store/delete/{id}', requirements: ['id' => '\d+'], name: 'admin_store_delete')]
+    #[Route(path: '/store/delete/{id}', name: 'admin_store_delete', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
         try {

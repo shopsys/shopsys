@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Customer detail'|trans }}{% endblock %}
+{% block h1 %}{{ 'Customer detail'|trans }}{% endblock %}
+
+{% block main_content %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <a href="{{ backUrl }}" class="btn-link-style">{{ backUrlText }}</a>
+                {{ form_save(customerUser|default(null), form) }}
+            {% endblock %}
+        {% endembed %}
+    {{ form_end(form) }}
+
+{% endblock %}

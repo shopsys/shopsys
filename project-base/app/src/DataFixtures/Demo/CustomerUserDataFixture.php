@@ -271,7 +271,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
                     self::KEY_ADDRESS_COMPANY_NAME => 'Shopsys',
-                    self::KEY_ADDRESS_COMPANY_NUMBER => '12345678',
+                    self::KEY_ADDRESS_COMPANY_NUMBER => '12345679',
                     self::KEY_ADDRESS_COMPANY_TAX_NUMBER => 'CZ65432123',
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_STREET => 'Hlubinská 5',

@@ -652,6 +652,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail: ~
 
+    Shopsys\FrameworkBundle\Model\Customer\UniqueBillingAddressChecker: ~
+
     Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
@@ -668,6 +670,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting: ~
 
     Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory

@@ -66,6 +66,11 @@ class CustomerUserData
      */
     public $newsletterSubscription = false;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     */
+    public $roleGroup;
+
     public function __construct()
     {
     }

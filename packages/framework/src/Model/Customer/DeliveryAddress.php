@@ -203,4 +203,12 @@ class DeliveryAddress
     {
         return $this->uuid;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullAddress(): string
+    {
+        return $this->street . ', ' . $this->city . ', ' . $this->postcode;
+    }
 }

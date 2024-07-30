@@ -7,6 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 class BillingAddressData
 {
     /**
+     * @var int|null
+     */
+    public $id;
+
+    /**
      * @var bool
      */
     public $companyCustomer;

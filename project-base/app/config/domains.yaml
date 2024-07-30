@@ -4,9 +4,11 @@ domains:
         name: shopsys
         styles_directory: common
         timezone: Europe/Prague
+        type: b2c
 
     -   id: 2
         locale: cs
         name: 2.shopsys
         styles_directory: domain2
         timezone: Europe/Prague
+        type: b2b

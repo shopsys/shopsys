@@ -107,6 +107,14 @@ class Customer
     }
 
     /**
+     * @return bool
+     */
+    public function isCompanyCustomer(): bool
+    {
+        return $this->getBillingAddress()->isCompanyCustomer();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
      */
     public function getDeliveryAddresses()

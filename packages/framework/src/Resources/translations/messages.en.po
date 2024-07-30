@@ -94,6 +94,9 @@ msgstr ""
 msgid "Add country"
 msgstr ""
 
+msgid "Add customer user"
+msgstr ""
+
 msgid "Add item"
 msgstr ""
 
@@ -101,6 +104,12 @@ msgid "Add language combination"
 msgstr ""
 
 msgid "Add limit"
+msgstr ""
+
+msgid "Add new customer user"
+msgstr ""
+
+msgid "Add new customer user to %companyName%"
 msgstr ""
 
 msgid "Add opening hours"
@@ -343,6 +352,9 @@ msgstr ""
 msgid "Avg duration (mm:ss)"
 msgstr ""
 
+msgid "Back to customer {{ name }}"
+msgstr ""
+
 msgid "Back to dashboard"
 msgstr ""
 
@@ -383,6 +395,9 @@ msgid "Billing address"
 msgstr ""
 
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
+msgstr ""
+
+msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Billing data"
@@ -610,6 +625,9 @@ msgstr ""
 msgid "Company data"
 msgstr ""
 
+msgid "Company detail"
+msgstr ""
+
 msgid "Company name"
 msgstr ""
 
@@ -728,6 +746,9 @@ msgid "Create new country"
 msgstr ""
 
 msgid "Create new customer"
+msgstr ""
+
+msgid "Create new delivery address"
 msgstr ""
 
 msgid "Create new holiday or internal day"
@@ -850,6 +871,9 @@ msgstr ""
 msgid "Customer email address"
 msgstr ""
 
+msgid "Customer has no customer users."
+msgstr ""
+
 msgid "Customer has no delivery addresses."
 msgstr ""
 
@@ -869,6 +893,9 @@ msgid "Customer phone number"
 msgstr ""
 
 msgid "Customer street"
+msgstr ""
+
+msgid "Customer users"
 msgstr ""
 
 msgid "Customers"
@@ -956,6 +983,18 @@ msgid "Delete and set"
 msgstr ""
 
 msgid "Delivery address"
+msgstr ""
+
+msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Delivery address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Delivery address <strong>{{ deliveryAddressFullAddress }}</strong> deleted"
+msgstr ""
+
+msgid "Delivery address detail"
 msgstr ""
 
 msgid "Delivery address is the same as billing address"
@@ -1064,6 +1103,9 @@ msgid "Do you really want to remove this brand? If it is used anywhere it will b
 msgstr ""
 
 msgid "Do you really want to remove this customer?"
+msgstr ""
+
+msgid "Do you really want to remove this delivery address?"
 msgstr ""
 
 msgid "Do you really want to remove this flag?"
@@ -1210,6 +1252,9 @@ msgstr ""
 msgid "Editing bestseller"
 msgstr ""
 
+msgid "Editing billing address - %name%"
+msgstr ""
+
 msgid "Editing blog article"
 msgstr ""
 
@@ -1244,6 +1289,12 @@ msgid "Editing customer"
 msgstr ""
 
 msgid "Editing customer - %name%"
+msgstr ""
+
+msgid "Editing delivery address"
+msgstr ""
+
+msgid "Editing delivery address - %name%"
 msgstr ""
 
 msgid "Editing domain"
@@ -2051,6 +2102,9 @@ msgid "New country"
 msgstr ""
 
 msgid "New customer"
+msgstr ""
+
+msgid "New delivery address"
 msgstr ""
 
 msgid "New item"
@@ -2905,6 +2959,9 @@ msgstr ""
 msgid "Selected customer doesn't exist."
 msgstr ""
 
+msgid "Selected delivery address doesn't exist."
+msgstr ""
+
 msgid "Selected flag doesn't exist."
 msgstr ""
 
@@ -3184,6 +3241,9 @@ msgstr ""
 msgid "This email was sent from the contact form located below the panel of categories."
 msgstr ""
 
+msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
+msgstr ""
+
 msgid "This item can be set in product detail of a specific variant"
 msgstr ""
 
@@ -3197,6 +3257,9 @@ msgid "This status can't be deleted, because there is a functionality bounded to
 msgstr ""
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
+msgstr ""
+
+msgid "This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?"
 msgstr ""
 
 msgid "Thursday"

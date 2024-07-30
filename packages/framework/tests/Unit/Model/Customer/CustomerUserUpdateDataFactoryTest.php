@@ -8,11 +8,13 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerRepository;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
@@ -120,7 +122,11 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         return new CustomerUserUpdateDataFactory(
             new BillingAddressDataFactory(),
             new DeliveryAddressDataFactory(),
-            new CustomerUserDataFactory($this->createMock(PricingGroupSettingFacade::class)),
+            new CustomerUserDataFactory(
+                $this->createMock(PricingGroupSettingFacade::class),
+                $this->createMock(CustomerUserRoleGroupFacade::class),
+                $this->createMock(CustomerRepository::class),
+            ),
         );
     }
 }

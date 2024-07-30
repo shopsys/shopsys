@@ -35,6 +35,18 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
+     */
+    public function createForCustomer(Customer $customer): DeliveryAddressData
+    {
+        $deliveryAddressData = $this->createInstance();
+        $deliveryAddressData->customer = $customer;
+
+        return $deliveryAddressData;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      */

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
@@ -11,10 +12,12 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
@@ -23,6 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,11 +41,17 @@ class CustomerUserFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         private readonly CustomerUserFacade $customerUserFacade,
+        private readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
+        private readonly Domain $domain,
+        private readonly CustomerFacade $customerFacade,
     ) {
     }
 
@@ -52,6 +62,7 @@ class CustomerUserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->customerUser = $options['customerUser'];
+        $domain = $this->domain->getDomainConfigById($options['domain_id']);
 
         $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
             'label' => t('System data'),
@@ -81,6 +92,7 @@ class CustomerUserFormType extends AbstractType
                     'attr' => [
                         'class' => 'js-toggle-opt-group-control',
                     ],
+                    'disabled' => !$options['allowEditSystemData'],
                 ]);
             $pricingGroups = $this->pricingGroupFacade->getAll();
         }
@@ -99,11 +111,28 @@ class CustomerUserFormType extends AbstractType
                     'class' => 'js-toggle-opt-group',
                     'data-js-toggle-opt-group-control' => '.js-toggle-opt-group-control',
                 ],
+                'disabled' => !$options['allowEditSystemData'],
             ]);
+
 
         $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
             'label' => t('Personal data'),
         ]);
+
+        if (
+            ($domain->isB2b() && $this->customerUser === null) ||
+            ($this->customerUser !== null && $this->customerFacade->isB2bFeaturesEnabledByCustomer($this->customerUser->getCustomer()))
+        ) {
+            $roleGroups = $this->customerUserRoleGroupFacade->getAll();
+            $builderPersonalDataGroup
+                ->add('roleGroup', ChoiceType::class, [
+                    'required' => true,
+                    'choices' => $roleGroups,
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'label' => t('Role'),
+                ]);
+        }
 
         $builderPersonalDataGroup
             ->add('firstName', TextType::class, [
@@ -194,6 +223,10 @@ class CustomerUserFormType extends AbstractType
             ->add($builderSystemDataGroup)
             ->add($builderPersonalDataGroup)
             ->add($builderRegisteredCustomerGroup);
+
+        if ($options['renderSaveButton']) {
+            $builder->add('save', SubmitType::class);
+        }
     }
 
     /**
@@ -208,8 +241,13 @@ class CustomerUserFormType extends AbstractType
 
         /** @var \Symfony\Component\Form\Form $form */
         $form = $context->getRoot();
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData */
-        $customerUserData = $form->getData()->customerUserData;
+
+        if ($form->getData() instanceof CustomerUserData) {
+            $customerUserData = $form->getData();
+        } else {
+            /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData */
+            $customerUserData = $form->getData()->customerUserData;
+        }
 
         $domainId = $customerUserData->domainId;
         $existingCustomerWithEmail = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $domainId);
@@ -226,8 +264,11 @@ class CustomerUserFormType extends AbstractType
     {
         $resolver
             ->setRequired(['customerUser', 'domain_id'])
+            ->setDefined(['renderSaveButton', 'allowEditSystemData'])
             ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setAllowedTypes('domain_id', 'int')
+            ->setAllowedTypes('renderSaveButton', 'bool')
+            ->setAllowedTypes('allowEditSystemData', 'bool')
             ->setDefaults([
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
@@ -245,6 +286,8 @@ class CustomerUserFormType extends AbstractType
                         'message' => 'Password cannot be same as part of email before at sign',
                     ]),
                 ],
+                'renderSaveButton' => false,
+                'allowEditSystemData' => true,
             ]);
     }
 }

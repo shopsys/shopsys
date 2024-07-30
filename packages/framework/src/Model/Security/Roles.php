@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 class Roles
 {
     public const string ROLE_ADMIN = 'ROLE_ADMIN';
-    public const string ROLE_LOGGED_CUSTOMER = 'ROLE_LOGGED_CUSTOMER';
     public const string ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     public const string ROLE_ALL = 'ROLE_ALL';

@@ -224,6 +224,11 @@ security:
         - { path: ^/%admin_url%/customer/edit, roles: ROLE_CUSTOMER_FULL, methods: [POST] }
         - { path: ^/%admin_url%/customer/delete, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/login-as-user/, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/billing-address/edit, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/edit-personal-data/, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/new-customer-user/, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/delivery-address/edit, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/delivery-address/new, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/, roles: ROLE_CUSTOMER_VIEW }
         # newsletter
         - { path: ^/%admin_url%/newsletter/delete, roles: ROLE_NEWSLETTER_FULL }

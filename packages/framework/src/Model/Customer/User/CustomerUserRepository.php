@@ -113,11 +113,23 @@ class CustomerUserRepository
     ) {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('
-                u.id,
-                u.email,
-                u.telephone,
-                u.domainId,
-                MAX(pg.name) AS pricingGroup,
+                MAX(ba.id) AS billingAddressId,
+                MAX(c.id) AS customerId,
+                MAX(u.id) AS id,
+                MAX(CASE WHEN ba.companyCustomer = true
+                        THEN \'\'
+                        ELSE u.email
+                    END) email,
+                MAX(CASE WHEN ba.companyCustomer = true
+                        THEN \'\'
+                        ELSE u.telephone
+                    END) telephone,
+                BOOL_AND(ba.companyCustomer) AS isCompanyCustomer,
+                MAX(u.domainId) domainId,
+                MAX(CASE WHEN ba.companyCustomer = true
+                        THEN \'\'
+                        ELSE pg.name
+                    END) pricingGroup,
                 MAX(ba.city) city,
                 MAX(CASE WHEN ba.companyCustomer = true
                         THEN ba.companyName
@@ -135,7 +147,7 @@ class CustomerUserRepository
             ->leftJoin(Order::class, 'o', 'WITH', 'o.customerUser = u.id AND o.deleted = :deleted')
             ->setParameter('deleted', false)
             ->leftJoin(PricingGroup::class, 'pg', 'WITH', 'pg.id = u.pricingGroup')
-            ->groupBy('u.id');
+            ->groupBy('c.id');
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
