@@ -84,8 +84,8 @@ class UploadedFileFacade
                 $type,
                 $uploadedFiles,
                 $uploadedFilenames,
-                $uploadedFileData->names,
                 $existingFilesCount,
+                $uploadedFileData->names,
             );
         } else {
             $temporaryFilename = array_pop($uploadedFiles);
@@ -134,7 +134,7 @@ class UploadedFileFacade
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
-        array $namesIndexedByLocale,
+        array $namesIndexedByLocale = [],
     ): void {
         $newUploadedFile = $this->uploadedFileFactory->create(
             $temporaryFilename,
@@ -154,8 +154,8 @@ class UploadedFileFacade
      * @param string $type
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
-     * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      * @param int $existingFilesCount
+     * @param array<int, array<string, string>> $namesIndexedByFileIdAndLocale
      */
     public function uploadFiles(
         object $entity,
@@ -163,8 +163,8 @@ class UploadedFileFacade
         string $type,
         array $temporaryFilenames,
         array $uploadedFilenames,
-        array $namesIndexedByFileIdAndLocale,
         int $existingFilesCount,
+        array $namesIndexedByFileIdAndLocale = [],
     ): void {
         if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);

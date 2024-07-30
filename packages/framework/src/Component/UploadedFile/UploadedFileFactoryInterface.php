@@ -27,6 +27,6 @@ interface UploadedFileFactoryInterface
     public function createMultiple(
         array $temporaryFilenames,
         array $uploadedFilenames,
-        array $namesIndexedByFileIdAndLocale,
+        array $namesIndexedByFileIdAndLocale = [],
     ): array;
 }
