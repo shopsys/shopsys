@@ -13,6 +13,7 @@ export const useRegistration = () => {
     const router = useRouter();
     const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const updateUserEntryState = usePersistStore((s) => s.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
@@ -56,6 +57,7 @@ export const useRegistration = () => {
                     : 'registration-loading',
             );
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
+            updateUserEntryState('registration');
             onGtmSendFormEventHandler(GtmFormType.registration);
             router.replace('/').then(() => router.reload());
 

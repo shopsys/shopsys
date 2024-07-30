@@ -1,4 +1,5 @@
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { TypeLoginTypeEnum } from 'graphql/types';
 import { GtmConsent } from 'gtm/enums/GtmConsent';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { GtmUserStatus } from 'gtm/enums/GtmUserStatus';
@@ -67,6 +68,8 @@ export type GtmUserInfoType = {
     type?: GtmUserType;
     status: GtmUserStatus;
     group?: string;
+    loginType?: TypeLoginTypeEnum;
+    externalId?: string | null;
 };
 
 export type GtmConsentInfoType = {
@@ -101,4 +104,13 @@ export type GtmCartItemType = GtmListedProductType & {
 export type GtmShippingInfoType = {
     transportDetail: string;
     transportExtra: string[];
+};
+
+export type GtmUserEntryInfoType = {
+    id?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    loginType?: TypeLoginTypeEnum;
+    externalId?: string | null;
 };

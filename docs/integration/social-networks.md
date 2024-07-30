@@ -15,7 +15,7 @@ For every social network, you need `app_id` and `app_secret`. Below you have inf
 ### Google
 
 -   log into Google account and create [OAuth 2.0 Client IDs](https://console.cloud.google.com/apis/credentials)
--   in detail, you will find `app_id` and `app_secret`
+-   in detail, you will find `Client ID` and `Client secret`
 -   in Client ID settings, you need to add an authorized redirect URI, which is `{eshop_domain}/social-network/login/google`
 
 ### Seznam

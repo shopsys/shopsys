@@ -42,6 +42,7 @@ export const useLogin = () => {
 
 export const useHandleActionsAfterLogin = () => {
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
+    const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const router = useRouter();
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
@@ -51,6 +52,7 @@ export const useHandleActionsAfterLogin = () => {
         updateProductListUuids({});
 
         updateAuthLoadingState(showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading');
+        updateUserEntryState('login');
 
         dispatchBroadcastChannel('reloadPage');
         if (rewriteUrl) {
