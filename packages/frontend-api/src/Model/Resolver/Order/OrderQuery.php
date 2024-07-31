@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
+use GraphQL\Server\RequestError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -12,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 
 class OrderQuery extends AbstractQuery
@@ -34,13 +34,21 @@ class OrderQuery extends AbstractQuery
     /**
      * @param string|null $uuid
      * @param string|null $urlHash
+     * @param string|null $orderNumber
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function orderByUuidOrUrlHashQuery(?string $uuid = null, ?string $urlHash = null): Order
-    {
+    public function orderByUuidOrUrlHashQuery(
+        ?string $uuid = null,
+        ?string $urlHash = null,
+        ?string $orderNumber = null,
+    ): Order {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         try {
+            if ($orderNumber !== null && $customerUser !== null) {
+                return $this->orderApiFacade->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
+            }
+
             if ($uuid !== null && $customerUser !== null) {
                 return $this->getOrderForCustomerUserByUuid($customerUser, $uuid);
             }
@@ -49,10 +57,10 @@ class OrderQuery extends AbstractQuery
                 return $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
             }
         } catch (OrderNotFoundException $orderNotFoundException) {
-            throw new OrderNotFoundUserError($orderNotFoundException->getMessage());
+            throw new OrderNotFoundUserError('Order not found');
         }
 
-        throw new InvalidAccessUserError('You need to be logged in or provide argument \'urlHash\'.');
+        throw new RequestError('You need to be logged in or provide argument \'urlHash\'.');
     }
 
     /**
