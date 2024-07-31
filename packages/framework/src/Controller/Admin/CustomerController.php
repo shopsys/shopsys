@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\ActionColumn;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -22,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundExcepti
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider;
@@ -44,6 +46,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      */
     public function __construct(
         protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
@@ -58,6 +61,7 @@ class CustomerController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly LoginAdministratorAsUserUrlProvider $loginAdministratorAsUserUrlProvider,
         protected readonly CustomerFacade $customerFacade,
+        protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
     ) {
     }
 
@@ -209,6 +213,8 @@ class CustomerController extends AdminBaseController
         $grid->addEditActionColumn('admin_customer_edit', ['id' => 'id']);
         $grid->addDeleteActionColumn('admin_customer_delete', ['id' => 'id'])
             ->setConfirmMessage(t('Do you really want to remove this customer?'));
+        $grid->addActionColumn(ActionColumn::TYPE_RESET_PASSWORD, t('Send reset password'), 'admin_customer_send_reset_password', ['id' => 'cu.id'])
+            ->setConfirmMessage(t('This will send an email to customer user for resetting password. Do you really want to send it ?'));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Customer/listGrid.html.twig');
 
@@ -368,6 +374,36 @@ class CustomerController extends AdminBaseController
             );
         } catch (CustomerUserNotFoundException $ex) {
             $this->addErrorFlash(t('Selected customer doesn\'t exist.'));
+        }
+
+        return $this->redirectToRoute('admin_customer_list');
+    }
+
+    /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/customer/send-reset-password/{id}', name: 'admin_customer_send_reset_password', requirements: ['id' => '\d+'])]
+    public function sendResetPasswordAction(int $id): Response
+    {
+        $customerUser = $this->customerUserFacade->getCustomerUserById($id);
+
+        $this->customerUserPasswordFacade->resetPassword($customerUser->getEmail(), $customerUser->getDomainId());
+
+        $this->addSuccessFlashTwig(
+            t('Reset password request was sent to <strong>{{ email }}</strong>'),
+            [
+                'email' => $customerUser->getEmail(),
+            ],
+        );
+
+        $customer = $customerUser->getCustomer();
+
+        if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+            $billingAddress = $customer->getBillingAddress();
+
+            return $this->redirectToRoute('admin_billing_address_edit', ['id' => $billingAddress->getId()]);
         }
 
         return $this->redirectToRoute('admin_customer_list');

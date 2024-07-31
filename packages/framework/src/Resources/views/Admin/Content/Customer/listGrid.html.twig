@@ -52,3 +52,9 @@
            data-confirm-contiue-url="{{ deleteUrl }}"></a>
     {% endif %}
 {% endblock %}
+
+{% block grid_action_cell_type_resetPassword %}
+    {% if not row.showEditBillingAddressLink %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}

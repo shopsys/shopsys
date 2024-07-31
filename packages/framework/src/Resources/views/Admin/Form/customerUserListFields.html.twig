@@ -70,6 +70,19 @@
                                         {% endif %}
                                     {%endif %}
                                     <a class="in-icon svg svg-forward-page btn-link-style" href="{{ getSsoLoginAsUserUrl(customerUser) }}" target="_blank"  title="{{ 'Log in as user'|trans }}"></a>
+                                    {% set customerId = customerUser.id %}
+                                    {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}
+                                    {% set sendResetPasswordUrl = url('admin_customer_send_reset_password', {
+                                        id: customerId,
+                                        (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                                    }) %}
+                                    <a class="in-icon svg svg-letter table-action"
+                                       href="{{ sendResetPasswordUrl }}"
+                                       title={{ 'Send reset password'|trans }}
+                                       data-confirm-window=""
+                                       data-confirm-message="{{ 'This will send an email to customer user for resetting password. Do you really want to send it ?'|trans }}"
+                                       data-confirm-contiue-url="{{ sendResetPasswordUrl }}">
+                                    </a>
                                 </td>
                             {% endif %}
                         </tr>
