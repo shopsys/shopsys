@@ -1,5 +1,5 @@
-query GetAdvertsQuery($positionName: String, $categoryUuid: Uuid) {
-    adverts (positionName: $positionName, categoryUuid: $categoryUuid) {
+query GetAdvertsQuery($positionNames: [String!], $categoryUuid: Uuid) {
+    adverts (positionNames: $positionNames, categoryUuid: $categoryUuid) {
         uuid
         name
         type

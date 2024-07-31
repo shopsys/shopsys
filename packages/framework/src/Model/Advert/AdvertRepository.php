@@ -17,8 +17,9 @@ class AdvertRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
@@ -39,28 +40,32 @@ class AdvertRepository
     }
 
     /**
-     * @param string $positionName
+     * @param string[] $positionNames
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getVisibleAdvertByPositionQueryBuilder(
-        string $positionName,
+    public function getVisibleAdvertByPositionsQueryBuilder(
+        array $positionNames,
         int $domainId,
-        ? Category $category = null,
+        ?Category $category = null,
     ): QueryBuilder {
-        if ($category === null && AdvertPositionRegistry::isCategoryPosition($positionName)) {
-            throw new LogicException('Cannot retrieve advert on product list page without setting category.');
+        if ($category === null) {
+            foreach ($positionNames as $positionName) {
+                if (AdvertPositionRegistry::isCategoryPosition($positionName)) {
+                    throw new LogicException('Cannot retrieve advert on product list page without setting category.');
+                }
+            }
         }
 
         $queryBuilder = $this->getVisibleAdvertsQueryBuilder($domainId)
-            ->andWhere('a.positionName = :positionName')
-            ->setParameter('positionName', $positionName);
+            ->andWhere('a.positionName IN (:positionNames)')
+            ->setParameter('positionNames', $positionNames);
 
         if ($category !== null) {
             $queryBuilder
-                ->leftJoin('a.categories', 'c')
-                ->andWhere('c IS NULL OR c = :category')
+                ->join('a.categories', 'c')
+                ->andWhere('c = :category')
                 ->setParameter('category', $category);
         }
 
@@ -97,7 +102,7 @@ class AdvertRepository
         int $domainId,
         ?Category $category = null,
     ): ?Advert {
-        $count = $this->getVisibleAdvertByPositionQueryBuilder($positionName, $domainId, $category)
+        $count = $this->getVisibleAdvertByPositionsQueryBuilder([$positionName], $domainId, $category)
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult();
 
@@ -106,7 +111,7 @@ class AdvertRepository
             return null;
         }
 
-        return $this->getVisibleAdvertByPositionQueryBuilder($positionName, $domainId, $category)
+        return $this->getVisibleAdvertByPositionsQueryBuilder([$positionName], $domainId, $category)
             ->setFirstResult(random_int(0, $count - 1))
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();

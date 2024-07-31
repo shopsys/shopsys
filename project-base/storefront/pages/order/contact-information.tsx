@@ -1,6 +1,10 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { ContactInformationWrapper } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
+import {
+    AdvertsQueryDocument,
+    TypeAdvertsQueryVariables,
+} from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { CountriesQueryDocument } from 'graphql/requests/countries/queries/CountriesQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
@@ -27,12 +31,21 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({
+            initServerSideProps<TypeAdvertsQueryVariables>({
                 context,
                 redisClient,
                 domainConfig,
                 t,
-                prefetchedQueries: [{ query: CountriesQueryDocument }],
+                prefetchedQueries: [
+                    { query: CountriesQueryDocument },
+                    {
+                        query: AdvertsQueryDocument,
+                        variables: {
+                            positionNames: ['cartPreview'],
+                            categoryUuid: null,
+                        },
+                    },
+                ],
             }),
 );
 

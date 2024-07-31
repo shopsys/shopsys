@@ -1,5 +1,9 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
+import {
+    AdvertsQueryDocument,
+    TypeAdvertsQueryVariables,
+} from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -25,7 +29,21 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, redisClient, domainConfig, t }),
+            initServerSideProps<TypeAdvertsQueryVariables>({
+                context,
+                redisClient,
+                domainConfig,
+                t,
+                prefetchedQueries: [
+                    {
+                        query: AdvertsQueryDocument,
+                        variables: {
+                            positionNames: ['cartPreview'],
+                            categoryUuid: null,
+                        },
+                    },
+                ],
+            }),
 );
 
 export default TransportAndPaymentPage;

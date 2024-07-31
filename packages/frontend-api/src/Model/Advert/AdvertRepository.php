@@ -22,16 +22,16 @@ class AdvertRepository
 
     /**
      * @param int $domainId
-     * @param string $positionName
+     * @param string[] $positionNames
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
     public function getVisibleAdvertsByPositionNameAndDomainId(
         int $domainId,
-        string $positionName,
+        array $positionNames,
         ?Category $category = null,
     ): array {
-        return $this->advertRepository->getVisibleAdvertByPositionQueryBuilder($positionName, $domainId, $category)->getQuery()->execute();
+        return $this->advertRepository->getVisibleAdvertByPositionsQueryBuilder($positionNames, $domainId, $category)->getQuery()->execute();
     }
 
     /**

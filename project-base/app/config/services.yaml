@@ -263,21 +263,6 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
 
-    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory:
-        alias: App\Model\Advert\AdvertDataFactory
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
-        alias: App\Model\Advert\AdvertDataFactory
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertFacade:
-        alias: App\Model\Advert\AdvertFacade
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry:
-        alias: App\Model\Advert\AdvertPositionRegistry
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertRepository:
-        alias: App\Model\Advert\AdvertRepository
-
     Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
 
@@ -600,6 +585,9 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader:
         alias: App\FrontendApi\Model\Product\ProductsBatchLoader
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertsQuery:
+        alias: App\FrontendApi\Model\Resolver\Advert\AdvertsQuery
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator

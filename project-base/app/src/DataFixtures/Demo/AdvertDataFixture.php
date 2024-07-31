@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Advert\AdvertPositionRegistry;
 use App\Model\Category\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -15,14 +14,15 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 
 class AdvertDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     private const string UUID_NAMESPACE = '17cf51a8-a14b-4caa-b4ba-a8523ed15bb4';
 
     /**
-     * @param \App\Model\Advert\AdvertFacade $advertFacade
-     * @param \App\Model\Advert\AdvertDataFactory $advertDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory $advertDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(

@@ -124,6 +124,21 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
+     * @param string $uuid
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
+     */
+    public function getByUuid(string $uuid): ReadyCategorySeoMix
+    {
+        $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findByUuid($uuid);
+
+        if ($readyCategorySeoMix === null) {
+            throw new ReadyCategorySeoMixNotFoundException(sprintf('ReadyCategorySeoMix with UUID %s not found', $uuid));
+        }
+
+        return $readyCategorySeoMix;
+    }
+
+    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      */
     public function delete(ReadyCategorySeoMix $readyCategorySeoMix): void
