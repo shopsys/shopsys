@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -55,19 +54,16 @@ class CustomerUserUpdateFormType extends AbstractType
             ->add('save', SubmitType::class);
 
         if ($options['customerUser'] === null) {
-            $builder->add('sendRegistrationMail', CheckboxType::class, [
-                'required' => false,
-                'label' => t('Send confirmation email about registration to customer'),
-            ]);
-        } else {
-            $this->addCustomerUserList($options, $builder);
-            $builder->add('deliveryAddresses', DeliveryAddressListType::class, [
-                'customerUser' => $options['customerUser'],
-            ]);
-            $builder->add('orders', OrderListType::class, [
-                'customerUser' => $options['customerUser'],
-            ]);
+            return;
         }
+
+        $this->addCustomerUserList($options, $builder);
+        $builder->add('deliveryAddresses', DeliveryAddressListType::class, [
+            'customerUser' => $options['customerUser'],
+        ]);
+        $builder->add('orders', OrderListType::class, [
+            'customerUser' => $options['customerUser'],
+        ]);
     }
 
     /**

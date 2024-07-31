@@ -130,7 +130,7 @@ class CustomerUserFacade
 
         $customerUser = $this->createCustomerUser($customer, $customerUserUpdateData->customerUserData);
 
-        if ($customerUserUpdateData->sendRegistrationMail) {
+        if ($customerUserUpdateData->customerUserData->sendRegistrationMail) {
             $this->customerMailFacade->sendRegistrationMail($customerUser);
         }
 

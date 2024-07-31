@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -177,6 +178,14 @@ class CustomerUserFormType extends AbstractType
                 ],
                 'label' => t('Telephone'),
             ]);
+
+        if ($this->customerUser === null) {
+            $builderPersonalDataGroup->add('sendRegistrationMail', CheckboxType::class, [
+                'required' => false,
+                'label' => t('Send confirmation email about registration to customer'),
+                'position' => ['after' => 'email'],
+            ]);
+        }
 
         $builderRegisteredCustomerGroup = $builder->create('registeredCustomer', GroupType::class, [
             'label' => t('Registered cust.'),

@@ -82,11 +82,11 @@ class CustomerUserUpdateDataFactory
         $customerUserData->firstName = $registrationData->firstName;
         $customerUserData->telephone = $registrationData->telephone;
         $customerUserData->newsletterSubscription = $registrationData->newsletterSubscription;
+        $customerUserData->sendRegistrationMail = $registrationData->activated;
 
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $customerUserUpdateData->billingAddressData = $billingAddressData;
         $customerUserUpdateData->customerUserData = $customerUserData;
-        $customerUserUpdateData->sendRegistrationMail = $registrationData->activated;
 
         return $customerUserUpdateData;
     }

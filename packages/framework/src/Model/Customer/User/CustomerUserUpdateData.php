@@ -25,11 +25,6 @@ class CustomerUserUpdateData
     public $deliveryAddressData;
 
     /**
-     * @var bool
-     */
-    public $sendRegistrationMail;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
@@ -42,6 +37,5 @@ class CustomerUserUpdateData
         $this->billingAddressData = $billingAddressData;
         $this->customerUserData = $customerUserData;
         $this->deliveryAddressData = $deliveryAddressData;
-        $this->sendRegistrationMail = false;
     }
 }
