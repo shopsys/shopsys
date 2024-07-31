@@ -351,6 +351,13 @@ class Order
     protected $promoCode;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer")
+     * @ORM\JoinColumn(nullable=true, name="customer_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $customer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -371,7 +378,7 @@ class Order
 
         $this->number = $orderNumber;
 
-        $this->customerUser = $customerUser;
+        $this->setCustomerUser($customerUser);
         $this->deleted = false;
 
         if ($orderData->createdAt === null) {
@@ -1212,5 +1219,6 @@ class Order
     public function setCustomerUser($customerUser): void
     {
         $this->customerUser = $customerUser;
+        $this->customer = $customerUser?->getCustomer();
     }
 }
