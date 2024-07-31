@@ -91,8 +91,8 @@ mutagen-compose up -d --build
 
 !!! note
 
-    With Mutagen Compose you will use `mutagen-compose` instead of `docker-compose` for all your Docker Compose commands.<br>
-    `mutagen-compose` is a wrapper around `docker-compose` that adds Mutagen synchronization to the `docker-compose up` command.
+    With Mutagen Compose you will use `mutagen-compose` instead of `docker compose` for all your Docker Compose commands.<br>
+    `mutagen-compose` is a wrapper around `docker compose` that adds Mutagen synchronization to the `docker compose up` command.
 
 !!! note
 

@@ -14,7 +14,7 @@ We recommend to choose **installation via Docker** because it is the easiest and
 Docker contains complete development environment necessary for running your application.
 In the future we want to add new technologies to Shopsys Platform (e.g. ElasticSearch).
 **Updating your development environment to use these technologies will be very easy with Docker**
-because such an update will be done just by running `docker-compose build`.
+because such an update will be done just by running `docker compose build`.
 And that is all!
 
 Create new project on Shopsys Platform easily from this package following the [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/).

@@ -171,7 +171,7 @@ Then change the version in your `docker/php-fpm/Dockerfile`:
 + FROM php:8.3.2-fpm-bullseye as base
 ```
 
-After running `docker-compose up -d --build` you'll have the application running on the same PHP.
+After running `docker compose up -d --build` you'll have the application running on the same PHP.
 
 Now you can modify the version in your `composer.json` as well so all packages will always be installed in a compatible version.
 

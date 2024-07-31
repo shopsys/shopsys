@@ -18,7 +18,7 @@ In such cases, you do not need to stop all running containers and start them aga
 To do that, run this command outside the container:
 
 ```bash
-docker-compose up -d --force-recreate storefront
+docker compose up -d --force-recreate storefront
 ```
 
 ## Native way

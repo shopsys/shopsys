@@ -17,7 +17,7 @@ CentOS is very common OS for production servers so we use it on our production s
 
 First we install Docker using [installation guide](https://docs.docker.com/install/linux/docker-ce/centos/#set-up-the-repository).  
 We want docker to start after server reboot using [postinstallation guide](https://docs.docker.com/install/linux/linux-postinstall/#configure-docker-to-start-on-boot).  
-Then we install docker-compose using [installation guide](https://docs.docker.com/compose/install/#prerequisites).
+Then we install docker compose using [installation guide](https://docs.docker.com/compose/install/#prerequisites).
 
 ### Firewall
 
@@ -326,11 +326,11 @@ mkdir /var/www/production-content
 chown -R 33:33 /var/www/production-content
 ```
 
-and start containers with docker-compose.
+and start containers with docker compose.
 
 ```sh
 cd <PROJECT_ROOT_PATH> #(e.g., /var/www/html)
-docker-compose -p production up -d
+docker compose -p production up -d
 ```
 
 Now we export maintenance page from `php-fpm` container.
@@ -342,7 +342,7 @@ docker cp  production-php-fpm:/var/www/html/app/maintenance.html /usr/share/ngin
 Then we create database and build the application.
 
 ```sh
-docker-compose -p production exec php-fpm ./phing db-create build-new
+docker compose -p production exec php-fpm ./phing db-create build-new
 ```
 
 !!! hint
@@ -412,11 +412,11 @@ docker exec build-php-fpm-container php phing build-deploy-part-2-db-dependent
 docker commit build-php-fpm-container production-php-fpm
 
 # remove actual running production container with the web volume that is shared with webserver container
-docker-compose -p production rm -fs php-fpm webserver
+docker compose -p production rm -fs php-fpm webserver
 docker volume rm -f production_web-volume
 
 # recreate production container with webserver container with new web folder
-docker-compose -p production up -d --force-recreate webserver
+docker compose -p production up -d --force-recreate webserver
 
 # remove container for building the application image
 docker rm -f build-php-fpm-container
@@ -433,7 +433,7 @@ docker rm -f build-php-fpm-container
 
 ## Logging
 
-If you need to inspect your application logs, use `docker-compose logs` command.
+If you need to inspect your application logs, use `docker compose logs` command.
 For more information about logging see [the separate article](../introduction/logging.md).
 
 ## Conclusion

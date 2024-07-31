@@ -19,7 +19,7 @@ provides advice to help you develop Shopsys Platform on Docker without problems.
 ## How to Run Multiple Projects by Docker
 
 If you use Docker for more than one Shopsys Platform project, you might run into a problem with container names and their ports.
-Docker requires a unique container name and port for each container, and since our `docker-compose` is not dynamically initialized,
+Docker requires a unique container name and port for each container, and since our `docker compose` is not dynamically initialized,
 it contains hard-coded container names and ports, and that makes running more projects in Docker on the same machine impossible without
 modifying your configuration.
 
@@ -29,9 +29,9 @@ With that being said, we have two options to solve this problem.
 
 This solution is simpler and is used if we only need one project running at the time.
 
-All we really need to do is to properly turn off `docker-compose`.
+All we really need to do is to properly turn off `docker compose`.
 
-Usually, everyone shuts off their `docker-compose` by running `docker-compose stop`, which is not the correct way.
+Usually, everyone shuts off their `docker compose` by running `docker compose stop`, which is not the correct way.
 
 This command is used to stop containers, not to delete them. That means that if you now try to start Docker compose
 in another project, it will output an error that there already are containers with those names.
@@ -40,7 +40,7 @@ That is true because these stopped containers are still registered in memory.
 To properly delete your workspace containers, run:
 
 ```sh
-docker-compose down
+docker compose down
 ```
 
 This will not only stop the containers but also delete them. This means that containers and all their data in volumes will be deleted.
@@ -57,7 +57,7 @@ So, how about changing their name?
 We recommend replacing `shopsys-framework` with your project name. For instance, php-fpm container that is defaultly named as
 `shopsys-framework-php-fpm` would now be named `my-project-name-php-fpm`.
 
-This would actually work, only if you always downed `docker-compose` before switching between projects.
+This would actually work, only if you always downed `docker compose` before switching between projects.
 Because it would try to locate our localhost ports to the same values, which would fail.
 
 So we need to change the ports of the containers. Containers have their ports defined in this format.
@@ -103,31 +103,31 @@ If we already had a project running once in Docker, there is probably a cached i
 
 That means that Docker does not really check if there is a change in the dockerfile,
 it will always build a container by cached image. We need to rebuild our containers.
-First, we need to stop our containers in `docker-compose` because we cannot update containers that are already in use:
+First, we need to stop our containers in `docker compose` because we cannot update containers that are already in use:
 
 ```sh
-docker-compose stop
+docker compose stop
 ```
 
 Then we need to force Docker to rebuild our containers:
 
 ```sh
-docker-compose build
+docker compose build
 ```
 
 Docker has now updated our containers and we can continue as usual with:
 
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Update of Docker-compose is not Reflected
 
-Docker compose is much easier to change than images. If we change anything in `docker-compose`, we just need to recreate `docker-compose`.
+Docker compose is much easier to change than images. If we change anything in `docker compose`, we just need to recreate `docker compose`.
 That is done by executing:
 
 ```sh
-docker-compose up -d --force-recreate
+docker compose up -d --force-recreate
 ```
 
 ## Docker-sync stopped to sync files
@@ -156,7 +156,7 @@ There are known some performance issues with Docker for Mac and Docker for Windo
 On Mac, we partially solved this by implementing docker-sync.
 Docker-sync has some limits, and that is the reason why we use Docker native volumes for syncing PostgreSQL and Elasticsearch data to ensure the data persistence.
 In some cases, performance can be more important than the persistence of the data.
-In this case, you can increase the performance by deleting these volumes in your `docker-compose.yml` file, but that will result in loss of persistence, which means that the data will be lost after the removal of the container, e.g., during `docker-compose down`.
+In this case, you can increase the performance by deleting these volumes in your `docker-compose.yml` file, but that will result in loss of persistence, which means that the data will be lost after the removal of the container, e.g., during `docker compose down`.
 
 ## A Docker container is not running
 
@@ -177,7 +177,7 @@ When `composer install` or `composer update` fails on an error with exceeding th
 
 ## Starting up the Docker containers fails due to an invalid reference format
 
-Docker images may fail to build during `docker-compose up -d` due to invalid reference format, e.g.:
+Docker images may fail to build during `docker compose up -d` due to invalid reference format, e.g.:
 
 ```no-highlight
 Building php-fpm
