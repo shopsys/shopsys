@@ -239,11 +239,13 @@ class ParameterRepository
     public function getParameterValuesIndexedByProductIdAndParameterNameForProducts(array $products, $locale)
     {
         $queryBuilder = $this->em->createQueryBuilder()
-            ->select('IDENTITY(ppv.product) as productId', 'pt.name', 'pv.text')
+            ->select('IDENTITY(ppv.product) as productId', 'pt.name', 'pv.text', 'uv.name as unit')
             ->from(ProductParameterValue::class, 'ppv')
             ->join('ppv.parameter', 'p')
             ->join('p.translations', 'pt')
             ->join('ppv.value', 'pv')
+            ->leftJoin('p.unit', 'u')
+            ->leftJoin('u.translations', 'uv', Join::WITH, 'uv.locale = :locale')
             ->where('ppv.product IN (:products)')
             ->andWhere('pv.locale = :locale')
             ->andWhere('pt.locale = :locale')
@@ -310,6 +312,11 @@ class ParameterRepository
             $parameterName = $productIdAndParameterNameAndValue['name'];
             $productId = $productIdAndParameterNameAndValue['productId'];
             $parameterValue = $productIdAndParameterNameAndValue['text'];
+
+            if ($productIdAndParameterNameAndValue['unit'] !== '') {
+                $parameterValue .= ' ' . $productIdAndParameterNameAndValue['unit'];
+            }
+
             $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] = $parameterValue;
         }
 

@@ -276,6 +276,10 @@ class ParameterRepository extends BaseParameterRepository
             $productId = $productIdAndParameterNameAndValue['productId'];
             $parameterValue = $productIdAndParameterNameAndValue['text'];
 
+            if ($productIdAndParameterNameAndValue['unit'] !== '') {
+                $parameterValue .= ' ' . $productIdAndParameterNameAndValue['unit'];
+            }
+
             if ($productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] ?? false) {
                 $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] .= '/' . $parameterValue;
             } else {

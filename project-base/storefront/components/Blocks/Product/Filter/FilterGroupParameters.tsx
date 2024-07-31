@@ -58,7 +58,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
         <FilterGroupWrapper>
             <FilterGroupTitle
                 isOpen={!isGroupCollapsed}
-                title={title}
+                title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}
                 onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
             />
 

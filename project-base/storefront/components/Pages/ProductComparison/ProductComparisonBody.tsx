@@ -5,7 +5,7 @@ import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonBodyProps = {
     comparedProducts: TypeProductInProductListFragment[];
-    parametersDataState: { name: string; values: string[] }[];
+    parametersDataState: { name: string; unit: string | undefined; values: string[] }[];
 };
 
 export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ comparedProducts, parametersDataState }) => {
@@ -45,7 +45,10 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                     <BodyItem isSticky>{parameter.name}</BodyItem>
 
                     {parameter.values.map((value, valueIndex) => (
-                        <BodyItem key={`parameter-${parameterIndex}-value-${valueIndex}`}>{value}</BodyItem>
+                        <BodyItem key={`parameter-${parameterIndex}-value-${valueIndex}`}>
+                            {value}
+                            {parameter.unit !== undefined && value !== '-' ? ` ${parameter.unit}` : ''}
+                        </BodyItem>
                     ))}
                 </tr>
             ))}

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> };
+export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, name: string, visible: boolean, unit: { __typename: 'Unit', name: string } | null, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> };
 
 
       export interface PossibleTypesResultData {
@@ -86,6 +86,10 @@ export const ParameterFragment = gql`
   uuid
   name
   visible
+  unit {
+    __typename
+    name
+  }
   values {
     __typename
     uuid
