@@ -282,7 +282,7 @@ class CustomerController extends AdminBaseController
         $billingAddress = $customer->getBillingAddress();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customerUser = $this->customerUserFacade->createCustomerUser($customer, $customerUserData);
+            $customerUser = $this->customerUserFacade->createCustomerUserWithRegistrationMail($customer, $customerUserData);
             $this->addSuccessFlashTwig(
                 t('Customer <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                 [

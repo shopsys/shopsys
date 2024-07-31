@@ -106,7 +106,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($customersDataProvider as $customerDataProvider) {
             $deliveryAddress = $this->createDeliveryAddress($customer, $customerDataProvider[self::KEY_DELIVERY_ADDRESS]);
             $customerUserdata = $this->createCustomerUserData($customerDataProvider[self::KEY_CUSTOMER_USER_DATA], $customer->getDomainId(), $deliveryAddress);
-            $customerUser = $this->customerUserFacade->createCustomerUser($customer, $customerUserdata);
+            $customerUser = $this->customerUserFacade->createCustomerUserWithRegistrationMail($customer, $customerUserdata);
 
             $customerUserReference = $customerDataProvider[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_REFERENCE];
             $this->addReferenceForDomain($customerUserReference, $customerUser, $customer->getDomainId());

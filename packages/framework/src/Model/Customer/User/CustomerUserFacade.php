@@ -110,9 +110,22 @@ class CustomerUserFacade
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
         }
 
-        $customerUser = $this->createCustomerUser($customer, $customerUserUpdateData->customerUserData);
+        return $this->createCustomerUserWithRegistrationMail($customer, $customerUserUpdateData->customerUserData);
+    }
 
-        if ($customerUserUpdateData->customerUserData->sendRegistrationMail) {
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function createCustomerUserWithRegistrationMail(
+        Customer $customer,
+        CustomerUserData $customerUserData,
+    ): CustomerUser {
+        $customerUserData->customer = $customer;
+        $customerUser = $this->createCustomerUser($customer, $customerUserData);
+
+        if ($customerUserData->sendRegistrationMail) {
             $this->customerMailFacade->sendRegistrationMail($customerUser);
         }
 
@@ -124,7 +137,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function createCustomerUser(
+    protected function createCustomerUser(
         Customer $customer,
         CustomerUserData $customerUserData,
     ): CustomerUser {
