@@ -14,6 +14,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderRepository as BaseOrderRepository
  * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order getByOrderNumberAndCustomerUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order|null findByOrderNumberAndCustomerUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order[] getCustomerOrderLimitedList(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, int $limit, int $offset)
  */
 class OrderRepository extends BaseOrderRepository
 {

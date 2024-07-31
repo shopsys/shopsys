@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
@@ -143,5 +144,37 @@ class OrderRepository
             ->andWhere('o.number = :orderNumber')->setParameter(':orderNumber', $orderNumber)
             ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
             ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getCustomerOrderLimitedList(Customer $customer, int $limit, int $offset): array
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.customer = :customer')
+            ->setParameter('customer', $customer)
+            ->orderBy('o.createdAt', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return int
+     */
+    public function getCustomerOrderCount(Customer $customer): int
+    {
+        return $this->createOrderQueryBuilder()
+            ->select('count(o.id)')
+            ->andWhere('o.customer = :customerUser')
+            ->setParameter('customerUser', $customer)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
