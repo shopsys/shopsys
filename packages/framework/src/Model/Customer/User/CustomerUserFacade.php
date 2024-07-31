@@ -83,24 +83,6 @@ class CustomerUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    public function register(CustomerUserData $customerUserData)
-    {
-        $customer = $this->createCustomerWithBillingAddress(
-            $customerUserData->domainId,
-            $this->billingAddressDataFactory->create(),
-        );
-
-        $customerUser = $this->createCustomerUser($customer, $customerUserData);
-
-        $this->customerMailFacade->sendRegistrationMail($customerUser);
-
-        return $customerUser;
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
