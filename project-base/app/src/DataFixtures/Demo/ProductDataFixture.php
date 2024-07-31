@@ -233,7 +233,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone - Apple A7 with 64-bit architecture, 4" Retina Touch display 1136x640, 32GB internal memory, WiFi 802.11a/b/g/n, Bluetooth 4.0, 8 Mpx camera with LED flash, GPS, Fingerprint sensor, iOS 7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT_KG => '0.12',
+                ParameterDataFixture::PARAM_WEIGHT => '120',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('123.8x58.6 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MEMORY_CARD_SUPPORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RAM => t('1024 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -338,7 +338,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('1800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => '3',
-                ParameterDataFixture::PARAM_WEIGHT => t('580 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -377,7 +377,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('5.4 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '5400',
                 ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
@@ -415,7 +415,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR_PRINTING => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -734,7 +734,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR_PRINTING => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -844,7 +844,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_PAGES_COUNT => t('55', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('50 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '50',
                 ParameterDataFixture::PARAM_COVER => t('hardcover', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -872,7 +872,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_PAGES_COUNT => t('50', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('150 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '150',
                 ParameterDataFixture::PARAM_COVER => t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -901,7 +901,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_PAGES_COUNT => t('250', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('250 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '250',
                 ParameterDataFixture::PARAM_COVER => t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -929,7 +929,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterValues($parameterValues, $locale, [
                 ParameterDataFixture::PARAM_PAGES_COUNT => t('48', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('50 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '50',
                 ParameterDataFixture::PARAM_COVER => t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
 
@@ -982,7 +982,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.7" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT_KG => '0.15',
+                ParameterDataFixture::PARAM_WEIGHT => '150',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('123.8x58.6 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MEMORY_CARD_SUPPORT => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_RAM => t('1024 MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -1126,7 +1126,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('426x306x145 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '4',
             ]);
         }
@@ -1180,7 +1180,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('5“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('580 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -1214,7 +1214,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('4“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('250 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '250',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -1500,7 +1500,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.6 "1280x720, Qualcomm MSM8960Pro 1.7 GHz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT_KG => '0.54',
+                ParameterDataFixture::PARAM_WEIGHT => '540',
                 ParameterDataFixture::PARAM_PROCESSOR_FREQUENCY_GHZ => '2.4',
             ]);
         }
@@ -2036,7 +2036,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Prime flour for creating your own cake. Now with special discount.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT => t('1 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '1000',
             ]);
         }
 
@@ -2110,7 +2110,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Well known USB cable with A and micro B connectors.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $this->addParameterValues($parameterValues, $locale, [
-                ParameterDataFixture::PARAM_WEIGHT => t('50 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '50',
                 ParameterDataFixture::PARAM_CONNECTORS => t('A and micro B', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -2457,7 +2457,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('6400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('380 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '380',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -2491,7 +2491,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('6400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('560 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '560',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -2526,7 +2526,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('250 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '250',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -2588,7 +2588,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('1800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('580 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -2623,7 +2623,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('12800', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('5“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('580 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -2657,7 +2657,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_VIEWFINDER_TYPE => t('optical', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_SENSITIVITY_ISO => t('6400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DISPLAY_SIZE => t('3“', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('580 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '580',
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -3543,7 +3543,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR_PRINTING => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -3578,7 +3578,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR_PRINTING => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -3617,7 +3617,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
             ]);
         }
 
@@ -3653,7 +3653,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR_PRINTING => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -3688,7 +3688,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_COLOR_PRINTING => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
                 ParameterDataFixture::PARAM_DIMENSIONS => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
@@ -3723,7 +3723,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_USB => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_WIFI => t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_DIMENSIONS => t('426x306x145 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                ParameterDataFixture::PARAM_WEIGHT => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => '3500',
             ]);
         }
 

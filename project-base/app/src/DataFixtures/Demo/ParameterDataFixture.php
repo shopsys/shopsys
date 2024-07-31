@@ -88,7 +88,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PARAM_WARRANTY_IN_YEARS = 'warranty_in_years';
     public const string PARAM_WATER_RESERVOIR_CAPACITY = 'water_reservoir_capacity';
     public const string PARAM_WEIGHT = 'weight';
-    public const string PARAM_WEIGHT_KG = 'weight_kg';
     public const string PARAM_WIFI = 'wifi';
     public const string PARAM_ZOOM = 'zoom';
 
@@ -174,10 +173,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_ERGONOMICS => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_SUPPORTED_OS => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_NUMBER_OF_BUTTONS => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_WEIGHT_KG => new ParameterDataFixtureData(
-                t('Weight (kg)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                Parameter::PARAMETER_TYPE_SLIDER,
-            ),
             self::PARAM_DIMENSIONS => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_MEMORY_CARD_SUPPORT => t('Memory card support', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_RAM => t('RAM', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -198,7 +193,11 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_VIEWFINDER_TYPE => t('Viewfinder type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_SENSITIVITY_ISO => t('Sensitivity (ISO)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_HEIGHT => t('Height', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_WEIGHT => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_WEIGHT => new ParameterDataFixtureData(
+                t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                Parameter::PARAMETER_TYPE_SLIDER,
+                unit: $this->getReference(UnitDataFixture::UNIT_GRAM, Unit::class),
+            ),
             self::PARAM_PRINT_TECHNOLOGY => t('Print technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_MAXIMUM_SIZE => t('Maximum size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_LCD => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
