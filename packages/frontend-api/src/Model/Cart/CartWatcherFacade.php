@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -38,15 +39,18 @@ class CartWatcherFacade
         protected TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
         protected CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected CartPromoCodeFacade $cartPromoCodeFacade,
+        protected readonly WhateverOrderCartFacade $whateverOrderCartFacade,
     ) {
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
      */
-    public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
+    public function getCheckedCartWithModifications(Order $cart): CartWithModificationsResult
     {
+        d('getCheckedCartWithModifications');
+        // TODO tohle je zajímavý vstup - projdu všechny možné změny, ponastavuju věci na samotné Order entitě. Pak bych mohl buď za každou změnou zavolat vytvoření inputu a prohnat to přes procesor nebo to procesorem prohnat až na konci
         $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
 
         $this->checkRemovedProductsItems($cart);
@@ -61,53 +65,59 @@ class CartWatcherFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkRemovedProductsItems(Cart $cart): void
+    protected function checkRemovedProductsItems(Order $cart): void
     {
-        foreach ($cart->getItems() as $cartItem) {
+        foreach ($cart->getProductItems() as $cartItem) {
             if (!$cartItem->hasProduct()) {
-                $cart->removeItemById($cartItem->getId());
+                $cart->removeItem($cartItem);
                 $this->em->remove($cartItem);
 
                 $this->cartWithModificationsResult->setCartHasRemovedProducts();
             }
         }
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkModifiedPrices(Cart $cart): void
+    protected function checkModifiedPrices(Order $cart): void
     {
         $modifiedItems = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
 
         foreach ($modifiedItems as $cartItem) {
             $this->cartWithModificationsResult->addCartItemWithModifiedPrice($cartItem);
         }
+
+        // TODO here or inside cartWatcher->getModifiedPriceItemsAndUpdatePrices()?
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkNotListableItems(Cart $cart): void
+    protected function checkNotListableItems(Order $cart): void
     {
         $notVisibleItems = $this->cartWatcher->getNotListableItems($cart, $this->currentCustomerUser);
 
         foreach ($notVisibleItems as $cartItem) {
-            $cart->removeItemById($cartItem->getId());
+            $cart->removeItem($cartItem);
             $this->em->remove($cartItem);
 
             $this->cartWithModificationsResult->addNoLongerListableCartItem($cartItem);
         }
+
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkUnavailableStockQuantityItems(Cart $cart): void
+    protected function checkUnavailableStockQuantityItems(Order $cart): void
     {
-        foreach ($cart->getItems() as $cartItem) {
+        foreach ($cart->getProductItems() as $cartItem) {
             $product = $cartItem->getProduct();
 
             if ($product === null) {
@@ -117,7 +127,7 @@ class CartWatcherFacade
             $maximumOrderQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $this->domain->getId());
 
             if ($maximumOrderQuantity === 0) {
-                $cart->removeItemById($cartItem->getId());
+                $cart->removeItem($cartItem);
                 $this->cartWithModificationsResult->addNoLongerAvailableCartItemDueToQuantity($cartItem);
 
                 continue;
@@ -133,12 +143,14 @@ class CartWatcherFacade
 
             $this->cartWithModificationsResult->addCartItemWithChangedQuantity($cartItem);
         }
+
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkPromoCodeValidity(Cart $cart): void
+    protected function checkPromoCodeValidity(Order $cart): void
     {
         foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
             try {
@@ -146,7 +158,9 @@ class CartWatcherFacade
             } catch (PromoCodeException $exception) {
                 $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
                 $this->cartWithModificationsResult->addChangedPromoCode($promoCode->getCode());
+                $this->whateverOrderCartFacade->updateCartOrder($cart);
             }
         }
+
     }
 }

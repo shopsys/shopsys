@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Payment;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
@@ -31,9 +32,11 @@ class PaymentValidationFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
+     * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
+     * @throws \Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException
      */
-    public function checkPaymentPrice(Payment $payment, Cart $cart): void
+    public function checkPaymentPrice(Payment $payment, Order $cart): void
     {
         $calculatedPaymentPrice = $this->paymentPriceProvider->getPaymentPrice(
             $cart,

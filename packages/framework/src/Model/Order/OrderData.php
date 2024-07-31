@@ -366,4 +366,15 @@ class OrderData
     {
         $this->items = $items;
     }
+
+    /**
+     * @param string $type
+     */
+    public function resetItemsByType(string $type): void
+    {
+        $this->items = array_filter(
+            $this->items,
+            fn (OrderItemData $item) => $item->type !== $type,
+        );
+    }
 }

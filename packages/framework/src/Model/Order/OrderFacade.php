@@ -130,8 +130,14 @@ class OrderFacade
     {
         $order = $this->orderRepository->getById($orderId);
 
-        $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId());
-        $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId());
+        if ($orderData->orderTransport !== null) {
+            $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId());
+        }
+
+        if ($orderData->orderPayment !== null) {
+            $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId());
+        }
+
         $this->refreshOrderItemsWithoutTransportAndPayment($order, $orderData);
         $this->updateTransportAndPaymentNamesInOrderData($orderData, $order);
 
@@ -258,8 +264,10 @@ class OrderFacade
     protected function refreshOrderItemsWithoutTransportAndPayment(Order $order, OrderData $orderData): void
     {
         $orderItemsWithoutTransportAndPaymentData = $orderData->getItemsWithoutTransportAndPayment();
-
+d('refreshOrderItemsWithoutTransportAndPayment');
+        d($orderItemsWithoutTransportAndPaymentData);
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
+            d($orderItem->getId());
             if (array_key_exists($orderItem->getId(), $orderItemsWithoutTransportAndPaymentData)) {
                 $orderItemData = $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()];
                 $this->calculateOrderItemDataPrices($orderItemData, $order->getDomainId());
@@ -319,13 +327,13 @@ class OrderFacade
 
         $orderTransportData = $orderData->orderTransport;
 
-        if ($orderTransportData->transport !== $order->getTransport()) {
+        if ($orderTransportData !== null && $orderTransportData->transport !== $order->getTransport()) {
             $orderTransportData->name = $orderTransportData->transport->getName($orderLocale);
         }
 
         $orderPaymentData = $orderData->orderPayment;
 
-        if ($orderPaymentData->payment !== $order->getPayment()) {
+        if ($orderPaymentData !== null && $orderPaymentData->payment !== $order->getPayment()) {
             $orderPaymentData->name = $orderPaymentData->payment->getName($orderLocale);
         }
     }

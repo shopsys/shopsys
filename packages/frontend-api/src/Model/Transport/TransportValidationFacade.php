@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
@@ -52,9 +53,9 @@ class TransportValidationFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    public function checkTransportWeightLimit(Transport $transport, Cart $cart): void
+    public function checkTransportWeightLimit(Transport $transport, Order $cart): void
     {
         if ($transport->getMaxWeight() !== null && $transport->getMaxWeight() < $cart->getTotalWeight()) {
             throw new TransportWeightLimitExceededException();
@@ -63,9 +64,9 @@ class TransportValidationFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    public function checkTransportPrice(Transport $transport, Cart $cart): void
+    public function checkTransportPrice(Transport $transport, Order $cart): void
     {
         $calculatedTransportPrice = $this->transportPriceProvider->getTransportPrice(
             $cart,

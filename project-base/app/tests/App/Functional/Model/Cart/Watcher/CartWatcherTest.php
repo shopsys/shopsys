@@ -6,6 +6,9 @@ namespace Tests\App\Functional\Model\Cart\Watcher;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Order\Item\OrderItem;
+use App\Model\Order\Order;
+use App\Model\Order\OrderData;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -16,8 +19,10 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -60,12 +65,24 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
     public function testGetModifiedPriceItemsAndUpdatePrices()
     {
-        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
-        $cartItem = new CartItem($cart, $product, 1, $productPrice->getPriceWithVat());
+        $orderData = new OrderData();
+        $orderData->uuid = '92465627-7dc7-4d35-8138-f48a7c657abd';
+        $cart = new Order($orderData);
+        $cartItem = new OrderItem(
+            $cart,
+            'name',
+            $productPrice->getPrice(),
+            '21',
+            1,
+            OrderItemTypeEnum::TYPE_PRODUCT,
+            null,
+            null,
+        );
+        $cartItem->setProduct($product);
+
         $cart->addItem($cartItem);
 
         $modifiedItems1 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
@@ -88,16 +105,29 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
     public function testGetNotListableItemsWithItemWithoutProduct()
     {
-        $customerUserIdentifier = new CustomerUserIdentifier('randomString');
-
-        $cartItemMock = $this->getMockBuilder(CartItem::class)
+        $cartItemMock = $this->getMockBuilder(OrderItem::class)
             ->disableOriginalConstructor()
-            ->onlyMethods([])
+            ->onlyMethods(['isType', 'checkTypeProduct'])
             ->getMock();
+        $cartItemMock->method('isType')->with(OrderItemTypeEnum::TYPE_PRODUCT)->willReturn(true);
 
         $currentCustomerUserMock = $this->createCustomerUserMock();
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $orderData = new OrderData();
+        $orderData->uuid = '92465627-7dc7-4d35-8138-f48a7c657abd';
+        $cart = new Order($orderData);
+
+//        $cartItem = new OrderItem(
+//            $cart,
+//            'name',
+//            Price::zero(),
+//            '21',
+//            1,
+//            OrderItemTypeEnum::TYPE_PRODUCT,
+//            null,
+//            null,
+//        );
+
         $cart->addItem($cartItemMock);
 
         $notListableItems = $this->cartWatcher->getNotListableItems($cart, $currentCustomerUserMock);

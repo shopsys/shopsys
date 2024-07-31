@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Payment;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CartPaymentFacade
 {
@@ -21,11 +22,11 @@ class CartPaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param string|null $paymentUuid
      * @param string|null $goPayBankSwift
      */
-    public function updatePaymentInCart(Cart $cart, ?string $paymentUuid, ?string $goPayBankSwift): void
+    public function updatePaymentInCart(Order $cart, ?string $paymentUuid, ?string $goPayBankSwift): void
     {
         if ($paymentUuid !== null) {
             $cartPaymentData = $this->cartPaymentDataFactory->create($cart, $paymentUuid, $goPayBankSwift);
@@ -38,18 +39,18 @@ class CartPaymentFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    public function unsetCartPayment(Cart $cart): void
+    public function unsetCartPayment(Order $cart): void
     {
         $this->updatePaymentInCart($cart, null, null);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $paymentWatchedPrice
      */
-    public function setPaymentWatchedPrice(Cart $cart, Money $paymentWatchedPrice): void
+    public function setPaymentWatchedPrice(Order $cart, Money $paymentWatchedPrice): void
     {
         $cart->setPaymentWatchedPrice($paymentWatchedPrice);
         $this->entityManager->flush();

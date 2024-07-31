@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
@@ -107,6 +108,7 @@ class CurrentPromoCodeFacade
 
         $isValidPromoCode = false;
 
+        d($products);
         foreach ($products as $product) {
             if (in_array($product->getId(), $allowedProductIds, true) === true) {
                 $isValidPromoCode = true;
@@ -204,10 +206,10 @@ class CurrentPromoCodeFacade
 
     /**
      * @param string $enteredCode
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function getValidatedPromoCode(string $enteredCode, Cart $cart): PromoCode
+    public function getValidatedPromoCode(string $enteredCode, Order $cart): PromoCode
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($enteredCode, $this->domain->getId());
 

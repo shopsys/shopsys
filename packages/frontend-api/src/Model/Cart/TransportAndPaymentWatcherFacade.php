@@ -8,7 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportFacade;
+use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
@@ -54,24 +56,25 @@ class TransportAndPaymentWatcherFacade
         protected readonly OrderProcessor $orderProcessor,
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly WhateverOrderCartFacade $whateverOrderCartFacade,
     ) {
     }
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult $cartWithModificationsResult
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
      */
     public function checkTransportAndPayment(
         CartWithModificationsResult $cartWithModificationsResult,
-        Cart $cart,
+        Order $cart,
     ): CartWithModificationsResult {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
 
         $domainId = $this->domain->getId();
 
         $orderData = $this->orderDataFactory->create();
-        $orderInput = $this->orderInputFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
+        $orderInput = $this->orderInputFactory->createFromOrder($cart, $this->domain->getCurrentDomainConfig());
         $orderData = $this->orderProcessor->process(
             $orderInput,
             $orderData,
@@ -104,37 +107,41 @@ class TransportAndPaymentWatcherFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkTransportPrice(Transport $transport, Cart $cart): void
+    protected function checkTransportPrice(Transport $transport, Order $cart): void
     {
         try {
             $this->transportValidationFacade->checkTransportPrice($transport, $cart);
         } catch (TransportPriceChangedException $exception) {
             $this->cartWithModificationsResult->setTransportPriceChanged(true);
+            // TODO in the end, this should be ensured by the WhateverOrderCartFacade
             $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice()->getPriceWithVat());
+            $this->whateverOrderCartFacade->updateCartOrder($cart);
         }
+
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      */
-    protected function checkPaymentPrice(Cart $cart, Payment $payment): void
+    protected function checkPaymentPrice(Order $cart, Payment $payment): void
     {
         try {
             $this->paymentValidationFacade->checkPaymentPrice($payment, $cart);
         } catch (PaymentPriceChangedException $exception) {
             $this->cartWithModificationsResult->setPaymentPriceChanged(true);
             $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice()->getPriceWithVat());
+            $this->whateverOrderCartFacade->updateCartOrder($cart);
         }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkTransportWeightLimit(Transport $transport, Cart $cart): void
+    protected function checkTransportWeightLimit(Transport $transport, Order $cart): void
     {
         try {
             $this->transportValidationFacade->checkTransportWeightLimit($transport, $cart);
@@ -142,43 +149,53 @@ class TransportAndPaymentWatcherFacade
             $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
             $this->cartTransportFacade->unsetCartTransport($cart);
         }
+
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkPersonalPickupStoreAvailability(Transport $transport, Cart $cart): void
+    protected function checkPersonalPickupStoreAvailability(Transport $transport, Order $cart): void
     {
         try {
             $this->transportValidationFacade->checkPersonalPickupStoreAvailability($transport, $cart->getPickupPlaceIdentifier());
         } catch (StoreByUuidNotFoundException) {
             $this->cartWithModificationsResult->setPersonalPickupStoreUnavailable(true);
+            // TODO in the end, this should be ensured by the WhateverOrderCartFacade?
             $this->cartTransportFacade->unsetPickupPlaceIdentifierFromCart($cart);
         }
+
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkPacketeryIdIsValid(Transport $transport, Cart $cart): void
+    protected function checkPacketeryIdIsValid(Transport $transport, Order $cart): void
     {
+        // TODO this is weird - invalid packetery ID breaks the application instead of setting modification result...
         if ($transport->isPacketery() && !is_numeric($cart->getPickupPlaceIdentifier())) {
             throw new InvalidPacketeryAddressIdUserError('Wrong packetery address ID');
         }
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkTransport(Cart $cart): void
+    protected function checkTransport(Order $cart): void
     {
         if ($cart->isEmpty()) {
             $this->cartTransportFacade->unsetCartTransport($cart);
         }
 
-        $transport = $cart->getTransport();
+        try {
+            $transport = $cart->getTransport();
+        } catch (OrderItemNotFoundException) {
+            return;
+        }
 
         if ($transport === null) {
             if ($cart->getTransportWatchedPrice() !== null) {
@@ -186,11 +203,15 @@ class TransportAndPaymentWatcherFacade
                 $this->setTransportInCartUnavailable($cart);
             }
 
+            $this->whateverOrderCartFacade->updateCartOrder($cart);
+
             return;
         }
 
         if ($this->transportFacade->isTransportVisibleAndEnabledOnCurrentDomain($transport) === false) {
             $this->setTransportInCartUnavailable($cart);
+
+            $this->whateverOrderCartFacade->updateCartOrder($cart);
 
             return;
         }
@@ -201,15 +222,19 @@ class TransportAndPaymentWatcherFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function checkPayment(Cart $cart): void
+    protected function checkPayment(Order $cart): void
     {
         if ($cart->isEmpty()) {
             $this->cartPaymentFacade->unsetCartPayment($cart);
         }
 
-        $payment = $cart->getPayment();
+        try {
+            $payment = $cart->getPayment();
+        } catch (OrderItemNotFoundException) {
+            return;
+        }
 
         if ($payment === null) {
             if ($cart->getPaymentWatchedPrice() !== null) {
@@ -217,11 +242,15 @@ class TransportAndPaymentWatcherFacade
                 $this->setPaymentInCartUnavailable($cart);
             }
 
+            $this->whateverOrderCartFacade->updateCartOrder($cart);
+
             return;
         }
 
         if ($this->paymentFacade->isPaymentVisibleAndEnabledOnCurrentDomain($payment) === false) {
             $this->setPaymentInCartUnavailable($cart);
+
+            $this->whateverOrderCartFacade->updateCartOrder($cart);
 
             return;
         }
@@ -229,18 +258,18 @@ class TransportAndPaymentWatcherFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function setTransportInCartUnavailable(Cart $cart): void
+    protected function setTransportInCartUnavailable(Order $cart): void
     {
         $this->cartWithModificationsResult->setTransportIsUnavailable();
         $this->cartTransportFacade->unsetCartTransport($cart);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    protected function setPaymentInCartUnavailable(Cart $cart): void
+    protected function setPaymentInCartUnavailable(Order $cart): void
     {
         $this->cartWithModificationsResult->setPaymentIsUnavailable();
         $this->cartPaymentFacade->unsetCartPayment($cart);

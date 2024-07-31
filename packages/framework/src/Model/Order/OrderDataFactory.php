@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
@@ -105,8 +106,16 @@ class OrderDataFactory
         $orderData->currency = $order->getCurrency();
         $orderData->createdAsAdministrator = $order->getCreatedAsAdministrator();
         $orderData->createdAsAdministratorName = $order->getCreatedAsAdministratorName();
-        $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getTransportItem());
-        $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getPaymentItem());
+        try {
+            $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getTransportItem());
+        } catch (OrderItemNotFoundException) {
+            // transport item is not set
+        }
+        try {
+            $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getPaymentItem());
+        } catch (OrderItemNotFoundException) {
+            // payment item is not set
+        }
 
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
 

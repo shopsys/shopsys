@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CartTransportFacade
 {
@@ -21,11 +22,11 @@ class CartTransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param string|null $transportUuid
      * @param string|null $pickupPlaceIdentifier
      */
-    public function updateTransportInCart(Cart $cart, ?string $transportUuid, ?string $pickupPlaceIdentifier): void
+    public function updateTransportInCart(Order $cart, ?string $transportUuid, ?string $pickupPlaceIdentifier): void
     {
         if ($transportUuid !== null) {
             $cartTransportData = $this->cartTransportDataFactory->create($cart, $transportUuid, $pickupPlaceIdentifier);
@@ -38,27 +39,27 @@ class CartTransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    public function unsetCartTransport(Cart $cart): void
+    public function unsetCartTransport(Order $cart): void
     {
         $this->updateTransportInCart($cart, null, null);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $transportWatchedPrice
      */
-    public function setTransportWatchedPrice(Cart $cart, Money $transportWatchedPrice): void
+    public function setTransportWatchedPrice(Order $cart, Money $transportWatchedPrice): void
     {
         $cart->setTransportWatchedPrice($transportWatchedPrice);
         $this->entityManager->flush();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    public function unsetPickupPlaceIdentifierFromCart(Cart $cart): void
+    public function unsetPickupPlaceIdentifierFromCart(Order $cart): void
     {
         $cart->unsetPickupPlaceIdentifier();
         $this->entityManager->flush();

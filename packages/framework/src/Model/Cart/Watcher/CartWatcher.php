@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -27,38 +28,39 @@ class CartWatcher
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getModifiedPriceItemsAndUpdatePrices(Cart $cart)
+    public function getModifiedPriceItemsAndUpdatePrices(Order $cart): array
     {
         $modifiedItems = [];
 
-        foreach ($cart->getItems() as $cartItem) {
+        foreach ($cart->getProductItems() as $cartItem) {
             $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
                 $cartItem->getProduct(),
             );
 
-            if (!$productPrice->getPriceWithVat()->equals($cartItem->getWatchedPrice())) {
+            if (!$productPrice->equals($cartItem->getPrice())) {
                 $modifiedItems[] = $cartItem;
             }
-            $cartItem->setWatchedPrice($productPrice->getPriceWithVat());
+            $cartItem->setUnitPrice($productPrice);
         }
 
         return $modifiedItems;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getNotListableItems(Cart $cart, CurrentCustomerUser $currentCustomerUser)
+    public function getNotListableItems(Order $cart, CurrentCustomerUser $currentCustomerUser): array
     {
         $notListableItems = [];
 
-        foreach ($cart->getItems() as $item) {
+        foreach ($cart->getProductItems() as $item) {
             try {
+                /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
                 $product = $item->getProduct();
                 $productVisibility = $this->productVisibilityFacade
                     ->getProductVisibility(

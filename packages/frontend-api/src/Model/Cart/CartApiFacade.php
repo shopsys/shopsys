@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Cart;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -13,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidCartItemUserError;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\UnavailableCartUserError;
@@ -27,6 +29,7 @@ class CartApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         protected readonly CartFacade $cartFacade,
@@ -35,15 +38,16 @@ class CartApiFacade
         protected readonly ProductFacade $productFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $cartUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Cart
+    public function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Order
     {
         $this->assertFilledCustomerUserOrUuid($customerUser, $cartUuid);
 
@@ -69,15 +73,17 @@ class CartApiFacade
 
     /**
      * @param string $cartUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getCartByUuid(string $cartUuid): Cart
+    public function getCartByUuid(string $cartUuid): Order
     {
         $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
 
         if ($cart === null) {
             $cartIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartUuid);
             $cart = $this->cartFactory->create($cartIdentifier);
+            $this->em->persist($cart);
+            $this->em->flush();
         }
 
         return $cart;
@@ -86,9 +92,9 @@ class CartApiFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $cartUuid
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
+    public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Order
     {
         if ($customerUser === null && $cartUuid !== null) {
             $cart = $this->getCartByUuid($cartUuid);
@@ -119,14 +125,14 @@ class CartApiFacade
      * @param string $productUuid
      * @param int $quantity
      * @param bool $isAbsoluteQuantity
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
     public function addProductByUuidToCart(
         string $productUuid,
         int $quantity,
         bool $isAbsoluteQuantity,
-        Cart $cart,
+        Order $cart,
     ): AddProductResult {
         try {
             $product = $this->productFacade->getSellableByUuid(

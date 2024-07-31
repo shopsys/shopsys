@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
@@ -28,14 +29,14 @@ class TransportPriceProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getTransportPrice(Cart $cart, Transport $transport, DomainConfig $domainConfig): Price
+    public function getTransportPrice(Order $cart, Transport $transport, DomainConfig $domainConfig): Price
     {
-        $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
+        $orderInput = $this->orderInputFactory->createFromOrder($cart, $domainConfig);
         $orderInput->setTransport($transport);
 
         if (!$transport->isPacketery()) {

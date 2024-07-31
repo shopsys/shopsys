@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 
 class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
@@ -36,6 +37,8 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
     ): OrderProcessingData {
         $orderData = $orderProcessingData->orderData;
 
+        $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_PRODUCT] = Price::zero();
+        $orderData->resetItemsByType(OrderItemTypeEnum::TYPE_PRODUCT);
         foreach ($orderProcessingData->orderInput->getQuantifiedProducts() as $quantifiedProduct) {
             $quantifiedItemPrice = $this->quantifiedProductPriceCalculation->calculatePrice(
                 $quantifiedProduct,
@@ -48,6 +51,9 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
 
             $orderData->addTotalPrice($quantifiedItemPrice->getTotalPrice(), OrderItemTypeEnum::TYPE_PRODUCT);
         }
+        d('---');
+        d($orderProcessingData->orderData);
+        d('---X');
 
         return $orderProcessingStack->processNext($orderProcessingData);
     }

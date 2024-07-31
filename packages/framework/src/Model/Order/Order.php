@@ -12,13 +12,19 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
+use Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData;
+use Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 
 /**
  * @ORM\Table(name="orders")
@@ -356,6 +362,28 @@ class Order
     protected $modifiedAt;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode>
+     * @ORM\ManyToMany(
+     *     targetEntity="\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode"
+     * )
+     * @ORM\JoinTable(name="order_promo_codes")
+     * @ORM\OrderBy({"id" = "DESC"})
+     */
+    protected $promoCodes;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     */
+    protected $transportWatchedPrice;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     */
+    protected $paymentWatchedPrice;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string|null $orderNumber
      * @param string|null $urlHash
@@ -390,6 +418,8 @@ class Order
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
+        $this->promoCodes = new ArrayCollection();
+
         $this->setModifiedNow();
     }
 
@@ -480,6 +510,14 @@ class Order
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return $this->items->count() === 0;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
     protected function editData(OrderData $orderData): void
@@ -530,8 +568,12 @@ class Order
     protected function editOrderTransport(OrderData $orderData): void
     {
         $orderTransportData = $orderData->orderTransport;
-        $this->transport = $orderTransportData->transport;
-        $this->getTransportItem()->edit($orderTransportData);
+        if ($orderTransportData === null) {
+            $this->transport = null;
+        } else {
+            $this->transport = $orderTransportData->transport;
+            $this->getTransportItem()->edit($orderTransportData);
+        }
     }
 
     /**
@@ -540,8 +582,12 @@ class Order
     protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
-        $this->payment = $orderPaymentData->payment;
-        $this->getPaymentItem()->edit($orderPaymentData);
+        if ($orderPaymentData === null) {
+            $this->payment = null;
+        } else {
+            $this->payment = $orderPaymentData->payment;
+            $this->getPaymentItem()->edit($orderPaymentData);
+        }
     }
 
     /**
@@ -595,6 +641,7 @@ class Order
             $this->payment = null;
         }
         $this->items->removeElement($item);
+        $this->setModifiedNow();
     }
 
     /**
@@ -644,6 +691,7 @@ class Order
      */
     public function getTransport()
     {
+        // TODO it would be nice to have some "findTransport" and "findTransportItem" methods to avoid try-catching everywhere
         $transport = $this->getTransportItem()->getTransport();
 
         if ($transport === null) {
@@ -1225,5 +1273,168 @@ class Order
     public function setModifiedNow(): void
     {
         $this->modifiedAt = new DateTime();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
+     */
+    public function getQuantifiedProducts(): array
+    {
+        $quantifiedProducts = [];
+
+        foreach ($this->getProductItems() as $item) {
+            try {
+                $quantifiedProducts[$item->getId()] = new QuantifiedProduct($item->getProduct(), $item->getQuantity());
+            } catch (ProductNotFoundException) {
+                continue;
+            }
+        }
+
+        return $quantifiedProducts;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getProducts(): array
+    {
+        return array_map(
+            static fn (QuantifiedProduct $quantifiedProduct) => $quantifiedProduct->getProduct(),
+            $this->getQuantifiedProducts(),
+        );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
+     */
+    public function getAllAppliedPromoCodes()
+    {
+        return $this->promoCodes->getValues();
+    }
+
+    /**
+     * @param int $promoCodeId
+     */
+    public function removePromoCodeById(int $promoCodeId): void
+    {
+        foreach ($this->promoCodes as $promoCode) {
+            if ($promoCode->getId() === $promoCodeId) {
+                $this->promoCodes->removeElement($promoCode);
+                $this->setModifiedNow();
+
+                return;
+            }
+        }
+        $message = 'Promo code with ID = ' . $promoCodeId . ' is not applied.';
+
+        throw new InvalidCartItemException($message);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $paymentWatchedPrice
+     */
+    public function setPaymentWatchedPrice($paymentWatchedPrice): void
+    {
+        $this->paymentWatchedPrice = $paymentWatchedPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $transportWatchedPrice
+     */
+    public function setTransportWatchedPrice($transportWatchedPrice): void
+    {
+        $this->transportWatchedPrice = $transportWatchedPrice;
+    }
+
+    public function getTransportWatchedPrice(): ?Money
+    {
+        return $this->transportWatchedPrice;
+    }
+
+    public function getPaymentWatchedPrice(): ?Money
+    {
+        return $this->paymentWatchedPrice;
+    }
+
+    public function unsetCartTransport(): void
+    {
+        $this->transport = null;
+        $this->transportWatchedPrice = null;
+        $this->pickupPlaceIdentifier = null;
+        $this->setModifiedNow();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Transport\CartTransportData $cartTransportData
+     */
+    public function editCartTransport(CartTransportData $cartTransportData): void
+    {
+        $this->transport = $cartTransportData->transport;
+        $this->transportWatchedPrice = $cartTransportData->watchedPrice;
+        $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
+        $this->setModifiedNow();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Payment\CartPaymentData $cartPaymentData
+     */
+    public function editCartPayment(CartPaymentData $cartPaymentData): void
+    {
+        $this->payment = $cartPaymentData->payment;
+        $this->paymentWatchedPrice = $cartPaymentData->watchedPrice;
+        $this->goPayBankSwift = $cartPaymentData->goPayBankSwift;
+        $this->setModifiedNow();
+    }
+
+    public function unsetCartPayment(): void
+    {
+        $this->payment = null;
+        $this->paymentWatchedPrice = null;
+        $this->goPayBankSwift = null;
+        $this->setModifiedNow();
+    }
+
+    public function getTotalWeight(): int
+    {
+        $totalWeight = 0;
+
+        foreach ($this->getProductItems() as $item) {
+            try {
+                $product = $item->getProduct();
+                $totalWeight += $product->getWeight() * $item->getQuantity();
+            } catch (ProductNotFoundException $productNotFoundException) {
+                continue;
+            }
+        }
+
+        return $totalWeight;
+    }
+    public function unsetPickupPlaceIdentifier(): void
+    {
+        $this->pickupPlaceIdentifier = null;
+    }
+
+    /**
+     * @param string $promoCodeCode
+     * @return bool
+     */
+    public function isPromoCodeApplied(string $promoCodeCode): bool
+    {
+        return $this->promoCodes->exists(
+            static function ($key, PromoCode $promoCode) use ($promoCodeCode) {
+                return $promoCode->getCode() === $promoCodeCode;
+            },
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    public function applyPromoCode(PromoCode $promoCode): void
+    {
+        if (!$this->promoCodes->contains($promoCode)) {
+            $this->promoCodes->add($promoCode);
+            $this->setModifiedNow();
+        }
     }
 }

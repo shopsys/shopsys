@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalP
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 
 /**
  * @ORM\Table(name="order_items")
@@ -384,6 +385,10 @@ class OrderItem
     {
         $this->checkTypeProduct();
 
+        if ($this->product === null) {
+            throw new ProductNotFoundException();
+        }
+
         return $this->product;
     }
 
@@ -537,5 +542,22 @@ class OrderItem
     public function changeAddedAt(DateTime $addedAt): void
     {
         $this->addedAt = $addedAt;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
+     */
+    public function setUnitPrice(Price $unitPrice): void
+    {
+        $this->unitPriceWithoutVat = $unitPrice->getPriceWithoutVat();
+        $this->unitPriceWithVat = $unitPrice->getPriceWithVat();
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }

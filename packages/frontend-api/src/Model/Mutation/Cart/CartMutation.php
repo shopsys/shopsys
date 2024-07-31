@@ -12,6 +12,7 @@ use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
 use Shopsys\FrontendApiBundle\Model\Cart\Exception\InvalidCartItemUserError;
+use Shopsys\FrontendApiBundle\Model\Cart\WhateverOrderCartFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 
@@ -28,6 +29,7 @@ class CartMutation extends AbstractMutation
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartWatcherFacade $cartWatcherFacade,
         protected readonly OrderApiFacade $orderApiFacade,
+        protected readonly WhateverOrderCartFacade $whateverOrderCartFacade,
     ) {
     }
 
@@ -49,6 +51,9 @@ class CartMutation extends AbstractMutation
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
+        // TODO myslím, že bych měl začít tady, protože tady se vytváří ten košík jako takový
+        // TODO tzn. vytvořím Order entitu, z ní jsem pak schopen vytvořit OrderInput (viz "nová" OrderInputFactory::createFromOrder)
+        // TODO celé to na mě ale zatím působí dost blbě - buď musím počítat s tím, že sice mám Order entitu, ale nemá všechno přepočítané, nebo to musím furt dokola prohánět tím stackem middlewarů
         $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
         $addProductResult = $this->cartApiFacade->addProductByUuidToCart(
@@ -57,6 +62,8 @@ class CartMutation extends AbstractMutation
             $isAbsoluteQuantity,
             $cart,
         );
+        d('in cart mutation after add product');
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
 
         $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
 

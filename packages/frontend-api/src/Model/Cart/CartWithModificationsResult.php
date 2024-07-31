@@ -6,8 +6,9 @@ namespace Shopsys\FrontendApiBundle\Model\Cart;
 
 use LogicException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -26,7 +27,7 @@ class CartWithModificationsResult
     ];
 
     /**
-     * @var array<string, array<int, \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem>>
+     * @var array<string, array<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>>
      */
     protected array $itemModifications = [
         'noLongerListableCartItems' => [],
@@ -80,22 +81,22 @@ class CartWithModificationsResult
     protected ?Price $roundingPrice = null;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $cart
      */
-    public function __construct(protected Cart $cart)
+    public function __construct(protected Order $cart)
     {
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getUuid(): ?string
+    public function getUuid(): string
     {
-        return $this->cart->getCartIdentifier() !== '' ? $this->cart->getCartIdentifier() : null;
+        return $this->cart->getUuid();
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
     public function getItems(): array
     {
@@ -117,33 +118,33 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $cartItem
      */
-    public function addNoLongerListableCartItem(CartItem $cartItem): void
+    public function addNoLongerListableCartItem(OrderItem $cartItem): void
     {
         $this->itemModifications['noLongerListableCartItems'][] = $cartItem;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $cartItem
      */
-    public function addCartItemWithModifiedPrice(CartItem $cartItem): void
+    public function addCartItemWithModifiedPrice(OrderItem $cartItem): void
     {
         $this->itemModifications['cartItemsWithModifiedPrice'][] = $cartItem;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $cartItem
      */
-    public function addCartItemWithChangedQuantity(CartItem $cartItem): void
+    public function addCartItemWithChangedQuantity(OrderItem $cartItem): void
     {
         $this->itemModifications['cartItemsWithChangedQuantity'][] = $cartItem;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $cartItem
      */
-    public function addNoLongerAvailableCartItemDueToQuantity(CartItem $cartItem): void
+    public function addNoLongerAvailableCartItemDueToQuantity(OrderItem $cartItem): void
     {
         $this->itemModifications['noLongerAvailableCartItemsDueToQuantity'][] = $cartItem;
     }
@@ -276,7 +277,11 @@ class CartWithModificationsResult
      */
     public function getTransport(): ?Transport
     {
-        return $this->cart->getTransport();
+        try {
+            return $this->cart->getTransport();
+        } catch (OrderItemNotFoundException) {
+            return null;
+        }
     }
 
     /**
@@ -284,7 +289,11 @@ class CartWithModificationsResult
      */
     public function getPayment(): ?Payment
     {
-        return $this->cart->getPayment();
+        try {
+            return $this->cart->getPayment();
+        } catch (OrderItemNotFoundException) {
+            return null;
+        }
     }
 
     /**
@@ -292,11 +301,7 @@ class CartWithModificationsResult
      */
     public function getPromoCode(): ?string
     {
-        if ($this->cart->getFirstAppliedPromoCode() === null) {
-            return null;
-        }
-
-        return $this->cart->getFirstAppliedPromoCode()->getCode();
+        return $this->cart->getPromoCode();
     }
 
     /**
@@ -312,7 +317,7 @@ class CartWithModificationsResult
      */
     public function getPaymentGoPayBankSwift(): ?string
     {
-        return $this->cart->getPaymentGoPayBankSwift();
+        return $this->cart->getGoPayBankSwift();
     }
 
     /**

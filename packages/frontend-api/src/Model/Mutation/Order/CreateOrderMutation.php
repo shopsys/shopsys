@@ -58,7 +58,7 @@ class CreateOrderMutation extends AbstractMutation
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
 
-        $orderData = $this->orderDataFactory->createOrderDataFromArgument($argument);
+        $orderData = $this->orderDataFactory->createOrderDataFromArgument($argument); // TODO myslím si, že OrderData objektu bych se mohl úplně zbavit, pokud bych měl Order od začátku jako Order a jen bych z ní vytvářel OrderInput (jako jej teď vytvářím z košíku)
 
         $input = $argument['input'];
         $cartUuid = $input['cartUuid'];

@@ -45,6 +45,8 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
                 continue;
             }
 
+            d('abstractpromocode...');
+            d($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT));
             $products = array_map(
                 static fn (OrderItemData $orderItemData) => $orderItemData->product,
                 $orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT),

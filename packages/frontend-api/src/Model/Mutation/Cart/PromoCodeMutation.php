@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult;
+use Shopsys\FrontendApiBundle\Model\Cart\WhateverOrderCartFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
 class PromoCodeMutation extends AbstractMutation
@@ -32,6 +33,7 @@ class PromoCodeMutation extends AbstractMutation
         protected readonly CartPromoCodeFacade $cartPromoCodeFacade,
         protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly Domain $domain,
+        protected readonly WhateverOrderCartFacade $whateverOrderCartFacade,
     ) {
     }
 
@@ -55,7 +57,12 @@ class PromoCodeMutation extends AbstractMutation
 
         $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
+        d('applyPromoCodeToCartMutation');
         $this->cartPromoCodeFacade->applyPromoCodeByCode($cart, $promoCodeCode);
+        d($cart->getProducts());
+        d('applyPromoCodeToCartMutationXXX');
+        $this->whateverOrderCartFacade->updateCartOrder($cart);
+        d($cart->getProducts());
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }
