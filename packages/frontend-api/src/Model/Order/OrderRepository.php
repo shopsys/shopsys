@@ -177,4 +177,65 @@ class OrderRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
+     */
+    protected function findByUuidAndCustomer(string $uuid, Customer $customer): ?Order
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
+            ->andWhere('o.customer = :customer')->setParameter(':customer', $customer)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndCustomer(string $uuid, Customer $customer): Order
+    {
+        $order = $this->findByUuidAndCustomer($uuid, $customer);
+
+        if ($order === null) {
+            throw new OrderNotFoundUserError(sprintf('Order with UUID \'%s\' not found.', $uuid));
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param string $orderNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
+     */
+    protected function findByOrderNumberAndCustomer(string $orderNumber, Customer $customer): ?Order
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
+            ->andWhere('o.customer = :customer')->setParameter(':customer', $customer)
+            ->setMaxResults(1)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $orderNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByOrderNumberAndCustomer(string $orderNumber, Customer $customer): Order
+    {
+        $order = $this->findByOrderNumberAndCustomer($orderNumber, $customer);
+
+        if ($order === null) {
+            throw new OrderNotFoundUserError(sprintf('Order with order number \'%s\' not found.', $orderNumber));
+        }
+
+        return $order;
+    }
 }

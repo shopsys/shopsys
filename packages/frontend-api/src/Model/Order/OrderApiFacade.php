@@ -146,4 +146,24 @@ class OrderApiFacade
     {
         return $this->orderRepository->getCustomerOrderCount($customer);
     }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndCustomer(string $uuid, Customer $customer): Order
+    {
+        return $this->orderRepository->getByUuidAndCustomer($uuid, $customer);
+    }
+
+    /**
+     * @param string $orderNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByOrderNumberAndCustomer(string $orderNumber, Customer $customer): Order
+    {
+        return $this->orderRepository->getByOrderNumberAndCustomer($orderNumber, $customer);
+    }
 }
