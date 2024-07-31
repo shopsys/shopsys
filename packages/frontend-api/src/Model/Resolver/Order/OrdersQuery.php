@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
@@ -40,6 +41,8 @@ class OrdersQuery extends AbstractQuery
      */
     public function ordersQuery(Argument $argument): ConnectionInterface|Promise
     {
+        PageSizeValidator::checkMaxPageSize($argument);
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
