@@ -1,5 +1,3 @@
-version: "3.7"
-
 x-variables:
     blackfire_environments: &blackfire_environments
         BLACKFIRE_SERVER_ID:
