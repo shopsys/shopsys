@@ -94,11 +94,22 @@ class CustomerUserFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function createWithActivationMail(CustomerUserUpdateData $customerUserUpdateData)
+    {
+        $customer = $this->createCustomerWithAddresses($customerUserUpdateData);
+
+        return $this->createCustomerUserWithActivationMail($customer, $customerUserUpdateData->customerUserData);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function createCustomerUserWithRegistrationMail(
+    protected function createCustomerUserWithRegistrationMail(
         Customer $customer,
         CustomerUserData $customerUserData,
     ): CustomerUser {
@@ -107,6 +118,25 @@ class CustomerUserFacade
 
         if ($customerUserData->sendRegistrationMail) {
             $this->customerMailFacade->sendRegistrationMail($customerUser);
+        }
+
+        return $customerUser;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function createCustomerUserWithActivationMail(
+        Customer $customer,
+        CustomerUserData $customerUserData,
+    ): CustomerUser {
+        $customerUserData->customer = $customer;
+        $customerUser = $this->createCustomerUser($customer, $customerUserData);
+
+        if ($customerUserData->sendRegistrationMail) {
+            $this->sendActivationMail($customerUser);
         }
 
         return $customerUser;
