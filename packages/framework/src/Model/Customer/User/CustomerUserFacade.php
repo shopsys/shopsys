@@ -88,27 +88,7 @@ class CustomerUserFacade
      */
     public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->createCustomerWithBillingAddress(
-            $customerUserUpdateData->customerUserData->domainId,
-            $customerUserUpdateData->billingAddressData,
-        );
-
-        if (
-            $customerUserUpdateData->deliveryAddressData
-            && $customerUserUpdateData->deliveryAddressData->addressFilled
-        ) {
-            $customerUserUpdateData->deliveryAddressData->customer = $customer;
-            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled($customerUserUpdateData->deliveryAddressData);
-
-            $customerData = $this->customerDataFactory->createFromCustomer($customer);
-
-            if ($deliveryAddress !== null) {
-                $customerData->deliveryAddresses[] = $deliveryAddress;
-            }
-            $this->customerFacade->edit($customer->getId(), $customerData);
-
-            $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
-        }
+        $customer = $this->createCustomerWithAddresses($customerUserUpdateData);
 
         return $this->createCustomerUserWithRegistrationMail($customer, $customerUserUpdateData->customerUserData);
     }
@@ -442,5 +422,38 @@ class CustomerUserFacade
         $this->em->flush();
 
         return $customerUser;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    protected function createCustomerWithAddresses(CustomerUserUpdateData $customerUserUpdateData): Customer
+    {
+        $customer = $this->createCustomerWithBillingAddress(
+            $customerUserUpdateData->customerUserData->domainId,
+            $customerUserUpdateData->billingAddressData,
+        );
+
+        if (
+            $customerUserUpdateData->deliveryAddressData
+            && $customerUserUpdateData->deliveryAddressData->addressFilled
+        ) {
+            $customerUserUpdateData->deliveryAddressData->customer = $customer;
+            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled(
+                $customerUserUpdateData->deliveryAddressData,
+            );
+
+            $customerData = $this->customerDataFactory->createFromCustomer($customer);
+
+            if ($deliveryAddress !== null) {
+                $customerData->deliveryAddresses[] = $deliveryAddress;
+            }
+            $this->customerFacade->edit($customer->getId(), $customerData);
+
+            $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
+        }
+
+        return $customer;
     }
 }
