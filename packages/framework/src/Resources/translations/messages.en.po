@@ -2800,9 +2800,6 @@ msgstr ""
 msgid "Refunded amount"
 msgstr ""
 
-msgid "Registered cust."
-msgstr ""
-
 msgid "Registration confirmation"
 msgstr ""
 
@@ -2816,6 +2813,9 @@ msgid "Removed %dataType%: \"%readableValue%\""
 msgstr ""
 
 msgid "Reset filter"
+msgstr ""
+
+msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr ""
 
 msgid "Return back"
@@ -3064,6 +3064,9 @@ msgstr ""
 msgid "Send refund and save order"
 msgstr ""
 
+msgid "Send reset password"
+msgstr ""
+
 msgid "Sending emails off, no email will be sent from the app."
 msgstr ""
 
@@ -3296,6 +3299,9 @@ msgid "This status can't be deleted. This is automatically assigned status to al
 msgstr ""
 
 msgid "This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?"
+msgstr ""
+
+msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
 msgstr ""
 
 msgid "Thursday"
