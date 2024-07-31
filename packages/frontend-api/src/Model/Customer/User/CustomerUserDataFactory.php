@@ -50,6 +50,7 @@ class CustomerUserDataFactory
         $input = $argument['input'];
 
         $customerUserData = $this->customerUserDataFactory->createForCustomerWithPresetPricingGroup($customer);
+        $customerUserData->sendRegistrationMail = true;
 
         return $this->mapInputDataToCustomerUserData($input, $customerUserData);
     }
