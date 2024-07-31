@@ -67,7 +67,7 @@ You can find out your UID by running `id -u` and your GID by running `id -g`.
 #### 2.3 Compose Docker container
 
 ```sh
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 !!! note

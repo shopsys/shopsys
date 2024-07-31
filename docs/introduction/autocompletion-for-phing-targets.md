@@ -8,7 +8,7 @@ Phing can be run from several locations and on different machines, we summarize 
 
 ## Inside the container
 
-When you connect to the container either with `docker-compose exec ... bash`, `docker exec -it ... bash`, or `kubectl exec -it ... bash`,
+When you connect to the container either with `docker compose exec ... bash`, `docker exec -it ... bash`, or `kubectl exec -it ... bash`,
 you can take advantage of already working autocompletion.
 
 To use, you just type `php phing <tab><tab>` to see all possible completion words.
@@ -26,7 +26,7 @@ Create the alias for easier running Phing in the container from your host machin
 Add following into your profile (usually `~/.bash_profile`, `~/.bashrc`, or `~/.profile` file) to make alias available in newly opened terminal.
 
 ```bash
-alias dphing='docker-compose exec php-fpm ./phing'
+alias dphing='docker compose exec php-fpm ./phing'
 ```
 
 From now on you can invoke a phing from the container just by running `dphing` from the root of your project folder.

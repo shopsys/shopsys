@@ -101,8 +101,8 @@ tests:functional-and-acceptance:
         - tests
     script:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
-        - docker-compose up -d
-        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
+        - docker compose up -d
+        - docker compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
     after_script:
         - mkdir -p codeception/
         - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
@@ -131,14 +131,14 @@ test:storefront-acceptance:
         expire_in: 1 day
     script:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
-        - docker-compose up -d
-        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
+        - docker compose up -d
+        - docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
         - cd storefront
-        - docker-compose run cypress
+        - docker compose run cypress
     after_script:
-        - docker-compose logs php-fpm > php-fpm-log.txt
-        - docker-compose logs webserver > webserver-log.txt
-        - docker-compose logs storefront > storefront-log.txt
+        - docker compose logs php-fpm > php-fpm-log.txt
+        - docker compose logs webserver > webserver-log.txt
+        - docker compose logs storefront > storefront-log.txt
     interruptible: true
 
 review:
@@ -158,12 +158,12 @@ review:
     script:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
-        - docker-compose down --rmi all -v --remove-orphans
+        - docker compose down --rmi all -v --remove-orphans
         - chmod +x ./gitlab/scripts/rabbitmq-vhost.sh && ./gitlab/scripts/rabbitmq-vhost.sh create ${COMPOSE_PROJECT_NAME}
-        - docker-compose up -d
+        - docker compose up -d
         - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
-        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
-        - docker-compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
+        - docker compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
+        - docker compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
         - ./gitlab/scripts/set-urls-for-review.sh printDomains
     tags:
         - review
@@ -180,8 +180,8 @@ review:stop:
         - review
     script:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
-        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
-        - docker-compose down --rmi all -v --remove-orphans
+        - docker compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
+        - docker compose down --rmi all -v --remove-orphans
         - chmod +x ./gitlab/scripts/rabbitmq-vhost.sh && ./gitlab/scripts/rabbitmq-vhost.sh remove ${COMPOSE_PROJECT_NAME}
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
     rules:

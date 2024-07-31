@@ -136,7 +136,7 @@ smtp-server:
 +            - "1025:1025"
 ```
 
--   Run `docker-compose up -d`
+-   Run `docker compose up -d`
 -   change the port in `MAILER_DSN` environment variable value (you can redefine the value in your `.env.local` file):
 
 ```diff
