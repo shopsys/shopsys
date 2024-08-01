@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Validator\InputValidator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
@@ -22,6 +23,7 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\CannotDeleteOwnCustomerUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\CustomerUserNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\LastCustomerUserWithDefaultRoleGroupError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
@@ -209,7 +211,11 @@ class CustomerUserMutation extends BaseTokenMutation
         $validator->validate();
         $input = $argument['input'];
 
-        $customerUser = $this->customerUserFacade->getByUuid($input['customerUserUuid']);
+        try {
+            $customerUser = $this->customerUserFacade->getByUuid($input['customerUserUuid']);
+        } catch (CustomerUserNotFoundException $exception) {
+            throw new CustomerUserNotFoundUserError('Customer user with uuid ' . $input['customerUserUuid'] . ' not found');
+        }
         $customerUserData = $this->customerUserDataFactory->createForCustomerUserWithArgument($customerUser, $argument);
 
         return $this->customerUserFacade->editCustomerUser($customerUser->getId(), $customerUserData);
@@ -225,8 +231,12 @@ class CustomerUserMutation extends BaseTokenMutation
 
         $input = $argument['input'];
 
-        $currentUser = $this->customerUserFacade->getByUuid($frontendApiUser->getUuid());
-        $customerUser = $this->customerUserFacade->getByUuid($input['customerUserUuid']);
+        try {
+            $currentUser = $this->customerUserFacade->getByUuid($frontendApiUser->getUuid());
+            $customerUser = $this->customerUserFacade->getByUuid($input['customerUserUuid']);
+        } catch (CustomerUserNotFoundException $exception) {
+            throw new CustomerUserNotFoundUserError('Customer user with uuid ' . $input['customerUserUuid'] . ' not found');
+        }
 
         $this->checkCustomerUserCanBeDeleted($customerUser, $currentUser);
 

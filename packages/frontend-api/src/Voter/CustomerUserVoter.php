@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Voter;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
@@ -86,8 +87,13 @@ class CustomerUserVoter extends AbstractB2bVoter
     {
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */
         $loggedUser = $token->getUser();
-        $loggedCustomerUser = $this->customerUserFacade->getByUuid($loggedUser->getUuid());
-        $editedCustomerUser = $this->customerUserFacade->getByUuid($inputData['customerUserUuid']);
+
+        try {
+            $loggedCustomerUser = $this->customerUserFacade->getByUuid($loggedUser->getUuid());
+            $editedCustomerUser = $this->customerUserFacade->getByUuid($inputData['customerUserUuid']);
+        } catch (CustomerUserNotFoundException $exception) {
+            return false;
+        }
 
         return $loggedCustomerUser->getCustomer()->getId() === $editedCustomerUser->getCustomer()->getId();
     }
