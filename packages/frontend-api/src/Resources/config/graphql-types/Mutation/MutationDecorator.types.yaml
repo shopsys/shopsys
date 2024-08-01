@@ -197,3 +197,11 @@ MutationDecorator:
                         type: "RemoveCustomerUserDataInput!"
                 resolve: "@=mutation('removeCustomerUserMutation', args)"
                 access: "@=isGranted('can_manage_customer_user_voter', args)"
+            CreateComplaint:
+                type: Complaint!
+                description: "Create a new complaint"
+                args:
+                    input:
+                        type: ComplaintInput!
+                        validation: cascade
+                resolve: "@=mutation('createComplaintMutation', args, validator)"

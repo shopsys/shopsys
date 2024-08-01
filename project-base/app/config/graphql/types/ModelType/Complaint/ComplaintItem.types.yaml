@@ -1,0 +1,4 @@
+ComplaintItem:
+    type: object
+    inherits:
+        - 'ComplaintItemDecorator'
