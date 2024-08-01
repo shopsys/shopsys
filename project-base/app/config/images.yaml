@@ -54,3 +54,6 @@
 
 -   name: parameterValue
     class: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+
+-   name: salesRepresentative
+    class: Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative

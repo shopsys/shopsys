@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative\SalesRepresentativeFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentativeNotFoundException;
-use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class SalesRepresentativeController extends AdminBaseController
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
+        protected readonly SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
@@ -64,7 +66,7 @@ class SalesRepresentativeController extends AdminBaseController
     #[Route(path: '/sales-representative/new/')]
     public function newAction(Request $request): Response
     {
-        $salesRepresentativeData = new SalesRepresentativeData();
+        $salesRepresentativeData = $this->salesRepresentativeDataFactory->create();
         $form = $this->createForm(SalesRepresentativeFormType::class, $salesRepresentativeData);
         $form->handleRequest($request);
 
@@ -100,10 +102,11 @@ class SalesRepresentativeController extends AdminBaseController
     public function editAction(Request $request, int $id): Response
     {
         $salesRepresentative = $this->salesRepresentativeFacade->getById($id);
-        $salesRepresentativeData = new SalesRepresentativeData();
-        $salesRepresentativeData->fillFromEntity($salesRepresentative);
+        $salesRepresentativeData = $this->salesRepresentativeDataFactory->createFromSalesRepresentative($salesRepresentative);
 
-        $form = $this->createForm(SalesRepresentativeFormType::class, $salesRepresentativeData);
+        $form = $this->createForm(SalesRepresentativeFormType::class, $salesRepresentativeData, [
+            'salesRepresentative' => $salesRepresentative,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

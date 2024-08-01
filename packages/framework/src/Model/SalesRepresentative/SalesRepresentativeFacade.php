@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class SalesRepresentativeFacade
 {
@@ -13,11 +14,13 @@ class SalesRepresentativeFacade
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeRepository $salesRepresentativeRepository
      * @param \Doctrine\ORM\EntityManager $entityManager
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFactory $salesRepresentativeFactory
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         protected readonly SalesRepresentativeRepository $salesRepresentativeRepository,
         protected readonly EntityManagerInterface $entityManager,
         protected readonly SalesRepresentativeFactory $salesRepresentativeFactory,
+        protected readonly ImageFacade $imageFacade,
     ) {
     }
 
@@ -39,6 +42,8 @@ class SalesRepresentativeFacade
 
         $this->entityManager->persist($salesRepresentative);
         $this->entityManager->flush();
+
+        $this->imageFacade->manageImages($salesRepresentative, $salesRepresentativeData->image);
 
         return $salesRepresentative;
     }
@@ -62,6 +67,8 @@ class SalesRepresentativeFacade
     ): void {
         $salesRepresentative->edit($salesRepresentativeData);
         $this->entityManager->flush();
+
+        $this->imageFacade->manageImages($salesRepresentative, $salesRepresentativeData->image);
     }
 
     /**

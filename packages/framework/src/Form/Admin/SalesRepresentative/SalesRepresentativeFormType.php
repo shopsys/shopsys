@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative;
 
+use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData;
 use Symfony\Component\Form\AbstractType;
@@ -33,15 +35,18 @@ class SalesRepresentativeFormType extends AbstractType
     {
         $this->salesRepresentative = $options['salesRepresentative'];
 
-        $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
-            'label' => t('System data'),
-        ]);
-
         if ($this->salesRepresentative instanceof SalesRepresentative) {
+            $builderSystemDataGroup = $builder->create('systemData', GroupType::class, [
+                'label' => t('System data'),
+            ]);
+
             $builderSystemDataGroup->add('formId', DisplayOnlyType::class, [
                 'label' => t('ID'),
                 'data' => $this->salesRepresentative->getId(),
             ]);
+
+            $builder
+                ->add($builderSystemDataGroup);
         }
 
         $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
@@ -91,9 +96,32 @@ class SalesRepresentativeFormType extends AbstractType
                 'label' => t('Telephone'),
             ]);
 
+        $builderImageGroup = $builder->create('image', GroupType::class, [
+            'label' => t('Image'),
+        ]);
+
+        $builderImageGroup
+            ->add('image', ImageUploadType::class, [
+                'required' => false,
+                'image_entity_class' => SalesRepresentative::class,
+                'file_constraints' => [
+                    new Constraints\Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg'],
+                        'mimeTypesMessage' => 'Image can be only in JPG or PNG format',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'label' => t('Upload image'),
+                'entity' => $options['salesRepresentative'],
+                'info_text' => t('You can upload following formats: PNG, JPG'),
+                'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
+            ]);
+
         $builder
-            ->add($builderSystemDataGroup)
             ->add($builderPersonalDataGroup)
+            ->add($builderImageGroup)
             ->add('save', SubmitType::class);
     }
 

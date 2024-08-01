@@ -31,19 +31,12 @@ class SalesRepresentativeData
      */
     public $telephone;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $image;
+
     public function __construct()
     {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative $salesRepresentative
-     */
-    public function fillFromEntity(SalesRepresentative $salesRepresentative): void
-    {
-        $this->uuid = $salesRepresentative->getUuid();
-        $this->firstName = $salesRepresentative->getFirstName();
-        $this->lastName = $salesRepresentative->getLastName();
-        $this->email = $salesRepresentative->getEmail();
-        $this->telephone = $salesRepresentative->getTelephone();
     }
 }
