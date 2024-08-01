@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
-use Overblog\GraphQLBundle\Error\UserWarning;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -31,7 +30,7 @@ class CurrentCustomerUserQuery extends AbstractQuery
         $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         if ($currentCustomerUser === null) {
-            throw new UserWarning('No customer user is currently logged in.');
+            throw new InvalidTokenUserMessageException('No customer user is currently logged in.');
         }
 
         return $currentCustomerUser;
