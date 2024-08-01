@@ -603,6 +603,60 @@ type CompanyCustomerUser implements CustomerUser {
   uuid: Uuid!
 }
 
+type Complaint {
+  "Date and time when the complaint was created"
+  createdAt: DateTime!
+  "City name for delivery"
+  deliveryCity: String!
+  "Company name for delivery"
+  deliveryCompanyName: String
+  "Country for delivery"
+  deliveryCountry: Country!
+  "First name of the contact person for delivery"
+  deliveryFirstName: String!
+  "Last name of the contact person for delivery"
+  deliveryLastName: String!
+  "Zip code for delivery"
+  deliveryPostcode: String!
+  "Street name for delivery"
+  deliveryStreet: String!
+  "Contact telephone number for delivery"
+  deliveryTelephone: String!
+  "All items in the complaint"
+  items: [ComplaintItem!]!
+  "Unique complaint number"
+  number: String!
+  "UUID"
+  uuid: Uuid!
+}
+
+input ComplaintInput {
+  "Delivery address"
+  deliveryAddress: DeliveryAddressInput!
+  "All items in the complaint"
+  items: [ComplaintItemInput!]!
+  "UUID of the order"
+  orderUuid: Uuid!
+}
+
+type ComplaintItem {
+  "Description of the complaint order item"
+  description: String!
+  "Order item"
+  orderItem: OrderItem!
+  "Quantity of the order item"
+  quantity: Int!
+}
+
+input ComplaintItemInput {
+  "Description of the complaint item"
+  description: String!
+  "UUID of the order item"
+  orderItemUuid: Uuid!
+  "Quantity of the complaint item"
+  quantity: Int!
+}
+
 input ContactFormInput {
   "Email address of the sender"
   email: String!
@@ -954,6 +1008,8 @@ type Mutation {
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "Send message to the site owner"
   ContactForm(input: ContactFormInput!): Boolean!
+  "Create a new complaint"
+  CreateComplaint(input: ComplaintInput!): Complaint!
   "Create a new delivery address"
   CreateDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
   "Creates complete order with products and addresses"

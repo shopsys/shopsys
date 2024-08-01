@@ -1,0 +1,19 @@
+ComplaintInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            orderUuid:
+                type: "Uuid!"
+                description: "UUID of the order"
+                validation:
+                    -   NotBlank:
+                            message: "Order is required"
+            deliveryAddress:
+                type: "DeliveryAddressInput!"
+                description: "Delivery address"
+                validation: cascade
+            items:
+                type: "[ComplaintItemInput!]!"
+                description: "All items in the complaint"
+                validation: cascade

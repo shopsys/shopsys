@@ -1,0 +1,41 @@
+ComplaintDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            number:
+                type: "String!"
+                description: "Unique complaint number"
+            createdAt:
+                type: "DateTime!"
+                description: "Date and time when the complaint was created"
+            deliveryFirstName:
+                type: "String!"
+                description: "First name of the contact person for delivery"
+            deliveryLastName:
+                type: "String!"
+                description: "Last name of the contact person for delivery"
+            deliveryCompanyName:
+                type: "String"
+                description: "Company name for delivery"
+            deliveryTelephone:
+                type: "String!"
+                description: "Contact telephone number for delivery"
+            deliveryStreet:
+                type: "String!"
+                description: "Street name for delivery"
+            deliveryCity:
+                type: "String!"
+                description: "City name for delivery"
+            deliveryPostcode:
+                type: "String!"
+                description: "Zip code for delivery"
+            deliveryCountry:
+                type: "Country!"
+                description: "Country for delivery"
+            items:
+                type: "[ComplaintItem!]!"
+                description: "All items in the complaint"
