@@ -34,6 +34,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
     const currentSearchString = useCurrentSearchStringQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const mappedFilter = mapParametersFilter(currentFilter);
+    const parameters = mappedFilter?.parameters?.map((parameter) => parameter.parameter);
 
     const previousLoadMoreRef = useRef(currentLoadMore);
     const previousPageRef = useRef(currentPage);
@@ -99,6 +100,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
             currentPage,
             currentLoadMore,
             userIdentifier,
+            parameters,
         );
 
         if (
@@ -125,6 +127,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
                 pageSize,
                 isAutocomplete: false,
                 userIdentifier,
+                parameters,
             },
             previousProductsFromCache,
         );
@@ -145,6 +148,7 @@ const readProductsSearchFromCache = (
     endCursor: string,
     pageSize: number,
     userIdentifier: string,
+    parameters?: string[] | null,
 ): TypeListedProductConnectionFragment | undefined => {
     const dataFromCache = client.readQuery<TypeSearchProductsQuery, TypeSearchProductsQueryVariables>(
         SearchProductsQueryDocument,
@@ -156,6 +160,7 @@ const readProductsSearchFromCache = (
             pageSize,
             isAutocomplete: false,
             userIdentifier,
+            parameters,
         },
     )?.data?.productsSearch;
 
@@ -171,6 +176,7 @@ const getPreviousProductsFromCache = (
     currentPage: number,
     currentLoadMore: number,
     userIdentifier: string,
+    parameters?: string[] | null,
 ) => {
     let cachedPartOfProducts: TypeListedProductConnectionFragment['edges'] | undefined;
     let iterationsCounter = currentLoadMore;
@@ -185,6 +191,7 @@ const getPreviousProductsFromCache = (
             offsetEndCursor,
             pageSize,
             userIdentifier,
+            parameters,
         );
 
         if (productsSearchFromCache) {
@@ -210,6 +217,7 @@ export const useSearchQuery = (searchString: string | undefined) => {
     const currentSort = useCurrentSortQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const mappedFilter = mapParametersFilter(currentFilter);
+    const parameters = mappedFilter?.parameters?.map((parameter) => parameter.parameter) ?? [];
     const { pageSize, isMoreThanOnePage } = getPageSizeInfo(false, currentLoadMore);
     const endCursor = getEndCursor(currentPage, isMoreThanOnePage ? undefined : currentLoadMore);
     const client = useClient();
@@ -228,6 +236,7 @@ export const useSearchQuery = (searchString: string | undefined) => {
                     filter: mappedFilter,
                     orderingMode: currentSort,
                     pageSize,
+                    parameters,
                 })
                 .then((searchResponse) => {
                     setSearchData(searchResponse.data);

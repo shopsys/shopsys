@@ -13,6 +13,7 @@ export type TypeSearchProductsQueryVariables = Types.Exact<{
   pageSize: Types.InputMaybe<Types.Scalars['Int']['input']>;
   isAutocomplete: Types.Scalars['Boolean']['input'];
   userIdentifier: Types.Scalars['Uuid']['input'];
+  parameters?: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;
 }>;
 
 
@@ -97,13 +98,13 @@ export type TypeSearchProductsQuery = { __typename?: 'Query', productsSearch: { 
     
 
 export const SearchProductsQueryDocument = gql`
-    query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
+    query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $parameters: [Uuid!] = []) {
   productsSearch(
     after: $endCursor
     orderingMode: $orderingMode
     filter: $filter
     first: $pageSize
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
     orderingMode
     defaultOrderingMode

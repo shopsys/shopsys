@@ -16,6 +16,7 @@ export type TypeSearchQueryVariables = Types.Exact<{
   orderingMode: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
   filter: Types.InputMaybe<Types.TypeProductFilter>;
   pageSize: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  parameters?: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;
 }>;
 
 
@@ -100,19 +101,19 @@ export type TypeSearchQuery = { __typename?: 'Query', articlesSearch: Array<{ __
     
 
 export const SearchQueryDocument = gql`
-    query SearchQuery($search: String!, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int) {
+    query SearchQuery($search: String!, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $parameters: [Uuid!] = []) {
   articlesSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
     ...SimpleArticleInterfaceFragment
   }
   brandSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
     ...ListedBrandFragment
   }
   categoriesSearch(
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
     ...ListedCategoryConnectionFragment
   }
@@ -121,7 +122,7 @@ export const SearchQueryDocument = gql`
     orderingMode: $orderingMode
     filter: $filter
     first: $pageSize
-    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier, parameters: $parameters}
   ) {
     orderingMode
     defaultOrderingMode

@@ -6,15 +6,35 @@ query SearchQuery(
     $orderingMode: ProductOrderingModeEnum
     $filter: ProductFilter
     $pageSize: Int
+    $parameters: [Uuid!] = []
 ) {
-    articlesSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
+    articlesSearch(
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+            parameters: $parameters
+        }
+    ) {
         ...SimpleArticleInterfaceFragment
     }
-    brandSearch(searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
+    brandSearch(
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+            parameters: $parameters
+        }
+    ) {
         ...ListedBrandFragment
     }
     categoriesSearch(
-        searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+            parameters: $parameters
+        }
     ) {
         ...ListedCategoryConnectionFragment
     }
@@ -27,7 +47,12 @@ query SearchQuery(
         orderingMode: $orderingMode
         filter: $filter
         first: $pageSize
-        searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+            parameters: $parameters
+        }
     ) {
         orderingMode
         defaultOrderingMode
