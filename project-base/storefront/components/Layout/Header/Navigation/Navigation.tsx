@@ -7,7 +7,7 @@ export type NavigationProps = {
 
 export const Navigation: FC<NavigationProps> = ({ navigation }) => {
     return (
-        <ul className="relative hidden w-full lg:flex lg:gap-6 xl:gap-12">
+        <ul className="relative hidden w-full lg:flex">
             {navigation.map((navigationItem, index) => (
                 <NavigationItem key={index} navigationItem={navigationItem} />
             ))}
