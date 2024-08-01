@@ -739,6 +739,62 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   uuid: Scalars['Uuid']['output'];
 };
 
+export type TypeComplaint = {
+  __typename?: 'Complaint';
+  /** Date and time when the complaint was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** City name for delivery */
+  deliveryCity: Scalars['String']['output'];
+  /** Company name for delivery */
+  deliveryCompanyName: Maybe<Scalars['String']['output']>;
+  /** Country for delivery */
+  deliveryCountry: TypeCountry;
+  /** First name of the contact person for delivery */
+  deliveryFirstName: Scalars['String']['output'];
+  /** Last name of the contact person for delivery */
+  deliveryLastName: Scalars['String']['output'];
+  /** Zip code for delivery */
+  deliveryPostcode: Scalars['String']['output'];
+  /** Street name for delivery */
+  deliveryStreet: Scalars['String']['output'];
+  /** Contact telephone number for delivery */
+  deliveryTelephone: Scalars['String']['output'];
+  /** All items in the complaint */
+  items: Array<TypeComplaintItem>;
+  /** Unique complaint number */
+  number: Scalars['String']['output'];
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+export type TypeComplaintInput = {
+  /** Delivery address */
+  deliveryAddress: TypeDeliveryAddressInput;
+  /** All items in the complaint */
+  items: Array<TypeComplaintItemInput>;
+  /** UUID of the order */
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+export type TypeComplaintItem = {
+  __typename?: 'ComplaintItem';
+  /** Description of the complaint order item */
+  description: Scalars['String']['output'];
+  /** Order item */
+  orderItem: TypeOrderItem;
+  /** Quantity of the order item */
+  quantity: Scalars['Int']['output'];
+};
+
+export type TypeComplaintItemInput = {
+  /** Description of the complaint item */
+  description: Scalars['String']['input'];
+  /** UUID of the order item */
+  orderItemUuid: Scalars['Uuid']['input'];
+  /** Quantity of the complaint item */
+  quantity: Scalars['Int']['input'];
+};
+
 export type TypeContactFormInput = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
@@ -1152,6 +1208,8 @@ export type TypeMutation = {
   ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
   ContactForm: Scalars['Boolean']['output'];
+  /** Create a new complaint */
+  CreateComplaint: TypeComplaint;
   /** Create a new delivery address */
   CreateDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Creates complete order with products and addresses */
@@ -1249,6 +1307,11 @@ export type TypeMutationChangeTransportInCartArgs = {
 
 export type TypeMutationContactFormArgs = {
   input: TypeContactFormInput;
+};
+
+
+export type TypeMutationCreateComplaintArgs = {
+  input: TypeComplaintInput;
 };
 
 

@@ -49,6 +49,12 @@ msgstr "Nové heslo musí mít minimálně {{ limit }} znaků"
 msgid "Old password must be at least {{ limit }} characters long"
 msgstr "Staré heslo musí mít minimálně {{ limit }} znaků"
 
+msgid "Order is required"
+msgstr "Objednávka je povinná"
+
+msgid "Order item is required"
+msgstr "Položka objednávky je povinná"
+
 msgid "Password must be at least {{ limit }} characters long"
 msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 
@@ -115,6 +121,9 @@ msgstr "Prosím, zadávejte pouze čísla a znak +"
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
 
+msgid "Please enter quantity"
+msgstr "Zadejte prosím množství"
+
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 
@@ -162,6 +171,12 @@ msgstr "Promo kód je dostupný pouze přihlášeným uživatelům."
 
 msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
 msgstr "Promo kód není dostupný pro vaši cenovou skupinu. Možná jste se zapomněl přihlásit."
+
+msgid "Quantity must be an integer"
+msgstr "Množství musí být celé číslo"
+
+msgid "Quantity must be greater than 0"
+msgstr "Množství musí být větší než 0"
 
 msgid "Selected payment price has changed"
 msgstr "Cena vybrané dopravy se změnila"

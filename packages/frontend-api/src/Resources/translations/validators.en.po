@@ -49,6 +49,12 @@ msgstr ""
 msgid "Old password must be at least {{ limit }} characters long"
 msgstr ""
 
+msgid "Order is required"
+msgstr ""
+
+msgid "Order item is required"
+msgstr ""
+
 msgid "Password must be at least {{ limit }} characters long"
 msgstr ""
 
@@ -115,6 +121,9 @@ msgstr ""
 msgid "Please enter password"
 msgstr ""
 
+msgid "Please enter quantity"
+msgstr ""
+
 msgid "Please enter street"
 msgstr ""
 
@@ -161,6 +170,12 @@ msgid "Promo code is available for registered customers only."
 msgstr ""
 
 msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
+msgstr ""
+
+msgid "Quantity must be an integer"
+msgstr ""
+
+msgid "Quantity must be greater than 0"
 msgstr ""
 
 msgid "Selected payment price has changed"

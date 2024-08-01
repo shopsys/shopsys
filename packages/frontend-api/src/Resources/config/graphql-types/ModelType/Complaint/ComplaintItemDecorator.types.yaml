@@ -1,0 +1,14 @@
+ComplaintItemDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            orderItem:
+                type: "OrderItem!"
+                description: "Order item"
+            quantity:
+                type: "Int!"
+                description: "Quantity of the order item"
+            description:
+                type: "String!"
+                description: "Description of the complaint order item"
