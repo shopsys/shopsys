@@ -91,6 +91,13 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $pricingGroup;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative")
+     * @ORM\JoinColumn(name="sales_representative_id", referencedColumnName="id", nullable=true)
+     */
+    protected $salesRepresentative;
+
+    /**
      * @var string|null
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -181,6 +188,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->firstName = $customerUserData->firstName;
         $this->lastName = $customerUserData->lastName;
         $this->pricingGroup = $customerUserData->pricingGroup;
+        $this->salesRepresentative = $customerUserData->salesRepresentative;
         $this->telephone = $customerUserData->telephone;
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
@@ -335,6 +343,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function getPricingGroup()
     {
         return $this->pricingGroup;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative|null
+     */
+    public function getSalesRepresentative()
+    {
+        return $this->salesRepresentative;
     }
 
     /**

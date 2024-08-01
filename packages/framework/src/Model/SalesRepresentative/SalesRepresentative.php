@@ -126,4 +126,12 @@ class SalesRepresentative
     {
         return $this->telephone;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
 }

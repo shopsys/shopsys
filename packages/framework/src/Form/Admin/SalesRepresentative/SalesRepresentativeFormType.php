@@ -81,8 +81,8 @@ class SalesRepresentativeFormType extends AbstractType
                 'label' => t('Email'),
             ])
             ->add('telephone', TextType::class, [
-                'required' => false,
                 'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
