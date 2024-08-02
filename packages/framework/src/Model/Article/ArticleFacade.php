@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler;
 
@@ -19,6 +20,7 @@ class ArticleFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
      * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -27,6 +29,7 @@ class ArticleFacade
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ArticleFactoryInterface $articleFactory,
         protected readonly ArticleExportScheduler $articleExportScheduler,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -88,6 +91,7 @@ class ArticleFacade
         $this->em->flush();
 
         $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
         return $article;
     }
@@ -116,6 +120,7 @@ class ArticleFacade
         $this->em->flush();
 
         $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
         return $article;
     }
@@ -131,6 +136,7 @@ class ArticleFacade
         $this->em->flush();
 
         $this->articleExportScheduler->scheduleRowIdForImmediateExport((int)$articleId);
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
     }
 
     /**
