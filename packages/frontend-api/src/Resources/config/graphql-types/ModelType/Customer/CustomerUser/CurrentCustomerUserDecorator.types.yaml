@@ -47,3 +47,6 @@ CurrentCustomerUserDecorator:
             loginInfo:
                 type: "LoginInfo!"
                 description: "Current login information"
+            salesRepresentative:
+                type: "SalesRepresentative"
+                description: "Sales representative assigned to customer"
