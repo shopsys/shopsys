@@ -173,8 +173,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 7,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
-                $this->getParameterValueIdForFirstDomain('3.5 kg') => 6,
+                $this->getParameterValueIdForFirstDomain('5400') => 1,
+                $this->getParameterValueIdForFirstDomain('3500') => 6,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 5,
@@ -233,8 +233,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 2,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
-                $this->getParameterValueIdForFirstDomain('3.5 kg') => 1,
+                $this->getParameterValueIdForFirstDomain('5400') => 1,
+                $this->getParameterValueIdForFirstDomain('3500') => 1,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 1,
@@ -310,8 +310,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 6,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('3.5 kg') => 5,
-                $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
+                $this->getParameterValueIdForFirstDomain('3500') => 5,
+                $this->getParameterValueIdForFirstDomain('5400') => 1,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
@@ -354,7 +354,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
+            [[$firstDomainLocale => t('3500', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
 
         $countData = new ProductFilterCountData();
@@ -364,7 +364,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         $countData->countByFlagId = [];
         $countData->countByParameterIdAndValueId = [
             $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
+                $this->getParameterValueIdForFirstDomain('5400') => 1,
             ],
         ];
 
@@ -398,7 +398,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
+            [[$firstDomainLocale => t('3500', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
 
         $countData = new ProductFilterCountData();
@@ -435,8 +435,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WEIGHT, Parameter::class)->getId() => [
-                $this->getParameterValueIdForFirstDomain('3.5 kg') => 4,
-                $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
+                $this->getParameterValueIdForFirstDomain('3500') => 4,
+                $this->getParameterValueIdForFirstDomain('5400') => 1,
             ],
             $this->getReference(ParameterDataFixture::PARAM_WIFI, Parameter::class)->getId() => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,

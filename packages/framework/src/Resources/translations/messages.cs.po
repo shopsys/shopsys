@@ -664,6 +664,9 @@ msgstr "Napište nám"
 msgid "Content"
 msgstr "Obsah"
 
+msgid "Convert values associated with parameter - %name%"
+msgstr "Převeďte hodnoty spojené s parametrem - %name%"
+
 msgid "Copied to clipboard!"
 msgstr "Zkopírováno do schránky!"
 
@@ -763,6 +766,9 @@ msgstr "Vytvořit nový stav objednávek"
 msgid "Create new page"
 msgstr "Vytvořit novou stránku"
 
+msgid "Create new parameter"
+msgstr "Vytvořit nový parametr"
+
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
 
@@ -771,9 +777,6 @@ msgstr "Vytvořit novou prodejnu"
 
 msgid "Create new warehouse"
 msgstr "Vytvořit nový sklad"
-
-msgid "Create parameter"
-msgstr "Vytvořit parametr"
 
 msgid "Create payment"
 msgstr "Vytvořit platbu"
@@ -1219,6 +1222,9 @@ msgstr "Upravit"
 msgid "Edit domain icon"
 msgstr "Změnit ikonu domény"
 
+msgid "Edit parameter"
+msgstr "Upravit parametr"
+
 msgid "Edit store"
 msgstr "Upravit prodejnu"
 
@@ -1323,6 +1329,9 @@ msgstr "Editace objednávky - č. %number%"
 
 msgid "Editing page"
 msgstr "Editace stránky"
+
+msgid "Editing parameter"
+msgstr "Editace parametru"
 
 msgid "Editing parameter of type color"
 msgstr "Editace parametru typu barva"
@@ -2119,6 +2128,9 @@ msgstr "Nové objednávky"
 msgid "New page"
 msgstr "Nová stránka"
 
+msgid "New parameter"
+msgstr "Nový parametr"
+
 msgid "New password settings URL address"
 msgstr "URL adresa pro nastavení nového hesla"
 
@@ -2142,6 +2154,9 @@ msgstr "Nová stránka slideru"
 
 msgid "New store"
 msgstr "Nová prodejna"
+
+msgid "New value"
+msgstr "Nová hodnota"
 
 msgid "New warehouse"
 msgstr "Nový sklad"
@@ -2286,6 +2301,9 @@ msgstr "Pokusili jste se přihlásit výchozími přihlašovacími údaji. V pro
 
 msgid "Ok"
 msgstr "Ok"
+
+msgid "Old value"
+msgstr "Původní hodnota"
 
 msgid "On each run (usually every 5 minutes)"
 msgstr "Po každém spuštění (obvykle každých 5 minut)"
@@ -2434,6 +2452,12 @@ msgstr "Zaplacená částka"
 msgid "Parameter"
 msgstr "Parametr"
 
+msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Parametr <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
+
+msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Parametr <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
+
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr "Parametr <strong>{{ name }}</strong> byl smazán"
 
@@ -2445,6 +2469,12 @@ msgstr "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }
 
 msgid "Parameter value of type color"
 msgstr "Hodnota parameteru typu barva"
+
+msgid "Parameter values"
+msgstr "Hodnoty parametru"
+
+msgid "Parameter values associated with parameter - <strong><a href=\"{{ url }}\">{{ parameterName }}</a></strong> modified."
+msgstr "Hodnoty parametru spojené s parametrem - <strong><a href=\"{{ url }}\">{{ parameterName }}</a></strong> byly upraveny."
 
 msgid "Parameter values of type color"
 msgstr "Hodnoty parameteru typu barva"
@@ -3244,6 +3274,9 @@ msgstr "Tento e-mail byl odeslán z kontaktního formuláře umístěného pod p
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr "Toto je poslední zákaznický účet. Odstraní všechna související data. Opravdu to chcete smazat?"
 
+msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
+msgstr "Toto se používá pro řazení parametrů na kartě produktu a řazení parametrů na stránce vyhledávání při použití Luigi's Boxu. Pro řazení parametrů ve filtru použijte nastavení v kategorii."
+
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 
@@ -3673,6 +3706,9 @@ msgstr "Nelze vybrat zboží, které je variantou"
 msgid "You don't have permission to perform this action."
 msgstr "Nemáte oprávnění k provedení této akce."
 
+msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
+msgstr "Změnili jste typ parametru, což vyžaduje převod jeho hodnot na %type%. Zde je seznam hodnot, které je třeba zkontrolovat."
+
 msgid "You have made changes, don't forget to save them!"
 msgstr "Provedli jste změny, nezapomeňte je uložit!"
 
@@ -3778,6 +3814,9 @@ msgstr "není"
 msgid "not entered"
 msgstr "není zadáno"
 
+msgid "numbers"
+msgstr "čísla"
+
 msgid "or"
 msgstr "nebo"
 
@@ -3828,6 +3867,9 @@ msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] 
 
 msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
 msgstr "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
+
+msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
+msgstr "{1} Existuje jeden parametr typu slider, který nemá vyplněné své číselné hodnoty.|[2,4] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty.|[5,Inf] Existuje %count% parametrů typu slider, které nemají vyplněné své číselné hodnoty."
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."

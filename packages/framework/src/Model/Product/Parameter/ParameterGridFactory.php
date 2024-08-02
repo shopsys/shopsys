@@ -33,7 +33,6 @@ class ParameterGridFactory implements GridFactoryInterface
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getAdminLocale();
         $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource());
-        $grid->setDefaultOrder('pt.name');
 
         if (count($locales) > 1) {
             $grid->addColumn(
@@ -62,13 +61,11 @@ class ParameterGridFactory implements GridFactoryInterface
             );
         }
 
-        $grid->addColumn(
-            'parameterType',
-            'p.parameterType',
-            t('Type'),
-        );
-
+        $grid->addColumn('parameterType', 'p.parameterType', t('Type'));
+        $grid->addColumn('parameterUnit', 'ut.name', t('Unit'));
         $grid->addColumn('visible', 'p.visible', t('Filter by'), true);
+
+        $grid->addEditActionColumn('admin_parameter_edit', ['id' => 'p.id']);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
@@ -88,10 +85,14 @@ class ParameterGridFactory implements GridFactoryInterface
         $locales = $this->localization->getLocalesOfAllDomains();
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
-            ->select('p, pt')
+            ->select('p, pt, ut')
             ->from(Parameter::class, 'p')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->leftJoin('p.unit', 'u')
+            ->leftJoin('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
+            ->setParameter('locale', $this->localization->getAdminLocale())
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy('pt.name', 'ASC');
 
         foreach ($locales as $locale) {
             if ($locale !== $this->localization->getAdminLocale()) {

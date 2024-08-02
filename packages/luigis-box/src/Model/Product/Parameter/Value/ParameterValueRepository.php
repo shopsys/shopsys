@@ -36,4 +36,25 @@ class ParameterValueRepository
             ])
             ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale))->getQuery()->getResult();
     }
+
+    /**
+     * @param string[] $parameterValues,
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getSliderParameterValuesForMinAndMaxByLocale(
+        array $parameterValues,
+        string $locale,
+    ): array {
+        return $this->em->createQueryBuilder()
+            ->select('pv')
+            ->from(ParameterValue::class, 'pv')
+            ->where('pv.numericValue IN(:parameterValues)')
+            ->andWhere('pv.locale = :locale')
+            ->setParameters([
+                'parameterValues' => $parameterValues,
+                'locale' => $locale,
+            ])
+            ->getQuery()->getResult();
+    }
 }

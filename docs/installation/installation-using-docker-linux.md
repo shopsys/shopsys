@@ -11,14 +11,12 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
     -   At least version **8.3 or higher**
 -   [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 -   [Docker](https://docs.docker.com/engine/installation/)
-    -   At least version **17.05 or higher** so it supports [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).
     -   It's necessary to perform [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user), to be able to run docker commands as non-root user.
 -   [Docker Compose](https://docs.docker.com/compose/install/)
-    -   At least version **1.17.0 or higher** because we use compose file version `3.4`
 
 ## Steps
 
-### 1. Create new project from Shopsys Platform sources
+### 1. Create a new project from Shopsys Platform sources
 
 ```sh
 composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
@@ -67,7 +65,7 @@ You can find out your UID by running `id -u` and your GID by running `id -g`.
 #### 2.3 Compose Docker container
 
 ```sh
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 !!! note

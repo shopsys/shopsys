@@ -50,6 +50,10 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
             }
 
             $normData[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
+
+            if ($productParameterValueData->parameter->isSlider()) {
+                $normData[$parameterId]->numericValue = $productParameterValueData->parameterValueData->text;
+            }
         }
 
         return array_values($normData);
@@ -72,6 +76,11 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
                         $productParameterValueData->parameter = $productParameterValuesLocalizedData->parameter;
                         $parameterValueData = $this->parameterValueDataFactory->create();
                         $parameterValueData->text = $valueText;
+
+                        if ($productParameterValuesLocalizedData->parameter->isSlider()) {
+                            $parameterValueData->numericValue = $valueText;
+                        }
+
                         $parameterValueData->locale = $locale;
                         $productParameterValueData->parameterValueData = $parameterValueData;
 

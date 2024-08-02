@@ -41,6 +41,14 @@ class ParameterValueFilterOption
     /**
      * @return string|null
      */
+    public function getNumericValue(): ?string
+    {
+        return $this->parameterValue->getNumericValue();
+    }
+
+    /**
+     * @return string|null
+     */
     public function getRgbHex(): ?string
     {
         return $this->parameterValue->getRgbHex();

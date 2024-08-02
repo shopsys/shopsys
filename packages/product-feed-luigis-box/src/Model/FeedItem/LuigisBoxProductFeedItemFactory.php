@@ -70,7 +70,11 @@ class LuigisBoxProductFeedItemFactory
 
         foreach ($this->productCachedAttributesFacade->getProductParameterValues($product, $locale) as $productParameterValue) {
             $parameterName = str_replace('.', '', $productParameterValue->getParameter()->getName($locale));
-            $parameterValuesIndexedByName[$parameterName] = $productParameterValue->getValue()->getText();
+            $parameterValue = $productParameterValue->getParameter()->isSlider() ? $productParameterValue->getValue()->getNumericValue() : $productParameterValue->getValue()->getText();
+
+            if ($parameterValue !== null) {
+                $parameterValuesIndexedByName[$parameterName] = $parameterValue;
+            }
         }
 
         $mainVariantId = null;

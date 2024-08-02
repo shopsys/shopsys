@@ -26,13 +26,13 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
     } = useComparisonTable(comparedProducts.length);
 
     const getParametersDataState = useMemo(() => {
-        const parametersData: { name: string; values: string[] }[] = [];
+        const parametersData: { name: string; unit: string | undefined; values: string[] }[] = [];
         comparedProducts.forEach((product) => {
             product.parameters.forEach((parameter) => {
                 const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
 
                 if (indexOfParameter === -1) {
-                    parametersData.push({ name: parameter.name, values: [] });
+                    parametersData.push({ name: parameter.name, unit: parameter.unit?.name, values: [] });
                 }
             });
         });

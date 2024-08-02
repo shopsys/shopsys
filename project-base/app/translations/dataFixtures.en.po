@@ -13,9 +13,6 @@ msgstr ""
 msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
 msgstr ""
 
-msgid "1 kg"
-msgstr ""
-
 msgid "100 Czech crowns ticket"
 msgstr ""
 
@@ -41,9 +38,6 @@ msgid "14 Mpix"
 msgstr ""
 
 msgid "15 bar"
-msgstr ""
-
-msgid "150 g"
 msgstr ""
 
 msgid "16mil."
@@ -103,9 +97,6 @@ msgstr ""
 msgid "250"
 msgstr ""
 
-msgid "250 g"
-msgstr ""
-
 msgid "250 kWh/year"
 msgstr ""
 
@@ -134,9 +125,6 @@ msgid "295 x 245 x 15 mm <br /> cartridge with active carbon"
 msgstr ""
 
 msgid "2W"
-msgstr ""
-
-msgid "3.5 kg"
 msgstr ""
 
 msgid "30\""
@@ -173,9 +161,6 @@ msgid "36\" Philips 32PFL4308"
 msgstr ""
 
 msgid "36\" Philips CRT 32PFL4308"
-msgstr ""
-
-msgid "380 g"
 msgstr ""
 
 msgid "3“"
@@ -232,16 +217,10 @@ msgstr ""
 msgid "5 Mpx"
 msgstr ""
 
-msgid "5.4 kg"
-msgstr ""
-
 msgid "5.5\""
 msgstr ""
 
 msgid "50"
-msgstr ""
-
-msgid "50 g"
 msgstr ""
 
 msgid "51,5\""
@@ -260,15 +239,6 @@ msgid "54\" Philips CRT 32PFL4308"
 msgstr ""
 
 msgid "55"
-msgstr ""
-
-msgid "560 g"
-msgstr ""
-
-msgid "580 g"
-msgstr ""
-
-msgid "580 kg"
 msgstr ""
 
 msgid "5“"
@@ -1922,9 +1892,6 @@ msgid "We are looking forward to your visit."
 msgstr ""
 
 msgid "Weight"
-msgstr ""
-
-msgid "Weight (kg)"
 msgstr ""
 
 msgid "Well known USB cable with A and micro B connectors."

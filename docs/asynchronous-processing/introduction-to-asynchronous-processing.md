@@ -173,7 +173,7 @@ This container consumes messages from every queue (except the `failed` queue).
 
 The consumer is automatically restarted after each 60s, so your changes are applied each 60s.
 Keep that in mind when you are working on the consumer's code.
-You can always restart the consumer manually by running `docker-compose restart php-consumer`.
+You can always restart the consumer manually by running `docker compose restart php-consumer`.
 
 ### Production usage
 

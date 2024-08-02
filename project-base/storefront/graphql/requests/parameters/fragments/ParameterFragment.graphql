@@ -3,6 +3,10 @@ fragment ParameterFragment on Parameter {
     uuid
     name
     visible
+    unit {
+        __typename
+        name
+    }
     values {
         __typename
         uuid

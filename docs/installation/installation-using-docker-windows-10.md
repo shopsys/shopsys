@@ -44,7 +44,7 @@ You will be prompted to create new user.
 -   Also turn on `Debian` under `Enable integration with additional distros`.
 -   Click `Apply & Restart` button.
 
-### Install dependencies, Docker and docker-compose in Debian
+### Install dependencies, Docker and docker compose in Debian
 
 We have prepared installation script for Debian dependencies in order to speed up the installation process.
 In `Debian` application run these commands:
@@ -128,7 +128,7 @@ mkdir -p vendor var/postgres-data var/elasticsearch-data
 Then rebuild and start containers
 
 ```sh
-docker-compose up -d
+docker compose up -d
 ```
 
 !!! note

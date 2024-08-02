@@ -7,6 +7,9 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
+msgid "-- Choose group --"
+msgstr ""
+
 msgid "301 (Permanent redirect)"
 msgstr ""
 
@@ -305,6 +308,9 @@ msgid "GTM ID"
 msgstr ""
 
 msgid "GTM creative"
+msgstr ""
+
+msgid "Group"
 msgstr ""
 
 msgid "Groups"
@@ -695,6 +701,9 @@ msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</stro
 msgstr ""
 
 msgid "Unable to load list of language constants"
+msgstr ""
+
+msgid "Unit"
 msgstr ""
 
 msgid "Unlimited"

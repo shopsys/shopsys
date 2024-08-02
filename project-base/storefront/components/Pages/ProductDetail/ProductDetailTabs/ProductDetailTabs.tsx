@@ -43,7 +43,12 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                 </Cell>
 
                                 <Cell className="py-2 text-right text-sm leading-5">
-                                    {parameter.values.map((value, index) => formatParameterValue(value.text, index))}
+                                    {parameter.values.map((value, index) =>
+                                        formatParameterValue(
+                                            value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                            index,
+                                        ),
+                                    )}
                                 </Cell>
                             </Row>
                         ))}

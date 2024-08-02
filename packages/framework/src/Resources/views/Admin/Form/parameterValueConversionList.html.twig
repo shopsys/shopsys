@@ -1,0 +1,49 @@
+{% macro parameterValueRow(parameterValue, index) %}
+    <tr class="js-form-group table-form__row" data-index="{{ index }}">
+        <td class="table-form__cell  table-form__cell--del-before table-form-cell-short">
+            <div class="input__wrap">
+                {{ form_widget(parameterValue.oldValueText, { attr: { class: 'input--flag'} })  }}
+                <span class="input__flag">
+                    {{ localeFlag(parameterValue.vars.value.locale) }}
+                </span>
+                {{ form_errors(parameterValue.oldValueText, { errors_attr: { class: 'table-params__cell__error' } } ) }}
+            </div>
+        </td>
+        <td class="table-form__cell table-form__cell--del">
+            <span class="svg svg-arrow-right"></span>
+        </td>
+        <td class="table-form__cell table-form__cell--del-before">
+            <div class="input__wrap">
+                {{ form_widget(parameterValue.newValueText, { attr: { class: 'input--flag'} })  }}
+                <span class="input__flag">
+                    {{ localeFlag(parameterValue.vars.value.locale) }}
+                </span>
+                {{ form_errors(parameterValue.newValueText, { errors_attr: { class: 'table-params__cell__error' } } ) }}
+            </div>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block parameter_value_conversion_list_widget %}
+    {% import _self as self %}
+    <div class="js-form-group form-group">
+        <table class="table-form" id="product_form_parameters">
+            <thead>
+                <tr class="table-form__row">
+                    <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Old value'|trans }}</th>
+                    <th class="table-form__cell table-form__cell--del"></th>
+                    <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'New value'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody data-index="{{ form|length }}">
+                {{ form_errors(form) }}
+
+                {% for key, parameterValue in form.children %}
+                    {{ self.parameterValueRow(parameterValue, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock parameter_value_conversion_list_widget %}

@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -25,6 +28,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
  * @method int[] getParametersIdsSortedByPositionFilteredByCategory(\App\Model\Category\Category $category)
  * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] getParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method updateParameterValuesByConversion(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueConversionData[] $parameterValuesConversionDataIndexedByParameterValueId)
+ * @method \App\Model\Product\Parameter\Parameter[] getSliderParametersWithoutTheirsNumericValueFilled()
+ * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
  */
 class ParameterFacade extends BaseParameterFacade
 {
@@ -35,6 +42,9 @@ class ParameterFacade extends BaseParameterFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
@@ -44,6 +54,9 @@ class ParameterFacade extends BaseParameterFacade
         EventDispatcherInterface $eventDispatcher,
         CategoryParameterRepository $categoryParameterRepository,
         UploadedFileFacade $uploadedFileFacade,
+        ParameterValueDataFactory $parameterValueDataFactory,
+        ParameterValueFactory $parameterValueFactory,
+        ProductRecalculationDispatcher $productRecalculationDispatcher,
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
     ) {
         parent::__construct(
@@ -53,6 +66,9 @@ class ParameterFacade extends BaseParameterFacade
             $eventDispatcher,
             $categoryParameterRepository,
             $uploadedFileFacade,
+            $parameterValueDataFactory,
+            $parameterValueFactory,
+            $productRecalculationDispatcher,
         );
     }
 

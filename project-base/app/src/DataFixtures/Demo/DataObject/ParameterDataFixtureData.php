@@ -15,6 +15,7 @@ class ParameterDataFixtureData
      * @param array $asFilterInCategories
      * @param \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
+     * @param int $orderingPriority
      */
     public function __construct(
         public string $name,
@@ -22,6 +23,7 @@ class ParameterDataFixtureData
         public array $asFilterInCategories = [],
         public ?ParameterGroup $parameterGroup = null,
         public ?Unit $unit = null,
+        public int $orderingPriority = 0,
     ) {
     }
 }

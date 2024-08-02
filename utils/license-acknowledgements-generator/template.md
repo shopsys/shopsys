@@ -23,7 +23,7 @@ You can check all the dependencies using the instructions from the section Libra
 {{ placeholder.storefrontNpm }}
 
 ## Images and libraries installed for a full run of Shopsys Platform on Docker
-These images and packages are configured in `docker-compose.yml` and in `Dockerfile`. We do not redistribute these packages, we are only referencing them to download, user agrees to download these images by pulling and building images done by `docker-compose up` or `docker build`.
+These images and packages are configured in `docker-compose.yml` and in `Dockerfile`. We do not redistribute these packages, we are only referencing them to download, user agrees to download these images by pulling and building images done by `docker compose up` or `docker build`.
 
 ### Postgres
 Image: `postgres:12.1-alpine`  

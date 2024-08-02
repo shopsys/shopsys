@@ -115,7 +115,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         ), $this->getParameterValueIdForFirstDomain(
             '48',
         )], 10 => [$this->getParameterValueIdForFirstDomain(
-            '50 g',
+            '50',
         )]];
 
         $filter = $this->createFilter()

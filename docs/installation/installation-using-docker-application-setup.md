@@ -10,7 +10,7 @@ Now that the Docker environment is prepared we can setup the application itself.
 ### 1.1. Connect into terminal of the Docker container
 
 ```sh
-docker-compose exec php-fpm bash
+docker compose exec php-fpm bash
 ```
 
 ### 1.2. Install dependencies and configure parameters
@@ -59,7 +59,7 @@ and Redis storage using [Redis commander](https://github.com/joeferner/redis-com
 Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).
 You can use [Kibana](https://www.elastic.co/downloads/kibana) for Elasticseacrh management, it is available on [http://127.0.0.1:5601](http://127.0.0.1:5601).
 
-If you need to inspect your application logs, use `docker-compose logs` command.
+If you need to inspect your application logs, use `docker compose logs` command.
 For more information about logging see [the separate article](../introduction/logging.md).
 
 _And now you can [start building your application](../introduction/start-building-your-application.md)._

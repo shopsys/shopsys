@@ -664,6 +664,9 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
+msgid "Convert values associated with parameter - %name%"
+msgstr ""
+
 msgid "Copied to clipboard!"
 msgstr ""
 
@@ -763,6 +766,9 @@ msgstr ""
 msgid "Create new page"
 msgstr ""
 
+msgid "Create new parameter"
+msgstr ""
+
 msgid "Create new product"
 msgstr ""
 
@@ -770,9 +776,6 @@ msgid "Create new store"
 msgstr ""
 
 msgid "Create new warehouse"
-msgstr ""
-
-msgid "Create parameter"
 msgstr ""
 
 msgid "Create payment"
@@ -1219,6 +1222,9 @@ msgstr ""
 msgid "Edit domain icon"
 msgstr ""
 
+msgid "Edit parameter"
+msgstr ""
+
 msgid "Edit store"
 msgstr ""
 
@@ -1322,6 +1328,9 @@ msgid "Editing order - Nr. %number%"
 msgstr ""
 
 msgid "Editing page"
+msgstr ""
+
+msgid "Editing parameter"
 msgstr ""
 
 msgid "Editing parameter of type color"
@@ -2119,6 +2128,9 @@ msgstr ""
 msgid "New page"
 msgstr ""
 
+msgid "New parameter"
+msgstr ""
+
 msgid "New password settings URL address"
 msgstr ""
 
@@ -2141,6 +2153,9 @@ msgid "New slider page"
 msgstr ""
 
 msgid "New store"
+msgstr ""
+
+msgid "New value"
 msgstr ""
 
 msgid "New warehouse"
@@ -2285,6 +2300,9 @@ msgid "Oh, you just tried to log in using default credentials. We do not allow t
 msgstr ""
 
 msgid "Ok"
+msgstr ""
+
+msgid "Old value"
 msgstr ""
 
 msgid "On each run (usually every 5 minutes)"
@@ -2434,6 +2452,12 @@ msgstr ""
 msgid "Parameter"
 msgstr ""
 
+msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr ""
+
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -2444,6 +2468,12 @@ msgid "Parameter value <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</
 msgstr ""
 
 msgid "Parameter value of type color"
+msgstr ""
+
+msgid "Parameter values"
+msgstr ""
+
+msgid "Parameter values associated with parameter - <strong><a href=\"{{ url }}\">{{ parameterName }}</a></strong> modified."
 msgstr ""
 
 msgid "Parameter values of type color"
@@ -3244,6 +3274,9 @@ msgstr ""
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
 msgstr ""
 
+msgid "This is used for ordering of parameters on product detail and ordering of parameters on search page when using Luigi's Box. For ordering of parameters in filter use settings in the category."
+msgstr ""
+
 msgid "This item can be set in product detail of a specific variant"
 msgstr ""
 
@@ -3673,6 +3706,9 @@ msgstr ""
 msgid "You don't have permission to perform this action."
 msgstr ""
 
+msgid "You have changed a parameter type which requires conversion of its values to a %type%. Here is a list of values, that needs to be reviewed."
+msgstr ""
+
 msgid "You have made changes, don't forget to save them!"
 msgstr ""
 
@@ -3778,6 +3814,9 @@ msgstr ""
 msgid "not entered"
 msgstr ""
 
+msgid "numbers"
+msgstr ""
+
 msgid "or"
 msgstr ""
 
@@ -3827,6 +3866,9 @@ msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
 msgstr ""
 
 msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
+msgstr ""
+
+msgid "{1} There is one parameter slider that does not have its numeric values filled in.|[2,Inf] There are %count% parameter sliders that does not have its numeric values filled in."
 msgstr ""
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."

@@ -25,12 +25,18 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getAll()
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByName(\App\Model\Product\Product $product, string $locale)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByOrderingPriorityAndName(\App\Model\Product\Product $product, string $locale)
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
  * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersByIds(int[] $parameterIds, string $locale)
+ * @method \App\Model\Product\Product[] getFirstTenProductsWithSliderParameterValuesWithoutTheirsNumericValueFilled(string $locale)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] getParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method updateParameterValueInProductsByConversion(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue)
+ * @method \App\Model\Product\Parameter\Parameter[] getSliderParametersWithoutTheirsNumericValueFilled()
+ * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
+ * @method \App\Model\Product\Product[] getProductsByParameterValues(\Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -46,7 +52,8 @@ class ParameterRepository extends BaseParameterRepository
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
             ->groupBy('p, pt');
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
@@ -65,7 +72,8 @@ class ParameterRepository extends BaseParameterRepository
             ->select('p')
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
             ->where('p.parameterType != :parameterType')
-            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER);
+            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER)
+            ->orderBy('p.orderingPriority', 'DESC');
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
 
@@ -142,9 +150,9 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(
+    protected function getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder(
         BaseProduct $product,
-        $locale,
+        string $locale,
     ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('ppv')
@@ -158,8 +166,9 @@ class ParameterRepository extends BaseParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->addOrderBy('pg.orderingPriority', 'ASC')
-            ->addOrderBy('p.orderingPriority', 'ASC');
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy('pg.orderingPriority', 'DESC')
+            ->addOrderBy('pt.name');
     }
 
     /**
@@ -229,6 +238,7 @@ class ParameterRepository extends BaseParameterRepository
                 pt.name as parameter_name,
                 pv.uuid as parameter_value_uuid,
                 pv.text as parameter_value_text,
+                pv.numericValue as parameter_value_numeric_value,
                 pgt.name as parameter_group,
                 put.name as parameter_unit',
             )
@@ -243,7 +253,7 @@ class ParameterRepository extends BaseParameterRepository
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
             ->orderBy('ordering_priority', 'DESC')
-            ->addOrderBy('parameter_id')
+            ->addOrderBy('parameter_name')
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,
@@ -266,6 +276,10 @@ class ParameterRepository extends BaseParameterRepository
             $productId = $productIdAndParameterNameAndValue['productId'];
             $parameterValue = $productIdAndParameterNameAndValue['text'];
 
+            if ($productIdAndParameterNameAndValue['unit'] !== '') {
+                $parameterValue .= ' ' . $productIdAndParameterNameAndValue['unit'];
+            }
+
             if ($productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] ?? false) {
                 $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] .= '/' . $parameterValue;
             } else {
@@ -274,5 +288,18 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $productParameterValuesIndexedByProductIdAndParameterName;
+    }
+
+    /**
+     * @return \App\Model\Product\Parameter\ParameterGroup[]
+     */
+    public function getAllParameterGroups(): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pg')
+            ->from(ParameterGroup::class, 'pg')
+            ->orderBy('pg.orderingPriority', 'ASC')
+            ->getQuery()
+            ->execute();
     }
 }

@@ -67,6 +67,10 @@ class ParameterRepository
             ->where('p.uuid IN (:uuids)')
             ->setParameter('uuids', $uuids);
 
+        if ($entityName === Parameter::class) {
+            $queryBuilder->orderBy('p.orderingPriority', 'DESC');
+        }
+
         $idsIndexedByUuids = [];
 
         foreach ($queryBuilder->getQuery()->getArrayResult() as $idAndUuid) {

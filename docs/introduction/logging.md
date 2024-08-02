@@ -20,7 +20,7 @@ This approach prevents logs from being output to console during console commands
 To see the logs from all containers including the Postgres database, web server etc. simply run:
 
 ```sh
-docker-compose logs
+docker compose logs
 ```
 
 The output will consist of log messages on separate lines, starting with the container name:
@@ -33,7 +33,7 @@ shopsys-framework-php-fpm | [2018-07-23 11:42:41] slow.NOTICE: 3.14159265359 App
 
 !!! tip
 
-    If you're only interested in some specific messages you can use `grep`, e.g., `docker-compose logs | grep slow.NOTICE` for slow responses.
+    If you're only interested in some specific messages you can use `grep`, e.g., `docker compose logs | grep slow.NOTICE` for slow responses.
 
 ## Conclusion
 

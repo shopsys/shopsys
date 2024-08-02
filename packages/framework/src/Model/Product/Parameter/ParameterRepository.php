@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -119,7 +120,7 @@ class ParameterRepository
             ->select('p')
             ->from(Parameter::class, 'p')
             ->join('p.translations', 'pt')
-            ->orderBy('p.id')
+            ->orderBy('p.orderingPriority', 'DESC')
             ->getQuery()
             ->execute();
     }
@@ -188,8 +189,10 @@ class ParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(Product $product, $locale)
-    {
+    protected function getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder(
+        Product $product,
+        string $locale,
+    ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
@@ -201,7 +204,7 @@ class ParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->orderBy('p.orderingPriority', 'ASC')
+            ->orderBy('p.orderingPriority', 'DESC')
             ->addOrderBy('pt.name');
     }
 
@@ -221,9 +224,9 @@ class ParameterRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValuesByProductSortedByName(Product $product, $locale)
+    public function getProductParameterValuesByProductSortedByOrderingPriorityAndName(Product $product, $locale)
     {
-        $queryBuilder = $this->getProductParameterValuesByProductSortedByNameQueryBuilder($product, $locale);
+        $queryBuilder = $this->getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder($product, $locale);
 
         return $queryBuilder->getQuery()->execute();
     }
@@ -236,11 +239,13 @@ class ParameterRepository
     public function getParameterValuesIndexedByProductIdAndParameterNameForProducts(array $products, $locale)
     {
         $queryBuilder = $this->em->createQueryBuilder()
-            ->select('IDENTITY(ppv.product) as productId', 'pt.name', 'pv.text')
+            ->select('IDENTITY(ppv.product) as productId', 'pt.name', 'pv.text', 'uv.name as unit')
             ->from(ProductParameterValue::class, 'ppv')
             ->join('ppv.parameter', 'p')
             ->join('p.translations', 'pt')
             ->join('ppv.value', 'pv')
+            ->leftJoin('p.unit', 'u')
+            ->leftJoin('u.translations', 'uv', Join::WITH, 'uv.locale = :locale')
             ->where('ppv.product IN (:products)')
             ->andWhere('pv.locale = :locale')
             ->andWhere('pt.locale = :locale')
@@ -307,6 +312,11 @@ class ParameterRepository
             $parameterName = $productIdAndParameterNameAndValue['name'];
             $productId = $productIdAndParameterNameAndValue['productId'];
             $parameterValue = $productIdAndParameterNameAndValue['text'];
+
+            if ($productIdAndParameterNameAndValue['unit'] !== '') {
+                $parameterValue .= ' ' . $productIdAndParameterNameAndValue['unit'];
+            }
+
             $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] = $parameterValue;
         }
 
@@ -320,7 +330,7 @@ class ParameterRepository
     public function getParametersByUuids(array $uuids): array
     {
         $parametersByUuid = [];
-        $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids]);
+        $parameters = $this->getParameterRepository()->findBy(['uuid' => $uuids], ['orderingPriority' => 'DESC']);
 
         foreach ($parameters as $parameter) {
             $parametersByUuid[$parameter->getUuid()] = $parameter;
@@ -358,7 +368,8 @@ class ParameterRepository
             ->where('p.id IN (:parameterIds)')
             ->setParameter('parameterIds', $parameterIds)
             ->setParameter('locale', $locale)
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
+            ->orderBy('p.orderingPriority', 'DESC')
+            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
 
         return $parametersQueryBuilder->getQuery()->getResult();
     }
@@ -418,5 +429,123 @@ class ParameterRepository
         }
 
         return $parameterValue;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByParameter(Parameter $parameter): array
+    {
+        return $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->select('pv')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value')
+            ->join(Parameter::class, 'p', Join::WITH, 'ppv.parameter = p')
+            ->where('ppv.parameter = :parameter')
+            ->setParameter(':parameter', $parameter)
+            ->groupBy('pv')
+            ->orderBy('pv.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue
+     */
+    public function updateParameterValueInProductsByConversion(
+        Parameter $parameter,
+        ParameterValue $oldParameterValue,
+        ParameterValue $newParameterValue,
+    ): void {
+        $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->update(ProductParameterValue::class, 'ppv')
+            ->set('ppv.value', ':newParameterValue')
+            ->where('ppv.parameter = :parameter')
+            ->andWhere('ppv.value = :oldParameterValue')
+            ->setParameter(':parameter', $parameter)
+            ->setParameter(':oldParameterValue', $oldParameterValue)
+            ->setParameter(':newParameterValue', $newParameterValue)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountOfSliderParametersWithoutTheirsNumericValueFilled(): int
+    {
+        try {
+            return $this->getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder()
+                ->select('COUNT(DISTINCT ppv.value)')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException) {
+            return 0;
+        }
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getSliderParametersWithoutTheirsNumericValueFilled(): array
+    {
+        return $this->getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder()
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getSliderParametersWithoutTheirsNumericValueFilledQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('DISTINCT p')
+            ->from(Parameter::class, 'p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.parameter = p')
+            ->join('ppv.value', 'pv')
+            ->where('pv.numericValue IS NULL')
+            ->andWhere('p.parameterType = :type')
+            ->setParameter('type', Parameter::PARAMETER_TYPE_SLIDER);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return int
+     */
+    public function getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(Parameter $parameter): int
+    {
+        try {
+            return $this->em->createQueryBuilder()
+                ->select('COUNT(DISTINCT ppv.value)')
+                ->from(Parameter::class, 'p')
+                ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.parameter = p')
+                ->join('ppv.value', 'pv')
+                ->where('pv.numericValue IS NULL')
+                ->andWhere('p = :parameter')
+                ->setParameter('parameter', $parameter)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } catch (NoResultException) {
+            return 0;
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getProductsByParameterValues(array $parameterValues): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.product = p')
+            ->where('ppv.value IN(:parameterValues)')
+            ->setParameter('parameterValues', $parameterValues)
+            ->getQuery()
+            ->execute();
     }
 }

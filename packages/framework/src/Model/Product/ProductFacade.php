@@ -222,13 +222,20 @@ class ProductFacade
         $toFlush = [];
 
         foreach ($productParameterValuesData as $productParameterValueData) {
+            $parameterValue = $this->parameterRepository->findOrCreateParameterValueByValueTextAndLocale(
+                $productParameterValueData->parameterValueData->text,
+                $productParameterValueData->parameterValueData->locale,
+            );
+
+            if ($productParameterValueData->parameter->isSlider()) {
+                $parameterValue->setNumericValue($productParameterValueData->parameterValueData->numericValue);
+                $toFlush[] = $parameterValue;
+            }
+
             $productParameterValue = $this->productParameterValueFactory->create(
                 $product,
                 $productParameterValueData->parameter,
-                $this->parameterRepository->findOrCreateParameterValueByValueTextAndLocale(
-                    $productParameterValueData->parameterValueData->text,
-                    $productParameterValueData->parameterValueData->locale,
-                ),
+                $parameterValue,
             );
             $this->em->persist($productParameterValue);
             $toFlush[] = $productParameterValue;

@@ -21,12 +21,12 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   repeat
 -   check the instructions in all sections; any of them could be relevant to you
 -   the typical upgrade sequence should be:
-    -   run `docker-compose down --volumes` to turn off your containers
+    -   run `docker compose down --volumes` to turn off your containers
     -   _(macOS only)_ run `mutagen-compose down --volumes` instead
     -   follow upgrade notes in the _Infrastructure_ section (related to `docker-compose.yml`, `Dockerfile`, docker containers, `nginx.conf`, `php.ini`, etc.)
     -   _(MacOS, Windows only)_ run `docker-sync start` to create volumes
-    -   run `docker-compose build --no-cache --pull` to build your images without cache and with the latest version
-    -   run `docker-compose up -d --force-recreate --remove-orphans` to start the application again
+    -   run `docker compose build --no-cache --pull` to build your images without cache and with the latest version
+    -   run `docker compose up -d --force-recreate --remove-orphans` to start the application again
     -   update the `shopsys/*` dependencies in `composer.json` to the version you are upgrading to
         -   e.g., `"shopsys/framework": "v7.0.0"`
     -   follow upgrade notes in the _Composer dependencies_ section (related with `composer.json`)

@@ -72,6 +72,6 @@ class ParameterFilterOption
      */
     protected function getFloatValuesFromParameterValueFilterOptions(array $values): array
     {
-        return array_map(static fn (ParameterValueFilterOption $parameterValueFilterOption) => (float)$parameterValueFilterOption->getText(), $values);
+        return array_map(static fn (ParameterValueFilterOption $parameterValueFilterOption) => (float)$parameterValueFilterOption->getNumericValue(), $values);
     }
 }

@@ -7,6 +7,9 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
+msgid "-- Choose group --"
+msgstr "-- Vybrat skupinu --"
+
 msgid "301 (Permanent redirect)"
 msgstr "301 (Trvalé přesměrování)"
 
@@ -306,6 +309,9 @@ msgstr "GTM ID"
 
 msgid "GTM creative"
 msgstr ""
+
+msgid "Group"
+msgstr "Skupina"
 
 msgid "Groups"
 msgstr "Skupiny"
@@ -696,6 +702,9 @@ msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_t
 
 msgid "Unable to load list of language constants"
 msgstr "Nepodařilo se načíst přehled jazykových konstant"
+
+msgid "Unit"
+msgstr "Jednotka"
 
 msgid "Unlimited"
 msgstr "Neomezeně"
