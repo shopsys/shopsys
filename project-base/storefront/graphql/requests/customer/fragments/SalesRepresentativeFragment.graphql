@@ -2,7 +2,7 @@ fragment SalesRepresentativeFragment on SalesRepresentative {
     __typename
     email
     firstName
-    images {
+    image {
         url
         name
     }

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, images: Array<{ __typename?: 'Image', url: string, name: string | null }> };
+export type TypeSalesRepresentativeFragment = { __typename: 'SalesRepresentative', email: string | null, firstName: string | null, lastName: string | null, telephone: string | null, uuid: string, image: { __typename?: 'Image', url: string, name: string | null } | null };
 
 
       export interface PossibleTypesResultData {
@@ -85,7 +85,7 @@ export const SalesRepresentativeFragment = gql`
   __typename
   email
   firstName
-  images {
+  image {
     url
     name
   }

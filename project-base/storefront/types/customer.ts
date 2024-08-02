@@ -1,4 +1,4 @@
-import { TypeCountry, TypeCustomerUserRoleGroup, TypeLoginInfo } from 'graphql/types';
+import { TypeCountry, TypeCustomerUserRoleGroup, TypeLoginInfo, TypeSalesRepresentative } from 'graphql/types';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
@@ -63,4 +63,5 @@ export type CurrentCustomerType = {
     arePricesHidden: boolean;
     roles: string[];
     roleGroup: TypeCustomerUserRoleGroup;
+    salesRepresentative?: TypeSalesRepresentative | null;
 };

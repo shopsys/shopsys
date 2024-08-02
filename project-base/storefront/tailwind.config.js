@@ -19,6 +19,7 @@ module.exports = {
             textInverted: '#FFFFFF',
             textDisabled: '#727588',
             textSuccess: '#00CDBE',
+            textSubtle: '#7892BC',
             textError: '#EC5353',
 
             link: '#004EB6',

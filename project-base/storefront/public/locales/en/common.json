@@ -197,6 +197,7 @@
     "My orders": "My orders",
     "name ascending": "Name A-Z",
     "name descending": "Name Z-A",
+    "Need advice?": "Need advice?",
     "New complaint": "New complaint",
     "New customer registration": "New customer registration",
     "New password": "New password",
@@ -496,6 +497,7 @@
     "Your permissions have changed. You are being redirected": "Your permissions have changed. You are being redirected",
     "Your preferences have been set.": "Your preferences have been set.",
     "Your profile has been changed successfully": "Your profile has been changed successfully",
+    "Your sales representative": "Your sales representative",
     "Your transport and payment selection has been removed.": "Your transport and payment selection has been removed.",
     "Zip code cannot be longer than {{ postcodeLength }} characters": "Zip code cannot be longer than {{ postcodeLength }} characters"
 }

@@ -1,4 +1,5 @@
 import { MenuIconicItemLink, MenuIconicSubItemLink } from './MenuIconicElements';
+import { SalesRepresentative } from './SalesRepresentative';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
@@ -76,7 +77,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-0 -right-[100%] z-cart block min-w-[315px] origin-top-right rounded-xl p-5',
+                        'pointer-events-none absolute top-0 -right-[100%] z-cart block min-w-max origin-top-right rounded-xl p-5',
                         'lg:top-full lg:transition-all',
                         'bg-none scale-50 opacity-0',
                         isHoveredDelayed &&
@@ -150,6 +151,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 {t('Logout')}
                             </MenuIconicSubItemLink>
                         </li>
+                        <SalesRepresentative />
                     </ul>
                 </div>
             </div>
