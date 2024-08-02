@@ -8,15 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ProductSellingDeniedRecalculator
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
+        protected readonly EntityManagerInterface $em,
     ) {
-        $this->em = $entityManager;
     }
 
     /**
