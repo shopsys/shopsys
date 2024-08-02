@@ -298,7 +298,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.companyName.label,
-                                        required: false,
+                                        required: true,
                                         type: 'text',
                                         autoComplete: 'organization',
                                     }}
@@ -310,7 +310,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                                     textInputProps={{
                                         label: formMeta.fields.companyNumber.label,
-                                        required: false,
+                                        required: true,
                                         type: 'text',
                                     }}
                                 />
