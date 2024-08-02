@@ -23,19 +23,18 @@ export const GoogleMapMarker: FC<GoogleMapMarkerProps> = ({
     isDetail,
     onMarkerClicked,
 }) => {
-    const { cluster: isCluster, point_count: pointCount, markerId } = cluster.properties;
-    const isActive = cluster.properties.markerId === activeMarkerIdentifier;
+    const { cluster: isCluster, point_count: pointCount, markerIdentifier } = cluster.properties;
+    const isActive = markerIdentifier === activeMarkerIdentifier;
 
     if (isCluster) {
-        return <ClusterMarker key={cluster.id}>{pointCount}</ClusterMarker>;
+        return <ClusterMarker>{pointCount}</ClusterMarker>;
     }
 
     return (
         <GoogleMapSingleMarker
-            key={markerId}
             isActive={isActive}
             isDetail={isDetail}
-            onClick={() => onMarkerClicked(cluster.properties.markerId)}
+            onClick={() => onMarkerClicked(markerIdentifier)}
         />
     );
 };
