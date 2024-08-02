@@ -272,6 +272,7 @@ class ProductSellingDeniedRecalculator
                 AND NOT EXISTS (
                     SELECT 1
                     FROM products as v
+                    JOIN product_visibilities pv ON pv.product_id = v.id AND pv.visible = TRUE
                     JOIN product_domains as pdv ON pdv.product_id = v.id AND pdv.domain_id = pd.domain_id
                     WHERE v.main_variant_id = p.id
                         AND pdv.calculated_sale_exclusion = FALSE
@@ -303,6 +304,7 @@ class ProductSellingDeniedRecalculator
                 AND NOT EXISTS (
                     SELECT 1
                     FROM products as v
+                    JOIN product_visibilities pv ON pv.product_id = v.id AND pv.visible = TRUE
                     JOIN product_domains as pdv ON pdv.product_id = v.id
                     WHERE v.main_variant_id = p.id
                         AND pdv.calculated_sale_exclusion = FALSE
