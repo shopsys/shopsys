@@ -54,6 +54,7 @@ class TestCustomerProvider
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
         $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->telephone = 'telephone';
         $customerUserData->password = 'pa55w0rd';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
@@ -65,6 +66,36 @@ class TestCustomerProvider
         $customerData->billingAddress = new BillingAddress($billingAddressData);
 
         $deliveryAddressData = self::getDeliveryAddressData($customer);
+        $customerData->deliveryAddresses = [new DeliveryAddress($deliveryAddressData)];
+
+        $customer->edit($customerData);
+
+        return $customerUserData;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
+     */
+    public static function getEmptyTestCustomerUserData(): CustomerUserData
+    {
+        $pricingGroupData = new PricingGroupData();
+        $pricingGroupData->name = 'name';
+        $pricingGroup = new PricingGroup($pricingGroupData, Domain::FIRST_DOMAIN_ID);
+
+        $customerData = new CustomerData();
+        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
+        $customer = new Customer($customerData);
+
+        $customerUserData = new CustomerUserData();
+        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
+        $customerUserData->customer = $customer;
+        $customerUserData->pricingGroup = $pricingGroup;
+        $customerUserData->createdAt = new DateTime();
+
+        $billingAddressData = self::getEmptyBillingAddressData($customer);
+        $customerData->billingAddress = new BillingAddress($billingAddressData);
+
+        $deliveryAddressData = self::getEmptyDeliveryAddressData($customer);
         $customerData->deliveryAddresses = [new DeliveryAddress($deliveryAddressData)];
 
         $customer->edit($customerData);
@@ -101,6 +132,19 @@ class TestCustomerProvider
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
+     */
+    public static function getEmptyBillingAddressData(Customer $customer): BillingAddressData
+    {
+        $billingAddressData = new BillingAddressData();
+        $billingAddressData->customer = $customer;
+        $billingAddressData->companyCustomer = true;
+
+        return $billingAddressData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
      */
     public static function getDeliveryAddressData(Customer $customer): DeliveryAddressData
@@ -120,6 +164,18 @@ class TestCustomerProvider
         $deliveryAddressData->country = $deliveryCountry;
         $deliveryAddressData->customer = $customer;
         $deliveryAddressData->uuid = '1f339571-4066-4c77-99ab-7b5172fbc2e9';
+
+        return $deliveryAddressData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData
+     */
+    public static function getEmptyDeliveryAddressData(Customer $customer): DeliveryAddressData
+    {
+        $deliveryAddressData = new DeliveryAddressData();
+        $deliveryAddressData->customer = $customer;
 
         return $deliveryAddressData;
     }
