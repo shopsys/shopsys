@@ -28,3 +28,6 @@ OrderItemDecorator:
             product:
                 type: "Product"
                 description: "Product of the order item"
+            catnum:
+                type: "String"
+                description: "Catalog number of the order item product"

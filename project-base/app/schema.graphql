@@ -1313,6 +1313,8 @@ input OrderInput {
 
 "Represent one item in the order"
 type OrderItem {
+  "Catalog number of the order item product"
+  catnum: String
   "Name of the order item"
   name: String!
   "Product of the order item"
@@ -1329,6 +1331,24 @@ type OrderItem {
   unitPrice: Price!
   "Applied VAT rate percentage applied to the order item"
   vatRate: String!
+}
+
+"A connection to a list of items."
+type OrderItemConnection {
+  "Information to aid in pagination."
+  edges: [OrderItemEdge]
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Total number of order items"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type OrderItemEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: OrderItem
 }
 
 "One of possible types of the order item"
@@ -1836,6 +1856,8 @@ type Query {
   notificationBars: [NotificationBar!]
   "Returns order filtered using UUID, orderNumber, or urlHash"
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
+  "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
+  orderItemsSearch(after: String, before: String, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
   "Returns HTML content for order with failed payment."
   orderPaymentFailedContent(orderUuid: Uuid!): String!
   "Returns payments available for the given order"

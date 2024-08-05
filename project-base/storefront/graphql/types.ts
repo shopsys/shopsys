@@ -1677,6 +1677,8 @@ export type TypeOrderInput = {
 /** Represent one item in the order */
 export type TypeOrderItem = {
   __typename?: 'OrderItem';
+  /** Catalog number of the order item product */
+  catnum: Maybe<Scalars['String']['output']>;
   /** Name of the order item */
   name: Scalars['String']['output'];
   /** Product of the order item */
@@ -1693,6 +1695,26 @@ export type TypeOrderItem = {
   unitPrice: TypePrice;
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
+};
+
+/** A connection to a list of items. */
+export type TypeOrderItemConnection = {
+  __typename?: 'OrderItemConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeOrderItemEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Total number of order items */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeOrderItemEdge = {
+  __typename?: 'OrderItemEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeOrderItem>;
 };
 
 /** One of possible types of the order item */
@@ -2258,6 +2280,8 @@ export type TypeQuery = {
   notificationBars: Maybe<Array<TypeNotificationBar>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<TypeOrder>;
+  /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords */
+  orderItemsSearch: TypeOrderItemConnection;
   /** Returns HTML content for order with failed payment. */
   orderPaymentFailedContent: Scalars['String']['output'];
   /** Returns HTML content for order with successful payment. */
@@ -2417,6 +2441,15 @@ export type TypeQueryOrderArgs = {
   orderNumber: InputMaybe<Scalars['String']['input']>;
   urlHash: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryOrderItemsSearchArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  searchInput: TypeSearchInput;
 };
 
 
