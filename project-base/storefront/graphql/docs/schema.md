@@ -5894,6 +5894,15 @@ Name of the order item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+Order to which the order item belongs
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -5926,6 +5935,15 @@ Unit of measurement used for the order item
 <td>
 
 Order item price per unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the order item
 
 </td>
 </tr>

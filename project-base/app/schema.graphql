@@ -1297,6 +1297,8 @@ type OrderItem {
   catnum: String
   "Name of the order item"
   name: String!
+  "Order to which the order item belongs"
+  order: Order!
   "Quantity of order items in the order"
   quantity: Int!
   "Total price for the quantity of order item"
