@@ -10,8 +10,8 @@ use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
-use Shopsys\FrameworkBundle\Form\Constraints\NotNegativeMoneyAmount;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
-use Shopsys\FrameworkBundle\Form\ProductCalculatedPricesType;
 use Shopsys\FrameworkBundle\Form\ProductParameterValueType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
@@ -29,19 +28,17 @@ use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransform
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Form\WarningMessageType;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -51,10 +48,9 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductFormType extends AbstractType
 {
-    public const CSRF_TOKEN_ID = 'product_edit_type';
+    public const string CSRF_TOKEN_ID = 'product_edit_type';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -62,12 +58,11 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        private readonly VatFacade $vatFacade,
         private readonly BrandFacade $brandFacade,
         private readonly FlagFacade $flagFacade,
         private readonly UnitFacade $unitFacade,
@@ -75,9 +70,9 @@ class ProductFormType extends AbstractType
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly CategoryFacade $categoryFacade,
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer,
+        private readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -479,61 +474,7 @@ class ProductFormType extends AbstractType
             'label' => t('Prices'),
         ]);
 
-        $productCalculatedPricesGroup = $builder->create(
-            'productCalculatedPricesGroup',
-            ProductCalculatedPricesType::class,
-            [
-                'product' => $product,
-                'inherit_data' => true,
-                'render_form_row' => false,
-            ],
-        );
-
-        $builderPricesGroup->add($productCalculatedPricesGroup);
-        $manualInputPricesByPricingGroup = $builder->create('manualInputPricesByPricingGroupId', FormType::class, [
-            'compound' => true,
-            'render_form_row' => false,
-            'disabled' => $this->isProductMainVariant($product),
-        ]);
-
-        $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
-            'compound' => true,
-            'render_form_row' => false,
-            'disabled' => $this->isProductMainVariant($product),
-        ]);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $vatsIndexedByDomainId
-                ->add((string)$domainId, ChoiceType::class, [
-                    'required' => true,
-                    'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainId),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
-                    ],
-                    'label' => t('VAT'),
-                ]);
-        }
-
-        foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $manualInputPricesByPricingGroup->add((string)$pricingGroup->getId(), MoneyType::class, [
-                'scale' => 6,
-                'required' => false,
-                'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
-                'constraints' => [
-                    new NotNegativeMoneyAmount(['message' => 'Price must be greater or equal to zero']),
-                ],
-                'label' => $pricingGroup->getName(),
-            ]);
-        }
-        $productCalculatedPricesGroup->add($manualInputPricesByPricingGroup);
-        $productCalculatedPricesGroup->add($vatsIndexedByDomainId);
-
-        $builderPricesGroup->add($productCalculatedPricesGroup);
-
         if ($this->isProductMainVariant($product)) {
-            $builderPricesGroup->remove('productCalculatedPricesGroup');
             $builderPricesGroup->add('disabledPricesOnMainVariant', DisplayOnlyType::class, [
                 'mapped' => false,
                 'required' => true,
@@ -542,7 +483,38 @@ class ProductFormType extends AbstractType
                     'class' => 'form-input-disabled form-line--disabled position__actual font-size-13',
                 ],
             ]);
+
+            return $builderPricesGroup;
         }
+
+        $productSellingPricesIndexedByDomainId = null;
+
+        if ($product !== null) {
+            $productSellingPricesIndexedByDomainId = $this->productFacade->getAllProductSellingPricesIndexedByDomainId($product);
+        }
+
+        $optionsByDomainId = [];
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $optionsByDomainId[$domainId] = [
+                'domain_id' => $domainId,
+                'selling_prices' => $productSellingPricesIndexedByDomainId[$domainId] ?? null,
+            ];
+        }
+
+        $builderPricesGroup->add(
+            'productInputPricesByDomain',
+            MultidomainType::class,
+            [
+                'label' => false,
+                'entry_type' => ProductPricesWithVatSelectType::class,
+                'options_by_domain_id' => $optionsByDomainId,
+                'entry_options' => [
+                    'required' => true,
+                ],
+                'required' => true,
+            ],
+        );
 
         return $builderPricesGroup;
     }

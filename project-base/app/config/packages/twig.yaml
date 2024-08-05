@@ -2,6 +2,8 @@ twig:
     debug: "%kernel.debug%"
     exception_controller: null
     form_themes:
+        - '@ShopsysFramework/Admin/Form/Product/Price/pricesWithCalculatedSellingPricesType.html.twig'
+        - '@ShopsysFramework/Admin/Form/Product/Price/productPricesWithVatSelectType.html.twig'
         - '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig'
         - '@ShopsysFramework/Admin/Form/blogCategoriesType.html.twig'
         - '@ShopsysFramework/Admin/Form/blogCategoryCheckboxType.html.twig'
@@ -23,7 +25,6 @@ twig:
         - '@ShopsysFramework/Admin/Form/parameterValueConversionList.html.twig'
         - '@ShopsysFramework/Admin/Form/paymentTransactionsFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/priceandvattableByDomainsFields.html.twig'
-        - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
         - '@ShopsysFramework/Admin/Form/productParameterValue.html.twig'
         - '@ShopsysFramework/Admin/Form/promoCodeFlagFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/promoCodeLimitFormTheme.html.twig'

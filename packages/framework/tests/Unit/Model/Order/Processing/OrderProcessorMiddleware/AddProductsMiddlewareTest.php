@@ -36,7 +36,6 @@ class AddProductsMiddlewareTest extends MiddlewareTestCase
         foreach ($productsProviderInput as $productProviderInput) {
             $productData = new ProductData();
             $productData->name = ['en' => $productProviderInput['name']];
-            $productData->vatsIndexedByDomainId = [1 => $this->createVat()];
             $productData->unit = $this->createMock(Unit::class);
             $product = Product::create($productData);
 

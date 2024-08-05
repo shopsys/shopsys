@@ -1,0 +1,26 @@
+{% block product_prices_with_vat_select_row %}
+    <div class="form-line__box">
+        {% if isMultidomain() %}
+            <div class="form-line__box__title">
+                <span class="form-line__box__title__image">
+                    {{ domainIcon(domainId, 'large') }}
+                </span>
+                <strong class="form-line__box__title__name">
+                    {{ 'Domain %domainName%'|trans({'%domainName%' : getDomainName(domainId)}) }}
+                </strong>
+            </div>
+        {% endif %}
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block product_prices_with_vat_select_widget %}
+    <div {% if isMultidomain() %} class="form-line__box__content"{% endif %}>
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block product_prices_select_vat_input_row %}
+    {{ form_label(form) }}
+    {{ form_widget(form) }}
+{% endblock %}

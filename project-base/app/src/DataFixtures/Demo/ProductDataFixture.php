@@ -316,8 +316,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_ZERO);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990', VatDataFixture::VAT_ZERO);
         $this->productDemoDataSetter->setSellingFrom($productData, '3.2.2013');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
@@ -1193,8 +1192,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'DMC FT5EP-K';
         $productData->ean = '8845781245911';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_LOW);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8385');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8385', VatDataFixture::VAT_LOW);
         $this->productDemoDataSetter->setSellingFrom($productData, '1.2.2013');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
@@ -2020,8 +2018,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'FLO242-PRI';
         $productData->ean = '8845781243206';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_LOW);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8.3');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8.3', VatDataFixture::VAT_LOW);
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10000000);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
@@ -2095,8 +2092,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'CAB-13';
         $productData->ean = '88457812432071';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_SECOND_LOW);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '61.9');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '61.9', VatDataFixture::VAT_SECOND_LOW);
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100000);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
@@ -2431,8 +2427,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_ZERO);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990', VatDataFixture::VAT_ZERO);
         $this->productDemoDataSetter->setSellingFrom($productData, '25.1.2014');
         $this->productDemoDataSetter->setSellingTo($productData, '25.1.2015');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);
@@ -2504,8 +2499,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'DMC FT5EP-K';
         $productData->ean = '8845781245911';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_LOW);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '2000');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '2000', VatDataFixture::VAT_LOW);
         $this->productDemoDataSetter->setSellingFrom($productData, '3.2.2013');
         $this->productDemoDataSetter->setStocksQuantity($productData, 500);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
@@ -2566,8 +2560,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
-        $this->productDemoDataSetter->setVat($productData, VatDataFixture::VAT_ZERO);
-        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990');
+        $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990', VatDataFixture::VAT_ZERO);
         $this->productDemoDataSetter->setSellingFrom($productData, '3.2.2013');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);

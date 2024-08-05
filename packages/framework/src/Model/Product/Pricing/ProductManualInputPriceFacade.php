@@ -48,15 +48,15 @@ class ProductManualInputPriceFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money[]|null[] $manualInputPrices
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceData> $productInputPriceDataByDomain
      */
-    public function refreshProductManualInputPrices(Product $product, array $manualInputPrices): void
+    public function refreshProductManualInputPrices(Product $product, array $productInputPriceDataByDomain): void
     {
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
             $this->refresh(
                 $product,
                 $pricingGroup,
-                $manualInputPrices[$pricingGroup->getId()],
+                $productInputPriceDataByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupId[$pricingGroup->getId()],
             );
         }
 

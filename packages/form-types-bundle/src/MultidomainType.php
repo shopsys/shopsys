@@ -15,15 +15,16 @@ class MultidomainType extends AbstractType
     /**
      * @param \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface $domainIdsProvider
      */
-    public function __construct(private readonly DomainIdsProviderInterface $domainIdsProvider)
-    {
+    public function __construct(
+        private readonly DomainIdsProviderInterface $domainIdsProvider,
+    ) {
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $entryOptions = $options['entry_options'];
         $entryOptions['required'] = ($options['required'] ?? false) && ($entryOptions['required'] ?? false);
@@ -45,7 +46,7 @@ class MultidomainType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'compound' => true,

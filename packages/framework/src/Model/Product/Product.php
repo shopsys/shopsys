@@ -649,7 +649,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setSeoMetaDescription($productData->seoMetaDescriptions[$domainId]);
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
-            $productDomain->setVat($productData->vatsIndexedByDomainId[$domainId]);
+            $productDomain->setVat($productData->productInputPricesByDomain[$domainId]->vat);
             $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2ByDomainId[$domainId]);

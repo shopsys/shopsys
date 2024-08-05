@@ -1,0 +1,43 @@
+{% block prices_with_calculated_selling_prices_row %}
+    <div class="form-price-heading">
+        <div class="form-price-heading__cell form-price-heading__cell--field">
+            {{ inputPriceLabel({ isSimple: true }) }}
+        </div>
+        <div class="form-price-heading__block">
+            <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price excluding VAT'|trans }}</div>
+            <div class="form-price-heading__cell form-price-heading__cell--price">{{ 'Price including VAT'|trans }}</div>
+        </div>
+    </div>
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block prices_with_calculated_selling_prices_input_row %}
+    {% set domainId = form.parent.vars.domain_id %}
+    <div class="form-line form-line--in-box">
+        <div class="form-line__label">
+            {{ form_label(form) }}
+        </div>
+        <div class="form-line__item">
+            {{ form_widget(form, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
+        </div>
+        {% if form.vars.selling_price %}
+            <div class="form-line__item--right">
+                <div class="form-line__item__price">
+                    <div class="form-line__item__price__label-mobile">
+                        {{ 'Excl. VAT'|trans }}
+                    </div>
+                    {{ form.vars.selling_price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
+                </div>
+                <div class="form-line__item__price">
+                    <div class="form-line__item__price__label-mobile">
+                        {{ 'Incl. VAT'|trans }}
+                    </div>
+                    <strong>{{ form.vars.selling_price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</strong>
+                </div>
+            </div>
+        {% endif %}
+        <div>
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endblock %}
