@@ -47,18 +47,18 @@ export const useCustomerChangeProfileForm = (
             city: validateCity(t),
             postcode: validatePostcode(t),
             country: validateCountry(t),
-            companyName: Yup.string().when('customer', {
-                is: (customer: string) => customer === 'companyCustomer',
+            companyName: Yup.string().when('companyCustomer', {
+                is: true,
                 then: validateCompanyNameRequired(t),
                 otherwise: Yup.string(),
             }),
-            companyNumber: Yup.string().when('customer', {
-                is: (customer: string) => customer === 'companyCustomer',
+            companyNumber: Yup.string().when('companyCustomer', {
+                is: true,
                 then: validateCompanyNumber(t),
                 otherwise: Yup.string(),
             }),
-            companyTaxNumber: Yup.string().when('customer', {
-                is: (customer: string) => customer === 'companyCustomer',
+            companyTaxNumber: Yup.string().when('companyCustomer', {
+                is: true,
                 then: validateCompanyTaxNumber(t),
                 otherwise: Yup.string(),
             }),
