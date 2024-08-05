@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
@@ -20,28 +19,30 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                 {storeAvailabilities.map(
                     (storeAvailability, index) =>
                         storeAvailability.store && (
-                            <li key={index} className="flex w-full items-center border-b border-graySlate py-4">
-                                <strong className="mr-2 w-36">{storeAvailability.store.storeName}</strong>
+                            <li
+                                key={index}
+                                className="flex w-full items-center border-b border-borderAccent py-4 justify-between gap-4"
+                            >
+                                <strong className="w-36">{storeAvailability.store.storeName}</strong>
 
                                 <span
                                     className={twJoin(
                                         'flex-1 pr-3 text-sm',
                                         storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.InStock &&
-                                            'text-secondary',
+                                            'text-availabilityInStock',
                                         storeAvailability.availabilityStatus ===
-                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-red',
+                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
                                     )}
                                 >
                                     {storeAvailability.availabilityInformation}
                                 </span>
 
                                 <ExtendedNextLink
-                                    className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
+                                    className="ml-auto flex items-center"
                                     href={storeAvailability.store.slug}
                                     type="store"
                                 >
                                     {t('Store detail')}
-                                    <ArrowRightIcon className="ml-1" />
                                 </ExtendedNextLink>
                             </li>
                         ),

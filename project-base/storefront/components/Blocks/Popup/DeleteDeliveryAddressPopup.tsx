@@ -1,4 +1,3 @@
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,17 +17,14 @@ export const DeleteDeliveryAddressPopup: FC<DeleteDeliveryAddressPopupProps> = (
                 {t('Do you really want to delete this delivery address?')}
                 <div className="mt-4 flex flex-row flex-nowrap justify-between">
                     <Button
+                        variant="inverted"
                         onClick={() => {
                             updatePortalContent(null);
                         }}
                     >
-                        <ArrowIcon className="relative mr-4 rotate-90 text-white" />
                         {t('No')}
                     </Button>
-                    <Button onClick={deleteDeliveryAddressHandler}>
-                        {t('Yes')}
-                        <ArrowIcon className="relative ml-4 -rotate-90" />
-                    </Button>
+                    <Button onClick={deleteDeliveryAddressHandler}>{t('Yes')}</Button>
                 </div>
             </div>
         </Popup>

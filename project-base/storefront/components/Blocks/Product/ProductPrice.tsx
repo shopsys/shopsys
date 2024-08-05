@@ -13,7 +13,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({ productPrice, isPriceFromV
     const formatPrice = useFormatPrice();
 
     return (
-        <div className={twMergeCustom('text-base font-bold text-primaryDark', className)}>
+        <div className={twMergeCustom('text-base font-bold text-price', className)}>
             {productPrice.isPriceFrom && isPriceFromVisible && t('From') + '\u00A0'}
             {formatPrice(productPrice.priceWithVat)}
         </div>

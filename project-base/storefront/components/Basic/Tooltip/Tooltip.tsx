@@ -46,7 +46,7 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
                 <div
                     ref={refs.setFloating}
                     {...getFloatingProps({
-                        className: 'tooltip block rounded bg-black bg-opacity-75 p-2 text-white',
+                        className: 'tooltip block rounded bg-backgroundMost p-2 text-text',
                         style: {
                             position: strategy,
                             top: y,

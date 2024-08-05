@@ -14,8 +14,9 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, is
         type="blogCategory"
         className={twJoin(
             'relative flex items-center rounded py-3 pr-9 pl-3 underline hover:no-underline',
-            isActive ? 'bg-whiteSnow  text-dark no-underline hover:text-dark' : 'text-whiteSnow hover:text-whiteSnow',
-            itemLevel !== undefined && '',
+            isActive
+                ? 'bg-backgroundAccent  text-textInverted no-underline hover:bg-backgroundAccentMore hover:text-textInverted'
+                : 'text-text hover:text-text',
         )}
     >
         {children}

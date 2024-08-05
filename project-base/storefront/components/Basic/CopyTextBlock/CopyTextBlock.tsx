@@ -1,3 +1,4 @@
+import { Button } from 'components/Forms/Button/Button';
 import { useState } from 'react';
 
 type CopyTextBlockProps = {
@@ -17,11 +18,11 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy }) => {
     };
 
     return (
-        <div className="rounded bg-graySlate">
-            <div className="flex justify-end rounded bg-skyBlue px-3 py-2">
-                <button className="text-white" onClick={handleCopy}>
+        <div className="rounded bg-backgroundAccentLess">
+            <div className="flex justify-end px-3 py-2">
+                <Button variant="inverted" onClick={handleCopy}>
                     {copyButtonText}
-                </button>
+                </Button>
             </div>
             <div className="p-3">
                 <p>{textToCopy.length < 500 ? textToCopy : textToCopy.slice(0, 500) + '...'}</p>

@@ -35,7 +35,7 @@ export const MobileMenu: FC = () => {
 
             <div
                 className={twJoin(
-                    'fixed p-8 gap-5 flex flex-col max-h-screen overflow-y-auto inset-0 z-maximum bg-white shadow-md transition-all',
+                    'fixed p-8 gap-5 flex flex-col max-h-screen overflow-y-auto inset-0 z-maximum bg-background shadow-md transition-all',
                     isMenuOpened ? 'translate-x-0' : 'translate-x-full',
                 )}
             >

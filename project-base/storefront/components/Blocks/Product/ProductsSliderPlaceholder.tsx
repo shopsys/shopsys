@@ -3,7 +3,7 @@ import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceholder';
 import { ProductsSliderProps } from './ProductsSlider';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductsSliderPlaceholderProps = {
@@ -23,16 +23,16 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
             {products.length > 4 && (
                 <div className="absolute -top-11 right-0 hidden items-center justify-center vl:flex ">
                     <button
-                        className="ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker disabled:bg-greyLighter"
+                        className="ml-1 h-8 w-8 cursor-pointer rounded border-none pt-1 outline-none transition"
                         title={t('Previous products')}
                     >
-                        <ArrowIcon className="-translate-y-[2px] rotate-90" />
+                        <ArrowRightIcon className="-translate-y-[2px] -rotate-180 w-5 text-text hover:text-textAccent disabled:text-textDisabled" />
                     </button>
                     <button
-                        className="ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker disabled:bg-greyLighter"
+                        className="ml-1 h-8 w-8 cursor-pointer rounded border-none pt-1 outline-none transition"
                         title={t('Next products')}
                     >
-                        <ArrowIcon className="-translate-y-[2px] -rotate-90" />
+                        <ArrowRightIcon className="-translate-y-[2px] w-5 text-text hover:text-textAccent disabled:text-textDisabled" />
                     </button>
                 </div>
             )}

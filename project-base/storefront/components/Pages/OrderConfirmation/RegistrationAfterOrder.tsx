@@ -1,4 +1,5 @@
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
+import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
@@ -86,9 +87,9 @@ export const RegistrationAfterOrder: FC = () => {
     }
 
     return (
-        <div className="relative mb-20 flex flex-col rounded border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
+        <div className="relative mb-20 flex flex-col rounded border-2 border-borderAccent lg:flex-row">
             <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
-                <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-primary">
+                <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-textAccent">
                     <Trans
                         components={{ 0: <br />, 1: <strong /> }}
                         i18nKey="Finish registration to loyalty program."
@@ -102,11 +103,9 @@ export const RegistrationAfterOrder: FC = () => {
                         t('Possibility of purchases for better prices'),
                         t('Exclusive products as a part of the loyalty program'),
                     ].map((text) => (
-                        <li
-                            key={text}
-                            className="relative mb-3 pl-4 leading-5 before:absolute before:left-0 before:top-2 before:h-1 before:w-1 before:rounded-full before:bg-primary before:content-none"
-                        >
-                            {text}
+                        <li key={text} className="relative mb-3 flex gap-2">
+                            <CheckmarkBadgeIcon className="min-w-4 text-textSuccess" />
+                            <span>{text}</span>
                         </li>
                     ))}
                 </ul>

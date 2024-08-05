@@ -61,7 +61,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                     width={80}
                                 />
 
-                                <PlayIcon className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-full bg-dark bg-opacity-50 text-white" />
+                                <PlayIcon className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-full bg-overlay text-textInverted" />
                             </div>
                         )}
                     </li>

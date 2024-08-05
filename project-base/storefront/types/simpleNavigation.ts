@@ -18,6 +18,11 @@ export type ListedItemPropType = (
           slug: string;
           name: string;
       }
+    | {
+          slug: string;
+          name: string;
+          icon: JSX.Element;
+      }
 ) & {
     __typename?: ListedItemPropTypeTypename;
 };

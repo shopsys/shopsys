@@ -21,6 +21,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     className,
 }) => {
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
+    const icon = 'icon' in listedItem ? listedItem.icon : null;
     const href = getStringWithoutTrailingSlash(listedItem.slug) + '/';
     const linkType = linkTypeOverride ?? getLinkType(listedItem.__typename);
 
@@ -30,8 +31,10 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'flex h-full w-full cursor-pointer flex-col items-center justify-center gap-2 rounded bg-whiteSnow px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                    'flex h-full w-full cursor-pointer flex-col items-center justify-center gap-2 rounded px-2 py-4 no-underline transition lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
                     className,
+                    'bg-backgroundMore text-text',
+                    'hover:bg-backgroundMost hover:text-text hover:no-underline',
                 )}
             >
                 {itemImage && (
@@ -46,10 +49,12 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                     </div>
                 )}
 
-                <div className={twJoin('text-center ', itemImage && 'lg:text-left')}>
-                    <div className="text-sm text-dark">{listedItem.name}</div>
+                {icon}
+
+                <div className={twJoin('text-center', itemImage && 'lg:text-left')}>
+                    <div className="text-sm">{listedItem.name}</div>
                     {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
-                        <span className="ml-2 whitespace-nowrap text-sm text-graySlate">({listedItem.totalCount})</span>
+                        <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
                     )}
                 </div>
             </ExtendedNextLink>

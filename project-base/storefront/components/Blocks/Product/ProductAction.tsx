@@ -5,7 +5,6 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
-import { twJoin } from 'tailwind-merge';
 
 type ProductActionProps = {
     product: TypeListedProductFragment;
@@ -14,32 +13,28 @@ type ProductActionProps = {
     listIndex: number;
 };
 
-const wrapperTwClass = 'rounded bg-whiteSnow p-2';
-
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
     const { t } = useTranslation();
 
     if (product.isMainVariant) {
         return (
-            <div className={wrapperTwClass}>
-                <ExtendedNextLink className="no-underline" href={product.slug} type="productMainVariant">
-                    <Button className="w-full py-2" name="choose-variant" size="small">
-                        {t('Choose variant')}
-                    </Button>
-                </ExtendedNextLink>
-            </div>
+            <ExtendedNextLink className="no-underline" href={product.slug} type="productMainVariant">
+                <Button className="py-2" size="small">
+                    {t('Choose variant')}
+                </Button>
+            </ExtendedNextLink>
         );
     }
 
     if (product.isSellingDenied) {
-        return <div className={twJoin('text-center', wrapperTwClass)}>{t('This item can no longer be purchased')}</div>;
+        return <div className="text-center">{t('This item can no longer be purchased')}</div>;
     }
 
     return (
         <AddToCart
-            className={twJoin('w-full', wrapperTwClass)}
             gtmMessageOrigin={gtmMessageOrigin}
             gtmProductListName={gtmProductListName}
+            isWithSpinbox={false}
             listIndex={listIndex}
             maxQuantity={product.stockQuantity}
             minQuantity={1}

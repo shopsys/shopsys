@@ -6,9 +6,9 @@ type TableProps = {
 };
 
 export const Table: FC<TableProps> = ({ head, children, className }) => (
-    <div className={twMergeCustom('overflow-x-auto rounded border-2 border-skyBlue p-6', className)}>
+    <div className={twMergeCustom('overflow-x-auto', className)}>
         <table className="w-full">
-            {!!head && <thead className="border-b border-skyBlue">{head}</thead>}
+            {!!head && <thead>{head}</thead>}
             <tbody>{children}</tbody>
         </table>
     </div>
@@ -22,7 +22,9 @@ type CellProps = {
 };
 
 export const Row: FC = ({ children, className }) => (
-    <tr className={twMergeCustom('border-b border-skyBlue text-graySlate last:border-b-0', className)}>{children}</tr>
+    <tr className={twMergeCustom('bg-tableBackground odd:bg-tableBackgroundContrast text-tableText', className)}>
+        {children}
+    </tr>
 );
 
 export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, colSpan }) => {
@@ -32,7 +34,7 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
         <Tag
             colSpan={colSpan}
             className={twMergeCustom(
-                'px-2 py-4 text-sm text-dark ',
+                'px-2 py-4 text-sm',
 
                 align === 'center' && 'text-center',
                 align === 'right' && 'text-right',
@@ -47,13 +49,13 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
 };
 
 export const CellHead: FC<CellProps> = ({ className, children, ...props }) => (
-    <Cell isHead className={twMergeCustom('font-bold text-graySlate', className)} {...props}>
+    <Cell isHead className={twMergeCustom(className, 'bg-tableBackgroundHeader text-tableTextHeader')} {...props}>
         {children}
     </Cell>
 );
 
 export const CellMinor: FC<CellProps> = ({ className, children, ...props }) => (
-    <Cell className={twMergeCustom(' text-graySlate', className)} {...props}>
+    <Cell className={className} {...props}>
         {children}
     </Cell>
 );

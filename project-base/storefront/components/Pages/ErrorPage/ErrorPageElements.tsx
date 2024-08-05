@@ -17,7 +17,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ children, isWithoutImage }) => (
 
 export const ErrorPageTextHeading: FC = ({ children }) => <div className="text-2xl">{children}</div>;
 
-export const ErrorPageTextMain: FC = ({ children }) => <div className="mt-4 text-skyBlue">{children}</div>;
+export const ErrorPageTextMain: FC = ({ children }) => <div className="mt-4">{children}</div>;
 
 export const ErrorPageButtonLink: FC<{ href: string }> = ({ href, children }) => (
     <ExtendedNextLink href={href}>

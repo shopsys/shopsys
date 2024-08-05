@@ -3,7 +3,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
 import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';
-import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -149,13 +148,8 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 </SocialNetworkLoginLink>
                             </div>
 
-                            <div className="lg:order-3 w-full flex justify-center items-center gap-1 whitespace-nowrap text-sm text-primary py-3">
-                                <WarningIcon className="h-5 w-5 text-red" />
-                                <ExtendedNextLink href={resetPasswordUrl}>
-                                    <div className="block text-sm text-primary underline hover:no-underline">
-                                        {t('Lost your password?')}
-                                    </div>
-                                </ExtendedNextLink>
+                            <div className="lg:order-3 w-full flex justify-center items-center gap-1 whitespace-nowrap text-sm py-3">
+                                <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
                             </div>
                         </FormButtonWrapper>
                     </FormBlockWrapper>
@@ -168,7 +162,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 const SocialNetworkLoginLink: FC<{ href: string }> = ({ href, children }) => {
     return (
         <ExtendedNextLink
-            className="bg-white h-12 w-full shadow-md rounded flex justify-center items-center hover:shadow-greyLight"
+            className="bg-background h-12 w-full shadow-md rounded flex justify-center items-center hover:shadow-greyLight"
             href={href}
         >
             {children}

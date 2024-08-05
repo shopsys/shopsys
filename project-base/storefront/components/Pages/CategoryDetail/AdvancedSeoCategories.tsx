@@ -13,7 +13,7 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
 
     return (
         <>
-            <div className="mb-3 mt-6 break-words font-bold text-dark lg:text-lg">{t('Favorite categories')}</div>
+            <div className="mb-3 mt-6 break-words font-bold lg:text-lg">{t('Favorite categories')}</div>
             <SimpleNavigation
                 itemClassName={simpleNavigationItemTwClass}
                 linkTypeOverride="category"

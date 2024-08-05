@@ -66,10 +66,10 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     });
 
     return (
-        <div className="fixed inset-0 flex select-none flex-col bg-dark p-2 z-maximum" onClick={onCloseModal}>
+        <div className="fixed inset-0 flex select-none flex-col bg-backgroundDark p-2 z-[10000]" onClick={onCloseModal}>
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
-                    <SpinnerIcon className="absolute -z-above w-16 text-white opacity-50" />
+                    <SpinnerIcon className="absolute -z-above w-16 text-textInverted opacity-50" />
 
                     {isImage && (
                         <Image
@@ -96,7 +96,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 </div>
 
                 {isImage && selectedGalleryItem.name && (
-                    <div className="mt-2 text-center text-skyBlue">{selectedGalleryItem.name}</div>
+                    <div className="mt-2 text-center text-textInverted">{selectedGalleryItem.name}</div>
                 )}
 
                 <div className="mt-4 flex items-center justify-center gap-8">
@@ -128,7 +128,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick,
     <button
         type="button"
         className={twMergeCustom(
-            'inline-flex items-center justify-center rounded-full bg-white p-2 text-black opacity-20 transition-opacity hover:opacity-100',
+            'inline-flex items-center justify-center rounded-full bg-backgroundAccentLess p-2 text-text transition-all hover:text-textAccent hover:cursor-pointer',
             className,
         )}
         onClick={(e) => {
@@ -150,7 +150,7 @@ const ButtonArrow: FC<FloatingButtonProps & { position: 'left' | 'right' }> = ({
     return (
         <FloatingButton className={twJoin('', isLeft ? 'left-2' : 'right-2')} {...floatingButtonProps}>
             <svg
-                className={twJoin('text-red-500 h-8 w-8', isLeft && 'rotate-180')}
+                className={twJoin('h-8 w-8', isLeft && 'rotate-180')}
                 fill="none"
                 stroke="currentColor"
                 strokeLinecap="round"

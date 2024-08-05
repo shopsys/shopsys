@@ -20,7 +20,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                     <li key={columnCategoryIndex}>
                         <ExtendedNextLink
-                            className="mb-4 flex justify-center rounded bg-whiteSnow p-2"
+                            className="mb-4 flex justify-center rounded bg-backgroundMore p-2"
                             href={columnCategory.slug}
                             skeletonType={skeletonType}
                             onClick={onLinkClick}
@@ -35,7 +35,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                         </ExtendedNextLink>
 
                         <ExtendedNextLink
-                            className="mb-1 block font-bold text-dark no-underline"
+                            className="mb-1 block font-bold text-text no-underline"
                             href={columnCategory.slug}
                             skeletonType={skeletonType}
                             onClick={onLinkClick}
@@ -48,7 +48,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                 {columnCategory.children.map((columnCategoryChild) => (
                                     <li key={columnCategoryChild.name}>
                                         <ExtendedNextLink
-                                            className="block text-sm text-dark no-underline"
+                                            className="block text-sm text-text no-underline"
                                             href={columnCategoryChild.slug}
                                             skeletonType={skeletonType}
                                             onClick={onLinkClick}

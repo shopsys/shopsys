@@ -62,7 +62,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                 </div>
 
                 {!!galleryItems.length && (
-                    <ul className="mx-auto flex w-full max-w-lg items-center justify-center gap-2 lg:relative vl:order-none vl:w-24 vl:flex-col">
+                    <ul className="mx-auto flex w-full max-w-lg items-center justify-center gap-2 lg:relative vl:order-none vl:w-16 vl:flex-col">
                         {galleryItems.map((galleryItem, index) => {
                             const isImage = galleryItem.__typename === 'Image';
                             const isVideo = galleryItem.__typename === 'VideoToken';
@@ -79,7 +79,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                 <li
                                     key={index}
                                     className={twJoin(
-                                        'flex max-h-16 w-1/5 cursor-pointer items-center justify-center sm:h-20 vl:w-auto hover:outline outline-secondary rounded-lg outline-1',
+                                        'flex w-1/5 cursor-pointer items-center justify-center sm:h-16 vl:w-auto hover:outline outline-borderAccent rounded-lg outline-1',
                                         (isWithAdditionalImages || isVideo) && 'relative',
                                     )}
                                     onClick={() => setSelectedGalleryItemIndex(index + 1)}
@@ -87,7 +87,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                     {isImage && (
                                         <Image
                                             alt={galleryItem.name || `${productName}-${index}`}
-                                            className="bg-grayLight aspect-square max-h-full object-contain mix-blend-multiply p-1 rounded-md"
+                                            className="bg-backgroundMore aspect-square max-h-full object-contain mix-blend-multiply p-1 rounded-md"
                                             height={90}
                                             src={galleryItemThumbnail?.url}
                                             width={90}
@@ -98,18 +98,19 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                         <>
                                             <Image
                                                 alt={galleryItem.description}
-                                                className="max-h-full"
+                                                className="max-h-full rounded-md"
                                                 height={90}
                                                 src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
                                                 width={90}
                                             />
-
-                                            <PlayIcon className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-full bg-dark bg-opacity-50 text-white" />
+                                            <div className="absolute items-center justify-center bg-imageOverlay w-full h-full flex rounded-lg overflow-hidden">
+                                                <PlayIcon className="h-8 w-8 rounded-full text-textInverted" />
+                                            </div>
                                         </>
                                     )}
 
                                     {isWithAdditionalImages && (
-                                        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-white bg-opacity-60 text-lg font-bold">
+                                        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-imageOverlay text-lg font-bold rounded-lg">
                                             +{galleryAdditionalItemsCount}
                                         </div>
                                     )}

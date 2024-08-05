@@ -9,7 +9,7 @@ export type ButtonBaseProps = {
     isDisabled?: boolean;
     isWithDisabledLook?: boolean;
     size?: 'small' | 'medium';
-    variant?: 'primary' | 'primaryOutlined' | 'secondary' | 'secondaryOutlined';
+    variant?: 'primary' | 'inverted';
 };
 
 export type ButtonProps = ButtonBaseProps & NativeButtonProps;
@@ -50,24 +50,22 @@ export const getButtonClassName = (
     isWithDisabledLook: ButtonBaseProps['isWithDisabledLook'],
 ) => {
     return twJoin(
-        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded text-center font-bold outline-none transition-all hover:no-underline border-2 hover:text-white active:scale-95',
+        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded text-center font-bold outline-none transition-all hover:no-underline border-2',
         size === 'small' && 'py-1 px-4 text-sm',
         size === 'medium' && 'py-3 px-8',
         variant === 'primary' && [
-            'border-secondary bg-secondary text-white hover:bg-secondaryLight hover:border-secondaryLight',
-            isDisabled && 'bg-secondarySlate border-secondarySlate text-skyBlue',
+            'border-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
+            'hover:border-actionPrimaryBorderHovered hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered',
+            'active:border-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
+            isDisabled &&
+                'border-actionPrimaryBorderDisabled bg-actionPrimaryBackgroundDisabled text-actionPrimaryTextDisabled',
         ],
-        variant === 'primaryOutlined' && [
-            'border-secondary border-2 text-secondary hover:border-secondaryLight hover:text-secondaryLight',
-            isDisabled && 'border-secondarySlate text-secondarySlate',
-        ],
-        variant === 'secondary' && [
-            'border-primaryDark bg-primaryDark text-white hover:bg-skyBlue hover:border-skyBlue active:border-dark active:bg-dark',
-            isDisabled && 'border-graySlate bg-graySlate',
-        ],
-        variant === 'secondaryOutlined' && [
-            'border-primaryDark border-2 text-primaryDark hover:border-skyBlue hover:text-skyBlue active:border-dark active:text-dark',
-            isDisabled && 'border-graySlate text-graySlate',
+        variant === 'inverted' && [
+            'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
+            'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
+            'active:border-actionInvertedBorderActive active:bg-actionInvertedBackgroundActive active:text-actionInvertedTextActive',
+            isDisabled &&
+                'border-actionInvertedBorderDisabled bg-actionInvertedBackgroundDisabled text-actionInvertedTextDisabled',
         ],
         (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
         isDisabled && 'pointer-events-none',

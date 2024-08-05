@@ -35,12 +35,8 @@ export const OrderAction: FC<OrderActionProps> = ({
             )}
         >
             <div className="order-2 lg:order-1">
-                <Button
-                    className="!bg-white p-0 !px-0 text-dark border-none hover:underline hover:text-primary gap-0"
-                    tid={TIDs.blocks_orderaction_back}
-                    onClick={backStepClickHandler}
-                >
-                    <ArrowIcon className="relative top-0 mr-1 rotate-90 text-graySlate" />
+                <Button tid={TIDs.blocks_orderaction_back} variant="inverted" onClick={backStepClickHandler}>
+                    <ArrowIcon className={twJoin('relative top-0 mr-1 rotate-90')} />
                     {buttonBack}
                 </Button>
             </div>

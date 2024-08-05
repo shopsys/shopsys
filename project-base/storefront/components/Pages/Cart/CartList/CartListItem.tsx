@@ -52,7 +52,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
     return (
         <div
-            className="relative flex flex-row flex-wrap items-center gap-4 border-b border-graySlate py-5 vl:flex-nowrap"
+            className="relative flex flex-row flex-wrap items-center gap-4 border-b border-borderAccent py-5 vl:flex-nowrap"
             tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0 gap-1">
@@ -76,14 +76,14 @@ export const CartListItem: FC<CartListItemProps> = ({
                 <div className="flex flex-col items-start gap-4 text-sm font-bold vl:flex-1 vl:flex-row vl:items-center">
                     <div className="h-full text-left vl:w-[16.875rem]" tid={TIDs.pages_cart_list_item_name}>
                         <ExtendedNextLink
-                            className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
+                            className="text-sm font-bold uppercase leading-4"
                             href={productSlug}
                             type="product"
                         >
                             {product.fullName}
                         </ExtendedNextLink>
 
-                        <div className="text-sm text-graySlate">
+                        <div className="text-sm text-textDisabled">
                             {t('Code')}: {product.catalogNumber}
                         </div>
                     </div>
@@ -119,7 +119,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             </div>
 
             <div
-                className="ml-auto flex items-center justify-end text-sm text-primary lg:text-base vl:w-32"
+                className="ml-auto flex items-center justify-end text-sm text-price lg:text-base vl:w-32"
                 tid={TIDs.pages_cart_list_item_totalprice}
             >
                 {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}

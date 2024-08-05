@@ -1,9 +1,9 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
+import { SimpleNavigationListItem } from 'components/Blocks/SimpleNavigation/SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
@@ -79,22 +79,14 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         )}
                     </div>
 
-                    <div className="mt-6 flex items-center justify-between rounded border border-graySlate py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
-                        <div className="flex flex-row items-center text-lg text-primary">
-                            <ChatIcon className="mr-3 w-6 text-2xl text-primary xl:mr-5" />
-                            <ExtendedNextLink
-                                passHref
-                                className="relative flex-grow text-primary md:text-lg no-underline hover:no-underline"
-                                href={contactUrl}
-                            >
-                                {t('Do you have any questions?')}
-                            </ExtendedNextLink>
-                        </div>
-
-                        <div className="flex flex-row items-center text-lg text-primary">
-                            <a className="relative flex-grow text-primary md:text-lg">{t('Customer Centre')}</a>
-                        </div>
-                    </div>
+                    <SimpleNavigationListItem
+                        linkTypeOverride={undefined}
+                        listedItem={{
+                            icon: <ChatIcon className="mr-3 w-6 text-2xl xl:mr-5" />,
+                            name: t('Do you have any questions?'),
+                            slug: contactUrl,
+                        }}
+                    />
                 </div>
 
                 <div className="flex mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
@@ -115,7 +107,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
             </div>
 
             {store.storeImages.length > 0 && (
-                <div className="mt-6 bg-whiteSnow p-3">
+                <div className="mt-6 bg-backgroundMore p-3">
                     <ul className="flex flex-wrap justify-center lg:justify-start">
                         {store.storeImages.map((image, index) => (
                             <li
@@ -151,8 +143,6 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     );
 };
 
-const StoreHeading: FC<{ text: string }> = ({ text }) => (
-    <div className="h3 mb-1 block font-normal text-primary">{text}</div>
-);
+const StoreHeading: FC<{ text: string }> = ({ text }) => <div className="h3 mb-1 block font-normal">{text}</div>;
 
 const InfoItem: FC = ({ children, className }) => <div className={twJoin('mb-4 md:mb-6', className)}>{children}</div>;

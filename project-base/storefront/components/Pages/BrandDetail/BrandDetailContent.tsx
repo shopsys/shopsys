@@ -26,7 +26,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                             width={220}
                         />
                     </div>
-                    <div className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark">
+                    <div className="self-start md:self-center [&>section]:text-base [&>section]:text-text">
                         {brand.description !== null ? <UserText htmlContent={brand.description} /> : null}
                     </div>
                 </div>

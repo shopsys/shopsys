@@ -76,10 +76,10 @@ export const SearchProducts: FC = () => {
 
                 <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
                     <div
-                        className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded bg-primary py-3 px-8 font-bold uppercase leading-7 text-white vl:hidden"
+                        className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded bg-backgroundAccent py-3 px-8 font-bold uppercase leading-7 text-textInverted vl:hidden"
                         onClick={handlePanelOpenerClick}
                     >
-                        <FilterIcon className="mr-3 w-6 font-bold text-white" />
+                        <FilterIcon className="mr-3 w-6 font-bold text-textInverted" />
                         {t('Filter')}
                     </div>
 

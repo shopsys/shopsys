@@ -38,16 +38,16 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     inputType === 'text-input' &&
                         'top-2 text-xs peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-sm',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        'absolute left-3 z-[2] block text-sm text-skyBlue transition-all',
+                        'absolute left-3 z-[2] block text-sm transition-all text-inputPlaceholder peer-disabled:text-inputPlaceholderDisabled peer-focus:text-inputPlaceholderActive peer-hover:text-inputPlaceholderHovered',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         (selectBoxLabelIsFloated === undefined || selectBoxLabelIsFloated === true) &&
                         'transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:transform-none',
                     (inputType === 'checkbox' || inputType === 'radio') && [
-                        'group relative flex w-full cursor-pointer items-center gap-2 text-base text-dark',
-                        disabled && 'cursor-no-drop text-skyBlue opacity-60',
+                        'group relative flex w-full cursor-pointer items-center gap-2 text-base text-inputText',
+                        disabled && 'cursor-no-drop text-inputTextDisabled opacity-60',
                     ],
                     inputType === 'checkbox' && [
-                        '[&>a]:text-dark [&>a]:hover:text-secondary [&>a]:focus:text-secondary [&>a]:active:text-secondary',
+                        '[&>a]:text-link [&>a]:hover:text-linkHovered [&>a]:focus:text-linkHovered [&>a]:active:text-linkHovered',
                     ],
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',
@@ -55,36 +55,36 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     ],
                     inputType === 'textarea' &&
                         'top-2 text-xs peer-placeholder-shown:top-5 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs',
-                    disabled && 'text-skyBlue',
+                    disabled && 'text-inputTextDisabled',
                     className,
                 )}
             >
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <div
                         className={twMergeCustom(
-                            'flex w-5 h-5 min-w-5 border border-black bg-white p-[3px] text-white transition',
+                            'flex w-5 h-5 min-w-5 border border-inputBorder bg-inputBackground p-[3px] transition',
                             inputType === 'checkbox' ? 'rounded' : 'rounded-full p-[5px]',
                             'active:scale-90',
                             checked
-                                ? 'border-primary bg-primary group-hover:bg-primaryDark group-hover:border-primaryDark'
-                                : 'group-hover:border-primary group-active:border-primary group-hover:bg-whiteSnow',
+                                ? 'border-inputBorderActive bg-inputBorderActive'
+                                : 'group-hover:border-inputBorderHovered group-active:border-inputBorderHovered group-hover:bg-inputBorderHovered',
                             disabled &&
-                                'border-skyBlue outline-0 group-hover:border-skyBlue group-hover:bg-none group-active:border-skyBlue group-active:outline-0 active:scale-100',
-                            disabled && checked && 'bg-skyBlue group-hover:bg-skyBlue',
+                                'border-inputBorderDisabled outline-0 group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled group-active:outline-0 active:scale-100',
+                            disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
                         )}
                     >
                         {inputType === 'checkbox' ? (
                             <CheckmarkIcon
                                 className={twMergeCustom(
-                                    'h-full opacity-0 transition',
+                                    'h-full opacity-0 transition group-hover:opacity-100 text-inputTextInverted',
                                     checked && 'opacity-100',
-                                    disabled && 'text-skyBlue',
+                                    disabled && 'text-inputTextDisabled',
                                 )}
                             />
                         ) : (
                             <span
                                 className={twMergeCustom(
-                                    'h-full w-full rounded-full bg-white opacity-0 transition',
+                                    'h-full w-full rounded-full bg-inputTextInverted opacity-0 transition',
                                     checked && 'opacity-100',
                                 )}
                             />
@@ -95,7 +95,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 <div className="w-full">
                     {label}
                     {!!count && !checked && ` (${count})`}
-                    {required && <span className="ml-1 text-red">*</span>}
+                    {required && <span className="ml-1 text-textError">*</span>}
                 </div>
             </label>
         )}

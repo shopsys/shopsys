@@ -3,7 +3,7 @@ import { Footer } from 'components/Layout/Footer/Footer';
 import { NewsletterForm } from 'components/Layout/Footer/NewsletterForm/NewsletterForm';
 import { useFooterArticles } from 'components/Layout/Footer/footerUtils';
 import { AutocompleteSearch } from 'components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
-import { Cart } from 'components/Layout/Header/Cart/Cart';
+import { CartInHeader } from 'components/Layout/Header/Cart/CartInHeader';
 import { Logo } from 'components/Layout/Header/Logo/Logo';
 import { MenuIconic } from 'components/Layout/Header/MenuIconic/MenuIconic';
 import { Navigation } from 'components/Layout/Header/Navigation/Navigation';
@@ -22,7 +22,10 @@ const Index: FC = () => {
         <>
             <NotificationBars />
 
-            <Webline className="relative mb-8" type="colored">
+            <Webline
+                className="relative mb-8"
+                wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
+            >
                 <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-1 lg:gap-x-7 lg:pb-5 lg:pt-6">
                     <Logo />
 
@@ -34,7 +37,7 @@ const Index: FC = () => {
                         <MenuIconic />
                     </div>
 
-                    <Cart className="order-3 vl:order-4" />
+                    <CartInHeader className="order-3 vl:order-4" />
                 </div>
                 {navigationData?.navigation && <Navigation navigation={navigationData.navigation} />}
             </Webline>
@@ -43,7 +46,7 @@ const Index: FC = () => {
                 <ArticleTitle>Blog or Article title</ArticleTitle>
                 <div className="px-5">
                     <div className="mb-12 flex w-full flex-col">
-                        <div className="mb-2 text-left text-xs font-semibold text-skyBlue">
+                        <div className="mb-2 text-left text-xs font-semibold text-textAccent">
                             {new Date().toLocaleDateString() + ''}
                         </div>
                         <GrapesJs className="gjs-editable pt-4 pb-4" />
@@ -51,12 +54,9 @@ const Index: FC = () => {
                 </div>
             </Webline>
 
-            <Webline type="light">
+            <Webline wrapperClassName="bg-backgroundAccentLess">
                 <NewsletterForm />
-            </Webline>
-
-            <Webline type="dark">
-                <Footer footerArticles={footerArticles} opening="Po - Út, 10 - 16 hod" phone="+420 111 222 333" />
+                <Footer footerArticles={footerArticles} />
             </Webline>
         </>
     );

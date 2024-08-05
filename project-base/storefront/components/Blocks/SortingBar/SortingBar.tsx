@@ -30,8 +30,6 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const updateSort = useUpdateSortQuery();
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
-    const asPathWithoutQueryParams = router.asPath.split('?')[0];
-
     const sortOptionsLabels = {
         [TypeProductOrderingModeEnum.Priority]: t('priority'),
         [TypeProductOrderingModeEnum.PriceAsc]: t('price ascending'),
@@ -47,40 +45,35 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     return (
         <div
             className={twMergeCustom(
-                'relative flex select-none items-center justify-center gap-3 rounded border-graySlate bg-secondary p-3 vl:flex-row vl:justify-between vl:rounded-none vl:border-b vl:bg-opacity-0 vl:p-0',
+                'relative flex select-none items-center justify-center gap-3 p-3 vl:flex-row vl:justify-between vl:rounded-none vl:border-b vl:p-0 rounded-full',
                 isSortMenuOpen && 'rounded-b-none',
                 className,
+                'bg-backgroundAccentLess text-text vl:border-none vl:bg-background',
             )}
             onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
         >
             <SortIcon className="w-5 align-middle vl:hidden" />
             <div className="flex flex-col justify-center vl:hidden">
                 <div className="font-bold uppercase leading-none">{t('Sort')}</div>
-                <div className="text-sm font-bold uppercase leading-none text-primaryDark">
+                <div className="text-sm font-bold uppercase leading-none text-textAccent">
                     {sortOptionsLabels[selectedSortOption]}
                 </div>
             </div>
 
             <div
                 className={twJoin(
-                    'w-full rounded-b max-vl:bg-skyBlue vl:static vl:flex vl:gap-3',
-                    isSortMenuOpen ? 'absolute top-full z-[1]' : 'hidden',
+                    'w-full rounded-b max-vl:bg-backgroundAccentLess vl:static vl:flex vl:gap-3',
+                    isSortMenuOpen ? 'absolute top-full z-[11]' : 'hidden',
                 )}
             >
                 {sortOptions.map((sortOption) => {
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const { page, ...queriesWithoutPage } = getUrlQueriesWithoutDynamicPageQueries(router.query);
-                    const sortParams = new URLSearchParams({
-                        ...queriesWithoutPage,
-                        sort: sortOption,
-                    }).toString();
-                    const sortHref = `${asPathWithoutQueryParams}?${sortParams}`;
                     const isSelectedSortOption = sortOption === selectedSortOption;
 
                     return (
                         <SortingBarItem
                             key={sortOption}
-                            href={sortHref}
                             isActive={isSelectedSortOption}
                             onClick={() => updateSort(sortOption)}
                         >

@@ -97,7 +97,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     {t('Accept all')}
                 </Button>
 
-                <Button size="small" variant="primaryOutlined" onClick={rejectUserConsent}>
+                <Button size="small" variant="inverted" onClick={rejectUserConsent}>
                     {t('Reject all')}
                 </Button>
             </div>
@@ -106,7 +106,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 };
 
 const ToggleContent: FC<{ name: string; toggleSwitch: JSX.Element }> = ({ toggleSwitch, name }) => (
-    <div className="my-2 flex justify-between border-b border-graySlate">
+    <div className="my-2 flex justify-between border-b border-borderAccent">
         <span className="text-xl">{name}</span>
         {toggleSwitch}
     </div>

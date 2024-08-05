@@ -1,4 +1,5 @@
-import { CrossIcon } from 'components/Basic/Icon/CrossIcon';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -11,16 +12,15 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
     const { t } = useTranslation();
 
     return (
-        <div className="max-w-sm">
-            <div className="text-primary">{t('Your discount with the code has been applied.')}</div>
-            <div className="flex items-center gap-1 font-bold" tid={TIDs.blocks_promocode_promocodeinfo_code}>
-                {promoCode}
-                <CrossIcon
-                    className="mr-1 w-4 cursor-pointer text-skyBlue hover:text-primary"
-                    onClick={onRemovePromoCodeCallback}
-                />
+        <div className="flex flex-col gap-2">
+            <div className="text-textAccent">{t('Your discount with the code has been applied.')}</div>
+            <div className="flex items-center font-bold" tid={TIDs.blocks_promocode_promocodeinfo_code}>
+                <LabelLink className="gap-3" onClick={onRemovePromoCodeCallback}>
+                    {promoCode}
+                    <RemoveIcon className=" w-3" />
+                </LabelLink>
             </div>
-            <p>
+            <p className="text-textDisabled ">
                 {t(
                     'The discount was applied to all non-discounted items to which the promotion applies according to the rules.',
                 )}

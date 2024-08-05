@@ -109,20 +109,32 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                 </div>
             </div>
             <div className="flex flex-1 justify-center gap-1 vl:flex-col vl:justify-start vl:gap-4">
-                {sliderItems.map((sliderItem, index) => (
-                    <button
-                        key={sliderItem.uuid}
-                        disabled={index === bannerSliderState.sliderPosition}
-                        className={twJoin(
-                            'group relative block h-2 w-3 cursor-pointer rounded border-none border-graySlate bg-graySlate font-bold outline-none transition active:bg-none disabled:bg-secondary',
-                            'vl:mx-0 vl:h-full vl:px-8 vl:w-full vl:border-2 vl:border-solid vl:border-primary vl:bg-whiteSnow vl:text-left vl:hover:border-primaryDark vl:disabled:border-secondary vl:disabled:bg-whiteSnow',
-                        )}
-                        onClick={() => moveToSlide(index)}
-                    >
-                        <TriangleIcon className="absolute top-1/2 left-3 hidden w-2 -translate-y-1/2 text-primary vl:group-disabled:block" />
-                        <span className="hidden vl:inline-block">{sliderItem.name}</span>
-                    </button>
-                ))}
+                {sliderItems.map((sliderItem, index) => {
+                    const isActive = index === bannerSliderState.sliderPosition;
+
+                    return (
+                        <button
+                            key={sliderItem.uuid}
+                            className={twJoin(
+                                'group relative block h-2 w-3 cursor-pointer rounded-full vl:rounded font-bold outline-none transition',
+                                'vl:mx-0 vl:h-full vl:px-8 vl:w-full border-8 vl:border-2 vl:border-solid vl:text-left',
+                                'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
+                                'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
+                                isActive &&
+                                    'border-actionInvertedBorderActive bg-actionInvertedBackgroundActive text-actionInvertedTextActive',
+                            )}
+                            onClick={() => moveToSlide(index)}
+                        >
+                            <TriangleIcon
+                                className={twJoin(
+                                    'absolute top-1/2 left-3 hidden w-2 -translate-y-1/2 text-actionInvertedText',
+                                    isActive && 'vl:block',
+                                )}
+                            />
+                            <span className="hidden vl:inline-block">{sliderItem.name}</span>
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );

@@ -23,41 +23,49 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
     return (
         <li
             className={twMergeCustom(
-                'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-full bg-grayLight hover:bg-gray transition',
+                'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-ful transition',
+                'bg-backgroundMore',
+                'hover:bg-backgroundMost',
                 className,
             )}
         >
             <ExtendedNextLink
-                className="flex h-full select-none flex-col gap-3 no-underline hover:no-underline"
+                className="flex h-full select-none flex-col justify-between no-underline hover:no-underline text-text hover:text-text"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
-                <ProductListItemImage product={product} size={size} visibleItemsConfig={{ flags: false }} />
+                <div className="flex flex-col gap-2">
+                    <ProductListItemImage product={product} size={size} visibleItemsConfig={{ flags: false }} />
 
-                <div className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark">{product.fullName}</div>
+                    <div className="font-semibold font-secondary mb-4">{product.fullName}</div>
+                </div>
 
-                <ProductPrice productPrice={product.price} />
+                <div>
+                    {visibleItemsConfig.price && <ProductPrice productPrice={product.price} />}
 
-                {visibleItemsConfig.storeAvailability && (
-                    <div className="flex flex-col gap-1 text-sm text-black">
-                        <div>{product.availability.name}</div>
-                        <ProductAvailableStoresCount
-                            availableStoresCount={product.availableStoresCount}
-                            isMainVariant={product.isMainVariant}
-                        />
-                    </div>
-                )}
+                    {visibleItemsConfig.storeAvailability && (
+                        <div className="flex flex-col gap-1 text-sm text-text">
+                            <div>{product.availability.name}</div>
+                            <ProductAvailableStoresCount
+                                availableStoresCount={product.availableStoresCount}
+                                isMainVariant={product.isMainVariant}
+                            />
+                        </div>
+                    )}
+                </div>
             </ExtendedNextLink>
 
-            {visibleItemsConfig.productListButtons && (
-                <div className="flex justify-end gap-2">
-                    <Skeleton className="w-8 h-8" />
-                    <Skeleton className="w-8 h-8" />
-                </div>
-            )}
+            <div className="flex w-full items-center gap-2">
+                {visibleItemsConfig.addToCart && <Skeleton className="h-10" containerClassName="w-1/2" />}
 
-            <Skeleton className="h-12" />
+                {visibleItemsConfig.productListButtons && (
+                    <>
+                        <Skeleton className="w-8 h-8" />
+                        <Skeleton className="w-8 h-8" />
+                    </>
+                )}
+            </div>
         </li>
     );
 };

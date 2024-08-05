@@ -19,12 +19,11 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     }
 
     return (
-        <button
+        <div
             className={twJoin(
-                'mr-1 text-sm flex cursor-pointer items-center no-underline hover:no-underline font-secondary',
-                product.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                    'text-secondary hover:text-secondary',
-                product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-red hover:text-red',
+                'mr-1 text-sm flex cursor-pointer items-center font-secondary',
+                product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availabilityInStock',
+                product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
             )}
             onClick={() =>
                 updatePortalContent(
@@ -38,6 +37,6 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 availability: product.availability.name,
                 count: product.availableStoresCount,
             })}`}
-        </button>
+        </div>
     );
 };

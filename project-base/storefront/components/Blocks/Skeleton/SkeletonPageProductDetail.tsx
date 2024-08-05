@@ -51,7 +51,7 @@ export const SkeletonPageProductDetail: FC = () => (
             ))}
         </div>
 
-        <div className="border-grayLight mb-6 w-full border-t vl:border-0">
+        <div className="border-borderAccent mb-6 w-full border-t vl:border-0">
             <Skeleton className="hidden vl:block vl:h-8 vl:w-40 vl:rounded" />
 
             <div className="flex w-full flex-col vl:flex-row">

@@ -1,7 +1,7 @@
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropTypeTypename } from 'types/simpleNavigation';
 
-export const getLinkType = (type: ListedItemPropTypeTypename | undefined): PageType => {
+export const getLinkType = (type: ListedItemPropTypeTypename | undefined): PageType | undefined => {
     switch (type) {
         case 'ArticleSite':
             return 'article';
@@ -12,6 +12,6 @@ export const getLinkType = (type: ListedItemPropTypeTypename | undefined): PageT
         case 'Category':
             return 'category';
         default:
-            throw new Error('Link type ' + type + ' could not be resolved.');
+            return undefined;
     }
 };

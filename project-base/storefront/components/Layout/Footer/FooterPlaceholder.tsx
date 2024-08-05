@@ -19,12 +19,11 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                     <ExtendedNextLink href={contactUrl}>{t('Write to us')}</ExtendedNextLink>
                     {footerArticles?.map((item) => (
                         <div key={item.title}>
-                            <h3 className="text-white">{item.title}</h3>
+                            <h3>{item.title}</h3>
                             <ul>
                                 {item.items.map((item) => (
                                     <li key={item.uuid}>
                                         <ExtendedNextLink
-                                            className="text-white"
                                             href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                                             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                                             target={item.external ? '_blank' : undefined}

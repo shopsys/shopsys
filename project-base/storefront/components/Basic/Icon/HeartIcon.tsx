@@ -7,7 +7,7 @@ export const HeartIcon: SvgFC<{ isFull: boolean }> = ({ isFull, ...props }) => (
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="1.5"
+            strokeWidth="2.5"
         />
     </svg>
 );

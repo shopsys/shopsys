@@ -6,7 +6,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { twMergeCustom } from 'utils/twMerge';
 
 type CustomerLayoutProps = {
     pageHeading?: string;
@@ -32,9 +31,7 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children,
             <Webline className="flex lg:flex-row flex-col gap-6 mt-8 lg:mt-4 vl:mt-12">
                 <UserNavigation />
                 <div className="w-full">
-                    {pageHeading && (
-                        <h1 className={twMergeCustom('text-dark', !isUserLoggedIn && 'mt-0 vl:mt-4')}>{pageHeading}</h1>
-                    )}
+                    {pageHeading && <h1 className={isUserLoggedIn ? '' : 'mt-0 vl:mt-4'}>{pageHeading}</h1>}
                     {children}
                 </div>
             </Webline>

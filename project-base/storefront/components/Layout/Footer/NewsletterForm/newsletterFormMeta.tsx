@@ -8,7 +8,6 @@ import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
-import { twMergeCustom } from 'utils/twMerge';
 import * as Yup from 'yup';
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {
@@ -70,7 +69,7 @@ export const useNewsletterFormMeta = (
                                 lnk1: privacyPolicyArticleUrl ? (
                                     <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                 ) : (
-                                    <span className={twMergeCustom('text-whiteSnow', linkPlaceholderTwClass)} />
+                                    <span className={linkPlaceholderTwClass} />
                                 ),
                             }}
                         />

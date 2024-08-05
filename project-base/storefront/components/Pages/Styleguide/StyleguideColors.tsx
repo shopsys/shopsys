@@ -20,7 +20,7 @@ export const StyleguideColors: FC = () => {
                     className={twJoin('h-24 flex justify-center items-center')}
                     style={{ backgroundColor: tailwindColors[color] as string }}
                 >
-                    <span className="text-white mix-blend-difference">{color}</span>
+                    <span className="text-textInverted mix-blend-difference">{color}</span>
                 </div>
             ))}
         </StyleguideSection>

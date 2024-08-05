@@ -1,4 +1,4 @@
-import { ListItem } from './CartListItem';
+import { CartInHeaderListItem } from './CartInHeaderListItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
@@ -18,7 +18,19 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
-export const Cart: FC = ({ className }) => {
+const emptyCartTwClassName = [
+    'bg-none text-actionPrimaryText border-actionPrimaryText',
+    'group-hover:bg-actionPrimaryBackgroundHovered group-hover:text-actionPrimaryTextHovered group-hover:border-actionPrimaryBorderHovered',
+    'group-active:bg-actionPrimaryBackgroundActive group-active:text-actionPrimaryTextActive group-active:border-actionPrimaryBorderActive',
+];
+
+const nonEmptyCartTwClassName = [
+    'bg-actionPrimaryBackground text-actionPrimaryText border-actionPrimaryBorder',
+    'group-hover:bg-actionPrimaryBackgroundHovered group-hover:text-actionPrimaryTextHovered group-hover:border-actionPrimaryBorderHovered',
+    'group-active:bg-actionPrimaryBackgroundActive group-active:text-actionPrimaryTextActive group-active:border-actionPrimaryBorderActive',
+];
+
+export const CartInHeader: FC = ({ className }) => {
     const router = useRouter();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
@@ -35,30 +47,33 @@ export const Cart: FC = ({ className }) => {
             onMouseLeave={() => setIsHovered(false)}
         >
             {isCartFetchingOrUnavailable && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-graySlate py-2 opacity-50" />
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
             )}
 
             <ExtendedNextLink
                 href={cartUrl}
                 tid={TIDs.header_cart_link}
                 className={twJoin(
-                    'min-w-24 hidden items-center gap-x-3 rounded h-12 bg-secondary pr-2 pl-4 text-white no-underline transition-all group-hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
+                    'min-w-24 hidden items-center gap-x-3 rounded h-12 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:rounded-b-none group-hover:shadow-lg lg:flex border',
+                    cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                 )}
             >
                 <span className="relative flex text-lg">
                     <CartIcon className="w-6 lg:w-5" />
-                    <CartCount>{cart?.items.length ?? 0}</CartCount>
+                    {!!cart?.items.length && <CartCount>{cart.items.length}</CartCount>}
                 </span>
                 <span className="hidden text-sm font-semibold lg:block">
-                    {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
-                        explicitZero: true,
-                    })}
+                    {cart?.items.length
+                        ? formatPrice(cart.totalItemsPrice.priceWithVat, {
+                              explicitZero: true,
+                          })
+                        : t('Empty')}
                 </span>
             </ExtendedNextLink>
 
             <div
                 className={twJoin(
-                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
+                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-background lg:opacity-0 lg:shadow-md',
                     !cart?.items.length
                         ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between'
                         : 'lg:w-[510px]',
@@ -71,7 +86,7 @@ export const Cart: FC = ({ className }) => {
                                 <ul className="relative m-0 flex max-h-96 w-full list-none flex-col overflow-y-auto p-0">
                                     {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
                                     {cart.items.map((cartItem, listIndex) => (
-                                        <ListItem
+                                        <CartInHeaderListItem
                                             key={cartItem.uuid}
                                             cartItem={cartItem}
                                             onRemoveFromCart={() => removeFromCart(cartItem, listIndex)}
@@ -86,8 +101,8 @@ export const Cart: FC = ({ className }) => {
                             </>
                         ) : (
                             <>
-                                <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                                <EmptyCartIcon className={twJoin('w-20 text-secondary')} />
+                                <span>{t('Your cart is currently empty.')}</span>
+                                <EmptyCartIcon className={twJoin('w-20')} />
                             </>
                         )}
                     </>
@@ -96,18 +111,24 @@ export const Cart: FC = ({ className }) => {
 
             <div className="flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                 <ExtendedNextLink
-                    className="relative flex h-full w-full items-center justify-center p-3 text-white no-underline transition-colors hover:text-white hover:no-underline"
                     href={cartUrl}
+                    className={twJoin(
+                        'relative flex h-full w-full items-center justify-center p-3 no-underline transition-colors hover:no-underline border rounded-lg',
+                        'bg-actionPrimaryBackground text-actionPrimaryText border-actionPrimaryBorder',
+                        'hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered hover:border-actionPrimaryBorderHovered',
+                        'active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive active:border-actionPrimaryBorderActive',
+                    )}
                 >
-                    <CartIcon className="w-6 text-white" />
+                    <CartIcon className="w-6" />
                     <CartCount>{cart?.items.length ?? 0}</CartCount>
                 </ExtendedNextLink>
             </div>
         </div>
     );
 };
+
 const CartCount: FC = ({ children }) => (
-    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold leading-normal text-white lg:-top-2 lg:-right-2">
+    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-backgroundAccent text-xs font-bold leading-normal text-textInverted lg:-top-2 lg:-right-2">
         {children}
     </span>
 );

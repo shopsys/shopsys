@@ -25,7 +25,10 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
             <NotificationBars />
 
-            <Webline className="relative mb-8" type="colored">
+            <Webline
+                className="relative mb-8"
+                wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
+            >
                 <Header simpleHeader />
             </Webline>
 
@@ -43,7 +46,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
             <Adverts withGapBottom withWebline positionName="footer" />
 
-            <Webline type="dark">
+            <Webline wrapperClassName="bg-backgroundAccentLess">
                 <Footer simpleFooter />
             </Webline>
         </>

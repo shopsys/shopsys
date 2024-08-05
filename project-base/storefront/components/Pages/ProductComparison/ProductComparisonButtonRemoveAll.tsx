@@ -14,8 +14,11 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
     return (
         <div
             className={twJoin(
-                'hidden cursor-pointer items-center rounded bg-whiteSnow py-2 px-4 transition-colors hover:bg-graySlate sm:inline-flex',
+                'hidden cursor-pointer items-center rounded py-2 px-4 transition-colors sm:inline-flex border-2',
                 displayMobile && 'mb-5 inline-flex sm:hidden',
+                'bg-actionInvertedBackground border-actionInvertedBorder text-actionInvertedText',
+                'hover:bg-actionInvertedBackgroundHovered hover:border-actionInvertedBorderHovered hover:text-actionInvertedTextHovered',
+                'active:bg-actionInvertedBackgroundActive active:border-actionInvertedBorderActive active:text-actionInvertedTextActive',
             )}
             onClick={handleRemoveComparison}
         >

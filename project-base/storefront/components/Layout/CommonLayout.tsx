@@ -57,7 +57,10 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
             <NotificationBars />
 
-            <Webline className="relative mb-8" type="colored">
+            <Webline
+                className="relative mb-8"
+                wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
+            >
                 <Header />
                 <DeferredNavigation />
             </Webline>
@@ -80,11 +83,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
             <Adverts withGapBottom withGapTop withWebline positionName="footer" />
 
-            <Webline type="light">
+            <Webline wrapperClassName="bg-backgroundAccentLess">
                 <DeferredNewsletterForm />
-            </Webline>
-
-            <Webline type="dark">
                 <DeferredFooter />
             </Webline>
         </>

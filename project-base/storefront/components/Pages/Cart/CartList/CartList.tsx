@@ -15,7 +15,7 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
     const { addToCart, isAddingToCart } = useAddToCart(GtmMessageOriginType.cart, GtmProductListNameType.cart);
 
     return (
-        <ul className="relative mb-6 border-graySlate lg:mb-8">
+        <ul className="relative mb-6 border-borderAccent lg:mb-8">
             {(isRemovingFromCart || isAddingToCart) && <LoaderWithOverlay className="w-16" />}
             {cartItems.map((cartItem, listIndex) => (
                 <CartListItem

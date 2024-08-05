@@ -151,6 +151,13 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         }
     }, [getPercent, maxValueThumb, minValueThumb]);
 
+    let rangeBgClass = 'bg-inputBorder';
+    if (minValueThumb !== min || maxValueThumb !== max) {
+        rangeBgClass = 'bg-inputBorderActive';
+    } else if (isDisabled) {
+        rangeBgClass = 'bg-inputBorderDisabled';
+    }
+
     return (
         <div className="relative mb-10 -mt-5 flex h-12 w-full items-center justify-center p-2">
             <RangeSliderThumb
@@ -180,12 +187,9 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onTouchEnd={handleMaxValueThumbCallback}
             />
             <div className="relative w-full">
-                <div className="absolute z-above h-1 w-full rounded bg-graySlate" />
-                <div
-                    className={twJoin('absolute z-[2] h-1 rounded', isDisabled ? 'bg-graySlate' : 'bg-primary')}
-                    ref={range}
-                />
-                <div className="absolute -left-2 mt-5 w-20 text-xs text-black">
+                <div className="absolute z-above h-1 w-full rounded bg-inputBorderDisabled" />
+                <div className={twJoin('absolute z-[2] h-1 rounded', rangeBgClass)} ref={range} />
+                <div className="absolute -left-2 mt-5 w-20 text-xs">
                     <TextInput
                         disabled={isDisabled}
                         id="basic-rangeslider-left-value"
@@ -198,7 +202,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onKeyDown={onEnterKeyDownHandler}
                     />
                 </div>
-                <div className="absolute -right-2 mt-5 w-20 text-xs text-dark">
+                <div className="absolute -right-2 mt-5 w-20 text-xs">
                     <TextInput
                         disabled={isDisabled}
                         id="basic-rangeslider-right-value"
@@ -228,6 +232,16 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ isActive, disabled, ...pr
     const msTwClass =
         '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:h-4 [&::-ms-thumb]:w-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-thumb]:border-none [&::-ms-fill-upper]:pointer-events-none';
 
+    let bgClass =
+        '[&::-moz-range-thumb]:bg-inputBorder [&::-ms-thumb]:bg-inputBorder [&::-webkit-slider-thumb]:bg-inputBorder';
+    if (isActive) {
+        bgClass =
+            '[&::-moz-range-thumb]:bg-inputBorderActive [&::-ms-thumb]:bg-inputBorderActive [&::-webkit-slider-thumb]:bg-inputBorderActive';
+    } else if (disabled) {
+        bgClass =
+            '[&::-moz-range-thumb]:bg-inputBorderDisabled [&::-ms-thumb]:bg-inputBorderDisabled [&::-webkit-slider-thumb]:bg-inputBorderDisabled';
+    }
+
     return (
         <input
             disabled={disabled}
@@ -237,9 +251,7 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ isActive, disabled, ...pr
                 webkitTwClass,
                 mozTwClass,
                 msTwClass,
-                isActive
-                    ? '[&::-moz-range-thumb]:bg-secondary [&::-ms-thumb]:bg-secondary [&::-webkit-slider-thumb]:bg-secondary'
-                    : '[&::-moz-range-thumb]:bg-graySlate [&::-ms-thumb]:bg-graySlate [&::-webkit-slider-thumb]:bg-graySlate',
+                bgClass,
                 disabled &&
                     '[&::-moz-range-thumb]:cursor-not-allowed [&::-ms-thumb]:cursor-not-allowed [&::-webkit-slider-thumb]:cursor-not-allowed',
             )}
