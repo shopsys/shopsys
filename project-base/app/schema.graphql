@@ -1305,6 +1305,8 @@ type OrderItem {
   unit: String
   "Order item price per unit"
   unitPrice: Price!
+  "UUID of the order item"
+  uuid: Uuid!
   "Applied VAT rate percentage applied to the order item"
   vatRate: String!
 }
