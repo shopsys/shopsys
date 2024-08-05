@@ -100,32 +100,32 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                   );
                               })
                             : undefined;
-                    if (!selectedParameterOptions || (!selectedParameterValues && !isSliderParameter)) {
+
+                    if (!selectedParameterOptions) {
                         return null;
                     }
 
                     return (
                         <SelectedParametersList key={selectedParameterOptions.uuid}>
                             <SelectedParametersName>{selectedParameterOptions.name}:</SelectedParametersName>
-                            {isSliderParameter ? (
+                            {isSliderParameter && (
                                 <SelectedParametersListItem key={selectedParameterOptions.uuid}>
                                     <span>{t('from')}&nbsp;</span>
                                     {selectedParameter.minimalValue || selectedParameterOptions.minimalValue}
                                     {!!selectedParameterOptions.unit?.name &&
                                         `\xa0${selectedParameterOptions.unit.name}`}
-
                                     <span>&nbsp;{t('to')}&nbsp;</span>
                                     {selectedParameter.maximalValue || selectedParameterOptions.maximalValue}
                                     {selectedParameterOptions.unit?.name && `\xa0${selectedParameterOptions.unit.name}`}
-
                                     <SelectedParametersIcon
                                         onClick={() =>
                                             updateFilterParametersQuery(selectedParameterOptions.uuid, undefined)
                                         }
                                     />
                                 </SelectedParametersListItem>
-                            ) : (
-                                selectedParameterValues?.map((selectedValue) => (
+                            )}
+                            {selectedParameterValues &&
+                                selectedParameterValues.map((selectedValue) => (
                                     <SelectedParametersListItem key={selectedValue.uuid}>
                                         {selectedValue.text}
                                         <SelectedParametersIcon
@@ -137,8 +137,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                             }
                                         />
                                     </SelectedParametersListItem>
-                                ))
-                            )}
+                                ))}
                         </SelectedParametersList>
                     );
                 })}
