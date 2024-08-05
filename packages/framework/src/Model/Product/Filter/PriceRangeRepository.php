@@ -106,7 +106,7 @@ class PriceRangeRepository
             ->setParameter('pricingGroup', $pricingGroup)
             ->resetDQLPart('groupBy')
             ->resetDQLPart('orderBy')
-            ->select('MIN(pmip.priceWithVat) AS minimalPrice, MAX(pmip.priceWithVat) AS maximalPrice');
+            ->select('MIN(pmip.inputPrice) AS minimalPrice, MAX(pmip.inputPrice) AS maximalPrice');
 
         $priceRangeData = $queryBuilder->getQuery()->execute();
         $priceRangeDataRow = reset($priceRangeData);
