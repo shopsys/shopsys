@@ -85,6 +85,9 @@ export const cacheUpdates: UpdatesConfig = {
         CreateOrder(_result: TypeCreateOrderMutation, _args: TypeCreateOrderMutationVariables, cache) {
             invalidateFields(cache, ['currentCustomerUser']);
         },
+        CreateDeliveryAddress(_result: TypeCreateOrderMutation, _args: TypeCreateOrderMutationVariables, cache) {
+            invalidateFields(cache, ['currentCustomerUser']);
+        },
         AddToCart(result: TypeAddToCartMutation, _args: TypeAddToCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.AddToCart.cart, result.AddToCart.cart.uuid);
         },

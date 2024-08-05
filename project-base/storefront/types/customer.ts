@@ -14,7 +14,7 @@ export type DeliveryAddressType = {
     telephone: string;
     firstName: string;
     lastName: string;
-    country: string;
+    country: TypeCountryFragment;
 };
 
 export type CurrentCustomerType = {

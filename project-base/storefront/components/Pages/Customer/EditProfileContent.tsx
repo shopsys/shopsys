@@ -20,7 +20,9 @@ import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { CombinedError } from 'urql';
@@ -30,6 +32,13 @@ import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
+const DeliveryAddressPopup = dynamic(
+    () => import('components/Blocks/Popup/DeliveryAddressPopup').then((component) => component.DeliveryAddressPopup),
+    {
+        ssr: false,
+    },
+);
+
 type EditProfileContentProps = {
     currentCustomerUser: CurrentCustomerType;
 };
@@ -38,6 +47,8 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutation();
     const [, resetPassword] = usePasswordRecoveryMutation();
+    const [, changePassword] = useChangePasswordMutation();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
@@ -48,8 +59,6 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
-    const [, changePassword] = useChangePasswordMutation();
-    const hasDeliveryAddresses = currentCustomerUser.deliveryAddresses.length > 0;
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
@@ -165,6 +174,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                 );
             }
         }
+    };
+
+    const openDeliveryAddressPopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        updatePortalContent(<DeliveryAddressPopup />);
     };
 
     return (
@@ -329,7 +343,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         </FormBlockWrapper>
                     )}
 
-                    <FormBlockWrapper className={hasDeliveryAddresses ? '' : 'border-b-0 !pb-0'}>
+                    <FormBlockWrapper>
                         <FormHeading>{t('Billing address')}</FormHeading>
                         <TextInputControlled
                             control={formProviderMethods.control}
@@ -394,18 +408,19 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         </FormLine>
                     </FormBlockWrapper>
 
-                    <FormBlockWrapper className={hasDeliveryAddresses ? '' : '!pt-0'}>
-                        {hasDeliveryAddresses && (
-                            <>
-                                <FormHeading>{t('Delivery addresses')}</FormHeading>
-                                <FormLine>
-                                    <AddressList
-                                        defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}
-                                        deliveryAddresses={currentCustomerUser.deliveryAddresses}
-                                    />
-                                </FormLine>
-                            </>
-                        )}
+                    <FormBlockWrapper>
+                        <FormHeading className="flex justify-between">
+                            {t('Delivery addresses')}
+                            <Button size="small" variant="primaryOutlined" onClick={(e) => openDeliveryAddressPopup(e)}>
+                                {t('Add new address')}
+                            </Button>
+                        </FormHeading>
+                        <FormLine>
+                            <AddressList
+                                defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}
+                                deliveryAddresses={currentCustomerUser.deliveryAddresses}
+                            />
+                        </FormLine>
                         <FormButtonWrapper>
                             <SubmitButton className="mx-auto">{t('Save profile')}</SubmitButton>
                         </FormButtonWrapper>

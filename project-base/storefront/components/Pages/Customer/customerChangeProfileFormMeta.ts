@@ -96,7 +96,7 @@ export const useCustomerChangeProfileFormMeta = (
         () => ({
             formName: 'customer-change-profile-form',
             messages: {
-                error: t('Error occured while saving your profile'),
+                error: t('An error occurred while saving your profile'),
                 success: t('Your profile has been changed successfully'),
             },
             fields: {

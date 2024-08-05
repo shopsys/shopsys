@@ -74,7 +74,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         {deliveryAddress.street}, {deliveryAddress.city},{' '}
                                                         {deliveryAddress.postcode}
                                                     </span>
-                                                    <span>{deliveryAddress.country}</span>
+                                                    <span>{deliveryAddress.country.name}</span>
                                                 </p>
                                             ),
                                             value: deliveryAddress.uuid,

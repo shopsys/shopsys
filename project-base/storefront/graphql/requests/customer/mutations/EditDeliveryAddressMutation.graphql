@@ -1,0 +1,5 @@
+mutation EditDeliveryAddressMutation($input: DeliveryAddressInput!) {
+    EditDeliveryAddress(input: $input) {
+        ...DeliveryAddressFragment
+    }
+}
