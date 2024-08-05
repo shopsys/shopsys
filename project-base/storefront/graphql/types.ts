@@ -1681,6 +1681,8 @@ export type TypeOrderItem = {
   catnum: Maybe<Scalars['String']['output']>;
   /** Name of the order item */
   name: Scalars['String']['output'];
+  /** Order to which the order item belongs */
+  order: TypeOrder;
   /** Product of the order item */
   product: Maybe<TypeProduct>;
   /** Quantity of order items in the order */

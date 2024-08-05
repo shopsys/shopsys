@@ -5939,6 +5939,15 @@ Name of the order item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+Order to which the order item belongs
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>product</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>

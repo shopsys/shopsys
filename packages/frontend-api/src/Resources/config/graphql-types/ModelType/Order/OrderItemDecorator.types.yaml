@@ -34,3 +34,6 @@ OrderItemDecorator:
             catnum:
                 type: "String"
                 description: "Catalog number of the order item product"
+            order:
+                type: "Order!"
+                description: "Order to which the order item belongs"
