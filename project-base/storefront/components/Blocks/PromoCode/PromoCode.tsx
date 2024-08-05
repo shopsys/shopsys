@@ -34,7 +34,7 @@ export const PromoCode: FC = () => {
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
 
     return (
-        <div className="relative w-80">
+        <div>
             {promoCode !== null ? (
                 <>
                     {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
@@ -61,7 +61,7 @@ export const PromoCode: FC = () => {
                                     applyPromoCodeToCart(promoCodeFormData.promoCode),
                                 )}
                             >
-                                <div className="flex">
+                                <div className="flex gap-2 max-w-sm">
                                     <TextInputControlled
                                         isWithoutFormLineError
                                         control={formProviderMethods.control}
@@ -69,18 +69,16 @@ export const PromoCode: FC = () => {
                                         name={formMeta.fields.promoCode.name}
                                         render={(textInput) => textInput}
                                         textInputProps={{
-                                            className: '!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0',
                                             label: formMeta.fields.promoCode.label,
                                             required: true,
                                         }}
                                     />
                                     <SubmitButton
-                                        className="!rounded-r !rounded-l-none !px-3"
+                                        className="h-14"
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
                                         tid={TIDs.blocks_promocode_apply_button}
                                     >
                                         {isApplyingPromoCodeToCart && <Loader className="w-4 text-white" />}
-
                                         {t('Apply')}
                                     </SubmitButton>
                                 </div>
