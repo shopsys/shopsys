@@ -178,7 +178,7 @@ MutationDecorator:
                     input:
                         type: AddNewCustomerUserDataInput!
                         validation: cascade
-                access: "@=isGranted('ROLE_API_ALL')"
+                access: "@=isGranted('is_company_owner_voter', args)"
                 resolve: "@=mutation('addNewCustomerUserMutation', args, validator)"
             EditCustomerUserPersonalData:
                 type: "CustomerUser!"
