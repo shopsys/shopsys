@@ -64,6 +64,8 @@
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
     * [OrderItem](#orderitem)
+    * [OrderItemConnection](#orderitemconnection)
+    * [OrderItemEdge](#orderitemedge)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
@@ -678,6 +680,40 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <tr>
 <td colspan="2" align="right" valign="top">uuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemsSearch</strong></td>
+<td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
+<td>
+
+Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -5840,6 +5876,15 @@ Represent one item in the order
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Catalog number of the order item product
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -5890,6 +5935,85 @@ Order item price per unit
 <td>
 
 Applied VAT rate percentage applied to the order item
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#orderitemedge">OrderItemEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of order items
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#orderitem">OrderItem</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
