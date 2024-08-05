@@ -1693,6 +1693,8 @@ export type TypeOrderItem = {
   unit: Maybe<Scalars['String']['output']>;
   /** Order item price per unit */
   unitPrice: TypePrice;
+  /** UUID of the order item */
+  uuid: Scalars['Uuid']['output'];
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
 };

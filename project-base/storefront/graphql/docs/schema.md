@@ -5993,6 +5993,15 @@ Order item price per unit
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the order item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>vatRate</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

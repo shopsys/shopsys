@@ -28,6 +28,9 @@ OrderItemDecorator:
             product:
                 type: "Product"
                 description: "Product of the order item"
+            uuid:
+                type: "Uuid!"
+                description: "UUID of the order item"
             catnum:
                 type: "String"
                 description: "Catalog number of the order item product"
