@@ -104,7 +104,7 @@ class FlagFilterChoiceRepository
 
         $clonedProductsQueryBuilder
             ->select('1')
-            ->join('p.flags', 'pf')
+            ->join('pd.flags', 'pf')
             ->andWhere('pf.id = f.id')
             ->andWhere('f.visible = true')
             ->resetDQLPart('orderBy');
