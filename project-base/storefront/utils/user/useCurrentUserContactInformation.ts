@@ -43,7 +43,9 @@ const mergeContactInformation = (
         const filteredProperty = filteredContactInformationFromStore[key as keyof ContactInformation];
 
         const isEmptyString = typeof filteredProperty === 'string' && filteredProperty.length === 0;
-        if ((isEmptyString || filteredProperty === undefined) && key in contactInformationFromApi) {
+        const isEmptyObject = typeof filteredProperty === 'object' && filteredProperty.value === '';
+
+        if ((isEmptyString || filteredProperty === undefined || isEmptyObject) && key in contactInformationFromApi) {
             delete filteredContactInformationFromStore[key as keyof ContactInformation];
         }
     }
