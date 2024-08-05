@@ -109,6 +109,15 @@ QueryDecorator:
                     searchInput:
                         type: "SearchInput!"
                 description: "Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords"
+            orderItemsSearch:
+                type: "OrderItemConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('orderItemsSearchQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    searchInput:
+                        type: "SearchInput!"
+                description: "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"

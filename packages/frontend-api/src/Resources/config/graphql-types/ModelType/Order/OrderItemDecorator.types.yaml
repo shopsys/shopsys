@@ -22,3 +22,6 @@ OrderItemDecorator:
             unit:
                 type: "String"
                 description: "Unit of measurement used for the order item"
+            catnum:
+                type: "String"
+                description: "Catalog number of the order item product"
