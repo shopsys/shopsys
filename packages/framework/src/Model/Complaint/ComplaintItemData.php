@@ -20,4 +20,9 @@ class ComplaintItemData
      * @var string|null
      */
     public $description;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileData
+     */
+    public $files;
 }

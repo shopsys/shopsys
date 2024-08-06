@@ -1,0 +1,4 @@
+FileUploadDecorator:
+    type: custom-scalar
+    config:
+        description: "Represents and encapsulates a file upload"
