@@ -58,7 +58,7 @@ class BestsellingProductsQuery extends AbstractQuery
             $this->domain->getId(),
             $category,
             $this->currentCustomerUser->getPricingGroup(),
-            $this->productFrontendLimitProvider->getBestsellingProductsFrontendLimit(),
+            $this->productFrontendLimitProvider->getProductsFrontendLimit(),
         );
 
         return $this->productsSellableByIdsBatchLoader->load($bestsellingProductsIds);

@@ -130,13 +130,7 @@ class ProductArrayFieldMapper
      */
     public function getAccessoriesPromise(array $data): Promise
     {
-        return $this->productsSellableByIdsBatchLoader->load(
-            array_slice(
-                $data['accessories'],
-                0,
-                $this->productFrontendLimitProvider->getProductAccessoriesFrontendLimit(),
-            ),
-        );
+        return $this->productsSellableByIdsBatchLoader->load($data['accessories']);
     }
 
     /**

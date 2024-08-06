@@ -111,7 +111,6 @@ class ProductEntityFieldMapper
             $product,
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $this->productFrontendLimitProvider->getProductAccessoriesFrontendLimit(),
         );
 
         $accessoriesIds = array_map(fn (Product $accessory) => $accessory->getId(), $accessories);

@@ -44,7 +44,7 @@ class RecommendationQuery extends AbstractQuery
     public function recommendationQuery(Argument $argument): array
     {
         $type = $argument['recommendationType'];
-        $limit = min($argument['limit'], $this->productFrontendLimitProvider->getRecommendedProductsFrontendLimit());
+        $limit = min($argument['limit'], $this->productFrontendLimitProvider->getProductsFrontendLimit());
         $userIdentifier = $argument['userIdentifier'];
         $itemIds = [];
 

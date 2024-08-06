@@ -44,7 +44,7 @@ class PromotedProductsQuery extends AbstractQuery
                 },
                 $allSortedPromotedProductsOnDomain,
             ),
-            $this->productFrontendLimitProvider->getPromotedProductsFrontendLimit(),
+            $this->productFrontendLimitProvider->getProductsFrontendLimit(),
         );
     }
 }

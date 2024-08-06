@@ -157,7 +157,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return $this->productElasticsearchProvider->getSellableProductArrayByIds(
             $data['related_products'],
-            $this->productFrontendLimitProvider->getRelatedProductsFrontendLimit(),
+            $this->productFrontendLimitProvider->getProductsFrontendLimit(),
         );
     }
 
@@ -194,13 +194,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      */
     public function getRelatedProductsPromise(array $data): Promise
     {
-        return $this->productsSellableByIdsBatchLoader->load(
-            array_slice(
-                $data['related_products'],
-                0,
-                $this->productFrontendLimitProvider->getRelatedProductsFrontendLimit(),
-            ),
-        );
+        return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
     }
 
     /**

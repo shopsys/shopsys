@@ -297,7 +297,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getRelatedProductsPromise(Product $product): Promise
     {
         $relatedProducts = $product->getRelatedProducts();
-        $relatedProducts = array_slice($relatedProducts, 0, $this->productFrontendLimitProvider->getRelatedProductsFrontendLimit());
         $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
 
         return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
