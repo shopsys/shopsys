@@ -1221,4 +1221,12 @@ class Order
         $this->customerUser = $customerUser;
         $this->customer = $customerUser?->getCustomer();
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer|null
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
 }

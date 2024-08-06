@@ -10,6 +10,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/colorpickerFields.html.twig'
         - '@ShopsysFramework/Admin/Form/customerUserListFields.html.twig'
         - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/displayOnlyCompanyName.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyCustomer.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyDomainIconFields.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyFields.html.twig'
