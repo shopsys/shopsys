@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileTypeConfig;
@@ -36,11 +37,13 @@ class CustomerUploadedFileFacade
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileData $customerUploadedFileData
      * @param string $type
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     public function manageFiles(
         object $entity,
         CustomerUploadedFileData $customerUploadedFileData,
         string $type = CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+        ?CustomerUser $customerUser = null,
     ): void {
         $customerUploadedFileEntityConfig = $this->customerUploadedFileConfig->getCustomerUploadedFileEntityConfig($entity);
         $customerUploadedFileTypeConfig = $customerUploadedFileEntityConfig->getTypeByName($type);
@@ -60,6 +63,7 @@ class CustomerUploadedFileFacade
                 $uploadedFiles,
                 $uploadedFilenames,
                 count($orderedFiles),
+                $customerUser,
             );
         } else {
             if (count($orderedFiles) > 1) {
@@ -75,6 +79,7 @@ class CustomerUploadedFileFacade
                 $type,
                 array_pop($uploadedFiles),
                 array_pop($uploadedFilenames),
+                $customerUser,
             );
         }
 
@@ -87,6 +92,7 @@ class CustomerUploadedFileFacade
      * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     protected function uploadFile(
         object $entity,
@@ -94,6 +100,7 @@ class CustomerUploadedFileFacade
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
+        ?CustomerUser $customerUser = null,
     ): void {
         $entityId = $this->getEntityId($entity);
 
@@ -103,6 +110,8 @@ class CustomerUploadedFileFacade
             $type,
             $temporaryFilename,
             $uploadedFilename,
+            0,
+            $customerUser,
         );
 
         $this->em->persist($newUploadedFile);
@@ -116,6 +125,7 @@ class CustomerUploadedFileFacade
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
      * @param int $existingFilesCount
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
     protected function uploadFiles(
         object $entity,
@@ -124,6 +134,7 @@ class CustomerUploadedFileFacade
         array $temporaryFilenames,
         array $uploadedFilenames,
         int $existingFilesCount,
+        ?CustomerUser $customerUser = null,
     ): void {
         if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);
@@ -134,6 +145,7 @@ class CustomerUploadedFileFacade
                 $temporaryFilenames,
                 $uploadedFilenames,
                 $existingFilesCount,
+                $customerUser,
             );
 
             foreach ($files as $file) {
@@ -308,6 +320,10 @@ class CustomerUploadedFileFacade
         ?CustomerUser $customerUser = null,
         ?string $hash = null,
     ): CustomerUploadedFile {
+        if (!$hash && !$customerUser) {
+            throw new InvalidArgumentException('Either hash or customerUser must be set.');
+        }
+
         return $this->customerUploadedFileRepository->getByIdSlugAndExtension(
             $customerUploadedFileId,
             $customerUploadedFileSlug,

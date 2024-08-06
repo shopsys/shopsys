@@ -73,6 +73,7 @@ class CreateComplaintMutation extends BaseTokenMutation
 
         $complaintItemsData = $this->createComplaintItems($input['items'], $order);
 
+
         $number = $this->complaintNumberSequenceRepository->getNextNumber();
 
         $complaintData = $this->complaintDataApiFactory->createFromComplaintInputArgument(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
@@ -47,7 +48,12 @@ class ComplaintApiFacade
         $this->em->flush();
 
         foreach ($complaintItems as $key => $item) {
-            $this->customerUploadedFileFacade->manageFiles($item, $complaintItemsData[$key]->files);
+            $this->customerUploadedFileFacade->manageFiles(
+                $item,
+                $complaintItemsData[$key]->files,
+                CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+                $complaint->getCustomerUser(),
+            );
         }
 
         return $complaint;
