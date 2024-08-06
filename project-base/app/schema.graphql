@@ -651,6 +651,8 @@ type ComplaintItem {
 input ComplaintItemInput {
   "Description of the complaint item"
   description: String!
+  "Files attached to the complaint item"
+  files: [FileUpload!]
   "UUID of the order item"
   orderItemUuid: Uuid!
   "Quantity of the complaint item"
@@ -789,6 +791,9 @@ type File {
   "Url to download the file"
   url: String!
 }
+
+"Represents and encapsulates a file upload"
+scalar FileUpload
 
 "Represents a flag"
 type Flag implements Hreflang & Slug & Breadcrumb & ProductListable {

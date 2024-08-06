@@ -24,3 +24,12 @@ ComplaintItemInputDecorator:
             description:
                 type: "String!"
                 description: "Description of the complaint item"
+            files:
+                type: "[FileUpload!]"
+                description: "Files attached to the complaint item"
+                validation:
+                  -   NotBlank:
+                        message: "Please attach files"
+                  -   \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload:
+                        mimeTypes: ['image/jpeg', 'image/png']
+                        maxSize: 10485760

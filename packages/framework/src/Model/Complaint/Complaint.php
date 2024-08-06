@@ -123,12 +123,13 @@ class Complaint
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      */
-    public function __construct(ComplaintData $complaintData)
+    public function __construct(ComplaintData $complaintData, array $complaintItems)
     {
         $this->uuid = Uuid::uuid4()->toString();
         $this->createdAt = new DateTime();
-        $this->items = new ArrayCollection();
+        $this->setItems($complaintItems);
 
         $this->setData($complaintData);
     }
@@ -278,10 +279,17 @@ class Complaint
         $this->deliveryPostcode = $complaintData->deliveryPostcode;
         $this->deliveryCountry = $complaintData->deliveryCountry;
         $this->status = $complaintData->status;
+    }
 
-        foreach ($complaintData->complaintItems as $item) {
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $items
+     */
+    protected function setItems($items): void
+    {
+        $this->items = new ArrayCollection($items);
+
+        foreach ($items as $item) {
             $item->setComplaint($this);
-            $this->items->add($item);
         }
     }
 }

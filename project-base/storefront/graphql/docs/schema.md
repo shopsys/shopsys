@@ -143,6 +143,7 @@
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
+    * [FileUpload](#fileupload)
     * [Float](#float)
     * [Int](#int)
     * [Money](#money)
@@ -9450,6 +9451,15 @@ Description of the complaint item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#fileupload">FileUpload</a>!]</td>
+<td>
+
+Files attached to the complaint item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderItemUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -10817,6 +10827,10 @@ The `Boolean` scalar type represents `true` or `false`.
 ### DateTime
 
 Represents and encapsulates an ISO-8601 encoded UTC date-time value
+
+### FileUpload
+
+Represents and encapsulates a file upload
 
 ### Float
 
