@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
+use InvalidArgumentException;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MissingFileClassDirectoryMappingException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
@@ -32,23 +36,23 @@ class FileUpload implements ResetInterface
 
     /**
      * @param string $temporaryDir
-     * @param string $uploadedFileDir
-     * @param string $imageDir
+     * @param array<string, string> $directoriesByFileClass
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
      */
     public function __construct(
         protected readonly string $temporaryDir,
-        protected readonly string $uploadedFileDir,
-        protected readonly string $imageDir,
+        protected array $directoriesByFileClass,
         protected readonly FileNamingConvention $fileNamingConvention,
         protected readonly MountManager $mountManager,
         protected readonly FilesystemOperator $filesystem,
         protected readonly ParameterBagInterface $parameterBag,
         protected readonly ImageRepository $imageRepository,
+        protected readonly CustomerUploadedFileRepository $customerUploadedFileRepository,
     ) {
     }
 
@@ -126,28 +130,28 @@ class FileUpload implements ResetInterface
     }
 
     /**
-     * @param bool $isImage
+     * @param string $fileClass
      * @param string $category
      * @param string|null $targetDirectory
      * @return string
      */
-    public function getUploadDirectory($isImage, $category, $targetDirectory)
+    public function getUploadDirectory($fileClass, $category, $targetDirectory)
     {
-        return ($isImage ? $this->imageDir : $this->uploadedFileDir)
+        return $this->getDirectoryByFileClass($fileClass)
             . $category
             . ($targetDirectory !== null ? '/' . $targetDirectory : '');
     }
 
     /**
      * @param string $filename
-     * @param bool $isImage
+     * @param string $fileClass
      * @param string $category
      * @param string|null $targetDirectory
      * @return string
      */
-    protected function getTargetFilepath($filename, $isImage, $category, $targetDirectory)
+    protected function getTargetFilepath($filename, $fileClass, $category, $targetDirectory)
     {
-        return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;
+        return $this->getUploadDirectory($fileClass, $category, $targetDirectory) . '/' . $filename;
     }
 
     /**
@@ -200,7 +204,7 @@ class FileUpload implements ResetInterface
             );
             $targetFilename = $this->getTargetFilepath(
                 $originalFilename,
-                $fileForUpload->isImage(),
+                $fileForUpload->getFileClass(),
                 $fileForUpload->getCategory(),
                 $fileForUpload->getTargetDirectory(),
             );
@@ -266,13 +270,21 @@ class FileUpload implements ResetInterface
             return $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type];
         }
 
-        $position = $this->imageRepository->getImagesCountByEntityIndexedById(
-            $entityName,
-            $entityId,
-            $type,
-        );
-
-        $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type] = $position;
+        $position = match ($uploadEntityType) {
+            'image' => $this->imageRepository->getImagesCountByEntityIndexedById(
+                $entityName,
+                $entityId,
+                $type,
+            ),
+            'customerFile' => $this->customerUploadedFileRepository->getCustomerUploadedFilesCountByEntityIndexedById(
+                $entityName,
+                $entityId,
+                $type,
+            ),
+            default => throw new InvalidArgumentException(
+                sprintf('Unknown upload entity type "%s"', $uploadEntityType),
+            ),
+        };
 
         return $position;
     }
@@ -289,6 +301,8 @@ class FileUpload implements ResetInterface
             $uploadEntityType = 'image';
         } elseif ($entityClass === ShopsysUploadedFile::class) {
             $uploadEntityType = 'file';
+        } elseif ($entityClass === CustomerUploadedFile::class) {
+            $uploadEntityType = 'customerFile';
         } else {
             throw new UnexpectedTypeException(
                 sprintf('Provided entity with class %s was not expected.', $entityClass),
@@ -301,5 +315,26 @@ class FileUpload implements ResetInterface
     public function reset(): void
     {
         $this->positionByEntityAndType = [];
+    }
+
+    /**
+     * @param string $fileClass
+     * @return string
+     */
+    protected function getDirectoryByFileClass(string $fileClass): string
+    {
+        if (array_key_exists($fileClass, $this->directoriesByFileClass)) {
+            return $this->directoriesByFileClass[$fileClass];
+        }
+
+        foreach ($this->directoriesByFileClass as $class => $dir) {
+            if (is_subclass_of($fileClass, $class)) {
+                return $dir;
+            }
+        }
+
+        throw new MissingFileClassDirectoryMappingException(
+            sprintf('Missing directory mapping for file class "%s"', $fileClass),
+        );
     }
 }

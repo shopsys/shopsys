@@ -2,27 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\UploadedFile;
+namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
- * @ORM\Table(name="uploaded_files")})
+ * @ORM\Table(name="customer_uploaded_files", indexes={@ORM\Index(columns={"entity_name", "entity_id"})})
  * @ORM\Entity
- * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation translation(?string $locale = null)
  */
-class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploadInterface
+class CustomerUploadedFile implements EntityFileUploadInterface
 {
-    protected const UPLOAD_KEY = 'uploadedFile';
+    protected const string UPLOAD_KEY = 'customerUploadedFile';
 
     /**
      * @var int
@@ -46,6 +43,18 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $entityName;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $entityId;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", length=5)
      */
     protected $extension;
@@ -57,30 +66,44 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     protected $modifiedAt;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $type;
+
+    /**
      * @var string|null
      */
     protected $temporaryFilename;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation>
-     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation")
+     * @var int
+     * @ORM\Column(type="integer")
      */
-    protected $translations;
+    protected $position;
 
     /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
-     * @param array<string, string> $namesIndexedByLocale
+     * @param int $position
      */
     public function __construct(
+        string $entityName,
+        int $entityId,
+        string $type,
         string $temporaryFilename,
         string $uploadedFilename,
-        array $namesIndexedByLocale,
+        int $position,
     ) {
+        $this->entityName = $entityName;
+        $this->entityId = $entityId;
+        $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
         $this->setNameAndSlug($uploadedFilename);
-        $this->translations = new ArrayCollection();
-        $this->setTranslatedNames($namesIndexedByLocale);
+        $this->position = $position;
     }
 
     /**
@@ -94,7 +117,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
             $files[static::UPLOAD_KEY] = new FileForUpload(
                 $this->temporaryFilename,
                 self::class,
-                '',
+                $this->entityName,
                 null,
                 FileNamingConvention::TYPE_ID,
             );
@@ -147,7 +170,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getId()
     {
@@ -213,9 +236,59 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     /**
      * @return string
      */
+    public function getEntityName()
+    {
+        return $this->entityName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEntityId()
+    {
+        return $this->entityId;
+    }
+
+    /**
+     * @return string
+     */
     public function getExtension()
     {
         return $this->extension;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     */
+    public function checkForDelete(string $entityName, int $entityId): void
+    {
+        if ($this->entityName !== $entityName || $this->entityId !== $entityId) {
+            throw new CustomerFileNotFoundException(
+                sprintf(
+                    'Entity "%s" with ID "%s" does not own file with ID "%s"',
+                    $entityName,
+                    $entityId,
+                    $this->id,
+                ),
+            );
+        }
+    }
+
+    /**
+     * @param int $position
+     */
+    public function setPosition($position): void
+    {
+        $this->position = $position;
     }
 
     /**
@@ -238,43 +311,10 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation
+     * @return int
      */
-    protected function createTranslation()
+    public function getPosition()
     {
-        return new UploadedFileTranslation();
-    }
-
-    /**
-     * @param string|null $locale
-     * @return string|null
-     */
-    public function getTranslatedName(?string $locale = null): ?string
-    {
-        return $this->translation($locale)->getName();
-    }
-
-    /**
-     * @param string[] $names
-     */
-    public function setTranslatedNames(array $names): void
-    {
-        foreach ($names as $locale => $name) {
-            $this->translation($locale)->setName($name);
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getTranslatedNames(): array
-    {
-        $namesByLocale = [];
-
-        foreach ($this->translations as $translation) {
-            $namesByLocale[$translation->getLocale()] = $translation->getName();
-        }
-
-        return $namesByLocale;
+        return $this->position;
     }
 }
