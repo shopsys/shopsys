@@ -28,6 +28,9 @@ msgstr "Email není vyplněn"
 msgid "Email is not valid"
 msgstr "E-mail není platný"
 
+msgid "Error occurred while uploading file."
+msgstr "Při nahrávání souboru došlo k chybě."
+
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
@@ -75,6 +78,9 @@ msgstr "Platba {{ paymentUuid }} není dostupná pro objednávku {{ orderUuid }}
 
 msgid "Pickup place with provided UUID is not available"
 msgstr "Odběrné místo se zadaným UUID není dostupné"
+
+msgid "Please attach files"
+msgstr "Přiložte prosím soubory"
 
 msgid "Please check Tax number format"
 msgstr "Prosím zkontrolujte formát DIČ"
@@ -217,6 +223,9 @@ msgstr "Telefon nesmí být delší než {{ limit }} znaků"
 msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
 
+msgid "The file {{ fileName }} is too big."
+msgstr "Soubor {{ fileName }} je příliš velký."
+
 msgid "The payment is not allowed in combination with already selected transport"
 msgstr "Platba není povolena v kombinaci s již vybranou dopravou"
 
@@ -249,6 +258,9 @@ msgstr "Doprava musí být vybrána před odesláním objednávky"
 
 msgid "Transport with provided UUID is not available"
 msgstr "Doprava se zadaným UUID není dostupná"
+
+msgid "Type of file {{ fileName }} is unsupported."
+msgstr "Typ souboru {{ fileName }} není podporován."
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
 msgstr "Musíte být přihlášen, pokud chcete poskytnout UUID dodací adresy jako vstup pro vytvoření objednávky"
