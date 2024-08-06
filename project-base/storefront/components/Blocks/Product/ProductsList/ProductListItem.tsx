@@ -105,7 +105,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     </div>
 
                     <div>
-                        {visibleItemsConfig.price && (
+                        {visibleItemsConfig.price && product.isMainVariant && !product.isSellingDenied && (
                             <ProductPrice
                                 isPriceFromVisible={visibleItemsConfig.priceFromWord}
                                 productPrice={product.price}
