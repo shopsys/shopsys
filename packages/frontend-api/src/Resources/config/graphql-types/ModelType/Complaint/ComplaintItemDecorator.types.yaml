@@ -12,3 +12,11 @@ ComplaintItemDecorator:
             description:
                 type: "String!"
                 description: "Description of the complaint order item"
+            files:
+                type: "[File!]"
+                description: "Files attached to the complaint order item"
+                resolve: '@=query("customerFilesByEntityPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: "default"
