@@ -104,8 +104,8 @@ const mapCurrentCustomerContactInformationApiData = (
                 : '',
         telephone: apiCurrentCustomerUserData.telephone ?? '',
         country: {
-            value: apiCurrentCustomerUserData.country.code,
-            label: apiCurrentCustomerUserData.country.name,
+            value: apiCurrentCustomerUserData.country?.code ?? '',
+            label: apiCurrentCustomerUserData.country?.name ?? '',
         },
         deliveryAddressUuid: apiCurrentCustomerUserData.defaultDeliveryAddress?.uuid ?? '',
         customer:

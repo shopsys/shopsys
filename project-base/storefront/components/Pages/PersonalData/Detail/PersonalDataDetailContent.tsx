@@ -70,7 +70,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                     </Row>
                                     <Row>
                                         <CellMinor>{t('Country')}</CellMinor>
-                                        <Cell>{userData.country.name}</Cell>
+                                        <Cell>{userData.country?.name ?? ''}</Cell>
                                     </Row>
                                 </Table>
                             </Cell>

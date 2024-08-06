@@ -53,8 +53,8 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
         country: {
-            label: currentCustomerUser.country.name,
-            value: currentCustomerUser.country.code,
+            label: currentCustomerUser.country?.name ?? '',
+            value: currentCustomerUser.country?.code ?? '',
         },
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
@@ -394,6 +394,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 render={({ fieldState: { invalid, error }, field }) => (
                                     <>
                                         <Select
+                                            required
                                             hasError={invalid}
                                             label={formMeta.fields.country.label}
                                             options={countriesAsSelectOptions}
