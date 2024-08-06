@@ -11,6 +11,9 @@ overblog_dataloader:
         categoryChildrenBatchLoader:
             alias: "category_children_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoryChildrenBatchLoader:loadByCategories"
+        customerUploadedFilesBatchLoader:
+            alias: "customer_uploaded_files_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\CustomerUploadedFile\\CustomerUploadedFilesBatchLoader:loadByBatchData"
         filesBatchLoader:
             alias: "files_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Files\\FilesBatchLoader:loadByBatchData"
