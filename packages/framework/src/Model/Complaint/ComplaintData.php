@@ -67,7 +67,7 @@ class ComplaintData
     public $status;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[]
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
      */
     public $complaintItems = [];
 }

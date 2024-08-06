@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintStatusEnum;
@@ -17,10 +18,12 @@ class ComplaintDataApiFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory $complaintDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
     public function __construct(
         protected readonly ComplaintDataFactory $complaintDataFactory,
         protected readonly CountryFacade $countryFacade,
+        protected readonly FileUpload $fileUpload,
     ) {
     }
 
@@ -28,7 +31,7 @@ class ComplaintDataApiFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param string $number
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $complaintItems
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
      */

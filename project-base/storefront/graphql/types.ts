@@ -14,6 +14,8 @@ export type Scalars = {
   Float: { input: number; output: number; }
   /** Represents and encapsulates an ISO-8601 encoded UTC date-time value */
   DateTime: { input: any; output: any; }
+  /** Represents and encapsulates a file upload */
+  FileUpload: { input: any; output: any; }
   /** Represents and encapsulates monetary value */
   Money: { input: string; output: string; }
   /** Represents and encapsulates a string for password */
@@ -789,6 +791,8 @@ export type TypeComplaintItem = {
 export type TypeComplaintItemInput = {
   /** Description of the complaint item */
   description: Scalars['String']['input'];
+  /** Files attached to the complaint item */
+  files: InputMaybe<Array<Scalars['FileUpload']['input']>>;
   /** UUID of the order item */
   orderItemUuid: Scalars['Uuid']['input'];
   /** Quantity of the complaint item */

@@ -17,13 +17,15 @@ class ComplaintFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     public function create(
         ComplaintData $complaintData,
+        array $complaintItems,
     ): Complaint {
         $entityClassName = $this->entityNameResolver->resolve(Complaint::class);
 
-        return new $entityClassName($complaintData);
+        return new $entityClassName($complaintData, $complaintItems);
     }
 }
