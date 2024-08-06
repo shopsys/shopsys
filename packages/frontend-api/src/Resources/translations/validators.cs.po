@@ -16,6 +16,9 @@ msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
 msgid "Customer role group cannot be changed."
 msgstr "Skupinu rolí zákazníka nelze změnit."
 
+msgid "Customer role group not found."
+msgstr "Skupina rolí zákazníka neexistuje"
+
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
@@ -231,9 +234,6 @@ msgstr "Doprava musí být vybrána před odesláním objednávky"
 
 msgid "Transport with provided UUID is not available"
 msgstr "Doprava se zadaným UUID není dostupná"
-
-msgid "You are not allowed to edit this role group."
-msgstr "Nemáte oprávnění upravovat tuto skupinu rolí."
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"
 msgstr "Musíte být přihlášen, pokud chcete poskytnout UUID dodací adresy jako vstup pro vytvoření objednávky"

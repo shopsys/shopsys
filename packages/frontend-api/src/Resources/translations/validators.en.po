@@ -16,6 +16,9 @@ msgstr ""
 msgid "Customer role group cannot be changed."
 msgstr ""
 
+msgid "Customer role group not found."
+msgstr ""
+
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -230,9 +233,6 @@ msgid "Transport must be set in cart before sending the order"
 msgstr ""
 
 msgid "Transport with provided UUID is not available"
-msgstr ""
-
-msgid "You are not allowed to edit this role group."
 msgstr ""
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"

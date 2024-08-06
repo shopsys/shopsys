@@ -16,4 +16,5 @@ EditCustomerUserPersonalDataInputDecorator:
                 type: "Uuid!"
                 description: "Customer user role group uuid."
                 validation:
+                    -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroup:
                     -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit:
