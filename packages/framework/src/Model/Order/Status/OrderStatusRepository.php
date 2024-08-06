@@ -59,7 +59,7 @@ class OrderStatusRepository
      */
     public function getDefault()
     {
-        $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatus::TYPE_NEW]);
+        $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatusTypeEnum::TYPE_NEW]);
 
         if ($orderStatus === null) {
             $message = 'Default order status not found.';
@@ -76,20 +76,6 @@ class OrderStatusRepository
     public function getAll()
     {
         return $this->getOrderStatusRepository()->findBy([], ['id' => 'asc']);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
-     */
-    public function getAllIndexedById()
-    {
-        $orderStatusesIndexedById = [];
-
-        foreach ($this->getAll() as $orderStatus) {
-            $orderStatusesIndexedById[$orderStatus->getId()] = $orderStatus;
-        }
-
-        return $orderStatusesIndexedById;
     }
 
     /**

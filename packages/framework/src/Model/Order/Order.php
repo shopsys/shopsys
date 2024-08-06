@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundExceptio
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
@@ -1111,9 +1111,9 @@ class Order
     /**
      * @return bool
      */
-    public function isCancelled()
+    public function isCancelled(): bool
     {
-        return $this->status->getType() === OrderStatus::TYPE_CANCELED;
+        return $this->status->getType() === OrderStatusTypeEnum::TYPE_CANCELED;
     }
 
     /**

@@ -16,14 +16,14 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface $orderStatusFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactory $orderStatusFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderStatusRepository $orderStatusRepository,
         protected readonly OrderRepository $orderRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
-        protected readonly OrderStatusFactoryInterface $orderStatusFactory,
+        protected readonly OrderStatusFactory $orderStatusFactory,
     ) {
     }
 
@@ -33,7 +33,7 @@ class OrderStatusFacade
      */
     public function create(OrderStatusData $orderStatusFormData)
     {
-        $orderStatus = $this->orderStatusFactory->create($orderStatusFormData, OrderStatus::TYPE_IN_PROGRESS);
+        $orderStatus = $this->orderStatusFactory->create($orderStatusFormData, OrderStatusTypeEnum::TYPE_IN_PROGRESS);
         $this->em->persist($orderStatus);
         $this->em->flush();
 
@@ -109,13 +109,5 @@ class OrderStatusFacade
     public function getAll()
     {
         return $this->orderStatusRepository->getAll();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
-     */
-    public function getAllIndexedById()
-    {
-        return $this->orderStatusRepository->getAllIndexedById();
     }
 }
