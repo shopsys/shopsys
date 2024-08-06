@@ -8,6 +8,7 @@ use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MissingFileClassDirectoryMappingException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -22,14 +23,9 @@ class FileUpload
 
     protected string $temporaryDir;
 
-    protected string $uploadedFileDir;
-
-    protected string $imageDir;
-
     /**
      * @param string $temporaryDir
-     * @param string $uploadedFileDir
-     * @param string $imageDir
+     * @param array<string, string> $directoriesByFileClass
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
@@ -37,16 +33,13 @@ class FileUpload
      */
     public function __construct(
         $temporaryDir,
-        $uploadedFileDir,
-        $imageDir,
+        protected array $directoriesByFileClass,
         protected readonly FileNamingConvention $fileNamingConvention,
         protected readonly MountManager $mountManager,
         protected readonly FilesystemOperator $filesystem,
         protected readonly ParameterBagInterface $parameterBag,
     ) {
         $this->temporaryDir = $temporaryDir;
-        $this->uploadedFileDir = $uploadedFileDir;
-        $this->imageDir = $imageDir;
     }
 
     /**
@@ -123,28 +116,28 @@ class FileUpload
     }
 
     /**
-     * @param bool $isImage
+     * @param string $fileClass
      * @param string $category
      * @param string|null $targetDirectory
      * @return string
      */
-    public function getUploadDirectory($isImage, $category, $targetDirectory)
+    public function getUploadDirectory($fileClass, $category, $targetDirectory)
     {
-        return ($isImage ? $this->imageDir : $this->uploadedFileDir)
+        return $this->getDirectoryByFileClass($fileClass)
             . $category
             . ($targetDirectory !== null ? '/' . $targetDirectory : '');
     }
 
     /**
      * @param string $filename
-     * @param bool $isImage
+     * @param string $fileClass
      * @param string $category
      * @param string|null $targetDirectory
      * @return string
      */
-    protected function getTargetFilepath($filename, $isImage, $category, $targetDirectory)
+    protected function getTargetFilepath($filename, $fileClass, $category, $targetDirectory)
     {
-        return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;
+        return $this->getUploadDirectory($fileClass, $category, $targetDirectory) . '/' . $filename;
     }
 
     /**
@@ -193,7 +186,7 @@ class FileUpload
             );
             $targetFilename = $this->getTargetFilepath(
                 $originalFilename,
-                $fileForUpload->isImage(),
+                $fileForUpload->getFileClass(),
                 $fileForUpload->getCategory(),
                 $fileForUpload->getTargetDirectory(),
             );
@@ -240,5 +233,26 @@ class FileUpload
         }
 
         return $deletedCounter;
+    }
+
+    /**
+     * @param string $fileClass
+     * @return string
+     */
+    protected function getDirectoryByFileClass(string $fileClass): string
+    {
+        if (array_key_exists($fileClass, $this->directoriesByFileClass)) {
+            return $this->directoriesByFileClass[$fileClass];
+        }
+
+        foreach ($this->directoriesByFileClass as $class => $dir) {
+            if (is_subclass_of($fileClass, $class)) {
+                return $dir;
+            }
+        }
+
+        throw new MissingFileClassDirectoryMappingException(
+            sprintf('Missing directory mapping for file class "%s"', $fileClass),
+        );
     }
 }

@@ -38,7 +38,12 @@ services:
             - { name: doctrine.event_subscriber, priority: -100 }
 
     App\Component\FileUpload\FileUpload:
-        arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
+        arguments:
+            $temporaryDir: '%shopsys.var_dir%'
+            $directoriesByFileClass:
+                Shopsys\FrameworkBundle\Component\Image\Image: '%shopsys.image_dir%'
+                Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile: '%shopsys.uploaded_file_dir%'
+                Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile: '%shopsys.customer_uploaded_file_dir%'
 
     App\Component\Image\ImageFacade:
         arguments:

@@ -1,3 +1,16 @@
+front_customer_uploaded_file_download:
+    defaults: { _controller: Shopsys\FrameworkBundle\Controller\Front\CustomerUploadedFileController::downloadAction }
+    methods: [GET]
+    path: /customer-file/download/{uploadedFileId}/{uploadedFilename}
+    requirements:
+        uploadedFileId: \d+
+
+front_customer_uploaded_file_view:
+    defaults: { _controller: Shopsys\FrameworkBundle\Controller\Front\CustomerUploadedFileController::viewAction }
+    methods: [GET]
+    path: /customer-file/view/{uploadedFileId}/{uploadedFilename}
+    requirements:
+        uploadedFileId: \d+
 
 front_download_uploaded_file:
     defaults: { _controller: Shopsys\FrameworkBundle\Controller\Front\UploadedFileController::downloadAction }

@@ -94,8 +94,7 @@ class ImageFactoryTest extends TestCase
 
         return new FileUpload(
             'temporaryDir',
-            'uploadedFileDir',
-            'imageDir',
+            [Image::class => 'imageDir'],
             $fileNamingConvention,
             $mountManager,
             $abstractFilesystem,
