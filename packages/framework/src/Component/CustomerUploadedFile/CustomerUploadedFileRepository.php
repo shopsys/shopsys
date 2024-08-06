@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUploadedFileRepository
 {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+
 interface CustomerUploadedFileFactoryInterface
 {
     /**
@@ -13,6 +15,7 @@ interface CustomerUploadedFileFactoryInterface
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      * @param int $position
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
      */
     public function create(
@@ -22,6 +25,7 @@ interface CustomerUploadedFileFactoryInterface
         string $temporaryFilename,
         string $uploadedFilename,
         int $position = 0,
+        ?CustomerUser $customerUser = null,
     ): CustomerUploadedFile;
 
     /**
@@ -31,6 +35,7 @@ interface CustomerUploadedFileFactoryInterface
      * @param array $temporaryFilenames
      * @param array $uploadedFilenames
      * @param int $existingFilesCount
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
     public function createMultiple(
@@ -40,5 +45,6 @@ interface CustomerUploadedFileFactoryInterface
         array $temporaryFilenames,
         array $uploadedFilenames,
         int $existingFilesCount,
+        ?CustomerUser $customerUser = null,
     ): array;
 }
