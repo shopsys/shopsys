@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\UploadedFile;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory;
 
 class UploadedFileFactoryTest extends TestCase
@@ -38,7 +39,7 @@ class UploadedFileFactoryTest extends TestCase
         /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         $fileForUpload = array_pop($filesForUpload);
         $this->assertSame($temporaryFilename, $fileForUpload->getTemporaryFilename());
-        $this->assertFalse($fileForUpload->isImage());
         $this->assertSame($name, $uploadedFile->getTranslatedName($nameLocale));
+        $this->assertSame(UploadedFile::class, $fileForUpload->getFileClass());
     }
 }
