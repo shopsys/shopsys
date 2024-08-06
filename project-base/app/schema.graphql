@@ -642,6 +642,8 @@ input ComplaintInput {
 type ComplaintItem {
   "Description of the complaint order item"
   description: String!
+  "Files attached to the complaint order item"
+  files(type: String = "default"): [File!]
   "Order item"
   orderItem: OrderItem!
   "Quantity of the order item"

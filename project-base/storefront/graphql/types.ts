@@ -780,10 +780,17 @@ export type TypeComplaintItem = {
   __typename?: 'ComplaintItem';
   /** Description of the complaint order item */
   description: Scalars['String']['output'];
+  /** Files attached to the complaint order item */
+  files: Maybe<Array<TypeFile>>;
   /** Order item */
   orderItem: TypeOrderItem;
   /** Quantity of the order item */
   quantity: Scalars['Int']['output'];
+};
+
+
+export type TypeComplaintItemFilesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TypeComplaintItemInput = {

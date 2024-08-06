@@ -4032,6 +4032,20 @@ Description of the complaint order item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]</td>
+<td>
+
+Files attached to the complaint order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderItem</strong></td>
 <td valign="top"><a href="#orderitem">OrderItem</a>!</td>
 <td>
