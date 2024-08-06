@@ -12,9 +12,14 @@ use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyExcepti
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 /**
- * @ORM\Table(name="customer_uploaded_files", indexes={@ORM\Index(columns={"entity_name", "entity_id"})})
+ * @ORM\Table(name="customer_uploaded_files", indexes={
+ *     @ORM\Index(columns={"entity_name", "entity_id"}),
+ *     @ORM\Index(columns={"id", "slug", "extension", "customer_user_id"}),
+ *     @ORM\Index(columns={"id", "slug", "extension", "hash"}),
+ * })
  * @ORM\Entity
  */
 class CustomerUploadedFile implements EntityFileUploadInterface
@@ -83,12 +88,27 @@ class CustomerUploadedFile implements EntityFileUploadInterface
     protected $position;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
+     * @ORM\JoinColumn(name="customer_user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    protected $customerUser;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    protected $hash = null;
+
+    /**
      * @param string $entityName
      * @param int $entityId
      * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      * @param int $position
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     * @param string|null $hash
      */
     public function __construct(
         string $entityName,
@@ -97,6 +117,8 @@ class CustomerUploadedFile implements EntityFileUploadInterface
         string $temporaryFilename,
         string $uploadedFilename,
         int $position,
+        ?CustomerUser $customerUser = null,
+        string $hash = null,
     ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -104,6 +126,8 @@ class CustomerUploadedFile implements EntityFileUploadInterface
         $this->setTemporaryFilename($temporaryFilename);
         $this->setNameAndSlug($uploadedFilename);
         $this->position = $position;
+        $this->customerUser = $customerUser;
+        $this->hash = $hash;
     }
 
     /**
