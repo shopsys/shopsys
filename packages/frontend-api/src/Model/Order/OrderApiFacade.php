@@ -57,6 +57,34 @@ class OrderApiFacade
     }
 
     /**
+     * @param string $search
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getCustomerUserOrderLimitedSearchList(
+        string $search,
+        CustomerUser $customerUser,
+        int $limit,
+        int $offset,
+    ): array {
+        return $this->orderRepository->getCustomerUserOrderLimitedSearchList($search, $customerUser, $limit, $offset);
+    }
+
+    /**
+     * @param string $search
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return int
+     */
+    public function getCustomerUserOrderLimitedSearchListCount(
+        string $search,
+        CustomerUser $customerUser,
+    ): int {
+        return $this->orderRepository->getCustomerUserOrderLimitedSearchListCount($customerUser, $search);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return int
      */
