@@ -11,7 +11,7 @@ class OrderItemsFilter
     /**
      * @param string|null $orderUuid
      * @param \DateTime|null $orderCreatedAfter
-     * @param int|null $orderStatus
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null $orderStatuses
      * @param string|null $catnum
      * @param string|null $productUuid
      * @param string|null $type
@@ -19,7 +19,7 @@ class OrderItemsFilter
     public function __construct(
         protected ?string $orderUuid = null,
         protected ?DateTime $orderCreatedAfter = null,
-        protected ?int $orderStatus = null,
+        protected ?array $orderStatuses = null,
         protected ?string $catnum = null,
         protected ?string $productUuid = null,
         protected ?string $type = null,
@@ -43,11 +43,11 @@ class OrderItemsFilter
     }
 
     /**
-     * @return int|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null
      */
-    public function getOrderStatus(): ?int
+    public function getOrderStatuses(): ?array
     {
-        return $this->orderStatus;
+        return $this->orderStatuses;
     }
 
     /**

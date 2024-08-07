@@ -110,4 +110,13 @@ class OrderStatusFacade
     {
         return $this->orderStatusRepository->getAll();
     }
+
+    /**
+     * @param string $statusType
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
+     */
+    public function getAllByType(string $statusType): array
+    {
+        return $this->orderStatusRepository->getAllByType($statusType);
+    }
 }
