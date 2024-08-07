@@ -14,14 +14,6 @@ Transport:
                 type: "StoreConnection"
                 description: "Stores available for personal pickup"
                 resolve: "@=query('storesByTransportQuery', value, args)"
-            images:
-                type: "[Image!]!"
-                description: "Transport images"
-                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null
             mainImage:
                 type: "Image"
                 description: "Transport image by params"
