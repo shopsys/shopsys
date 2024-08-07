@@ -122,6 +122,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->variantAlias[$locale] = null;
         }
         $productData->availability = $this->availabilityFacade->getDefaultInStockAvailability();
+        $this->fillProductStockByStocks($productData);
     }
 
     /**
@@ -209,6 +210,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
+        $this->fillProductStockByProduct($productData, $product);
     }
 
     /**

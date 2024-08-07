@@ -769,9 +769,6 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-msgid "Hide on domain"
-msgstr ""
-
 msgid "Holiday / internal day detail"
 msgstr ""
 
