@@ -1,4 +1,4 @@
-# UPGRADING FROM 13.x to 14.0
+# UPGRADING FROM 13.x to 14.0.1
 
 The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
@@ -60,7 +60,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     - see #project-base-diff to update your project
 -->
 
-## [Upgrade from v14.0.0 to v14.0.1-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...14.0)
+## [Upgrade from v14.0.0 to v14.0.1-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...14.0.1)
+
+#### moved CSRFExtension from project-base to framework ([#3318](https://github.com/shopsys/shopsys/pull/3318))
+
+-   see #project-base-diff to update your project
 
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
