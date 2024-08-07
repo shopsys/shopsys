@@ -19,6 +19,9 @@ msgstr "Skupinu rolí zákazníka nelze změnit."
 msgid "Customer role group not found."
 msgstr "Skupina rolí zákazníka neexistuje"
 
+msgid "Description is required"
+msgstr "Popis je povinný"
+
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 

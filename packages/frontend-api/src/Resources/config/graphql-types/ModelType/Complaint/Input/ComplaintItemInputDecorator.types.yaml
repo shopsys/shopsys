@@ -24,6 +24,9 @@ ComplaintItemInputDecorator:
             description:
                 type: "String!"
                 description: "Description of the complaint item"
+                validation:
+                    -   NotBlank:
+                            message: "Description is required"
             files:
                 type: "[FileUpload!]"
                 description: "Files attached to the complaint item"
