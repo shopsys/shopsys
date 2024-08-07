@@ -690,6 +690,36 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>orderItems</strong></td>
+<td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderitemsfilterinput">OrderItemsFilterInput</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderItemsSearch</strong></td>
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
 <td>
@@ -787,6 +817,11 @@ Returns list of orders that can be paginated using `first`, `last`, `before` and
 <tr>
 <td colspan="2" align="right" valign="top">before</td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderfilterinput">OrderFilterInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -9882,6 +9917,24 @@ Filter orders
 <td>
 
 Filter orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemsCatnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemsProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Filter orders by order items with product UUID (OR condition with orderItemsCatnum)
 
 </td>
 </tr>

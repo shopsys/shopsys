@@ -1633,6 +1633,10 @@ export type TypeOrderEdge = {
 export type TypeOrderFilterInput = {
   /** Filter orders created after this date */
   createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid) */
+  orderItemsCatnum: InputMaybe<Scalars['String']['input']>;
+  /** Filter orders by order items with product UUID (OR condition with orderItemsCatnum) */
+  orderItemsProductUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Filter orders created after this date */
   status: InputMaybe<TypeOrderStatusEnum>;
 };
@@ -2331,6 +2335,7 @@ export type TypeQuery = {
   notificationBars: Maybe<Array<TypeNotificationBar>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<TypeOrder>;
+  orderItems: TypeOrderItemConnection;
   /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords */
   orderItemsSearch: TypeOrderItemConnection;
   /** Returns HTML content for order with failed payment. */
@@ -2495,6 +2500,15 @@ export type TypeQueryOrderArgs = {
 };
 
 
+export type TypeQueryOrderItemsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderItemsFilterInput>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type TypeQueryOrderItemsSearchArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
@@ -2528,6 +2542,7 @@ export type TypeQueryOrderSentPageContentArgs = {
 export type TypeQueryOrdersArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderFilterInput>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
 };

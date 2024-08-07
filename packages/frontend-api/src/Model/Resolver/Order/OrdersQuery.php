@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderFilterFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Symfony\Component\Security\Core\Security;
@@ -26,12 +27,14 @@ class OrdersQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilterFactory $orderFilterFactory
      */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly CustomerFacade $customerFacade,
         protected readonly Security $security,
+        protected readonly OrderFilterFactory $orderFilterFactory,
     ) {
     }
 
@@ -67,11 +70,13 @@ class OrdersQuery extends AbstractQuery
         CustomerUser $customerUser,
         Argument $argument,
     ): ConnectionInterface|Promise {
-        $paginator = new Paginator(function ($offset, $limit) use ($customerUser) {
-            return $this->orderApiFacade->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
+        $filter = $this->orderFilterFactory->createFromArgument($argument);
+
+        $paginator = new Paginator(function ($offset, $limit) use ($customerUser, $filter) {
+            return $this->orderApiFacade->getCustomerUserOrderLimitedList($customerUser, $limit, $offset, $filter);
         });
 
-        return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderCount($customerUser));
+        return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderCount($customerUser, $filter));
     }
 
     /**

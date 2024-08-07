@@ -4,9 +4,15 @@ OrderFilterInputDecorator:
     config:
         description: "Filter orders"
         fields:
-           createdAfter:
-               type: "DateTime"
-               description: "Filter orders created after this date"
-           status:
-               type: "OrderStatusEnum"
-               description: "Filter orders created after this date"
+            createdAfter:
+                type: "DateTime"
+                description: "Filter orders created after this date"
+            status:
+                type: "OrderStatusEnum"
+                description: "Filter orders created after this date"
+            orderItemsCatnum:
+                type: "String"
+                description: "Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid)"
+            orderItemsProductUuid:
+                type: "Uuid"
+                description: "Filter orders by order items with product UUID (OR condition with orderItemsCatnum)"
