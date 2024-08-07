@@ -55,7 +55,7 @@ export const Pagination: FC<PaginationProps> = ({
 
             <div className="order-2 my-3 flex justify-center vl:order-1 vl:w-1/5">
                 {isWithLoadMore && hasNextPage && (
-                    <Button className="px-3" onClick={loadMore}>
+                    <Button className="px-3" variant="inverted" onClick={loadMore}>
                         {t('Load more')}
                     </Button>
                 )}
@@ -117,11 +117,11 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
             <Tag
                 href={href}
                 className={twJoin(
-                    'flex h-12 w-12 items-center justify-center rounded border font-bold no-underline hover:no-underline',
+                    'flex h-12 w-12 items-center justify-center rounded border-2 font-bold no-underline hover:no-underline',
                     (isActive || isDotButton) && 'hover:cursor-default',
                     isActive
-                        ? 'border-none bg-primary text-white hover:bg-primaryDark hover:text-white'
-                        : 'border-white bg-white',
+                        ? 'bg-actionInvertedBackgroundActive text-actionInvertedTextActive border-actionInvertedBorderActive'
+                        : 'bg-actionInvertedBackground text-actionInvertedText border-actionInvertedBackground hover:border-actionInvertedBorderHovered hover:text-actionInvertedTextHovered',
                 )}
                 onClick={handleOnClick}
             >

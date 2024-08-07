@@ -42,7 +42,7 @@ export const NewsletterForm: FC = () => {
 
     return (
         <div className="relative flex flex-col pb-7 pt-8 lg:flex-row lg:items-center">
-            <div className="mb-3 break-words text-lg font-bold text-dark lg:mb-0 lg:pr-5 lg:text-2xl">
+            <div className="mb-3 break-words text-lg font-bold lg:mb-0 lg:pr-5 lg:text-2xl">
                 {t('Sign up for our newsletter and get 35% discount on running apparel')}
             </div>
 
@@ -69,8 +69,9 @@ export const NewsletterForm: FC = () => {
 
                             <div className="flex flex-col">
                                 <SubmitButton
-                                    className="max-lg:mt-3 lg:ml-3"
+                                    className="max-lg:mt-3 lg:ml-3 py-0 h-12"
                                     isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                    variant="inverted"
                                 >
                                     {t('Send')}
                                 </SubmitButton>

@@ -17,7 +17,7 @@ export const DeferredMobileMenu: FC = () => {
     const shouldRender = useDeferredRender('mobile_menu');
 
     return (
-        <div className="order-4 ml-3 flex cursor-pointer items-center justify-center text-lg lg:hidden">
+        <div className="order-1 flex cursor-pointer items-center justify-center text-lg lg:hidden">
             {shouldRender && !isRecognizingWindowWidth && !isDesktop ? (
                 <MobileMenu />
             ) : (

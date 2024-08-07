@@ -5,13 +5,13 @@ export const CompareIcon: SvgFC = (props) => (
             fill="transparent"
             stroke="currentColor"
             strokeLinejoin="round"
-            strokeWidth="1.5"
+            strokeWidth="2.5"
         />
         <path
             d="M4.7 9.624c0 1.134-.897 2.028-1.975 2.028-1.077 0-1.975-.894-1.975-2.028 0-1.133.898-2.027 1.975-2.027 1.078 0 1.976.894 1.976 2.027Z"
             fill="transparent"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="2.5"
         />
         <path d="M10.233 1v14.056" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
         <path
@@ -20,13 +20,13 @@ export const CompareIcon: SvgFC = (props) => (
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="1.5"
+            strokeWidth="2.5"
         />
         <path
             d="M19.25 8.671c0 .95-.751 1.695-1.648 1.695-.897 0-1.648-.745-1.648-1.694 0-.95.751-1.695 1.648-1.695.897 0 1.648.745 1.648 1.694Z"
             fill="transparent"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="2.5"
         />
     </svg>
 );

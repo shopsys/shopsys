@@ -6,18 +6,18 @@ import React from 'react';
 export const StyleguideTooltips: FC = () => {
     return (
         <StyleguideSection className="flex flex-wrap gap-3" title="Tooltips">
-            <TooltipBox label="Top">ℹ️ Top tooltip</TooltipBox>
+            <TooltipBox label="Top">Top tooltip</TooltipBox>
 
             <TooltipBox label="Right" placement="right">
-                ℹ️ Right tooltip
+                Right tooltip
             </TooltipBox>
 
             <TooltipBox label="Bottom" placement="bottom">
-                ℹ️ Bottom tooltip
+                Bottom tooltip
             </TooltipBox>
 
             <TooltipBox label="Left" placement="left">
-                ℹ️ Left tooltip
+                Left tooltip
             </TooltipBox>
         </StyleguideSection>
     );
@@ -25,6 +25,6 @@ export const StyleguideTooltips: FC = () => {
 
 const TooltipBox: FC<{ label: string; placement?: Placement }> = ({ label, placement, children }) => (
     <Tooltip label={label} placement={placement}>
-        <div className="p-5 bg-skyBlue cursor-pointer">{children}</div>
+        <div className="px-2 py-1 bg-backgroundBrandLess rounded-full text-textInverted">{children}</div>
     </Tooltip>
 );

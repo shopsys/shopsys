@@ -1,5 +1,6 @@
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
+import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
@@ -13,7 +14,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
 
     return (
         <tbody>
-            <tr className="[&>td]:bg-white [&>td]:odd:bg-whiteSnow">
+            <tr className="[&>td]:bg-tableBackground [&>td]:odd:bg-tableBackgroundContrast">
                 <BodyItem isSticky>
                     <div>{t('Price with VAT')}</div>
                 </BodyItem>
@@ -23,15 +24,17 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                     </BodyItem>
                 ))}
             </tr>
-            <tr className="[&>td]:bg-white [&>td]:odd:bg-whiteSnow">
+            <tr className="[&>td]:bg-tableBackground [&>td]:odd:bg-tableBackgroundContrast">
                 <BodyItem isSticky>{t('Availability')}</BodyItem>
                 {comparedProducts.map((product) => (
                     <BodyItem key={`availability-${product.uuid}`}>
                         <div
                             className={twJoin(
                                 'break-words text-sm font-bold sm:text-base',
-                                product.availability.status,
-                                product.stockQuantity < 1 && 'text-orange',
+                                product.availability.status === TypeAvailabilityStatusEnum.InStock &&
+                                    'text-availabilityInStock',
+                                product.availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
+                                    'text-availabilityOutOfStock',
                             )}
                         >
                             {product.availability.name}
@@ -41,7 +44,10 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
             </tr>
 
             {parametersDataState.map((parameter, parameterIndex) => (
-                <tr key={`parameter-${parameterIndex}`} className="[&>td]:bg-white [&>td]:odd:bg-whiteSnow">
+                <tr
+                    key={`parameter-${parameterIndex}`}
+                    className="[&>td]:bg-tableBackground [&>td]:odd:bg-tableBackgroundContrast"
+                >
                     <BodyItem isSticky>{parameter.name}</BodyItem>
 
                     {parameter.values.map((value, valueIndex) => (
@@ -59,8 +65,8 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
 const BodyItem: FC<{ isSticky?: boolean }> = ({ children, isSticky }) => (
     <td
         className={twJoin(
-            'w-[182px] break-words bg-white p-3 text-sm sm:w-[207px] sm:px-5 sm:text-base',
-            isSticky && 'sticky left-0 z-above text-base text-skyBlue',
+            'w-[182px] break-words bg-tableBackground p-3 text-sm sm:w-[207px] sm:px-5 sm:text-base',
+            isSticky && 'sticky left-0 z-above text-base text-textAccent',
         )}
     >
         {children}

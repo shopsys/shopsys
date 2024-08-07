@@ -12,7 +12,7 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <li className="flex items-center border-b border-whiteSnow py-3">
+        <li className="flex items-center border-b border-borderAccent py-3">
             <div className="mr-4 flex w-14 items-center justify-center" tid={TIDs.order_summary_cart_item_image}>
                 <Image
                     alt={item.product.mainImage?.name || item.product.fullName}

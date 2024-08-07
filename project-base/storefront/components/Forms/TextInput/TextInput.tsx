@@ -59,11 +59,17 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer w-full rounded-md border-2 border-skyBlue bg-white px-3 pt-5 text-dark [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50 focus:border-primaryDark transition',
-                    '[&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner',
+                    'peer w-full rounded-md border-2 px-3 pt-5 [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop transition',
+                    'border-inputBorder bg-inputBackground text-inputText',
+                    'disabled:border-inputBorderDisabled disabled:bg-inputBackgroundDisabled disabled:text-inputTextDisabled',
+                    'hover:border-inputBorderActive hover:bg-inputBackgroundActive hover:text-inputTextActive',
+                    'focus:border-inputBorderActive focus:bg-inputBackgroundActive focus:text-inputTextActive',
+                    '[&:-internal-autofill-selected]:!bg-inputBackground [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-inputBackground [&:-webkit-autofill]:!shadow-inner',
+                    '[&:-webkit-autofill]:hover:!bg-inputBackgroundActive [&:-webkit-autofill]:hover:!shadow-inner',
+                    '[&:-webkit-autofill]:focus:!bg-inputBackgroundActive [&:-webkit-autofill]:focus:!shadow-inner',
                     inputSize === 'small' ? 'text-small h-12' : 'text-body h-14',
-                    hasError && 'border-red bg-white shadow-none',
-                    type === 'password' && 'text-2xl text-graySlate focus-visible:text-dark',
+                    hasError && 'border-inputError bg-inputBackground shadow-none',
+                    type === 'password' && 'text-2xl text-inputTextDisabled focus-visible:text-inputText',
                     className,
                 )}
                 onBlur={onBlur}

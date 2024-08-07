@@ -51,7 +51,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     return (
         <>
             {product.isSellingDenied ? (
-                <p className="text-red">{t('This item can no longer be purchased')}</p>
+                <p className="text-textError">{t('This item can no longer be purchased')}</p>
             ) : (
                 <div className="text-sm vl:text-base">
                     <div className="flex items-center justify-between">

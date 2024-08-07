@@ -64,11 +64,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 {product.brand && (
                                     <div>
                                         <span>{t('Brand')}: </span>
-                                        <ExtendedNextLink
-                                            className="text-dark hover:text-primary"
-                                            href={product.brand.slug}
-                                            type="brand"
-                                        >
+                                        <ExtendedNextLink href={product.brand.slug} type="brand">
                                             {product.brand.name}
                                         </ExtendedNextLink>
                                     </div>
@@ -84,8 +80,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
-                        <div className="bg-grayLight rounded-xl p-3 sm:p-6 flex flex-col gap-4">
-                            <div className="text-2xl font-bold text-primaryDark font-secondary">
+                        <div className="bg-backgroundMore rounded-xl p-3 sm:p-6 flex flex-col gap-4">
+                            <div className="text-2xl font-bold text-price font-secondary">
                                 {formatPrice(product.price.priceWithVat)}
                             </div>
 

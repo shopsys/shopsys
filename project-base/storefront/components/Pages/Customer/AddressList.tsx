@@ -95,9 +95,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                 <div
                     key={address.uuid}
                     className={twJoin(
-                        'relative flex w-full justify-between rounded-md bg-white border-2 border-skyBlue p-4',
+                        'relative flex w-full justify-between rounded-md bg-background border-2 border-borderAccentLess p-4',
                         defaultDeliveryAddress?.uuid === address.uuid
-                            ? 'border-primary bg-whiteSnow'
+                            ? 'border-borderAccent bg-backgroundAccentLess'
                             : 'cursor-pointer',
                     )}
                     onClick={() => setDefaultItemHandler(address.uuid)}
@@ -121,7 +121,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <Button
                                 className="flex-1"
                                 size="small"
-                                variant="secondaryOutlined"
+                                variant="inverted"
                                 onClick={(e) => openDeleteAddressPopup(e, address.uuid)}
                             >
                                 <RemoveIcon className="size-4" /> {t('Delete')}
@@ -129,7 +129,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <Button
                                 className="flex-1"
                                 size="small"
-                                variant="secondary"
+                                variant="inverted"
                                 onClick={(e) => openDeliveryAddressPopup(e, address)}
                             >
                                 <EditIcon className="size-4" /> {t('Edit')}

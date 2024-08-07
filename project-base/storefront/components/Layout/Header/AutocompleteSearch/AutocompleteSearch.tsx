@@ -81,7 +81,7 @@ export const AutocompleteSearch: FC = () => {
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
-                    className="w-full border-2 border-white"
+                    className="w-full"
                     label={t('Write what you are looking for...')}
                     shouldShowSpinnerInInput={areAutocompleteSearchDataFetching}
                     value={searchQueryValue}

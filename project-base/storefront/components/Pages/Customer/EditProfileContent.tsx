@@ -411,7 +411,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     <FormBlockWrapper>
                         <FormHeading className="flex justify-between">
                             {t('Delivery addresses')}
-                            <Button size="small" variant="primaryOutlined" onClick={(e) => openDeliveryAddressPopup(e)}>
+                            <Button size="small" variant="inverted" onClick={(e) => openDeliveryAddressPopup(e)}>
                                 {t('Add new address')}
                             </Button>
                         </FormHeading>

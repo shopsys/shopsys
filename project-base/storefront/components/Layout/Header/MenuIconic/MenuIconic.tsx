@@ -26,7 +26,7 @@ export const MenuIconic: FC = () => {
         <ul className="flex items-center gap-1 h-12">
             <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
-                    <MarkerIcon className="w-4 text-white" />
+                    <MarkerIcon className="w-4" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
@@ -41,15 +41,17 @@ export const MenuIconic: FC = () => {
 
             <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
-                    <CompareIcon className="w-4 text-white" />
+                    <CompareIcon className="w-4" />
                     {!!comparison?.products.length && <span>{comparison.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
-            <MenuIconicItem className="max-lg:hidden">
+            <MenuIconicItem>
                 <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
-                    <HeartIcon className="w-4 text-white" isFull={!!wishlist?.products.length} />
-                    {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
+                    <HeartIcon className="w-6 lg:w-4" isFull={!!wishlist?.products.length} />
+                    <span className="max-lg:hidden">
+                        {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
+                    </span>
                 </MenuIconicItemLink>
             </MenuIconicItem>
         </ul>

@@ -49,11 +49,12 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         {checkedBrands.map(
                             (checkedBrand) =>
                                 !!checkedBrand && (
-                                    <SelectedParametersListItem key={checkedBrand.brand.uuid}>
+                                    <SelectedParametersListItem
+                                        key={checkedBrand.brand.uuid}
+                                        onClick={() => updateFilterBrandsQuery(checkedBrand.brand.uuid)}
+                                    >
                                         {checkedBrand.brand.name}
-                                        <SelectedParametersIcon
-                                            onClick={() => updateFilterBrandsQuery(checkedBrand.brand.uuid)}
-                                        />
+                                        <SelectedParametersIcon />
                                     </SelectedParametersListItem>
                                 ),
                         )}
@@ -64,9 +65,12 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     <SelectedParametersList>
                         <SelectedParametersName>{t('Flags')}:</SelectedParametersName>
                         {checkedFlags.map((checkedFlag) => (
-                            <SelectedParametersListItem key={checkedFlag.flag.uuid}>
+                            <SelectedParametersListItem
+                                key={checkedFlag.flag.uuid}
+                                onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
+                            >
                                 {checkedFlag.flag.name}
-                                <SelectedParametersIcon onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)} />
+                                <SelectedParametersIcon />
                             </SelectedParametersListItem>
                         ))}
                     </SelectedParametersList>
@@ -109,7 +113,12 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         <SelectedParametersList key={selectedParameterOptions.uuid}>
                             <SelectedParametersName>{selectedParameterOptions.name}:</SelectedParametersName>
                             {isSliderParameter && (
-                                <SelectedParametersListItem key={selectedParameterOptions.uuid}>
+                                <SelectedParametersListItem
+                                    key={selectedParameterOptions.uuid}
+                                    onClick={() =>
+                                        updateFilterParametersQuery(selectedParameterOptions.uuid, undefined)
+                                    }
+                                >
                                     <span>{t('from')}&nbsp;</span>
                                     {selectedParameter.minimalValue || selectedParameterOptions.minimalValue}
                                     {!!selectedParameterOptions.unit?.name &&
@@ -117,25 +126,19 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     <span>&nbsp;{t('to')}&nbsp;</span>
                                     {selectedParameter.maximalValue || selectedParameterOptions.maximalValue}
                                     {selectedParameterOptions.unit?.name && `\xa0${selectedParameterOptions.unit.name}`}
-                                    <SelectedParametersIcon
-                                        onClick={() =>
-                                            updateFilterParametersQuery(selectedParameterOptions.uuid, undefined)
-                                        }
-                                    />
+                                    <SelectedParametersIcon />
                                 </SelectedParametersListItem>
                             )}
                             {selectedParameterValues &&
                                 selectedParameterValues.map((selectedValue) => (
-                                    <SelectedParametersListItem key={selectedValue.uuid}>
+                                    <SelectedParametersListItem
+                                        key={selectedValue.uuid}
+                                        onClick={() =>
+                                            updateFilterParametersQuery(selectedParameter.parameter, selectedValue.uuid)
+                                        }
+                                    >
                                         {selectedValue.text}
-                                        <SelectedParametersIcon
-                                            onClick={() =>
-                                                updateFilterParametersQuery(
-                                                    selectedParameter.parameter,
-                                                    selectedValue.uuid,
-                                                )
-                                            }
-                                        />
+                                        <SelectedParametersIcon />
                                     </SelectedParametersListItem>
                                 ))}
                         </SelectedParametersList>
@@ -145,9 +148,9 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                 {!!currentFilter?.onlyInStock && (
                     <SelectedParametersList>
                         <SelectedParametersName>{t('Availability')}:</SelectedParametersName>
-                        <SelectedParametersListItem>
+                        <SelectedParametersListItem onClick={() => updateFilterInStockQuery(false)}>
                             {t('Only goods in stock')}
-                            <SelectedParametersIcon onClick={() => updateFilterInStockQuery(false)} />
+                            <SelectedParametersIcon />
                         </SelectedParametersListItem>
                     </SelectedParametersList>
                 )}
@@ -155,7 +158,11 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                 {(currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined) && (
                     <SelectedParametersList>
                         <SelectedParametersName>{t('Price')}:</SelectedParametersName>
-                        <SelectedParametersListItem>
+                        <SelectedParametersListItem
+                            onClick={() => {
+                                updateFilterPricesQuery({ maximalPrice: undefined, minimalPrice: undefined });
+                            }}
+                        >
                             {currentFilter.minimalPrice !== undefined && (
                                 <>
                                     <span>{t('from')}&nbsp;</span>
@@ -169,26 +176,20 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     {formatPrice(currentFilter.maximalPrice)}
                                 </>
                             )}
-                            <SelectedParametersIcon
-                                onClick={() => {
-                                    updateFilterPricesQuery({ maximalPrice: undefined, minimalPrice: undefined });
-                                }}
-                            />
+                            <SelectedParametersIcon />
                         </SelectedParametersListItem>
                     </SelectedParametersList>
                 )}
             </div>
-            <div className="flex cursor-pointer items-center text-sm text-graySlate" onClick={resetAllFilterQueries}>
+            <div className="flex cursor-pointer items-center text-sm text-textDisabled" onClick={resetAllFilterQueries}>
                 <div className="font-bold uppercase">{t('Clear all')}</div>
-                <RemoveIcon className="ml-2 cursor-pointer text-secondary" />
+                <RemoveIcon className="ml-2 cursor-pointer" />
             </div>
         </div>
     );
 };
 
-const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick }) => (
-    <RemoveThinIcon className="ml-3 w-3 cursor-pointer" onClick={onClick} />
-);
+const SelectedParametersIcon: FC = () => <RemoveThinIcon className="ml-3 w-3 cursor-pointer" />;
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,

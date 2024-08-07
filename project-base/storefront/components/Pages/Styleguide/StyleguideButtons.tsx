@@ -6,7 +6,7 @@ export const StyleguideButtons: FC = () => {
         <StyleguideSection className="flex flex-col gap-5" title="Buttons">
             <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Variants">
                 <Button>Primary</Button>
-                <Button variant="primaryOutlined">Secondary</Button>
+                <Button variant="inverted">Inverted</Button>
             </StyleguideSubSection>
 
             <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Sizes">

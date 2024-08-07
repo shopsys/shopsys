@@ -3,8 +3,8 @@ import { AutocompleteSearchBrandsResult } from './AutocompleteSearchBrandsResult
 import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategoriesResult';
 import { AutocompleteSearchProductsResult } from './AutocompleteSearchProductsResult';
 import { AutocompleteSkeleton } from './AutocompleteSkeleton';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { IconImage } from 'components/Basic/IconImage/IconImage';
+import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { m } from 'framer-motion';
@@ -52,7 +52,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 initial="hidden"
                 variants={fadeAnimation}
                 className={twJoin(
-                    'gap-5 w-full absolute left-0 -bottom-3 z-aboveOverlay flex vl:w-[770px] origin-top translate-y-full flex-col vl:gap-6 rounded-xl bg-white p-7 overflow-auto',
+                    'gap-5 w-full absolute left-0 -bottom-3 z-aboveOverlay flex vl:w-[770px] origin-top translate-y-full flex-col vl:gap-6 rounded-xl bg-background p-7 overflow-auto',
                     'max-h-[calc(85vh-169px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)] vl:max-h-[calc(98vh-120px)]',
                 )}
             >
@@ -99,7 +99,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                         <div className="flex justify-center">
                             <Button
                                 className="w-full md:w-fit"
-                                variant="secondaryOutlined"
+                                variant="inverted"
                                 onClick={() => {
                                     onClosePopupCallback();
                                     router.push({
@@ -127,14 +127,9 @@ export const SearchResultSectionGroup: FC = ({ children }) => <ul className="fle
 export const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKey }> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, onClick, href, type }, _) => (
-        <ExtendedNextLink
-            className="bg-skyBlue rounded-full px-3 py-2 text-white text-sm font-medium no-underline hover:no-underline block hover:text-white hover:bg-primaryLight"
-            href={href}
-            type={type}
-            onClick={onClick}
-        >
+        <LabelLink href={href} type={type} onClick={onClick}>
             {children}
-        </ExtendedNextLink>
+        </LabelLink>
     ),
 );
 

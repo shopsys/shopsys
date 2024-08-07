@@ -4,11 +4,14 @@ import { Webline } from './Webline/Webline';
 
 export const ErrorLayout: FC = ({ children }) => (
     <>
-        <Webline className="relative mb-8" type="colored">
+        <Webline
+            className="relative mb-8"
+            wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
+        >
             <Header simpleHeader />
         </Webline>
         {children}
-        <Webline type="dark">
+        <Webline wrapperClassName="bg-backgroundAccentLess">
             <Footer simpleFooter />
         </Webline>
     </>

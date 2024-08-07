@@ -34,8 +34,8 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                     'peer-checked:after:pointer-events-none peer-checked:after:absolute peer-checked:after:left-[12px] peer-checked:after:top-[11px] peer-checked:after:h-[10px] peer-checked:after:w-[6px] peer-checked:after:rotate-45 peer-checked:after:border-r-2 peer-checked:after:border-b-2 peer-checked:after:opacity-100 peer-checked:after:content-[""]',
                     isDisabled && !isActive && 'pointer-events-none opacity-30 after:opacity-100',
                     isLightColor
-                        ? 'after:text-white peer-checked:after:border-black'
-                        : 'peer-checked:after:border-white',
+                        ? 'after:text-inputTextInverted peer-checked:after:border-inputTextActive'
+                        : 'peer-checked:after:border-inputTextInverted',
                 )}
             />
         </Tooltip>

@@ -50,7 +50,7 @@ export const HomePageContent: FC = () => {
                     <DeferredPromotedProducts />
                 </Webline>
 
-                <Webline type="blog">
+                <Webline>
                     <DeferredBlogPreview />
                 </Webline>
 

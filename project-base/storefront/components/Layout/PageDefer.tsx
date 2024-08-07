@@ -13,7 +13,9 @@ export const PageDefer: FC = ({ children }) => {
     return (
         <>
             {children}
-            <div className="fixed left-2 bottom-2 p-2 bg-red text-white rounded">Defer is turned off</div>
+            <div className="fixed left-2 bottom-2 p-2 bg-backgroundError text-textInverted rounded">
+                Defer is turned off
+            </div>
         </>
     );
 };

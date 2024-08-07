@@ -1,5 +1,5 @@
 import { DeferredAutocompleteSearch } from './AutocompleteSearch/DeferredAutocompleteSearch';
-import { DeferredCart } from './Cart/DeferredCart';
+import { DeferredCartInHeader } from './Cart/DeferredCartInHeader';
 import { Logo } from './Logo/Logo';
 import { DeferredMenuIconic } from './MenuIconic/DeferredMenuIconic';
 import { DeferredMobileMenu } from './MobileMenu/DeferredMobileMenu';
@@ -14,7 +14,7 @@ type HeaderProps = {
 
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     return (
-        <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-1 lg:gap-x-7 lg:pb-5 lg:pt-6" tid={TIDs.header}>
+        <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-4 lg:gap-x-7 lg:pb-5 lg:pt-6" tid={TIDs.header}>
             <Logo />
 
             {simpleHeader ? (
@@ -31,7 +31,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
 
                     <DeferredMobileMenu />
 
-                    <DeferredCart />
+                    <DeferredCartInHeader />
                 </>
             )}
         </div>

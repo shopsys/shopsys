@@ -11,18 +11,18 @@ export const OrderStatus: FC<OrderStatusProps> = ({ order }) => {
     const { t } = useTranslation();
 
     return (
-        <>
+        <span>
             {order.status}
             {order.payment.type === PaymentTypeEnum.GoPay && (
                 <>
                     {' '}
                     (
-                    <span className={order.isPaid ? 'text-green' : 'text-red'}>
+                    <span className={order.isPaid ? 'text-textSuccess' : 'text-textError'}>
                         {order.isPaid ? t('Paid') : t('Not paid')}
                     </span>
                     )
                 </>
             )}
-        </>
+        </span>
     );
 };

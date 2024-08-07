@@ -19,7 +19,7 @@ export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop
                     initial="hidden"
                     variants={fadeAnimation}
                     className={twMergeCustom(
-                        'fixed inset-0 z-overlay flex cursor-pointer items-center justify-center bg-black bg-opacity-60',
+                        'fixed inset-0 z-overlay flex cursor-pointer items-center justify-center bg-overlay',
                         isHiddenOnDesktop && 'vl:hidden',
                     )}
                     onClick={onClick}

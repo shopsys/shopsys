@@ -3,6 +3,7 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
+import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
@@ -51,7 +52,6 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                         />
                     </div>
                     <ExtendedNextLink
-                        className="text-primary no-underline hover:no-underline"
                         href={product.slug}
                         type="product"
                         onClick={() =>
@@ -77,18 +77,19 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                     />
                 </div>
             </div>
-            <div
-                className="absolute top-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white transition-colors hover:bg-whiteSnow"
+            <Button
+                className="absolute top-1 right-1 flex p-2"
+                variant="inverted"
                 onClick={() => {
                     toggleProductInComparison();
                     calcMaxMarginLeft();
                 }}
             >
-                <RemoveIcon className="w-4 text-skyBlue" />
-            </div>
+                <RemoveIcon className="w-4" />
+            </Button>
 
             {product.flags.length > 0 && (
-                <div className="absolute left-0 top-0 mt-7 flex flex-col items-start">
+                <div className="absolute left-0 top-0 mt-7 flex flex-col items-start z-0">
                     <ProductFlags flags={product.flags} />
                 </div>
             )}

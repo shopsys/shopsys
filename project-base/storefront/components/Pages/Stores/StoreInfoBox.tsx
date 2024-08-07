@@ -14,9 +14,9 @@ export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallbac
     const { t } = useTranslation();
 
     return (
-        <div className="top-0 left-0 z-above flex h-full w-full flex-col items-center justify-center bg-white py-4 text-center vl:absolute vl:px-10">
+        <div className="top-0 left-0 z-above flex h-full w-full flex-col items-center justify-center bg-background py-4 text-center vl:absolute vl:px-10">
             <RemoveIcon
-                className="absolute top-4 right-4 w-5 cursor-pointer text-secondary transition-colors hover:text-secondaryLight"
+                className="absolute top-4 right-4 w-5 cursor-pointer text-textAccent"
                 onClick={closeInfoBoxCallback}
             />
 

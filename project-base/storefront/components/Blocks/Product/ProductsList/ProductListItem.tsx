@@ -14,6 +14,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -67,14 +68,20 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-full bg-grayLight hover:bg-gray transition',
+                    'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-ful transition',
+                    'bg-backgroundMore',
+                    'hover:bg-backgroundMost',
                     className,
                 )}
             >
                 {visibleItemsConfig.wishlistRemoveButton && (
                     <button
-                        className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whiteSnow p-0 outline-none transition hover:bg-graySlate"
                         title={t('Remove from wishlist')}
+                        className={twJoin(
+                            'absolute left-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 transition',
+                            'border-none bg-backgroundAccentLess outline-none text-text',
+                            'hover:bg-backgroundAccent hover:text-textInverted',
+                        )}
                         onClick={toggleProductInWishlist}
                     >
                         <RemoveBoldIcon className="mx-auto w-2 basis-2" />
@@ -82,7 +89,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex h-full select-none flex-col justify-between no-underline hover:no-underline"
+                    className="flex h-full select-none flex-col justify-between no-underline hover:no-underline text-text hover:text-text"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -94,9 +101,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     <div className="flex flex-col gap-2">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                        <div className="text-sm font-semibold text-dark font-secondary group-hover:underline group-hover:text-primary mb-4">
-                            {product.fullName}
-                        </div>
+                        <div className="font-semibold font-secondary mb-4">{product.fullName}</div>
                     </div>
 
                     <div>
@@ -108,7 +113,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         )}
 
                         {visibleItemsConfig.storeAvailability && (
-                            <div className="flex flex-col justify-between text-sm text-black h-16">
+                            <div className="flex flex-col justify-between text-sm text-text h-16">
                                 <div>{product.availability.name}</div>
                                 <ProductAvailableStoresCount
                                     availableStoresCount={product.availableStoresCount}
@@ -119,27 +124,29 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     </div>
                 </ExtendedNextLink>
 
-                {visibleItemsConfig.productListButtons && (
-                    <div className="flex justify-end gap-2">
-                        <ProductCompareButton
-                            isProductInComparison={isProductInComparison}
-                            toggleProductInComparison={toggleProductInComparison}
+                <div className="flex w-full items-center gap-2">
+                    {visibleItemsConfig.addToCart && (
+                        <ProductAction
+                            gtmMessageOrigin={gtmMessageOrigin}
+                            gtmProductListName={gtmProductListName}
+                            listIndex={listIndex}
+                            product={product}
                         />
-                        <ProductWishlistButton
-                            isProductInWishlist={isProductInWishlist}
-                            toggleProductInWishlist={toggleProductInWishlist}
-                        />
-                    </div>
-                )}
+                    )}
 
-                {visibleItemsConfig.addToCart && (
-                    <ProductAction
-                        gtmMessageOrigin={gtmMessageOrigin}
-                        gtmProductListName={gtmProductListName}
-                        listIndex={listIndex}
-                        product={product}
-                    />
-                )}
+                    {visibleItemsConfig.productListButtons && (
+                        <div className="flex justify-end gap-2">
+                            <ProductCompareButton
+                                isProductInComparison={isProductInComparison}
+                                toggleProductInComparison={toggleProductInComparison}
+                            />
+                            <ProductWishlistButton
+                                isProductInWishlist={isProductInWishlist}
+                                toggleProductInWishlist={toggleProductInWishlist}
+                            />
+                        </div>
+                    )}
+                </div>
             </li>
         );
     },

@@ -30,7 +30,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
             <div className="w-full vl:max-w-md">
                 <div className="mb-3 font-bold h4">{t('Your order')}</div>
 
-                <div className="rounded bg-whiteSnow py-3 px-5 vl:m-0">
+                <div className="rounded bg-backgroundMore py-3 px-5 vl:m-0">
                     <div className="relative flex flex-col">
                         <div className="mb-5">
                             <ul>

@@ -12,7 +12,7 @@ export const GoogleMapSingleMarker: FC<GoogleMapSingleMarkerProps> = ({ isActive
         <GoogleMapMarkerIcon
             className={twJoin(
                 'w-10 h-10',
-                isActive ? 'origin-bottom scale-125 text-primary' : 'text-secondary',
+                isActive ? 'origin-bottom scale-125 text-text' : 'text-textAccent',
                 isDetail ? 'cursor-default' : 'cursor-pointer',
             )}
         />

@@ -8,18 +8,13 @@ const Footer = dynamic(() => import('./Footer').then((component) => component.Fo
 
 const FooterPlaceholder = dynamic(() => import('./FooterPlaceholder').then((component) => component.FooterPlaceholder));
 
-const dummyData = {
-    phone: '+420 111 222 333',
-    opening: 'Po - Út, 10 - 16 hod',
-};
-
 export const DeferredFooter = () => {
     const footerArticles = useFooterArticles();
     const shouldRender = useDeferredRender('footer');
 
     return shouldRender ? (
-        <Footer footerArticles={footerArticles} opening={dummyData.opening} phone={dummyData.phone} />
+        <Footer footerArticles={footerArticles} />
     ) : (
-        <FooterPlaceholder footerArticles={footerArticles} opening={dummyData.opening} phone={dummyData.phone} />
+        <FooterPlaceholder footerArticles={footerArticles} />
     );
 };

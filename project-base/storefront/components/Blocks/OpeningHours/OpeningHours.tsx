@@ -43,9 +43,9 @@ export const OpeningHours: FC<{ openingHours: TypeOpeningHours }> = ({ openingHo
                         key={dayOfWeek}
                         className={twJoin(
                             'flex flex-row',
-                            isToday && openingHours.isOpen && 'text-green',
-                            isToday && !openingHours.isOpen && 'text-orange',
-                            isToday && isClosedWholeDay && 'text-red',
+                            isToday && openingHours.isOpen && 'text-openingStatusOpen',
+                            isToday && !openingHours.isOpen && 'text-openingStatusOpenToday',
+                            isToday && isClosedWholeDay && 'text-openingStatusClosed',
                         )}
                     >
                         <strong className="basis-32 text-left">

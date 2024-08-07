@@ -37,14 +37,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 <div>
                     <div tid={TIDs.pages_order_selectitem_label_name}>{name}</div>
 
-                    {description && <div className="text-graySlate">{description}</div>}
+                    {description && <div className="text-textDisabled">{description}</div>}
                 </div>
 
                 {pickupPlaceDetail && (
                     <div>
-                        <div className="text-graySlate">{pickupPlaceDetail.name}</div>
+                        <div className="text-textDisabled">{pickupPlaceDetail.name}</div>
 
-                        <div className="text-graySlate">
+                        <div className="text-textDisabled">
                             {pickupPlaceDetail.street +
                                 ', ' +
                                 pickupPlaceDetail.postcode +
@@ -52,14 +52,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                 pickupPlaceDetail.city}
                         </div>
 
-                        <div className="my-1 text-graySlate">{t('Open') + ': '}</div>
+                        <div className="my-1 text-textDisabled">{t('Open') + ': '}</div>
 
                         <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
                     </div>
                 )}
 
                 {daysUntilDelivery !== undefined && (
-                    <div className="text-sm text-secondary lg:ml-auto lg:basis-36 lg:text-right">
+                    <div className="text-sm text-textAccent lg:ml-auto lg:basis-36 lg:text-right">
                         {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                     </div>
                 )}
@@ -76,6 +76,10 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
 const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean, t: Translate) => {
     if (isPersonalPickup) {
+        if (daysUntilDelivery === 0) {
+            return t('Personal pickup today');
+        }
+
         if (daysUntilDelivery < 7) {
             return t('Personal pickup in {{ count }} days', { count: daysUntilDelivery });
         }
@@ -83,6 +87,9 @@ const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean
         return t('Personal pickup in {{count}} weeks', {
             count: Math.ceil(daysUntilDelivery / 7),
         });
+    }
+    if (daysUntilDelivery === 0) {
+        return t('Delivery today');
     }
 
     if (daysUntilDelivery < 7) {

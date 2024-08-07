@@ -11,7 +11,6 @@ import { PaymentTypeEnum } from 'types/payment';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { twMergeCustom } from 'utils/twMerge';
 
 type OrderDetailContentProps = {
     order: TypeOrderDetailFragment;
@@ -45,195 +44,178 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
 
             <Webline>
                 <Table>
-                    <Row className="flex flex-col md:flex-row">
-                        <Cell className="flex-1">
-                            <ColumnHeader>{t('Basic information')}</ColumnHeader>
-                            <Table className="border-0 p-0">
-                                <Row>
-                                    <CellMinor>{t('Creation date')}</CellMinor>
-                                    <Cell align="right">
-                                        <span tid={TIDs.order_detail_creation_date}>
-                                            {formatDateAndTime(order.creationDate)}
-                                        </span>
-                                    </Cell>
-                                </Row>
-                            </Table>
+                    <Row>
+                        <CellHead>{t('Basic information')}</CellHead>
+                        {!!order.trackingNumber && <CellHead>{t('Tracking package')}</CellHead>}
+                        {!!order.note && <CellHead>{t('Your note')}</CellHead>}
+                        <CellHead>{t('Payment information')}</CellHead>
+                    </Row>
+                    <Row>
+                        <Cell>
+                            <div className="flex justify-between">
+                                {t('Creation date')}
+                                <span tid={TIDs.order_detail_creation_date}>
+                                    {formatDateAndTime(order.creationDate)}
+                                </span>
+                            </div>
                         </Cell>
 
                         {!!order.trackingNumber && (
-                            <Cell className="flex-1">
-                                <ColumnHeader>{t('Tracking package')}</ColumnHeader>
-                                <Table className="border-0 p-0">
-                                    <Row>
-                                        <CellMinor>{t('Package number')}</CellMinor>
-                                        <Cell align="right">
-                                            {order.trackingUrl ? (
-                                                <ExtendedNextLink href={order.trackingUrl} target="_blank">
-                                                    {order.trackingNumber}
-                                                </ExtendedNextLink>
-                                            ) : (
-                                                order.trackingNumber
-                                            )}
-                                        </Cell>
-                                    </Row>
-                                </Table>
+                            <Cell>
+                                <div className="flex justify-between">
+                                    {t('Package number')}
+                                    {order.trackingUrl ? (
+                                        <ExtendedNextLink href={order.trackingUrl} target="_blank">
+                                            {order.trackingNumber}
+                                        </ExtendedNextLink>
+                                    ) : (
+                                        order.trackingNumber
+                                    )}
+                                </div>
                             </Cell>
                         )}
 
-                        {!!order.note && (
-                            <Cell className="flex-1">
-                                <ColumnHeader>{t('Your note')}</ColumnHeader>
-                                <Table>
-                                    <Row>
-                                        <Cell>{order.note}</Cell>
-                                    </Row>
-                                </Table>
-                            </Cell>
-                        )}
-                        <Cell className="flex-1">
-                            <ColumnHeader>{t('Payment information')}</ColumnHeader>
-                            <Table className="border-0 p-0">
-                                <Row>
-                                    <CellMinor>{t('Status')}</CellMinor>
-                                    <Cell align="right">
-                                        <OrderStatus order={order} />
-                                    </Cell>
-                                </Row>
-                            </Table>
-                            {!order.isPaid && order.payment.type === PaymentTypeEnum.GoPay && (
-                                <PaymentsInOrderSelect
-                                    orderUuid={order.uuid}
-                                    paymentTransactionCount={order.paymentTransactionsCount}
-                                    withRedirectAfterChanging={false}
-                                />
-                            )}
+                        {!!order.note && <Cell>{order.note}</Cell>}
+
+                        <Cell>
+                            <div className="flex justify-between">
+                                {t('Status')}
+                                <OrderStatus order={order} />
+                            </div>
                         </Cell>
                     </Row>
                 </Table>
 
-                <Table className="mt-10">
-                    <Row className="flex flex-col md:flex-row">
-                        <Cell className="flex-1">
-                            <ColumnHeader>{t('Billing address')}</ColumnHeader>
+                <div className="flex justify-center mt-10">
+                    <div className="lg:w-1/2 p-5 bg-backgroundMore rounded">
+                        {!order.isPaid && order.payment.type === PaymentTypeEnum.GoPay && (
+                            <PaymentsInOrderSelect
+                                orderUuid={order.uuid}
+                                paymentTransactionCount={order.paymentTransactionsCount}
+                                withRedirectAfterChanging={false}
+                            />
+                        )}
+                    </div>
+                </div>
 
-                            <Table className="border-0 p-0">
-                                {!!order.companyName && (
-                                    <>
-                                        <Row>
-                                            <CellMinor>{t('Company name')}</CellMinor>
-                                            <Cell>{order.companyName}</Cell>
-                                        </Row>
+                <div className="grid lg:grid-cols-2 mt-10 gap-5">
+                    <Table className="border-0 p-0">
+                        <Row>
+                            <CellHead colSpan={2}>{t('Delivery address')}</CellHead>
+                        </Row>
+                        <Row>
+                            <CellMinor>{t('First name')}</CellMinor>
+                            <Cell>{order.deliveryFirstName}</Cell>
+                        </Row>
 
-                                        <Row>
-                                            <CellMinor>{t('Company number')}</CellMinor>
-                                            <Cell>{order.companyNumber}</Cell>
-                                        </Row>
+                        <Row>
+                            <CellMinor>{t('Last name')}</CellMinor>
+                            <Cell>{order.deliveryLastName}</Cell>
+                        </Row>
 
-                                        {!!order.companyTaxNumber && (
-                                            <Row>
-                                                <CellMinor>{t('Tax number')}</CellMinor>
-                                                <Cell>{order.companyTaxNumber}</Cell>
-                                            </Row>
-                                        )}
-                                    </>
+                        {!!order.deliveryCompanyName && (
+                            <Row>
+                                <CellMinor>{t('Company name')}</CellMinor>
+                                <Cell>{order.deliveryCompanyName}</Cell>
+                            </Row>
+                        )}
+
+                        <Row>
+                            <CellMinor>{t('Phone')}:</CellMinor>
+                            <Cell>{order.deliveryTelephone}</Cell>
+                        </Row>
+
+                        <Row>
+                            <CellMinor>{t('Street and house no.')}:</CellMinor>
+                            <Cell>{order.deliveryStreet}</Cell>
+                        </Row>
+
+                        <Row>
+                            <CellMinor>{t('City')}:</CellMinor>
+                            <Cell>{order.deliveryCity}</Cell>
+                        </Row>
+
+                        <Row>
+                            <CellMinor>{t('Postcode')}:</CellMinor>
+                            <Cell>{order.deliveryPostcode}</Cell>
+                        </Row>
+
+                        <Row>
+                            <CellMinor>{t('Country')}:</CellMinor>
+                            <Cell>{order.deliveryCountry?.name}</Cell>
+                        </Row>
+                    </Table>
+
+                    <Table className="border-0 p-0">
+                        <Row>
+                            <CellHead colSpan={2}>{t('Billing address')}</CellHead>
+                        </Row>
+                        {!!order.companyName && (
+                            <>
+                                <Row>
+                                    <CellMinor>{t('Company name')}</CellMinor>
+                                    <Cell>{order.companyName}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Company number')}</CellMinor>
+                                    <Cell>{order.companyNumber}</Cell>
+                                </Row>
+
+                                {!!order.companyTaxNumber && (
+                                    <Row>
+                                        <CellMinor>{t('Tax number')}</CellMinor>
+                                        <Cell>{order.companyTaxNumber}</Cell>
+                                    </Row>
                                 )}
+                            </>
+                        )}
 
-                                {!!order.firstName && (
-                                    <>
-                                        <Row>
-                                            <CellMinor>{t('First name')}</CellMinor>
-                                            <Cell>{order.firstName}</Cell>
-                                        </Row>
-
-                                        <Row>
-                                            <CellMinor>{t('Last name')}</CellMinor>
-                                            <Cell>{order.lastName}</Cell>
-                                        </Row>
-                                    </>
-                                )}
-
-                                <Row>
-                                    <CellMinor>{t('Email')}</CellMinor>
-                                    <Cell>{order.email}</Cell>
-                                </Row>
-
-                                <Row>
-                                    <CellMinor>{t('Phone')}</CellMinor>
-                                    <Cell>{order.telephone}</Cell>
-                                </Row>
-
-                                <Row>
-                                    <CellMinor>{t('Street and house no.')}</CellMinor>
-                                    <Cell>{order.street}</Cell>
-                                </Row>
-
-                                <Row>
-                                    <CellMinor>{t('City')}</CellMinor>
-                                    <Cell>{order.city}</Cell>
-                                </Row>
-
-                                <Row>
-                                    <CellMinor>{t('Postcode')}</CellMinor>
-                                    <Cell>{order.postcode}</Cell>
-                                </Row>
-
-                                <Row>
-                                    <CellMinor>{t('Country')}</CellMinor>
-                                    <Cell>{order.country.name}</Cell>
-                                </Row>
-                            </Table>
-                        </Cell>
-
-                        <Cell className="flex-1">
-                            <ColumnHeader>{t('Delivery address')}</ColumnHeader>
-
-                            <Table className="border-0 p-0">
+                        {!!order.firstName && (
+                            <>
                                 <Row>
                                     <CellMinor>{t('First name')}</CellMinor>
-                                    <Cell>{order.deliveryFirstName}</Cell>
+                                    <Cell>{order.firstName}</Cell>
                                 </Row>
 
                                 <Row>
                                     <CellMinor>{t('Last name')}</CellMinor>
-                                    <Cell>{order.deliveryLastName}</Cell>
+                                    <Cell>{order.lastName}</Cell>
                                 </Row>
+                            </>
+                        )}
 
-                                {!!order.deliveryCompanyName && (
-                                    <Row>
-                                        <CellMinor>{t('Company name')}</CellMinor>
-                                        <Cell>{order.deliveryCompanyName}</Cell>
-                                    </Row>
-                                )}
+                        <Row>
+                            <CellMinor>{t('Email')}</CellMinor>
+                            <Cell>{order.email}</Cell>
+                        </Row>
 
-                                <Row>
-                                    <CellMinor>{t('Phone')}:</CellMinor>
-                                    <Cell>{order.deliveryTelephone}</Cell>
-                                </Row>
+                        <Row>
+                            <CellMinor>{t('Phone')}</CellMinor>
+                            <Cell>{order.telephone}</Cell>
+                        </Row>
 
-                                <Row>
-                                    <CellMinor>{t('Street and house no.')}:</CellMinor>
-                                    <Cell>{order.deliveryStreet}</Cell>
-                                </Row>
+                        <Row>
+                            <CellMinor>{t('Street and house no.')}</CellMinor>
+                            <Cell>{order.street}</Cell>
+                        </Row>
 
-                                <Row>
-                                    <CellMinor>{t('City')}:</CellMinor>
-                                    <Cell>{order.deliveryCity}</Cell>
-                                </Row>
+                        <Row>
+                            <CellMinor>{t('City')}</CellMinor>
+                            <Cell>{order.city}</Cell>
+                        </Row>
 
-                                <Row>
-                                    <CellMinor>{t('Postcode')}:</CellMinor>
-                                    <Cell>{order.deliveryPostcode}</Cell>
-                                </Row>
+                        <Row>
+                            <CellMinor>{t('Postcode')}</CellMinor>
+                            <Cell>{order.postcode}</Cell>
+                        </Row>
 
-                                <Row>
-                                    <CellMinor>{t('Country')}:</CellMinor>
-                                    <Cell>{order.deliveryCountry?.name}</Cell>
-                                </Row>
-                            </Table>
-                        </Cell>
-                    </Row>
-                </Table>
-
+                        <Row>
+                            <CellMinor>{t('Country')}</CellMinor>
+                            <Cell>{order.country.name}</Cell>
+                        </Row>
+                    </Table>
+                </div>
                 {!!order.items.length && (
                     <div className="mt-10">
                         <div className="h2 mb-3 text-center">{t('Your purchase')}</div>
@@ -264,10 +246,8 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 </Row>
                             ))}
                             <Row>
-                                <Cell className="w-full text-right" colSpan={6}>
-                                    <b>
-                                        {t('Total price including VAT')}: {formatPrice(order.totalPrice.priceWithVat)}
-                                    </b>
+                                <Cell className="w-full text-right text-2xl text-price" colSpan={6}>
+                                    {t('Total price including VAT')}: {formatPrice(order.totalPrice.priceWithVat)}
                                 </Cell>
                             </Row>
                         </Table>
@@ -277,7 +257,3 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
         </>
     );
 };
-
-const ColumnHeader: FC = ({ children, className }) => (
-    <div className={twMergeCustom('border-b-2 border-graySlate p-4 pl-0 text-lg text-dark', className)}>{children}</div>
-);

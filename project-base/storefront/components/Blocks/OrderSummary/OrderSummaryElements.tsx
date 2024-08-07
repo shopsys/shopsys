@@ -1,7 +1,7 @@
 export const OrderSummaryContent: FC = ({ children }) => <div className="relative flex flex-col">{children}</div>;
 
 export const OrderSummaryRowWrapper: FC = ({ children }) => (
-    <div className="mb-5 border-b border-whiteSnow pb-3">{children}</div>
+    <div className="mb-5 border-b border-borderAccent pb-3">{children}</div>
 );
 
 export const OrderSummaryRow: FC = ({ children }) => <div className="flex justify-between">{children}</div>;

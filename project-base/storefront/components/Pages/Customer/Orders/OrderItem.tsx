@@ -29,22 +29,22 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
     return (
-        <div className="bg-grayLight flex flex-col gap-5 rounded-md p-4 vl:p-6">
+        <div className="bg-backgroundMore flex flex-col gap-5 rounded-md p-4 vl:p-6">
             {order.payment.type === PaymentTypeEnum.GoPay && (
                 <div
                     className={twJoin(
                         'p-2 rounded-md flex gap-2',
-                        order.isPaid ? 'bg-greenLight text-white' : 'bg-orangeLight',
+                        order.isPaid ? 'bg-backgroundSuccess text-textInverted' : 'bg-backgroundWarning',
                     )}
                 >
                     {order.isPaid ? (
                         <>
-                            <InfoIconInCircle className="w-4 text-green" />
+                            <InfoIconInCircle className="w-4 text-backgroundSuccessMore" />
                             {t('The order was paid')}
                         </>
                     ) : (
                         <>
-                            <InfoIconInCircle className="w-4 text-orange" />
+                            <InfoIconInCircle className="w-4 text-backgroundWarningMore" />
                             {t('The order has not been paid')}
                         </>
                     )}
@@ -74,7 +74,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         <OrderItemColumnInfo
                             title={t('Price')}
                             value={formatPrice(order.totalPrice.priceWithVat)}
-                            valueClassName="text-primary"
+                            valueClassName="text-price"
                             wrapperClassName="min-w-[80px] max-w-[80px]"
                         />
                         <OrderItemColumnInfo
@@ -123,7 +123,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <Button
                         size="small"
                         tid={TIDs.order_list_repeat_order_button}
-                        variant="primaryOutlined"
+                        variant="inverted"
                         onClick={() => addOrderItemsToEmptyCart(order.uuid)}
                     >
                         {t('Repeat order')}

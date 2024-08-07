@@ -14,27 +14,21 @@ type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: st
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
     if (href) {
         return (
-            <ExtendedNextLink
-                className="block py-3 px-5 text-sm text-dark no-underline"
-                href={href}
-                tid={tid}
-                type={type}
-                onClick={onClick}
-            >
+            <ExtendedNextLink className="block py-3 px-5 text-sm" href={href} tid={tid} type={type} onClick={onClick}>
                 {children}
             </ExtendedNextLink>
         );
     }
 
     return (
-        <a className="block py-3 px-5 text-sm text-dark no-underline" tid={tid} onClick={onClick}>
+        <a className="block py-3 px-5 text-sm" tid={tid} onClick={onClick}>
             {children}
         </a>
     );
 };
 
 const menuIconicItemLinkTwClass =
-    'flex items-center justify-center py-4 px-3 gap-2 rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline';
+    'flex items-center justify-center py-4 px-3 gap-2 rounded-tr-none text-sm text-linkInverted no-underline transition-colors hover:text-linkInvertedHovered hover:no-underline';
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

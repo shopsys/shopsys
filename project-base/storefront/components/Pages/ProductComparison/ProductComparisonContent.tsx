@@ -3,6 +3,7 @@ import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemov
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { Button } from 'components/Forms/Button/Button';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -64,7 +65,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
             <ProductComparisonButtonRemoveAll displayMobile />
 
             <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
-                <div className="mb-1 flex justify-end gap-3">
+                <div className="mb-1 flex justify-between">
                     <ContentArrow
                         isActive={isArrowLeftActive}
                         isShowed={isArrowLeftShowed}
@@ -101,19 +102,12 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
 type ContentArrowProps = { onClick: () => void; isActive: boolean; isRight?: boolean; isShowed?: boolean };
 
 const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onClick }) => (
-    <button
-        disabled={!isActive}
-        className={twMergeCustom(
-            'absolute right-0 top-40 z-[2] h-10 w-10 cursor-pointer items-center justify-center rounded border border-secondary bg-whiteSnow transition-colors vl:static',
-            isActive ? 'hover:bg-graySlate' : 'cursor-default border border-graySlate bg-white',
-
-            !isRight && 'right-auto left-0',
-            isShowed ? 'flex' : 'hidden',
-        )}
+    <Button
+        className={twMergeCustom('p-3', isShowed ? 'flex' : 'hidden')}
+        isDisabled={!isActive}
+        variant="inverted"
         onClick={onClick}
     >
-        <ArrowIcon
-            className={twJoin('w-5 text-dark', isRight ? '-rotate-90' : 'rotate-90', !isActive && 'text-graySlate')}
-        />
-    </button>
+        <ArrowIcon className={twJoin('w-5', isRight ? '-rotate-90' : 'rotate-90')} />
+    </Button>
 );

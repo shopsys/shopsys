@@ -21,11 +21,9 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
 
     return (
         <div className="mt-6">
-            <div className="mb-3 break-words font-bold text-dark lg:text-lg">
-                {t('Do not want to choose? Choose certainty')}
-            </div>
+            <div className="mb-3 break-words font-bold lg:text-lg">{t('Do not want to choose? Choose certainty')}</div>
 
-            <div className="mb-5">
+            <div className="mb-5 flex flex-col gap-3">
                 {shownProducts.map((product, index) => (
                     <CategoryBestsellersListItem
                         key={product.uuid}
@@ -38,8 +36,8 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
                 <div className="text-center">
-                    <Button size="small" onClick={() => setIsCollapsed((prev) => !prev)}>
-                        <span>{isCollapsed ? t('show more') : t('show less')}</span>
+                    <Button size="small" variant="inverted" onClick={() => setIsCollapsed((prev) => !prev)}>
+                        {isCollapsed ? t('show more') : t('show less')}
                     </Button>
                 </div>
             )}

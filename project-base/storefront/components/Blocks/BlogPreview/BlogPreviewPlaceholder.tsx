@@ -34,7 +34,7 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
                                     ),
                             )}
 
-                            <ExtendedNextLink className="text-white" href={item.node.link} type="blogArticle">
+                            <ExtendedNextLink className="text-text" href={item.node.link} type="blogArticle">
                                 {item.node.name}
                             </ExtendedNextLink>
 
@@ -60,7 +60,7 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
                                     ),
                             )}
 
-                            <ExtendedNextLink className="text-white" href={item.node.link} type="blogArticle">
+                            <ExtendedNextLink className="text-text" href={item.node.link} type="blogArticle">
                                 {item.node.name}
                             </ExtendedNextLink>
 

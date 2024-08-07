@@ -44,7 +44,12 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded-md border-2 border-white bg-white pr-20 pl-11 text-dark placeholder:text-skyBlue placeholder:opacity-100 focus:outline-none [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
+                    'peer mb-0 h-12 w-full rounded-md border-2 border-inputBackground bg-inputBackground pr-20 pl-11 text-inputText placeholder:text-inputPlaceholder',
+                    '[&:-internal-autofill-selected]:!bg-inputBackground [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-inputBackground [&:-webkit-autofill]:!shadow-inner',
+                    '[&:-webkit-autofill]:hover:!bg-inputBackgroundHovered [&:-webkit-autofill]:hover:!shadow-inner',
+                    '[&:-webkit-autofill]:focus:!bg-inputBackgroundActive [&:-webkit-autofill]:focus:!shadow-inner',
+                    '[&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
+                    'focus:outline-none',
                     value ? 'pr-7' : 'pr-4',
                     className,
                 )}
@@ -63,14 +68,14 @@ export const SearchInput: FC<SearchInputProps> = ({
 
             {!!value && !shouldShowSpinnerInInput && (
                 <div
-                    className="absolute right-2 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center text-whiteSnow p-1.5"
+                    className="absolute right-2 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center p-1.5"
                     onClick={onClear}
                 >
-                    <CloseIcon className="w-3 text-skyBlue" />
+                    <CloseIcon className="w-4 text-inputTextDisabled" />
                 </div>
             )}
             {shouldShowSpinnerInInput && (
-                <SpinnerIcon className="absolute right-4 top-1/2 w-5 -translate-y-1/2 text-dark" />
+                <SpinnerIcon className="absolute right-3 top-1/2 w-5 -translate-y-1/2 text-inputText" />
             )}
         </div>
     );

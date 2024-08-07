@@ -16,8 +16,8 @@ export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
                     key={index}
                     style={{ backgroundColor: rgbColor || '#cdb3ff' }}
                     className={twJoin(
-                        'mb-1 inline-flex rounded py-1 px-2 text-xs text-black z-flag',
-                        tinycolor(rgbColor).isDark() && 'text-whiteSnow',
+                        'mb-1 inline-flex rounded py-1 px-2 text-xs text-text z-flag',
+                        tinycolor(rgbColor).isDark() && 'text-textInverted',
                     )}
                 >
                     {name}

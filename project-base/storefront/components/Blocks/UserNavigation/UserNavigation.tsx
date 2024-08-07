@@ -12,9 +12,10 @@ import { useUserMenuItems } from 'utils/user/useUserMenuItems';
 
 const getMenuItemTwClass = (menuItemLink?: string, asPath?: string) =>
     twJoin(
-        'border-b border-graySlate last:border-none no-underline px-6 py-3 flex justify-between gap-4',
-        'hover:no-underline hover:brightness-95 transition active:brightness-90',
-        menuItemLink && asPath?.includes(menuItemLink) ? 'bg-graySlate text-white hover:text-white' : 'bg-grayLight',
+        'border-b border-borderAccent last:border-none no-underline px-2 py-3 flex justify-between gap-4',
+        menuItemLink && asPath?.includes(menuItemLink)
+            ? 'bg-backgroundAccentLess text-textAccent hover:text-textAccent'
+            : 'bg-backgroundMore text-text hover:text-textAccent',
     );
 
 export const UserNavigation: FC = () => {
@@ -28,19 +29,19 @@ export const UserNavigation: FC = () => {
         <div className="flex flex-col min-w-[300px] rounded-md overflow-hidden h-fit">
             <button
                 className={twJoin(
-                    'items-center last:border-none bg-grayLight no-underline px-6 py-3 flex justify-between gap-4 lg:hidden',
-                    isExpanded && 'border-b border-graySlate',
+                    'items-center last:border-none bg-backgroundMore no-underline px-6 py-3 flex justify-between gap-4 lg:hidden',
+                    isExpanded && 'border-b border-borderAccent',
                 )}
                 onClick={() => setIsExpanded((prev) => !prev)}
             >
                 {isExpanded ? t('Hide menu') : t('Show menu')}
-                <ArrowIcon className={twJoin('h-3 w-3 text-dark transition', isExpanded ? 'rotate-180' : 'rotate-0')} />
+                <ArrowIcon className={twJoin('h-3 w-3 transition', isExpanded ? 'rotate-180' : 'rotate-0')} />
             </button>
 
             <m.div
                 key="user-navigation"
                 animate={isExpanded ? 'open' : 'closed'}
-                className="!flex flex-col lg:!h-auto"
+                className="!flex flex-col lg:!h-auto px-4 bg-backgroundMore"
                 initial={false}
                 variants={collapseExpandAnimation}
             >
@@ -54,8 +55,7 @@ export const UserNavigation: FC = () => {
                         {menuItem.count && (
                             <div
                                 className={twJoin(
-                                    'min-w-[24px] px-1 items-center justify-center min-h-[24px] flex text-sm  rounded-full',
-                                    menuItem.link === router.asPath ? 'bg-white text-dark' : 'bg-dark text-white',
+                                    'min-w-[24px] px-1 items-center justify-center min-h-[24px] flex text-sm rounded-full bg-backgroundDark text-textInverted',
                                 )}
                             >
                                 {menuItem.count}
@@ -66,7 +66,7 @@ export const UserNavigation: FC = () => {
                 <Button
                     className={twJoin(
                         getMenuItemTwClass(),
-                        'font-normal text-primaryDark normal-case hover:text-primary hover:bg-grayLight',
+                        'font-normal normal-case bg-backgroundMore hover:bg-backgroundMore text-text hover:text-textAccent hover:underline',
                     )}
                     onClick={logoutHandler}
                 >

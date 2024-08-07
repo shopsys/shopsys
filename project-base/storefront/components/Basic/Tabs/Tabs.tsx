@@ -40,7 +40,7 @@ export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children,
     <Tab
         selectedClassName="isActive"
         className={twJoin(
-            'cursor-pointer select-none px-3 bg-grayLight rounded-2xl text-sm font-semibold py-2 [&.isActive]:outline outline-secondary outline-1',
+            'cursor-pointer select-none px-3 bg-backgroundMore rounded-2xl text-sm font-semibold py-2 [&.isActive]:outline outline-borderAccentSuccess outline-1',
             className,
         )}
         {...props}
@@ -65,12 +65,12 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             {...props}
         >
             <h3
-                className="flex w-full cursor-pointer items-center justify-between rounded bg-grayLight py-4 px-5 font-bold lg:hidden"
+                className="flex w-full cursor-pointer items-center justify-between rounded bg-backgroundMore py-4 px-5 font-bold lg:hidden"
                 onClick={mobileTab}
             >
                 {headingTextMobile}
                 <ArrowIcon
-                    className={twJoin('w-4 rotate-0 transition text-skyBlue', isActiveOnMobile && '-rotate-180 ')}
+                    className={twJoin('w-4 rotate-0 transition text-text', isActiveOnMobile && '-rotate-180 ')}
                 />
             </h3>
             <div className={twJoin('w-full py-5', isActiveOnMobile ? 'block' : 'hidden lg:block')}>{children}</div>

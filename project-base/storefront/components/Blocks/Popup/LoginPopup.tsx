@@ -15,7 +15,7 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
         <Popup className="w-11/12 max-w-3xl">
             <div className="h2 mb-3">{t('Login')}</div>
             <div className="flex w-full flex-col lg:flex-row">
-                <div className="w-full border-b border-primary lg:w-1/2 lg:border-b-0 lg:border-r lg:pr-5">
+                <div className="w-full border-b border-borderAccent lg:w-1/2 lg:border-b-0 lg:border-r lg:pr-5">
                     <LoginForm
                         defaultEmail={defaultEmail}
                         formContentWrapperClassName="!px-5"
@@ -24,15 +24,22 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
                 </div>
 
                 <div className="mt-7 w-full lg:mt-0 lg:w-1/2 lg:pl-5 flex flex-col">
-                    <div className="mb-6 -mr-4 flex w-full justify-between rounded-l bg-primary p-4">
-                        <p className="text-lg text-whiteSnow lg:text-xl">{t("Don't have an account yet? Register.")}</p>
+                    <div className="mb-6 -mr-4 flex w-full justify-between rounded-l bg-backgroundAccentLess p-4">
+                        <p className="text-lg text-textAccent lg:text-xl">
+                            {t("Don't have an account yet? Register.")}
+                        </p>
                     </div>
 
                     <p className="mb-8 hidden lg:block">
                         {t('Your addresses prefilled and you can check your order history.')}
                     </p>
 
-                    <Link isButton href={registrationUrl} tid={TIDs.login_popup_register_button}>
+                    <Link
+                        isButton
+                        buttonVariant="inverted"
+                        href={registrationUrl}
+                        tid={TIDs.login_popup_register_button}
+                    >
                         {t('Register')}
                     </Link>
                 </div>

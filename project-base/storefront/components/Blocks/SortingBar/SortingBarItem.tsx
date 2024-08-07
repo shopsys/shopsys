@@ -1,29 +1,16 @@
-import { MouseEventHandler } from 'react';
-import { twMergeCustom } from 'utils/twMerge';
+import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { twJoin } from 'tailwind-merge';
 
-type SortingBarItemProps = { isActive: boolean; href?: string; onClick?: () => void };
+type SortingBarItemProps = { isActive: boolean; onClick?: () => void };
 
-export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, href, onClick }) => {
-    const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        e.preventDefault();
-
-        if (onClick) {
-            onClick();
-        }
-    };
-
+export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, onClick }) => {
     return (
-        <a
-            href={href}
-            className={twMergeCustom(
-                'block border-b-2 p-3 text-center text-xs uppercase text-dark no-underline transition hover:text-dark hover:no-underline vl:py-2',
-                isActive
-                    ? 'pointer-events-none hidden cursor-default hover:text-dark vl:block vl:border-primary'
-                    : 'border-none',
-            )}
-            onClick={handleOnClick}
+        <LabelLink
+            className={twJoin('max-vl:bg-backgroundAccentLess max-vl:text-text', isActive && 'max-vl:text-textAccent')}
+            isActive={isActive}
+            onClick={onClick}
         >
             {children}
-        </a>
+        </LabelLink>
     );
 };

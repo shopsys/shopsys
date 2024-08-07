@@ -1,4 +1,3 @@
-import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -23,6 +22,7 @@ type AddToCartProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
+    isWithSpinbox?: boolean;
 };
 
 export const AddToCart: FC<AddToCartProps> = ({
@@ -33,6 +33,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     gtmProductListName,
     listIndex,
     className,
+    isWithSpinbox = true,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
@@ -40,12 +41,16 @@ export const AddToCart: FC<AddToCartProps> = ({
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const onAddToCartHandler = async () => {
-        if (spinboxRef.current === null) {
+        if (isWithSpinbox && spinboxRef.current === null) {
             return;
         }
 
-        const addToCartResult = await addToCart(productUuid, spinboxRef.current.valueAsNumber, listIndex);
-        spinboxRef.current!.valueAsNumber = 1;
+        const addedQuantity = isWithSpinbox ? spinboxRef.current!.valueAsNumber : 1;
+        const addToCartResult = await addToCart(productUuid, addedQuantity, listIndex);
+
+        if (isWithSpinbox) {
+            spinboxRef.current!.valueAsNumber = 1;
+        }
 
         if (addToCartResult) {
             updatePortalContent(
@@ -59,15 +64,17 @@ export const AddToCart: FC<AddToCartProps> = ({
 
     return (
         <div className={twMergeCustom('flex items-stretch justify-between gap-2', className)}>
-            <Spinbox
-                defaultValue={1}
-                id={productUuid}
-                max={maxQuantity}
-                min={minQuantity}
-                ref={spinboxRef}
-                size="small"
-                step={1}
-            />
+            {isWithSpinbox && (
+                <Spinbox
+                    defaultValue={1}
+                    id={productUuid}
+                    max={maxQuantity}
+                    min={minQuantity}
+                    ref={spinboxRef}
+                    size="small"
+                    step={1}
+                />
+            )}
             <Button
                 className="py-2"
                 isDisabled={isAddingToCart}
@@ -76,8 +83,8 @@ export const AddToCart: FC<AddToCartProps> = ({
                 tid={TIDs.blocks_product_addtocart}
                 onClick={onAddToCartHandler}
             >
-                {isAddingToCart ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}
                 <span>{t('Add to cart')}</span>
+                {isAddingToCart && <Loader className="w-4" />}
             </Button>
         </div>
     );

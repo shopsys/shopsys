@@ -37,7 +37,7 @@ export const FreeTransport: FC = () => {
 };
 
 const RemainingAmountWrapper: FC = ({ children }) => (
-    <div className="my-2 block rounded bg-primary text-white px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-green">
+    <div className="my-2 block rounded bg-backgroundAccentLess text-textAccent px-3 py-1 text-xs [&_strong]:font-bold">
         {children}
     </div>
 );

@@ -6,7 +6,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles, opening, phone }) => {
+export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [userConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/user-consent', '/contact'], url);
@@ -16,19 +16,14 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
         <>
             {!simpleFooter && (
                 <>
-                    <a className="text-white" href={'tel:' + phone}>
-                        {phone}
-                    </a>
-                    <p>{opening}</p>
                     <ExtendedNextLink href={contactUrl}>{t('Write to us')}</ExtendedNextLink>
                     {footerArticles?.map((item) => (
                         <div key={item.title}>
-                            <h3 className="text-white">{item.title}</h3>
+                            <h3>{item.title}</h3>
                             <ul>
                                 {item.items.map((item) => (
                                     <li key={item.uuid}>
                                         <ExtendedNextLink
-                                            className="text-white"
                                             href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                                             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                                             target={item.external ? '_blank' : undefined}

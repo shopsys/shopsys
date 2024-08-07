@@ -16,7 +16,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     );
 
     return (
-        <ul className="mb-6 flex justify-between border-b border-graySlate p-0 lg:mb-3">
+        <ul className="mb-6 flex justify-between border-b border-borderAccentLess p-0 lg:mb-3">
             <OrderStepsListItem>
                 {activeStep > 1 ? (
                     <OrderStepsListItemLink isClickable href={cartUrl} isActive={false}>
@@ -51,13 +51,18 @@ const OrderStepsListItem: FC = ({ children }) => <li className="relative w-1/3 p
 type OrderStepsListItemLinkProps = { isActive: boolean; isClickable?: boolean; href?: string };
 
 const OrderStepsListItemLink: FC<OrderStepsListItemLinkProps> = ({ children, isActive, isClickable, href }) => {
+    let linkClassName = 'text-linkDisabled';
+    if (isClickable) {
+        linkClassName = 'cursor-pointer hover:text-linkHovered';
+    } else if (isActive) {
+        linkClassName =
+            'text-linkHovered before:absolute before:bottom-0 before:left-0 before:right-0 before:h-[2px] before:bg-linkHovered before:content-[""]';
+    }
     const Component = (
         <span
             className={twJoin(
-                'block text-xs uppercase no-underline',
-                isClickable && 'cursor-pointer hover:text-primary hover:no-underline hover:outline-none',
-                isActive &&
-                    'text-primary before:absolute before:bottom-0 before:left-0 before:right-0 before:h-[2px] before:bg-primary before:content-[""]',
+                'block text-xs uppercase no-underline hover:no-underline hover:outline-none',
+                linkClassName,
             )}
         >
             {children}
@@ -65,7 +70,7 @@ const OrderStepsListItemLink: FC<OrderStepsListItemLinkProps> = ({ children, isA
     );
 
     return href ? (
-        <ExtendedNextLink className="no-underline" href={href}>
+        <ExtendedNextLink className="!no-underline" href={href}>
             {Component}
         </ExtendedNextLink>
     ) : (

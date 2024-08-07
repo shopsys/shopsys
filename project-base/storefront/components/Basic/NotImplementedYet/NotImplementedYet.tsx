@@ -11,10 +11,10 @@ export const notImplementedYetHandler = (e: SyntheticEvent): void => {
 };
 
 const notImplementedTagTwClass =
-    'whitespace-nowrap rounded-sm bg-red p-1 text-center text-xs font-normal text-white opacity-100';
+    'whitespace-nowrap rounded-sm bg-backgroundError p-1 text-center text-xs font-normal text-textInverted';
 const notImplementedTagPositionedTwClass =
-    'whitespace-nowrap rounded-sm bg-red p-1 text-center text-xs font-normal text-white opacity-100 absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2';
-const notImplementedBorderTwClass = 'border border-dashed border-red';
+    'whitespace-nowrap rounded-sm bg-backgroundError p-1 text-center text-xs font-normal text-textInverted absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2';
+const notImplementedBorderTwClass = 'border border-dashed border-borderAccentError';
 
 export const NotImplementedYetWrapper: FC = ({ children }) => {
     return (

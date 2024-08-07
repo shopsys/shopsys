@@ -38,7 +38,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                         <div
                             className={twJoin(
                                 'flex items-center justify-center text-center text-sm font-bold',
-                                tinycolor(item.rgbColor).isLight() ? 'text-dark' : 'text-white',
+                                tinycolor(item.rgbColor).isLight() ? 'text-text' : 'text-textInverted',
                             )}
                         >
                             {!!item.mainImage && (
@@ -61,9 +61,9 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                 </div>
             ))}
             {loggedAsUserEmail && (
-                <div className="bg-red py-2">
+                <div className="bg-backgroundError py-2">
                     <Webline>
-                        <div className="flex items-center justify-center text-center text-sm font-bold text-dark">
+                        <div className="flex items-center justify-center text-center text-sm font-bold text-text">
                             <Trans
                                 defaultTrans="Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>"
                                 i18nKey="adminLoggedInAsCustomerWarning"
@@ -74,7 +74,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                                             size="small"
                                             style={{ marginLeft: '10px' }}
                                             type="button"
-                                            variant="primaryOutlined"
+                                            variant="inverted"
                                             onClick={logout}
                                         />
                                     ),

@@ -14,7 +14,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
     return (
         <Webline>
             <ArticleTitle>{article.seoH1 || article.articleName}</ArticleTitle>
-            <p className="mb-2 px-5 text-left text-xs font-semibold text-skyBlue">
+            <p className="mb-2 px-5 text-left text-xs font-semibold text-textDisabled">
                 {formatDate(article.createdAt, 'l')}
             </p>
             <div className="px-5 lg:flex">
