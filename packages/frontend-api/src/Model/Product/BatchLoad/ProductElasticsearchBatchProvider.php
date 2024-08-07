@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
+use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
-use Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider;
 
 class ProductElasticsearchBatchProvider
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository $productElasticsearchBatchRepository
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,

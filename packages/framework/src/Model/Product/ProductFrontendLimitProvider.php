@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Product;
+namespace Shopsys\FrameworkBundle\Model\Product;
 
 class ProductFrontendLimitProvider
 {
