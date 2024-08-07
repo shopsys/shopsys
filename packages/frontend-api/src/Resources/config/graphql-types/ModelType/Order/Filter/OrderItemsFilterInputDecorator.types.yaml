@@ -1,0 +1,24 @@
+OrderItemsFilterInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Filter order items"
+        fields:
+            orderUuid:
+                type: "Uuid"
+                description: "Filter order items by order with this UUID"
+            orderCreatedAfter:
+                type: "DateTime"
+                description: "Filter order items in orders created after this date"
+            orderStatus:
+                type: "OrderStatusEnum"
+                description: "Filter orders created after this date"
+            catnum:
+                type: "String"
+                description: "Filter order items by product catalog number (OR condition with productUuid)"
+            productUuid:
+                type: "Uuid"
+                description: "Filter order items by product with this UUID (OR condition with catnum)"
+            type:
+                type: "OrderItemTypeEnum"
+                description: "Filter order items by type"
