@@ -1,0 +1,4 @@
+OrderItemsFilterInput:
+    type: input-object
+    inherits:
+        - 'OrderItemsFilterInputDecorator'

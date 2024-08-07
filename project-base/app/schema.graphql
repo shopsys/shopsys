@@ -1262,6 +1262,14 @@ type OrderEdge {
   node: Order
 }
 
+"Filter orders"
+input OrderFilterInput {
+  "Filter orders created after this date"
+  createdAfter: DateTime
+  "Filter orders created after this date"
+  status: OrderStatusEnum
+}
+
 "Represents the main input object to create orders"
 input OrderInput {
   "Cart identifier used for getting carts of not logged customers"
@@ -1358,11 +1366,53 @@ type OrderItemEdge {
   node: OrderItem
 }
 
+"Filter order items"
+input OrderItemsFilterInput {
+  "Filter order items by product catalog number (OR condition with productUuid)"
+  catnum: String
+  "Filter order items in orders created after this date"
+  orderCreatedAfter: DateTime
+  "Filter orders created after this date"
+  orderStatus: OrderStatusEnum
+  "Filter order items by order with this UUID"
+  orderUuid: Uuid
+  "Filter order items by product with this UUID (OR condition with catnum)"
+  productUuid: Uuid
+  "Filter order items by type"
+  type: OrderItemTypeEnum
+}
+
+"Type of order item"
+enum OrderItemTypeEnum {
+  "Discount"
+  discount
+  "Payment"
+  payment
+  "Product"
+  product
+  "Rounding"
+  rounding
+  "Transport"
+  transport
+}
+
 type OrderPaymentsConfig {
   "All available payment methods for the order (excluding the current one)"
   availablePayments: [Payment!]!
   "Current payment method used in the order"
   currentPayment: Payment!
+}
+
+"Status of order"
+enum OrderStatusEnum {
+  "Canceled"
+  canceled
+  "Done"
+  done
+  "In progress"
+  inProgress
+  "New"
+  new
 }
 
 "Information about pagination in a connection."
@@ -1855,7 +1905,7 @@ type Query {
   "Returns order filtered using UUID, orderNumber, or urlHash"
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
   "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
-  orderItemsSearch(after: String, before: String, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
+  orderItemsSearch(after: String, before: String, filter: OrderItemsFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderItemConnection!
   "Returns HTML content for order with failed payment."
   orderPaymentFailedContent(orderUuid: Uuid!): String!
   "Returns payments available for the given order"
@@ -1867,7 +1917,7 @@ type Query {
   "Returns HTML content for order sent page."
   orderSentPageContent(orderUuid: Uuid!): String!
   "Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords"
-  ordersSearch(after: String, before: String, first: Int, last: Int, searchInput: SearchInput!): OrderConnection!
+  ordersSearch(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderConnection!
   ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
   ParameterColorFilterOption: ParameterColorFilterOption
   ParameterSliderFilterOption: ParameterSliderFilterOption

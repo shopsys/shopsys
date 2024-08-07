@@ -10,6 +10,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrontendApiBundle\Model\Order\OrderFilterFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 
@@ -18,10 +19,12 @@ class OrdersSearchQuery extends AbstractQuery
     /**
      * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilterFactory $orderFilterFactory
      */
     public function __construct(
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly OrderFilterFactory $orderFilterFactory,
     ) {
     }
 
@@ -42,10 +45,12 @@ class OrdersSearchQuery extends AbstractQuery
         }
 
         $search = (string)$searchInput;
-        $paginator = new Paginator(function ($offset, $limit) use ($customerUser, $search) {
-            return $this->orderApiFacade->getCustomerUserOrderLimitedSearchList($search, $customerUser, $limit, $offset);
+
+        $filter = $this->orderFilterFactory->createFromArgument($argument);
+        $paginator = new Paginator(function ($offset, $limit) use ($customerUser, $search, $filter) {
+            return $this->orderApiFacade->getCustomerUserOrderLimitedSearchList($search, $customerUser, $limit, $offset, $filter);
         });
 
-        return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderLimitedSearchListCount($search, $customerUser));
+        return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderLimitedSearchListCount($search, $customerUser, $filter));
     }
 }

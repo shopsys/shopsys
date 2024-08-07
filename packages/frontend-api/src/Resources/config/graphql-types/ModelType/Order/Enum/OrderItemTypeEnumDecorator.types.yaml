@@ -1,0 +1,21 @@
+OrderItemTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Type of order item"
+        values:
+            payment:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_PAYMENT")'
+                description: "Payment"
+            product:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_PRODUCT")'
+                description: "Product"
+            discount:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_DISCOUNT")'
+                description: "Discount"
+            transport:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_TRANSPORT")'
+                description: "Transport"
+            rounding:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Item\\OrderItemTypeEnum::TYPE_ROUNDING")'
+                description: "Rounding"
