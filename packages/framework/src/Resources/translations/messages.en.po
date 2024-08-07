@@ -2296,7 +2296,7 @@ msgstr ""
 msgid "Number of products in filter"
 msgstr ""
 
-msgid "Number of selected products is not limited, however only 30 will be displayed on frontend."
+msgid "Number of selected products is not limited, however only %limit% will be displayed on frontend."
 msgstr ""
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
