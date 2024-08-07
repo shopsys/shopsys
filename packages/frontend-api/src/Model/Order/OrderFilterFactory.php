@@ -23,6 +23,8 @@ class OrderFilterFactory
         return new OrderFilter(
             $filter['createdAfter'] ?? null,
             $filter['status'] ?? null,
+            $filter['orderItemsCatnum'] ?? null,
+            $filter['orderItemsProductUuid'] ?? null,
         );
     }
 }

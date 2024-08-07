@@ -86,11 +86,22 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
      * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerUserOrderLimitedList(CustomerUser $customerUser, int $limit, int $offset): array
-    {
-        return $this->createCustomerUserOrderLimitedList($customerUser)
+    public function getCustomerUserOrderLimitedList(
+        CustomerUser $customerUser,
+        int $limit,
+        int $offset,
+        ?OrderFilter $filter = null,
+    ): array {
+        $queryBuilder = $this->createCustomerUserOrderLimitedList($customerUser);
+
+        if ($filter) {
+            $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
+        }
+
+        return $queryBuilder
             ->orderBy('o.createdAt', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
@@ -139,16 +150,21 @@ class OrderRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
      * @return int
      */
-    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
+    public function getCustomerUserOrderCount(CustomerUser $customerUser, OrderFilter $filter): int
     {
-        return $this->em->createQueryBuilder()
+        $queryBuilder = $this->em->createQueryBuilder()
             ->select('count(o.id)')
             ->from(Order::class, 'o')
             ->where('o.deleted = FALSE')
             ->andWhere('o.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
+            ->setParameter('customerUser', $customerUser);
+
+        $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
+
+        return $queryBuilder
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -324,6 +340,23 @@ class OrderRepository
         if ($filter->getStatus() !== null) {
             $queryBuilder->andWhere('o.status = :status')
                 ->setParameter('status', $filter->getStatus());
+        }
+
+        if ($filter->getOrderItemsCatnum() === null && $filter->getOrderItemsProductUuid() === null) {
+            return;
+        }
+
+        $queryBuilder->leftJoin('o.items', 'oi');
+
+        if ($filter->getOrderItemsCatnum() !== null) {
+            $queryBuilder->andWhere('oi.catnum = :catnum')
+                ->setParameter('catnum', $filter->getOrderItemsCatnum());
+        }
+
+        if ($filter->getOrderItemsProductUuid() !== null) {
+            $queryBuilder->leftJoin('oi.product', 'p')
+                ->andWhere('p.uuid = :productUuid')
+                ->setParameter('productUuid', $filter->getOrderItemsProductUuid());
         }
     }
 }
