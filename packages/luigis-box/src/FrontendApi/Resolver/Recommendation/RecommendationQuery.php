@@ -9,6 +9,7 @@ use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedIte
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient;
 use Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory;
@@ -24,6 +25,7 @@ class RecommendationQuery extends AbstractQuery
      * @param \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient $luigisBoxClient
      * @param \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      */
     public function __construct(
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
@@ -31,6 +33,7 @@ class RecommendationQuery extends AbstractQuery
         protected readonly LuigisBoxClient $luigisBoxClient,
         protected readonly LuigisBoxBatchLoadDataFactory $luigisBoxBatchLoadDataFactory,
         protected readonly Domain $domain,
+        protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
     ) {
     }
 
@@ -41,7 +44,7 @@ class RecommendationQuery extends AbstractQuery
     public function recommendationQuery(Argument $argument): array
     {
         $type = $argument['recommendationType'];
-        $limit = $argument['limit'];
+        $limit = min($argument['limit'], $this->productFrontendLimitProvider->getProductsFrontendLimit());
         $userIdentifier = $argument['userIdentifier'];
         $itemIds = [];
 

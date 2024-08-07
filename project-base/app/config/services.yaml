@@ -421,9 +421,6 @@ services:
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail:
         alias: App\Model\PersonalData\Mail\PersonalDataExportMail
 
-    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
-        alias: App\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
-
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
         alias: App\Model\Product\Brand\BrandDataFactory
 

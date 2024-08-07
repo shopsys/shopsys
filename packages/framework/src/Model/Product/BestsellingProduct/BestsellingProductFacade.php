@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 class BestsellingProductFacade
 {
     protected const ORDERS_CREATED_AT_LIMIT = '-1 month';
-    public const MAX_SHOW_RESULTS = 3;
     public const MAX_RESULTS_ADMIN = 10;
 
     /**
@@ -30,10 +29,15 @@ class BestsellingProductFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup)
-    {
+    public function getOfferedBestsellingProducts(
+        int $domainId,
+        Category $category,
+        PricingGroup $pricingGroup,
+        int $limit,
+    ) {
         $manualBestsellingProducts = $this->manualBestsellingProductRepository->getOfferedByCategory(
             $domainId,
             $category,
@@ -51,13 +55,13 @@ class BestsellingProductFacade
             $category,
             $pricingGroup,
             new DateTime(static::ORDERS_CREATED_AT_LIMIT),
-            static::MAX_RESULTS_ADMIN,
+            $limit,
         );
 
         return $this->bestsellingProductCombinator->combineManualAndAutomaticProducts(
             $manualProductsIndexedByPosition,
             $automaticProducts,
-            static::MAX_RESULTS_ADMIN,
+            $limit,
         );
     }
 }

@@ -4,25 +4,30 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
+use GraphQL\Executor\Promise\Promise;
+use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
-use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
 class ProductEntityFieldMapper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -32,6 +37,8 @@ class ProductEntityFieldMapper
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
+        protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
     ) {
     }
 
@@ -96,15 +103,19 @@ class ProductEntityFieldMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function getAccessories(Product $product): array
+    public function getAccessoriesPromise(Product $product): Promise
     {
-        return $this->productAccessoryFacade->getAllAccessories(
+        $accessories = $this->productAccessoryFacade->getOfferedAccessories(
             $product,
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
         );
+
+        $accessoriesIds = array_map(fn (Product $accessory) => $accessory->getId(), $accessories);
+
+        return $this->productsSellableByIdsBatchLoader->load($accessoriesIds);
     }
 
     /**

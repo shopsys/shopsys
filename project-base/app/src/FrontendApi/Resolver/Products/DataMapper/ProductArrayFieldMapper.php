@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
 
@@ -31,9 +32,10 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
@@ -42,12 +44,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         BrandFacade $brandFacade,
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
+        ProductFrontendLimitProvider $productFrontendLimitProvider,
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
-        private DataLoaderInterface $productsSellableByIdsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
     ) {
-        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
+        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory, $productFrontendLimitProvider, $productsSellableByIdsBatchLoader);
     }
 
     /**
@@ -152,7 +155,10 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      */
     public function getRelatedProducts(array $data): array
     {
-        return $this->productElasticsearchProvider->getSellableProductArrayByIds($data['related_products']);
+        return $this->productElasticsearchProvider->getSellableProductArrayByIds(
+            $data['related_products'],
+            $this->productFrontendLimitProvider->getProductsFrontendLimit(),
+        );
     }
 
     /**
@@ -180,15 +186,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getFlagsPromise(array $data): Promise
     {
         return $this->flagsBatchLoader->load($data['flags']);
-    }
-
-    /**
-     * @param array $data
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function getAccessoriesPromise(array $data): Promise
-    {
-        return $this->productsSellableByIdsBatchLoader->load($data['accessories']);
     }
 
     /**

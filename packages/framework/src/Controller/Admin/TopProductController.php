@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\TopProduct\TopProductsFormType;
+use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +16,12 @@ class TopProductController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      */
     public function __construct(
         protected readonly TopProductFacade $topProductFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
     ) {
     }
 
@@ -46,6 +49,7 @@ class TopProductController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/TopProduct/list.html.twig', [
             'form' => $form->createView(),
+            'productsFrontendLimit' => $this->productFrontendLimitProvider->getProductsFrontendLimit(),
         ]);
     }
 
