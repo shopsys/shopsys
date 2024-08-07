@@ -52,7 +52,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         videoIds={product.productVideos}
                     />
 
-                    <div className="flex flex-1 flex-col gap-4">
+                    <div className="flex flex-1 flex-col gap-4 w-full">
                         <div className="flex flex-col gap-1">
                             {product.namePrefix && <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>}
 
@@ -84,7 +84,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
-                        <div className="bg-grayLight rounded-xl p-6 flex flex-col gap-4">
+                        <div className="bg-grayLight rounded-xl p-3 sm:p-6 flex flex-col gap-4">
                             <div className="text-2xl font-bold text-primaryDark font-secondary">
                                 {formatPrice(product.price.priceWithVat)}
                             </div>
