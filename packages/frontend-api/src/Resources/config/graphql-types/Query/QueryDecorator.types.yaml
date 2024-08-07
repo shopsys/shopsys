@@ -108,6 +108,8 @@ QueryDecorator:
                 args:
                     searchInput:
                         type: "SearchInput!"
+                    filter:
+                        type: "OrderFilterInput"
                 description: "Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords"
             orderItemsSearch:
                 type: "OrderItemConnection!"
@@ -117,6 +119,8 @@ QueryDecorator:
                 args:
                     searchInput:
                         type: "SearchInput!"
+                    filter:
+                        type: "OrderItemsFilterInput"
                 description: "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
             order:
                 type: 'Order'

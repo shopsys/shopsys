@@ -121,7 +121,9 @@
     * [EditCustomerUserPersonalDataInput](#editcustomeruserpersonaldatainput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
+    * [OrderFilterInput](#orderfilterinput)
     * [OrderInput](#orderinput)
+    * [OrderItemsFilterInput](#orderitemsfilterinput)
     * [ParameterFilter](#parameterfilter)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [ProductFilter](#productfilter)
@@ -139,6 +141,7 @@
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
+    * [OrderStatusEnum](#orderstatusenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -146,6 +149,7 @@
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
+    * [FileUpload](#fileupload)
     * [Float](#float)
     * [Int](#int)
     * [Money](#money)
@@ -705,6 +709,11 @@ Returns list of searched order items that can be paginated using `first`, `last`
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderitemsfilterinput">OrderItemsFilterInput</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">first</td>
 <td valign="top"><a href="#int">Int</a></td>
 <td></td>
@@ -821,6 +830,11 @@ Returns list of searched orders that can be paginated using `first`, `last`, `be
 <tr>
 <td colspan="2" align="right" valign="top">before</td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderfilterinput">OrderFilterInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -4041,6 +4055,20 @@ UUID
 Description of the complaint order item
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]</td>
+<td>
+
+Files attached to the complaint order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>orderItem</strong></td>
@@ -9531,6 +9559,15 @@ Description of the complaint item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#fileupload">FileUpload</a>!]</td>
+<td>
+
+Files attached to the complaint item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderItemUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -9826,6 +9863,40 @@ Represents the main input object to subscribe for e-mail newsletter
 </tbody>
 </table>
 
+### OrderFilterInput
+
+Filter orders
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>createdAfter</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
+<td>
+
+Filter orders created after this date
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### OrderInput
 
 Represents the main input object to create orders
@@ -10070,6 +10141,76 @@ Billing address street name (will be on the tax invoice)
 <td>
 
 The customer's phone number
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemsFilterInput
+
+Filter order items
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Filter order items by product catalog number (OR condition with productUuid)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderCreatedAfter</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter order items in orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderStatus</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
+<td>
+
+Filter orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Filter order items by order with this UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Filter order items by product with this UUID (OR condition with catnum)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#orderitemtypeenum">OrderItemTypeEnum</a></td>
+<td>
+
+Filter order items by type
 
 </td>
 </tr>
@@ -10813,6 +10954,51 @@ One of possible types of the order item
 </tbody>
 </table>
 
+### OrderStatusEnum
+
+Status of order
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>canceled</strong></td>
+<td>
+
+Canceled
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>done</strong></td>
+<td>
+
+Done
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>inProgress</strong></td>
+<td>
+
+In progress
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>new</strong></td>
+<td>
+
+New
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalDataAccessRequestTypeEnum
 
 One of two possible types for personal data access request
@@ -10964,6 +11150,10 @@ The `Boolean` scalar type represents `true` or `false`.
 ### DateTime
 
 Represents and encapsulates an ISO-8601 encoded UTC date-time value
+
+### FileUpload
+
+Represents and encapsulates a file upload
 
 ### Float
 

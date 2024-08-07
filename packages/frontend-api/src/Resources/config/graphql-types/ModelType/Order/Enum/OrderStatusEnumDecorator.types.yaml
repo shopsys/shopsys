@@ -1,0 +1,18 @@
+OrderStatusEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Status of order"
+        values:
+            new:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_NEW")'
+                description: "New"
+            inProgress:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_IN_PROGRESS")'
+                description: "In progress"
+            done:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_DONE")'
+                description: "Done"
+            canceled:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\Status\\OrderStatusTypeEnum::TYPE_CANCELED")'
+                description: "Canceled"

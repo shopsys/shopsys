@@ -14,6 +14,8 @@ export type Scalars = {
   Float: { input: number; output: number; }
   /** Represents and encapsulates an ISO-8601 encoded UTC date-time value */
   DateTime: { input: any; output: any; }
+  /** Represents and encapsulates a file upload */
+  FileUpload: { input: any; output: any; }
   /** Represents and encapsulates monetary value */
   Money: { input: string; output: string; }
   /** Represents and encapsulates a string for password */
@@ -780,15 +782,24 @@ export type TypeComplaintItem = {
   __typename?: 'ComplaintItem';
   /** Description of the complaint order item */
   description: Scalars['String']['output'];
+  /** Files attached to the complaint order item */
+  files: Maybe<Array<TypeFile>>;
   /** Order item */
   orderItem: TypeOrderItem;
   /** Quantity of the order item */
   quantity: Scalars['Int']['output'];
 };
 
+
+export type TypeComplaintItemFilesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type TypeComplaintItemInput = {
   /** Description of the complaint item */
   description: Scalars['String']['input'];
+  /** Files attached to the complaint item */
+  files: InputMaybe<Array<Scalars['FileUpload']['input']>>;
   /** UUID of the order item */
   orderItemUuid: Scalars['Uuid']['input'];
   /** Quantity of the complaint item */
@@ -1618,6 +1629,14 @@ export type TypeOrderEdge = {
   node: Maybe<TypeOrder>;
 };
 
+/** Filter orders */
+export type TypeOrderFilterInput = {
+  /** Filter orders created after this date */
+  createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter orders created after this date */
+  status: InputMaybe<TypeOrderStatusEnum>;
+};
+
 /** Represents the main input object to create orders */
 export type TypeOrderInput = {
   /** Cart identifier used for getting carts of not logged customers */
@@ -1730,6 +1749,22 @@ export enum TypeOrderItemTypeEnum {
   Transport = 'transport'
 }
 
+/** Filter order items */
+export type TypeOrderItemsFilterInput = {
+  /** Filter order items by product catalog number (OR condition with productUuid) */
+  catnum: InputMaybe<Scalars['String']['input']>;
+  /** Filter order items in orders created after this date */
+  orderCreatedAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter orders created after this date */
+  orderStatus: InputMaybe<TypeOrderStatusEnum>;
+  /** Filter order items by order with this UUID */
+  orderUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Filter order items by product with this UUID (OR condition with catnum) */
+  productUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Filter order items by type */
+  type: InputMaybe<TypeOrderItemTypeEnum>;
+};
+
 export type TypeOrderPaymentsConfig = {
   __typename?: 'OrderPaymentsConfig';
   /** All available payment methods for the order (excluding the current one) */
@@ -1737,6 +1772,18 @@ export type TypeOrderPaymentsConfig = {
   /** Current payment method used in the order */
   currentPayment: TypePayment;
 };
+
+/** Status of order */
+export enum TypeOrderStatusEnum {
+  /** Canceled */
+  Canceled = 'canceled',
+  /** Done */
+  Done = 'done',
+  /** In progress */
+  InProgress = 'inProgress',
+  /** New */
+  New = 'new'
+}
 
 /** Information about pagination in a connection. */
 export type TypePageInfo = {
@@ -2451,6 +2498,7 @@ export type TypeQueryOrderArgs = {
 export type TypeQueryOrderItemsSearchArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderItemsFilterInput>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   searchInput: TypeSearchInput;
@@ -2488,6 +2536,7 @@ export type TypeQueryOrdersArgs = {
 export type TypeQueryOrdersSearchArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderFilterInput>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   searchInput: TypeSearchInput;
