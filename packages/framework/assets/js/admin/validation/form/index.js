@@ -4,6 +4,7 @@ import './validationFreTransportAndPayment';
 import './validationMailTemplate';
 import './validationAdvert';
 import './validationOrder';
+import './validationParameterName';
 import './validationPromoCode';
 import './validationHreflangSetting';
 import './validationStore';

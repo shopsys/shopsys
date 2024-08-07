@@ -145,6 +145,9 @@ msgstr "Hodnota parametru musí být číselná"
 msgid "Parameter value must be of type {{ type }}"
 msgstr "Hodnota parametru musí být typu {{ type }}"
 
+msgid "Parameter with this name already exists for the locale \"%locale%\"."
+msgstr "Parametr se zadaným názvem už existuje pro jazyk \"%locale%\"."
+
 msgid "Parameter {{ parameterName }} is used more than once"
 msgstr "Parametr {{ parameterName }} je použit více než jednou"
 

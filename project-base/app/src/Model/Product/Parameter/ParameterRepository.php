@@ -38,6 +38,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Product[] getProductsByParameterValues(\Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
  * @method \App\Model\Product\Parameter\Parameter[] getAllWithTranslations(string $locale)
+ * @method bool existsParameterByName(string $name, string $locale, \App\Model\Product\Parameter\Parameter|null $excludeParameter = null)
  */
 class ParameterRepository extends BaseParameterRepository
 {
