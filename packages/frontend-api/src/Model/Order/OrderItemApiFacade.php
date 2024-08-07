@@ -128,9 +128,7 @@ class OrderItemApiFacade
         string $search,
         OrderItemsFilter $filter,
     ): QueryBuilder {
-        $queryBuilder = $this->createCustomerUserOrderItemsLimitedListQueryBuilder($customerUser, $filter)
-            ->join('oi.order', 'o')
-            ->andWhere('o.customerUser = :customerUser');
+        $queryBuilder = $this->createCustomerUserOrderItemsLimitedListQueryBuilder($customerUser, $filter);
 
         $queryBuilder->setParameter(':customerUser', $customerUser)
             ->andWhere(
@@ -180,9 +178,9 @@ class OrderItemApiFacade
                 ->setParameter(':orderCreatedAfter', $filter->getOrderCreatedAfter());
         }
 
-        if ($filter->getOrderStatus() !== null) {
-            $queryBuilder->andWhere('o.status = :orderStatus')
-                ->setParameter(':orderStatus', $filter->getOrderStatus());
+        if ($filter->getOrderStatuses() !== null && count($filter->getOrderStatuses()) > 0) {
+            $queryBuilder->andWhere('o.status IN (:orderStatuses)')
+                ->setParameter(':orderStatuses', $filter->getOrderStatuses());
         }
 
         if ($filter->getType() !== null) {

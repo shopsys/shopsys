@@ -55,6 +55,15 @@ class OrderStatusRepository
     }
 
     /**
+     * @param string $type
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
+     */
+    public function getAllByType(string $type): array
+    {
+        return $this->getOrderStatusRepository()->findBy(['type' => $type]);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
     public function getDefault()

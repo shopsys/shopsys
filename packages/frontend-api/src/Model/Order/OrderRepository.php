@@ -337,9 +337,9 @@ class OrderRepository
                 ->setParameter('createdAfter', $filter->getCreatedAfter());
         }
 
-        if ($filter->getStatus() !== null) {
-            $queryBuilder->andWhere('o.status = :status')
-                ->setParameter('status', $filter->getStatus());
+        if ($filter->getStatuses() !== null && count($filter->getStatuses()) > 0) {
+            $queryBuilder->andWhere('o.status IN (:statuses)')
+                ->setParameter('statuses', $filter->getStatuses());
         }
 
         if ($filter->getOrderItemsCatnum() === null && $filter->getOrderItemsProductUuid() === null) {
