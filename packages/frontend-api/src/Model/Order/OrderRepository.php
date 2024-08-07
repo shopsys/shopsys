@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -88,14 +90,45 @@ class OrderRepository
      */
     public function getCustomerUserOrderLimitedList(CustomerUser $customerUser, int $limit, int $offset): array
     {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
+        return $this->createCustomerUserOrderLimitedList($customerUser)
             ->orderBy('o.createdAt', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param string $search
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getCustomerUserOrderLimitedSearchList(
+        string $search,
+        CustomerUser $customerUser,
+        int $limit,
+        int $offset,
+    ): array {
+        return $this->createCustomerUserOrderLimitSearchListQueryBuilder($customerUser, $search)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string $search
+     * @return int
+     */
+    public function getCustomerUserOrderLimitedSearchListCount(CustomerUser $customerUser, string $search): int
+    {
+        return $this->createCustomerUserOrderLimitSearchListQueryBuilder($customerUser, $search)
+            ->select('count(o.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
@@ -237,5 +270,30 @@ class OrderRepository
         }
 
         return $order;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createCustomerUserOrderLimitedList(CustomerUser $customerUser): QueryBuilder
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string $search
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createCustomerUserOrderLimitSearchListQueryBuilder(
+        CustomerUser $customerUser,
+        string $search,
+    ): QueryBuilder {
+        return $this->createCustomerUserOrderLimitedList($customerUser)
+            ->andWhere('NORMALIZED(o.number) LIKE NORMALIZED(:orderNumber)')
+            ->setParameter('orderNumber', DatabaseSearching::getFullTextLikeSearchString($search));
     }
 }
