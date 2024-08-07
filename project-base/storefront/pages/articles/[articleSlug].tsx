@@ -58,25 +58,25 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
-                    await client!
-                        .query(ArticleDetailQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
-
-                const article =
-                    articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
-
-                const parsedCatnums = parseCatnums(article?.text ?? '');
-
+            const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
                 await client!
-                    .query(ProductsByCatnumsDocument, {
-                        catnums: parsedCatnums,
+                    .query(ArticleDetailQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
                     })
                     .toPromise();
 
+            const article =
+                articleResponse.data?.article?.__typename === 'ArticleSite' ? articleResponse.data.article : null;
+
+            const parsedCatnums = parseCatnums(article?.text ?? '');
+
+            await client!
+                .query(ProductsByCatnumsDocument, {
+                    catnums: parsedCatnums,
+                })
+                .toPromise();
+
+            if (isRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     articleResponse.error?.graphQLErrors,
                     articleResponse.data?.article,

@@ -64,24 +64,24 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
+            const blogArticleResponse: OperationResult<
+                TypeBlogArticleDetailQuery,
+                TypeBlogArticleDetailQueryVariables
+            > = await client!
+                .query(BlogArticleDetailQueryDocument, {
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                })
+                .toPromise();
+
+            const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
+
+            await client!
+                .query(ProductsByCatnumsDocument, {
+                    catnums: parsedCatnums,
+                })
+                .toPromise();
+
             if (isRedirectedFromSsr(context.req.headers)) {
-                const blogArticleResponse: OperationResult<
-                    TypeBlogArticleDetailQuery,
-                    TypeBlogArticleDetailQueryVariables
-                > = await client!
-                    .query(BlogArticleDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                    })
-                    .toPromise();
-
-                const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
-
-                await client!
-                    .query(ProductsByCatnumsDocument, {
-                        catnums: parsedCatnums,
-                    })
-                    .toPromise();
-
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     blogArticleResponse.error?.graphQLErrors,
                     blogArticleResponse.data?.blogArticle,

@@ -58,14 +58,13 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> =
-                    await client!
-                        .query(StoreDetailQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
+            const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> = await client!
+                .query(StoreDetailQueryDocument, {
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                })
+                .toPromise();
 
+            if (isRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     storeResponse.error?.graphQLErrors,
                     storeResponse.data?.store,

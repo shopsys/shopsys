@@ -69,22 +69,22 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
             const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
-                    await client!
-                        .query(BlogCategoryQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
-
+            const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
                 await client!
-                    .query(BlogCategoryArticlesDocument, {
-                        uuid: blogCategoryResponse.data?.blogCategory?.uuid,
-                        endCursor: getEndCursor(page),
-                        pageSize: DEFAULT_PAGE_SIZE,
+                    .query(BlogCategoryQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
                     })
                     .toPromise();
 
+            await client!
+                .query(BlogCategoryArticlesDocument, {
+                    uuid: blogCategoryResponse.data?.blogCategory?.uuid,
+                    endCursor: getEndCursor(page),
+                    pageSize: DEFAULT_PAGE_SIZE,
+                })
+                .toPromise();
+
+            if (isRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     blogCategoryResponse.error?.graphQLErrors,
                     blogCategoryResponse.data?.blogCategory,

@@ -96,33 +96,30 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
+            const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+            const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
+
+            const flagDetailResponsePromise = client!
+                .query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
+                    urlSlug,
+                    filter,
+                    orderingMode,
+                })
+                .toPromise();
+
+            const flagProductsResponsePromise = client!
+                .query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
+                    endCursor: getEndCursor(page),
+                    orderingMode,
+                    filter,
+                    urlSlug,
+                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                })
+                .toPromise();
+
+            const [flagDetailResponse] = await Promise.all([flagDetailResponsePromise, flagProductsResponsePromise]);
+
             if (isRedirectedFromSsr(context.req.headers)) {
-                const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
-                const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
-
-                const flagDetailResponsePromise = client!
-                    .query<TypeFlagDetailQuery, TypeFlagDetailQueryVariables>(FlagDetailQueryDocument, {
-                        urlSlug,
-                        filter,
-                        orderingMode,
-                    })
-                    .toPromise();
-
-                const flagProductsResponsePromise = client!
-                    .query<TypeFlagProductsQuery, TypeFlagProductsQueryVariables>(FlagProductsQueryDocument, {
-                        endCursor: getEndCursor(page),
-                        orderingMode,
-                        filter,
-                        urlSlug,
-                        pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                    })
-                    .toPromise();
-
-                const [flagDetailResponse] = await Promise.all([
-                    flagDetailResponsePromise,
-                    flagProductsResponsePromise,
-                ]);
-
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     flagDetailResponse.error?.graphQLErrors,
                     flagDetailResponse.data?.flag,

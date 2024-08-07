@@ -98,34 +98,34 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             let categoryUuid: string | null = null;
 
+            const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
+            const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+            const categoryDetailResponsePromise = client!
+                .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
+                    urlSlug,
+                    filter,
+                    orderingMode,
+                })
+                .toPromise();
+
+            const categoryProductsResponsePromise = client!
+                .query(CategoryProductsQueryDocument, {
+                    endCursor: getEndCursor(page),
+                    orderingMode,
+                    filter,
+                    urlSlug,
+                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                })
+                .toPromise();
+
+            const [categoryDetailResponse] = await Promise.all([
+                categoryDetailResponsePromise,
+                categoryProductsResponsePromise,
+            ]);
+
+            categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
+
             if (isRedirectedFromSsr(context.req.headers)) {
-                const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
-                const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
-                const categoryDetailResponsePromise = client!
-                    .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
-                        urlSlug,
-                        filter,
-                        orderingMode,
-                    })
-                    .toPromise();
-
-                const categoryProductsResponsePromise = client!
-                    .query(CategoryProductsQueryDocument, {
-                        endCursor: getEndCursor(page),
-                        orderingMode,
-                        filter,
-                        urlSlug,
-                        pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                    })
-                    .toPromise();
-
-                const [categoryDetailResponse] = await Promise.all([
-                    categoryDetailResponsePromise,
-                    categoryProductsResponsePromise,
-                ]);
-
-                categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
-
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     categoryDetailResponse.error?.graphQLErrors,
                     categoryDetailResponse.data?.category,
