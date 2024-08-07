@@ -1266,6 +1266,10 @@ type OrderEdge {
 input OrderFilterInput {
   "Filter orders created after this date"
   createdAfter: DateTime
+  "Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid)"
+  orderItemsCatnum: String
+  "Filter orders by order items with product UUID (OR condition with orderItemsCatnum)"
+  orderItemsProductUuid: Uuid
   "Filter orders created after this date"
   status: OrderStatusEnum
 }
@@ -1914,7 +1918,7 @@ type Query {
   "Returns HTML content for order with successful payment."
   orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
-  orders(after: String, before: String, first: Int, last: Int): OrderConnection
+  orders(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int): OrderConnection
   "Returns HTML content for order sent page."
   orderSentPageContent(orderUuid: Uuid!): String!
   "Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords"
