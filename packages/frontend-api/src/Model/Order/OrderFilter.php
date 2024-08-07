@@ -10,13 +10,13 @@ class OrderFilter
 {
     /**
      * @param \DateTime|null $createdAfter
-     * @param int|null $status
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null $statuses
      * @param string|null $orderItemsCatnum
      * @param string|null $orderItemsProductUuid
      */
     public function __construct(
         protected ?DateTime $createdAfter = null,
-        protected ?int $status = null,
+        protected ?array $statuses = null,
         protected ?string $orderItemsCatnum = null,
         protected ?string $orderItemsProductUuid = null,
     ) {
@@ -31,11 +31,11 @@ class OrderFilter
     }
 
     /**
-     * @return int|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]|null
      */
-    public function getStatus(): ?int
+    public function getStatuses(): ?array
     {
-        return $this->status;
+        return $this->statuses;
     }
 
     /**
