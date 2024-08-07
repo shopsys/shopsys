@@ -99,6 +99,9 @@ QueryDecorator:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('ordersQuery', args)"
+                args:
+                    filter:
+                        type: "OrderFilterInput"
                 description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
             ordersSearch:
                 type: "OrderConnection!"
