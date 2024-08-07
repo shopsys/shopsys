@@ -19,6 +19,9 @@ msgstr ""
 msgid "Customer role group not found."
 msgstr ""
 
+msgid "Description is required"
+msgstr ""
+
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
