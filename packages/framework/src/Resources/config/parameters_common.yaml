@@ -10,8 +10,6 @@ parameters:
     # Seed for demo data generation
     faker.seed: 1234
 
-    gopay_config: []
-
     # Time zone that the admin use for entering and viewing dates and times in the datetime pickers
     shopsys.admin_display_timezone: ~
 

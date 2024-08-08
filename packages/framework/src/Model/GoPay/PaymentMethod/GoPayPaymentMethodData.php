@@ -35,4 +35,9 @@ class GoPayPaymentMethodData
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
      */
     public $currency;
+
+    /**
+     * @var int
+     */
+    public $domainId;
 }

@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotConfiguredException;
+use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainException;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -102,7 +103,7 @@ class PaymentServiceFacade
                 if ($update) {
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
                 }
-            } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException|PaymentTransactionHasNoAssignedPayment $exception) {
+            } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException|GoPayNotEnabledOnDomainException|PaymentTransactionHasNoAssignedPayment $exception) {
                 $this->logger->error($exception->getMessage());
             }
         }
