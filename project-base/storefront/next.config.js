@@ -9,7 +9,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: { scrollRestoration: true },
+    experimental: { scrollRestoration: true, middlewarePrefetch: 'strict' },
     reactStrictMode: true,
     swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
