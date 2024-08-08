@@ -1,0 +1,10 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Customer user role groups'|trans }}{% endblock %}
+{% block h1 %}{{ 'Customer user role groups'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="customer_user_role_group">
+        {{ gridView.render() }}
+    </div>
+{% endblock %}

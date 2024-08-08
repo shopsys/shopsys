@@ -187,6 +187,13 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
+            $menu->addChild('customer_user_role_group', [
+                'route' => 'admin_superadmin_customer_user_role_group_list',
+                'label' => t('Customer user role groups'),
+            ])->setExtra('superadmin', true);
+        }
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);
 
         return $menu;

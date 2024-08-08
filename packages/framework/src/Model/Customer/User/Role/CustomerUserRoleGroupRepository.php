@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception\CustomerUserRoleGroupNotFoundException;
 
 class CustomerUserRoleGroupRepository
@@ -60,5 +62,37 @@ class CustomerUserRoleGroupRepository
         }
 
         return $roleGroup;
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getAllQueryBuilder(): QueryBuilder
+    {
+        return $this->getCustomerUserRoleGroupRepository()->createQueryBuilder('cug');
+    }
+
+    /**
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllQueryBuilderByLocale(string $locale): QueryBuilder
+    {
+        $queryBuilder = $this->getAllQueryBuilder();
+        $this->addTranslation($queryBuilder, $locale);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param string $locale
+     */
+    protected function addTranslation(QueryBuilder $queryBuilder, string $locale): void
+    {
+        $queryBuilder
+            ->addSelect('cugt')
+            ->join('cug.translations', 'cugt', Join::WITH, 'cugt.locale = :locale')
+            ->setParameter('locale', $locale);
     }
 }
