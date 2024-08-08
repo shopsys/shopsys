@@ -9,7 +9,7 @@ type HamburgerMenuProps = {
 export const HamburgerMenu: FC<HamburgerMenuProps> = ({ onClick }) => {
     return (
         <div
-            className={twJoin('flex h-10 w-12 cursor-pointer items-center rounded bg-none text-linkInverted')}
+            className={twJoin('flex h-10 w-8 cursor-pointer items-center rounded bg-none text-linkInverted')}
             onClick={onClick}
         >
             <div className="flex w-7 items-center justify-center">
