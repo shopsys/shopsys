@@ -39,6 +39,23 @@ class CustomerUserRoleGroupFacade
     }
 
     /**
+     * @param int $customerUserRoleGroupId
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $administratorRoleGroupData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     */
+    public function edit(
+        int $customerUserRoleGroupId,
+        CustomerUserRoleGroupData $administratorRoleGroupData,
+    ): CustomerUserRoleGroup {
+        $customerUserRoleGroup = $this->customerUserRoleGroupRepository->getById($customerUserRoleGroupId);
+
+        $customerUserRoleGroup->edit($administratorRoleGroupData);
+        $this->entityManager->flush();
+
+        return $customerUserRoleGroup;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup[]
      */
     public function getAll(): array
@@ -52,5 +69,14 @@ class CustomerUserRoleGroupFacade
     public function getDefaultCustomerUserRoleGroup(): CustomerUserRoleGroup
     {
         return $this->customerUserRoleGroupSetting->getDefaultCustomerUserRoleGroup();
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     */
+    public function getById(int $id): CustomerUserRoleGroup
+    {
+        return $this->customerUserRoleGroupRepository->getById($id);
     }
 }

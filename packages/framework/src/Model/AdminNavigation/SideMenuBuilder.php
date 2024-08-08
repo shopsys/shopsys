@@ -198,6 +198,11 @@ class SideMenuBuilder
                 'display' => false,
                 'label' => t('New customer user role group'),
             ]);
+            $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_edit', [
+                'route' => 'admin_superadmin_customer_user_role_group_edit',
+                'display' => false,
+                'label' => t('Editing customer user role group'),
+            ]);
             $roleGroupMenu->setExtra('superadmin', true);
         }
 

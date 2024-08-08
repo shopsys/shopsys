@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup\CustomerUserRoleGroupFormType;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupGridFactory;
@@ -18,11 +19,13 @@ class CustomerUserRoleGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupGridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
         protected readonly CustomerUserRoleGroupGridFactory $gridFactory,
         protected readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
@@ -70,6 +73,48 @@ class CustomerUserRoleGroupController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/superadmin/customer/role-group/edit/{id}', name: 'admin_superadmin_customer_user_role_group_edit', requirements: ['id' => '\d+'])]
+    public function editAction(Request $request, int $id): Response
+    {
+        $customerUserRoleGroup = $this->customerUserRoleGroupFacade->getById($id);
+        $administratorRoleGroupData = $this->customerUserRoleGroupDataFactory->createFromCustomerUserRoleGroup($customerUserRoleGroup);
+
+        $form = $this->createForm(CustomerUserRoleGroupFormType::class, $administratorRoleGroupData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $customerUserRoleGroup = $this->customerUserRoleGroupFacade->edit($customerUserRoleGroup->getId(), $administratorRoleGroupData);
+
+            $this->addSuccessFlashTwig(
+                t('Customer user role group <strong><a href="{{ url }}">{{ name }}</a></strong> was edited'),
+                [
+                    'name' => $customerUserRoleGroup->getName(),
+                    'url' => $this->generateUrl('admin_superadmin_customer_user_role_group_edit', ['id' => $id]),
+                ],
+            );
+
+            return $this->redirectToRoute('admin_superadmin_customer_user_role_group_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing customer user role group - %name%', ['%name%' => $customerUserRoleGroup->getName()]),
+        );
+
+        return $this->render('@ShopsysFramework/Admin/Content/Customer/RoleGroup/edit.html.twig', [
+            'form' => $form->createView(),
+            'customerUserRoleGroup' => $customerUserRoleGroup,
         ]);
     }
 }
