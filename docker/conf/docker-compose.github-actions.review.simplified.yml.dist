@@ -8,11 +8,11 @@ services:
             - web-volume:/var/www/html/project-base/app/web
             - nginx-conf:/etc/nginx/conf.d/
         labels:
-            - traefik.backend=BRANCH_NAME
-            - traefik.http.routers.BRANCH_NAME.rule=Host(TRAEFIK_HOSTS)
-            - traefik.http.routers.BRANCH_NAME.entrypoints=http,https
-            - traefik.http.routers.BRANCH_NAME.tls.certresolver=letsencrypt
-            - traefik.http.services.BRANCH_NAME.loadbalancer.server.port=8080
+            - traefik.backend=${BRANCH_NAME_ESCAPED}
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}.rule=Host(TRAEFIK_HOSTS)
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}.entrypoints=http,https
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}.tls.certresolver=letsencrypt
+            - traefik.http.services.${BRANCH_NAME_ESCAPED}.loadbalancer.server.port=8080
             - traefik.docker.network=github-runner_traefik-network
             - traefik.enable=true
         networks:
@@ -28,9 +28,9 @@ services:
             - postgres-conf:/var/www/html/project-base/app/docker/postgres
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
-            DATABASE_NAME: BRANCH_NAME
-            ELASTIC_SEARCH_INDEX_PREFIX: BRANCH_NAME
-            REDIS_PREFIX: BRANCH_NAME
+            DATABASE_NAME: "${BRANCH_NAME_ESCAPED}"
+            ELASTIC_SEARCH_INDEX_PREFIX: "${BRANCH_NAME_ESCAPED}"
+            REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
             FORCE_ELASTIC_LIMITS: true
             GOPAY_EN_GOID: "${GOPAY_GOID}"
             GOPAY_EN_CLIENTID: "${GOPAY_CLIENTID}"
@@ -40,7 +40,7 @@ services:
             GOPAY_CS_CLIENTSECRET: "${GOPAY_CLIENTSECRET}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             PACKETERY_API_PASSWORD: "${PACKETERY_API_PASSWORD_VALUE}"
-            MESSENGER_TRANSPORT_VHOST: BRANCH_NAME
+            MESSENGER_TRANSPORT_VHOST: "${BRANCH_NAME_ESCAPED}"
             FACEBOOK_CLIENT_ID: "${FACEBOOK_CLIENTID}"
             FACEBOOK_CLIENT_SECRET: "${FACEBOOK_CLIENTSECRET}"
             GOOGLE_CLIENT_ID: "${GOOGLE_CLIENTID}"
@@ -53,36 +53,36 @@ services:
         labels:
             - traefik.enable=false
             - chadburn.enabled=true
-            - chadburn.job-exec.BRANCH_NAME-cron-services.schedule=@every 5m
-            - chadburn.job-exec.BRANCH_NAME-cron-services.command=php phing cron-service
-            - chadburn.job-exec.BRANCH_NAME-cron-services.no-overlap=true
-            - chadburn.job-exec.BRANCH_NAME-cron-services.user=www-data
-            - chadburn.job-exec.BRANCH_NAME-cron-services.tty=true
-            - chadburn.job-exec.BRANCH_NAME-cron-export.schedule=@every 5m
-            - chadburn.job-exec.BRANCH_NAME-cron-export.command=php phing cron-export
-            - chadburn.job-exec.BRANCH_NAME-cron-export.no-overlap=true
-            - chadburn.job-exec.BRANCH_NAME-cron-export.user=www-data
-            - chadburn.job-exec.BRANCH_NAME-cron-export.tty=true
-            - chadburn.job-exec.BRANCH_NAME-cron-products.schedule=@every 5m
-            - chadburn.job-exec.BRANCH_NAME-cron-products.command=php phing cron-products
-            - chadburn.job-exec.BRANCH_NAME-cron-products.no-overlap=true
-            - chadburn.job-exec.BRANCH_NAME-cron-products.user=www-data
-            - chadburn.job-exec.BRANCH_NAME-cron-products.tty=true
-            - chadburn.job-exec.BRANCH_NAME-cron-gopay.schedule=@every 5m
-            - chadburn.job-exec.BRANCH_NAME-cron-gopay.command=php phing cron-gopay
-            - chadburn.job-exec.BRANCH_NAME-cron-gopay.no-overlap=true
-            - chadburn.job-exec.BRANCH_NAME-cron-gopay.user=www-data
-            - chadburn.job-exec.BRANCH_NAME-cron-gopay.tty=true
-            - chadburn.job-exec.BRANCH_NAME-cron-dataBridgeImport.schedule=@every 5m
-            - chadburn.job-exec.BRANCH_NAME-cron-dataBridgeImport.command=php phing cron-data-bridge-import
-            - chadburn.job-exec.BRANCH_NAME-cron-dataBridgeImport.no-overlap=true
-            - chadburn.job-exec.BRANCH_NAME-cron-dataBridgeImport.user=www-data
-            - chadburn.job-exec.BRANCH_NAME-cron-dataBridgeImport.tty=true
-            - chadburn.job-exec.BRANCH_NAME-cron-packetery.schedule=@every 5m
-            - chadburn.job-exec.BRANCH_NAME-cron-packetery.command=php phing cron-packetery
-            - chadburn.job-exec.BRANCH_NAME-cron-packetery.no-overlap=true
-            - chadburn.job-exec.BRANCH_NAME-cron-packetery.user=www-data
-            - chadburn.job-exec.BRANCH_NAME-cron-packetery.tty=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-services.schedule=@every 5m
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-services.command=php phing cron-service
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-services.no-overlap=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-services.user=www-data
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-services.tty=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-export.schedule=@every 5m
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-export.command=php phing cron-export
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-export.no-overlap=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-export.user=www-data
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-export.tty=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-products.schedule=@every 5m
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-products.command=php phing cron-products
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-products.no-overlap=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-products.user=www-data
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-products.tty=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-gopay.schedule=@every 5m
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-gopay.command=php phing cron-gopay
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-gopay.no-overlap=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-gopay.user=www-data
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-gopay.tty=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-dataBridgeImport.schedule=@every 5m
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-dataBridgeImport.command=php phing cron-data-bridge-import
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-dataBridgeImport.no-overlap=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-dataBridgeImport.user=www-data
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-dataBridgeImport.tty=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-packetery.schedule=@every 5m
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-packetery.command=php phing cron-packetery
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-packetery.no-overlap=true
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-packetery.user=www-data
+            - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-packetery.tty=true
 
     php-consumer:
         restart: always
@@ -91,9 +91,9 @@ services:
             - web-volume:/var/www/html/project-base/app/web
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
-            DATABASE_NAME: BRANCH_NAME
-            ELASTIC_SEARCH_INDEX_PREFIX: BRANCH_NAME
-            REDIS_PREFIX: BRANCH_NAME
+            DATABASE_NAME: "${BRANCH_NAME_ESCAPED}"
+            ELASTIC_SEARCH_INDEX_PREFIX: "${BRANCH_NAME_ESCAPED}"
+            REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
             FORCE_ELASTIC_LIMITS: true
             GOPAY_EN_GOID: "${GOPAY_GOID}"
             GOPAY_EN_CLIENTID: "${GOPAY_CLIENTID}"
@@ -103,7 +103,7 @@ services:
             GOPAY_CS_CLIENTSECRET: "${GOPAY_CLIENTSECRET}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             PACKETERY_API_PASSWORD: "${PACKETERY_API_PASSWORD_VALUE}"
-            MESSENGER_TRANSPORT_VHOST: BRANCH_NAME
+            MESSENGER_TRANSPORT_VHOST: "${BRANCH_NAME_ESCAPED}"
             FACEBOOK_CLIENT_ID: "${FACEBOOK_CLIENTID}"
             FACEBOOK_CLIENT_SECRET: "${FACEBOOK_CLIENTSECRET}"
             GOOGLE_CLIENT_ID: "${GOOGLE_CLIENTID}"
@@ -124,7 +124,7 @@ services:
         restart: always
         image: storefront-image
         environment:
-            REDIS_PREFIX: BRANCH_NAME
+            REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY_VALUE}"
         networks:
