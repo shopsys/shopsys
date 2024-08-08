@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
@@ -30,6 +31,7 @@ class BlogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -42,6 +44,7 @@ class BlogCategoryFacade
         protected readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
         protected readonly BlogArticleFacade $blogArticleFacade,
         protected readonly Domain $domain,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -75,6 +78,8 @@ class BlogCategoryFacade
 
         $this->em->flush();
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+
         return $blogCategory;
     }
 
@@ -103,6 +108,8 @@ class BlogCategoryFacade
 
         $this->scheduleArticlesToExportByCategory($blogCategory);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
+
         return $blogCategory;
     }
 
@@ -122,6 +129,8 @@ class BlogCategoryFacade
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
         $this->scheduleArticlesToExportByCategory($blogCategory);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
     }
 
     /**
@@ -300,6 +309,8 @@ class BlogCategoryFacade
 
             $this->blogArticleExportQueueFacade->addIdsBatch($allIds, $domainId);
         }
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
     }
 
     /**

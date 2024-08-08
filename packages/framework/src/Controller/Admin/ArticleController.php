@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
-use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -34,7 +33,6 @@ class ArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\UserConsentPolicy\UserConsentPolicyFacade $userConsentPolicyFacade
-     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
@@ -45,7 +43,6 @@ class ArticleController extends AdminBaseController
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
         protected readonly UserConsentPolicyFacade $userConsentPolicyFacade,
-        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -77,8 +74,6 @@ class ArticleController extends AdminBaseController
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
                     ],
                 );
-
-            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
             return $this->redirectToRoute('admin_article_list');
         }
@@ -145,8 +140,6 @@ class ArticleController extends AdminBaseController
                     ],
                 );
 
-            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
-
             return $this->redirectToRoute('admin_article_list');
         }
 
@@ -171,8 +164,6 @@ class ArticleController extends AdminBaseController
             $fullName = $this->articleFacade->getById($id)->getName();
 
             $this->articleFacade->delete($id);
-
-            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
             $this->addSuccessFlashTwig(
                 t('Article <strong>{{ name }}</strong> deleted'),
