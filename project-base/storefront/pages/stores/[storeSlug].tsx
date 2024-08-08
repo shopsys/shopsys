@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { getPrefixedSeoTitle } from 'utils/seo/getPrefixedSeoTitle';
@@ -64,7 +64,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 })
                 .toPromise();
 
-            if (isRedirectedFromSsr(context.req.headers)) {
+            if (getIsRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     storeResponse.error?.graphQLErrors,
                     storeResponse.data?.store,

@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
@@ -119,7 +119,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             const [flagDetailResponse] = await Promise.all([flagDetailResponsePromise, flagProductsResponsePromise]);
 
-            if (isRedirectedFromSsr(context.req.headers)) {
+            if (getIsRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     flagDetailResponse.error?.graphQLErrors,
                     flagDetailResponse.data?.flag,

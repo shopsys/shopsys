@@ -23,7 +23,7 @@ import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
@@ -130,7 +130,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             const [brandDetailResponse] = await Promise.all([brandDetailResponsePromise, brandProductsResponsePromise]);
 
-            if (isRedirectedFromSsr(context.req.headers)) {
+            if (getIsRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     brandDetailResponse.error?.graphQLErrors,
                     brandDetailResponse.data?.brand,

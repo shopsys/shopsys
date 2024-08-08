@@ -30,6 +30,7 @@ import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedi
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { CookiesStoreState } from 'utils/cookies/cookiesStore';
 import { DomainConfigType } from 'utils/domain/domainConfig';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
@@ -89,14 +90,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         });
 
     const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
-
-    const prefetchQueries: QueriesArray<
-        | TypeAdvertsQueryVariables
-        | TypeArticlesQueryVariables
-        | TypeSettingsQueryVariables
-        | TypeSeoPageQueryVariables
-        | VariablesType
-    > = [
+    const queriesNotToBeFetchedDuringClientSideNavigation = [
         { query: NotificationBarsDocument },
         { query: NavigationQueryDocument },
         {
@@ -112,7 +106,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             },
         },
         { query: AdvertsQueryDocument, variables: { positionNames: ['header', 'footer'], categoryUuid: null } },
-        { query: CurrentCustomerUserQueryDocument },
         { query: SettingsQueryDocument },
         ...(seoPageSlug
             ? [
@@ -124,6 +117,18 @@ export const initServerSideProps = async <VariablesType extends Variables>({
                   },
               ]
             : []),
+    ];
+
+    const isRedirectedFromSsr = getIsRedirectedFromSsr(context.req.headers);
+    const prefetchQueries: QueriesArray<
+        | TypeAdvertsQueryVariables
+        | TypeArticlesQueryVariables
+        | TypeSettingsQueryVariables
+        | TypeSeoPageQueryVariables
+        | VariablesType
+    > = [
+        { query: CurrentCustomerUserQueryDocument },
+        ...(isRedirectedFromSsr ? queriesNotToBeFetchedDuringClientSideNavigation : []),
         ...additionalPrefetchQueries,
     ];
 
