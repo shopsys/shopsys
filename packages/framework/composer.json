@@ -56,7 +56,7 @@
         "elasticsearch/elasticsearch": "^7.6.1",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
-        "gopay/payments-sdk-php": ">=1.4 <1.7",
+        "gopay/payments-sdk-php": "^1.10",
         "gedmo/doctrine-extensions": "^3.5",
         "gordalina/cachetool": "^8.5",
         "guzzlehttp/guzzle": "^7.5",
