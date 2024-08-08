@@ -57,7 +57,7 @@ jobs:
                     echo "DOCKER_STOREFRONT_CI_IMAGE_EXISTS=${DOCKER_STOREFRONT_CI_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     echo "DOCKER_ELASTICSEARCH_REPOSITORY_TAG=${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
-                    HOST=${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                    HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_OUTPUT
             -   name: Prepare docker-compose.yml file from docker-compose.github-actions.yml.dist
                 run: |
