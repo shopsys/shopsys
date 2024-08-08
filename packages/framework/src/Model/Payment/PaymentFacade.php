@@ -307,13 +307,14 @@ class PaymentFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     * @param int $domainId
      */
-    public function hideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    public function hideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod, int $domainId): void
     {
-        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod, $domainId);
 
         foreach ($payments as $payment) {
-            $payment->hideByGoPay();
+            $payment->hideByGoPayOnDomain($domainId);
         }
 
         $this->em->flush();
@@ -321,13 +322,14 @@ class PaymentFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     * @param int $domainId
      */
-    public function unHideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    public function unHideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod, int $domainId): void
     {
-        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod, $domainId);
 
         foreach ($payments as $payment) {
-            $payment->unHideByGoPay();
+            $payment->unHideByGoPayOnDomain($domainId);
         }
 
         $this->em->flush();

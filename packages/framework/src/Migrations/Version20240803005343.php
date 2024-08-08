@@ -30,6 +30,31 @@ class Version20240803005343 extends AbstractMigration implements ContainerAwareI
             );
         }
         $this->sql('ALTER TABLE gopay_payment_methods ALTER domain_id SET NOT NULL');
+
+        $this->sql('ALTER TABLE payment_domains ADD go_pay_payment_method_id INT DEFAULT NULL');
+        $this->sql('
+            ALTER TABLE
+                payment_domains
+            ADD
+                CONSTRAINT FK_9532B177B1E3A4E9 FOREIGN KEY (go_pay_payment_method_id) REFERENCES gopay_payment_methods (id) ON DELETE
+            SET
+                NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql('CREATE INDEX IDX_9532B177B1E3A4E9 ON payment_domains (go_pay_payment_method_id)');
+        $this->sql('UPDATE payment_domains 
+            SET go_pay_payment_method_id = payments.go_pay_payment_method_id 
+            FROM payments 
+            WHERE payment_domains.payment_id = payments.id AND payment_domains.enabled = TRUE
+        ');
+        $this->sql('ALTER TABLE payments DROP COLUMN go_pay_payment_method_id');
+
+        $this->sql('ALTER TABLE payment_domains ADD hidden_by_go_pay BOOLEAN NOT NULL DEFAULT FALSE');
+        $this->sql('UPDATE payment_domains 
+            SET hidden_by_go_pay = payments.hidden_by_go_pay 
+            FROM payments 
+            WHERE payment_domains.payment_id = payments.id AND payment_domains.enabled = TRUE
+        ');
+        $this->sql('ALTER TABLE payment_domains ALTER COLUMN hidden_by_go_pay DROP DEFAULT ');
+        $this->sql('ALTER TABLE payments DROP COLUMN hidden_by_go_pay');
     }
 
     /**

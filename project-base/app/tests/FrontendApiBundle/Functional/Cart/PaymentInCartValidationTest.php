@@ -12,7 +12,6 @@ use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
 use App\Model\Transport\Transport;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInCart;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -74,7 +73,7 @@ class PaymentInCartValidationTest extends GraphQlTestCase
     {
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
         $this->addTransportToDemoCart($transport->getUuid());
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);

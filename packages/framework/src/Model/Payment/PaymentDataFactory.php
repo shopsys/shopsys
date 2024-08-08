@@ -51,6 +51,8 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
             $paymentData->enabled[$domainId] = true;
             $paymentData->pricesIndexedByDomainId[$domainId] = Money::zero();
             $paymentData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+            $paymentData->goPayPaymentMethodByDomainId[$domainId] = null;
+            $paymentData->hiddenByGoPay[$domainId] = false;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -58,8 +60,8 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
             $paymentData->description[$locale] = null;
             $paymentData->instructions[$locale] = null;
         }
+
         $paymentData->image = $this->imageUploadDataFactory->create();
-        $paymentData->hiddenByGoPay = false;
     }
 
     /**
@@ -105,11 +107,11 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
             $paymentData->enabled[$domainId] = $payment->isEnabled($domainId);
             $paymentData->pricesIndexedByDomainId[$domainId] = $payment->getPrice($domainId)->getPrice();
             $paymentData->vatsIndexedByDomainId[$domainId] = $payment->getPaymentDomain($domainId)->getVat();
+            $paymentData->goPayPaymentMethodByDomainId[$domainId] = $payment->getGoPayPaymentMethodByDomainId($domainId);
+            $paymentData->hiddenByGoPay[$domainId] = $payment->isHiddenByGoPayByDomainId($domainId);
         }
 
         $paymentData->image = $this->imageUploadDataFactory->createFromEntityAndType($payment);
         $paymentData->type = $payment->getType();
-        $paymentData->goPayPaymentMethod = $payment->getGoPayPaymentMethod();
-        $paymentData->hiddenByGoPay = $payment->isHiddenByGoPay();
     }
 }

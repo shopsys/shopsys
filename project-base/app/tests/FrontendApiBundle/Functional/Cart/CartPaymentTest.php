@@ -7,14 +7,13 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Payment\Payment;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartPaymentTest extends GraphQlTestCase
 {
     public function testPaymentIsReturnedFromCart(): void
     {
-        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
         $swift = 'ABCDEFGH';
         $this->addPaymentToDemoCart($paymentGoPay, $swift);
         $getCartQuery = '{
@@ -37,7 +36,7 @@ class CartPaymentTest extends GraphQlTestCase
 
     public function testPaymentIsReturnedAfterAddingToCart(): void
     {
-        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
         $swift = 'ABCDEFGH';
         $response = $this->addPaymentToDemoCart($paymentGoPay, $swift);
         $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInCart');

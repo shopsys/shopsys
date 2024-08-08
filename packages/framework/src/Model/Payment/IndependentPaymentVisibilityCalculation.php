@@ -31,7 +31,7 @@ class IndependentPaymentVisibilityCalculation
             return false;
         }
 
-        if ($payment->isHidden() || $payment->isDeleted() || $payment->isHiddenByGoPay()) {
+        if ($payment->isHidden() || $payment->isDeleted() || $payment->isHiddenByGoPayByDomainId($domainId)) {
             return false;
         }
 

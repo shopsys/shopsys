@@ -37,6 +37,9 @@ msgstr ""
 msgid "-- Select name of the transfer --"
 msgstr ""
 
+msgid "---"
+msgstr ""
+
 msgid "0"
 msgstr ""
 
@@ -3415,7 +3418,7 @@ msgstr ""
 msgid "This item can be set in product detail of a specific variant"
 msgstr ""
 
-msgid "This payment method is hidden by GoPay."
+msgid "This payment method is hidden by GoPay on domains: %domains%"
 msgstr ""
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."

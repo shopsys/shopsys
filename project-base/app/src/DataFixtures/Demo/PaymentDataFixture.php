@@ -11,7 +11,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
@@ -28,8 +27,8 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const string PAYMENT_CARD = 'payment_card';
     public const string PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const string PAYMENT_CASH = 'payment_cash';
-    public const string PAYMENT_GOPAY_DOMAIN = Payment::TYPE_GOPAY . '_domain_';
-    public const string PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN = 'goPay_bank_account_transfer_domain_';
+    public const string PAYMENT_GOPAY_CARD = 'payment_' . Payment::TYPE_GOPAY;
+    public const string PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
     public const string PAYMENT_LATER = 'payment_later';
 
     /**
@@ -100,8 +99,8 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
 
-        $this->createGoPayCardPaymentOnDomain($this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig());
-        $this->createGoPayBankAccountTransferPaymentOnDomain($this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig());
+        $this->createGoPayCardPayment();
+        $this->createGoPayBankAccountTransferPaymentOnDomain();
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_BASIC;
@@ -112,14 +111,6 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
         $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
-
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            if ($domainConfig === $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()) {
-                continue;
-            }
-            $this->createGoPayCardPaymentOnDomain($domainConfig);
-            $this->createGoPayBankAccountTransferPaymentOnDomain($domainConfig);
-        }
     }
 
     /**
@@ -181,27 +172,27 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
-    private function createGoPayBankAccountTransferPaymentOnDomain(DomainConfig $domainConfig): void
+    private function createGoPayBankAccountTransferPaymentOnDomain(): void
     {
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_GOPAY;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            $paymentData->enabled[$domainId] = $domainId === $domainConfig->getId();
+            $paymentData->goPayPaymentMethodByDomainId[$domainId] = $this->getReferenceForDomain(
+                GoPayDataFixture::BANK_ACCOUNT_METHOD,
+                $domainId,
+                GoPayPaymentMethod::class,
+            );
         }
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $domainConfig->getLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $paymentData->czkRounding = false;
-        $paymentData->goPayPaymentMethod = $this->getReferenceForDomain(GoPayDataFixture::BANK_ACCOUNT_METHOD, $domainConfig->getId(), GoPayPaymentMethod::class);
         $paymentData->hidden = false;
-        $this->createPayment(self::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . $domainConfig->getId(), $paymentData, [
+        $this->createPayment(self::PAYMENT_GOPAY_BANK_ACCOUNT, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_CZECH_POST,
             TransportDataFixture::TRANSPORT_PPL,
@@ -209,30 +200,28 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         ]);
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     */
-    private function createGoPayCardPaymentOnDomain(DomainConfig $domainConfig): void
+    private function createGoPayCardPayment(): void
     {
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_GOPAY;
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
-            $domainId = $domain->getId();
-            $paymentData->enabled[$domainId] = $domainId === $domainConfig->getId();
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $paymentData->goPayPaymentMethodByDomainId[$domainId] = $this->getReferenceForDomain(
+                GoPayDataFixture::PAYMENT_CARD_METHOD,
+                $domainId,
+                GoPayPaymentMethod::class,
+            );
         }
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Payment By Card [%locale%]', ['%locale%' => $domainConfig->getLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->name[$locale] = t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = '';
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $paymentData->czkRounding = false;
 
-        $paymentData->goPayPaymentMethod = $this->getReferenceForDomain(GoPayDataFixture::PAYMENT_CARD_METHOD, $domainConfig->getId(), GoPayPaymentMethod::class);
-
         $paymentData->hidden = false;
-        $this->createPayment(self::PAYMENT_GOPAY_DOMAIN . $domainConfig->getId(), $paymentData, [
+        $this->createPayment(self::PAYMENT_GOPAY_CARD, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
         ]);

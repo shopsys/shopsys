@@ -37,6 +37,9 @@ msgstr "-- Vyber roli --"
 msgid "-- Select name of the transfer --"
 msgstr "-- Vyberte název převodu --"
 
+msgid "---"
+msgstr ""
+
 msgid "0"
 msgstr ""
 
@@ -3415,8 +3418,8 @@ msgstr "Toto se používá pro řazení parametrů na kartě produktu a řazení
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 
-msgid "This payment method is hidden by GoPay."
-msgstr "Tento způsob platby je skrytý systémem GoPay."
+msgid "This payment method is hidden by GoPay on domains: %domains%"
+msgstr "Tento způsob platby je skrytý systémem GoPay na doménách: %domains%"
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."

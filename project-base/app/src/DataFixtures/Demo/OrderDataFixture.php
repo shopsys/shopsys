@@ -102,7 +102,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 3,
             ],
             TransportDataFixture::TRANSPORT_PERSONAL,
-            PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId,
+            PaymentDataFixture::PAYMENT_GOPAY_CARD,
             $customerUser,
         );
         $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
@@ -440,7 +440,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
             ],
             TransportDataFixture::TRANSPORT_PERSONAL,
-            PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId,
+            PaymentDataFixture::PAYMENT_GOPAY_CARD,
         );
         $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
 

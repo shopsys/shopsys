@@ -12,7 +12,6 @@ use App\Model\Order\OrderFacade;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -52,7 +51,7 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
 
         $order = $this->createOrder($product, $transport, $payment);
 
@@ -85,7 +84,7 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
 
         $order = $this->createOrder($product, $transport, $payment);
 

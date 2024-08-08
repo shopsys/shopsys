@@ -83,7 +83,7 @@ class GoPayPaymentMethodFacade
             if (array_key_exists($paymentIdentifier, $paymentMethodByIdentifier)) {
                 $paymentMethod = $paymentMethodByIdentifier[$paymentIdentifier];
                 $this->editByRawData($paymentMethod, $goPayPaymentMethodRawData, $goPayClient->getLanguage());
-                $this->paymentFacade->unHideByGoPayPaymentMethod($paymentMethod);
+                $this->paymentFacade->unHideByGoPayPaymentMethod($paymentMethod, $domainConfig->getId());
                 unset($paymentMethodByIdentifier[$paymentIdentifier]);
             } else {
                 $this->createFromRawData(
@@ -96,7 +96,7 @@ class GoPayPaymentMethodFacade
         }
 
         foreach ($paymentMethodByIdentifier as $paymentMethod) {
-            $this->paymentFacade->hideByGoPayPaymentMethod($paymentMethod);
+            $this->paymentFacade->hideByGoPayPaymentMethod($paymentMethod, $domainConfig->getId());
         }
     }
 
