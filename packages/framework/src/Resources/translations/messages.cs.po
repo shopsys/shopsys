@@ -361,6 +361,9 @@ msgstr "Průměrné trvání všech cronů za posledních sedm dní"
 msgid "Avg duration (mm:ss)"
 msgstr "Prům. trvání (mm:ss)"
 
+msgid "B2B data and user management"
+msgstr "Správa B2B údajů a uživatelů"
+
 msgid "Back to customer {{ name }}"
 msgstr "Zpět k zákazníkovi {{ name }}"
 
@@ -760,6 +763,9 @@ msgstr "Vytvořit nový stát"
 msgid "Create new customer"
 msgstr "Vytvořit nového zákazníka"
 
+msgid "Create new customer user role group"
+msgstr "Vytvořit novou skupinu uživatelských práv"
+
 msgid "Create new delivery address"
 msgstr "Vytvořit novou adresu"
 
@@ -904,8 +910,26 @@ msgstr "Objednávky zákazníka"
 msgid "Customer phone number"
 msgstr "Telefonní číslo zákazníka"
 
+msgid "Customer self manage"
+msgstr "Spravovat své údaje"
+
 msgid "Customer street"
 msgstr "Ulice zákazníka"
+
+msgid "Customer user role group"
+msgstr "Skupina práv"
+
+msgid "Customer user role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+
+msgid "Customer user role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+
+msgid "Customer user role group <strong>{{ name }}</strong> deleted."
+msgstr "Skupina práv <strong>{{ name }</strong> byla smazána"
+
+msgid "Customer user role groups"
+msgstr "Skupina práv"
 
 msgid "Customer users"
 msgstr "Uživatelé"
@@ -1120,6 +1144,9 @@ msgstr "Opravdu chcete odebrat tento článek blogu?"
 msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
 msgstr "Opravdu chcete odstranit tuto značku? Pokud je někde použita, bude odnastavena."
 
+msgid "Do you really want to remove this customer user role group?"
+msgstr "Opravdu chcete odstranit tuto skupinu práv"
+
 msgid "Do you really want to remove this customer?"
 msgstr "Opravdu chcete odstranit tohoto zákazníka?"
 
@@ -1314,6 +1341,12 @@ msgstr "Editace zákazníka"
 
 msgid "Editing customer - %name%"
 msgstr "Editace zákazníka - %name%"
+
+msgid "Editing customer user role group"
+msgstr "Editace skupiny práv"
+
+msgid "Editing customer user role group - %name%"
+msgstr "Editace skupiny práv - %name%"
 
 msgid "Editing delivery address"
 msgstr "Úprava dodací adresy"
@@ -2164,6 +2197,9 @@ msgstr "Nový stát"
 msgid "New customer"
 msgstr "Nový zákazník"
 
+msgid "New customer user role group"
+msgstr "Nová skupina práv"
+
 msgid "New delivery address"
 msgstr "Nová doručovací adresa"
 
@@ -2898,6 +2934,9 @@ msgstr "Skupina práv"
 
 msgid "Role Groups"
 msgstr "Skupiny práv"
+
+msgid "Role group <strong>{{ roleGroupName }}</strong> cannot be deleted, because some customer users are using it"
+msgstr "Skupina práv <strong>{{ roleGroupName }}</strong> nelze smazat, protože je používana zákazníky"
 
 msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
 msgstr "Skupina práv nelze smazat, prodože jí někteří administrátoři používají: {{ names }}"

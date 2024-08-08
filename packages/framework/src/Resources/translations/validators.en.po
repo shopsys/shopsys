@@ -361,6 +361,9 @@ msgstr ""
 msgid "Please enter quantity"
 msgstr ""
 
+msgid "Please enter role name"
+msgstr ""
+
 msgid "Please enter street"
 msgstr ""
 
