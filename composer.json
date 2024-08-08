@@ -104,7 +104,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.5",
         "google/cloud-storage": "^1.10",
-        "gopay/payments-sdk-php": ">=1.4 <1.7",
+        "gopay/payments-sdk-php": "^1.7",
         "gordalina/cachetool": "^8.5",
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",

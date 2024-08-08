@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayClient
 {
-    public const RESPONSE_STATUS_CODE_OK = 200;
+    protected const int RESPONSE_STATUS_CODE_OK = 200;
 
     protected GoPay $goPay;
 
@@ -56,9 +56,9 @@ class GoPayClient
         if ($token->token) {
             return $this->goPay->call(
                 $urlPath,
-                $contentType,
                 'Bearer ' . $token->token,
                 $method,
+                $contentType,
                 $data,
             );
         }
@@ -98,11 +98,11 @@ class GoPayClient
 
         $response = $this->sendApiRequest($urlPath, GoPay::FORM, RequestMethods::GET);
 
-        if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
+        if ((int)$response->statusCode !== self::RESPONSE_STATUS_CODE_OK) {
             throw new GoPayPaymentDownloadException(
                 $this->goPay->buildUrl($urlPath),
                 RequestMethods::GET,
-                self::RESPONSE_STATUS_CODE_OK,
+                static::RESPONSE_STATUS_CODE_OK,
                 null,
                 $response,
             );
@@ -130,11 +130,11 @@ class GoPayClient
             $body,
         );
 
-        if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
+        if ((int)$response->statusCode !== self::RESPONSE_STATUS_CODE_OK) {
             throw new GoPayPaymentDownloadException(
                 $this->goPay->buildUrl($urlPath),
                 RequestMethods::POST,
-                self::RESPONSE_STATUS_CODE_OK,
+                static::RESPONSE_STATUS_CODE_OK,
                 $body,
                 $response,
             );
@@ -157,11 +157,11 @@ class GoPayClient
             RequestMethods::GET,
         );
 
-        if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
+        if ((int)$response->statusCode !== self::RESPONSE_STATUS_CODE_OK) {
             throw new GoPayPaymentDownloadException(
                 $this->goPay->buildUrl($urlPath),
                 RequestMethods::GET,
-                self::RESPONSE_STATUS_CODE_OK,
+                static::RESPONSE_STATUS_CODE_OK,
                 null,
                 $response,
             );
