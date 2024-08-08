@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception\CustomerUserRoleGroupNotFoundException;
 
 class CustomerUserRoleGroupRepository
@@ -94,5 +95,21 @@ class CustomerUserRoleGroupRepository
             ->addSelect('cugt')
             ->join('cug.translations', 'cugt', Join::WITH, 'cugt.locale = :locale')
             ->setParameter('locale', $locale);
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getCustomerUserCountByRoleGroup(int $id): int
+    {
+        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder
+            ->select('COUNT(cu.id)')
+            ->from(CustomerUser::class, 'cu')
+            ->where('cu.roleGroup = :roleGroup')
+            ->setParameter('roleGroup', $id);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 }

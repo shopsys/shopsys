@@ -41,6 +41,8 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_superadmin_customer_user_role_group_edit', ['id' => 'cug.id']);
+        $grid->addDeleteActionColumn('admin_superadmin_customer_user_role_group_delete', ['id' => 'cug.id'])
+            ->setConfirmMessage(t('Do you really want to remove this customer user role group?'));
 
         return $grid;
     }

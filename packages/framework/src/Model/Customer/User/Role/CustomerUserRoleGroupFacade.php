@@ -56,6 +56,16 @@ class CustomerUserRoleGroupFacade
     }
 
     /**
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        $customerUserRoleGroup = $this->customerUserRoleGroupRepository->getById($id);
+        $this->entityManager->remove($customerUserRoleGroup);
+        $this->entityManager->flush();
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup[]
      */
     public function getAll(): array
@@ -78,5 +88,14 @@ class CustomerUserRoleGroupFacade
     public function getById(int $id): CustomerUserRoleGroup
     {
         return $this->customerUserRoleGroupRepository->getById($id);
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getCustomerUserCountByRoleGroup(int $id): int
+    {
+        return $this->customerUserRoleGroupRepository->getCustomerUserCountByRoleGroup($id);
     }
 }

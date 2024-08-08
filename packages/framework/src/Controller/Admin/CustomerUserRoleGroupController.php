@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup\CustomerUserRoleGroupFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory;
@@ -116,5 +117,39 @@ class CustomerUserRoleGroupController extends AdminBaseController
             'form' => $form->createView(),
             'customerUserRoleGroup' => $customerUserRoleGroup,
         ]);
+    }
+
+    /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/superadmin/customer/role-group/delete/{id}', name: 'admin_superadmin_customer_user_role_group_delete', requirements: ['id' => '\d+'])]
+    public function deleteAction(int $id): Response
+    {
+        $customerUserRoleGroup = $this->customerUserRoleGroupFacade->getById($id);
+        $customerUserRoleGroupName = $customerUserRoleGroup->getName();
+        $customerUserCount = $this->customerUserRoleGroupFacade->getCustomerUserCountByRoleGroup($customerUserRoleGroup->getId());
+
+        if ($customerUserCount !== 0) {
+            $this->addErrorFlashTwig(
+                t('Role group <strong>{{ roleGroupName }}</strong> cannot be deleted, because some customer users are using it'),
+                [
+                    'roleGroupName' => $customerUserRoleGroupName,
+                ],
+            );
+
+            return $this->redirectToRoute('admin_superadmin_customer_user_role_group_list');
+        }
+
+        $this->customerUserRoleGroupFacade->delete($id);
+        $this->addSuccessFlashTwig(
+            t('Customer user role group <strong>{{ name }}</strong> deleted.'),
+            [
+                'name' => $customerUserRoleGroupName,
+            ],
+        );
+
+        return $this->redirectToRoute('admin_superadmin_customer_user_role_group_list');
     }
 }
