@@ -9,7 +9,7 @@ services:
             - nginx-conf:/etc/nginx/conf.d/
         labels:
             - traefik.backend=${BRANCH_NAME_ESCAPED}
-            - traefik.http.routers.${BRANCH_NAME_ESCAPED}.rule=Host(TRAEFIK_HOSTS)
+            - traefik.http.routers.${BRANCH_NAME_ESCAPED}.rule=Host(${TRAEFIK_HOSTS})
             - traefik.http.routers.${BRANCH_NAME_ESCAPED}.entrypoints=http,https
             - traefik.http.routers.${BRANCH_NAME_ESCAPED}.tls.certresolver=letsencrypt
             - traefik.http.services.${BRANCH_NAME_ESCAPED}.loadbalancer.server.port=8080
