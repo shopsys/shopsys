@@ -3,6 +3,14 @@
 {% block title %}- {{ 'Customer user role groups'|trans }}{% endblock %}
 {% block h1 %}{{ 'Customer user role groups'|trans }}{% endblock %}
 
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_superadmin_customer_user_role_group_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new customer user role group'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
 {% block main_content %}
     <div class="customer_user_role_group">
         {{ gridView.render() }}
