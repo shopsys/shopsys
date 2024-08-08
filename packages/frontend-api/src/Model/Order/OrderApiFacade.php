@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -121,5 +122,48 @@ class OrderApiFacade
 
         $order->setCustomerUser($customerUser);
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param int $offset
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getCustomerOrderLimitedList(
+        Customer $customer,
+        int $limit,
+        int $offset,
+    ): array {
+        return $this->orderRepository->getCustomerOrderLimitedList($customer, $limit, $offset);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return int
+     */
+    public function getCustomerOrderCount(Customer $customer): int
+    {
+        return $this->orderRepository->getCustomerOrderCount($customer);
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuidAndCustomer(string $uuid, Customer $customer): Order
+    {
+        return $this->orderRepository->getByUuidAndCustomer($uuid, $customer);
+    }
+
+    /**
+     * @param string $orderNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByOrderNumberAndCustomer(string $orderNumber, Customer $customer): Order
+    {
+        return $this->orderRepository->getByOrderNumberAndCustomer($orderNumber, $customer);
     }
 }

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionsType;
 use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyCompanyNameType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -111,6 +112,7 @@ class OrderFormType extends AbstractType
      */
     private function createBasicInformationGroup(FormBuilderInterface $builder, Order $order): FormBuilderInterface
     {
+        $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);
@@ -169,6 +171,14 @@ class OrderFormType extends AbstractType
                 'label' => t('Customer'),
                 'user' => $order->getCustomerUser(),
             ]);
+
+        if ($domainConfig->isB2b() && $order->getCustomer()?->getBillingAddress()->getCompanyNumber() !== null) {
+            $builderBasicInformationGroup
+                ->add('company', DisplayOnlyCompanyNameType::class, [
+                    'label' => t('Company'),
+                    'customer' => $order->getCustomer(),
+                ]);
+        }
 
         $builderBasicInformationGroup
             ->add('heurekaAgreement', DisplayOnlyType::class, [

@@ -69,6 +69,11 @@ class CustomerController extends AdminBaseController
     public function editAction(Request $request, int $id)
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
+        $customer = $customerUser->getCustomer();
+
+        if ($this->customerFacade->isB2bFeaturesEnabledByCustomer($customer)) {
+            return $this->redirectToRoute('admin_customer_user_edit', ['id' => $id]);
+        }
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
 
         $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
