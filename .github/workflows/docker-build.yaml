@@ -711,6 +711,18 @@ jobs:
         env:
             BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
+            GOPAY_GOID: ${{ secrets.GOPAY_GOID }}
+            GOPAY_CLIENTID: ${{ secrets.GOPAY_CLIENTID }}
+            GOPAY_CLIENTSECRET: ${{ secrets.GOPAY_CLIENTSECRET }}
+            PACKETERY_API_KEY_VALUE: ${{ secrets.PACKETERY_API_KEY }}
+            PACKETERY_API_PASSWORD_VALUE: ${{ secrets.PACKETERY_API_PASSWORD }}
+            FACEBOOK_CLIENTID: ${{ secrets.FACEBOOK_CLIENTID }}
+            FACEBOOK_CLIENTSECRET: ${{ secrets.FACEBOOK_CLIENTSECRET }}
+            GOOGLE_CLIENTID: ${{ secrets.GOOGLE_CLIENTID }}
+            GOOGLE_CLIENTSECRET: ${{ secrets.GOOGLE_CLIENTSECRET }}
+            SEZNAM_CLIENTID: ${{ secrets.SEZNAM_CLIENTID }}
+            SEZNAM_CLIENTSECRET: ${{ secrets.SEZNAM_CLIENTSECRET }}
+            GOOGLE_MAP_API_KEY_VALUE: ${{ secrets.GOOGLE_MAP_API_KEY }}
         steps:
             -   name: Create branch directory
                 run: |
@@ -747,20 +759,6 @@ jobs:
                 run: |
                     mv docker-compose.review.simplified.yml ${BRANCH_NAME}/docker-compose.yml
                     bash ./${BRANCH_NAME}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
-            -   name: Update docker-compose.yaml with secrets
-                run: |
-                    sed -i "s#GOPAY_GOID#${{ secrets.GOPAY_GOID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOPAY_CLIENTID#${{ secrets.GOPAY_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOPAY_CLIENTSECRET#${{ secrets.GOPAY_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#PACKETERY_API_KEY_VALUE#${{ secrets.PACKETERY_API_KEY }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#PACKETERY_API_PASSWORD_VALUE#${{ secrets.PACKETERY_API_PASSWORD }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#FACEBOOK_CLIENTID#${{ secrets.FACEBOOK_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#FACEBOOK_CLIENTSECRET#${{ secrets.FACEBOOK_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOOGLE_CLIENTID#${{ secrets.GOOGLE_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOOGLE_CLIENTSECRET#${{ secrets.GOOGLE_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#SEZNAM_CLIENTID#${{ secrets.SEZNAM_CLIENTID }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#SEZNAM_CLIENTSECRET#${{ secrets.SEZNAM_CLIENTSECRET }}#" "${BRANCH_NAME}/docker-compose.yml"
-                    sed -i "s#GOOGLE_MAP_API_KEY_VALUE#${{ secrets.GOOGLE_MAP_API_KEY }}#" "${BRANCH_NAME}/docker-compose.yml"
             -   name: Start project
                 run: |
                     cd ${BRANCH_NAME}
