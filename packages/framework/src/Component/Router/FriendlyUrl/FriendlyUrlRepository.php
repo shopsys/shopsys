@@ -12,8 +12,9 @@ class FriendlyUrlRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
@@ -78,6 +79,25 @@ class FriendlyUrlRepository
         ];
 
         return $this->getFriendlyUrlRepository()->findOneBy($criteria);
+    }
+
+    /**
+     * @param string $routeName
+     * @param int $entityId
+     * @return array<int, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null>
+     */
+    public function getMainFriendlyUrlsIndexedByDomains(string $routeName, int $entityId): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('f')
+            ->from(FriendlyUrl::class, 'f', 'f.domainId')
+            ->andWhere('f.routeName = :routeName')
+            ->setParameter('routeName', $routeName)
+            ->andWhere('f.entityId = :entityId')
+            ->setParameter('entityId', $entityId)
+            ->andWhere('f.main = TRUE')
+            ->getQuery()
+            ->getResult();
     }
 
     /**

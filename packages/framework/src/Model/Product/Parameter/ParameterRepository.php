@@ -116,13 +116,34 @@ class ParameterRepository
      */
     public function getAll(): array
     {
-        return $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Parameter::class, 'p')
-            ->join('p.translations', 'pt')
+        return $this->getAllQueryBuilder()
             ->orderBy('p.orderingPriority', 'DESC')
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getAllWithTranslations(string $locale): array
+    {
+        return $this->getAllQueryBuilder()
+            ->addSelect('pt')
+            ->join('p.translations', 'pt')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getAllQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Parameter::class, 'p');
     }
 
     /**

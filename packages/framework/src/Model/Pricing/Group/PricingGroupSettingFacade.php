@@ -46,6 +46,20 @@ class PricingGroupSettingFacade
     }
 
     /**
+     * @return array<int, int>
+     */
+    public function getAllDefaultPricingGroupsIdsIndexedByDomainId(): array
+    {
+        $defaultPricingGroupIdsByDomainId = [];
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $defaultPricingGroupIdsByDomainId[$domainId] = $this->setting->getForDomain(Setting::DEFAULT_PRICING_GROUP, $domainId);
+        }
+
+        return $defaultPricingGroupIdsByDomainId;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
     public function getDefaultPricingGroupByCurrentDomain()

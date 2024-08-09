@@ -75,6 +75,15 @@ class ParameterFacade
     }
 
     /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getAllWithTranslations(string $locale): array
+    {
+        return $this->parameterRepository->getAllWithTranslations($locale);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */

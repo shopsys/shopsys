@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter;
 
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData;
 use Symfony\Component\Form\AbstractType;
@@ -21,9 +22,12 @@ class ProductParameterValueFormType extends AbstractType
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(private readonly ParameterFacade $parameterFacade)
-    {
+    public function __construct(
+        private readonly ParameterFacade $parameterFacade,
+        private readonly Localization $localization,
+    ) {
     }
 
     /**
@@ -35,7 +39,7 @@ class ProductParameterValueFormType extends AbstractType
         $builder
             ->add('parameter', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->parameterFacade->getAll(),
+                'choices' => $this->parameterFacade->getAllWithTranslations($this->localization->getAdminLocale()),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [
