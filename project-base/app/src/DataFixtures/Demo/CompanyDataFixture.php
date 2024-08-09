@@ -221,7 +221,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
                     self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_PETER_KOVAC,
-                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER, CustomerUserRoleGroup::class),
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_LIMITED_USER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_FIRST_NAME => 'Eva',
