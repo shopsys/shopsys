@@ -6,13 +6,19 @@ query SearchProductsQuery(
     $pageSize: Int
     $isAutocomplete: Boolean!
     $userIdentifier: Uuid!
+    $parameters: [Uuid!] = []
 ) {
     productsSearch(
         after: $endCursor
         orderingMode: $orderingMode
         filter: $filter
         first: $pageSize
-        searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+            parameters: $parameters
+        }
     ) {
         orderingMode
         defaultOrderingMode
