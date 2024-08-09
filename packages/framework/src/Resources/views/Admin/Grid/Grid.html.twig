@@ -207,6 +207,8 @@
         {% set icon = 'pencil' %}
     {% elseif actionColumn.type == 'delete' %}
         {% set icon = 'trash' %}
+    {% elseif actionColumn.type == 'resetPassword' %}
+        {% set icon = 'letter' %}
     {% else %}
         {% set icon = actionColumn.type %}
     {% endif %}

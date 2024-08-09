@@ -27,20 +27,6 @@ class CustomerUserDataFactory
     }
 
     /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
-     */
-    public function createWithArgument(Argument $argument): CustomerUserData
-    {
-        $input = $argument['input'];
-
-        $domainId = $this->domain->getId();
-        $customerUserData = $this->customerUserDataFactory->createForDomainId($domainId);
-
-        return $this->mapInputDataToCustomerUserData($input, $customerUserData);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
@@ -50,6 +36,7 @@ class CustomerUserDataFactory
         $input = $argument['input'];
 
         $customerUserData = $this->customerUserDataFactory->createForCustomerWithPresetPricingGroup($customer);
+        $customerUserData->sendRegistrationMail = true;
 
         return $this->mapInputDataToCustomerUserData($input, $customerUserData);
     }

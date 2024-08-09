@@ -103,7 +103,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('Login')}</h1>
+            <h1 className="max-w-3xl w-full">{t('Set new password')}</h1>
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="w-full flex justify-center"

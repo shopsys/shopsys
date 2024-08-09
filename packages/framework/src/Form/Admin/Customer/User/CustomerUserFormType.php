@@ -16,16 +16,14 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -178,30 +176,14 @@ class CustomerUserFormType extends AbstractType
                 'label' => t('Telephone'),
             ]);
 
-        $builderRegisteredCustomerGroup = $builder->create('registeredCustomer', GroupType::class, [
-            'label' => t('Registered cust.'),
-        ]);
-
-        $builderRegisteredCustomerGroup
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
+        if ($this->customerUser === null) {
+            $builderPersonalDataGroup->add('sendRegistrationMail', CheckboxType::class, [
                 'required' => false,
-                'options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                ],
-                'first_options' => [
-                    'constraints' => [
-                        new Constraints\Length(
-                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
-                        ),
-                    ],
-                    'label' => t('Password'),
-                ],
-                'second_options' => [
-                    'label' => t('Password again'),
-                ],
-                'invalid_message' => 'Passwords do not match',
+                'label' => t('Send confirmation email about registration to customer'),
+                'position' => ['after' => 'email'],
             ]);
+        }
+
 
         if ($this->customerUser instanceof CustomerUser) {
             $builderSystemDataGroup->add('createdAt', DisplayOnlyType::class, [
@@ -209,7 +191,7 @@ class CustomerUserFormType extends AbstractType
                 'data' => $this->dateTimeFormatterExtension->formatDateTime($this->customerUser->getCreatedAt()),
             ]);
 
-            $builderRegisteredCustomerGroup->add('lastLogin', DisplayOnlyType::class, [
+            $builderSystemDataGroup->add('lastLogin', DisplayOnlyType::class, [
                 'label' => t('Last login'),
                 'data' => $this->customerUser->getLastLogin() !== null ? $this->dateTimeFormatterExtension->formatDateTime(
                     $this->customerUser->getLastLogin(),
@@ -221,8 +203,7 @@ class CustomerUserFormType extends AbstractType
 
         $builder
             ->add($builderSystemDataGroup)
-            ->add($builderPersonalDataGroup)
-            ->add($builderRegisteredCustomerGroup);
+            ->add($builderPersonalDataGroup);
 
         if ($options['renderSaveButton']) {
             $builder->add('save', SubmitType::class);

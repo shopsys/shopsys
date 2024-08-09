@@ -229,6 +229,7 @@ security:
         - { path: ^/%admin_url%/billing-address/edit, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/edit-personal-data/, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/new-customer-user/, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/admin_customer_send_reset_password/, roles: ROLE_CUSTOMER_VIEW }
         - { path: ^/%admin_url%/delivery-address/edit, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/delivery-address/new, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/, roles: ROLE_CUSTOMER_VIEW }

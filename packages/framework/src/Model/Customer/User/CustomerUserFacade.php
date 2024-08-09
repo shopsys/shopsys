@@ -83,54 +83,40 @@ class CustomerUserFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function register(CustomerUserData $customerUserData)
+    public function create(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->createCustomerWithBillingAddress(
-            $customerUserData->domainId,
-            $this->billingAddressDataFactory->create(),
-        );
+        $customer = $this->createCustomerWithAddresses($customerUserUpdateData);
 
-        $customerUser = $this->createCustomerUser($customer, $customerUserData);
-
-        $this->customerMailFacade->sendRegistrationMail($customerUser);
-
-        return $customerUser;
+        return $this->createCustomerUserWithRegistrationMail($customer, $customerUserUpdateData->customerUserData);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function create(CustomerUserUpdateData $customerUserUpdateData)
+    public function createWithActivationMail(CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customer = $this->createCustomerWithBillingAddress(
-            $customerUserUpdateData->customerUserData->domainId,
-            $customerUserUpdateData->billingAddressData,
-        );
+        $customer = $this->createCustomerWithAddresses($customerUserUpdateData);
 
-        if (
-            $customerUserUpdateData->deliveryAddressData
-            && $customerUserUpdateData->deliveryAddressData->addressFilled
-        ) {
-            $customerUserUpdateData->deliveryAddressData->customer = $customer;
-            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled($customerUserUpdateData->deliveryAddressData);
+        return $this->createCustomerUserWithActivationMail($customer, $customerUserUpdateData->customerUserData);
+    }
 
-            $customerData = $this->customerDataFactory->createFromCustomer($customer);
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    protected function createCustomerUserWithRegistrationMail(
+        Customer $customer,
+        CustomerUserData $customerUserData,
+    ): CustomerUser {
+        $customerUserData->customer = $customer;
+        $customerUser = $this->createCustomerUser($customer, $customerUserData);
 
-            if ($deliveryAddress !== null) {
-                $customerData->deliveryAddresses[] = $deliveryAddress;
-            }
-            $this->customerFacade->edit($customer->getId(), $customerData);
-
-            $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
-        }
-
-        $customerUser = $this->createCustomerUser($customer, $customerUserUpdateData->customerUserData);
-
-        if ($customerUserUpdateData->sendRegistrationMail) {
+        if ($customerUserData->sendRegistrationMail) {
             $this->customerMailFacade->sendRegistrationMail($customerUser);
         }
 
@@ -142,7 +128,26 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function createCustomerUser(
+    public function createCustomerUserWithActivationMail(
+        Customer $customer,
+        CustomerUserData $customerUserData,
+    ): CustomerUser {
+        $customerUserData->customer = $customer;
+        $customerUser = $this->createCustomerUser($customer, $customerUserData);
+
+        if ($customerUserData->sendRegistrationMail) {
+            $this->sendActivationMail($customerUser);
+        }
+
+        return $customerUser;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    protected function createCustomerUser(
         Customer $customer,
         CustomerUserData $customerUserData,
     ): CustomerUser {
@@ -447,5 +452,38 @@ class CustomerUserFacade
         $this->em->flush();
 
         return $customerUser;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
+     */
+    protected function createCustomerWithAddresses(CustomerUserUpdateData $customerUserUpdateData): Customer
+    {
+        $customer = $this->createCustomerWithBillingAddress(
+            $customerUserUpdateData->customerUserData->domainId,
+            $customerUserUpdateData->billingAddressData,
+        );
+
+        if (
+            $customerUserUpdateData->deliveryAddressData
+            && $customerUserUpdateData->deliveryAddressData->addressFilled
+        ) {
+            $customerUserUpdateData->deliveryAddressData->customer = $customer;
+            $deliveryAddress = $this->deliveryAddressFacade->createIfAddressFilled(
+                $customerUserUpdateData->deliveryAddressData,
+            );
+
+            $customerData = $this->customerDataFactory->createFromCustomer($customer);
+
+            if ($deliveryAddress !== null) {
+                $customerData->deliveryAddresses[] = $deliveryAddress;
+            }
+            $this->customerFacade->edit($customer->getId(), $customerData);
+
+            $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
+        }
+
+        return $customer;
     }
 }

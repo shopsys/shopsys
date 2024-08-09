@@ -34,6 +34,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustom
  * @method sendActivationMail(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method setDefaultDeliveryAddress(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Customer\DeliveryAddress $deliveryAddress)
  * @method \App\Model\Customer\User\CustomerUser editCustomerUser(int $id, \App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method \Shopsys\FrameworkBundle\Model\Customer\Customer createCustomerWithAddresses(\App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData)
+ * @method \App\Model\Customer\User\CustomerUser createCustomerUserWithRegistrationMail(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, \App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method \App\Model\Customer\User\CustomerUser createWithActivationMail(\App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData)
+ * @method \App\Model\Customer\User\CustomerUser createCustomerUserWithActivationMail(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, \App\Model\Customer\User\CustomerUserData $customerUserData)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {

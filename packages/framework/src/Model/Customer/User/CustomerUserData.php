@@ -71,7 +71,13 @@ class CustomerUserData
      */
     public $roleGroup;
 
+    /**
+     * @var bool
+     */
+    public $sendRegistrationMail;
+
     public function __construct()
     {
+        $this->sendRegistrationMail = false;
     }
 }

@@ -2800,9 +2800,6 @@ msgstr "Refundovatelná částka"
 msgid "Refunded amount"
 msgstr "Refundovaná částka"
 
-msgid "Registered cust."
-msgstr "Registrovaní zák."
-
 msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
 
@@ -2817,6 +2814,9 @@ msgstr "Smazáno %dataType%: \"%readableValue%\""
 
 msgid "Reset filter"
 msgstr "Zrušit filtr"
+
+msgid "Reset password request was sent to <strong>{{ email }}</strong>"
+msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
 
 msgid "Return back"
 msgstr "Vrátit zpět"
@@ -3064,6 +3064,9 @@ msgstr "Pošlete mi ověřovací kód"
 msgid "Send refund and save order"
 msgstr "Odeslat refundaci a uložit objednávku"
 
+msgid "Send reset password"
+msgstr "Odeslat email pro reset hesla"
+
 msgid "Sending emails off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
@@ -3297,6 +3300,9 @@ msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky při�
 
 msgid "This will remove all customer related data (users, addresses etc.). Do you really want to remove this company?"
 msgstr "Tím se odstraní všechna související data (uživatelé, adresy atd.). Opravdu chcete odstranit tuto firmu?"
+
+msgid "This will send an email to customer user for resetting password. Do you really want to send it ?"
+msgstr "Tím se zákazníkovi odešle e-mail pro resetování hesla. Opravdu to chcete poslat?"
 
 msgid "Thursday"
 msgstr "Čtvrtek"

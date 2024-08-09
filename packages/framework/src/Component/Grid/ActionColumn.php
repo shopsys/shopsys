@@ -12,6 +12,7 @@ class ActionColumn
 {
     public const TYPE_DELETE = 'delete';
     public const TYPE_EDIT = 'edit';
+    public const TYPE_RESET_PASSWORD = 'resetPassword';
 
     protected string $type;
 
@@ -133,7 +134,7 @@ class ActionColumn
             $parameters[$key] = Grid::getValueFromRowBySourceColumnName($row, $sourceColumnName);
         }
 
-        if ($this->type === self::TYPE_DELETE) {
+        if ($this->type === self::TYPE_DELETE || $this->type === self::TYPE_RESET_PASSWORD) {
             $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(
                 $this->route,
             );

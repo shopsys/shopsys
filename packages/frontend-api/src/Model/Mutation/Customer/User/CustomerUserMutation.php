@@ -196,7 +196,7 @@ class CustomerUserMutation extends BaseTokenMutation
         $customer = $customerUser->getCustomer();
         $customerUserData = $this->customerUserDataFactory->createNewForCustomerWithArgument($customer, $argument);
 
-        return $this->customerUserFacade->createCustomerUser($customer, $customerUserData);
+        return $this->customerUserFacade->createCustomerUserWithActivationMail($customer, $customerUserData);
     }
 
     /**
