@@ -495,7 +495,7 @@
                 </exec>
                 <exec executable="php" escape="false" passthru="true">
                     <arg value="-r"/>
-                    <arg value="echo 'File generated: ${path.upgrade-notes}/storefront_${currentDate}.md');"/>
+                    <arg value="echo 'File generated: ${path.upgrade-notes}/storefront_${currentDate}.md';"/>
                 </exec>
             </then>
         </if>
