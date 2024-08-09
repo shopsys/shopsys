@@ -197,7 +197,7 @@ const useHandleEventsAfterOrderCreation = () => {
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
 
     const handleEventsAfterOrderCreation = (orderNumber: string) => {
-        if (cart && payment && promoCode) {
+        if (cart && payment) {
             const gtmCreateOrderEventOrderPart = getGtmCreateOrderEventOrderPart(
                 cart,
                 payment,
