@@ -17,9 +17,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class CustomerUserRoleGroup extends AbstractTranslatableEntity
 {
-    public const DEFAULT_ROLE_GROUP_NAME = 'Owner';
-    public const USER_ROLE_GROUP_NAME = 'User';
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
