@@ -28,7 +28,7 @@ export type CurrentCustomerType = {
     street: string;
     city: string;
     postcode: string;
-    country: TypeCountryFragment;
+    country: TypeCountryFragment | null;
     newsletterSubscription: boolean;
     companyName: string;
     companyNumber: string;

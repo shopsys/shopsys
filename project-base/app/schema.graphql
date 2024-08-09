@@ -573,7 +573,7 @@ type CompanyCustomerUser implements CustomerUser {
   "The customer’s company tax number (only when customer is a company)"
   companyTaxNumber: String
   "Billing address country"
-  country: Country!
+  country: Country
   "Default customer delivery addresses"
   defaultDeliveryAddress: DeliveryAddress
   "List of delivery addresses"
@@ -633,7 +633,7 @@ interface CustomerUser {
   "city name"
   city: String
   "Billing address country"
-  country: Country!
+  country: Country
   "Default customer delivery addresses"
   defaultDeliveryAddress: DeliveryAddress
   "List of delivery addresses"
@@ -1872,7 +1872,7 @@ type RegularCustomerUser implements CustomerUser {
   "city name"
   city: String
   "Billing address country"
-  country: Country!
+  country: Country
   "Default customer delivery addresses"
   defaultDeliveryAddress: DeliveryAddress
   "List of delivery addresses"

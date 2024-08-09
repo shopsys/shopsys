@@ -707,7 +707,7 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   /** The customer’s company tax number (only when customer is a company) */
   companyTaxNumber: Maybe<Scalars['String']['output']>;
   /** Billing address country */
-  country: TypeCountry;
+  country: Maybe<TypeCountry>;
   /** Default customer delivery addresses */
   defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
   /** List of delivery addresses */
@@ -769,7 +769,7 @@ export type TypeCustomerUser = {
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
-  country: TypeCountry;
+  country: Maybe<TypeCountry>;
   /** Default customer delivery addresses */
   defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
   /** List of delivery addresses */
@@ -2500,7 +2500,7 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   /** city name */
   city: Maybe<Scalars['String']['output']>;
   /** Billing address country */
-  country: TypeCountry;
+  country: Maybe<TypeCountry>;
   /** Default customer delivery addresses */
   defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
   /** List of delivery addresses */

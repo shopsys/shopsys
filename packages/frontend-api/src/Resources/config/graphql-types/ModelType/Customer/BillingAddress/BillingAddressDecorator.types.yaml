@@ -16,5 +16,5 @@ BillingAddressDecorator:
                 type: "String"
                 description: "zip code"
             country:
-                type: "Country!"
+                type: "Country"
                 description: "Billing address country"

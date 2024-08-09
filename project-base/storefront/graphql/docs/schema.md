@@ -3665,7 +3665,7 @@ The customer’s company tax number (only when customer is a company)
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#country">Country</a>!</td>
+<td valign="top"><a href="#country">Country</a></td>
 <td>
 
 Billing address country
@@ -6806,7 +6806,7 @@ city name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#country">Country</a>!</td>
+<td valign="top"><a href="#country">Country</a></td>
 <td>
 
 Billing address country
@@ -10531,7 +10531,7 @@ city name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#country">Country</a>!</td>
+<td valign="top"><a href="#country">Country</a></td>
 <td>
 
 Billing address country

@@ -8,7 +8,7 @@ import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefau
 type NativeProps = ExtractNativePropsFromDefault<
     Props,
     'options' | 'onChange',
-    'defaultValue' | 'value' | 'isDisabled' | 'id'
+    'defaultValue' | 'value' | 'isDisabled' | 'id' | 'required'
 >;
 
 type SelectProps = NativeProps & {
