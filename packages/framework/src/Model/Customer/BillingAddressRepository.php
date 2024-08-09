@@ -58,4 +58,19 @@ class BillingAddressRepository
             ->setParameter('domainId', $domainId)
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
+     */
+    public function getByUuid(string $uuid): BillingAddress
+    {
+        $billingAddress = $this->getBillingAddressRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($billingAddress === null) {
+            throw new BillingAddressNotFoundException('Billing address with UUID ' . $uuid . ' not found.');
+        }
+
+        return $billingAddress;
+    }
 }

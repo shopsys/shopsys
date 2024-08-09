@@ -32,6 +32,11 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
             $code = $error->getCode();
         }
 
+        if ($error->getMessage() === 'Access denied to this field.') {
+            $userCode = 'access-denied';
+            $code = 403;
+        }
+
         if ($userCode === null && $code === null) {
             $code = 500;
         }

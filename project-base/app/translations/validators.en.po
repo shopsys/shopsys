@@ -10,12 +10,6 @@ msgstr ""
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "City name cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Company name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -26,9 +20,6 @@ msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
 msgid "Flag name cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Image can be only in JPG or PNG format"
@@ -55,19 +46,10 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr ""
 
-msgid "Please check Tax number format"
-msgstr ""
-
-msgid "Please choose country"
-msgstr ""
-
 msgid "Please choose image"
 msgstr ""
 
 msgid "Please enter GTM ID"
-msgstr ""
-
-msgid "Please enter company name"
 msgstr ""
 
 msgid "Please enter email"
@@ -83,9 +65,6 @@ msgid "Please enter flag color"
 msgstr ""
 
 msgid "Please enter flag name in all languages"
-msgstr ""
-
-msgid "Please enter identification number"
 msgstr ""
 
 msgid "Please enter last name"
@@ -112,22 +91,7 @@ msgstr ""
 msgid "Please enter video ID"
 msgstr ""
 
-msgid "Please enter your city"
-msgstr ""
-
 msgid "Please enter your email address"
-msgstr ""
-
-msgid "Please enter your postal code"
-msgstr ""
-
-msgid "Please enter your street"
-msgstr ""
-
-msgid "Please fill in numbers only"
-msgstr ""
-
-msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Product prefix name cannot be longer than {{ limit }} characters"
@@ -143,18 +107,6 @@ msgid "Provided hash is not valid."
 msgstr ""
 
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
-msgstr ""
-
-msgid "Street and house number must contain a number"
-msgstr ""
-
-msgid "Street and house number must contain letters"
-msgstr ""
-
-msgid "Street cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Telephone number cannot be longer than {{ limit }} characters"

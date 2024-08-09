@@ -1,0 +1,4 @@
+AddNewCustomerUserDataInput:
+    type: input-object
+    inherits:
+        - 'AddNewCustomerUserDataInputDecorator'

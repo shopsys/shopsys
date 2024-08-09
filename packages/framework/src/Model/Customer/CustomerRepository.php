@@ -10,6 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 
 class CustomerRepository
 {
@@ -92,5 +93,27 @@ class CustomerRepository
             ->join(CustomerUser::class, 'cu', Join::WITH, 'cu.customer = c')
             ->where('c = :customer')
             ->setParameter('customer', $customer);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup $customerUserRoleGroup
+     * @return int
+     */
+    public function getCountOfCustomerUsersByCustomerUserRoleGroup(
+        Customer $customer,
+        CustomerUserRoleGroup $customerUserRoleGroup,
+    ): int {
+        return (int)$this->em
+            ->createQueryBuilder()
+            ->select('count(cu.id)')
+            ->from(Customer::class, 'c')
+            ->join(CustomerUser::class, 'cu', Join::WITH, 'cu.customer = c')
+            ->where('c = :customer')
+            ->andWhere('cu.roleGroup = :roleGroup')
+            ->setParameter('customer', $customer)
+            ->setParameter('roleGroup', $customerUserRoleGroup)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

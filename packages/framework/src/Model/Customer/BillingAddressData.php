@@ -61,6 +61,11 @@ class BillingAddressData
      */
     public $activated;
 
+    /**
+     * @var string|null
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->companyCustomer = false;

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception\CustomerUserRoleGroupNotFoundException;
 
-class CustomerUserRoleGroupDataRepository
+class CustomerUserRoleGroupRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -42,6 +42,21 @@ class CustomerUserRoleGroupDataRepository
 
         if ($roleGroup === null) {
             throw new CustomerUserRoleGroupNotFoundException('Role group with ID ' . $id . ' not found.');
+        }
+
+        return $roleGroup;
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
+     */
+    public function getByUuid(string $uuid): CustomerUserRoleGroup
+    {
+        $roleGroup = $this->getCustomerUserRoleGroupRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($roleGroup === null) {
+            throw new CustomerUserRoleGroupNotFoundException('Role group with UUID ' . $uuid . ' not found.');
         }
 
         return $roleGroup;

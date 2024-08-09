@@ -4,11 +4,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Billing address company number {{ company_number }} already exists. Contact customer support."
+msgstr "Fakturační adresa s IČO {{ company_number }} již existuje. Kontaktujte zákaznickou podporu."
+
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Název města nesmí být delší než {{ limit }} znaků"
 
 msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
+
+msgid "Customer role group cannot be changed."
+msgstr "Skupinu rolí zákazníka nelze změnit."
+
+msgid "Customer role group not found."
+msgstr "Skupina rolí zákazníka neexistuje"
 
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
@@ -115,8 +124,14 @@ msgstr "Vyplňte prosím telefon"
 msgid "Please enter the message"
 msgstr "Vyplňte prosím zprávu"
 
+msgid "Please enter uuid"
+msgstr "Vyplňte prosím uuid"
+
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
+
+msgid "Please enter your city"
+msgstr "Vyplňte prosím své město"
 
 msgid "Please enter your email address"
 msgstr "Prosím zadejte svůj e-mail"
@@ -124,11 +139,20 @@ msgstr "Prosím zadejte svůj e-mail"
 msgid "Please enter your name"
 msgstr "Vyplňte prosím své jméno"
 
+msgid "Please enter your postal code"
+msgstr "Vyplňte prosím PSČ"
+
+msgid "Please enter your street"
+msgstr "Vyplňte prosím ulici"
+
 msgid "Please enter zip code"
 msgstr "Vyplňte prosím PSČ"
 
 msgid "Please fill in numbers only"
 msgstr "Prosím vyplňte pouze čísla"
+
+msgid "Postcode cannot be longer than {{ limit }} characters"
+msgstr "PSČ nemůže být delší než {{ limit }} znaků"
 
 msgid "Promo code is already applied in the current cart."
 msgstr "Promo kód je již použit v aktuálním košíku."
@@ -156,6 +180,15 @@ msgstr "Cena vybrané dopravy se změnila"
 
 msgid "Selected transport weight limit has been exceeded"
 msgstr "Váhový limit vybrané dopravy byl překročen"
+
+msgid "Street and house number must contain a number"
+msgstr "Ulice a číslo domu musí obsahovat číslo"
+
+msgid "Street and house number must contain letters"
+msgstr "Ulice a číslo domu musí obsahovat písmena"
+
+msgid "Street cannot be longer than {{ limit }} characters"
+msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
 
 msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr "Název ulice nesmí být delší než {{ limit }} znaků"

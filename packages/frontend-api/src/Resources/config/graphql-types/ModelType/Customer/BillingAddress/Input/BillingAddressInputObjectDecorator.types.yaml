@@ -3,6 +3,10 @@ BillingAddressInputObjectDecorator:
     decorator: true
     config:
         fields:
+            billingAddressUuid:
+                type: "Uuid"
+                description: "UUID"
+                defaultValue: null
             street:
                 type: "String!"
                 description: "Billing address street name (will be on the tax invoice)"

@@ -1,0 +1,8 @@
+RemoveCustomerUserDataInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            customerUserUuid:
+                type: "Uuid!"
+                description: "Customer user UUID"

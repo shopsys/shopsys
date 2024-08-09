@@ -259,3 +259,13 @@ QueryDecorator:
                 type: '[Country!]!'
                 resolve: "@=query('countriesQuery')"
                 description: "Returns available countries"
+            customerUsers:
+                type: '[CustomerUser!]!'
+                resolve: "@=query('customerUsersQuery')"
+                access: "@=isGranted('ROLE_API_ALL')"
+                description: "Returns all customer users assigned to the current customer"
+            customerUserRoleGroups:
+                type: '[CustomerUserRoleGroup!]!'
+                resolve: "@=query('customerUserRoleGroupsQuery')"
+                access: "@=isGranted('is_company_owner_voter')"
+                description: "Returns all customer user role groups"

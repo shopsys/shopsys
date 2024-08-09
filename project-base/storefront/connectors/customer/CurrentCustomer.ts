@@ -17,6 +17,7 @@ export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined
         companyCustomer: isCompanyCustomer,
         firstName: currentCustomerUser.firstName ?? '',
         lastName: currentCustomerUser.lastName ?? '',
+        billingAddressUuid: currentCustomerUser.billingAddressUuid,
         street: currentCustomerUser.street ?? '',
         city: currentCustomerUser.city ?? '',
         postcode: currentCustomerUser.postcode ?? '',

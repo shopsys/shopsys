@@ -10,12 +10,6 @@ msgstr "Pole hodnot (\"values\") není podporováno jako vstup pro parametry typ
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
-msgid "City name cannot be longer than {{ limit }} characters"
-msgstr "Název města nesmí být delší než {{ limit }} znaků"
-
-msgid "Company name cannot be longer than {{ limit }} characters"
-msgstr "Název společnosti nesmí být delší než {{ limit }} znaků"
-
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
@@ -27,9 +21,6 @@ msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, n
 
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr "Název příznaku nemůže být delší než {{ limit }} znaků"
-
-msgid "Identification number cannot be longer than {{ limit }} characters"
-msgstr "IČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Image can be only in JPG or PNG format"
 msgstr "Obrázek může být pouze ve formátu JPG nebo PNG"
@@ -55,20 +46,11 @@ msgstr "Heslo musí být delší alespoň {{ limit }} znaků dlouhé"
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
 
-msgid "Please check Tax number format"
-msgstr "Prosím zkontrolujte formát DIČ"
-
-msgid "Please choose country"
-msgstr "Prosím vyberte stát"
-
 msgid "Please choose image"
 msgstr "Vyberte prosím obrázek"
 
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
-
-msgid "Please enter company name"
-msgstr "Vyplňte prosím název společnosti"
 
 msgid "Please enter email"
 msgstr "Vyplňte prosím e-mail"
@@ -84,9 +66,6 @@ msgstr "Vyplňte prosím barvu příznaku"
 
 msgid "Please enter flag name in all languages"
 msgstr "Prosím zadejte název příznaku ve všech jazycích"
-
-msgid "Please enter identification number"
-msgstr "Prosím vyplňte IČ"
 
 msgid "Please enter last name"
 msgstr "Vyplňte prosím příjmení"
@@ -112,23 +91,8 @@ msgstr "Vyplňte prosím platný e-mail"
 msgid "Please enter video ID"
 msgstr "Prosím vyplňte ID videa"
 
-msgid "Please enter your city"
-msgstr "Prosím vyplňte vaše město"
-
 msgid "Please enter your email address"
 msgstr "Vyplňte prosím e-mail"
-
-msgid "Please enter your postal code"
-msgstr "Prosím vyplňte vaše PSČ"
-
-msgid "Please enter your street"
-msgstr "Prosím vyplňte vaši ulici s popisným číslem."
-
-msgid "Please fill in numbers only"
-msgstr "Prosím vyplňte pouze čísla"
-
-msgid "Postcode cannot be longer than {{ limit }} characters"
-msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Product prefix name cannot be longer than {{ limit }} characters"
 msgstr "Prefix produktu nesmí být delší než {{ limit }} znaků"
@@ -144,18 +108,6 @@ msgstr "Zadaný hash není validní."
 
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
-
-msgid "Street and house number must contain a number"
-msgstr "Ulice a číslo popisná musí obsahovat čísla"
-
-msgid "Street and house number must contain letters"
-msgstr "Ulice a číslo popisná musí obsahovat znaky"
-
-msgid "Street cannot be longer than {{ limit }} characters"
-msgstr "Ulice a č. popisné nesmí být delší než {{ limit }} znaků"
-
-msgid "Tax number cannot be longer than {{ limit }} characters"
-msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Telefonní číslo nesmí být delší než {{ limit }} znaků"

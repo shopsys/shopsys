@@ -1,6 +1,8 @@
 CurrentCustomerUserDecorator:
     type: interface
     decorator: true
+    inherits:
+        - 'BillingAddressDecorator'
     heirs:
         - 'CompanyCustomerUser'
         - 'RegularCustomerUser'
@@ -25,18 +27,6 @@ CurrentCustomerUserDecorator:
             newsletterSubscription:
                 type: "Boolean!"
                 description: "Whether customer user receives newsletters or not"
-            street:
-                type: "String"
-                description: "Billing address street name"
-            city:
-                type: "String"
-                description: "Billing address city name"
-            postcode:
-                type: "String"
-                description: "Billing address zip code"
-            country:
-                type: "Country!"
-                description: "Billing address country"
             defaultDeliveryAddress:
                 type: "DeliveryAddress"
                 description: "Default customer delivery addresses"
@@ -49,3 +39,8 @@ CurrentCustomerUserDecorator:
             hasPasswordSet:
                 type: "Boolean!"
                 description: "Whether the customer user has password set or not"
+            roles:
+                type: "[String!]!"
+            roleGroup:
+                type: "CustomerUserRoleGroup!"
+                description: "The customer user role group"

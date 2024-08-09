@@ -15,4 +15,9 @@ class CustomerUserRoleGroupData
      * @var string[]
      */
     public $roles;
+
+    /**
+     * @var string|null
+     */
+    public $uuid;
 }

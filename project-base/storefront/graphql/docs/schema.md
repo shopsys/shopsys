@@ -37,6 +37,7 @@
     * [CompanyCustomerUser](#companycustomeruser)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
+    * [CustomerUserRoleGroup](#customeruserrolegroup)
     * [DeliveryAddress](#deliveryaddress)
     * [Flag](#flag)
     * [FlagFilterOption](#flagfilteroption)
@@ -97,6 +98,7 @@
     * [Variant](#variant)
     * [VideoToken](#videotoken)
   * [Inputs](#inputs)
+    * [AddNewCustomerUserDataInput](#addnewcustomeruserdatainput)
     * [AddOrderItemsToCartInput](#addorderitemstocartinput)
     * [AddToCartInput](#addtocartinput)
     * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
@@ -108,6 +110,7 @@
     * [ChangeTransportInCartInput](#changetransportincartinput)
     * [ContactFormInput](#contactforminput)
     * [DeliveryAddressInput](#deliveryaddressinput)
+    * [EditCustomerUserPersonalDataInput](#editcustomeruserpersonaldatainput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
     * [OrderInput](#orderinput)
@@ -119,6 +122,7 @@
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationDataInput](#registrationdatainput)
+    * [RemoveCustomerUserDataInput](#removecustomeruserdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
     * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
     * [SearchInput](#searchinput)
@@ -529,6 +533,24 @@ Returns available countries
 <td>
 
 Returns currently logged in customer user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>customerUserRoleGroups</strong></td>
+<td valign="top">[<a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!]!</td>
+<td>
+
+Returns all customer user role groups
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>customerUsers</strong></td>
+<td valign="top">[<a href="#customeruser">CustomerUser</a>!]!</td>
+<td>
+
+Returns all customer users assigned to the current customer
 
 </td>
 </tr>
@@ -1152,6 +1174,20 @@ Returns available transport methods based on the current cart state
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>AddNewCustomerUser</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td>
+
+Add new customer user to customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#addnewcustomeruserdatainput">AddNewCustomerUserDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>AddOrderItemsToCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
@@ -1334,6 +1370,20 @@ Delete delivery address by Uuid
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>EditCustomerUserPersonalData</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td>
+
+edit customer user to customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#editcustomeruserpersonaldatainput">EditCustomerUserPersonalDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>EditDeliveryAddress</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
@@ -1438,6 +1488,20 @@ Register new customer user
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#registrationdatainput">RegistrationDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RemoveCustomerUser</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+delete customer user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#removecustomeruserdatainput">RemoveCustomerUserDataInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -3555,11 +3619,20 @@ Represents an currently logged customer user
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address city name
+city name
 
 </td>
 </tr>
@@ -3667,7 +3740,7 @@ Whether customer user receives newsletters or not
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address zip code
+zip code
 
 </td>
 </tr>
@@ -3681,11 +3754,25 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
+<td>
+
+The customer user role group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roles</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address street name
+street name
 
 </td>
 </tr>
@@ -3771,6 +3858,39 @@ Localized country name
 <td colspan="2" valign="top"><strong>orderCreated</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### CustomerUserRoleGroup
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user group name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -6667,11 +6787,20 @@ Represents an currently logged customer user
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address city name
+city name
 
 </td>
 </tr>
@@ -6752,7 +6881,7 @@ Whether customer user receives newsletters or not
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address zip code
+zip code
 
 </td>
 </tr>
@@ -6766,11 +6895,25 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
+<td>
+
+The customer user role group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roles</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address street name
+street name
 
 </td>
 </tr>
@@ -8335,6 +8478,65 @@ UUID
 
 ## Inputs
 
+### AddNewCustomerUserDataInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user email.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roleGroupUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Customer user role group uuid.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's telephone number
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### AddOrderItemsToCartInput
 
 <table>
@@ -8615,6 +8817,15 @@ UUID of a payment that should be assigned to the order.
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
@@ -8897,6 +9108,65 @@ Delivery address telephone
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### EditCustomerUserPersonalDataInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>customerUserUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roleGroupUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Customer user role group uuid.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's telephone number
 
 </td>
 </tr>
@@ -9525,6 +9795,15 @@ Represents the main input object to register customer user
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
@@ -9674,6 +9953,29 @@ Billing address street name (will be on the tax invoice)
 <td>
 
 The customer's telephone number
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### RemoveCustomerUserDataInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>customerUserUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Customer user UUID
 
 </td>
 </tr>
@@ -10210,11 +10512,20 @@ Represents an currently logged customer user
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address city name
+city name
 
 </td>
 </tr>
@@ -10295,7 +10606,7 @@ Whether customer user receives newsletters or not
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address zip code
+zip code
 
 </td>
 </tr>
@@ -10309,11 +10620,25 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
+<td>
+
+The customer user role group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roles</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Billing address street name
+street name
 
 </td>
 </tr>

@@ -33,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustom
  * @method addRefreshTokenChain(\App\Model\Customer\User\CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, \DateTime $tokenExpiration, \App\Model\Administrator\Administrator|null $administrator)
  * @method sendActivationMail(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method setDefaultDeliveryAddress(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Customer\DeliveryAddress $deliveryAddress)
+ * @method \App\Model\Customer\User\CustomerUser editCustomerUser(int $id, \App\Model\Customer\User\CustomerUserData $customerUserData)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {

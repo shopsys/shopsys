@@ -1,0 +1,25 @@
+AddNewCustomerUserDataInputDecorator:
+    type: input-object
+    inherits:
+        - 'ChangePersonalDataInputDecorator'
+        - 'TelephoneInputObjectDecorator'
+    config:
+        fields:
+            email:
+                type: "String!"
+                description: "Customer user email."
+                validation:
+                    -   NotBlank:
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+                    -   Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail:
+                            message: "This email is already registered"
+            roleGroupUuid:
+                type: "Uuid!"
+                description: "Customer user role group uuid."
+                validation:
+                    -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroup:

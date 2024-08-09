@@ -1,0 +1,20 @@
+BillingAddressDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            billingAddressUuid:
+                type: "Uuid!"
+                description: "UUID"
+            street:
+                type: "String"
+                description: "street name"
+            city:
+                type: "String"
+                description: "city name"
+            postcode:
+                type: "String"
+                description: "zip code"
+            country:
+                type: "Country!"
+                description: "Billing address country"

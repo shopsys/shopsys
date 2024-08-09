@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 class CustomerUserRoleGroup extends AbstractTranslatableEntity
 {
     public const DEFAULT_ROLE_GROUP_NAME = 'Owner';
+    public const USER_ROLE_GROUP_NAME = 'User';
 
     /**
      * @ORM\Column(type="integer")
@@ -38,12 +40,19 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
     protected $roles;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
      */
     public function __construct(CustomerUserRoleGroupData $customerUserRoleGroupData)
     {
         $this->translations = new ArrayCollection();
         $this->roles = $customerUserRoleGroupData->roles;
+        $this->uuid = $customerUserRoleGroupData->uuid ?: Uuid::uuid4()->toString();
         $this->setTranslations($customerUserRoleGroupData);
     }
 
@@ -88,5 +97,13 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
         foreach ($customerUserRoleGroupData->names as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 }

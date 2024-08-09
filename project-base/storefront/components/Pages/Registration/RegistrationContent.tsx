@@ -38,6 +38,7 @@ export const RegistrationContent: FC = () => {
             country: registrationFormData.country.value,
             companyCustomer: registrationFormData.customer === 'companyCustomer',
             lastOrderUuid: null,
+            billingAddressUuid: null,
         });
 
         handleFormErrors(registrationError, formProviderMethods, t, formMeta.messages.error);

@@ -44,6 +44,7 @@ MutationDecorator:
                     input:
                         type: ChangePersonalDataInput!
                         validation: cascade
+                access: "@=isGranted('ROLE_API_ALL')"
                 resolve: "@=mutation('changePersonalDataMutation', args, validator)"
             Register:
                 type: Token!
@@ -170,3 +171,29 @@ MutationDecorator:
                         type: ContactFormInput!
                         validation: cascade
                 resolve: "@=mutation('contactFormMutation', args, validator)"
+            AddNewCustomerUser:
+                type: "CustomerUser!"
+                description: "Add new customer user to customer"
+                args:
+                    input:
+                        type: AddNewCustomerUserDataInput!
+                        validation: cascade
+                access: "@=isGranted('is_company_owner_voter', args)"
+                resolve: "@=mutation('addNewCustomerUserMutation', args, validator)"
+            EditCustomerUserPersonalData:
+                type: "CustomerUser!"
+                description: "edit customer user to customer"
+                args:
+                    input:
+                        type: EditCustomerUserPersonalDataInput!
+                        validation: cascade
+                resolve: "@=mutation('editCustomerUserPersonalDataMutation', args, validator)"
+                access: "@=isGranted('can_manage_customer_user_voter', args)"
+            RemoveCustomerUser:
+                type: Boolean!
+                description: "delete customer user"
+                args:
+                    input:
+                        type: "RemoveCustomerUserDataInput!"
+                resolve: "@=mutation('removeCustomerUserMutation', args)"
+                access: "@=isGranted('can_manage_customer_user_voter', args)"

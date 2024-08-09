@@ -38,6 +38,7 @@ export const useRegistration = () => {
                 street: registrationInput.street,
                 telephone: registrationInput.telephone,
                 productListsUuids: Object.values(productListUuids),
+                billingAddressUuid: null,
             },
         });
 

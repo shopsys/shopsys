@@ -433,4 +433,19 @@ class CustomerUserFacade
         $customerUser->setDefaultDeliveryAddress($deliveryAddress);
         $this->em->flush();
     }
+
+    /**
+     * @param int $id
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function editCustomerUser(int $id, CustomerUserData $customerUserData): CustomerUser
+    {
+        $customerUser = $this->getCustomerUserById($id);
+        $customerUser->edit($customerUserData);
+
+        $this->em->flush();
+
+        return $customerUser;
+    }
 }

@@ -78,6 +78,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         );
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->password = 'password';
+        $customerUserUpdateData->billingAddressData->uuid = '683213c6-8879-4b65-a429-b5f17c98ac96';
         $this->expectException(DuplicateEmailException::class);
 
         $this->customerUserFacade->create($customerUserUpdateData);
@@ -92,6 +93,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->password = 'password';
         $customerUserUpdateData->customerUserData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
+        $customerUserUpdateData->billingAddressData->uuid = 'c82523e6-47bb-4681-bcb7-39e42f77fd19';
         $this->expectException(DuplicateEmailException::class);
 
         $this->customerUserFacade->create($customerUserUpdateData);
