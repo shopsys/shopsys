@@ -19,7 +19,7 @@ final class EnsureReleaseHighlightsPostIsReleasedReleaseWorker extends AbstractS
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return '[Manually] Ensure "Release highlights" is released';
+        return '[Manually] Ensure "Release highlights" is released and information about the new release will be shared with the community on social networks.';
     }
 
     /**
@@ -30,7 +30,7 @@ final class EnsureReleaseHighlightsPostIsReleasedReleaseWorker extends AbstractS
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->confirm('Confirm the post is released');
+        $this->confirm('Confirm the post is released and the marketing department will share the information about the new release with the community on social networks.');
     }
 
     /**
