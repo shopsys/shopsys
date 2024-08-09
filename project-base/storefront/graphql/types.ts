@@ -1013,7 +1013,7 @@ export type TypeLoginInfo = {
   /** The user ID in the service (facebook, google, etc.) used for login. Null for 'web' login type */
   externalId: Maybe<Scalars['String']['output']>;
   /** The type of login (web, facebook, google, etc.) */
-  loginType: Scalars['String']['output'];
+  loginType: TypeLoginTypeEnum;
 };
 
 export type TypeLoginInput = {
@@ -1034,6 +1034,14 @@ export type TypeLoginResult = {
   showCartMergeInfo: Scalars['Boolean']['output'];
   tokens: TypeToken;
 };
+
+/** One of the possible methods of the customer user login */
+export enum TypeLoginTypeEnum {
+  Facebook = 'facebook',
+  Google = 'google',
+  Seznam = 'seznam',
+  Web = 'web'
+}
 
 /** Represents a product */
 export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
