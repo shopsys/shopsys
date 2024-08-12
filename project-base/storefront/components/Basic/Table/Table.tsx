@@ -3,11 +3,12 @@ import { twMergeCustom } from 'utils/twMerge';
 
 type TableProps = {
     head?: ReactNode;
+    tableClassName?: string;
 };
 
-export const Table: FC<TableProps> = ({ head, children, className }) => (
+export const Table: FC<TableProps> = ({ head, children, className, tableClassName }) => (
     <div className={twMergeCustom('overflow-x-auto', className)}>
-        <table className="w-full">
+        <table className={twMergeCustom('w-full', tableClassName)}>
             {!!head && <thead>{head}</thead>}
             <tbody>{children}</tbody>
         </table>
