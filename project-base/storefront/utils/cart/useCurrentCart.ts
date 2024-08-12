@@ -6,6 +6,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCartType } from 'types/cart';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
@@ -63,7 +64,7 @@ const getSelectedPickupPlace = (
         return null;
     }
 
-    if (transport.transportType.code === 'packetery') {
+    if (isPacketeryTransport(transport.transportType.code)) {
         return packeteryPickupPoint;
     }
 
