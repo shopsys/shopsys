@@ -1,17 +1,17 @@
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useGtmCartInfo } from 'gtm/utils/useGtmCartInfo';
 import useTranslation from 'next-translate/useTranslation';
 import { usePersistStore } from 'store/usePersistStore';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { useLatest } from 'utils/ui/useLatest';
 
 export type ChangeTransportInCart = (
     newTransportUuid: string | null,
-    newPickupPlace: TypeListedStoreFragment | null,
+    newPickupPlace: StoreOrPacketeryPoint | null,
 ) => Promise<TypeCartFragment | undefined | null>;
 
 export const useChangeTransportInCart = () => {

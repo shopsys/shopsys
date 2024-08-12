@@ -2,9 +2,9 @@ import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { useMemo } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type StoreSelectProps = {
     selectedStoreUuid: string;
@@ -13,7 +13,7 @@ type StoreSelectProps = {
 };
 
 export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, onSelectStoreCallback }) => {
-    const mappedStores = useMemo(() => mapConnectionEdges<TypeListedStoreFragment>(stores.edges), [stores.edges]);
+    const mappedStores = useMemo(() => mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges), [stores.edges]);
 
     return (
         <ul className="max-h-[70dvh] overflow-y-auto">

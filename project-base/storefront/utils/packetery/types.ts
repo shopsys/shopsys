@@ -1,3 +1,5 @@
+import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+
 export {};
 
 /**
@@ -41,10 +43,22 @@ export type PacketeryExtendedPoint = {
         tableLong: string;
         regular: string;
     };
+    exceptionDays: PacketeryExceptionDay[];
     pickupPointType: string;
     routingCode: string;
     carrierId: string;
     carrierPickupPointId: string;
+};
+
+type PacketeryExceptionDay = {
+    from: string;
+    to: string | null;
+    times: PacketeryTime[];
+};
+
+type PacketeryTime = {
+    open: string;
+    close: string;
 };
 
 export type PacketeryOptions = {
@@ -71,3 +85,9 @@ export type PacketeryPickFunction = (
     opts?: PacketeryOptions,
     inElement?: HTMLElement,
 ) => void;
+
+export type StoreOrPacketeryPoint = TypeListedStoreFragment & {
+    openingHours: TypeListedStoreFragment['openingHours'] & {
+        exceptionDays?: PacketeryExceptionDay[];
+    };
+};

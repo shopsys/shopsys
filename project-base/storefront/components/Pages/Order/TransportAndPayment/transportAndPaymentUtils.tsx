@@ -6,7 +6,6 @@ import {
     LastOrderQueryDocument,
 } from 'graphql/requests/orders/queries/LastOrderQuery.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import {
     TypeStoreQuery,
     TypeStoreQueryVariables,
@@ -32,6 +31,7 @@ import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const PickupPlacePopup = dynamic(
@@ -66,7 +66,7 @@ export const usePaymentChangeInSelect = (changePaymentHandler: ChangePaymentInCa
 
 export const useTransportChangeInSelect = (
     transports: TypeTransportWithAvailablePaymentsFragment[] | undefined,
-    lastOrderPickupPlace: TypeListedStoreFragment | null,
+    lastOrderPickupPlace: StoreOrPacketeryPoint | null,
     changeTransportHandler: ChangeTransportInCart,
     changePaymentHandler: ChangePaymentInCart,
 ) => {
@@ -151,7 +151,7 @@ export const useTransportChangeInSelect = (
         );
     };
 
-    const changePickupPlace = (transportUuid: string, selectedPickupPlace: TypeListedStoreFragment | null) => {
+    const changePickupPlace = (transportUuid: string, selectedPickupPlace: StoreOrPacketeryPoint | null) => {
         if (selectedPickupPlace) {
             changeTransportHandler(transportUuid, selectedPickupPlace);
         } else {
@@ -171,9 +171,9 @@ export const useTransportChangeInSelect = (
 const getLastOrderPickupPlace = (
     lastOrder: TypeLastOrderFragment,
     lastOrderPickupPlaceIdentifier: string,
-    lastOrderPickupPlaceFromApi: TypeListedStoreFragment | undefined | null,
-    packeteryPickupPoint: TypeListedStoreFragment | null,
-): TypeListedStoreFragment | null => {
+    lastOrderPickupPlaceFromApi: StoreOrPacketeryPoint | undefined | null,
+    packeteryPickupPoint: StoreOrPacketeryPoint | null,
+): StoreOrPacketeryPoint | null => {
     if (packeteryPickupPoint?.identifier === lastOrderPickupPlaceIdentifier) {
         return packeteryPickupPoint;
     }
@@ -205,7 +205,7 @@ type TransportAndPaymentErrorsType = {
 
 export const getTransportAndPaymentValidationMessages = (
     transport: Maybe<TypeTransportWithAvailablePaymentsFragment>,
-    pickupPlace: Maybe<TypeListedStoreFragment>,
+    pickupPlace: Maybe<StoreOrPacketeryPoint>,
     payment: Maybe<TypeSimplePaymentFragment>,
     paymentGoPayBankSwift: Maybe<string>,
     t: Translate,
@@ -250,12 +250,12 @@ export const getTransportAndPaymentValidationMessages = (
 export const useLoadTransportAndPaymentFromLastOrder = (
     changeTransportInCart: ChangeTransportInCart,
     changePaymentInCart: ChangePaymentInCart,
-): [boolean, TypeListedStoreFragment | null] => {
+): [boolean, StoreOrPacketeryPoint | null] => {
     const client = useClient();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { transport: currentTransport, payment: currentPayment, cart } = useCurrentCart();
 
-    const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<TypeListedStoreFragment | null>(null);
+    const [lastOrderPickupPlace, setLastOrderPickupPlace] = useState<StoreOrPacketeryPoint | null>(null);
     const [isLoadingTransportAndPaymentFromLastOrder, setIsLoadingTransportAndPaymentFromLastOrder] = useState(false);
 
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
