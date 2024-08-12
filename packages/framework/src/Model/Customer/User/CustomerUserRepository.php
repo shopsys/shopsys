@@ -234,4 +234,19 @@ class CustomerUserRepository
 
         return $lastSecurityChangeDateTime < $referenceDateTime;
     }
+
+    /**
+     * @param int $salesRepresentativeId
+     * @return array
+     */
+    public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array
+    {
+        $customers = $this->getCustomerUserRepository()->findBy([
+            'salesRepresentative' => $salesRepresentativeId,
+        ]);
+
+        return array_map(function ($item) {
+            return $item['email'];
+        }, $customers);
+    }
 }

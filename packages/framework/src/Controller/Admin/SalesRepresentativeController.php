@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative\SalesRepresentativeFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentativeNotFoundException;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
@@ -23,12 +24,14 @@ class SalesRepresentativeController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         protected readonly SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 
@@ -145,7 +148,7 @@ class SalesRepresentativeController extends AdminBaseController
     #[Route(path: '/sales-representative/delete/{id}', requirements: ['id' => '\d+'])]
     public function deleteAction(int $id): Response
     {
-        $customersUsingThisSalesRepresentative = $this->salesRepresentativeFacade->findCustomersWithSalesRepresentative($id);
+        $customersUsingThisSalesRepresentative = $this->customerUserFacade->findEmailsOfCustomerUsersUsingSalesRepresentative($id);
 
         if (count($customersUsingThisSalesRepresentative) !== 0) {
             $this->addErrorFlashTwig(

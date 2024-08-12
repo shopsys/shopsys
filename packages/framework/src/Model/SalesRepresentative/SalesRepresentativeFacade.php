@@ -89,13 +89,4 @@ class SalesRepresentativeFacade
     {
         return $this->salesRepresentativeRepository->getAll();
     }
-
-    /**
-     * @param int $id
-     * @return int
-     */
-    public function findCustomersWithSalesRepresentative(int $id): int
-    {
-        return 0;
-    }
 }

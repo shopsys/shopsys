@@ -480,4 +480,13 @@ class CustomerUserFacade
     {
         return array_diff($customerUserCurrentRoles, $customerUserOriginalRoles) !== [] || array_diff($customerUserOriginalRoles, $customerUserCurrentRoles) !== [];
     }
+
+    /**
+     * @param int $salesRepresentativeId
+     * @return string[]
+     */
+    public function findEmailsOfCustomerUsersUsingSalesRepresentative(int $salesRepresentativeId): array
+    {
+        return $this->customerUserRepository->findEmailsOfCustomerUsersUsingSalesRepresentative($salesRepresentativeId);
+    }
 }
