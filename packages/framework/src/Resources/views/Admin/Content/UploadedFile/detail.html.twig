@@ -1,0 +1,21 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'File'|trans }}{% endblock %}
+
+{% block h1 %}{{ 'File'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_uploadedfile_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_save(entity|default(null), form) }}
+        {% endblock %}
+    {% endembed %}
+
+    {% block main_content_inner %}{% endblock %}
+
+    {{ form_end(form) }}
+{% endblock %}

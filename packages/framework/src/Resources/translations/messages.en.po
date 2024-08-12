@@ -97,6 +97,9 @@ msgstr ""
 msgid "Add customer user"
 msgstr ""
 
+msgid "Add files"
+msgstr ""
+
 msgid "Add item"
 msgstr ""
 
@@ -131,6 +134,9 @@ msgid "Add some mail whitelist patterns"
 msgstr ""
 
 msgid "Add some parameters"
+msgstr ""
+
+msgid "Add to products"
 msgstr ""
 
 msgid "Add variant"
@@ -985,6 +991,9 @@ msgstr ""
 msgid "Delete and set"
 msgstr ""
 
+msgid "Delete file"
+msgstr ""
+
 msgid "Delivery address"
 msgstr ""
 
@@ -1058,6 +1067,9 @@ msgid "Do you really want to %action% %count% product?"
 msgstr ""
 
 msgid "Do you really want to delete this category?"
+msgstr ""
+
+msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
 msgstr ""
 
 msgid "Do you really want to discard all changes?"
@@ -1160,6 +1172,9 @@ msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser ca
 msgstr ""
 
 msgid "Domain name"
+msgstr ""
+
+msgid "Download"
 msgstr ""
 
 msgid "Download file"
@@ -1310,6 +1325,9 @@ msgid "Editing email template"
 msgstr ""
 
 msgid "Editing email template - %name%"
+msgstr ""
+
+msgid "Editing file"
 msgstr ""
 
 msgid "Editing holiday / internal day - {{ name }}"
@@ -1519,6 +1537,9 @@ msgstr ""
 msgid "Export email list in CSV format"
 msgstr ""
 
+msgid "Ext."
+msgstr ""
+
 msgid "External ID"
 msgstr ""
 
@@ -1552,6 +1573,12 @@ msgstr ""
 msgid "Feeds - view"
 msgstr ""
 
+msgid "File"
+msgstr ""
+
+msgid "File <strong>{{ fileName }}</strong> deleted"
+msgstr ""
+
 msgid "File content"
 msgstr ""
 
@@ -1570,7 +1597,25 @@ msgstr ""
 msgid "File upload failed, try again please."
 msgstr ""
 
-msgid "File will be deleted after saving."
+msgid "File will be removed from the record after saving."
+msgstr ""
+
+msgid "Filename"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Files - full"
+msgstr ""
+
+msgid "Files - view"
+msgstr ""
+
+msgid "Files overview"
+msgstr ""
+
+msgid "Files uploaded:"
 msgstr ""
 
 msgid "Fill missing settings to enable creating products. More information here."
@@ -2059,6 +2104,9 @@ msgstr ""
 msgid "Name serves only for internal use within the administration."
 msgstr ""
 
+msgid "Names"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 
@@ -2212,6 +2260,9 @@ msgstr ""
 msgid "No email templates found. You have to create some first."
 msgstr ""
 
+msgid "No files found."
+msgstr ""
+
 msgid "No flags found. You have to create some first."
 msgstr ""
 
@@ -2267,6 +2318,9 @@ msgid "Nominal"
 msgstr ""
 
 msgid "Not possible to assign product to itself"
+msgstr ""
+
+msgid "Not possible to assign to itself"
 msgstr ""
 
 msgid "Not possible to create variations of products that are already variant or main variant."
@@ -2812,6 +2866,9 @@ msgstr ""
 msgid "Removed %dataType%: \"%readableValue%\""
 msgstr ""
 
+msgid "Replace file"
+msgstr ""
+
 msgid "Reset filter"
 msgstr ""
 
@@ -2929,10 +2986,16 @@ msgstr "Search"
 msgid "Search by code..."
 msgstr ""
 
+msgid "Search by filename, extension or translated name..."
+msgstr ""
+
 msgid "Search by name, catalog number, or product part number..."
 msgstr ""
 
 msgid "Search in transfers"
+msgstr ""
+
+msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching in all currencies"
@@ -2993,6 +3056,9 @@ msgid "Selected customer doesn't exist."
 msgstr ""
 
 msgid "Selected delivery address doesn't exist."
+msgstr ""
+
+msgid "Selected file doesn't exist."
 msgstr ""
 
 msgid "Selected flag doesn't exist."
@@ -3499,7 +3565,13 @@ msgstr ""
 msgid "Unused friendly URLs - view"
 msgstr ""
 
+msgid "Upload"
+msgstr ""
+
 msgid "Upload attachment"
+msgstr ""
+
+msgid "Upload files"
 msgstr ""
 
 msgid "Upload icon"
@@ -3512,6 +3584,9 @@ msgid "Upload image for mobile devices"
 msgstr ""
 
 msgid "Upload new image"
+msgstr ""
+
+msgid "Uploaded file <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Uploading..."
@@ -3773,6 +3848,9 @@ msgid "doesn't include"
 msgstr ""
 
 msgid "empty value"
+msgstr ""
+
+msgid "files"
 msgstr ""
 
 msgid "flags"

@@ -69,3 +69,6 @@ ProductDecorator:
             hreflangLinks:
                 type: "[HreflangLink!]!"
                 description: "Alternate links for hreflang meta tags"
+            files:
+                type: "[File!]!"
+                resolve: '@=query("filesByProductPromiseQuery", value)'

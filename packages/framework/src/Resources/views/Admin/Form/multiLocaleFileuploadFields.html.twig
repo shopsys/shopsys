@@ -1,0 +1,121 @@
+{% extends '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig' %}
+
+{% block multi_locale_file_upload_row %}
+    {% if entity is not null %}
+        {% if form.orderedFiles|length > 0 %}
+            <div class="list-files__wrap">
+                <ul class="list-files js-file-upload">
+                    {% for fileForm in form.orderedFiles %}
+                        {% set file = files_by_id[fileForm.vars.value] %}
+                        {% set isRemoved = false %}
+                        {% if not multiple and loop.index > 1 %}
+                            {% set isRemoved = true %}
+                        {% endif %}
+                        <li class="list-files__item js-file-upload-file" data-id="{{ file.id }}"
+                            data-delete-input="#{{ form.filesToDelete.vars.id }}">
+                            <div class="list-files__item__in">
+                                <div class="list-files__item__file js-file-upload-preview{% if isRemoved %} list-files__item__in--removed{% endif %}">
+                                    {% if uploadedFileExists(file) %}
+                                        <a href="{{ uploadedFileUrl(file) }}" target="_blank" rel="noopener">
+                                            {{ uploadedFilePreview(file) }}
+                                        </a>
+                                    {% else %}
+                                        {{ uploadedFilePreview(file) }}
+                                    {% endif %}
+                                </div>
+                                {% if multiple %}
+                                    <span class="js-file-upload-file-handle list-files__item__move"
+                                          title="{{ 'Move'|trans }}">
+                                        <i class="svg svg-move"></i>
+                                    </span>
+                                {% endif %}
+                                {% if not isRemoved %}
+                                    <button class="js-file-upload-delete-button btn-no-style list-files__item__remove"
+                                            type="button" title="{{ 'Delete'|trans }}">
+                                        <i class="svg svg-delete"></i>
+                                    </button>
+                                    <button class="btn-no-style js-file-upload-delete-revert-button display-none list-files__item__revert"
+                                            type="button" title="{{ 'Return back'|trans }}">
+                                        <i class="svg svg-forward-page"></i>
+                                    </button>
+                                {% endif %}
+                                <span class="list-files__item__overlay js-file-upload-file-overlay{% if isRemoved %} list-files__item__overlay__show{% endif %}">
+                                    {{ 'File will be removed from the record after saving.'|trans }}
+                                </span>
+                            </div>
+                            {{ form_widget(fileForm, { full_name: form.orderedFiles.vars.full_name ~ '[]'}) }}
+                            {{ form_widget(form.currentFilenamesIndexedById.children[fileForm.vars.value]) }}
+                            <div class="margin-top-10">
+                                {{ form_widget(form.namesIndexedById.children[fileForm.vars.value]) }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            {% do form.orderedFiles.setRendered %}
+        {% endif %}
+
+        {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}
+            {% block files_picker %}
+                <div
+                        id="{{ form.relations.vars.id }}"
+                        class="js-files-picker"
+                        data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
+                        data-picker-url="{{ form.relations.vars.picker_url }}"
+                >
+                    <div class="list-files__wrap">
+                        <ul class="list-files js-file-upload js-picker-items">
+                            {% for key, formRow in form.relations %}
+                                {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key], [form.relationsNames[key]]) }}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+
+        <div class="display-none">
+            {{ form_widget(form.filesToDelete) }}
+        </div>
+    {% endif %}
+
+    <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+        {{ form_errors(form) }}
+        {{ form_label(form, label) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block multi_locale_file_upload_widget %}
+    {% embed "@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig" %}
+        {% block widget_attributes %}
+            {{ block("widget_attributes", "@ShopsysFramework/Admin/Form/theme.html.twig") }}
+        {% endblock %}
+
+        {% block abstract_file_upload_widget_uploaded_files %}
+            <ul class="list-files js-file-upload-uploaded-files"
+                data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none', [form.names.vars.prototype])|escape }}"
+            >
+                {% for key, uploadedFile in form.uploadedFiles %}
+                    {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
+                    {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri, null, [form.names[key]]) }}
+                {% else %}
+                    <li>
+                        {% do form.children.uploadedFiles.setRendered %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endblock %}
+
+        {% block abstract_file_upload_widget_buttons %}
+            <a href="#" class="btn btn--plus js-picker-button-add margin-left-5"
+               data-picker-target="{{ form.relations.vars.id }}">
+                <i class="btn__icon">+</i>
+                {{ form.relations.vars.label_button_add }}
+            </a>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

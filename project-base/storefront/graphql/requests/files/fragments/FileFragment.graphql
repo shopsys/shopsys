@@ -1,0 +1,5 @@
+fragment FileFragment on File {
+    __typename
+    anchorText
+    url
+}

@@ -60,6 +60,7 @@ class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
 
         foreach ($uploadedFileData->orderedFiles as $file) {
             $uploadedFileData->currentFilenamesIndexedById[$file->getId()] = $file->getName();
+            $uploadedFileData->namesIndexedById[$file->getId()] = $file->getTranslatedNames();
         }
     }
 }

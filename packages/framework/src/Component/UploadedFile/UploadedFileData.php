@@ -30,4 +30,29 @@ class UploadedFileData
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public $orderedFiles = [];
+
+    /**
+     * @var array<int, array<string, string>>
+     */
+    public $names = [];
+
+    /**
+     * @var array<int, array<string, string>>
+     */
+    public $namesIndexedById = [];
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     */
+    public $relations = [];
+
+    /**
+     * @var string[]
+     */
+    public $relationsFilenames = [];
+
+    /**
+     * @var array<int, array<string, string>>
+     */
+    public $relationsNames = [];
 }

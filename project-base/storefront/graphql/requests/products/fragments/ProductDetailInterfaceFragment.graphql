@@ -51,4 +51,7 @@ fragment ProductDetailInterfaceFragment on Product {
     relatedProducts {
         ...ListedProductFragment
     }
+    files {
+        ...FileFragment
+    }
 }

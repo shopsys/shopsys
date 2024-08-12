@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
@@ -31,6 +32,7 @@ class ProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      */
     public function __construct(
         protected readonly UnitFacade $unitFacade,
@@ -45,6 +47,7 @@ class ProductDataFactory
         protected readonly StockFacade $stockFacade,
         protected readonly ProductStockDataFactory $productStockDataFactory,
         protected readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
+        protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
     ) {
     }
 
@@ -55,6 +58,7 @@ class ProductDataFactory
     {
         $productData = new ProductData();
         $productData->images = $this->imageUploadDataFactory->create();
+        $productData->files = $this->uploadedFileDataFactory->create();
 
         return $productData;
     }
@@ -176,6 +180,7 @@ class ProductDataFactory
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
         $productData->weight = $product->getWeight();
+        $productData->files = $this->uploadedFileDataFactory->createByEntity($product);
     }
 
     /**

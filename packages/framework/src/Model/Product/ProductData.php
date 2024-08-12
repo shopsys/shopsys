@@ -188,6 +188,11 @@ class ProductData
      */
     public $productInputPricesByDomain;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+     */
+    public $files;
+
     public function __construct()
     {
         $this->name = [];

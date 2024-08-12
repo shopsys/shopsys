@@ -18,3 +18,10 @@
     types:
         -   name: default
             multiple: false
+
+
+-   name: product
+    class:  Shopsys\FrameworkBundle\Model\Product\Product
+    types:
+        -   name: default
+            multiple: true

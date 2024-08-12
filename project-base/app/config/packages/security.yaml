@@ -56,6 +56,7 @@ security:
             - ROLE_HEUREKA_FULL
             - ROLE_LANGUAGE_CONSTANTS_FULL
             - ROLE_TRANSFER_VIEW
+            - ROLE_FILES_FULL
         ROLE_ALL_VIEW:
             - ROLE_ORDER_VIEW
             - ROLE_CUSTOMER_VIEW
@@ -105,6 +106,7 @@ security:
             - ROLE_HEUREKA_VIEW
             - ROLE_LANGUAGE_CONSTANTS_VIEW
             - ROLE_TRANSFER_VIEW
+            - ROLE_FILES_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -151,6 +153,7 @@ security:
         ROLE_STOCK_FULL: [ROLE_STOCK_VIEW]
         ROLE_HEUREKA_FULL: [ROLE_HEUREKA_VIEW]
         ROLE_LANGUAGE_CONSTANTS_FULL: [ROLE_LANGUAGE_CONSTANTS_VIEW]
+        ROLE_FILES_FULL: [ROLE_FILES_VIEW]
         # FE API ROLES
         ROLE_API_ALL: [ROLE_API_CUSTOMER_SELF_MANAGE]
 
@@ -429,8 +432,14 @@ security:
         - { path: ^/%admin_url%/constant/list/, roles: ROLE_LANGUAGE_CONSTANTS_VIEW }
         # transfers
         - { path: ^/%admin_url%/transfer/issue/list/, roles: ROLE_TRANSFER_VIEW }
-        # special paths for file manager in wysiwyg, product picker, grid, domain selector, login as user.
+        # uploaded files
+        - { path: ^/%admin_url%/uploaded-file/new, roles: ROLE_FILES_FULL }
+        - { path: ^/%admin_url%/uploaded-file/edit, roles: ROLE_FILES_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/uploaded-file/delete, roles: ROLE_FILES_FULL }
+        - { path: ^/%admin_url%/uploaded-file/, roles: ROLE_FILES_VIEW }
+        # special paths for file manager in wysiwyg, file picker, product picker, grid, domain selector, login as user.
         - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/file-picker/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/_grid/save-form/, roles: ROLE_ALL }
         - { path: ^/%admin_url%/_grid/save-ordering/, roles: ROLE_ALL }
         - { path: ^/%admin_url%/_grid/get-form/, roles: ROLE_ALL }

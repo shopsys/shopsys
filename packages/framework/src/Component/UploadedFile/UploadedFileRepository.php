@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 class UploadedFileRepository
@@ -48,17 +49,22 @@ class UploadedFileRepository
      */
     public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {
-        return $this->getUploadedFileRepository()->findBy(
-            [
-                'entityName' => $entityName,
-                'entityId' => $entityId,
-                'type' => $type,
-            ],
-            [
-                'position' => 'asc',
-                'id' => 'asc',
-            ],
-        );
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->from(UploadedFile::class, 'u')
+            ->join(UploadedFileRelation::class, 'ur', Join::WITH, 'u = ur.uploadedFile')
+            ->select('u')
+            ->andWhere('ur.type = :type')
+            ->setParameter('type', $type)
+            ->andWhere('ur.entityName = :entityName')
+            ->setParameter('entityName', $entityName)
+            ->andWhere('ur.entityId = :entityId')
+            ->setParameter('entityId', $entityId)
+            ->addOrderBy('ur.position', 'asc')
+            ->addOrderBy('ur.id', 'asc');
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -109,5 +115,42 @@ class UploadedFileRepository
         }
 
         return $uploadedFile;
+    }
+
+    /**
+     * @param int[] $uploadedFileIds
+     * @throws \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
+     */
+    public function getByIds(array $uploadedFileIds): array
+    {
+        $uploadedFiles = $this->getUploadedFileRepository()->findBy(['id' => $uploadedFileIds]);
+
+        if (count($uploadedFileIds) !== count($uploadedFiles)) {
+            $foundUploadedFileIds = array_map(fn (UploadedFile $uploadedFile) => $uploadedFile->getId(), $uploadedFiles);
+
+            throw new FileNotFoundException(
+                sprintf(
+                    'UploadedFiles with IDs %s do not exist.',
+                    implode(', ', array_diff($uploadedFileIds, $foundUploadedFileIds)),
+                ),
+            );
+        }
+
+        return $uploadedFiles;
+    }
+
+    /**
+     * @param int $uploadedFileId
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileTranslation[]
+     */
+    public function getAllTranslationsByUploadedFileId(int $uploadedFileId): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('ut')
+            ->from(UploadedFileTranslation::class, 'ut')
+            ->andWhere('ut.translatable = :uploadedFileId')->setParameter('uploadedFileId', $uploadedFileId)
+            ->getQuery()
+            ->getResult();
     }
 }

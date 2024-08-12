@@ -15,11 +15,10 @@ class UploadedFileLocatorTest extends TestCase
     public function testFileExists()
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
-        $uploadedFileMock->method('getEntityName')->willReturn('entityName');
 
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertTrue($uploadedFileLocator->fileExists($uploadedFileMock));
@@ -28,11 +27,10 @@ class UploadedFileLocatorTest extends TestCase
     public function testFileNotExists()
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('non-existent.txt');
-        $uploadedFileMock->method('getEntityName')->willReturn('entityName');
 
         $uploadedFileLocator = $this->createUploadedFileLocator(false);
         $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
@@ -53,15 +51,14 @@ class UploadedFileLocatorTest extends TestCase
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
-        $uploadedFileMock->method('getEntityName')->willReturn('entityName');
 
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
-            $uploadedFileDir . 'entityName/dummy.txt',
+            $uploadedFileDir . 'dummy.txt',
             $uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFileMock),
         );
     }
@@ -69,15 +66,14 @@ class UploadedFileLocatorTest extends TestCase
     public function testGetRelativeUploadedFileFilepath()
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
-            ->onlyMethods(['getFilename', 'getEntityName'])
+            ->onlyMethods(['getFilename'])
             ->disableOriginalConstructor()
             ->getMock();
         $uploadedFileMock->method('getFilename')->willReturn('dummy.txt');
-        $uploadedFileMock->method('getEntityName')->willReturn('entityName');
 
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
-            'entityName/dummy.txt',
+            'dummy.txt',
             $uploadedFileLocator->getRelativeUploadedFileFilepath($uploadedFileMock),
         );
     }

@@ -73,9 +73,14 @@ services:
 
     App\DataFixtures\Demo\ImageDataFixture:
         arguments:
-            - '%shopsys.data_fixtures_images.resources_dir%'
-            - '%shopsys.image_dir%'
-            - '%shopsys.domain_images_dir%'
+            $dataFixturesImagesDirectory: '%shopsys.data_fixtures_images.resources_dir%'
+            $targetImagesDirectory: '%shopsys.image_dir%'
+            $targetDomainImagesDirectory: '%shopsys.domain_images_dir%'
+        tags: ['doctrine.fixture.orm']
+
+    App\DataFixtures\Demo\UploadedFileDataFixture:
+        arguments:
+            $dataFixturesFilesDirectory: '%shopsys.data_fixtures_uploaded_files.resources_dir%'
         tags: ['doctrine.fixture.orm']
 
     App\DataFixtures\Performance\CategoryDataFixture:

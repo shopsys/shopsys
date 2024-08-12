@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
@@ -230,12 +231,12 @@ class ParameterFacade
         $parameterValue = $this->parameterRepository->getParameterValueById($parameterValueId);
         $parameterValue->edit($parameterValueData);
 
-        if ($parameterValueData->colourIcon->uploadedFilenames) {
+        if ($parameterValueData->colourIcon->uploadedFilenames || $parameterValueData->colourIcon->relations) {
             $this->uploadedFileFacade->manageFiles($parameterValue, $parameterValueData->colourIcon);
         }
 
-        if (count($parameterValueData->colourIcon->uploadedFilenames) === 0 && $parameterValueData->colourIcon->filesToDelete) {
-            $this->uploadedFileFacade->deleteAllUploadedFilesByEntity($parameterValue);
+        if (count($parameterValueData->colourIcon->uploadedFilenames) === 0 && count($parameterValueData->colourIcon->relations) === 0 && $parameterValueData->colourIcon->filesToDelete) {
+            $this->uploadedFileFacade->deleteRelationsByEntityAndUploadedFiles($parameterValue, $parameterValueData->colourIcon->filesToDelete, UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
         }
 
         $this->em->flush();

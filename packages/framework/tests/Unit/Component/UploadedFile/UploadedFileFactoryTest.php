@@ -30,13 +30,15 @@ class UploadedFileFactoryTest extends TestCase
             ->willReturn($temporaryFilepath);
 
         $uploadedFileFactory = new UploadedFileFactory($fileUploadMock, new EntityNameResolver([]));
-        $uploadedFile = $uploadedFileFactory->create($entityName, $entityId, $type, $temporaryFilename, '0');
+        $name = 'test-name';
+        $nameLocale = 'en';
+
+        $uploadedFile = $uploadedFileFactory->create($temporaryFilename, '0', [$nameLocale => $name]);
         $filesForUpload = $uploadedFile->getTemporaryFilesForUpload();
         /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         $fileForUpload = array_pop($filesForUpload);
-        $this->assertSame($entityId, $uploadedFile->getEntityId());
-        $this->assertSame($entityName, $uploadedFile->getEntityName());
         $this->assertSame($temporaryFilename, $fileForUpload->getTemporaryFilename());
         $this->assertFalse($fileForUpload->isImage());
+        $this->assertSame($name, $uploadedFile->getTranslatedName($nameLocale));
     }
 }

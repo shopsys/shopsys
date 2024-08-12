@@ -171,7 +171,7 @@ If you set this option to `true`, domain url will be shown instead of domain nam
 
 ### [FileUploadType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/FileUploadType.php)
 
-Uses `AbstractFileUploadType` to display a widget for files upload and to work with them (same as `ImageUploadType`).
+Uses `AbstractFileUploadType` to display a widget for files upload and to work with them (similar as `ImageUploadType`).
 After a file or files are uploaded it shows box for every file and lets you to downloads, order or delete files.
 
 #### file_constraints
@@ -193,6 +193,26 @@ Required option that needs to be string or null and is a text that is shown unde
 #### entity
 
 Defines which entity should the files be assigned to.
+
+### [MultiLocaleFileUploadType](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Form/MultiLocaleFileUploadType.php)
+
+Extends `FileUploadType` with additional support for translated file names.
+
+### [BasicFileUploadType](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Form/BasicFileUploadType.php)
+
+Uses `AbstractFileUploadType` to display a widget for file uploads and manage them without associating them with any entity.
+
+#### multiple
+
+Allows multiple files to be uploaded.
+
+#### allow_filenames_input
+
+Allows to input custom filenames for uploaded files.
+
+### [MultiLocaleBasicFileUploadType](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Form/MultiLocaleBasicFileUploadType.php)
+
+Extends `BasicFileUploadType` with additional support for translated file names.
 
 ### [FriendlyUrlType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/FriendlyUrlType.php)
 

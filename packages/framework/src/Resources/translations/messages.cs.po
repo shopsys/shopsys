@@ -97,6 +97,9 @@ msgstr "Přidat stát"
 msgid "Add customer user"
 msgstr "Přidat zákaznický účet"
 
+msgid "Add files"
+msgstr "Přidat soubory"
+
 msgid "Add item"
 msgstr "Přidat položku"
 
@@ -132,6 +135,9 @@ msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
 
 msgid "Add some parameters"
 msgstr "Přidejte nějaké parametry"
+
+msgid "Add to products"
+msgstr "Přidat k produktům"
 
 msgid "Add variant"
 msgstr "Přidat variantu"
@@ -985,6 +991,9 @@ msgstr "Smazat"
 msgid "Delete and set"
 msgstr "Smazat a nastavit"
 
+msgid "Delete file"
+msgstr "Smazat soubor"
+
 msgid "Delivery address"
 msgstr "Dodací adresa"
 
@@ -1059,6 +1068,9 @@ msgstr "Opravdu chcete %action% %count% zboží?"
 
 msgid "Do you really want to delete this category?"
 msgstr "Opravdu chcete smazat tuto kategorii?"
+
+msgid "Do you really want to delete this file? It will be permanently deleted and unassigned from related records."
+msgstr "Opravdu chcete smazat tento soubor? Soubor bude nevratně odstraněn a odebrán z přiřažených záznamů."
 
 msgid "Do you really want to discard all changes?"
 msgstr "Opravdu chcete zahodit všechny změny?"
@@ -1161,6 +1173,9 @@ msgstr "Byla upravena doména <strong>{{ name }}</strong>. Nevidíte-li novou ik
 
 msgid "Domain name"
 msgstr "Název domény"
+
+msgid "Download"
+msgstr "Stáhnout"
 
 msgid "Download file"
 msgstr "Stáhnout soubor"
@@ -1311,6 +1326,9 @@ msgstr "Editace e-mailové šablony"
 
 msgid "Editing email template - %name%"
 msgstr "Editace e-mailové šablony - %name%"
+
+msgid "Editing file"
+msgstr "Upravit soubor"
 
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr "Editace svátku / interního dne - {{ name }}"
@@ -1519,6 +1537,9 @@ msgstr "Očekávané maximální trvání"
 msgid "Export email list in CSV format"
 msgstr "Exportovat seznam e-mailů jako CSV"
 
+msgid "Ext."
+msgstr "Příp."
+
 msgid "External ID"
 msgstr "Externí ID"
 
@@ -1552,6 +1573,12 @@ msgstr "Feed \"{{ feedName }}\" byl úspěšně vygenerován."
 msgid "Feeds - view"
 msgstr "XML Feedy - zobrazení"
 
+msgid "File"
+msgstr "Soubor"
+
+msgid "File <strong>{{ fileName }}</strong> deleted"
+msgstr "Soubor <strong>{{ fileName }}</strong> byl smazán"
+
 msgid "File content"
 msgstr "Obsah souboru"
 
@@ -1570,8 +1597,26 @@ msgstr "Nahrání souboru se nezdařilo."
 msgid "File upload failed, try again please."
 msgstr "Nahrání souboru selhalo, zkuste to, prosím, znovu."
 
-msgid "File will be deleted after saving."
-msgstr "Po uložení bude soubor smazán"
+msgid "File will be removed from the record after saving."
+msgstr "Soubor bude po uložení odebrán ze záznamu."
+
+msgid "Filename"
+msgstr "Název souboru"
+
+msgid "Files"
+msgstr "Soubory"
+
+msgid "Files - full"
+msgstr "Soubory - vše"
+
+msgid "Files - view"
+msgstr "Soubory - zobrazení"
+
+msgid "Files overview"
+msgstr "Přehled souborů"
+
+msgid "Files uploaded:"
+msgstr "Soubory nahrány:"
 
 msgid "Fill missing settings to enable creating products. More information here."
 msgstr "Pro vytvoření produktu doplňte chybějící nastavení. Více informací zde."
@@ -2059,6 +2104,9 @@ msgstr "Název slouží pouze pro interní použití v rámci administrace"
 msgid "Name serves only for internal use within the administration."
 msgstr "Název slouží pouze pro interní použití v rámci administrace."
 
+msgid "Names"
+msgstr "Názvy (web)"
+
 msgid "Navigation"
 msgstr "Navigace"
 
@@ -2212,6 +2260,9 @@ msgstr "Doposud nejsou žádné domény."
 msgid "No email templates found. You have to create some first."
 msgstr "Nebyly nalezeny žádné e-mailové šablony. Nejprve musíte nějaké vytvořit."
 
+msgid "No files found."
+msgstr "Žádné soubory nebyly nalezeny."
+
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
 
@@ -2268,6 +2319,9 @@ msgstr "Nominální"
 
 msgid "Not possible to assign product to itself"
 msgstr "Nelze přiřadit produkt sám sobě"
+
+msgid "Not possible to assign to itself"
+msgstr "Není možné přiřadit k sám sobě"
 
 msgid "Not possible to create variations of products that are already variant or main variant."
 msgstr "Nelze vytvářet varianty ze zboží, které jsou již variantou nebo hlavní variantou."
@@ -2812,6 +2866,9 @@ msgstr "Odebrat"
 msgid "Removed %dataType%: \"%readableValue%\""
 msgstr "Smazáno %dataType%: \"%readableValue%\""
 
+msgid "Replace file"
+msgstr "Nahradit soubor"
+
 msgid "Reset filter"
 msgstr "Zrušit filtr"
 
@@ -2929,11 +2986,17 @@ msgstr "Vyhledat"
 msgid "Search by code..."
 msgstr "Vyhledat podle kódu..."
 
+msgid "Search by filename, extension or translated name..."
+msgstr "Vyhledat podle názvu souboru, přípony nebo přeloženého názvu..."
+
 msgid "Search by name, catalog number, or product part number..."
 msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
 
 msgid "Search in transfers"
 msgstr "Hledání v přenosech"
+
+msgid "Search in uploaded files by filename, extension or translated name. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání ve nahraných souborech podle názvu souboru, přípony nebo přeloženého názvu. Je možné používat operátory * a ?."
 
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
@@ -2994,6 +3057,9 @@ msgstr "Zvolený zákazník neexistuje"
 
 msgid "Selected delivery address doesn't exist."
 msgstr "Zvolená doručovací adresa neexistuje."
+
+msgid "Selected file doesn't exist."
+msgstr "Vybraný soubor neexistuje."
 
 msgid "Selected flag doesn't exist."
 msgstr "Zvolený příznak neexistuje."
@@ -3499,8 +3565,14 @@ msgstr "Seznam nepoužívaných hezkých URL - vše"
 msgid "Unused friendly URLs - view"
 msgstr "Seznam nepoužívaných hezkých URL - zobrazení"
 
+msgid "Upload"
+msgstr "Nahrát"
+
 msgid "Upload attachment"
 msgstr "Nahrát přílohu"
+
+msgid "Upload files"
+msgstr "Nahrát soubory"
 
 msgid "Upload icon"
 msgstr "Nahrát ikonu"
@@ -3513,6 +3585,9 @@ msgstr "Nahrát obrázek pro mobilní zařízení"
 
 msgid "Upload new image"
 msgstr "Nahrát nový obrázek"
+
+msgid "Uploaded file <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Soubor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
 
 msgid "Uploading..."
 msgstr "Nahrávám..."
@@ -3774,6 +3849,9 @@ msgstr "neobsahuje"
 
 msgid "empty value"
 msgstr "prázdná hodnota"
+
+msgid "files"
+msgstr "soubory"
 
 msgid "flags"
 msgstr "příznaky"

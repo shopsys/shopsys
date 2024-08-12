@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
 
 /**
  * @property \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig, \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository, \League\Flysystem\FilesystemOperator $filesystem, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig, \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository, \League\Flysystem\FilesystemOperator $filesystem, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository)
  */
 class UploadedFileFacade extends BaseUploadedFileFacade
 {
@@ -27,9 +27,17 @@ class UploadedFileFacade extends BaseUploadedFileFacade
         $uploadedFiles = $uploadedFileData->uploadedFiles;
         $uploadedFilenames = $uploadedFileData->uploadedFilenames;
         $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
+        $orderedFiles = $uploadedFileData->orderedFiles;
 
-        $this->deleteAllUploadedFilesByEntity($entity);
+        $this->deleteRelationsByEntityAndUploadedFiles($entity, $orderedFiles, $type);
 
-        $this->uploadFile($entity, $uploadedFileEntityConfig->getEntityName(), $type, array_pop($uploadedFiles), array_pop($uploadedFilenames));
+        $this->uploadFile(
+            $entity,
+            $uploadedFileEntityConfig->getEntityName(),
+            $type,
+            array_pop($uploadedFiles),
+            array_pop($uploadedFilenames),
+            array_pop($uploadedFileData->names),
+        );
     }
 }

@@ -7,7 +7,7 @@
         <div {{ block('widget_attributes') }}>
             <div class="js-file-upload-item box-upload__result">
                 <div class="info">
-                    {% macro uploadedFile(uploadedFile, uploadedFilename, label, iconType, thumbnailUri, class) %}
+                    {% macro uploadedFile(uploadedFile, uploadedFilename, label, iconType, thumbnailUri, class, additionalTypesToRender) %}
                         <li class="js-file-upload-uploaded-file list-files__item {{ class|default('') }}">
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file">
@@ -40,20 +40,32 @@
                                     {{ form_widget(uploadedFilename, { attr: { class: 'js-file-upload-name-input js-validation-no-file-upload' }}) }}
                                     {{ form_errors(uploadedFilename) }}
                                 </span>
+
+                                <div class="margin-top-10">
+                                    {% if additionalTypesToRender is defined %}
+                                        {% for additionalType in additionalTypesToRender %}
+                                            {{ form_widget(additionalType) }}
+                                            {{ form_errors(additionalType) }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
                             </div>
                         </li>
                     {% endmacro %}
 
-                    <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}">
-                        {% for key, uploadedFile in form.uploadedFiles %}
-                            {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
-                            {{ self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
-                        {% else %}
-                            <li>
-                                {% do form.children.uploadedFiles.setRendered %}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    {% block abstract_file_upload_widget_uploaded_files %}
+                        <ul class="list-files js-file-upload-uploaded-files" data-prototype="{{ _self.uploadedFile(form.uploadedFiles.vars.prototype, form.uploadedFilenames.vars.prototype, '', '__icon-type__', false, 'js-file-upload-uploaded-file-template display-none')|escape }}">
+                            {% for key, uploadedFile in form.uploadedFiles %}
+                                {% set fileThumbnailInfo = getFileThumbnailInfoByTemporaryFilename(uploadedFile.vars.value) %}
+                                {{ _self.uploadedFile(uploadedFile, form.uploadedFilenames[key], getLabelByTemporaryFilename(uploadedFile.vars.value), fileThumbnailInfo.iconType, fileThumbnailInfo.imageUri) }}
+                            {% else %}
+                                <li>
+                                    {% do form.children.uploadedFiles.setRendered %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endblock %}
+
                     <div class="display-none">
                          <span class="js-file-upload-status in-message in-message--info box-upload__uploading">{{ 'Status'|trans }}: {{ 'Successfully uploaded'|trans }}</span>
                     </div>
@@ -81,6 +93,8 @@
                 </div>
                 <div class="box-upload__place__button">
                     {{ form_widget(form.children.file) }}
+                    {% block abstract_file_upload_widget_buttons %}
+                    {% endblock  %}
                 </div>
             </div>
         </div>

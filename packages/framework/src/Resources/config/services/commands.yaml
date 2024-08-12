@@ -7,6 +7,10 @@ services:
     Shopsys\FrameworkBundle\Command\:
         resource: '../../Command'
 
+    Shopsys\FrameworkBundle\Command\CheckMigrateUploadedFilesCommand:
+        arguments:
+            - '%shopsys.uploaded_file_dir%'
+
     Shopsys\FrameworkBundle\Command\ConfigureDomainsUrlsCommand:
         arguments:
             $configFilepath: '%shopsys.domain_urls_config_filepath%'
@@ -29,6 +33,11 @@ services:
     Shopsys\FrameworkBundle\Command\MigrateImagesCommand:
         arguments:
             - '%shopsys.image_dir%'
+
+    Shopsys\FrameworkBundle\Command\MigrateUploadedFilesCommand:
+        arguments:
+            - '%shopsys.uploaded_file_dir%'
+
 
     Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand:
         arguments:
