@@ -9,7 +9,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
@@ -24,11 +23,11 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 {
     private const string UUID_NAMESPACE = '7cd16792-7f6c-433c-b038-34ad5f31a215';
 
-    public const PAGES_IN_CATEGORY = 15;
+    public const int PAGES_IN_CATEGORY = 15;
 
-    public const FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
-    public const FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
-    public const FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
+    public const string FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
+    public const string FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
+    public const string FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
 
     private int $articleCounter = 1;
 
@@ -36,32 +35,31 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade $blogVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      */
     public function __construct(
-        private BlogArticleFacade $blogArticleFacade,
-        private BlogArticleDataFactory $blogArticleDataFactory,
-        private BlogCategoryFacade $blogCategoryFacade,
-        private Domain $domain,
-        private BlogVisibilityFacade $blogVisibilityFacade,
-        private BlogCategoryDataFactory $blogCategoryDataFactory,
+        private readonly BlogArticleFacade $blogArticleFacade,
+        private readonly BlogArticleDataFactory $blogArticleDataFactory,
+        private readonly BlogCategoryFacade $blogCategoryFacade,
+        private readonly BlogVisibilityFacade $blogVisibilityFacade,
+        private readonly BlogCategoryDataFactory $blogCategoryDataFactory,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $mainPageBlogCategory = $this->blogCategoryFacade->getById(BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID);
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
         $mainPageBlogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Main blog page')->toString();
 
-        foreach ($this->domain->getAll() as $domain) {
-            $locale = $domain->getLocale();
-            $domainId = $domain->getId();
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+
             $mainPageBlogCategoryData->names[$locale] = t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mainPageBlogCategoryData->descriptions[$locale] = t('description - Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mainPageBlogCategoryData->seoH1s[$domainId] = t('Main blog page - %locale% - H1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -127,21 +125,22 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogCategoryData = $this->blogCategoryDataFactory->create();
         $blogCategoryData->parent = $parentCategory;
 
-        foreach ($this->domain->getAll() as $domain) {
-            $locale = $domain->getLocale();
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
 
             if ($subcategoryOrder === 1) {
-                $blogCategoryData->seoH1s[$domain->getId()] = t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoTitles[$domain->getId()] = t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoH1s[$domainId] = t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoTitles[$domainId] = t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                 $blogCategoryData->names[$locale] = t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                 $blogCategoryData->descriptions[$locale] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoMetaDescriptions[$domain->getId()] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoMetaDescriptions[$domainId] = t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             } else {
-                $blogCategoryData->seoH1s[$domain->getId()] = t('Second subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoTitles[$domain->getId()] = t('title - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoH1s[$domainId] = t('Second subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoTitles[$domainId] = t('title - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                 $blogCategoryData->names[$locale] = t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                 $blogCategoryData->descriptions[$locale] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $blogCategoryData->seoMetaDescriptions[$domain->getId()] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                $blogCategoryData->seoMetaDescriptions[$domainId] = t('description - Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             }
         }
 
@@ -166,7 +165,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogArticleData->publishDate = $dateTime->setTime(0, 0);
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article example ' . $this->articleCounter)->toString();
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->descriptions[$locale] = t(
                 '<div class="gjs-text-ckeditor">
@@ -201,12 +200,14 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $blogArticleData->perexes[$locale] = t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        foreach ($this->domain->getAll() as $domain) {
-            $locale = $domain->getLocale();
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = $blogCategories;
-            $blogArticleData->seoTitles[$domain->getId()] = t('title - Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domain->getId()] = t('Blog article example %counter% %locale% - H1', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoMetaDescriptions[$domain->getId()] = t('Blog article example %counter% %locale% - Meta description', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+
+            $blogArticleData->blogCategoriesByDomainId[$domainId] = $blogCategories;
+            $blogArticleData->seoTitles[$domainId] = t('title - Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoH1s[$domainId] = t('Blog article example %counter% %locale% - H1', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoMetaDescriptions[$domainId] = t('Blog article example %counter% %locale% - Meta description', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->articleCounter++;
@@ -220,7 +221,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for search testing')->toString();
         $blogArticleData->publishDate = new DateTime('-1 days');
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->descriptions[$locale] = t(
                 '<div class="gjs-text-ckeditor">Article text for search testing, the search phrase is &#34;Dina&#34;.</div>',
@@ -231,11 +232,13 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $blogArticleData->perexes[$locale] = t('perex', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        foreach ($this->domain->getAll() as $domain) {
-            $locale = $domain->getLocale();
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
-            $blogArticleData->seoTitles[$domain->getId()] = t('title', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domain->getId()] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+
+            $blogArticleData->blogCategoriesByDomainId[$domainId] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
+            $blogArticleData->seoTitles[$domainId] = t('title', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoH1s[$domainId] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->blogArticleFacade->create($blogArticleData);
@@ -249,7 +252,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogArticleData->publishDate = new DateTime('-2 days');
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Blog article for products testing')->toString();
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
     <div class="gjs-text-ckeditor"><h2>Produkty 1</h2></div>
@@ -271,11 +274,13 @@ EOT));
             $blogArticleData->perexes[$locale] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        foreach ($this->domain->getAll() as $domain) {
-            $locale = $domain->getLocale();
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
-            $blogArticleData->seoTitles[$domain->getId()] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->seoH1s[$domain->getId()] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $locale = $domainConfig->getLocale();
+            $domainId = $domainConfig->getId();
+
+            $blogArticleData->blogCategoriesByDomainId[$domainId] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
+            $blogArticleData->seoTitles[$domainId] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $blogArticleData->seoH1s[$domainId] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->blogArticleFacade->create($blogArticleData);
@@ -287,10 +292,10 @@ EOT));
     {
         $blogArticleData = $this->blogArticleDataFactory->create();
         $blogArticleData->publishDate = new DateTime('-3 days');
-        $firstDomainUrl = $this->domain->getDomainConfigById(1)->getUrl();
+        $firstDomainUrl = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getUrl();
         $blogArticleData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'GrapesJS page')->toString();
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $blogArticleData->names[$locale] = t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
 <style>#i3wiwe{padding-top:15px;padding-bottom:15px;}#i47xqe{color:black;}#ijhc4t{color:black;width:533px;height:324px;}#ie4jei{color:black;width:1157px;}</style>
@@ -331,8 +336,11 @@ Proin in tellus sit amet nibh dignissim sagittis. Integer in sapien. Curabitur s
 EOT));
         }
 
-        foreach ($this->domain->getAll() as $domain) {
-            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class)];
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $blogArticleData->blogCategoriesByDomainId[$domainId] = [
+                $this->getReference(self::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class),
+                $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, BlogCategory::class),
+            ];
         }
 
         $this->blogArticleFacade->create($blogArticleData);

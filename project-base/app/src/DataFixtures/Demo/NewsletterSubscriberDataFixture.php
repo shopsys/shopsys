@@ -13,20 +13,18 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private readonly NewsletterFacade $newsletterFacade, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly NewsletterFacade $newsletterFacade,
+    ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $newsletterSubscribersData = $this->getDistinctEmailData();
             } else {

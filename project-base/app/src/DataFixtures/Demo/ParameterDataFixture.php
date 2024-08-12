@@ -15,7 +15,6 @@ use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
@@ -100,14 +99,12 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
      */
     public function __construct(
         private readonly ParameterDataFactory $parameterDataFactory,
         private readonly ParameterFacade $parameterFacade,
         private readonly EntityManagerDecorator $entityManager,
-        private readonly Domain $domain,
         private readonly CategoryParameterFactory $categoryParameterFactory,
     ) {
     }
@@ -266,13 +263,13 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      */
     public function load(ObjectManager $manager): void
     {
-        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        $firstDomainLocale = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getLocale();
         $parameters = $this->getParameterData($firstDomainLocale);
 
         foreach ($parameters as $parameterDataKey => $parameterDataValue) {
             $parameterNamesByLocale = [];
 
-            foreach ($this->domain->getAllLocales() as $locale) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
                 $parameterNamesByLocale[$locale] = $this->getParameterNameByReferenceName($parameterDataKey, $locale);
             }
 

@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class CurrencyDataFixture extends AbstractReferenceFixture
 {
-    public const CURRENCY_CZK = 'currency_czk';
-    public const CURRENCY_EUR = 'currency_eur';
-    private const CZK_EXCHANGE_RATE_TO_EUR = '0.04';
+    public const string CURRENCY_CZK = 'currency_czk';
+    public const string CURRENCY_EUR = 'currency_eur';
+    private const string CZK_EXCHANGE_RATE_TO_EUR = '0.04';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -29,7 +29,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * The "CZK" and "EUR" currencies are created in database migrations.

@@ -6,7 +6,6 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory;
@@ -18,12 +17,10 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
     public const ROLE_GROUP_USER = 'role_group_user';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      */
     public function __construct(
-        private readonly Domain $domain,
         private readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
         private readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
     ) {
@@ -38,7 +35,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
 
         $customerUserRoleGroupData = $this->customerUserRoleGroupDataFactory->create();
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $customerUserRoleGroupData->names[$locale] = t('User', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $customerUserRoleGroupData->roles = [CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE];

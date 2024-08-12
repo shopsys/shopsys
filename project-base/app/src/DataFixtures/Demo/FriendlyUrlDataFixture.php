@@ -14,8 +14,9 @@ class FriendlyUrlDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade)
-    {
+    public function __construct(
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+    ) {
     }
 
     /**

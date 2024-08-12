@@ -6,18 +6,15 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class HreflangDataFixture extends AbstractReferenceFixture
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
-        protected readonly Domain $domain,
     ) {
     }
 
@@ -26,7 +23,10 @@ class HreflangDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager): void
     {
-        if (count($this->domain->getAll()) === 1) {
+        if (
+            !$this->domainsForDataFixtureProvider->isDomainIdAllowed(1) ||
+            !$this->domainsForDataFixtureProvider->isDomainIdAllowed(2)
+        ) {
             return;
         }
 

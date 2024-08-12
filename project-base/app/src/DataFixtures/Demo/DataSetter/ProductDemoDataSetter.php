@@ -11,8 +11,8 @@ use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductData;
 use DateTime;
+use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -28,7 +28,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockRepository;
 class ProductDemoDataSetter
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider $domainsForDataFixtureProvider
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
@@ -39,7 +39,7 @@ class ProductDemoDataSetter
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
      */
     public function __construct(
-        private readonly Domain $domain,
+        private readonly DomainsForDataFixtureProvider $domainsForDataFixtureProvider,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
@@ -66,7 +66,7 @@ class ProductDemoDataSetter
      */
     public function setFlags(ProductData $productData, array $flagReferences): void
     {
-        foreach ($this->domain->getAllIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             foreach ($flagReferences as $flagReference) {
                 $productData->flagsByDomainId[$domainId][] = $this->persistentReferenceFacade->getReference($flagReference, Flag::class);
             }
@@ -133,7 +133,7 @@ class ProductDemoDataSetter
         $currencyCzk = $this->persistentReferenceFacade->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
         $allPricingGroups = $this->pricingGroupFacade->getAll();
 
-        foreach ($this->domain->getAllIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $highVat = $this->persistentReferenceFacade->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
             $vat = $this->persistentReferenceFacade->getReferenceForDomain($vatReference, $domainId, Vat::class);
 
@@ -164,7 +164,7 @@ class ProductDemoDataSetter
      */
     public function setCategoriesForAllDomains(ProductData $productData, array $categoryReferences): void
     {
-        foreach ($this->domain->getAllIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             foreach ($categoryReferences as $categoryReference) {
                 $productData->categoriesByDomainId[$domainId][] = $this->persistentReferenceFacade->getReference($categoryReference, Category::class);
             }
@@ -201,7 +201,7 @@ class ProductDemoDataSetter
      */
     public function setOrderingPriority(ProductData $productData, int $orderingPriority): void
     {
-        foreach ($this->domain->getAllIds() as $domainId) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $productData->orderingPriorityByDomainId[$domainId] = $orderingPriority;
         }
     }

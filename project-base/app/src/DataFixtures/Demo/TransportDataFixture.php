@@ -9,7 +9,6 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -24,23 +23,21 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 {
     private const string UUID_NAMESPACE = '5e4cf5fd-16f1-4f1e-8a1b-fe81286ce8ed';
 
-    public const TRANSPORT_CZECH_POST = 'transport_cp';
-    public const TRANSPORT_PPL = 'transport_ppl';
-    public const TRANSPORT_PERSONAL = 'transport_personal';
-    public const TRANSPORT_DRONE = 'transport_drone';
-    public const TRANSPORT_PACKETERY = 'transport_packetery';
+    public const string TRANSPORT_CZECH_POST = 'transport_cp';
+    public const string TRANSPORT_PPL = 'transport_ppl';
+    public const string TRANSPORT_PERSONAL = 'transport_personal';
+    public const string TRANSPORT_DRONE = 'transport_drone';
+    public const string TRANSPORT_PACKETERY = 'transport_packetery';
 
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly TransportDataFactory $transportDataFactory,
-        private readonly Domain $domain,
         private readonly PriceConverter $priceConverter,
         private readonly TransportTypeFacade $transportTypeFacade,
     ) {
@@ -49,14 +46,14 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 5;
         $transportData->maxWeight = 5000;
         $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->description[$locale] = t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -70,7 +67,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->daysUntilDelivery = 4;
         $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
@@ -81,7 +78,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 0;
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $transportData->name[$locale] = t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->description[$locale] = t(
                 'You will be welcomed by friendly staff!',
@@ -105,7 +102,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 0;
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $transportData->name[$locale] = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->description[$locale] = t('Suitable for all kinds of goods', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->instructions[$locale] = t('Expect delivery by the end of next month', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -117,7 +114,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 2;
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $transportData->name[$locale] = t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->description[$locale] = t('Packeta delivery company', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->instructions[$locale] = t('Probably best value for your money', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -132,7 +129,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string $referenceName
      * @param \App\Model\Transport\TransportData $transportData
      */
-    private function createTransport(string $referenceName, TransportData $transportData)
+    private function createTransport(string $referenceName, TransportData $transportData): void
     {
         $transportData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
         $transport = $this->transportFacade->create($transportData);
@@ -147,25 +144,25 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId(), Vat::class);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
             $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 $price,
                 $currencyCzk,
                 $vat->getPercent(),
-                $domain->getId(),
+                $domainId,
             );
 
-            $transportData->vatsIndexedByDomainId[$domain->getId()] = $vat;
-            $transportData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;
+            $transportData->vatsIndexedByDomainId[$domainId] = $vat;
+            $transportData->pricesIndexedByDomainId[$domainId] = $convertedPrice;
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             VatDataFixture::class,

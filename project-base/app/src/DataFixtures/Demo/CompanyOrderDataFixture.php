@@ -52,7 +52,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
      */
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             if (!$domainConfig->isB2b()) {
                 continue;
             }

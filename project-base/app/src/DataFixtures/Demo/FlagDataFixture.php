@@ -7,28 +7,25 @@ namespace App\DataFixtures\Demo;
 use App\Model\Product\Flag\FlagDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
 class FlagDataFixture extends AbstractReferenceFixture
 {
-    public const FLAG_PRODUCT_SALE = 'product_sale';
-    public const FLAG_PRODUCT_ACTION = 'product_action';
-    public const FLAG_PRODUCT_NEW = 'product_new';
-    public const FLAG_PRODUCT_MADEIN_CZ = 'product_madein_cz';
-    public const FLAG_PRODUCT_MADEIN_SK = 'product_madein_sk';
-    public const FLAG_PRODUCT_MADEIN_DE = 'product_madein_de';
+    public const string FLAG_PRODUCT_SALE = 'product_sale';
+    public const string FLAG_PRODUCT_ACTION = 'product_action';
+    public const string FLAG_PRODUCT_NEW = 'product_new';
+    public const string FLAG_PRODUCT_MADEIN_CZ = 'product_madein_cz';
+    public const string FLAG_PRODUCT_MADEIN_SK = 'product_madein_sk';
+    public const string FLAG_PRODUCT_MADEIN_DE = 'product_madein_de';
 
     /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly FlagFacade $flagFacade,
         private readonly FlagDataFactory $flagDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
@@ -66,7 +63,7 @@ class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->flagDataFactory->createFromFlag($flag);
 
-        foreach ($this->domain->getAllLocales() as $locale) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->flagFacade->edit($flagId, $flagData);

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SeoPageDataFixture extends AbstractReferenceFixture
 {
-    public const FIRST_DEMO_SEO_PAGE = 'first_demo_seo_page';
+    public const string FIRST_DEMO_SEO_PAGE = 'first_demo_seo_page';
 
     /**
      * @var array<string, string>
@@ -58,9 +58,9 @@ class SeoPageDataFixture extends AbstractReferenceFixture
             $seoPageData = $this->seoPageDataFactory->create();
             $seoPageData->pageName = $pageName;
 
-            foreach ($this->domain->getAll() as $domain) {
-                $domainId = $domain->getId();
-                $locale = $domain->getLocale();
+            foreach ($this->domain->getAll() as $domainConfig) {
+                $domainId = $domainConfig->getId();
+                $locale = $domainConfig->getLocale();
 
                 $seoPageData->pageSlugsIndexedByDomainId[$domainId] = $pageSlug;
 
@@ -89,11 +89,11 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         foreach ($seoPages as $seoPage) {
             $seoPageData = $this->seoPageDataFactory->createFromSeoPage($seoPage);
 
-            foreach ($this->domain->getAll() as $domain) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
                 $this->fillSeoPageData(
                     $seoPageData,
-                    $domain->getId(),
-                    $domain->getLocale(),
+                    $domainConfig->getId(),
+                    $domainConfig->getLocale(),
                     $seoPage->getId(),
                 );
             }

@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Article\Article;
@@ -33,12 +34,10 @@ class ArticleDataFixture extends AbstractReferenceFixture
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly ArticleFacade $articleFacade,
         private readonly ArticleDataFactoryInterface $articleDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
@@ -47,22 +46,20 @@ class ArticleDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $data = $this->getDataForArticles($domainConfig->getLocale());
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $data = $this->getDataForArticles($domainConfig);
             $this->createArticlesFromArray($data, $domainConfig->getId());
-        }
-
-        if ($this->domain->isMultidomain()) {
-            $this->changeDataForSecondDomain();
         }
     }
 
     /**
-     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[][]
      */
-    private function getDataForArticles(string $locale): array
+    private function getDataForArticles(DomainConfig $domainConfig): array
     {
+        $locale = $domainConfig->getLocale();
+
         return [
             [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'About us',
@@ -160,7 +157,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $locale,
                 ),
-                self::ATTRIBUTE_PLACEMENT_KEY => Article::PLACEMENT_NONE,
+                self::ATTRIBUTE_PLACEMENT_KEY => $domainConfig->getId() === Domain::SECOND_DOMAIN_ID ? Article::PLACEMENT_FOOTER_2 : Article::PLACEMENT_NONE,
                 self::REFERENCE_NAME_KEY => self::USER_CONSENT_POLICY_ARTICLE,
             ], [
                 self::ATTRIBUTE_PLAIN_NAME_KEY => 'Article for search testing',
@@ -212,14 +209,5 @@ class ArticleDataFixture extends AbstractReferenceFixture
         if ($referenceName !== null) {
             $this->addReferenceForDomain($referenceName, $article, $articleData->domainId);
         }
-    }
-
-    private function changeDataForSecondDomain(): void
-    {
-        $userConsentPolicyArticle = $this->getReferenceForDomain(self::USER_CONSENT_POLICY_ARTICLE, Domain::SECOND_DOMAIN_ID, Article::class);
-        $userConsentPolicyArticleData = $this->articleDataFactory->createFromArticle($userConsentPolicyArticle);
-        $userConsentPolicyArticleData->placement = Article::PLACEMENT_FOOTER_2;
-
-        $this->articleFacade->edit($userConsentPolicyArticle->getId(), $userConsentPolicyArticleData);
     }
 }

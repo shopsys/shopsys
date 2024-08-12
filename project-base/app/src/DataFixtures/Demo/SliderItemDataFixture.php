@@ -7,7 +7,6 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
@@ -19,22 +18,21 @@ class SliderItemDataFixture extends AbstractReferenceFixture
     /**
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \App\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly SliderItemFacade $sliderItemFacade,
         private readonly SliderItemDataFactoryInterface $sliderItemDataFactory,
-        private readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            $domainId = $domainConfig->getId();
+            $locale = $domainConfig->getLocale();
 
             /** @var \App\Model\Slider\SliderItemData $sliderItemData */
             $sliderItemData = $this->sliderItemDataFactory->create();

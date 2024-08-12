@@ -7,7 +7,6 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory;
 use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
@@ -18,13 +17,13 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
-    public const BANK_ACCOUNT_METHOD = 'gopay_bank_account_method';
+    public const string PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
+    public const string BANK_ACCOUNT_METHOD = 'gopay_bank_account_method';
 
-    public const AIRBANK_SWIFT_PATTERN = 'AIRA%sPP';
-    public const FIO_SWIFT_PATTERN = 'FIOB%sPP';
+    public const string AIRBANK_SWIFT_PATTERN = 'AIRA%sPP';
+    public const string FIO_SWIFT_PATTERN = 'FIOB%sPP';
 
-    private const SWIFT_DEMO_DATA = [
+    private const array SWIFT_DEMO_DATA = [
         [
             'name' => 'Airbank',
             'swift_pattern' => self::AIRBANK_SWIFT_PATTERN,
@@ -41,7 +40,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         ],
     ];
 
-    private const DEMO_DATA = [
+    private const array DEMO_DATA = [
         [
             'reference_name' => self::PAYMENT_CARD_METHOD,
             'identifier' => GoPayPaymentMethod::IDENTIFIER_PAYMENT_CARD,
@@ -113,7 +112,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
      * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
@@ -121,7 +119,6 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         private readonly GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory,
         private readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
         private readonly GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
-        private readonly Domain $domain,
         private readonly CurrencyFacade $currencyFacade,
     ) {
     }
@@ -131,7 +128,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             foreach (self::DEMO_DATA as $data) {
                 $locale = $domainConfig->getLocale();
                 $domainId = $domainConfig->getId();

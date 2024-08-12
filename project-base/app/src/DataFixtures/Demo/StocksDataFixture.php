@@ -6,44 +6,41 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Stock\StockData;
 use Shopsys\FrameworkBundle\Model\Stock\StockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 class StocksDataFixture extends AbstractReferenceFixture
 {
-    private const ATTR_NAME = 'name';
-    private const ATTR_IS_DEFAULT = 'isDefault';
-    private const ATTR_NOTE = 'note';
-    private const ATTR_ENABLED_BY_DOMAIN = 'enabled';
-    private const ATTR_EXTERNAL = 'externalId';
-    private const ENABLED_FIRST_DOMAIN = [
+    private const string ATTR_NAME = 'name';
+    private const string ATTR_IS_DEFAULT = 'isDefault';
+    private const string ATTR_NOTE = 'note';
+    private const string ATTR_ENABLED_BY_DOMAIN = 'enabled';
+    private const string ATTR_EXTERNAL = 'externalId';
+    private const array ENABLED_FIRST_DOMAIN = [
         1 => true,
         2 => false,
     ];
-    private const ENABLED_SECOND_DOMAIN = [
+    private const array ENABLED_SECOND_DOMAIN = [
         1 => false,
         2 => true,
     ];
-    public const STOCK_PREFIX = 'stock_';
+    public const string STOCK_PREFIX = 'stock_';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockDataFactory $stockDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private StockFacade $stockFacade,
-        private StockDataFactory $stockDataFactory,
-        private Domain $domain,
+        private readonly StockFacade $stockFacade,
+        private readonly StockDataFactory $stockDataFactory,
     ) {
     }
 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->getDemoData() as $demoRow) {
             $stock = $this->stockFacade->create($this->initStockData($demoRow));
@@ -52,10 +49,10 @@ class StocksDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param mixed $demoRow
+     * @param array $demoRow
      * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
      */
-    protected function initStockData($demoRow): StockData
+    protected function initStockData(array $demoRow): StockData
     {
         $stockData = $this->stockDataFactory->create();
 
@@ -63,8 +60,7 @@ class StocksDataFixture extends AbstractReferenceFixture
         $stockData->externalId = $demoRow[self::ATTR_EXTERNAL];
         $stockData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
 
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
-            $domainId = $domainConfig->getId();
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $stockData->isEnabledByDomain[$domainId] = $demoRow[self::ATTR_ENABLED_BY_DOMAIN][$domainId] ?? false;
         }
         $stockData->note = $demoRow[self::ATTR_NOTE];

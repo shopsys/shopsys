@@ -7,18 +7,15 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade;
 
 class OrderContentPageSettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade $orderContentPageSettingFacade
      */
     public function __construct(
-        private readonly Domain $domain,
         private readonly OrderContentPageSettingFacade $orderContentPageSettingFacade,
     ) {
     }
@@ -28,7 +25,7 @@ class OrderContentPageSettingValueDataFixture extends AbstractReferenceFixture i
      */
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 
@@ -63,7 +60,7 @@ class OrderContentPageSettingValueDataFixture extends AbstractReferenceFixture i
     /**
      * {@inheritdoc}
      */
-    public function getDependencies(): iterable
+    public function getDependencies(): array
     {
         return [
             SettingValueDataFixture::class,

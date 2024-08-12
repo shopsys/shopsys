@@ -13,8 +13,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 
 class AdministratorDataFixture extends AbstractReferenceFixture
 {
-    public const SUPERADMINISTRATOR = 'administrator_superadministrator';
-    public const ADMINISTRATOR = 'administrator_administrator';
+    public const string SUPERADMINISTRATOR = 'administrator_superadministrator';
+    public const string ADMINISTRATOR = 'administrator_administrator';
 
     /**
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
@@ -29,7 +29,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->createAdministratorReference(1, self::SUPERADMINISTRATOR);
         $administrator = $this->createAdministratorReference(2, self::ADMINISTRATOR);
