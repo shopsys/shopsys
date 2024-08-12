@@ -23,7 +23,7 @@ import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
@@ -98,34 +98,34 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             let categoryUuid: string | null = null;
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
-                const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
-                const categoryDetailResponsePromise = client!
-                    .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
-                        urlSlug,
-                        filter,
-                        orderingMode,
-                    })
-                    .toPromise();
+            const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
+            const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+            const categoryDetailResponsePromise = client!
+                .query<TypeCategoryDetailQuery, TypeCategoryDetailQueryVariables>(CategoryDetailQueryDocument, {
+                    urlSlug,
+                    filter,
+                    orderingMode,
+                })
+                .toPromise();
 
-                const categoryProductsResponsePromise = client!
-                    .query(CategoryProductsQueryDocument, {
-                        endCursor: getEndCursor(page),
-                        orderingMode,
-                        filter,
-                        urlSlug,
-                        pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                    })
-                    .toPromise();
+            const categoryProductsResponsePromise = client!
+                .query(CategoryProductsQueryDocument, {
+                    endCursor: getEndCursor(page),
+                    orderingMode,
+                    filter,
+                    urlSlug,
+                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                })
+                .toPromise();
 
-                const [categoryDetailResponse] = await Promise.all([
-                    categoryDetailResponsePromise,
-                    categoryProductsResponsePromise,
-                ]);
+            const [categoryDetailResponse] = await Promise.all([
+                categoryDetailResponsePromise,
+                categoryProductsResponsePromise,
+            ]);
 
-                categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
+            categoryUuid = categoryDetailResponse.data?.category?.uuid || null;
 
+            if (getIsRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     categoryDetailResponse.error?.graphQLErrors,
                     categoryDetailResponse.data?.category,

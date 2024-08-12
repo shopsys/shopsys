@@ -17,7 +17,7 @@ import { OgTypeEnum } from 'types/seo';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
@@ -64,24 +64,24 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const blogArticleResponse: OperationResult<
-                    TypeBlogArticleDetailQuery,
-                    TypeBlogArticleDetailQueryVariables
-                > = await client!
-                    .query(BlogArticleDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                    })
-                    .toPromise();
+            const blogArticleResponse: OperationResult<
+                TypeBlogArticleDetailQuery,
+                TypeBlogArticleDetailQueryVariables
+            > = await client!
+                .query(BlogArticleDetailQueryDocument, {
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                })
+                .toPromise();
 
-                const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
+            const parsedCatnums = parseCatnums(blogArticleResponse.data?.blogArticle?.text ?? '');
 
-                await client!
-                    .query(ProductsByCatnumsDocument, {
-                        catnums: parsedCatnums,
-                    })
-                    .toPromise();
+            await client!
+                .query(ProductsByCatnumsDocument, {
+                    catnums: parsedCatnums,
+                })
+                .toPromise();
 
+            if (getIsRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     blogArticleResponse.error?.graphQLErrors,
                     blogArticleResponse.data?.blogArticle,

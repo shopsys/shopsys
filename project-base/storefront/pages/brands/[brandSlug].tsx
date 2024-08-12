@@ -23,7 +23,7 @@ import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'utils/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'utils/loadMore/getRedirectWithOffsetPage';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getProductListSortFromUrlQuery } from 'utils/parsing/getProductListSortFromUrlQuery';
@@ -107,33 +107,30 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
             });
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
-                const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
+            const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+            const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
-                const brandDetailResponsePromise = client!
-                    .query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
-                        urlSlug,
-                        orderingMode,
-                        filter,
-                    })
-                    .toPromise();
+            const brandDetailResponsePromise = client!
+                .query<TypeBrandDetailQuery, TypeBrandDetailQueryVariables>(BrandDetailQueryDocument, {
+                    urlSlug,
+                    orderingMode,
+                    filter,
+                })
+                .toPromise();
 
-                const brandProductsResponsePromise = client!
-                    .query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
-                        endCursor: getEndCursor(page),
-                        orderingMode,
-                        filter,
-                        urlSlug,
-                        pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                    })
-                    .toPromise();
+            const brandProductsResponsePromise = client!
+                .query<TypeBrandProductsQuery, TypeBrandProductsQueryVariables>(BrandProductsQueryDocument, {
+                    endCursor: getEndCursor(page),
+                    orderingMode,
+                    filter,
+                    urlSlug,
+                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                })
+                .toPromise();
 
-                const [brandDetailResponse] = await Promise.all([
-                    brandDetailResponsePromise,
-                    brandProductsResponsePromise,
-                ]);
+            const [brandDetailResponse] = await Promise.all([brandDetailResponsePromise, brandProductsResponsePromise]);
 
+            if (getIsRedirectedFromSsr(context.req.headers)) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     brandDetailResponse.error?.graphQLErrors,
                     brandDetailResponse.data?.brand,

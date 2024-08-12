@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
-import { isRedirectedFromSsr } from 'utils/isRedirectedFromSsr';
+import { getIsRedirectedFromSsr } from 'utils/getIsRedirectedFromSsr';
 import { getNumberFromUrlQuery } from 'utils/parsing/getNumberFromUrlQuery';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
@@ -69,22 +69,23 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
             const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
-            if (isRedirectedFromSsr(context.req.headers)) {
-                const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
-                    await client!
-                        .query(BlogCategoryQueryDocument, {
-                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-                        })
-                        .toPromise();
-
+            const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
                 await client!
-                    .query(BlogCategoryArticlesDocument, {
-                        uuid: blogCategoryResponse.data?.blogCategory?.uuid,
-                        endCursor: getEndCursor(page),
-                        pageSize: DEFAULT_PAGE_SIZE,
+                    .query(BlogCategoryQueryDocument, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
                     })
                     .toPromise();
 
+            await client!
+                .query(BlogCategoryArticlesDocument, {
+                    uuid: blogCategoryResponse.data?.blogCategory?.uuid,
+                    endCursor: getEndCursor(page),
+                    pageSize: DEFAULT_PAGE_SIZE,
+                })
+                .toPromise();
+
+            const isRedirectedFromSsr = getIsRedirectedFromSsr(context.req.headers);
+            if (isRedirectedFromSsr) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
                     blogCategoryResponse.error?.graphQLErrors,
                     blogCategoryResponse.data?.blogCategory,
