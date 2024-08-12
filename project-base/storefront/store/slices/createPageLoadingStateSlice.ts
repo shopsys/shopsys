@@ -13,6 +13,7 @@ const CUSTOM_PAGE_TYPES = [
     'contact-information',
     'cart',
     'order-confirmation',
+    'contact',
 ] as const;
 
 export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];
