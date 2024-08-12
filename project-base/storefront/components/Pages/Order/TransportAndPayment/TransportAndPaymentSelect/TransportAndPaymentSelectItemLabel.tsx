@@ -45,11 +45,8 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                         <div className="text-textDisabled">{pickupPlaceDetail.name}</div>
 
                         <div className="text-textDisabled">
-                            {pickupPlaceDetail.street +
-                                ', ' +
-                                pickupPlaceDetail.postcode +
-                                ', ' +
-                                pickupPlaceDetail.city}
+                            {pickupPlaceDetail.street}, {pickupPlaceDetail.postcode} {pickupPlaceDetail.city},{' '}
+                            {pickupPlaceDetail.country.name}
                         </div>
 
                         <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
