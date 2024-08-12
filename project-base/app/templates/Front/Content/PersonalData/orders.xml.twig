@@ -1,5 +1,6 @@
 <customer_orders>
     {% for order in orders %}
+        {% set customerUser = order.customerUser %}
         <order>
             <variable_symbol>{{ order.number }}</variable_symbol>
             <order_create_date>{{ order.createdAt|date('c') }}</order_create_date>
@@ -81,10 +82,10 @@
                         <item_quantity>{{ item.quantity }}</item_quantity>
                         <item_unit><![CDATA[{{ item.unitName|default('') }}]]></item_unit>
                         {% if not item.unitPriceWithoutVat.isZero %}
-                            <item_unit_price_without_vat>{{ item.unitPriceWithoutVat|moneyFormat }}</item_unit_price_without_vat>
+                            <item_unit_price_without_vat>{{ item.unitPriceWithoutVat|moneyFormat|hidePrice(customerUser) }}</item_unit_price_without_vat>
                         {% endif %}
                         {% if not item.unitPriceWithVat.isZero %}
-                            <item_unit_price_with_vat>{{ item.unitPriceWithVat|moneyFormat }}</item_unit_price_with_vat>
+                            <item_unit_price_with_vat>{{ item.unitPriceWithVat|moneyFormat|hidePrice(customerUser) }}</item_unit_price_with_vat>
                         {% endif %}
                         {% if order.currency.code %}
                             <item_currency_code><![CDATA[{{ order.currency.code }}]]></item_currency_code>
