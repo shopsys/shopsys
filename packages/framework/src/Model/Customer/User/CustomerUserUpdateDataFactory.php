@@ -117,7 +117,10 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
 
         $transport = $order->getTransport();
 
-        if (!$transport->isPersonalPickup()) {
+        if (
+            !$transport->isPersonalPickup() &&
+            !$transport->isPacketery()
+        ) {
             $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
                 $order,
                 $deliveryAddress,
