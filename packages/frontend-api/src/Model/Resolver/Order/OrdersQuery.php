@@ -88,10 +88,12 @@ class OrdersQuery extends AbstractQuery
         Customer $customer,
         Argument $argument,
     ): ConnectionInterface|Promise {
-        $paginator = new Paginator(function ($offset, $limit) use ($customer) {
-            return $this->orderApiFacade->getCustomerOrderLimitedList($customer, $limit, $offset);
+        $filter = $this->orderFilterFactory->createFromArgument($argument);
+
+        $paginator = new Paginator(function ($offset, $limit) use ($customer, $filter) {
+            return $this->orderApiFacade->getCustomerOrderLimitedList($customer, $limit, $offset, $filter);
         });
 
-        return $paginator->auto($argument, $this->orderApiFacade->getCustomerOrderCount($customer));
+        return $paginator->auto($argument, $this->orderApiFacade->getCustomerOrderCount($customer, $filter));
     }
 }
