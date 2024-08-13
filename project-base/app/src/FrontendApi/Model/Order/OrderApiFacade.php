@@ -17,7 +17,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade as BaseOrderApiFacade;
  * @method \App\Model\Order\Order getByOrderNumberAndCustomerUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order|null findLastOrderByCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method pairCustomerUserWithOrderByOrderUuid(\App\Model\Customer\User\CustomerUser $customerUser, string $orderUuid)
- * @method \App\Model\Order\Order[] getCustomerOrderLimitedList(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, int $limit, int $offset)
+ * @method \App\Model\Order\Order[] getCustomerOrderLimitedList(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, int $limit, int $offset, \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter)
  * @method \App\Model\Order\Order getByUuidAndCustomer(string $uuid, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  * @method \App\Model\Order\Order getByOrderNumberAndCustomer(string $orderNumber, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  */

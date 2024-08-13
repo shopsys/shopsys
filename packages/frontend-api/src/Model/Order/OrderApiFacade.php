@@ -131,23 +131,26 @@ class OrderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @param int $limit
      * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
     public function getCustomerOrderLimitedList(
         Customer $customer,
         int $limit,
         int $offset,
+        OrderFilter $orderFilter,
     ): array {
-        return $this->orderRepository->getCustomerOrderLimitedList($customer, $limit, $offset);
+        return $this->orderRepository->getCustomerOrderLimitedList($customer, $limit, $offset, $orderFilter);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return int
      */
-    public function getCustomerOrderCount(Customer $customer): int
+    public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int
     {
-        return $this->orderRepository->getCustomerOrderCount($customer);
+        return $this->orderRepository->getCustomerOrderCount($customer, $orderFilter);
     }
 
     /**
