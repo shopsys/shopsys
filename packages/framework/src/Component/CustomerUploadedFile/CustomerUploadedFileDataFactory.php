@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
-use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileTypeConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
 class CustomerUploadedFileDataFactory
 {
@@ -38,7 +38,7 @@ class CustomerUploadedFileDataFactory
      */
     public function createByEntity(
         object $entity,
-        string $type = CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): CustomerUploadedFileData {
         $customerUploadedFileData = $this->createInstance();
 

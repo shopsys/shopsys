@@ -6,11 +6,13 @@ namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
-class CustomerUploadedFileRepository
+class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -48,7 +50,7 @@ class CustomerUploadedFileRepository
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
      */
-    public function getCustomerUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
+    public function getUploadedFilesByEntity(string $entityName, int $entityId, string $type): array
     {
         return $this->getCustomerUploadedFileRepository()->findBy(
             [
@@ -64,15 +66,15 @@ class CustomerUploadedFileRepository
     }
 
     /**
-     * @param int $customerUploadedFileId
+     * @param int $uploadedFileId
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
      */
-    public function getById(int $customerUploadedFileId): CustomerUploadedFile
+    public function getById(int $uploadedFileId): UploadedFileInterface
     {
-        $customerUploadedFile = $this->getCustomerUploadedFileRepository()->find($customerUploadedFileId);
+        $customerUploadedFile = $this->getCustomerUploadedFileRepository()->find($uploadedFileId);
 
         if ($customerUploadedFile === null) {
-            $message = 'CustomerUploadedFile with ID ' . $customerUploadedFileId . ' does not exist.';
+            $message = 'CustomerUploadedFile with ID ' . $uploadedFileId . ' does not exist.';
 
             throw new CustomerFileNotFoundException($message);
         }

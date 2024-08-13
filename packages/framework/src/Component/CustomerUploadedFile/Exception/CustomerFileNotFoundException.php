@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception;
 
 use Exception;
 
-class CustomerFileNotFoundException extends Exception implements CustomerFileException
+class CustomerFileNotFoundException extends CustomerFileException
 {
     /**
      * @param string $message
@@ -14,6 +14,6 @@ class CustomerFileNotFoundException extends Exception implements CustomerFileExc
      */
     public function __construct($message = '', ?Exception $previous = null)
     {
-        parent::__construct($message, 0, $previous);
+        parent::__construct($message, $previous);
     }
 }

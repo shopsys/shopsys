@@ -4,33 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
-class UploadedFileData
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileData;
+
+/**
+ * @property \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $orderedFiles
+ * @property \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $filesToDelete
+ */
+class UploadedFileData extends AbstractUploadedFileData
 {
-    /**
-     * @var string[]
-     */
-    public $uploadedFiles = [];
-
-    /**
-     * @var string[]
-     */
-    public $uploadedFilenames = [];
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
-     */
-    public $filesToDelete = [];
-
-    /**
-     * @var string[]
-     */
-    public $currentFilenamesIndexedById = [];
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
-     */
-    public $orderedFiles = [];
-
     /**
      * @var array<int, array<string, string>>
      */
