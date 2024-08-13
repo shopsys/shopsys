@@ -15,23 +15,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
     {
         parent::setUp();
 
-        $responseData = $this->getResponseContentForQuery(
-            self::getLoginQuery(
-                static::DEFAULT_USER_EMAIL,
-                static::DEFAULT_USER_PASSWORD,
-            ),
-        );
-        $accessToken = $responseData['data']['Login']['tokens']['accessToken'];
-        $this->currentAccessToken = $accessToken;
-
-        $this->configureCurrentClient(
-            null,
-            null,
-            [
-                'CONTENT_TYPE' => 'application/graphql',
-                'HTTP_X-Auth-Token' => sprintf('Bearer %s', $accessToken),
-            ],
-        );
+        $this->login();
     }
 
     /**
@@ -63,6 +47,16 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 
     protected function login(): void
     {
+        if ($this->currentAccessToken === '') {
+            $responseData = $this->getResponseContentForQuery(
+                self::getLoginQuery(
+                    static::DEFAULT_USER_EMAIL,
+                    static::DEFAULT_USER_PASSWORD,
+                ),
+            );
+            $this->currentAccessToken = $responseData['data']['Login']['tokens']['accessToken'];
+        }
+
         $this->configureCurrentClient(
             null,
             null,
@@ -75,6 +69,8 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 
     protected function logout(): void
     {
+        $this->currentAccessToken = '';
+
         $this->configureCurrentClient(
             null,
             null,
