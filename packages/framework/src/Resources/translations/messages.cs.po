@@ -979,6 +979,9 @@ msgstr "Jméno zákazníka"
 msgid "Customer phone number"
 msgstr "Telefonní číslo zákazníka"
 
+msgid "Customer sees prices"
+msgstr "Zákazník vidí ceny"
+
 msgid "Customer self manage"
 msgstr "Spravovat své údaje"
 
