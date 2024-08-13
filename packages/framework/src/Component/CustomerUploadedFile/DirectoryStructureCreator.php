@@ -25,7 +25,7 @@ class DirectoryStructureCreator
 
     public function makeCustomerUploadedFileDirectories(): void
     {
-        $customerUploadedFileEntityConfigs = $this->customerUploadedFileConfig->getAllCustomerUploadedFileEntityConfigs();
+        $customerUploadedFileEntityConfigs = $this->customerUploadedFileConfig->getAllUploadedFileEntityConfigs();
         $directories = [];
 
         foreach ($customerUploadedFileEntityConfigs as $customerUploadedFileEntityConfig) {

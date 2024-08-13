@@ -38,7 +38,7 @@ class CustomerUploadedFileQuery extends AbstractQuery
      */
     public function customerFilesByEntityPromiseQuery(object $entity, ?string $type): Promise
     {
-        $entityConfig = $this->customerUploadedFileConfig->getCustomerUploadedFileEntityConfig($entity);
+        $entityConfig = $this->customerUploadedFileConfig->getUploadedFileEntityConfig($entity);
 
         return $this->resolveByEntityIdPromise($entity->getId(), $entityConfig->getEntityName(), $type);
     }

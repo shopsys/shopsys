@@ -6,11 +6,11 @@ namespace Shopsys\FrontendApiBundle\Component\CustomerUploadedFile;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
-use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class CustomerUploadedFilesBatchLoader
@@ -64,7 +64,7 @@ class CustomerUploadedFilesBatchLoader
     protected function getCustomerUploadedFilesByEntityNameAndTypeIndexedByDataId(
         array $customerUploadedFileBatchLoadData,
         string $entityName,
-        string $type = CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): array {
         $entityIds = array_map(fn (CustomerUploadedFileBatchLoadData $customerUploadedFileBatchLoadData) => $customerUploadedFileBatchLoadData->getEntityId(), $customerUploadedFileBatchLoadData);
         $customerUploadedFilesIndexedByEntityId = $this->customerUploadedFileApiFacade->getAllCustomerUploadedFilesIndexedByEntityId($entityIds, $entityName, $type);
@@ -95,7 +95,7 @@ class CustomerUploadedFilesBatchLoader
 
         foreach ($customerUploadedFileBatchLoadData as $fileBatchLoadData) {
             $entityName = $fileBatchLoadData->getEntityName();
-            $type = Utils::ifNull($fileBatchLoadData->getType(), CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME);
+            $type = Utils::ifNull($fileBatchLoadData->getType(), UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
             $result[$entityName][$type][] = $fileBatchLoadData;
         }
 
