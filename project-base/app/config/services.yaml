@@ -228,6 +228,9 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\ProductController:
         class: 'App\Controller\Admin\ProductController'
 
+    Shopsys\FrameworkBundle\Controller\Front\PersonalDataController:
+        class: 'App\Controller\Front\PersonalDataController'
+
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: App\Model\Administrator\AdministratorDataFactory
 
