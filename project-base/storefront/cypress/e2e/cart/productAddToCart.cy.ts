@@ -3,13 +3,10 @@ import {
     addProductToCartFromPromotedProductsOnHomepage,
     addToCartOnProductDetailPage,
     addVariantToCartFromMainVariantDetail,
-    decreaseProductListQuantityWithSpinbox,
-    increaseProductListQuantityWithSpinbox,
     searchProductByNameWithAutocomplete,
 } from './cartSupport';
 import { products, url } from 'fixtures/demodata';
 import {
-    changeProductListItemQuantityWithSpinboxInput,
     checkPopupIsVisible,
     checkUrl,
     goToPageThroughSimpleNavigation,
@@ -24,7 +21,7 @@ describe('Product add to cart tests', () => {
     });
 
     it('should add product to cart from brand page', function () {
-        cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverwiev);
+        cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverview);
 
         goToPageThroughSimpleNavigation(22);
         addProductToCartFromProductList(products.helloKitty.catnum);

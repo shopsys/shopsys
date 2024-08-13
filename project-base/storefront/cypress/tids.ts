@@ -77,4 +77,8 @@ export enum TIDs {
     simple_navigation_image = 'simple_navigation_image',
     footer_social_links = 'footer_social_links',
     loader = 'loader',
+    category_bestseller_image = 'category_bestseller_image',
+    blog_preview_image = 'blog_preview_image',
+    product_gallery_image = 'product_gallery_image',
+    stores_map = 'stores_map',
 }

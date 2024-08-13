@@ -140,7 +140,7 @@ export const transport = {
 export const url = {
     cart: '/cart',
     search: '/search?q=',
-    brandsOverwiev: '/brands-overview',
+    brandsOverview: '/brands-overview',
     order: {
         transportAndPayment: '/order/transport-and-payment',
         contactInformation: '/order/contact-information',
@@ -157,6 +157,8 @@ export const url = {
     categoryElectronics: '/electronics',
     productHelloKitty: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
     registration: '/registration',
+    stores: '/stores',
+    blogArticleGrapesJs: '/grapesjs-page',
 } as const;
 
 export const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
