@@ -134,7 +134,10 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     ): void {
         $stockSettingsData = new StockSettingsData();
         $stockSettingsData->transfer = $transfer;
-        $this->stockSettingsDataFacade->edit($stockSettingsData);
+        $this->stockSettingsDataFacade->edit(
+            $stockSettingsData,
+            $this->domain->getDomainConfigById(self::FIRST_DOMAIN_ID),
+        );
 
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
