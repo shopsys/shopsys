@@ -98,7 +98,10 @@ class StockController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $stockSettingsData = $form->getData();
 
-            $this->stockSettingsDataFacade->edit($stockSettingsData);
+            $this->stockSettingsDataFacade->edit(
+                $stockSettingsData,
+                $this->adminDomainTabsFacade->getSelectedDomainConfig(),
+            );
 
             $this
                 ->addSuccessFlashTwig(
