@@ -252,10 +252,12 @@ You can run your tests both using the CLI (usually run as `cypress run`) and usi
 
 ### How to run tests using the CLI (`cypress run`)?
 
-There are two commands provided for you:
+There are four commands provided for you:
 
 -   `run-acceptance-tests-base`: This command runs the tests and allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
 -   `run-acceptance-tests-actual`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
+-   `selected-acceptance-tests-base`: This is the same as `run-acceptance-tests-base`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
+-   `selected-acceptance-tests-actual`: This is the same as `run-acceptance-tests-actual`, but you will be asked to select test suites (`.cy.ts` files) which you want to run. You can run one, two, or even all but one suits. It is up to you. You just have to decide between `y` (run the suite) and `n` (do not run the suite) when prompted.
 
 ### How to run tests using the cypress interactive GUI (`cypress open`) on Mac?
 

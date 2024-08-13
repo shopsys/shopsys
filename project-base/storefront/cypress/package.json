@@ -8,13 +8,16 @@
         "open-base": "cypress open --env type=base",
         "open-actual": "cypress open --env type=actual",
         "base": "cypress run --env type=base",
-        "actual": "cypress run --env type=actual"
+        "actual": "cypress run --env type=actual",
+        "selected-actual": "./runSelectedTests.js type=actual",
+        "selected-base": "./runSelectedTests.js type=base"
     },
     "devDependencies": {
         "cypress": "^12.3.0",
         "cypress-real-events": "^1.10.0",
         "cypress-visual-regression": "^3.0.0",
         "cypress-wait-for-stable-dom": "^0.1.0",
+        "inquirer": "^10.1.8",
         "typescript": "^5.1.6",
         "uuid": "^9.0.1"
     }
