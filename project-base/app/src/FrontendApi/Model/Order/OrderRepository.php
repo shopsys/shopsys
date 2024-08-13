@@ -19,10 +19,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderRepository as BaseOrderRepository
  * @method \App\Model\Order\Order getByUuidAndCustomer(string $uuid, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  * @method \App\Model\Order\Order|null findByOrderNumberAndCustomer(string $orderNumber, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
  * @method \App\Model\Order\Order getByOrderNumberAndCustomer(string $orderNumber, \Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
- * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedSearchList(string $search, \App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset, \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter)
- * @method int getCustomerUserOrderLimitedSearchListCount(\App\Model\Customer\User\CustomerUser $customerUser, string $search, \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter)
  * @method \Doctrine\ORM\QueryBuilder createCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser)
- * @method \Doctrine\ORM\QueryBuilder createCustomerUserOrderLimitSearchListQueryBuilder(\App\Model\Customer\User\CustomerUser $customerUser, string $search, \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter)
  */
 class OrderRepository extends BaseOrderRepository
 {
