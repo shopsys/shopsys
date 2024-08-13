@@ -9,6 +9,7 @@ use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
@@ -21,6 +22,7 @@ use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 
 class ComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    private const UUID_NAMESPACE = '4bd62d36-8baa-4f8a-b074-c084641823b0';
     public const string COMPLAINT_PREFIX = 'complaint_';
 
     /**
@@ -86,6 +88,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         array $items,
     ): Complaint {
         $complaintData = $this->complaintDataFactory->create();
+        $complaintData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, md5(serialize(func_get_args())))->toString();
         $complaintData->number = $this->complaintNumberSequenceRepository->getNextNumber();
         $complaintData->customerUser = $customerUser;
         $complaintData->order = $order;
