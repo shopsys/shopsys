@@ -4,34 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
-use League\Flysystem\FilesystemOperator;
+use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 
-class CustomerUploadedFileLocator
+class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
 {
-    /**
-     * @param string $customerUploadedFileDir
-     * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     */
-    public function __construct(
-        protected readonly string $customerUploadedFileDir,
-        protected readonly FilesystemOperator $filesystem,
-        protected readonly DomainRouterFactory $domainRouterFactory,
-    ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
-    public function getAbsoluteUploadedFileFilepath(CustomerUploadedFile $customerUploadedFile): string
-    {
-        return $this->getAbsoluteFilePath($customerUploadedFile->getEntityName()) . '/' . $customerUploadedFile->getFilename();
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
@@ -75,31 +55,17 @@ class CustomerUploadedFileLocator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return bool
-     */
-    public function fileExists(CustomerUploadedFile $customerUploadedFile): bool
-    {
-        $fileFilepath = $this->getAbsoluteUploadedFileFilepath($customerUploadedFile);
-
-        return $this->filesystem->has($fileFilepath);
-    }
-
-    /**
-     * @param string $entityName
+     * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
      * @return string
      */
-    protected function getRelativeFilePath(string $entityName): string
+    protected function getFilePath(UploadedFileInterface $uploadedFile): string
     {
-        return $entityName;
-    }
+        if (!$uploadedFile instanceof CustomerUploadedFile) {
+            throw new InvalidArgumentException(
+                sprintf('Instance of CustomerUploadedFile expected, got %s', get_class($uploadedFile)),
+            );
+        }
 
-    /**
-     * @param string $entityName
-     * @return string
-     */
-    public function getAbsoluteFilePath(string $entityName): string
-    {
-        return $this->customerUploadedFileDir . $this->getRelativeFilePath($entityName);
+        return sprintf('%s/%s', $uploadedFile->getEntityName(), $uploadedFile->getFilename());
     }
 }

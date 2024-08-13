@@ -7,30 +7,38 @@ namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorInterface;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig;
-use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileTypeConfig;
-use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\EntityIdentifierException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
-class CustomerUploadedFileFacade
+/**
+ * @method \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile getById(int $uploadedFileId)
+ * @method \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[] getUploadedFilesByEntity(object $entity, string $type = \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig::DEFAULT_TYPE_NAME)
+ */
+class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
 {
     /**
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig $customerUploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
-     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFactory $customerUploadedFileFactory
      */
     public function __construct(
-        protected readonly EntityManagerInterface $em,
+        FilesystemOperator $filesystem,
+        EntityManagerInterface $em,
         protected readonly CustomerUploadedFileConfig $customerUploadedFileConfig,
         protected readonly CustomerUploadedFileRepository $customerUploadedFileRepository,
-        protected readonly FilesystemOperator $filesystem,
         protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,
         protected readonly CustomerUploadedFileFactory $customerUploadedFileFactory,
     ) {
+        parent::__construct($filesystem, $em);
     }
 
     /**
@@ -42,11 +50,11 @@ class CustomerUploadedFileFacade
     public function manageFiles(
         object $entity,
         CustomerUploadedFileData $customerUploadedFileData,
-        string $type = CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
         ?CustomerUser $customerUser = null,
     ): void {
-        $customerUploadedFileEntityConfig = $this->customerUploadedFileConfig->getCustomerUploadedFileEntityConfig($entity);
-        $customerUploadedFileTypeConfig = $customerUploadedFileEntityConfig->getTypeByName($type);
+        $customerUploadedFileEntityConfig = $this->customerUploadedFileConfig->getUploadedFileEntityConfig($entity);
+        $uploadedFileTypeConfig = $customerUploadedFileEntityConfig->getTypeByName($type);
 
         $uploadedFiles = $customerUploadedFileData->uploadedFiles;
         $uploadedFilenames = $customerUploadedFileData->uploadedFilenames;
@@ -55,7 +63,7 @@ class CustomerUploadedFileFacade
         $this->updateFilesOrder($orderedFiles);
         $this->updateFilenamesAndSlugs($customerUploadedFileData->currentFilenamesIndexedById);
 
-        if ($customerUploadedFileTypeConfig->isMultiple()) {
+        if ($uploadedFileTypeConfig->isMultiple()) {
             $this->uploadFiles(
                 $entity,
                 $customerUploadedFileEntityConfig->getEntityName(),
@@ -157,18 +165,6 @@ class CustomerUploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     */
-    public function deleteFileFromFilesystem(CustomerUploadedFile $customerUploadedFile): void
-    {
-        $filepath = $this->customerUploadedFileLocator->getAbsoluteUploadedFileFilepath($customerUploadedFile);
-
-        if ($this->filesystem->has($filepath)) {
-            $this->filesystem->delete($filepath);
-        }
-    }
-
-    /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[] $customerUploadedFiles
      */
@@ -199,58 +195,6 @@ class CustomerUploadedFileFacade
         );
 
         $this->deleteFiles($entity, $customerUploadedFiles);
-    }
-
-    /**
-     * @param object $entity
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile[]
-     */
-    public function getUploadedFilesByEntity(
-        object $entity,
-        string $type = CustomerUploadedFileTypeConfig::DEFAULT_TYPE_NAME,
-    ): array {
-        return $this->customerUploadedFileRepository->getCustomerUploadedFilesByEntity(
-            $this->customerUploadedFileConfig->getEntityName($entity),
-            $this->getEntityId($entity),
-            $type,
-        );
-    }
-
-    /**
-     * @param object $entity
-     * @return int
-     */
-    protected function getEntityId(object $entity): int
-    {
-        $entityMetadata = $this->em->getClassMetadata(get_class($entity));
-        $identifier = $entityMetadata->getIdentifierValues($entity);
-
-        if (count($identifier) === 1) {
-            return array_pop($identifier);
-        }
-
-        $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
-
-        throw new EntityIdentifierException($message);
-    }
-
-    /**
-     * @param int $customerUploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
-     */
-    public function getById(int $customerUploadedFileId): CustomerUploadedFile
-    {
-        return $this->customerUploadedFileRepository->getById($customerUploadedFileId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
-     * @return string
-     */
-    public function getAbsoluteUploadedFileFilepath(CustomerUploadedFile $customerUploadedFile): string
-    {
-        return $this->customerUploadedFileLocator->getAbsoluteUploadedFileFilepath($customerUploadedFile);
     }
 
     /**
@@ -331,5 +275,29 @@ class CustomerUploadedFileFacade
             $hash ? null : $customerUser,
             $hash ?? null,
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface
+     */
+    protected function getRepository(): UploadedFileRepositoryInterface
+    {
+        return $this->customerUploadedFileRepository;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorInterface
+     */
+    protected function getFileLocator(): UploadedFileLocatorInterface
+    {
+        return $this->customerUploadedFileLocator;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface
+     */
+    protected function getUploadedFileConfig(): UploadedFileConfigInterface
+    {
+        return $this->customerUploadedFileConfig;
     }
 }
