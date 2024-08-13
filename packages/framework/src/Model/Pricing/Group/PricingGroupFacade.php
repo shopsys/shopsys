@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -82,9 +83,13 @@ class PricingGroupFacade
     /**
      * @param int $oldPricingGroupId
      * @param int|null $newPricingGroupId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null $selectedDomain
      */
-    public function delete($oldPricingGroupId, $newPricingGroupId = null)
-    {
+    public function delete(
+        int $oldPricingGroupId,
+        ?int $newPricingGroupId = null,
+        ?DomainConfig $selectedDomain = null,
+    ): void {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
 
         if ($newPricingGroupId !== null) {
@@ -96,9 +101,10 @@ class PricingGroupFacade
 
         if (
             $newPricingGroup !== null
-            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($oldPricingGroup)
+            && $selectedDomain !== null
+            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($oldPricingGroup, $selectedDomain)
         ) {
-            $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain($newPricingGroup);
+            $this->pricingGroupSettingFacade->setDefaultPricingGroupForDomain($newPricingGroup, $selectedDomain);
         }
 
         $this->em->remove($oldPricingGroup);
