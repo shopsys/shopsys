@@ -847,45 +847,6 @@ Returns HTML content for order sent page.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ordersSearch</strong></td>
-<td valign="top"><a href="#orderconnection">OrderConnection</a>!</td>
-<td>
-
-Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">filter</td>
-<td valign="top"><a href="#orderfilterinput">OrderFilterInput</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">searchInput</td>
-<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>ParameterCheckboxFilterOption</strong></td>
 <td valign="top"><a href="#parametercheckboxfilteroption">ParameterCheckboxFilterOption</a></td>
 <td></td>

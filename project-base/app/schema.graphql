@@ -1901,8 +1901,6 @@ type Query {
   orders(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int): OrderConnection
   "Returns HTML content for order sent page."
   orderSentPageContent(orderUuid: Uuid!): String!
-  "Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords"
-  ordersSearch(after: String, before: String, filter: OrderFilterInput, first: Int, last: Int, searchInput: SearchInput!): OrderConnection!
   ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
   ParameterColorFilterOption: ParameterColorFilterOption
   ParameterSliderFilterOption: ParameterSliderFilterOption
