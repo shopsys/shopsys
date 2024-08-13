@@ -4,9 +4,10 @@ import { GtmCartItemType } from 'gtm/types/objects';
 
 export const getGtmCartViewEvent = (
     currencyCode: string,
-    valueWithoutVat: number,
-    valueWithVat: number,
+    valueWithoutVat: number | null,
+    valueWithVat: number | null,
     products: GtmCartItemType[] | undefined,
+    arePricesHidden: boolean,
 ): GtmCartViewEventType => ({
     event: GtmEventType.cart_view,
     ecommerce: {
@@ -14,6 +15,7 @@ export const getGtmCartViewEvent = (
         valueWithoutVat,
         valueWithVat,
         products,
+        arePricesHidden,
     },
     _clear: true,
 });

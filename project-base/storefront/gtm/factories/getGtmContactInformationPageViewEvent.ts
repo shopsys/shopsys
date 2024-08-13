@@ -4,6 +4,7 @@ import { GtmCartInfoType } from 'gtm/types/objects';
 
 export const getGtmContactInformationPageViewEvent = (
     gtmCartInfo: GtmCartInfoType,
+    arePricesHidden: boolean,
 ): GtmContactInformationPageViewEventType => ({
     event: GtmEventType.contact_information_page_view,
     ecommerce: {
@@ -12,6 +13,7 @@ export const getGtmContactInformationPageViewEvent = (
         valueWithVat: gtmCartInfo.valueWithVat,
         promoCodes: gtmCartInfo.promoCodes,
         products: gtmCartInfo.products,
+        arePricesHidden,
     },
     _clear: true,
 });

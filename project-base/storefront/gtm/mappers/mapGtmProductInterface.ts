@@ -1,4 +1,5 @@
 import { GtmProductInterface } from 'gtm/types/objects';
+import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { ProductInterfaceType } from 'types/product';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 
@@ -20,8 +21,8 @@ export const mapGtmProductInterface = (
         availability: productInterface.availability.name,
         imageUrl: mapGtmProductInterfaceImageUrl(productInterface),
         flags: productInterface.flags.map((simpleFlagType) => simpleFlagType.name),
-        priceWithoutVat: parseFloat(productInterface.price.priceWithoutVat),
-        priceWithVat: parseFloat(productInterface.price.priceWithVat),
+        priceWithoutVat: getGtmPriceBasedOnVisibility(productInterface.price.priceWithoutVat),
+        priceWithVat: getGtmPriceBasedOnVisibility(productInterface.price.priceWithVat),
         vatAmount: parseFloat(productInterface.price.vatAmount),
         sku: productInterface.catalogNumber,
         url: productUrl,

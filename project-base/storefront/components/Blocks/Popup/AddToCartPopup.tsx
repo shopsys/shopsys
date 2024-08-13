@@ -12,7 +12,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
@@ -74,9 +74,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
 
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
                         <div className="block text-price">
-                            {`${quantity} ${product.unit.name}, ${formatPrice(
-                                quantity * mapPriceForCalculations(product.price.priceWithVat),
-                            )}`}
+                            {`${quantity} ${product.unit.name}`}
+                            {isPriceVisible(product.price.priceWithVat) &&
+                                `, ${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`}
                         </div>
                     </div>
                 </div>

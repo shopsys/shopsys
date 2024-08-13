@@ -9,6 +9,7 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 const ProductVariantsAvailabilityPopup = dynamic(
     () =>
@@ -70,7 +71,9 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         />
                     </div>
 
-                    <div className="lg:w-40 lg:text-right">{formatPrice(variant.price.priceWithVat)}</div>
+                    {isPriceVisible(variant.price.priceWithVat) && (
+                        <div className="lg:w-40 lg:text-right">{formatPrice(variant.price.priceWithVat)}</div>
+                    )}
 
                     <div className="text-right max-lg:clear-both">
                         {isSellingDenied ? (

@@ -4,9 +4,9 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getGtmChangeCartItemEvent } from 'gtm/factories/getGtmChangeCartItemEvent';
 import { getGtmMappedCart } from 'gtm/utils/getGtmMappedCart';
+import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { mapPriceForCalculations } from 'utils/mappers/price';
 
 export const onGtmChangeCartItemEventHandler = (
     initialQuantity: number,
@@ -17,14 +17,18 @@ export const onGtmChangeCartItemEventHandler = (
     listIndex: number | undefined,
     gtmProductListName: GtmProductListNameType,
     isUserLoggedIn: boolean,
+    arePricesHidden: boolean,
 ): void => {
     const quantityDifference = isAbsoluteQuantity
         ? addToCartResult.addProductResult.addedQuantity - initialQuantity
         : addToCartResult.addProductResult.addedQuantity;
-    const eventValueWithoutVat =
-        mapPriceForCalculations(addedCartItem.product.price.priceWithoutVat) * Math.abs(quantityDifference);
-    const eventValueWithVat =
-        mapPriceForCalculations(addedCartItem.product.price.priceWithVat) * Math.abs(quantityDifference);
+
+    const eventValueWithoutVat = getGtmPriceBasedOnVisibility(addedCartItem.product.price.priceWithoutVat);
+    const eventValueWithVat = getGtmPriceBasedOnVisibility(addedCartItem.product.price.priceWithVat);
+    const eventValueWithoutVatMultipliedByQuantity =
+        eventValueWithoutVat === null ? eventValueWithoutVat : eventValueWithoutVat * Math.abs(quantityDifference);
+    const eventValueWithVatMultipliedByQuantity =
+        eventValueWithVat === null ? eventValueWithVat : eventValueWithVat * Math.abs(quantityDifference);
 
     const absoluteQuantity = Math.abs(quantityDifference);
     const event = getGtmChangeCartItemEvent(
@@ -33,10 +37,11 @@ export const onGtmChangeCartItemEventHandler = (
         listIndex,
         absoluteQuantity,
         domainConfig.currencyCode,
-        eventValueWithoutVat,
-        eventValueWithVat,
+        eventValueWithoutVatMultipliedByQuantity,
+        eventValueWithVatMultipliedByQuantity,
         gtmProductListName,
         domainConfig.url,
+        arePricesHidden,
         getGtmMappedCart(
             addToCartResult.cart,
             addToCartResult.cart.promoCode,

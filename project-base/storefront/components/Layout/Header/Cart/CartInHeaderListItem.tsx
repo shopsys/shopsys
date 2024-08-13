@@ -5,7 +5,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;
@@ -41,9 +41,11 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
 
             <div className="text-sm">{quantity + product.unit.name}</div>
 
-            <div className="w-28 break-words text-right text-sm font-bold text-price">
-                {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
-            </div>
+            {isPriceVisible(product.price.priceWithVat) && (
+                <div className="w-28 break-words text-right text-sm font-bold text-price">
+                    {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
+                </div>
+            )}
 
             <RemoveCartItemButton onRemoveFromCart={onRemoveFromCart} />
         </li>

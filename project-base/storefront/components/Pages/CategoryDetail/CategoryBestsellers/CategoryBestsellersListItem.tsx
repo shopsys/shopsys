@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
@@ -9,6 +10,7 @@ import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;
@@ -23,6 +25,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 }) => {
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
+    const currentCustomerData = useCurrentCustomerData();
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
@@ -35,7 +38,15 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 'bg-backgroundMore',
                 'hover:bg-backgroundMost',
             )}
-            onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
+            onClick={() =>
+                onGtmProductClickEventHandler(
+                    product,
+                    gtmProductListName,
+                    listIndex,
+                    url,
+                    !!currentCustomerData?.arePricesHidden,
+                )
+            }
         >
             <div className="flex items-center gap-5 font-bold no-underline hover:no-underline lg:flex-1">
                 <div className="flex w-20 shrink-0 items-center justify-center">
@@ -69,9 +80,11 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 />
             </div>
 
-            <div className="basis-2/6 text-right font-bold leading-5 text-price lg:basis-2/12">
-                {formatPrice(product.price.priceWithVat)}
-            </div>
+            {isPriceVisible(product.price.priceWithVat) && (
+                <div className="basis-2/6 text-right font-bold leading-5 text-price lg:basis-2/12">
+                    {formatPrice(product.price.priceWithVat)}
+                </div>
+            )}
         </ExtendedNextLink>
     );
 };

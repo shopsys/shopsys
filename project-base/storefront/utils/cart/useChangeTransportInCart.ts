@@ -1,3 +1,4 @@
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangeTransportInCartMutation } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -19,6 +20,7 @@ export const useChangeTransportInCart = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
+    const currentCustomerData = useCurrentCustomerData();
 
     const gtmCart = useLatest(gtmCartInfo);
 
@@ -60,6 +62,7 @@ export const useChangeTransportInCart = () => {
                 changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
                 newPickupPlace,
                 changeTransportResult.data?.ChangeTransportInCart.payment?.name,
+                !!currentCustomerData?.arePricesHidden,
             );
         });
 

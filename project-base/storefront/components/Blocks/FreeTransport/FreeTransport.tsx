@@ -2,6 +2,7 @@ import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 export const FreeTransport: FC = () => {
     const { cart } = useCurrentCart();
@@ -9,7 +10,12 @@ export const FreeTransport: FC = () => {
     const formatPrice = useFormatPrice();
     const remainingAmount = cart?.remainingAmountWithVatForFreeTransport;
 
-    if (!cart?.items.length || remainingAmount === null || remainingAmount === undefined) {
+    if (
+        !cart?.items.length ||
+        remainingAmount === null ||
+        remainingAmount === undefined ||
+        !isPriceVisible(remainingAmount)
+    ) {
         return null;
     }
 

@@ -5,6 +5,7 @@ import { GtmCartInfoType } from 'gtm/types/objects';
 export const getGtmTransportAndPaymentPageViewEvent = (
     currencyCode: string,
     gtmCartInfo: GtmCartInfoType,
+    arePricesHidden: boolean,
 ): GtmPaymentAndTransportPageViewEventType => ({
     event: GtmEventType.payment_and_transport_page_view,
     ecommerce: {
@@ -12,6 +13,7 @@ export const getGtmTransportAndPaymentPageViewEvent = (
         valueWithoutVat: gtmCartInfo.valueWithoutVat,
         valueWithVat: gtmCartInfo.valueWithVat,
         products: gtmCartInfo.products,
+        arePricesHidden,
     },
     _clear: true,
 });

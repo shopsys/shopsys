@@ -7,6 +7,7 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -62,6 +63,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     ) => {
         const { url } = useDomainConfig();
         const { t } = useTranslation();
+        const currentCustomerData = useCurrentCustomerData();
 
         return (
             <li
@@ -94,7 +96,13 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClick={() => {
-                        onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url);
+                        onGtmProductClickEventHandler(
+                            product,
+                            gtmProductListName,
+                            listIndex,
+                            url,
+                            !!currentCustomerData?.arePricesHidden,
+                        );
                         onClick?.(product, listIndex);
                     }}
                 >

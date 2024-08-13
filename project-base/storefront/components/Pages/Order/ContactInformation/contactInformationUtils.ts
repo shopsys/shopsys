@@ -232,6 +232,7 @@ const useHandleEventsAfterOrderCreation = () => {
             onGtmCreateOrderEventHandler(
                 gtmCreateOrderEventOrderPart,
                 gtmCreateOrderEventUserPart,
+                !!user?.arePricesHidden,
                 isPaymentSuccessful,
             );
         }

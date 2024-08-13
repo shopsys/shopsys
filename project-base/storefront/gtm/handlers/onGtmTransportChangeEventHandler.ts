@@ -9,8 +9,11 @@ export const onGtmTransportChangeEventHandler = (
     updatedTransport: TypeTransportWithAvailablePaymentsAndStoresFragment | null,
     updatedPickupPlace: StoreOrPacketeryPoint | null,
     paymentName: string | undefined,
+    arePricesHidden: boolean,
 ): void => {
     if (gtmCartInfo && updatedTransport !== null) {
-        gtmSafePushEvent(getGtmTransportChangeEvent(gtmCartInfo, updatedTransport, updatedPickupPlace, paymentName));
+        gtmSafePushEvent(
+            getGtmTransportChangeEvent(gtmCartInfo, updatedTransport, updatedPickupPlace, paymentName, arePricesHidden),
+        );
     }
 };

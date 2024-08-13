@@ -9,6 +9,7 @@ export const onGtmProductClickEventHandler = (
     gtmProductListName: GtmProductListNameType,
     index: number,
     domainUrl: string,
+    arePricesHidden: boolean,
 ): void => {
-    gtmSafePushEvent(getGtmProductClickEvent(product, gtmProductListName, index, domainUrl));
+    gtmSafePushEvent(getGtmProductClickEvent(product, gtmProductListName, index, domainUrl, arePricesHidden));
 };

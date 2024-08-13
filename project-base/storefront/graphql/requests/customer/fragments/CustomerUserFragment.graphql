@@ -29,4 +29,5 @@ fragment CustomerUserFragment on CustomerUser {
     }
     pricingGroup
     hasPasswordSet
+    roles
 }

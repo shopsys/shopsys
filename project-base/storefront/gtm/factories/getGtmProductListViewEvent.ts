@@ -10,6 +10,7 @@ export const getGtmProductListViewEvent = (
     currentPageWithLoadMore: number,
     pageSize: number,
     domainUrl: string,
+    arePricesHidden: boolean,
 ): GtmProductListViewEventType => ({
     event: GtmEventType.product_list_view,
     ecommerce: {
@@ -19,6 +20,7 @@ export const getGtmProductListViewEvent = (
 
             return mapGtmListedProductType(product, listedProductIndex, domainUrl);
         }),
+        arePricesHidden,
     },
     _clear: true,
 });

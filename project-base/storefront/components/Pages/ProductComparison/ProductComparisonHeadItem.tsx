@@ -5,6 +5,7 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -30,10 +31,11 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);
+    const currentCustomerData = useCurrentCustomerData();
 
     const onProductDetailRedirectHandler = useCallback(
         (product: TypeListedProductFragment, listName: GtmProductListNameType, index: number) => {
-            onGtmProductClickEventHandler(product, listName, index, url);
+            onGtmProductClickEventHandler(product, listName, index, url, !!currentCustomerData?.arePricesHidden);
         },
         [url],
     );

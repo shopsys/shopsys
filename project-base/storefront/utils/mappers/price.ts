@@ -3,3 +3,5 @@ export const mapPriceForCalculations = (price: string): number => parseFloat(pri
 const roundPrice = (price: number): number => Math.round((price + Number.EPSILON) * 100) / 100;
 
 export const getPriceRounded = (price: string): number => roundPrice(mapPriceForCalculations(price));
+
+export const isPriceVisible = (price: string | undefined) => price !== '***';

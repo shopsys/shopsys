@@ -91,7 +91,7 @@ export type TypePersonalDataDetailQuery = { __typename?: 'Query', accessPersonal
   }
 };
       export default result;
-    
+
 
 export const PersonalDataDetailQueryDocument = gql`
     query PersonalDataDetailQuery($hash: String!) {
