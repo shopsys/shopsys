@@ -3910,12 +3910,6 @@ msgstr "větší nebo rovno"
 msgid "higher than"
 msgstr "větší než"
 
-msgid "in category (above the category name)"
-msgstr "v kategorii (nad názvem kategorie)"
-
-msgid "in category (above the product list)"
-msgstr "v kategorii (nad výpisem produktů)"
-
 msgid "in category (between first and second row of products)"
 msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
 

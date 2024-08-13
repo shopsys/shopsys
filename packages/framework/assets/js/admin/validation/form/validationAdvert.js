@@ -24,7 +24,7 @@ export default function validationAdvert () {
     };
 
     const initAdvertProductList = function () {
-        if (getPositionName() === 'productList') {
+        if (getPositionName() === 'productListSecondRow') {
             $advertForm.find('.js-category-tree-form-children-container').closest('.form-line').show();
         } else {
             $advertForm.find('.js-category-tree-form-children-container').closest('.form-line').hide();

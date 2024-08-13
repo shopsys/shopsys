@@ -6,11 +6,9 @@ namespace App\FrontendApi\Model\Resolver;
 
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade;
-use Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertPositionWithoutCategoryUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertsQuery as BaseAdvertsQuery;
 
 class AdvertsQuery extends BaseAdvertsQuery
@@ -37,15 +35,6 @@ class AdvertsQuery extends BaseAdvertsQuery
      */
     public function advertsQuery(?array $positionNames = null, ?string $categoryOrSeoCategoryUuid = null): array
     {
-        if (
-            $categoryOrSeoCategoryUuid === null &&
-            $positionNames &&
-            array_key_exists(AdvertPositionRegistry::POSITION_PRODUCT_LIST, $positionNames)
-        ) {
-            // TODO: Get adverts for the rest of the positions?
-            throw new AdvertPositionWithoutCategoryUserError('Cannot retrieve advert on product list page without setting category.');
-        }
-
         $domainId = $this->domain->getId();
 
         if ($positionNames === null || $positionNames === []) {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Advert;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -31,14 +30,6 @@ class AdvertsQuery extends AbstractQuery
      */
     public function advertsQuery(?array $positionNames = null, ?string $categoryUuid = null): array
     {
-        if (
-            $categoryUuid === null &&
-            $positionNames &&
-            array_key_exists(AdvertPositionRegistry::POSITION_PRODUCT_LIST, $positionNames)
-        ) {
-            throw new AdvertPositionWithoutCategoryUserError('Cannot retrieve advert on product list page without setting category.');
-        }
-
         $domainId = $this->domain->getId();
 
         if ($positionNames === null || $positionNames === []) {

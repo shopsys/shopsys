@@ -146,7 +146,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     {
                         query: AdvertsQueryDocument,
                         variables: {
-                            positionNames: ['productList', 'productListMiddle', 'productListSecondRow'],
+                            positionNames: ['productListSecondRow'],
                             categoryUuid,
                         },
                     },

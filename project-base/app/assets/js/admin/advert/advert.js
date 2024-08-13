@@ -7,8 +7,6 @@ import Register from 'framework/common/utils/Register';
 
     const initAdvertForm = function () {
         const positionNamesWithCategoryTree = [
-            'productList',
-            'productListMiddle',
             'productListSecondRow'
         ];
 

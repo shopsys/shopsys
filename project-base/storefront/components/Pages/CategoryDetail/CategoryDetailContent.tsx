@@ -1,5 +1,4 @@
 import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
-import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
@@ -77,15 +76,11 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 {isPanelOpen && <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />}
 
                 <div className="flex flex-1 flex-col">
-                    <Adverts className="mt-6" currentCategory={category} positionName="productList" />
-
                     <h1>{title}</h1>
 
                     {!!category.description && currentPage === 1 && (
                         <div dangerouslySetInnerHTML={{ __html: category.description }} />
                     )}
-
-                    <Adverts className="mt-6" currentCategory={category} positionName="productListMiddle" />
 
                     <SimpleNavigation
                         className="mt-6"
