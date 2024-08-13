@@ -165,32 +165,42 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @param int $limit
      * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerOrderLimitedList(Customer $customer, int $limit, int $offset): array
-    {
-        return $this->createOrderQueryBuilder()
+    public function getCustomerOrderLimitedList(
+        Customer $customer,
+        int $limit,
+        int $offset,
+        OrderFilter $orderFilter,
+    ): array {
+        $queryBuilder = $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')
             ->setParameter('customer', $customer)
             ->orderBy('o.createdAt', 'DESC')
             ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->execute();
+            ->setMaxResults($limit);
+
+        $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
+
+        return $queryBuilder->getQuery()->execute();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return int
      */
-    public function getCustomerOrderCount(Customer $customer): int
+    public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int
     {
-        return $this->createOrderQueryBuilder()
+        $queryBuilder = $this->createOrderQueryBuilder()
             ->select('count(o.id)')
             ->andWhere('o.customer = :customerUser')
-            ->setParameter('customerUser', $customer)
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->setParameter('customerUser', $customer);
+
+        $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     /**
