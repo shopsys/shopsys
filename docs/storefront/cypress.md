@@ -168,7 +168,7 @@ The `takeSnapshotAndCompare` helper method does several things.
 7. Reset pointer events of the previously blocked elements (point 3.)
 
 ```ts
-export type Blackout = { tid: TIDs; zIndex?: number; shouldNotOffset?: boolean };
+export type Blackout = { tid: TIDs; zIndex?: number };
 
 type SnapshotAdditionalOptions = {
     capture: 'viewport' | 'fullPage' | TIDs;
@@ -181,6 +181,7 @@ export const takeSnapshotAndCompare = (
     testName: string | undefined,
     snapshotName: string,
     options: Partial<SnapshotAdditionalOptions> = {},
+    callbackBeforeBlackout?: () => void | undefined,
 ) => {
     const optionsWithDefaultValues = {
         capture: options.capture ?? 'fullPage',
@@ -194,8 +195,10 @@ export const takeSnapshotAndCompare = (
     }
 
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
-    removePointerEventsBeforeScreenshot(ELEMENTS_WITHOUT_POINTER_EVENTS_FOR_SCREENSHOTS);
+    hideScrollbars();
+    callbackBeforeBlackout?.();
+    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
+    removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
 
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
         cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });

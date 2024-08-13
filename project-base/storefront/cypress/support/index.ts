@@ -126,7 +126,7 @@ export const clickOnLabel = (parentElementId: string) => {
     cy.get(`[for="${parentElementId}"]`).click();
 };
 
-export type Blackout = { tid: TIDs; zIndex?: number; shouldNotOffset?: boolean };
+export type Blackout = { tid: TIDs; zIndex?: number };
 
 type SnapshotAdditionalOptions = {
     capture: 'viewport' | 'fullPage' | TIDs;
@@ -153,8 +153,9 @@ export const takeSnapshotAndCompare = (
     }
 
     scrollPageBeforeScreenshot(optionsWithDefaultValues);
+    hideScrollbars();
     callbackBeforeBlackout?.();
-    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout, optionsWithDefaultValues.capture);
+    blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
     removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
 
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
@@ -179,7 +180,17 @@ const scrollPageBeforeScreenshot = (optionsWithDefaultValues: SnapshotAdditional
     }
 };
 
-const blackoutBeforeScreenshot = (blackout: Blackout[], capture: 'viewport' | 'fullPage' | TIDs) => {
+const hideScrollbars = () => {
+    cy.document().then((doc) => {
+        const style = doc.createElement('style');
+        style.setAttribute('id', 'hide-scrollbars');
+        doc.head.appendChild(style);
+
+        style.innerHTML = `::-webkit-scrollbar { display: none; }`;
+    });
+};
+
+const blackoutBeforeScreenshot = (blackout: Blackout[]) => {
     for (const blackoutElement of blackout) {
         cy.getByTID([blackoutElement.tid]).each((element) => {
             const rect = element[0].getBoundingClientRect();
@@ -187,12 +198,10 @@ const blackoutBeforeScreenshot = (blackout: Blackout[], capture: 'viewport' | 'f
             const coverDiv = document.createElement('div');
             coverDiv.classList.add('blackout');
             coverDiv.style.position = 'absolute';
-            const scrollbarWidth = 15;
-            const offset = capture === 'fullPage' && !blackoutElement.shouldNotOffset ? scrollbarWidth : 0;
             coverDiv.style.width = `${rect.width}px`;
             coverDiv.style.height = `${rect.height}px`;
             coverDiv.style.top = `${rect.top + window.scrollY}px`;
-            coverDiv.style.left = `${rect.left + window.scrollX + offset}px`;
+            coverDiv.style.left = `${rect.left + window.scrollX}px`;
             coverDiv.style.backgroundColor = 'black';
             coverDiv.style.zIndex = blackoutElement.zIndex ? blackoutElement.zIndex.toString() : '10000';
 
