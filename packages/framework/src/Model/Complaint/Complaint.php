@@ -127,7 +127,6 @@ class Complaint
      */
     public function __construct(ComplaintData $complaintData, array $complaintItems)
     {
-        $this->uuid = Uuid::uuid4()->toString();
         $this->createdAt = new DateTime();
         $this->setItems($complaintItems);
 
@@ -267,6 +266,7 @@ class Complaint
      */
     protected function setData(ComplaintData $complaintData): void
     {
+        $this->uuid = $complaintData->uuid ?? Uuid::uuid4()->toString();
         $this->number = $complaintData->number;
         $this->order = $complaintData->order;
         $this->customerUser = $complaintData->customerUser;
