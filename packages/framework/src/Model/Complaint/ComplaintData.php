@@ -7,6 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 class ComplaintData
 {
     /**
+     * @var string|null
+     */
+    public $uuid;
+
+    /**
      * @var string
      */
     public $number;
