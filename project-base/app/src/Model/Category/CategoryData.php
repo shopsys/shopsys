@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 
 /**
  * @property \App\Model\Category\Category|null $parent
+ * @property \App\Model\Product\Parameter\Parameter[] $parametersCollapsed
  */
 class CategoryData extends BaseCategoryData
 {
@@ -15,16 +16,6 @@ class CategoryData extends BaseCategoryData
      * @var string|null
      */
     public $akeneoCode;
-
-    /**
-     * @var \App\Model\Product\Parameter\Parameter[]
-     */
-    public $parametersCollapsed;
-
-    /**
-     * @var int[]|null[]
-     */
-    public $parametersPosition;
 
     /**
      * @var \App\Model\Category\Category[]
@@ -35,7 +26,6 @@ class CategoryData extends BaseCategoryData
     {
         parent::__construct();
 
-        $this->parametersPosition = [];
         $this->linkedCategories = [];
     }
 }

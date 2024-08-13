@@ -1285,6 +1285,12 @@ msgstr "Pro vytvoření produktu doplňte chybějící nastavení. Více informa
 msgid "Filter by"
 msgstr "Filtrovat podle"
 
+msgid "Filter parameters"
+msgstr "Parametry filtru"
+
+msgid "Filter parameters closed by default"
+msgstr "Defaultně zavřené parametry ve filtru"
+
 msgid "Finish the assigning"
 msgstr "Dokončit přiřazování"
 
@@ -2004,6 +2010,9 @@ msgstr "Parametr <strong>{{ name }}</strong> byl smazán"
 
 msgid "Parameters"
 msgstr "Parametry"
+
+msgid "Parameters order in category"
+msgstr "Pořadí parametrů v kategorii"
 
 msgid "Parameters overview"
 msgstr "Přehled parametrů"
