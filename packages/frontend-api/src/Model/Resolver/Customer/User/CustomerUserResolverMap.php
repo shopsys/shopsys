@@ -8,6 +8,7 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\Exception\MissingCustomerUserLoginTypeException;
 
 class CustomerUserResolverMap extends ResolverMap
 {
@@ -52,7 +53,11 @@ class CustomerUserResolverMap extends ResolverMap
                 return $customerUser->getPricingGroup()->getName();
             },
             'loginInfo' => function (CustomerUser $customerUser) {
-                $mostRecentLoginType = $this->customerUserLoginTypeFacade->getMostRecentLoginType($customerUser);
+                $mostRecentLoginType = $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser);
+
+                if ($mostRecentLoginType === null) {
+                    throw new MissingCustomerUserLoginTypeException();
+                }
 
                 return $this->loginInfoFactory->createFromCustomerUserLoginType($mostRecentLoginType);
             },

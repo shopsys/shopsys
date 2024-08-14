@@ -26,7 +26,7 @@ class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformat
     #[Override]
     public function getLastLogin(CustomerUser $customerUser): ?DateTime
     {
-        return $this->customerUserLoginTypeFacade->getMostRecentLoginType($customerUser)->getLastLoggedInAt();
+        return $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser)?->getLastLoggedInAt();
     }
 
     /**
