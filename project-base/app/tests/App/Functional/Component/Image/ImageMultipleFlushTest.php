@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Image;
 
-use App\Component\FileUpload\FileUpload;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

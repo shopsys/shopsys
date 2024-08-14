@@ -141,4 +141,27 @@ class ImageRepository
 
         return $imagesByEntityId;
     }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param string|null $type
+     * @return int
+     */
+    public function getImagesCountByEntityIndexedById(string $entityName, int $entityId, ?string $type = null): int
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('COUNT(i)')
+            ->from(Image::class, 'i', 'i.id')
+            ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
+            ->andWhere('i.entityId = :entityId')->setParameter('entityId', $entityId);
+
+        if ($type === null) {
+            $queryBuilder->andWhere('i.type IS NULL');
+        } else {
+            $queryBuilder->andWhere('i.type = :type')->setParameter('type', $type);
+        }
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }

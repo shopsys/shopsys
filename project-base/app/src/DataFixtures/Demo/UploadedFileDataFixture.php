@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Component\FileUpload\FileUpload;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
@@ -23,7 +23,7 @@ class UploadedFileDataFixture extends AbstractReferenceFixture implements Depend
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
-     * @param \App\Component\FileUpload\FileUpload $fileUpload
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
