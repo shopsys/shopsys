@@ -1,0 +1,19 @@
+query GetOrderItemsQuery ($first: Int, $filter: OrderItemsFilterInput) {
+    orderItems(first: $first, filter: $filter) {
+        totalCount
+        edges {
+            cursor
+            node {
+                uuid
+                name
+                vatRate
+                quantity
+                unit
+                catnum
+                order {
+                    number
+                }
+            }
+        }
+    }
+}
