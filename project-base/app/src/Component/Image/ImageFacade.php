@@ -151,19 +151,6 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
-    protected function setImagePositionsByOrder(array $orderedImages): void
-    {
-        $position = 0;
-
-        foreach ($orderedImages as $image) {
-            $image->setPosition($position);
-            $position++;
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
-     */
     protected function saveImageOrdering($orderedImages): void
     {
         // Image entity can be cached, and It caused no persisted entity -> fatal on flush
