@@ -22,7 +22,8 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class Image extends AbstractTranslatableEntity implements EntityFileUploadInterface
 {
-    protected const UPLOAD_KEY = 'image';
+    protected const string UPLOAD_KEY = 'image';
+    public const int DEFAULT_IMAGE_POSITION = 0;
 
     /**
      * @var int
@@ -65,8 +66,8 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $extension;
 
     /**
-     * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     * @ORM\Column(type="integer")
      */
     protected $position;
 
@@ -101,6 +102,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         $this->setNames($namesIndexedByLocale);
         $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
+        $this->position = static::DEFAULT_IMAGE_POSITION;
     }
 
     /**
