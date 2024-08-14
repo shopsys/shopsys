@@ -1,0 +1,21 @@
+query SearchOrderItemsQuery($first: Int, $searchInput: SearchInput!, $filter: OrderItemsFilterInput){
+    orderItemsSearch(first: $first, searchInput: $searchInput, filter: $filter) {
+        totalCount
+        edges {
+            cursor
+            node {
+                catnum
+                name
+                vatRate
+                quantity
+                unit
+                uuid
+                order {
+                    uuid
+                    number
+                    creationDate
+                }
+            }
+        }
+    }
+}
