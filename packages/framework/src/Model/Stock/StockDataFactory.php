@@ -19,9 +19,20 @@ class StockDataFactory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
      */
-    public function create(): StockData
+    protected function createInstance(): StockData
     {
         return new StockData();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
+     */
+    public function create(): StockData
+    {
+        $stockData = $this->createInstance();
+        $this->fillNew($stockData);
+
+        return $stockData;
     }
 
     /**
@@ -30,7 +41,7 @@ class StockDataFactory
      */
     public function createFromStock(Stock $stock): StockData
     {
-        $stockData = new StockData();
+        $stockData = $this->createInstance();
         $this->fillFromStock($stockData, $stock);
 
         return $stockData;
@@ -40,7 +51,7 @@ class StockDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
      * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
      */
-    public function fillFromStock(StockData $stockData, Stock $stock): void
+    protected function fillFromStock(StockData $stockData, Stock $stock): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $stockData->isEnabledByDomain[$domainId] = $stock->isEnabled($domainId);
@@ -50,5 +61,15 @@ class StockDataFactory
         $stockData->isDefault = $stock->isDefault();
         $stockData->externalId = $stock->getExternalId();
         $stockData->note = $stock->getNote();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
+     */
+    protected function fillNew(StockData $stockData): void
+    {
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $stockData->isEnabledByDomain[$domainId] = false;
+        }
     }
 }
