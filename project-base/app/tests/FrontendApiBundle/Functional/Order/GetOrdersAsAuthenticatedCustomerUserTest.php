@@ -6,6 +6,8 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
+use DateTime;
+use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -76,6 +78,18 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
         //last 2 orders
         yield [['last' => 2], 4, 2];
+
+        // filter by order item catnum
+        yield [['first' => 2, 'filter' => ['orderItemsCatnum' => '8456655']], 4, 1];
+
+        // filter by order item product uuid
+        yield [['first' => 1, 'filter' => ['orderItemsProductUuid' => 'e451f3ba-025c-577e-8fdf-49b46e6725ee']], 4, 1];
+
+        // filter by order created after date
+        yield [['filter' => ['createdAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)]], null, null];
+
+        // filter by order status
+        yield [['filter' => ['status' => 'inProgress']], 0, 1];
     }
 
     /**
