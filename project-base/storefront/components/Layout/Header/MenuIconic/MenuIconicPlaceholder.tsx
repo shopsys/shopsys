@@ -10,7 +10,7 @@ import { twJoin } from 'tailwind-merge';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const placeholderItemTwClass =
-    'flex items-center justify-center py-4 px-3 gap-2 rounded-tr-none text-sm text-linkInverted no-underline';
+    'flex items-center justify-center py-4 px-3 gap-2 rounded-tr-none text-sm text-linkInverted no-underline hover:!text-linkInvertedHovered hover:!no-underline';
 
 export const MenuIconicPlaceholder: FC = () => {
     const { t } = useTranslation();
