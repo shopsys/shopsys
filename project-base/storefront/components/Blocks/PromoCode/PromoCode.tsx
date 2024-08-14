@@ -46,7 +46,7 @@ export const PromoCode: FC = () => {
             ) : (
                 <>
                     <Button
-                        className="text-sm mb-3"
+                        className="max-sm:w-full text-sm mb-3"
                         tid={TIDs.blocks_promocode_add_button}
                         variant="inverted"
                         onClick={() => setIsContentVisible(!isContentVisible)}
@@ -62,7 +62,7 @@ export const PromoCode: FC = () => {
                                     applyPromoCodeToCart(promoCodeFormData.promoCode),
                                 )}
                             >
-                                <div className="flex gap-2 max-w-sm">
+                                <div className="flex max-w-sm">
                                     <TextInputControlled
                                         isWithoutFormLineError
                                         control={formProviderMethods.control}
@@ -72,6 +72,7 @@ export const PromoCode: FC = () => {
                                         textInputProps={{
                                             label: formMeta.fields.promoCode.label,
                                             required: true,
+                                            className: '!rounded-r-none border-r-0',
                                         }}
                                     />
                                     <SubmitButton
