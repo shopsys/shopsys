@@ -28,7 +28,7 @@ define run_acceptance_tests
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
 	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress;
-	docker compose stop storefront-cypress
+	docker rm -f shopsys-framework-storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 endef
@@ -57,7 +57,7 @@ define open_acceptance_tests
 		xhost + $(get_ip); \
 	fi
 	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress;
-	docker compose stop storefront-cypress
+	docker rm -f shopsys-framework-storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 endef
