@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecur
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
@@ -26,6 +29,8 @@ class LoginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
      */
     public function __construct(
         protected readonly CustomerUserRepository $customerUserRepository,
@@ -35,6 +40,8 @@ class LoginAsUserFacade
         protected readonly AdministratorFacade $administratorFacade,
         protected readonly TokenFacade $tokenFacade,
         protected readonly TokensDataFactory $tokensDataFactory,
+        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
+        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
     ) {
     }
 
@@ -51,6 +58,10 @@ class LoginAsUserFacade
         $deviceId = Uuid::uuid4()->toString();
         $user = $this->customerUserRepository->getCustomerUserById($customerUserId);
         $administrator = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
+
+        $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
+            $this->customerUserLoginTypeDataFactory->create($user, LoginTypeEnum::ADMIN),
+        );
 
         return $this->tokensDataFactory->create(
             $this->tokenFacade->createAccessTokenAsString($user, $deviceId, $administrator),

@@ -1037,6 +1037,7 @@ export type TypeLoginResult = {
 
 /** One of the possible methods of the customer user login */
 export enum TypeLoginTypeEnum {
+  Admin = 'admin',
   Facebook = 'facebook',
   Google = 'google',
   Seznam = 'seznam',

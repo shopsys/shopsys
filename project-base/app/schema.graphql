@@ -870,6 +870,7 @@ type LoginResult {
 
 "One of the possible methods of the customer user login"
 enum LoginTypeEnum {
+  admin
   facebook
   google
   seznam

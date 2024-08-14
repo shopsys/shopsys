@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserLoginTypeRepository
@@ -35,15 +36,14 @@ class CustomerUserLoginTypeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
      * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType|null
      */
-    public function findMostRecentLoginType(CustomerUser $customerUser): ?CustomerUserLoginType
-    {
-        return $this->entityManager->getRepository(CustomerUserLoginType::class)
-            ->createQueryBuilder('cult')
-            ->where('cult.customerUser = :customerUser')
-            ->orderBy('cult.lastLoggedInAt', 'DESC')
-            ->setParameter('customerUser', $customerUser)
+    public function findMostRecentLoginType(
+        CustomerUser $customerUser,
+        ?string $excludeType = null,
+    ): ?CustomerUserLoginType {
+        return $this->getOrderedCustomerUserLoginTypeQueryBuilder($customerUser, $excludeType)
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -51,19 +51,40 @@ class CustomerUserLoginTypeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
      * @return string[]
      */
-    public function getAllLoginTypes(CustomerUser $customerUser): array
+    public function getAllLoginTypes(CustomerUser $customerUser, ?string $excludeType = null): array
     {
-        $result = $this->entityManager->getRepository(CustomerUserLoginType::class)
-            ->createQueryBuilder('cult')
+        $result = $this->getOrderedCustomerUserLoginTypeQueryBuilder($customerUser, $excludeType)
             ->select('cult.loginType')
-            ->orderBy('cult.lastLoggedInAt', 'DESC')
-            ->where('cult.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
             ->getQuery()
             ->getArrayResult();
 
         return array_column($result, 'loginType');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getOrderedCustomerUserLoginTypeQueryBuilder(
+        CustomerUser $customerUser,
+        ?string $excludeType = null,
+    ): QueryBuilder {
+        $queryBuilder = $this->entityManager->getRepository(CustomerUserLoginType::class)
+            ->createQueryBuilder('cult')
+            ->where('cult.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser)
+            ->orderBy('cult.lastLoggedInAt', 'DESC');
+
+        if ($excludeType !== null) {
+            $queryBuilder
+                ->andWhere('cult.loginType != :excludeType')
+                ->setParameter('excludeType', $excludeType);
+        }
+
+        return $queryBuilder;
     }
 }

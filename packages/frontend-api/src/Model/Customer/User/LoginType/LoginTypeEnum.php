@@ -12,4 +12,5 @@ class LoginTypeEnum extends AbstractEnum
     public const string FACEBOOK = 'facebook';
     public const string GOOGLE = 'google';
     public const string SEZNAM = 'seznam';
+    public const string ADMIN = 'admin';
 }

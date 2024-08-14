@@ -12,3 +12,5 @@ LoginTypeEnumDecorator:
                 value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::GOOGLE")'
             seznam:
                 value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::SEZNAM")'
+            admin:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::ADMIN")'

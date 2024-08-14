@@ -9,6 +9,7 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider as BaseCustomerUserLoginInformationProvider;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 
 class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformationProvider
 {
@@ -26,7 +27,7 @@ class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformat
     #[Override]
     public function getLastLogin(CustomerUser $customerUser): ?DateTime
     {
-        return $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser)?->getLastLoggedInAt();
+        return $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser, LoginTypeEnum::ADMIN)?->getLastLoggedInAt();
     }
 
     /**
@@ -35,7 +36,7 @@ class CustomerUserLoginInformationProvider extends BaseCustomerUserLoginInformat
     #[Override]
     public function getAdditionalLoginInfo(CustomerUser $customerUser): ?string
     {
-        $loginTypes = $this->customerUserLoginTypeFacade->getAllLoginTypes($customerUser);
+        $loginTypes = $this->customerUserLoginTypeFacade->getAllLoginTypes($customerUser, LoginTypeEnum::ADMIN);
 
         return t('{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%.', [
             '%count%' => count($loginTypes),

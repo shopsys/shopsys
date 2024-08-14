@@ -47,19 +47,23 @@ class CustomerUserLoginTypeFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
      * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType|null
      */
-    public function findMostRecentLoginType(CustomerUser $customerUser): ?CustomerUserLoginType
-    {
-        return $this->customerUserLoginTypeRepository->findMostRecentLoginType($customerUser);
+    public function findMostRecentLoginType(
+        CustomerUser $customerUser,
+        ?string $excludeType = null,
+    ): ?CustomerUserLoginType {
+        return $this->customerUserLoginTypeRepository->findMostRecentLoginType($customerUser, $excludeType);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
      * @return string[]
      */
-    public function getAllLoginTypes(CustomerUser $customerUser): array
+    public function getAllLoginTypes(CustomerUser $customerUser, ?string $excludeType = null): array
     {
-        return $this->customerUserLoginTypeRepository->getAllLoginTypes($customerUser);
+        return $this->customerUserLoginTypeRepository->getAllLoginTypes($customerUser, $excludeType);
     }
 }

@@ -10289,6 +10289,10 @@ One of the possible methods of the customer user login
 </thead>
 <tbody>
 <tr>
+<td valign="top"><strong>admin</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>facebook</strong></td>
 <td></td>
 </tr>
