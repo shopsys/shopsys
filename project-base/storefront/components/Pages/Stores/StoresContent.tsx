@@ -5,6 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
 import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -30,7 +31,10 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
             {mappedStores && (
                 <>
                     <div className="mb-8 flex w-full flex-col vl:h-[500px] vl:flex-row">
-                        <div className="flex h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
+                        <div
+                            className="flex h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]"
+                            tid={TIDs.stores_map}
+                        >
                             <GoogleMap activeMarkerHandler={activeMarkerHandler} markers={mappedStores} />
                         </div>
                         <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-borderAccent p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">

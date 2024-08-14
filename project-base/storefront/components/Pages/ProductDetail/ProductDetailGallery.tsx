@@ -90,6 +90,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                             className="bg-backgroundMore aspect-square max-h-full object-contain mix-blend-multiply p-1 rounded-md"
                                             height={90}
                                             src={galleryItemThumbnail?.url}
+                                            tid={TIDs.product_gallery_image}
                                             width={90}
                                         />
                                     )}

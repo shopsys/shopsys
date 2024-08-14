@@ -48,6 +48,24 @@ run-acceptance-tests-base:
 run-acceptance-tests-actual:
 	$(call run_acceptance_tests,actual)
 
+define selected_acceptance_tests
+	$(call prepare-data-for-acceptance-tests)
+	docker compose stop storefront
+	docker compose up -d --wait storefront-cypress --force-recreate
+	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected cypress;
+	docker rm -f shopsys-framework-storefront-cypress
+	docker compose up -d storefront
+	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+endef
+
+.PHONY: selected-acceptance-tests-base
+selected-acceptance-tests-base:
+	$(call selected_acceptance_tests,base)
+
+.PHONY: selected-acceptance-tests-actual
+selected-acceptance-tests-actual:
+	$(call selected_acceptance_tests,actual)
+
 IS_WSL := $(shell uname -r | grep -i microsoft)
 
 ifeq ($(IS_WSL),)

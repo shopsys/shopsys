@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -43,6 +44,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                         className="max-h-20 w-auto shrink-0"
                         height={80}
                         src={product.mainImage?.url}
+                        tid={TIDs.category_bestseller_image}
                         width={80}
                     />
                 </div>

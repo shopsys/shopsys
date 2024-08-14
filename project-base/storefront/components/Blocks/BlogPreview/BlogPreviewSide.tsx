@@ -1,6 +1,7 @@
 import { ArticleLink } from './BlogPreviewElements';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
+import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
 
@@ -22,6 +23,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                     height={250}
                     sizes="(max-width: 600px) 90vw, (max-width: 1024px) 40vw, 10vw"
                     src={article.mainImage?.url}
+                    tid={TIDs.blog_preview_image}
                     width={768}
                 />
 

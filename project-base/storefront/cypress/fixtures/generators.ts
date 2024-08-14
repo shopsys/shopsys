@@ -54,6 +54,7 @@ export const generateCustomerRegistrationData = (
         companyNumber: null,
         companyTaxNumber: null,
         lastOrderUuid: null,
+        billingAddressUuid: null,
     };
 
     if (customerType === 'companyCustomer') {
