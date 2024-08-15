@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative\SalesRepresentativeFo
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentativeNotFoundException;
-use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class SalesRepresentativeController extends AdminBaseController
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory $salesRepresentativeDataFactory
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory $salesRepresentativeGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
-        protected readonly SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory,
+        protected readonly SalesRepresentativeDataFactory $salesRepresentativeDataFactory,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
         protected readonly SalesRepresentativeGridFactory $salesRepresentativeGridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,

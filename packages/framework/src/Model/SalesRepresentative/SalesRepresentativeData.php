@@ -35,8 +35,4 @@ class SalesRepresentativeData
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
      */
     public $image;
-
-    public function __construct()
-    {
-    }
 }

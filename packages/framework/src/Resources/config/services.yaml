@@ -932,9 +932,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory
 
-    Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory
-
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
             - '%kernel.environment%'

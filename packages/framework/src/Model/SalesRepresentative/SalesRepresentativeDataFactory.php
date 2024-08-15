@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\SalesRepresentative;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
-class SalesRepresentativeDataFactory implements SalesRepresentativeDataFactoryInterface
+class SalesRepresentativeDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory

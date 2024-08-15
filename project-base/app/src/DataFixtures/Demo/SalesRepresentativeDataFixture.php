@@ -7,7 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 
 class SalesRepresentativeDataFixture extends AbstractReferenceFixture
@@ -23,7 +23,7 @@ class SalesRepresentativeDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly SalesRepresentativeFacade $salesRepresentativeFacade,
-        private readonly SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory,
+        private readonly SalesRepresentativeDataFactory $salesRepresentativeDataFactory,
     ) {
     }
 
