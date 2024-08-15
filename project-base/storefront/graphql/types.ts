@@ -2727,6 +2727,8 @@ export type TypeSettings = {
   privacyPolicyArticleUrl: Maybe<Scalars['String']['output']>;
   /** Settings related to SEO */
   seo: TypeSeoSetting;
+  /** Returns available social network logins */
+  socialNetworkLoginConfig: Array<TypeLoginTypeEnum>;
   /** Returns Terms and Conditions article's url */
   termsAndConditionsArticleUrl: Maybe<Scalars['String']['output']>;
   /** Returns User consent policy article's url */

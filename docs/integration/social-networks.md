@@ -4,6 +4,8 @@ Social network use PHP backend library [Hybridauth](https://hybridauth.github.io
 
 ## How to set it up?
 
+You can set up which social network logins are enabled on which domain in `social_network_config.yaml` file.
+
 For every social network, you need `app_id` and `app_secret`. Below you have information on where and how to get them. The credentials then need to be set to the corresponding environment variables.
 
 ### Facebook

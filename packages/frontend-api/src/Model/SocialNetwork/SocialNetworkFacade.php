@@ -8,6 +8,7 @@ use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
 use Hybridauth\User\Profile;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
@@ -43,6 +44,7 @@ class SocialNetworkFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -57,6 +59,7 @@ class SocialNetworkFacade
         protected readonly ProductListFacade $productListFacade,
         protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -69,7 +72,7 @@ class SocialNetworkFacade
     public function login(string $type, string $redirectUrl, SessionInterface $session): LoginResultData
     {
         try {
-            $config = $this->socialNetworkConfigFactory->createConfig($redirectUrl);
+            $config = $this->socialNetworkConfigFactory->createConfigForDomain($this->domain->getId(), $redirectUrl);
             $hybridauth = new Hybridauth($config);
 
             $adapter = $hybridauth->authenticate($type);

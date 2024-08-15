@@ -44,3 +44,7 @@ SettingsDecorator:
                 type: String
                 resolve: "@=query('userConsentPolicyArticleUrlQuery')"
                 description: "Returns User consent policy article's url"
+            socialNetworkLoginConfig:
+                type: "[LoginTypeEnum!]!"
+                resolve: "@=query('socialNetworkLoginConfigQuery')"
+                description: "Returns available social network logins"

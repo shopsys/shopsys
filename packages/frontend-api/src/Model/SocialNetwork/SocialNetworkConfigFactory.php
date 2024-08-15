@@ -15,11 +15,28 @@ class SocialNetworkConfigFactory
     }
 
     /**
-     * @param string $redirectUrl
+     * @param int $domainId
+     * @param string|null $redirectUrl
      * @return array
      */
-    public function createConfig(string $redirectUrl): array
+    public function createConfigForDomain(int $domainId, ?string $redirectUrl = null): array
     {
-        return array_merge(['callback' => $redirectUrl], $this->socialNetworkLoginConfig);
+        foreach ($this->socialNetworkLoginConfig['providers'] ?? [] as $providerName => $providerSetting) {
+            $id = $providerSetting['keys']['id'] ?? '';
+            $secret = $providerSetting['keys']['secret'] ?? '';
+            $enabledOnDomains = $providerSetting['enabledOnDomains'] ?? [];
+
+            if ($id !== '' && $secret !== '' && in_array($domainId, $enabledOnDomains, true)) {
+                $this->socialNetworkLoginConfig['providers'][$providerName]['enabled'] = true;
+            } else {
+                $this->socialNetworkLoginConfig['providers'][$providerName]['enabled'] = false;
+            }
+        }
+
+        if ($redirectUrl !== null) {
+            $this->socialNetworkLoginConfig['callback'] = $redirectUrl;
+        }
+
+        return $this->socialNetworkLoginConfig;
     }
 }
