@@ -29,11 +29,15 @@ class CustomerUserRoleProvider
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return bool
      */
-    public function canSeePrices(CustomerUser $customerUser): bool
+    public function canCustomerUserSeePrices(?CustomerUser $customerUser): bool
     {
+        if ($customerUser === null) {
+            return true;
+        }
+
         $roles = $this->getRolesForCustomerUser($customerUser);
 
         return in_array(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, $roles, true);
