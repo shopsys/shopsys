@@ -22,3 +22,9 @@ OrderItemDecorator:
             unit:
                 type: "String"
                 description: "Unit of measurement used for the order item"
+            type:
+                type: "OrderItemTypeEnum!"
+                description: "Type of the order item"
+            product:
+                type: "Product"
+                description: "Product of the order item"

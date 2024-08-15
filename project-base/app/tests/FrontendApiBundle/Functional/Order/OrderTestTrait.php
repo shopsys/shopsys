@@ -14,6 +14,7 @@ use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
@@ -28,19 +29,20 @@ trait OrderTestTrait
         $domainId = $this->domain->getId();
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
-
-        $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
-            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
-            t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+        $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         return [
             0 => [
-                'name' => $helloKittyName,
+                'name' => $helloKittyProduct->getFullname($firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'type' => OrderItemTypeEnum::TYPE_PRODUCT,
+                'product' => [
+                    'uuid' => $helloKittyProduct->getUuid(),
+                ],
             ],
             1 => [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -49,6 +51,8 @@ trait OrderTestTrait
                 'quantity' => 1,
                 'vatRate' => $vatZero->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_PAYMENT,
+                'product' => null,
             ],
             2 => [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -57,6 +61,8 @@ trait OrderTestTrait
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_TRANSPORT,
+                'product' => null,
             ],
         ];
     }

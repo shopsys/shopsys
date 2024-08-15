@@ -12,6 +12,7 @@ use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -104,18 +105,20 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
 
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
-        $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
-            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
-            t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+        $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
 
         return [
             0 => [
-                'name' => $helloKittyName,
+                'name' => $helloKittyProduct->getFullname($firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'type' => OrderItemTypeEnum::TYPE_PRODUCT,
+                'product' => [
+                    'uuid' => $helloKittyProduct->getUuid(),
+                ],
             ],
             1 => [
                 'name' => $this->getExpectedPromoCodeItemName($firstDomainLocale),
@@ -124,6 +127,8 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_DISCOUNT,
+                'product' => null,
             ],
             2 => [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -132,6 +137,8 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                 'quantity' => 1,
                 'vatRate' => $vatZero->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_PAYMENT,
+                'product' => null,
             ],
             3 => [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -140,6 +147,8 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_TRANSPORT,
+                'product' => null,
             ],
         ];
     }
@@ -188,6 +197,10 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                                 quantity
                                 vatRate
                                 unit
+                                type
+                                product {
+                                    uuid
+                                }
                             }
                         }
                         cart {
