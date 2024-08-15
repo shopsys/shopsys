@@ -291,3 +291,9 @@ QueryDecorator:
                 resolve: "@=query('customerUserRoleGroupsQuery')"
                 access: "@=isGranted('is_company_owner_voter')"
                 description: "Returns all customer user role groups"
+            complaints:
+                type: "ComplaintConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('complaintsQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
