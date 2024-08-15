@@ -23,10 +23,6 @@ class SalesRepresentativeFormType extends AbstractType
 {
     private ?SalesRepresentative $salesRepresentative = null;
 
-    public function __construct()
-    {
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -55,8 +51,8 @@ class SalesRepresentativeFormType extends AbstractType
 
         $builderPersonalDataGroup
             ->add('firstName', TextType::class, [
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
@@ -65,8 +61,8 @@ class SalesRepresentativeFormType extends AbstractType
                 'label' => t('First name'),
             ])
             ->add('lastName', TextType::class, [
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter last name']),
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
@@ -75,8 +71,8 @@ class SalesRepresentativeFormType extends AbstractType
                 'label' => t('Last name'),
             ])
             ->add('email', EmailType::class, [
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Constraints\Length([
                         'max' => 255,
                         'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
@@ -86,8 +82,8 @@ class SalesRepresentativeFormType extends AbstractType
                 'label' => t('Email'),
             ])
             ->add('telephone', TextType::class, [
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',

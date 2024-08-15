@@ -62,9 +62,9 @@ class SalesRepresentativeController extends AdminBaseController
             $salesRepresentative = $this->salesRepresentativeFacade->create($salesRepresentativeData);
 
             $this->addSuccessFlashTwig(
-                t('Sales representative <strong><a href="{{ url }}">{{ name }}</a></strong> was created'),
+                t('Sales representative <strong><a href="{{ url }}">{{ label }}</a></strong> was created'),
                 [
-                    'name' => $salesRepresentative->getFirstName() . ' ' . $salesRepresentative->getLastName(),
+                    'label' => $salesRepresentative->hasNoneOfNamesSet() ? $salesRepresentative->getId() : $salesRepresentative->getFullName(),
                     'url' => $this->generateUrl('admin_salesrepresentative_edit', ['id' => $salesRepresentative->getId()]),
                 ],
             );
@@ -97,13 +97,15 @@ class SalesRepresentativeController extends AdminBaseController
         ]);
         $form->handleRequest($request);
 
+        $label = $salesRepresentative->hasNoneOfNamesSet() ? $salesRepresentative->getId() : $salesRepresentative->getFullName();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->salesRepresentativeFacade->edit($salesRepresentative, $salesRepresentativeData);
 
             $this->addSuccessFlashTwig(
-                t('Sales representative <strong><a href="{{ url }}">{{ name }}</a></strong> was edited'),
+                t('Sales representative <strong><a href="{{ url }}">{{ label }}</a></strong> was edited'),
                 [
-                    'name' => $salesRepresentativeData->firstName . ' ' . $salesRepresentativeData->lastName,
+                    'label' => $label,
                     'url' => $this->generateUrl('admin_salesrepresentative_edit', ['id' => $id]),
                 ],
             );
@@ -116,7 +118,9 @@ class SalesRepresentativeController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing sales representative - %name%', ['%name%' => $salesRepresentative->getFirstName() . ' ' . $salesRepresentative->getLastName()]),
+            t('Editing sales representative - %label%', [
+                'label' => $label,
+            ]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/edit.html.twig', [
@@ -147,14 +151,13 @@ class SalesRepresentativeController extends AdminBaseController
         }
 
         try {
-            $firstName = $this->salesRepresentativeFacade->getById($id)->getFirstName();
-            $lastName = $this->salesRepresentativeFacade->getById($id)->getLastName();
+            $salesRepresentative = $this->salesRepresentativeFacade->getById($id);
 
             $this->salesRepresentativeFacade->delete($id);
             $this->addSuccessFlashTwig(
-                t('Sales representative <strong>{{ name }}</strong> deleted.'),
+                t('Sales representative <strong>{{ label }}</strong> deleted.'),
                 [
-                    'name' => $firstName . ' ' . $lastName,
+                    'label' => $salesRepresentative->hasNoneOfNamesSet() ? $salesRepresentative->getId() : $salesRepresentative->getFullName(),
                 ],
             );
         } catch (SalesRepresentativeNotFoundException $ex) {
