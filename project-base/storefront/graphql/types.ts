@@ -769,6 +769,26 @@ export type TypeComplaint = {
   uuid: Scalars['Uuid']['output'];
 };
 
+/** A connection to a list of items. */
+export type TypeComplaintConnection = {
+  __typename?: 'ComplaintConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeComplaintEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Total number of complaints */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeComplaintEdge = {
+  __typename?: 'ComplaintEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeComplaint>;
+};
+
 export type TypeComplaintInput = {
   /** Delivery address */
   deliveryAddress: TypeDeliveryAddressInput;
@@ -2314,6 +2334,8 @@ export type TypeQuery = {
   categoriesSearch: TypeCategoryConnection;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<TypeCategory>;
+  /** Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords */
+  complaints: TypeComplaintConnection;
   /** Returns available countries */
   countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
@@ -2480,6 +2502,14 @@ export type TypeQueryCategoryArgs = {
   orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryComplaintsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
 };
 
 

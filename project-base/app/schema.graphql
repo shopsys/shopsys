@@ -632,6 +632,24 @@ type Complaint {
   uuid: Uuid!
 }
 
+"A connection to a list of items."
+type ComplaintConnection {
+  "Information to aid in pagination."
+  edges: [ComplaintEdge]
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Total number of complaints"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type ComplaintEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Complaint
+}
+
 input ComplaintInput {
   "Delivery address"
   deliveryAddress: DeliveryAddressInput!
@@ -1883,6 +1901,8 @@ type Query {
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
+  "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
+  complaints(after: String, before: String, first: Int, last: Int): ComplaintConnection!
   "Returns available countries"
   countries: [Country!]!
   "Returns currently logged in customer user"

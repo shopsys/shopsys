@@ -36,6 +36,8 @@
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
     * [Complaint](#complaint)
+    * [ComplaintConnection](#complaintconnection)
+    * [ComplaintEdge](#complaintedge)
     * [ComplaintItem](#complaintitem)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
@@ -530,6 +532,35 @@ Returns category filtered using UUID or URL slug
 <tr>
 <td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
 <td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>complaints</strong></td>
+<td valign="top"><a href="#complaintconnection">ComplaintConnection</a>!</td>
+<td>
+
+Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -4025,6 +4056,85 @@ Unique complaint number
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#complaintedge">ComplaintEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of complaints
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#complaint">Complaint</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
