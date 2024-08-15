@@ -53,6 +53,10 @@ export const order = {
     creationDate: '10/26/1999 10:10 AM',
 };
 
+export const blogArticle = {
+    publicationDate: '10/26/1999',
+};
+
 export const payment = {
     creditCard: {
         uuid: '808f7a8a-6143-538e-a46d-3803519ecf00',

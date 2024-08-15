@@ -4,6 +4,7 @@ import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
 import { SkeletonPageCart } from './SkeletonPageCart';
 import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageConfirmation } from './SkeletonPageConfirmation';
+import { SkeletonPageContact } from './SkeletonPageContact';
 import { SkeletonPageContactInformation } from './SkeletonPageContactInformation';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageOrder } from './SkeletonPageOrder';
@@ -91,6 +92,8 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageCart />;
         case 'order-confirmation':
             return <SkeletonPageConfirmation />;
+        case 'contact':
+            return <SkeletonPageContact />;
         default:
             return null;
     }

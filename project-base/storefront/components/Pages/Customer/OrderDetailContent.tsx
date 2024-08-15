@@ -42,13 +42,10 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                 </div>
             </Webline>
 
-            <Webline>
-                <Table>
+            <Webline className="lg:flex">
+                <Table className="w-full">
                     <Row>
                         <CellHead>{t('Basic information')}</CellHead>
-                        {!!order.trackingNumber && <CellHead>{t('Tracking package')}</CellHead>}
-                        {!!order.note && <CellHead>{t('Your note')}</CellHead>}
-                        <CellHead>{t('Payment information')}</CellHead>
                     </Row>
                     <Row>
                         <Cell>
@@ -59,8 +56,15 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 </span>
                             </div>
                         </Cell>
+                    </Row>
+                </Table>
 
-                        {!!order.trackingNumber && (
+                {!!order.trackingNumber && (
+                    <Table className="max-lg:mt-10 w-full">
+                        <Row>
+                            <CellHead>{t('Tracking package')}</CellHead>
+                        </Row>
+                        <Row>
                             <Cell>
                                 <div className="flex justify-between">
                                     {t('Package number')}
@@ -73,10 +77,15 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                     )}
                                 </div>
                             </Cell>
-                        )}
+                        </Row>
+                    </Table>
+                )}
 
-                        {!!order.note && <Cell>{order.note}</Cell>}
-
+                <Table className="max-lg:mt-10 w-full">
+                    <Row>
+                        <CellHead>{t('Payment information')}</CellHead>
+                    </Row>
+                    <Row>
                         <Cell>
                             <div className="flex justify-between">
                                 {t('Status')}
@@ -85,18 +94,33 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                         </Cell>
                     </Row>
                 </Table>
+            </Webline>
 
-                <div className="flex justify-center mt-10">
-                    <div className="lg:w-1/2 p-5 bg-backgroundMore rounded">
-                        {!order.isPaid && order.payment.type === PaymentTypeEnum.GoPay && (
+            <Webline>
+                {!order.isPaid && order.payment.type === PaymentTypeEnum.GoPay && (
+                    <div className="flex justify-center mt-10">
+                        <div className="lg:w-1/2 p-5 bg-backgroundMore rounded">
                             <PaymentsInOrderSelect
                                 orderUuid={order.uuid}
                                 paymentTransactionCount={order.paymentTransactionsCount}
                                 withRedirectAfterChanging={false}
                             />
-                        )}
+                        </div>
                     </div>
-                </div>
+                )}
+            </Webline>
+
+            <Webline>
+                {!!order.note && (
+                    <Table tableClassName="table-fixed mt-10">
+                        <Row>
+                            <CellHead>{t('Your note')}</CellHead>
+                        </Row>
+                        <Row>
+                            <Cell className="[overflow-wrap:anywhere]">{order.note}</Cell>
+                        </Row>
+                    </Table>
+                )}
 
                 <div className="grid lg:grid-cols-2 mt-10 gap-5">
                     <Table className="border-0 p-0">
@@ -220,37 +244,39 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                     <div className="mt-10">
                         <div className="h2 mb-3 text-center">{t('Your purchase')}</div>
 
-                        <Table
-                            className="overflow-x-auto"
-                            head={
-                                <Row>
-                                    <CellHead isWithoutWrap>{t('Product name')}</CellHead>
-                                    <CellHead className="text-right">{t('Price per piece incl. VAT')}</CellHead>
-                                    <CellHead className="text-right">{t('Amount')}</CellHead>
-                                    <CellHead className="text-right">{t('VAT')}</CellHead>
-                                    <CellHead className="text-right">{t('Total price excl. VAT')}</CellHead>
-                                    <CellHead className="text-right">{t('Total price incl. VAT')}</CellHead>
-                                </Row>
-                            }
-                        >
-                            {order.items.map((item, index) => (
-                                <Row key={index}>
-                                    <Cell>{item.name}</Cell>
-                                    <Cell className="text-right">{formatPrice(item.unitPrice.priceWithVat)}</Cell>
-                                    <Cell className="text-right">
-                                        {item.quantity} {item.unit}
-                                    </Cell>
-                                    <Cell className="nowrap text-right">{parseFloat(item.vatRate)} %</Cell>
-                                    <Cell className="text-right">{formatPrice(item.totalPrice.priceWithoutVat)}</Cell>
-                                    <Cell className="text-right">{formatPrice(item.totalPrice.priceWithVat)}</Cell>
-                                </Row>
-                            ))}
-                            <Row>
-                                <Cell className="w-full text-right text-2xl text-price" colSpan={6}>
-                                    {t('Total price including VAT')}: {formatPrice(order.totalPrice.priceWithVat)}
-                                </Cell>
-                            </Row>
-                        </Table>
+                        <div className="overflow-x-auto">
+                            <Table
+                                className="min-w-[700px]"
+                                head={
+                                    <Row>
+                                        <CellHead isWithoutWrap>{t('Product name')}</CellHead>
+                                        <CellHead className="text-right">{t('Price per piece incl. VAT')}</CellHead>
+                                        <CellHead className="text-right">{t('Amount')}</CellHead>
+                                        <CellHead className="text-right min-w-16">{t('VAT')}</CellHead>
+                                        <CellHead className="text-right">{t('Total price excl. VAT')}</CellHead>
+                                        <CellHead className="text-right">{t('Total price incl. VAT')}</CellHead>
+                                    </Row>
+                                }
+                            >
+                                {order.items.map((item, index) => (
+                                    <Row key={index}>
+                                        <Cell>{item.name}</Cell>
+                                        <Cell className="text-right">{formatPrice(item.unitPrice.priceWithVat)}</Cell>
+                                        <Cell className="text-right">
+                                            {item.quantity} {item.unit}
+                                        </Cell>
+                                        <Cell className="nowrap text-right">{parseFloat(item.vatRate)} %</Cell>
+                                        <Cell className="text-right">
+                                            {formatPrice(item.totalPrice.priceWithoutVat)}
+                                        </Cell>
+                                        <Cell className="text-right">{formatPrice(item.totalPrice.priceWithVat)}</Cell>
+                                    </Row>
+                                ))}
+                            </Table>
+                        </div>
+                        <div className="w-full text-right text-lg md:text-2xl text-price">
+                            {t('Total price including VAT')}: {formatPrice(order.totalPrice.priceWithVat)}
+                        </div>
                     </div>
                 )}
             </Webline>

@@ -1,9 +1,9 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
-import { SimpleNavigationListItem } from 'components/Blocks/SimpleNavigation/SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
@@ -79,14 +79,10 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         )}
                     </div>
 
-                    <SimpleNavigationListItem
-                        linkTypeOverride={undefined}
-                        listedItem={{
-                            icon: <ChatIcon className="mr-3 w-6 text-2xl xl:mr-5" />,
-                            name: t('Do you have any questions?'),
-                            slug: contactUrl,
-                        }}
-                    />
+                    <LabelLink href={contactUrl} type="contact">
+                        <ChatIcon className="mr-3 w-6 text-2xl xl:mr-5" />
+                        {t('Do you have any questions?')}
+                    </LabelLink>
                 </div>
 
                 <div className="flex mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">

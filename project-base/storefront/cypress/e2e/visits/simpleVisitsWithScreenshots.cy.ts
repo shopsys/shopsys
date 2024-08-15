@@ -1,3 +1,4 @@
+import { changeBlogArticleDynamicPartsToStaticDemodata } from './visitsSupport';
 import { url } from 'fixtures/demodata';
 import { initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
@@ -53,6 +54,7 @@ describe('Simple page visit tests with screenshots', () => {
 
     it('blog article detail visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.blogArticleGrapesJs);
+        changeBlogArticleDynamicPartsToStaticDemodata();
         takeSnapshotAndCompare(this.test?.title, 'blog article detail', {
             blackout: [{ tid: TIDs.product_list_item_image }, { tid: TIDs.footer_social_links }],
         });

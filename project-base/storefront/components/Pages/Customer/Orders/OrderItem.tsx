@@ -34,7 +34,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                 <div
                     className={twJoin(
                         'p-2 rounded-md flex gap-2',
-                        order.isPaid ? 'bg-backgroundSuccess text-textInverted' : 'bg-backgroundWarning',
+                        order.isPaid ? 'bg-backgroundSuccess' : 'bg-backgroundWarning',
                     )}
                 >
                     {order.isPaid ? (
@@ -173,7 +173,9 @@ const OrderItemRowInfo: FC<OrderItemRowInfoProps> = ({ title, value, rowValueCla
     return (
         <div className="grid grid-cols-[85px_1fr]">
             <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold leading-none', rowValueClassName)}>{value}</span>
+            <span className={twMergeCustom('font-bold leading-5 [overflow-wrap:anywhere]', rowValueClassName)}>
+                {value}
+            </span>
         </div>
     );
 };
