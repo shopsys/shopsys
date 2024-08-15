@@ -1,0 +1,5 @@
+mutation RemoveCustomerUserMutation($customerUserUuid: Uuid!) {
+    RemoveCustomerUser(input:{
+      customerUserUuid:$customerUserUuid
+    })
+}

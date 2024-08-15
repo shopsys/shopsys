@@ -1,0 +1,5 @@
+mutation EditCustomerUserPersonalDataMutation($input: EditCustomerUserPersonalDataInput!) {
+    EditCustomerUserPersonalData(input: $input) {
+        ...CustomerUserFragment
+    }
+}
