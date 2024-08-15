@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative\SalesRepresentativeFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -13,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\Exception\SalesRepresentativeNotFoundException;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,14 +21,14 @@ class SalesRepresentativeController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory
      * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeGridFactory $salesRepresentativeGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         protected readonly SalesRepresentativeDataFactoryInterface $salesRepresentativeDataFactory,
         protected readonly SalesRepresentativeFacade $salesRepresentativeFacade,
-        protected readonly GridFactory $gridFactory,
+        protected readonly SalesRepresentativeGridFactory $salesRepresentativeGridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly CustomerUserFacade $customerUserFacade,
     ) {
@@ -41,21 +40,7 @@ class SalesRepresentativeController extends AdminBaseController
     #[Route(path: '/sales-representative/list/')]
     public function listAction(): Response
     {
-        $queryBuilder = $this->salesRepresentativeFacade->getAllQueryBuilder();
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'sr.id');
-
-        $grid = $this->gridFactory->create('salesRepresentativesList', $dataSource);
-        $grid->setDefaultOrder('name');
-
-        $grid->addColumn('firstName', 'sr.firstName', t('First name'), true);
-        $grid->addColumn('lastName', 'sr.lastName', t('Last name'), true);
-        $grid->addColumn('telephone', 'sr.telephone', t('Telephone'), true);
-        $grid->addColumn('email', 'sr.email', t('E-mail'), true);
-
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
-        $grid->addEditActionColumn('admin_salesrepresentative_edit', ['id' => 'sr.id']);
-        $grid->addDeleteActionColumn('admin_salesrepresentative_delete', ['id' => 'sr.id'])
-            ->setConfirmMessage(t('Do you really want to remove this sales representative?'));
+        $grid = $this->salesRepresentativeGridFactory->create();
 
         return $this->render('@ShopsysFramework/Admin/Content/SalesRepresentative/list.html.twig', [
             'gridView' => $grid->createView(),
