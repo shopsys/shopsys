@@ -55,8 +55,8 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
         $domainId = $this->domain->getId();
         $companyNumber = $billingAddressApiData->companyNumber;
 
-        if ($billingAddressApiData->uuid !== null) {
-            $billingAddress = $this->billingAddressRepository->getByUuid($billingAddressApiData->uuid);
+        if ($billingAddressApiData->billingAddressUuid !== null) {
+            $billingAddress = $this->billingAddressRepository->getByUuid($billingAddressApiData->billingAddressUuid);
         }
 
         if ($billingAddress !== null) {
