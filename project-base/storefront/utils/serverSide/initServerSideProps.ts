@@ -24,8 +24,10 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { CustomerUserRoleEnum } from 'types/customer';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
+import { getCustomerUserRoles } from 'utils/auth/getCustomerUserRoles';
 import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { CookiesStoreState } from 'utils/cookies/cookiesStore';
@@ -37,6 +39,7 @@ import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getSer
 export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
+    isForbidden: boolean;
     domainConfig: DomainConfigType;
     cookiesStore: CookiesStoreState;
 } & Record<string, any>;
@@ -47,6 +50,7 @@ type InitServerSidePropsParameters<VariablesType> = {
     domainConfig: DomainConfigType;
     context: GetServerSidePropsContext;
     authenticationRequired?: boolean;
+    authorizedRole?: CustomerUserRoleEnum;
     prefetchedQueries?: QueriesArray<VariablesType>;
     additionalProps?: Record<string, any>;
 } & (
@@ -70,6 +74,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     redisClient,
     t,
     authenticationRequired = false,
+    authorizedRole,
     prefetchedQueries: additionalPrefetchQueries = [],
     client,
     ssrExchange: ssrExchangeOverride,
@@ -156,6 +161,17 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         }
     }
 
+    let isForbidden = false;
+    if (authorizedRole) {
+        const customerUserRoles = getCustomerUserRoles(currentClient);
+
+        if (domainConfig.type !== "b2b" || !customerUserRoles.some((role) => role === authorizedRole)) {
+            context.res.statusCode = 403;
+            isForbidden = true;
+        }
+    }
+
+
     const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
     if (isMaintenance) {
         // eslint-disable-next-line require-atomic-updates
@@ -172,6 +188,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
+            isForbidden,
             ...additionalProps,
         },
     };

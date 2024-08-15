@@ -1,8 +1,14 @@
-import { TypeCountryFragment } from 'graphql/requests/countries/fragments/CountryFragment.generated';
+import { TypeCountry, TypeCustomerUserRoleGroup } from 'graphql/types';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
     CompanyCustomer = 'companyCustomer',
+}
+
+export enum CustomerUserRoleEnum {
+    ROLE_API_ALL = 'ROLE_API_ALL',
+    ROLE_API_CUSTOMER_SELF_MANAGE = 'ROLE_API_CUSTOMER_SELF_MANAGE',
+    ROLE_API_LOGGED_CUSTOMER = 'ROLE_API_LOGGED_CUSTOMER',
 }
 
 export type DeliveryAddressType = {
@@ -14,7 +20,7 @@ export type DeliveryAddressType = {
     telephone: string;
     firstName: string;
     lastName: string;
-    country: TypeCountryFragment;
+    country: TypeCountry;
 };
 
 export type CurrentCustomerType = {
@@ -28,7 +34,7 @@ export type CurrentCustomerType = {
     street: string;
     city: string;
     postcode: string;
-    country: TypeCountryFragment;
+    country: TypeCountry;
     newsletterSubscription: boolean;
     companyName: string;
     companyNumber: string;
@@ -40,4 +46,6 @@ export type CurrentCustomerType = {
     deliveryAddresses: DeliveryAddressType[];
     pricingGroup: string;
     hasPasswordSet: boolean;
+    roles: string[];
+    roleGroup: TypeCustomerUserRoleGroup;
 };

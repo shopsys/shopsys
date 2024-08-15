@@ -20,6 +20,7 @@ export type DomainConfigType = {
     };
     gtmId?: string;
     isLuigisBoxActive: boolean;
+    type: 'b2c' | 'b2b';
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {

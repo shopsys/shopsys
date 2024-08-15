@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserAuth';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -34,6 +35,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutation();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const { canManageCompanyData } = useCurrentCustomerUserPermissions();
 
     const deleteItemHandler = async (deliveryAddressUuid: string | undefined) => {
         if (deliveryAddressUuid === undefined) {
@@ -99,8 +101,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         defaultDeliveryAddress?.uuid === address.uuid
                             ? 'border-borderAccent bg-backgroundAccentLess'
                             : 'cursor-pointer',
+                        !canManageCompanyData && 'backdrop-brightness-50',
                     )}
-                    onClick={() => setDefaultItemHandler(address.uuid)}
+                    onClick={() => canManageCompanyData && setDefaultItemHandler(address.uuid)}
                 >
                     <div className="flex flex-col w-full">
                         <strong className="mr-1">

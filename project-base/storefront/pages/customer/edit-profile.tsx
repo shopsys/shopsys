@@ -15,13 +15,9 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const EditProfilePage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [customerUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/customer', '/customer/edit-profile'],
-        url,
-    );
+    const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer', '/customer/edit-profile'], url);
     const currentCustomerUserData = useCurrentCustomerData();
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('Edit profile'), slug: customerEditProfileUrl },
     ];
 

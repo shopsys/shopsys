@@ -1,15 +1,15 @@
-import { TypeDeliveryAddressFragment } from 'graphql/requests/customer/fragments/DeliveryAddressFragment.generated';
 import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import { TypeCompanyCustomerUser, TypeDeliveryAddress } from 'graphql/types';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
-export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined => {
+export const useCurrentCustomerData = (companyCustomerUser?: TypeCompanyCustomerUser): CurrentCustomerType | null | undefined => {
     const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
 
     if (!currentCustomerUserData?.currentCustomerUser) {
         return undefined;
     }
 
-    const { currentCustomerUser } = currentCustomerUserData;
+    const currentCustomerUser = companyCustomerUser ?? currentCustomerUserData.currentCustomerUser;
     const isCompanyCustomer = currentCustomerUser.__typename === 'CompanyCustomerUser';
 
     return {
@@ -39,7 +39,7 @@ export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined
     };
 };
 
-const mapDeliveryAddress = (apiDeliveryAddressData: TypeDeliveryAddressFragment): DeliveryAddressType => {
+const mapDeliveryAddress = (apiDeliveryAddressData: TypeDeliveryAddress): DeliveryAddressType => {
     return {
         ...apiDeliveryAddressData,
         companyName: apiDeliveryAddressData.companyName ?? '',
@@ -57,6 +57,6 @@ const mapDeliveryAddress = (apiDeliveryAddressData: TypeDeliveryAddressFragment)
     };
 };
 
-const mapDeliveryAddresses = (apiDeliveryAddressesData: TypeDeliveryAddressFragment[]): DeliveryAddressType[] => {
+const mapDeliveryAddresses = (apiDeliveryAddressesData: TypeDeliveryAddress[]): DeliveryAddressType[] => {
     return apiDeliveryAddressesData.map((address) => mapDeliveryAddress(address));
 };

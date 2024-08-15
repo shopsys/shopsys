@@ -1,5 +1,6 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserAuth';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -15,9 +16,10 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const [customerOrdersUrl, customerEditProfileUrl, productComparisonUrl, wishlistUrl] =
+    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const [customerOrdersUrl, customerEditProfileUrl, productComparisonUrl, wishlistUrl, customerUsersUrl] =
         getInternationalizedStaticUrls(
-            ['/customer/orders', '/customer/edit-profile', '/product-comparison', '/wishlist'],
+            ['/customer/orders', '/customer/edit-profile', '/product-comparison', '/wishlist', '/customer/users'],
             url,
         );
 
@@ -42,5 +44,12 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         },
     ];
 
-    return userMenuItems;
+    if (!canManageUsers) {
+        return userMenuItems;
+    }
+
+    return [...userMenuItems, {
+        text: t('Customer users'),
+        link: customerUsersUrl,
+    }];
 };

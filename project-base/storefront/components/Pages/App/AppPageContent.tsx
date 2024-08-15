@@ -17,6 +17,13 @@ const Error503Content = dynamic(
     },
 );
 
+const Error403Content = dynamic(
+    () => import('components/Pages/ErrorPage/Error403Content').then((component) => component.Error403Content),
+    {
+        ssr: false,
+    },
+);
+
 type AppPageContentProps = {
     Component: NextComponentType<NextPageContext, any, any>;
     pageProps: ServerSidePropsType;
@@ -24,6 +31,10 @@ type AppPageContentProps = {
 
 export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }) => {
     useCookiesStoreSync();
+
+    if (pageProps.isForbidden) {
+        return <Error403Content />;
+    }
 
     if (pageProps.isMaintenance) {
         return <Error503Content />;
