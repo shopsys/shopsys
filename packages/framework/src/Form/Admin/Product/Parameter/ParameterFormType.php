@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -16,14 +19,19 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ParameterFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         private readonly UnitFacade $unitFacade,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly Localization $localization,
     ) {
     }
 
@@ -78,8 +86,37 @@ class ParameterFormType extends AbstractType
             ->setDefaults([
                 'data_class' => ParameterData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new Constraints\Callback([$this, 'validateUniqueParameterName']),
+                ],
             ])
             ->setRequired(['parameter'])
             ->setAllowedTypes('parameter', [Parameter::class, 'null']);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateUniqueParameterName(ParameterData $parameterData, ExecutionContextInterface $context): void
+    {
+        $form = $context->getRoot();
+        $formOptions = $form->getConfig()->getOptions();
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null $currentParameter */
+        $currentParameter = $formOptions['parameter'];
+
+        foreach ($parameterData->name as $locale => $name) {
+            if ($name === null) {
+                continue;
+            }
+
+            if ($this->parameterFacade->existsParameterByName($name, $locale, $currentParameter)) {
+                $context
+                    ->buildViolation(t('Parameter with this name already exists for the locale "%locale%".', ['%locale%' => $locale], Translator::VALIDATOR_TRANSLATION_DOMAIN))
+                    ->atPath(sprintf('name[%s]', $this->localization->getAdminLocale()))
+                    ->addViolation();
+            }
+        }
     }
 }

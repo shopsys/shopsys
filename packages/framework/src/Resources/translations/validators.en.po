@@ -145,6 +145,9 @@ msgstr ""
 msgid "Parameter value must be of type {{ type }}"
 msgstr ""
 
+msgid "Parameter with this name already exists for the locale \"%locale%\"."
+msgstr ""
+
 msgid "Parameter {{ parameterName }} is used more than once"
 msgstr ""
 

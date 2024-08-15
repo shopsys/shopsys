@@ -33,6 +33,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Product\Parameter\Parameter[] getSliderParametersWithoutTheirsNumericValueFilled()
  * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Parameter\Parameter[] getAllWithTranslations(string $locale)
+ * @method bool existsParameterByName(string $name, string $locale, \App\Model\Product\Parameter\Parameter|null $excludeParameter = null)
  */
 class ParameterFacade extends BaseParameterFacade
 {

@@ -569,4 +569,32 @@ class ParameterRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param string $name
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null $excludeParameter
+     * @return bool
+     */
+    public function existsParameterByName(string $name, string $locale, ?Parameter $excludeParameter = null): bool
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('count(p)')
+            ->from(Parameter::class, 'p')
+            ->join('p.translations', 'pt')
+            ->where('pt.name = :name')
+            ->andWhere('pt.locale = :locale')
+            ->setParameter('name', $name)
+            ->setParameter('locale', $locale);
+
+        if ($excludeParameter !== null) {
+            $queryBuilder
+                ->andWhere('p != :excludeParameter')
+                ->setParameter('excludeParameter', $excludeParameter);
+        }
+
+        return $queryBuilder
+            ->getQuery()
+            ->getSingleScalarResult() > 0;
+    }
 }

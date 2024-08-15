@@ -109,6 +109,17 @@ class ParameterFacade
     }
 
     /**
+     * @param string $name
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null $excludeParameter
+     * @return bool
+     */
+    public function existsParameterByName(string $name, string $locale, ?Parameter $excludeParameter = null): bool
+    {
+        return $this->parameterRepository->existsParameterByName($name, $locale, $excludeParameter);
+    }
+
+    /**
      * @param int $parameterId
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
