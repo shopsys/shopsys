@@ -5,14 +5,21 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { parseCatnums } from 'utils/parsing/grapesJsParser';
+import { twMergeCustom } from 'utils/twMerge';
 
 type GrapesJsProps = {
     rawProductPart: string;
     allFetchedProducts?: TypeProductsByCatnums | undefined;
     areProductsFetching: boolean;
+    isBlogPage?: boolean;
 };
 
-export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetchedProducts, areProductsFetching }) => {
+export const GrapesJsProducts: FC<GrapesJsProps> = ({
+    rawProductPart,
+    allFetchedProducts,
+    areProductsFetching,
+    isBlogPage = false,
+}) => {
     const products = [];
 
     const productCatnums = parseCatnums(rawProductPart);
@@ -30,7 +37,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
     if (areProductsFetching) {
         return (
             <div className="flex">
-                {createEmptyArray(3).map((_, index) => (
+                {createEmptyArray(4).map((_, index) => (
                     <SkeletonModuleProductListItem key={index} />
                 ))}
             </div>
@@ -42,11 +49,19 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
     }
 
     return (
-        <ProductsSlider
-            gtmMessageOrigin={GtmMessageOriginType.other}
-            gtmProductListName={GtmProductListNameType.other}
-            products={products}
-            wrapperClassName="md:auto-cols-[50%] xl:auto-cols-[33.3%]"
-        />
+        <div
+            className={twMergeCustom(
+                'my-4',
+                isBlogPage && products.length > 3 ? 'xl:my-9' : '',
+                !isBlogPage && products.length > 4 ? 'vl:my-9' : '',
+            )}
+        >
+            <ProductsSlider
+                gtmMessageOrigin={GtmMessageOriginType.other}
+                gtmProductListName={GtmProductListNameType.other}
+                isBlogPage={isBlogPage}
+                products={products}
+            />
+        </div>
     );
 };

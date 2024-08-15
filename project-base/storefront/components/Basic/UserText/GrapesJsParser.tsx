@@ -6,9 +6,10 @@ import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'utils/parsing/grapesJsPars
 
 type GrapesJsParserProps = {
     text: string;
+    isBlogPage?: boolean;
 };
 
-export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
+export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, isBlogPage = false }) => {
     const catnums = parseCatnums(text);
     const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
         variables: { catnums },
@@ -25,6 +26,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
                             key={index}
                             allFetchedProducts={productsData}
                             areProductsFetching={areProductsFetching}
+                            isBlogPage={isBlogPage}
                             rawProductPart={part}
                         />
                     );

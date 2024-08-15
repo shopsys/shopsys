@@ -17,7 +17,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
             <p className="mb-2 px-5 text-left text-xs font-semibold text-textDisabled">
                 {formatDate(article.createdAt, 'l')}
             </p>
-            <div className="px-5 lg:flex">
+            <div className="px-5">
                 {article.text !== null && (
                     <div className="order-2 mb-16 flex w-full flex-col">
                         <GrapesJsParser text={article.text} />
