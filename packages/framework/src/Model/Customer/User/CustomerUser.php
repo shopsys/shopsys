@@ -501,12 +501,4 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     {
         $this->lastSecurityChange = new DateTime();
     }
-
-    /**
-     * @return bool
-     */
-    public function canSeePrices()
-    {
-        return in_array(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES, $this->getRoles(), true);
-    }
 }
