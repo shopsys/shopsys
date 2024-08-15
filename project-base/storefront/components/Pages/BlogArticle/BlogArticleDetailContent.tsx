@@ -2,6 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { BlogLayout } from 'components/Layout/BlogLayout';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
+import { TIDs } from 'cypress/tids';
 import { TypeBlogArticleDetailFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
@@ -29,7 +30,10 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         </div>
                     )}
 
-                    <div className="mb-2 text-left text-xs font-semibold text-textDisabled">
+                    <div
+                        className="mb-2 text-left text-xs font-semibold text-textDisabled"
+                        tid={TIDs.blog_article_publication_date}
+                    >
                         {formatDate(blogArticle.publishDate, 'l')}
                     </div>
 
