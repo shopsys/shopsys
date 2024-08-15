@@ -1,4 +1,6 @@
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
+import { productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
@@ -51,8 +53,8 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
                         <Skeleton className="h-4 w-20" />
                     </div>
 
-                    <div className="mb-7 grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-y-4 xl:grid-cols-4">
-                        {createEmptyArray(9).map((_, index) => (
+                    <div className={productListTwClass}>
+                        {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
                             <SkeletonModuleProductListItem key={index} />
                         ))}
                     </div>
