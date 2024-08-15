@@ -23,7 +23,7 @@ Category:
             bestsellers:
                 type: "[Product!]!"
                 description: "Best selling products"
-                resolve: '@=query("bestSellingProductsByCategoryOrReadyCategorySeoMixQuery", value)'
+                resolve: '@=query("bestSellingProductsByCategoryQuery", value)'
             slug:
                 type: "String!"
                 description: "Category URL slug"
