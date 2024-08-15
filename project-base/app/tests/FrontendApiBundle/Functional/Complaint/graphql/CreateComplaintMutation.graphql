@@ -1,0 +1,14 @@
+mutation CreateComplaint($input: ComplaintInput!) {
+    CreateComplaint(input: $input) {
+        number
+        items {
+            quantity
+            files {
+                url
+            }
+            orderItem {
+                name
+            }
+        }
+    }
+}
