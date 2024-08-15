@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,6 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CustomerUserLoginType
 {
+    public const string TYPE_WEB = 'web';
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      * @ORM\Id
@@ -33,6 +36,18 @@ class CustomerUserLoginType
     protected $loginType;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $lastLoggedInAt;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $externalId;
+
+    /**
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeData $customerUserLoginTypeData
      */
     public function __construct(
@@ -40,5 +55,39 @@ class CustomerUserLoginType
     ) {
         $this->customerUser = $customerUserLoginTypeData->customerUser;
         $this->loginType = $customerUserLoginTypeData->loginType;
+        $this->externalId = $customerUserLoginTypeData->externalId;
+        $this->lastLoggedInAt = $customerUserLoginTypeData->lastLoggedInAt;
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     */
+    public function setLastLoggedInAt($dateTime): void
+    {
+        $this->lastLoggedInAt = $dateTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginType()
+    {
+        return $this->loginType;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExternalId()
+    {
+        return $this->externalId;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastLoggedInAt()
+    {
+        return $this->lastLoggedInAt;
     }
 }

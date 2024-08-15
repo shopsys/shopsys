@@ -8,7 +8,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
@@ -33,10 +32,6 @@ class LoginListener
 
         if ($user instanceof TimelimitLoginInterface) {
             $user->setLastActivity(new DateTime());
-        }
-
-        if ($user instanceof CustomerUser) {
-            $user->onLogin();
         }
 
         if ($user instanceof UniqueLoginInterface && !$user->isMultidomainLogin()) {

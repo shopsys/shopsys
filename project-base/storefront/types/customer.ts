@@ -1,4 +1,5 @@
 import { TypeCountryFragment } from 'graphql/requests/countries/fragments/CountryFragment.generated';
+import { TypeLoginInfo } from 'graphql/types';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
@@ -40,4 +41,5 @@ export type CurrentCustomerType = {
     deliveryAddresses: DeliveryAddressType[];
     pricingGroup: string;
     hasPasswordSet: boolean;
+    loginInfo: TypeLoginInfo;
 };

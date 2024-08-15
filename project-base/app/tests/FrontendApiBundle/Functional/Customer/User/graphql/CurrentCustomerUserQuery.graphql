@@ -44,5 +44,9 @@ query CurrentCustomerUserQuery {
             companyNumber
             companyTaxNumber
         }
+        loginInfo {
+            externalId
+            loginType
+        }
     }
 }

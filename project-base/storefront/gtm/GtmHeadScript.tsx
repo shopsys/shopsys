@@ -17,6 +17,7 @@ export const GtmHeadScript: FC = () => {
 
     return (
         <Script
+            id="gtm-script"
             strategy="lazyOnload"
             dangerouslySetInnerHTML={{
                 __html: `
@@ -27,7 +28,7 @@ export const GtmHeadScript: FC = () => {
                 })(window,document,'script','dataLayer','${GTM_ID}');
             `,
             }}
-            onLoad={() => setIsScriptLoaded(true)}
+            onReady={() => setIsScriptLoaded(true)}
         />
     );
 };

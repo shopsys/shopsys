@@ -720,6 +720,8 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */
@@ -782,6 +784,8 @@ export type TypeCustomerUser = {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */
@@ -1004,6 +1008,14 @@ export type TypeLink = {
   slug: Scalars['String']['output'];
 };
 
+export type TypeLoginInfo = {
+  __typename?: 'LoginInfo';
+  /** The user ID in the service (facebook, google, etc.) used for login. Null for 'web' login type */
+  externalId: Maybe<Scalars['String']['output']>;
+  /** The type of login (web, facebook, google, etc.) */
+  loginType: TypeLoginTypeEnum;
+};
+
 export type TypeLoginInput = {
   /** Uuid of the cart that should be merged to the cart of the user */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
@@ -1022,6 +1034,15 @@ export type TypeLoginResult = {
   showCartMergeInfo: Scalars['Boolean']['output'];
   tokens: TypeToken;
 };
+
+/** One of the possible methods of the customer user login */
+export enum TypeLoginTypeEnum {
+  Admin = 'admin',
+  Facebook = 'facebook',
+  Google = 'google',
+  Seznam = 'seznam',
+  Web = 'web'
+}
 
 /** Represents a product */
 export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
@@ -2524,6 +2545,8 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */

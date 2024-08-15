@@ -1,0 +1,16 @@
+LoginTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of the possible methods of the customer user login"
+        values:
+            web:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::WEB")'
+            facebook:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::FACEBOOK")'
+            google:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::GOOGLE")'
+            seznam:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::SEZNAM")'
+            admin:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Customer\\User\\LoginType\\LoginTypeEnum::ADMIN")'

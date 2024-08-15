@@ -10,6 +10,7 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 const SocialLoginPage: FC<ServerSidePropsType> = () => {
     const { query } = useRouter();
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
+    const updateUserEntryState = usePersistStore((store) => store.updateUserEntryState);
     const handleActionsAfterLogin = useHandleActionsAfterLogin();
     const router = useRouter();
 
@@ -25,6 +26,7 @@ const SocialLoginPage: FC<ServerSidePropsType> = () => {
             router.replace(replaceUrl).then(() => router.reload());
         } else {
             handleActionsAfterLogin(query.showCartMergeInfo === 'true', replaceUrl);
+            updateUserEntryState(query.isRegistration === 'true' ? 'registration' : 'login');
         }
     }, []);
 

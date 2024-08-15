@@ -78,12 +78,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $createdAt;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $lastLogin;
-
-    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -237,11 +231,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->lastActivity = $lastActivity;
     }
 
-    public function onLogin()
-    {
-        $this->lastLogin = new DateTime();
-    }
-
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
@@ -332,14 +321,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastLogin()
-    {
-        return $this->lastLogin;
     }
 
     /**

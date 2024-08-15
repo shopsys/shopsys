@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -69,6 +70,10 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             'companyName' => 'Shopsys',
             'companyNumber' => '12345678',
             'companyTaxNumber' => 'CZ65432123',
+            'loginInfo' => [
+                'loginType' => LoginTypeEnum::WEB,
+                'externalId' => null,
+            ],
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CurrentCustomerUserQuery.graphql');

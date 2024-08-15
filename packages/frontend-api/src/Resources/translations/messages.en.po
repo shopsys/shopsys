@@ -7,3 +7,6 @@ msgstr ""
 msgid "Customer not found."
 msgstr ""
 
+msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."
+msgstr ""
+

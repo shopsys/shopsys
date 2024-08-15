@@ -38,6 +38,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustom
  * @method \App\Model\Customer\User\CustomerUser createCustomerUserWithRegistrationMail(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, \App\Model\Customer\User\CustomerUserData $customerUserData)
  * @method \App\Model\Customer\User\CustomerUser createWithActivationMail(\App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData)
  * @method \App\Model\Customer\User\CustomerUser createCustomerUserWithActivationMail(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, \App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method \App\Model\Customer\User\CustomerUser[] getAll()
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {

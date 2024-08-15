@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Customer\User\LoginType;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUserLoginTypeFacade
 {
@@ -26,18 +27,43 @@ class CustomerUserLoginTypeFacade
     public function updateCustomerUserLoginTypes(
         CustomerUserLoginTypeData $customerUserLoginTypeData,
     ): void {
-        $customerUserLoginTypeExists = $this->customerUserLoginTypeRepository->existsByCustomerUserAndType(
+        $existingCustomerUserLoginType = $this->customerUserLoginTypeRepository->findByCustomerUserAndType(
             $customerUserLoginTypeData->customerUser,
             $customerUserLoginTypeData->loginType,
         );
 
-        if ($customerUserLoginTypeExists === true) {
+        if ($existingCustomerUserLoginType !== null) {
+            $existingCustomerUserLoginType->setLastLoggedInAt($customerUserLoginTypeData->lastLoggedInAt);
+            $this->entityManager->flush();
+
             return;
         }
 
-        $customerUserLoginType = $this->customerUserLoginTypeFactory->create($customerUserLoginTypeData);
-        $this->entityManager->persist($customerUserLoginType);
+        $newCustomerUserLoginType = $this->customerUserLoginTypeFactory->create($customerUserLoginTypeData);
+        $this->entityManager->persist($newCustomerUserLoginType);
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
+     * @return \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginType|null
+     */
+    public function findMostRecentLoginType(
+        CustomerUser $customerUser,
+        ?string $excludeType = null,
+    ): ?CustomerUserLoginType {
+        return $this->customerUserLoginTypeRepository->findMostRecentLoginType($customerUser, $excludeType);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludeType
+     * @return string[]
+     */
+    public function getAllLoginTypes(CustomerUser $customerUser, ?string $excludeType = null): array
+    {
+        return $this->customerUserLoginTypeRepository->getAllLoginTypes($customerUser, $excludeType);
     }
 }

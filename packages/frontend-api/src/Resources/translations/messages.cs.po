@@ -7,3 +7,6 @@ msgstr ""
 msgid "Customer not found."
 msgstr "Zákazník nenalezen."
 
+msgid "{0}Customer has not logged in yet.|[1,Inf[ Customer uses login via %loginTypes%."
+msgstr "{0}Zákazník se ještě nepřihlásil.|[1,Inf[ Zákazník se přihlašuje přes %loginTypes%."
+

@@ -6,6 +6,7 @@ import {
     GtmPageInfoType,
     GtmProductInterface,
     GtmReviewConsentsType,
+    GtmUserEntryInfoType,
     GtmUserInfoType,
 } from './objects';
 import { GtmDeviceTypes } from 'gtm/enums/GtmDeviceTypes';
@@ -252,5 +253,12 @@ export type GtmSendFormEventType = GtmEventInterface<
         eventParameters: {
             form: GtmFormType;
         };
+    }
+>;
+
+export type GtmUserEntryEventType = GtmEventInterface<
+    GtmEventType.login | GtmEventType.registration,
+    {
+        user: GtmUserEntryInfoType | null | undefined;
     }
 >;

@@ -49,6 +49,7 @@
     * [Image](#image)
     * [LanguageConstant](#languageconstant)
     * [Link](#link)
+    * [LoginInfo](#logininfo)
     * [LoginResult](#loginresult)
     * [MainVariant](#mainvariant)
     * [NavigationItem](#navigationitem)
@@ -130,6 +131,7 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
+    * [LoginTypeEnum](#logintypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -3728,6 +3730,15 @@ Last name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
+<td>
+
+Current login information
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -4509,6 +4520,39 @@ Clickable text for a hyperlink
 <td>
 
 Target URL slug
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### LoginInfo
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>externalId</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The user ID in the service (facebook, google, etc.) used for login. Null for 'web' login type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>loginType</strong></td>
+<td valign="top"><a href="#logintypeenum">LoginTypeEnum</a>!</td>
+<td>
+
+The type of login (web, facebook, google, etc.)
 
 </td>
 </tr>
@@ -6905,6 +6949,15 @@ Whether the customer user has password set or not
 <td>
 
 Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
+<td>
+
+Current login information
 
 </td>
 </tr>
@@ -10225,6 +10278,39 @@ Product availability status out of stock
 </tbody>
 </table>
 
+### LoginTypeEnum
+
+One of the possible methods of the customer user login
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>admin</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>facebook</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>google</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>seznam</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>web</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalDataAccessRequestTypeEnum
 
 One of two possible types for personal data access request
@@ -10640,6 +10726,15 @@ Whether the customer user has password set or not
 <td>
 
 Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
+<td>
+
+Current login information
 
 </td>
 </tr>

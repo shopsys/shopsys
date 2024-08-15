@@ -17,4 +17,6 @@ export enum GtmEventType {
     create_order = 'ec.create_order',
     show_message = 'ec.show_message',
     send_form = 'send_form',
+    login = 'ec.login',
+    registration = 'ec.registration',
 }

@@ -80,6 +80,12 @@ const overwriteGtmUserInfoWithLoggedCustomer = (
     if (userInfo.lastName === undefined || userInfo.lastName.length === 0) {
         userInfo.lastName = currentSignedInCustomer.lastName;
     }
+    if (userInfo.loginType === undefined) {
+        userInfo.loginType = currentSignedInCustomer.loginInfo.loginType;
+    }
+    if (userInfo.externalId === undefined) {
+        userInfo.externalId = currentSignedInCustomer.loginInfo.externalId;
+    }
 
     if (userInfo.type !== undefined) {
         return;

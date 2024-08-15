@@ -15,4 +15,14 @@ class CustomerUserLoginTypeData
      * @var string
      */
     public $loginType;
+
+    /**
+     * @var \DateTime
+     */
+    public $lastLoggedInAt;
+
+    /**
+     * @var string|null
+     */
+    public $externalId;
 }

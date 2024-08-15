@@ -486,4 +486,12 @@ class CustomerUserFacade
 
         return $customer;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
+     */
+    public function getAll(): array
+    {
+        return $this->customerUserRepository->getAll();
+    }
 }

@@ -9,6 +9,9 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
+use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidCredentialsUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\TooManyLoginAttemptsUserError;
@@ -33,6 +36,8 @@ class LoginMutation extends AbstractMutation
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory $tokensDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
      */
     public function __construct(
         protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
@@ -44,6 +49,8 @@ class LoginMutation extends AbstractMutation
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly TokensDataFactory $tokensDataFactory,
         protected readonly LoginResultDataFactory $loginResultDataFactory,
+        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
+        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
     ) {
     }
 
@@ -88,6 +95,10 @@ class LoginMutation extends AbstractMutation
         if (array_key_exists('productListsUuids', $input) && $input['productListsUuids']) {
             $this->productListFacade->mergeProductListsToCustomerUser($input['productListsUuids'], $user);
         }
+
+        $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
+            $this->customerUserLoginTypeDataFactory->create($user, LoginTypeEnum::WEB),
+        );
 
         return $this->loginResultDataFactory->create(
             $this->tokensDataFactory->create(

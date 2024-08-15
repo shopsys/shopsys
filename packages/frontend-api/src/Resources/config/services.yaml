@@ -22,6 +22,9 @@ services:
     Lcobucci\JWT\Configuration:
         factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
 
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider:
+        alias: Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserLoginInformationProvider
+
     Shopsys\FrameworkBundle\Model\Security\LoginAdministratorAsUserUrlProvider:
         alias: Shopsys\FrontendApiBundle\Model\Security\LoginAdministratorAsUserUrlProvider
 

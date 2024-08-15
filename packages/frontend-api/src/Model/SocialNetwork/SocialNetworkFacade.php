@@ -8,7 +8,7 @@ use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\UnexpectedValueException;
 use Hybridauth\Hybridauth;
 use Hybridauth\User\Profile;
-use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Controller\SocialNetworkController;
@@ -41,8 +41,8 @@ class SocialNetworkFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\MergeCartFacade $mergeCartFacade
      * @param \Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory $loginResultDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserSocialNetworkLoginDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserSocialNetworkLoginFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
      */
     public function __construct(
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -55,8 +55,8 @@ class SocialNetworkFacade
         protected readonly MergeCartFacade $mergeCartFacade,
         protected readonly LoginResultDataFactory $loginResultDataFactory,
         protected readonly ProductListFacade $productListFacade,
-        protected readonly CustomerUserLoginTypeDataFactory $customerUserSocialNetworkLoginDataFactory,
-        protected readonly CustomerUserLoginTypeFacade $customerUserSocialNetworkLoginFacade,
+        protected readonly CustomerUserLoginTypeDataFactory $customerUserLoginTypeDataFactory,
+        protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
     ) {
     }
 
@@ -79,9 +79,12 @@ class SocialNetworkFacade
 
             $registrationData = $this->registrationDataFactory->createFromSocialNetworkProfile($userProfile);
 
+            $isRegistration = false;
+
             try {
                 $customerUser = $this->registrationFacade->register($registrationData);
-            } catch (DuplicateUserNameException) {
+                $isRegistration = true;
+            } catch (DuplicateEmailException) {
                 $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $registrationData->domainId);
             }
             $adapter->disconnect();
@@ -113,10 +116,11 @@ class SocialNetworkFacade
             $loginResultData = $this->loginResultDataFactory->create(
                 $this->loginAsUserFacade->loginAndReturnAccessAndRefreshToken($customerUser),
                 $showCartMergeInfo,
+                $isRegistration,
             );
 
-            $this->customerUserSocialNetworkLoginFacade->updateCustomerUserLoginTypes(
-                $this->customerUserSocialNetworkLoginDataFactory->create($customerUser, $type),
+            $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
+                $this->customerUserLoginTypeDataFactory->create($customerUser, $type, (string)$userProfile->identifier),
             );
 
             return $loginResultData;
