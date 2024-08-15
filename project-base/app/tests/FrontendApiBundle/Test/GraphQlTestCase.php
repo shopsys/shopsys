@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\App\Test\ApplicationTestCase;
 
@@ -127,20 +128,44 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     /**
      * @param string $pathToFile
      * @param array<string, mixed> $variables
+     * @param array<int, string> $filePaths
+     * @param array<int, string[]> $filePathsVariablesMap
      * @return array<string, mixed>
      */
-    protected function getResponseContentForGql(string $pathToFile, array $variables = []): array
-    {
+    protected function getResponseContentForGql(
+        string $pathToFile,
+        array $variables = [],
+        array $filePaths = [],
+        array $filePathsVariablesMap = [],
+    ): array {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
 
-        self::$client->request(
-            'GET',
-            $path,
-            [
-                'query' => file_get_contents($pathToFile),
-                'variables' => json_encode($variables, JSON_THROW_ON_ERROR),
-            ],
-        );
+        if (count($filePaths) > 0) {
+            $parameters = [
+                'operations' => json_encode([
+                    'variables' => $variables,
+                    'query' => file_get_contents($pathToFile),
+                ]),
+                'map' => json_encode($filePathsVariablesMap),
+            ];
+
+            self::$client->request(
+                'POST',
+                $path,
+                $parameters,
+                $this->createUploadedFiles($filePaths),
+                ['CONTENT_TYPE' => 'multipart/form-data'],
+            );
+        } else {
+            self::$client->request(
+                'GET',
+                $path,
+                [
+                    'query' => file_get_contents($pathToFile),
+                    'variables' => json_encode($variables, JSON_THROW_ON_ERROR),
+                ],
+            );
+        }
 
         if (self::$client->getResponse()->getStatusCode() === 500) {
             throw new RuntimeException(self::$client->getResponse()->getContent());
@@ -345,5 +370,22 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         foreach ($expectedArray as $expectedItem) {
             $this->assertContains($expectedItem, $actualArray);
         }
+    }
+
+    /**
+     * @param array<int, string> $filePaths
+     * @return array<int, \Symfony\Component\HttpFoundation\File\UploadedFile>
+     */
+    private function createUploadedFiles(array $filePaths): array
+    {
+        $uploadedFiles = [];
+
+        foreach ($filePaths as $key => $fileName) {
+            $tmpFile = tempnam(sys_get_temp_dir(), 'gql_test_');
+            copy($fileName, $tmpFile);
+            $uploadedFiles[$key] = new UploadedFile($tmpFile, basename($fileName));
+        }
+
+        return $uploadedFiles;
     }
 }
