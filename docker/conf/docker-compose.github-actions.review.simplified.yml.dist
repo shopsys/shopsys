@@ -1,7 +1,7 @@
 services:
     webserver:
         restart: always
-        image: nginx:1.13-alpine
+        image: nginx:1.27-alpine
         depends_on:
             - php-fpm
         volumes:

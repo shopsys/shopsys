@@ -461,7 +461,7 @@ https://www.postgresql.org/about/licence/
 
 ### Nginx
 
-Image: `nginx:1.13-alpine`  
+Image: `nginx:1.27-alpine`  
 License: BSD-2-Clause  
 http://nginx.org/LICENSE
 

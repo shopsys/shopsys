@@ -33,7 +33,7 @@ services:
             - config_file=/var/lib/postgresql/data/postgresql.conf
 
     webserver:
-        image: nginx:1.13-alpine
+        image: nginx:1.27-alpine
         container_name: shopsys-framework-webserver
         depends_on:
             - php-fpm
