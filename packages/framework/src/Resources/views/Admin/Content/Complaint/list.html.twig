@@ -1,0 +1,10 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Complaints overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Complaints overview'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
+    {{ gridView.render() }}
+{% endblock %}

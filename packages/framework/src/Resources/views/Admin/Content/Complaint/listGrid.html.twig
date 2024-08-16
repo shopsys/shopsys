@@ -1,0 +1,22 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_number %}
+    <a href="{{ url('admin_complaint_edit', { id: row.cmp.id }) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_domain_id %}
+    {{ domainIcon(value, 'small') }}
+{% endblock %}
+
+{% block grid_value_cell_id_created_at %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No complaints found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'complaints'|trans %}
+    {{ parent() }}
+{% endblock %}
