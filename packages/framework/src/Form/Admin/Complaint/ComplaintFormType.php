@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintStatusEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
