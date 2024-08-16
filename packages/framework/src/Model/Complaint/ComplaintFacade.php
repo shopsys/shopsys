@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Complaint\Exception\ComplaintNotFoundException;
 
 class ComplaintFacade
@@ -18,14 +17,6 @@ class ComplaintFacade
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly EntityManagerInterface $em,
     ) {
-    }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getComplaintsQueryBuilder(): QueryBuilder
-    {
-        return $this->complaintRepository->getComplaintsQueryBuilder();
     }
 
     /**
