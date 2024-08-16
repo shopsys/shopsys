@@ -96,4 +96,48 @@ class ComplaintController extends AdminBaseController
 
         return $grid;
     }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/complaint/edit/{id}', requirements: ['id' => '\d+'])]
+    public function editAction(Request $request, int $id): Response
+    {
+        $complaint = $this->complaintFacade->getById($id);
+        $complaintData = $this->complaintDataFactory->createFromComplaint($complaint);
+
+        $form = $this->createForm(ComplaintFormType::class, $complaintData, ['complaint' => $complaint]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->complaintFacade->edit($id, $complaintData);
+
+            $this->addSuccessFlashTwig(
+                t('Complaint Nr. <strong><a href="{{ url }}">{{ number }}</a></strong> modified'),
+                [
+                    'number' => $complaint->getNumber(),
+                    'url' => $this->generateUrl('admin_complaint_edit', ['id' => $complaint->getId()]),
+                ],
+            );
+
+            return $this->redirectToRoute('admin_complaint_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing complaint - Nr. %number%', ['%number%' => $complaint->getNumber()]),
+        );
+
+
+        return $this->render('@ShopsysFramework/Admin/Content/Complaint/edit.html.twig', [
+            'form' => $form->createView(),
+            'complaint' => $complaint,
+            'domains' => $this->domain->getAll(),
+        ]);
+    }
 }

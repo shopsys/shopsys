@@ -1,0 +1,10 @@
+{% block display_only_order_widget %}
+    <div class="form-line__side">
+        <div class="form-line__item form-line__item--text">
+            <a href="{{ path('admin_order_edit', { id: order.id }) }}" target="_blank">
+                {{ order.number }}
+                <i class="svg svg-forward-page"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
