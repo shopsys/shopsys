@@ -90,6 +90,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $complaintData = $this->complaintDataFactory->create();
         $complaintData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, md5(serialize(func_get_args())))->toString();
         $complaintData->number = $this->complaintNumberSequenceRepository->getNextNumber();
+        $complaintData->domainId = $order->getDomainId();
         $complaintData->customerUser = $customerUser;
         $complaintData->order = $order;
         $complaintData->status = $status;
