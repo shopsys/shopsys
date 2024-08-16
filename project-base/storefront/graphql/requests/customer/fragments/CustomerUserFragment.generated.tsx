@@ -87,7 +87,7 @@ export type TypeCustomerUserFragment = TypeCustomerUserFragment_CompanyCustomerU
   }
 };
       export default result;
-    
+
 export const CustomerUserFragment = gql`
     fragment CustomerUserFragment on CustomerUser {
   __typename
