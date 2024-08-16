@@ -11,8 +11,11 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\ComplaintFormType;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +32,7 @@ class ComplaintController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory $complaintDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade $advancedSearchComplaintFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -38,20 +42,39 @@ class ComplaintController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ComplaintDataFactory $complaintDataFactory,
+        protected readonly AdvancedSearchComplaintFacade $advancedSearchComplaintFacade,
     ) {
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/complaint/list/')]
-    public function listAction(): Response
+    public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'complaints';
 
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
 
-        $queryBuilder = $this->complaintFacade->getComplaintsQueryBuilder();
+        $advancedSearchForm = $this->advancedSearchComplaintFacade->createAdvancedSearchComplaintForm($request);
+        $advancedSearchData = $advancedSearchForm->getData();
+
+        $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
+        $quickSearchForm->handleRequest($request);
+
+        $isAdvancedSearchFormSubmitted = $this->advancedSearchComplaintFacade->isAdvancedSearchComplaintFormSubmitted(
+            $request,
+        );
+
+        if ($isAdvancedSearchFormSubmitted) {
+            $queryBuilder = $this->advancedSearchComplaintFacade->getQueryBuilderByAdvancedSearchData(
+                $advancedSearchData,
+            );
+        } else {
+            $queryBuilder = $this->advancedSearchComplaintFacade->getComplaintListQueryBuilderByQuickSearchData($quickSearchForm->getData());
+        }
+
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmp.id');
 
         if ($selectedDomainId !== null) {
@@ -64,6 +87,9 @@ class ComplaintController extends AdminBaseController
             'gridView' => $this->createGrid($dataSource)->createView(),
             'domains' => $this->domain->getAll(),
             'domainFilterNamespace' => $domainFilterNamespace,
+            'isAdvancedSearchFormSubmitted' => $isAdvancedSearchFormSubmitted,
+            'quickSearchForm' => $quickSearchForm->createView(),
+            'advancedSearchForm' => $advancedSearchForm->createView(),
         ]);
     }
 
@@ -138,6 +164,23 @@ class ComplaintController extends AdminBaseController
             'form' => $form->createView(),
             'complaint' => $complaint,
             'domains' => $this->domain->getAll(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/complaint/get-advanced-search-rule-form/', methods: ['post'])]
+    public function getRuleFormAction(Request $request): Response
+    {
+        $ruleForm = $this->advancedSearchComplaintFacade->createRuleForm(
+            $request->get('filterName'),
+            $request->get('newIndex'),
+        );
+
+        return $this->render('@ShopsysFramework/Admin/Content/Complaint/AdvancedSearch/ruleForm.html.twig', [
+            'rulesForm' => $ruleForm->createView(),
         ]);
     }
 }

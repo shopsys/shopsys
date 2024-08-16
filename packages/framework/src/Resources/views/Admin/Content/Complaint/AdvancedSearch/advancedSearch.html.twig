@@ -1,0 +1,23 @@
+{{ form_start(advancedSearchForm) }}
+    <div id="js-advanced-search-rules-box" class="box-advanced-search">
+        <div id="js-advanced-search-rules-container" data-rule-form-url="{{ url('admin_complaint_getruleform') }}">
+            {% include '@ShopsysFramework/Admin/Content/Complaint/AdvancedSearch/ruleForm.html.twig' with {rulesForm: advancedSearchForm} %}
+        </div>
+        <div class="box-advanced-search__line box-advanced-search__line--button">
+            <input type="submit" value="{{ 'Search [verb]'|trans }}" class="box-quick-search__btn btn">
+        </div>
+        <div class="box-advanced-search__line box-advanced-search__line--dark">
+            <button type="button" class="in-iconic-link in-iconic-link--add" id="js-advanced-search-add-rule-button">
+                <i class="svg svg-circle-plus"></i>
+                {{ 'Add requirement'|trans }}
+            </button>
+
+            {% set RULES_FORM_NAME = constant('Shopsys\\FrameworkBundle\\Model\\AdvancedSearchOrder\\AdvancedSearchOrderFacade::RULES_FORM_NAME') %}
+            {% set routeParams =  getRouteParams()|merge({ (RULES_FORM_NAME): true }) %}
+            <a href="{{ url(getRoute(), routeParams) }}" class="in-iconic-link">
+                <i class="svg svg-circle-cross"></i>
+                {{ 'Reset filter'|trans }}
+            </a>
+        </div>
+    </div>
+{{ form_end(advancedSearchForm) }}
