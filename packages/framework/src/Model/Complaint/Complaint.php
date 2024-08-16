@@ -30,6 +30,12 @@ class Complaint
     protected $uuid;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      */
@@ -158,6 +164,14 @@ class Complaint
     }
 
     /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
     public function getOrder()
@@ -268,6 +282,7 @@ class Complaint
     {
         $this->uuid = $complaintData->uuid ?? Uuid::uuid4()->toString();
         $this->number = $complaintData->number;
+        $this->domainId = $complaintData->domainId;
         $this->order = $complaintData->order;
         $this->customerUser = $complaintData->customerUser;
         $this->deliveryFirstName = $complaintData->deliveryFirstName;

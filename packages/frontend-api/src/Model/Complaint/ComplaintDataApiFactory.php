@@ -47,6 +47,7 @@ class ComplaintDataApiFactory
         $complaintData = $this->complaintDataFactory->create();
         $complaintData->number = $number;
         $complaintData->order = $order;
+        $complaintData->domainId = $order->getDomainId();
         $complaintData->customerUser = $customerUser;
         $complaintData->complaintItems = $complaintItems;
 

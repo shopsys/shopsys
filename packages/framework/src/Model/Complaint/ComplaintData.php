@@ -12,6 +12,11 @@ class ComplaintData
     public $uuid;
 
     /**
+     * @var int
+     */
+    public $domainId;
+
+    /**
      * @var string
      */
     public $number;
