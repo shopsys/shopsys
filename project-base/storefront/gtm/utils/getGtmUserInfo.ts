@@ -63,7 +63,7 @@ const overwriteGtmUserInfoWithLoggedCustomer = (
         userInfo.postcode = currentSignedInCustomer.postcode;
     }
     if (userInfo.country === undefined || userInfo.country.length === 0) {
-        userInfo.country = currentSignedInCustomer.country?.code;
+        userInfo.country = currentSignedInCustomer.country.code;
     }
     if (userInfo.email === undefined || userInfo.email.length === 0) {
         userInfo.email = userContactInformation.email || currentSignedInCustomer.email;

@@ -7,6 +7,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -14,10 +15,12 @@ export const CustomerContent: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const { url } = useDomainConfig();
-    const [customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/customer/orders', '/customer/complaints', '/customer/edit-profile'],
-        url,
-    );
+    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const [customerOrdersUrl, customerEditProfileUrl, customerComplaintsUrl, customerUsersUrl] =
+        getInternationalizedStaticUrls(
+            ['/customer/orders', '/customer/edit-profile', '/customer/complaints', '/customer/users'],
+            url,
+        );
 
     return (
         <>
@@ -49,6 +52,12 @@ export const CustomerContent: FC = () => {
                             {t('Edit profile')}
                         </ExtendedNextLink>
                     </CustomerListItem>
+
+                    {canManageUsers && (
+                        <CustomerListItem>
+                            <ExtendedNextLink href={customerUsersUrl}>{t('Customer users')}</ExtendedNextLink>
+                        </CustomerListItem>
+                    )}
 
                     <CustomerListItem>
                         <a tid={TIDs.customer_page_logout} onClick={logout}>

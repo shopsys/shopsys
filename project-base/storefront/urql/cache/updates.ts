@@ -162,13 +162,13 @@ export const cacheUpdates: UpdatesConfig = {
             invalidateFields(cache, ['order']);
         },
         AddNewCustomerUser(_result, _args, cache) {
-            invalidateFields(cache, ['customerUsers']);
+            invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
         },
         EditCustomerUserPersonalData(_result, _args, cache) {
-            invalidateFields(cache, ['customerUsers']);
+            invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
         },
         RemoveCustomerUser(_result, _args, cache) {
-            invalidateFields(cache, ['customerUsers']);
+            invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
         },
         CreateComplaint(_result, _args, cache) {
             invalidateFields(cache, ['complaints']);

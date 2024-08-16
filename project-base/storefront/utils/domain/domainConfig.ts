@@ -1,4 +1,5 @@
 import getConfig from 'next/config';
+import { CustomerUserAreaEnum } from 'types/customer';
 
 type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
 
@@ -20,6 +21,7 @@ export type DomainConfigType = {
     };
     gtmId?: string;
     isLuigisBoxActive: boolean;
+    type: CustomerUserAreaEnum;
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {

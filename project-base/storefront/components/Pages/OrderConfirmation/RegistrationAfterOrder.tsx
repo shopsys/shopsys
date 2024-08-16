@@ -65,12 +65,11 @@ export const RegistrationAfterOrder: FC = () => {
         if (registrationError) {
             const validationErrors = getUserFriendlyErrors(registrationError, t).userError?.validation;
             for (const fieldName in validationErrors) {
-                if (fieldName === 'password') {
+                if (fieldName === 'password' || fieldName === 'input') {
                     showErrorMessage(validationErrors[fieldName].message, GtmMessageOriginType.order_confirmation_page);
                 } else {
                     isInvalidRegistrationRef.current = true;
-                    showErrorMessage(t('There was an error with you registration. Please try again later.'));
-
+                    showErrorMessage(t('There was an error with your registration. Please try again later.'));
                     break;
                 }
             }

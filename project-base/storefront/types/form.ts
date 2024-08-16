@@ -48,6 +48,14 @@ export type CustomerChangeProfileFormType = {
     newsletterSubscription: boolean;
 };
 
+export type CustomerUserManageProfileFormType = {
+    email: string;
+    telephone: string;
+    firstName: string;
+    lastName: string;
+    roleGroup: SelectOptionType;
+};
+
 export type ContactFormType = {
     email: string;
     name: string;

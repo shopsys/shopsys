@@ -94,7 +94,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const orderUuid = orderResponse.data?.order?.uuid;
 
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
-                authenticationRequired: true,
+                authenticationConfig: { authenticationRequired: true },
                 prefetchedQueries: orderUuid
                     ? [
                           {

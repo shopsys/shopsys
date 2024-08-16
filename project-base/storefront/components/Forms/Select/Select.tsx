@@ -3,6 +3,7 @@ import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { ReactNode } from 'react';
 import SelectReact from 'react-select';
 import { components, Props } from 'react-select';
+import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -19,7 +20,7 @@ type SelectProps = NativeProps & {
 const DropdownIndicator = (props: any) => {
     return (
         <components.DropdownIndicator {...props}>
-            <ArrowIcon className="text-inputText" />
+            <ArrowIcon className={twJoin('text-inputText', props.isDisabled && 'text-inputTextDisabled')} />
         </components.DropdownIndicator>
     );
 };
@@ -57,10 +58,36 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
             value={value}
             styles={{
                 indicatorSeparator: () => ({}),
-                control: (styles) =>
-                    hasError
-                        ? { ...styles, boxShadow: 'none', backgroundColor: 'white', borderColor: '#ec5353' }
-                        : styles,
+                control: (styles) => {
+                    if (isDisabled) {
+                        return {
+                            ...styles,
+                            backgroundColor: '#E3E3E3 !important',
+                            borderColor: '#AFBBCF !important',
+                            color: '#727588 !important',
+                        };
+                    }
+                    if (hasError) {
+                        return {
+                            ...styles,
+                            boxShadow: 'none',
+                            backgroundColor: 'white',
+                            borderColor: '#ec5353',
+                        };
+                    }
+
+                    return styles;
+                },
+                singleValue: (styles) => {
+                    if (isDisabled) {
+                        return {
+                            ...styles,
+                            color: '#727588 !important',
+                        };
+                    }
+
+                    return styles;
+                },
             }}
             onChange={onChange}
             {...props}

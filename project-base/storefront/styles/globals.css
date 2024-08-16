@@ -127,7 +127,7 @@ input[type='number'] {
 }
 
 .select__control {
-    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-md !border-2 !border-inputBorder !shadow-none  hover:!border-2 hover:!border-inputBorderHovered active:!border-inputBorderActive disabled:!border-inputBorderDisabled;
+    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-md !border-2 !border-inputBorder !shadow-none  hover:!border-2 hover:!border-inputBorderHovered active:!border-inputBorderActive;
 }
 
 .select__indicator {

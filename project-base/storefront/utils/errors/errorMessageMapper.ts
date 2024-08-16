@@ -28,6 +28,8 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'wishlist-product-already-in-list': t('Product in wishlist already exists.'),
         'wishlist-product-not-in-list': t('Product in wishlist not found.'),
         'article-not-found': t('Article not found.'),
+        'cannot-remove-own-customer-user': t('Cannot delete own user'),
+        'access-denied': t('Access denied'),
         'invalid-quantity': t('Complaint item quantity exceeds the order item quantity.'),
     };
 

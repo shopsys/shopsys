@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
+import { CustomerUserAreaEnum } from 'types/customer';
 import { DomainConfigType } from 'utils/domain/domainConfig';
 import { describe, expect, test } from 'vitest';
 
@@ -18,6 +19,7 @@ const MOCKED_DOMAIN_CONFIG: DomainConfigType = {
         zoom: 0,
     },
     publicGraphqlEndpoint: '',
+    type: CustomerUserAreaEnum.B2C,
 };
 
 describe('ExtendedNextLink snapshot tests', () => {

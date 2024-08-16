@@ -24,8 +24,11 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { CustomerUserAreaEnum, CustomerUserRoleEnum } from 'types/customer';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
+import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRoles';
+import { getIsUserAuthorizedToViewPage } from 'utils/auth/getIsUserAuthorizedToViewPage';
 import { getUnauthenticatedRedirectSSR } from 'utils/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'utils/auth/isUserLoggedInSSR';
 import { CookiesStoreState } from 'utils/cookies/cookiesStore';
@@ -38,6 +41,7 @@ import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getSer
 export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
+    isForbidden: boolean;
     domainConfig: DomainConfigType;
     cookiesStore: CookiesStoreState;
 } & Record<string, any>;
@@ -47,7 +51,12 @@ type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: V
 type InitServerSidePropsParameters<VariablesType> = {
     domainConfig: DomainConfigType;
     context: GetServerSidePropsContext;
-    authenticationRequired?: boolean;
+    authenticationConfig?: {
+        authenticationRequired?: boolean;
+        authorizedRoles?: CustomerUserRoleEnum[];
+        authorizedAreas?: CustomerUserAreaEnum[];
+    };
+    authorizedRole?: CustomerUserRoleEnum;
     prefetchedQueries?: QueriesArray<VariablesType>;
     additionalProps?: Record<string, any>;
 } & (
@@ -70,7 +79,9 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     context,
     redisClient,
     t,
-    authenticationRequired = false,
+    authenticationConfig = {
+        authenticationRequired: false,
+    },
     prefetchedQueries: additionalPrefetchQueries = [],
     client,
     ssrExchange: ssrExchangeOverride,
@@ -153,11 +164,29 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         };
     }
 
-    if (authenticationRequired) {
+    if (authenticationConfig.authenticationRequired) {
         const isUserLoggedIn = isUserLoggedInSSR(currentClient);
 
         if (!isUserLoggedIn) {
             return getUnauthenticatedRedirectSSR(getUrlWithoutGetParameters(context.resolvedUrl), domainConfig.url);
+        }
+    }
+
+    let isForbidden = false;
+
+    if (authenticationConfig.authorizedRoles || authenticationConfig.authorizedAreas) {
+        const customerUserRoles = getCurrentCustomerUserRoles(currentClient);
+
+        const isUserAuthorized = getIsUserAuthorizedToViewPage(
+            customerUserRoles,
+            domainConfig.type,
+            authenticationConfig.authorizedRoles,
+            authenticationConfig.authorizedAreas,
+        );
+
+        if (!isUserAuthorized) {
+            context.res.statusCode = 403;
+            isForbidden = true;
         }
     }
 
@@ -177,6 +206,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
+            isForbidden,
             ...additionalProps,
         },
     };
