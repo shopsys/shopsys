@@ -41,4 +41,13 @@ class ComplaintRepository
                 END) AS customerName',
             );
     }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
+     */
+    public function findById(int $id): ?Complaint
+    {
+        return $this->getComplaintRepository()->find($id);
+    }
 }
