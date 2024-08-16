@@ -402,6 +402,15 @@
         </exec>
     </target>
 
+    <target name="db-migrations-generate-empty" description="Generates new empty migration file.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:migrations:generate"/>
+            <arg value="--empty"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
     <target name="db-performance" depends="production-protection,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,db-fixtures-performance" description="Drops all data in main database and creates a new one with performance data."/>
 
     <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
