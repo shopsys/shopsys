@@ -1,0 +1,17 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}{{ 'Complaint Nr.'|trans }} {{ complaint.number }}{% endblock %}
+{% block h1 %}{{ 'Complaint Nr.'|trans }} {{ complaint.number }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_complaint_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

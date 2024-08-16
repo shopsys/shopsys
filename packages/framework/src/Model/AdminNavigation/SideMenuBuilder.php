@@ -211,6 +211,15 @@ class SideMenuBuilder
             'label' => t('Complaints'),
         ]);
 
+        $complaintsMenu->addChild(
+            'admin_complaint_edit',
+            [
+                'route' => 'admin_complaint_edit',
+                'label' => t('Editing complaint'),
+                'display' => false,
+            ],
+        );
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);
 
         return $menu;
