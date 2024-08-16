@@ -45,8 +45,8 @@ class SalesRepresentativeGridFactory implements GridFactoryInterface
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_salesrepresentative_edit', ['id' => 'sr.id']);
-        $grid->addDeleteActionColumn('admin_salesrepresentative_delete', ['id' => 'sr.id'])
-            ->setConfirmMessage(t('Do you really want to remove this sales representative?'));
+        $grid->addDeleteActionColumn('admin_salesrepresentative_deleteconfirm', ['id' => 'sr.id'])
+            ->setAjaxConfirm();
 
         return $grid;
     }

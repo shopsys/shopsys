@@ -93,7 +93,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @var \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative")
-     * @ORM\JoinColumn(name="sales_representative_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="sales_representative_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $salesRepresentative;
 

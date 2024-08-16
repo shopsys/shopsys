@@ -1216,6 +1216,9 @@ msgstr "Opravdu si přejete trvale odstranit sazbu \"%name%\"? Nikde není použ
 msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav reklamace \"%name%\"? Nikde není použitý."
 
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgstr "Opravdu si přejete trvale odstranit obchodního zástupce \"%name%\"? Nikde není použit."
+
 msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav objednávek \"%name%\"? Nikde není použitý."
 
@@ -1278,9 +1281,6 @@ msgstr "Opravdu chcete odstranit toto zboží?"
 
 msgid "Do you really want to remove this promo code?"
 msgstr "Opravdu chcete odstranit tento slevový kupón?"
-
-msgid "Do you really want to remove this sales representative?"
-msgstr "Opravdu chcete odstranit tohoto obchodního zástupce?"
 
 msgid "Do you really want to remove this shipping?"
 msgstr "Opravdu chcete odstranit tuto dopravu?"
@@ -1531,8 +1531,8 @@ msgstr "Editace slevového kupónu - %code%"
 msgid "Editing sales representative"
 msgstr "Editace obchodního zástupce"
 
-msgid "Editing sales representative - %name%"
-msgstr "Editace obchodního zástupce - %name%"
+msgid "Editing sales representative - %label%"
+msgstr "Editace obchodního zástupce - %label%"
 
 msgid "Editing shipping"
 msgstr "Editace dopravy"
@@ -3181,6 +3181,9 @@ msgstr "Přehled prodejů (za posledních 7 dní)"
 msgid "Sales representative"
 msgstr "Obchodní zástupce"
 
+msgid "Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> %extraCount% Do you really want to remove sales representative \"%label%\" permanently?"
+msgstr "[0,20]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[21,21]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+1 další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[22,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
+
 msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
 msgstr "Obchodní zástupce <strong><a href=\"{{ url }}\">{{ label }}</a></strong> byl vytvořen"
 
@@ -3189,9 +3192,6 @@ msgstr "Obchodní zástupce <strong><a href=\"{{ url }}\">{{ label }}</a></stron
 
 msgid "Sales representative <strong>{{ label }}</strong> deleted."
 msgstr "Obchodní zástupce <strong>{{ label }}</strong> byl smazán."
-
-msgid "Sales representative cannot be deleted, because some customers are using it: {{ customers }}"
-msgstr "Obchodní zástupce nemůže být smazán, protože jej mají někteří zákazníci přiřazeno: {{ customers }} "
 
 msgid "Sales representatives"
 msgstr "Obchodní zástupci"

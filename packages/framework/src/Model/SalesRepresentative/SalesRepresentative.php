@@ -82,7 +82,7 @@ class SalesRepresentative
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -90,7 +90,7 @@ class SalesRepresentative
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -98,7 +98,7 @@ class SalesRepresentative
     /**
      * @return string|null
      */
-    public function getFirstName(): ?string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -106,7 +106,7 @@ class SalesRepresentative
     /**
      * @return string|null
      */
-    public function getLastName(): ?string
+    public function getLastName()
     {
         return $this->lastName;
     }
@@ -114,7 +114,7 @@ class SalesRepresentative
     /**
      * @return string|null
      */
-    public function getEmail(): ?string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -122,7 +122,7 @@ class SalesRepresentative
     /**
      * @return string|null
      */
-    public function getTelephone(): ?string
+    public function getTelephone()
     {
         return $this->telephone;
     }
@@ -130,7 +130,7 @@ class SalesRepresentative
     /**
      * @return string
      */
-    public function getFullName(): string
+    public function getFullName()
     {
         return $this->firstName . ' ' . $this->lastName;
     }
@@ -138,8 +138,16 @@ class SalesRepresentative
     /**
      * @return bool
      */
-    public function hasNoneOfNamesSet(): bool
+    public function hasNoneOfNamesSet()
     {
         return ($this->getFirstName() === null || $this->getFirstName() === '') && ($this->getLastName() === null || $this->getLastName() === '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPresentationalLabel()
+    {
+        return $this->hasNoneOfNamesSet() ? (string)$this->getId() : $this->getFullName();
     }
 }
