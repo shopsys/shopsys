@@ -524,6 +524,10 @@ class SideMenuBuilder
             'order_statuses',
             ['route' => 'admin_orderstatus_list', 'label' => t('Status of orders')],
         );
+        $listsMenu->addChild(
+            'complaint_statuses',
+            ['route' => 'admin_complaintstatus_list', 'label' => t('Status of complaints')],
+        );
         $brandsMenu = $listsMenu->addChild('brands', ['route' => 'admin_brand_list', 'label' => t('Brands')]);
         $brandsMenu->addChild('new', ['route' => 'admin_brand_new', 'label' => t('New brand'), 'display' => false]);
         $brandsMenu->addChild(

@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintStatusEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 
 class ComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
