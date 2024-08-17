@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExten
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\ComplaintNumberFilter;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,12 +24,14 @@ class AdvancedSearchComplaintFacade
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository $complaintRepository
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
         protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly ComplaintRepository $complaintRepository,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -71,7 +74,7 @@ class AdvancedSearchComplaintFacade
      */
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
-        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder();
+        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getAdminLocale());
         $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData);
 
         return $queryBuilder;
@@ -84,7 +87,7 @@ class AdvancedSearchComplaintFacade
     public function getComplaintListQueryBuilderByQuickSearchData(
         QuickSearchFormData $quickSearchData,
     ): QueryBuilder {
-        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder();
+        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getAdminLocale());
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder

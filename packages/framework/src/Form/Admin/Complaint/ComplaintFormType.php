@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
@@ -29,11 +29,13 @@ class ComplaintFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly CountryFacade $countryFacade,
+        protected readonly ComplaintStatusFacade $complaintStatusFacade,
     ) {
     }
 
@@ -103,10 +105,9 @@ class ComplaintFormType extends AbstractType
             ->add('status', ChoiceType::class, [
                 'label' => t('Status'),
                 'required' => true,
-                'choices' => [
-                    t('New') => ComplaintStatusEnum::STATUS_NEW,
-                    t('Resolved') => ComplaintStatusEnum::STATUS_RESOLVED,
-                ],
+                'choices' => $this->complaintStatusFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
                 'multiple' => false,
                 'expanded' => false,
             ])

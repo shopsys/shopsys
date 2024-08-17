@@ -8,7 +8,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -60,7 +59,6 @@ class ComplaintDataApiFactory
         $complaintData->deliveryCity = $delivery['city'];
         $complaintData->deliveryPostcode = $delivery['postcode'];
         $complaintData->deliveryCountry = $this->countryFacade->findByCode($delivery['country']);
-        $complaintData->status = ComplaintStatusEnum::STATUS_NEW;
 
         return $complaintData;
     }

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class ComplaintRepository
@@ -27,9 +28,10 @@ class ComplaintRepository
     }
 
     /**
+     * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getComplaintsQueryBuilder(): QueryBuilder
+    public function getComplaintsQueryBuilder(string $locale): QueryBuilder
     {
         return $this->getComplaintRepository()->createQueryBuilder('cmp')
             ->select('cmp')
@@ -39,7 +41,15 @@ class ComplaintRepository
                     THEN o.companyName
                     ELSE CONCAT(o.lastName, \' \', o.firstName)
                 END) AS customerName',
-            );
+            )
+            ->addSelect('MAX(cst.name) AS statusName')
+            ->join('cmp.status', 'cs')
+            ->join('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
+            ->groupBy('cmp.id')
+            ->addGroupBy('o.companyName')
+            ->addGroupBy('o.lastName')
+            ->addGroupBy('o.firstName')
+            ->setParameter('locale', $locale);
     }
 
     /**

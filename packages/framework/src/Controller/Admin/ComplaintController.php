@@ -111,7 +111,7 @@ class ComplaintController extends AdminBaseController
         if ($this->domain->isMultidomain()) {
             $grid->addColumn('domain_id', 'cmp.domainId', t('Domain'), true);
         }
-        $grid->addColumn('status_name', 'cmp.status', t('Status'), true);
+        $grid->addColumn('status_name', 'statusName', t('Status'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_complaint_edit', ['id' => 'cmp.id']);

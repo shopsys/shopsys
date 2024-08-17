@@ -47,6 +47,20 @@ class Version20240816221930 extends AbstractMigration
         );
 
         $this->sql('ALTER SEQUENCE complaint_statuses_id_seq RESTART WITH 3');
+
+        $this->sql('ALTER TABLE complaints ADD status_id INT NULL');
+        $this->sql('
+            ALTER TABLE
+                complaints
+            ADD
+                CONSTRAINT FK_A05AAF3A6BF700BD FOREIGN KEY (status_id) REFERENCES complaint_statuses (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql('CREATE INDEX IDX_A05AAF3A6BF700BD ON complaints (status_id)');
+
+        $this->sql('UPDATE complaints SET status_id = 1 WHERE status = \'new\'');
+        $this->sql('UPDATE complaints SET status_id = 2 WHERE status = \'resolved\'');
+
+        $this->sql('ALTER TABLE complaints DROP COLUMN status');
+        $this->sql('ALTER TABLE complaints ALTER status_id SET NOT NULL');
     }
 
     /**
