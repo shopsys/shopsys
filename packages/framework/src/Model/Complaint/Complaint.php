@@ -111,8 +111,9 @@ class Complaint
     protected $createdAt;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $status;
 
@@ -274,7 +275,7 @@ class Complaint
     }
 
     /**
-     * @return string
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
      */
     public function getStatus()
     {

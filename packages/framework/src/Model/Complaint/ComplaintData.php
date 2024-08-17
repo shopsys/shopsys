@@ -72,7 +72,7 @@ class ComplaintData
     public $deliveryCountry;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
      */
     public $status;
 

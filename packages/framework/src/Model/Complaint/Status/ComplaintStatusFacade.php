@@ -102,4 +102,12 @@ class ComplaintStatusFacade
     {
         return $this->complaintStatusRepository->getAll();
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
+     */
+    public function getDefault(): ComplaintStatus
+    {
+        return $this->complaintStatusRepository->getDefault();
+    }
 }
