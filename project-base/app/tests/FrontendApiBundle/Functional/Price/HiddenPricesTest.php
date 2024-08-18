@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class HiddenPricesTest extends GraphQlWithLoginTestCase
@@ -97,6 +98,32 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
             $this->assertSame('***', $item['totalPrice']['priceWithoutVat']);
             $this->assertSame('***', $item['unitPrice']['priceWithVat']);
             $this->assertSame('***', $item['unitPrice']['priceWithoutVat']);
+        }
+    }
+
+    public function testCustomerUserCannotSeeGatewayPayments(): void
+    {
+        $query = '
+            query {
+                payments {
+                    uuid
+                    type
+                    price {
+                        priceWithVat
+                        priceWithoutVat
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $payments = $response['data']['payments'];
+        $this->assertCount(4, $payments);
+
+        foreach ($payments as $payment) {
+            $this->assertSame('***', $payment['price']['priceWithVat']);
+            $this->assertSame('***', $payment['price']['priceWithoutVat']);
+            $this->assertSame(Payment::TYPE_BASIC, $payment['type']);
         }
     }
 }

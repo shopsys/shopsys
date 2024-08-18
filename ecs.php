@@ -136,6 +136,8 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainDataCreatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Mail/EnvelopeListenerTest.php',
+                __DIR__ . '/packages/framework/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php',
+                __DIR__ . '/packages/framework/tests/Unit/Model/Payment/IndependentPaymentVisibilityCalculationTest.php',
                 __DIR__ . '/packages/migrations/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
                 __DIR__ . '/packages/product-feed-zbozi/src/DataFixtures/ZboziPluginDataFixture.php',
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',
