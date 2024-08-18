@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -90,13 +91,20 @@ class PaymentPriceCalculationTest extends TestCase
         $pricingSettingMock
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
+        $customerUserRoleProviderMock = $this->getMockBuilder(CustomerUserRoleProvider::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['canCurrentCustomerUserSeePrices'])
+            ->getMock();
+        $customerUserRoleProviderMock
+            ->expects($this->any())->method('canCurrentCustomerUserSeePrices')
+                ->willReturn(true);
 
         $rounding = new Rounding();
 
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingMock);
+        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingMock, $customerUserRoleProviderMock);
 
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -162,13 +170,20 @@ class PaymentPriceCalculationTest extends TestCase
         $pricingSettingMock
             ->expects($this->any())->method('getFreeTransportAndPaymentPriceLimit')
                 ->willReturn($priceLimit);
+        $customerUserRoleProviderMock = $this->getMockBuilder(CustomerUserRoleProvider::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['canCurrentCustomerUserSeePrices'])
+            ->getMock();
+        $customerUserRoleProviderMock
+            ->expects($this->any())->method('canCurrentCustomerUserSeePrices')
+                ->willReturn(true);
 
         $rounding = new Rounding();
 
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingMock);
+        $paymentPriceCalculation = new PaymentPriceCalculation($basePriceCalculation, $pricingSettingMock, $customerUserRoleProviderMock);
 
         $vatData = new VatData();
         $vatData->name = 'vat';
