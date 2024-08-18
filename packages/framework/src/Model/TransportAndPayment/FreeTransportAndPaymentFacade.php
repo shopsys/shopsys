@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\TransportAndPayment;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class FreeTransportAndPaymentFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider $customerUserRoleProvider
      */
-    public function __construct(protected readonly PricingSetting $pricingSetting)
-    {
+    public function __construct(
+        protected readonly PricingSetting $pricingSetting,
+        protected readonly CustomerUserRoleProvider $customerUserRoleProvider,
+    ) {
     }
 
     /**
@@ -22,6 +26,10 @@ class FreeTransportAndPaymentFacade
      */
     public function isActive($domainId)
     {
+        if (!$this->customerUserRoleProvider->canCurrentCustomerUserSeePrices()) {
+            return false;
+        }
+
         return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) !== null;
     }
 

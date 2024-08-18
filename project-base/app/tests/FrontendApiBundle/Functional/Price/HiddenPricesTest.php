@@ -126,4 +126,30 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
             $this->assertSame(Payment::TYPE_BASIC, $payment['type']);
         }
     }
+
+    public function testCustomerUserCannotUseFreeTransport(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $mutation = 'mutation {
+            AddToCart(
+                input: {
+                    productUuid: "' . $product->getUuid() . '"
+                    quantity: 1
+                }
+            ) {
+                cart {
+                    uuid
+                    remainingAmountWithVatForFreeTransport
+                }
+            }
+        }';
+
+        $response = $this->getResponseContentForQuery($mutation);
+        $newlyCreatedCart = $response['data']['AddToCart']['cart'];
+
+        self::assertNull(
+            $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
+            'Actual remaining price has to be null for limited user who cannot see prices',
+        );
+    }
 }

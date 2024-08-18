@@ -72,7 +72,6 @@ class TransportPriceCalculationTest extends TestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['canCurrentCustomerUserSeePrices'])
             ->getMock();
-
         $customerUserRoleProviderMock
             ->expects($this->any())->method('canCurrentCustomerUserSeePrices')
                 ->willReturn(true);
