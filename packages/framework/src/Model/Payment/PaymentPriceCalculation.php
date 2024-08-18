@@ -79,31 +79,4 @@ class PaymentPriceCalculation
 
         return $productsPrice->getPriceWithVat()->isGreaterThanOrEqualTo($freeTransportAndPaymentPriceLimit);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
-     */
-    public function getCalculatedPricesIndexedByPaymentId(
-        array $payments,
-        Currency $currency,
-        Price $productsPrice,
-        int $domainId,
-    ): array {
-        $paymentsPricesByPaymentId = [];
-
-        foreach ($payments as $payment) {
-            $paymentsPricesByPaymentId[$payment->getId()] = $this->calculatePrice(
-                $payment,
-                $currency,
-                $productsPrice,
-                $domainId,
-            );
-        }
-
-        return $paymentsPricesByPaymentId;
-    }
 }
