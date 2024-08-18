@@ -41,7 +41,7 @@ class PaymentVisibilityCalculation
      * @param int $domainId
      * @return bool
      */
-    protected function isVisible(Payment $payment, $domainId)
+    public function isVisible(Payment $payment, $domainId)
     {
         if (!$this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, $domainId)) {
             return false;
