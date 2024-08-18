@@ -30,7 +30,7 @@ class FreeTransportAndPaymentFacade
      * @param int $domainId
      * @return bool
      */
-    public function isFree(Money $productsPriceWithVat, $domainId)
+    protected function isFree(Money $productsPriceWithVat, $domainId)
     {
         $freeTransportAndPaymentPriceLimit = $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId);
 
