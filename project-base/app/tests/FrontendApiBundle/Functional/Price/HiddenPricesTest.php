@@ -175,4 +175,25 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
 
         $this->assertSame('Filtering by price is not allowed for current user.', $errors[0]['message']);
     }
+
+    public function testCustomerUserCannotUseOrderingByPrice(): void
+    {
+        $query = '
+            query {
+                products (first: 1, orderingMode: PRICE_ASC) {
+                    edges {
+                        node {
+                            name
+                        }
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('Ordering by price is not allowed for current user.', $errors[0]['message']);
+    }
 }
