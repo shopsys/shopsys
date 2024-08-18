@@ -152,4 +152,27 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
             'Actual remaining price has to be null for limited user who cannot see prices',
         );
     }
+
+    public function testCustomerUserCannotUseFilterByPrice(): void
+    {
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('75000');
+
+        $query = '
+            query {
+                products (first: 1, filter: { minimalPrice: "' . $minimalPrice . '" }) {
+                    edges {
+                        node {
+                            name
+                        }
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('Filtering by price is not allowed for current user.', $errors[0]['message']);
+    }
 }
