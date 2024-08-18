@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\FrontendApiBundle\Functional\Price;
+namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
-class HiddenPricesTest extends GraphQlWithLoginTestCase
+class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
 {
     /**
      * @inject
