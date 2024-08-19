@@ -60,27 +60,6 @@ class ImageFactoryTest extends TestCase
         }
     }
 
-    public function testCreate(): void
-    {
-        $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], ['type' => true]);
-        $filename = 'filename.jpg';
-
-        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['convertToShopFormatAndGetNewFilename'])
-            ->getMock();
-        $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')->willReturn(
-            $filename,
-        );
-
-        $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
-        $image = $imageFactory->create($imageEntityConfig->getEntityName(), 1, [], $filename, 'type');
-        $temporaryFiles = $image->getTemporaryFilesForUpload();
-
-        $this->assertInstanceOf(Image::class, $image);
-        $this->assertSame($filename, array_pop($temporaryFiles)->getTemporaryFilename());
-    }
-
     /**
      * @return \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
      */

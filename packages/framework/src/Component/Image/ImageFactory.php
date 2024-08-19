@@ -32,7 +32,7 @@ class ImageFactory
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function create(
+    protected function create(
         string $entityName,
         int $entityId,
         array $namesIndexedByLocale,
