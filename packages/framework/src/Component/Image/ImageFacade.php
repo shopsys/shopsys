@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
@@ -33,7 +32,7 @@ class ImageFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
@@ -47,7 +46,7 @@ class ImageFacade
         protected readonly FilesystemOperator $filesystem,
         protected readonly FileUpload $fileUpload,
         protected readonly ImageLocator $imageLocator,
-        protected readonly ImageFactoryInterface $imageFactory,
+        protected readonly ImageFactory $imageFactory,
         protected readonly MountManager $mountManager,
         protected readonly LoggerInterface $logger,
         protected readonly CdnFacade $cdnFacade,

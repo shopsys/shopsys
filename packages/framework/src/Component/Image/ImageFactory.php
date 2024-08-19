@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
-class ImageFactory implements ImageFactoryInterface
+class ImageFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor

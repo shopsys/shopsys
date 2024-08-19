@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
-use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -52,7 +52,7 @@ class ImageFacade extends BaseImageFacade
         FilesystemOperator $filesystem,
         FileUpload $fileUpload,
         ImageLocator $imageLocator,
-        ImageFactoryInterface $imageFactory,
+        ImageFactory $imageFactory,
         MountManager $mountManager,
         LoggerInterface $logger,
         CdnFacade $cdnFacade,
