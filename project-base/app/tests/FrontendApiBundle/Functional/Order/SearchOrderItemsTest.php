@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\OrderDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Order\Order;
+use App\Model\Product\Product;
 use DateTime;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -11,6 +15,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
+use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 
 class SearchOrderItemsTest extends GraphQlWithLoginTestCase
 {
@@ -25,7 +30,11 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         array $queryVariables,
         array $expectedOrderItemsIds = [],
     ): void {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SearchOrderItemsQuery.graphql', $queryVariables);
+        $resolvedQueryVariables = $this->resolveReferenceDataAccessors($queryVariables);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/SearchOrderItemsQuery.graphql',
+            $resolvedQueryVariables,
+        );
         $responseData = $this->getResponseDataForGraphQlType($response, 'orderItemsSearch');
 
         $expectedOrderItems = $this->getExpectedOrderItems($expectedOrderItemsIds);
@@ -49,7 +58,15 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
 
         // search by name and filter by order uuid
         yield [
-            [...self::createSearchInput('A4tech'), 'filter' => ['orderUuid' => '7cb7934c-72bc-59e3-8834-8e0fd8c02920']],
+            [
+                ...self::createSearchInput('A4tech'),
+                'filter' => [
+                    'orderUuid' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_PREFIX . 3,
+                        fn (Order $order) => $order->getUuid(),
+                    ),
+                ],
+            ],
             [11],
         ];
 
@@ -70,7 +87,15 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
 
         // search by name and filter by order item catnum
         yield [
-            [...self::createSearchInput('Hello Kitty'), 'filter' => ['catnum' => '9177759']],
+            [
+                ...self::createSearchInput('Hello Kitty'),
+                'filter' => [
+                    'catnum' => new ReferenceDataAccessor(
+                        ProductDataFixture::PRODUCT_PREFIX . 1,
+                        fn (Product $product) => $product->getCatnum(),
+                    ),
+                ],
+            ],
             [15, 20],
         ];
 
@@ -78,7 +103,12 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         yield [
             [
                 ...self::createSearchInput('9177759'),
-                'filter' => ['productUuid' => '55bb22ab-bb88-5459-a464-005b948d8c78'],
+                'filter' => [
+                    'productUuid' => new ReferenceDataAccessor(
+                        ProductDataFixture::PRODUCT_PREFIX . 1,
+                        fn (Product $product) => $product->getUuid(),
+                    ),
+                ],
             ],
             [15, 20],
         ];

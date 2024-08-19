@@ -10,6 +10,7 @@ use DateTime;
 use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
+use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
@@ -28,7 +29,8 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ?int $offsetInExpected,
         ?int $lengthInExpected,
     ): void {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql', $queryVariables);
+        $resolvedQueryVariables = $this->resolveReferenceDataAccessors($queryVariables);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql', $resolvedQueryVariables);
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'orders');
 
@@ -80,10 +82,34 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         yield [['last' => 2], 4, 2];
 
         // filter by order item catnum
-        yield [['first' => 2, 'filter' => ['orderItemsCatnum' => '8456655']], 4, 1];
+        yield [
+            [
+                'first' => 2,
+                'filter' => [
+                    'orderItemsCatnum' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_PREFIX . 2,
+                        fn (Order $order) => $order->getProductItems()[1]->getProduct()->getCatnum(),
+                    ),
+                ],
+            ],
+            4,
+            1,
+        ];
 
         // filter by order item product uuid
-        yield [['first' => 1, 'filter' => ['orderItemsProductUuid' => 'e451f3ba-025c-577e-8fdf-49b46e6725ee']], 4, 1];
+        yield [
+            [
+                'first' => 1,
+                'filter' => [
+                    'orderItemsProductUuid' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_PREFIX . 2,
+                        fn (Order $order) => $order->getProductItems()[0]->getProduct()->getUuid(),
+                    ),
+                ],
+            ],
+            4,
+            1,
+        ];
 
         // filter by order created after date
         yield [['filter' => ['createdAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)]], null, null];
