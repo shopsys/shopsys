@@ -109,9 +109,15 @@ const getCreateOrderMutationVariables = (
         deliveryInfo = getDeliveryInfoFromFormValues(formValues);
         const savedAndSelectedDeliveryAddress = getSelectedDeliveryAddressForLoggedInUser(user, formValues);
         const savedAndSelectedDeliveryAddressUuid = savedAndSelectedDeliveryAddress?.uuid ?? null;
+        const packeteryPickupPointName =
+            isPacketeryTransport && selectedPickupPlace?.name ? selectedPickupPlace.name : null;
 
         if (selectedPickupPlace) {
-            deliveryInfo = getDeliveryInfoFromSelectedPickupPlace(formValues, selectedPickupPlace);
+            deliveryInfo = getDeliveryInfoFromSelectedPickupPlace(
+                formValues,
+                selectedPickupPlace,
+                packeteryPickupPointName,
+            );
             deliveryCountry = selectedPickupPlace.country.code;
         } else if (savedAndSelectedDeliveryAddressUuid) {
             deliveryInfo = getDeliveryInfoFromSavedAndSelectedDeliveryAddress(savedAndSelectedDeliveryAddressUuid);
