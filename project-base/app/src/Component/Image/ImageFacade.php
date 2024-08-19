@@ -9,10 +9,8 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
-use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
@@ -45,7 +43,6 @@ class ImageFacade extends BaseImageFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         string $imageUrlPrefix,
@@ -60,7 +57,6 @@ class ImageFacade extends BaseImageFacade
         LoggerInterface $logger,
         CdnFacade $cdnFacade,
         CacheInterface|AdapterInterface $cache,
-        private readonly Domain $domain,
     ) {
         parent::__construct(
             $imageUrlPrefix,
@@ -76,52 +72,6 @@ class ImageFacade extends BaseImageFacade
             $cdnFacade,
             $cache,
         );
-    }
-
-    /**
-     * @param object $entity
-     * @param array $temporaryFilenames
-     * @param string|null $type
-     * @param bool $deleteOldImage
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image|null
-     */
-    public function uploadAndReturnImage(
-        object $entity,
-        array $temporaryFilenames,
-        ?string $type,
-        bool $deleteOldImage = true,
-    ): ?Image {
-        $newImage = null;
-
-        if (count($temporaryFilenames) > 0) {
-            $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
-            $entityName = $imageEntityConfig->getEntityName();
-            $entityId = $this->getEntityId($entity);
-            $oldImage = $this->imageRepository->findImageByEntity($imageEntityConfig->getEntityName(), $entityId, $type);
-            $generatedNamesIndexedByLocale = [];
-
-            foreach ($this->domain->getAllLocales() as $locale) {
-                $generatedNamesIndexedByLocale[$locale] = sprintf('%s - %d (%s)', $entityName, $entityId, $locale);
-            }
-
-            if ($oldImage !== null && $deleteOldImage === true) {
-                $this->em->remove($oldImage);
-            }
-
-            /** @var \Shopsys\FrameworkBundle\Component\Image\Image|null $newImage */
-            $newImage = $this->imageFactory->create(
-                $imageEntityConfig->getEntityName(),
-                $entityId,
-                $generatedNamesIndexedByLocale,
-                array_pop($temporaryFilenames),
-                $type,
-            );
-            $this->em->persist($newImage);
-
-            $this->em->flush();
-        }
-
-        return $newImage;
     }
 
     /**

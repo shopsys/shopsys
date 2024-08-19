@@ -265,43 +265,6 @@ class ImageFacade
     }
 
     /**
-     * @param object $sourceEntity
-     * @param object $targetEntity
-     */
-    public function copyImages(object $sourceEntity, object $targetEntity): void
-    {
-        $sourceImages = $this->getAllImagesByEntity($sourceEntity);
-
-        foreach ($sourceImages as $sourceImage) {
-            try {
-                $this->mountManager->copy(
-                    'main://' . $this->imageLocator->getAbsoluteImageFilepath(
-                        $sourceImage,
-                    ),
-                    'main://' . TransformString::removeDriveLetterFromPath(
-                        $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename()),
-                    ),
-                );
-            } catch (Exception $exception) {
-                $this->logger->error('Image could not be copied', [$exception]);
-
-                continue;
-            }
-
-            $targetImage = $this->imageFactory->create(
-                $this->imageConfig->getImageEntityConfig($targetEntity)->getEntityName(),
-                $this->getEntityId($targetEntity),
-                $sourceImage->getNames(),
-                $sourceImage->getFilename(),
-                $sourceImage->getType(),
-            );
-
-            $this->em->persist($targetImage);
-        }
-        $this->em->flush();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
     protected function setImagePositionsByOrder(array $orderedImages): void
