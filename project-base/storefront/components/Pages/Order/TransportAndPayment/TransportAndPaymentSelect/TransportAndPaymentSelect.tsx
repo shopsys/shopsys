@@ -13,7 +13,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportStoresFragment } from 'graphql/requests/transports/fragments/TransportStoresFragment.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -22,10 +21,11 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type TransportAndPaymentSelectProps = {
     transports: TypeTransportWithAvailablePaymentsFragment[];
-    lastOrderPickupPlace: TypeListedStoreFragment | null;
+    lastOrderPickupPlace: StoreOrPacketeryPoint | null;
     changeTransportInCart: ChangeTransportInCart;
     changePaymentInCart: ChangePaymentInCart;
     isTransportSelectionLoading: boolean;

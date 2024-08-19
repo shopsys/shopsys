@@ -15,7 +15,6 @@ import {
     TypeCreateOrderMutationVariables,
     useCreateOrderMutation,
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
 import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
@@ -34,6 +33,7 @@ import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
 
@@ -88,7 +88,7 @@ export const useCreateOrder = (
 const getCreateOrderMutationVariables = (
     cartUuid: string | null,
     formValues: ContactInformation,
-    selectedPickupPlace: TypeListedStoreFragment | null,
+    selectedPickupPlace: StoreOrPacketeryPoint | null,
     user: CurrentCustomerType | undefined | null,
 ) => {
     const country = formValues.country.value;

@@ -1,14 +1,14 @@
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmShippingInfo } from 'gtm/mappers/mapGtmShippingInfo';
 import { GtmTransportChangeEventType } from 'gtm/types/events';
 import { GtmCartInfoType } from 'gtm/types/objects';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const getGtmTransportChangeEvent = (
     gtmCartInfo: GtmCartInfoType,
     updatedTransport: TypeTransportWithAvailablePaymentsAndStoresFragment,
-    updatedPickupPlace: TypeListedStoreFragment | null,
+    updatedPickupPlace: StoreOrPacketeryPoint | null,
     paymentName: string | undefined,
 ): GtmTransportChangeEventType => {
     const { transportDetail, transportExtra } = mapGtmShippingInfo(updatedPickupPlace);

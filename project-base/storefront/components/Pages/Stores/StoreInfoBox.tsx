@@ -2,11 +2,11 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Link } from 'components/Basic/Link/Link';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type StoreInfoBoxProps = {
-    store: TypeListedStoreFragment;
+    store: StoreOrPacketeryPoint;
     closeInfoBoxCallback: () => void;
 };
 

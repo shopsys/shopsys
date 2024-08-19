@@ -3,15 +3,15 @@ import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { StoreSelect } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/StoreSelect';
 import { TIDs } from 'cypress/tids';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { useTransportStoresQuery } from 'graphql/requests/transports/queries/TransportStoresQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type PickupPlacePopupProps = {
     transportUuid: string;
-    onChangePickupPlaceCallback: (transportUuid: string, selectedPickupPlace: TypeListedStoreFragment | null) => void;
+    onChangePickupPlaceCallback: (transportUuid: string, selectedPickupPlace: StoreOrPacketeryPoint | null) => void;
 };
 
 export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onChangePickupPlaceCallback }) => {

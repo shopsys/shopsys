@@ -2,10 +2,10 @@ import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
@@ -13,7 +13,7 @@ type TransportAndPaymentSelectItemLabelProps = {
     daysUntilDelivery?: number;
     description?: string | null;
     image?: TypeImageFragment | null;
-    pickupPlaceDetail?: TypeListedStoreFragment;
+    pickupPlaceDetail?: StoreOrPacketeryPoint;
 };
 
 export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
@@ -51,8 +51,6 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                 ', ' +
                                 pickupPlaceDetail.city}
                         </div>
-
-                        <div className="my-1 text-textDisabled">{t('Open') + ': '}</div>
 
                         <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
                     </div>

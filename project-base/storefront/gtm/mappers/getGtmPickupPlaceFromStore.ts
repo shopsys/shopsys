@@ -1,6 +1,6 @@
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
-export const getGtmPickupPlaceFromStore = (store: TypeListedStoreFragment): TypeListedStoreFragment => ({
+export const getGtmPickupPlaceFromStore = (store: StoreOrPacketeryPoint): StoreOrPacketeryPoint => ({
     __typename: 'Store',
     latitude: null,
     longitude: null,

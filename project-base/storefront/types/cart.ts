@@ -2,15 +2,15 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { TypeCartModificationsFragment } from 'graphql/requests/cart/fragments/CartModificationsFragment.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { Maybe } from 'graphql/types';
 import { UseQueryExecute } from 'urql';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export type CurrentCartType = {
     cart: Maybe<TypeCartFragment> | undefined;
     transport: Maybe<TypeTransportWithAvailablePaymentsAndStoresFragment>;
-    pickupPlace: Maybe<TypeListedStoreFragment>;
+    pickupPlace: Maybe<StoreOrPacketeryPoint>;
     payment: Maybe<TypeSimplePaymentFragment>;
     paymentGoPayBankSwift: Maybe<string>;
     promoCode: Maybe<string>;

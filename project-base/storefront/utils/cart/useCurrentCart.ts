@@ -1,5 +1,4 @@
 import { useCartQuery } from 'graphql/requests/cart/queries/CartQuery.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { Maybe } from 'graphql/types';
 import { useEffect } from 'react';
@@ -7,6 +6,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCartType } from 'types/cart';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -57,8 +57,8 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 const getSelectedPickupPlace = (
     transport: Maybe<TypeTransportWithAvailablePaymentsAndStoresFragment> | undefined,
     pickupPlaceIdentifier: string | null | undefined,
-    packeteryPickupPoint: TypeListedStoreFragment | null,
-): TypeListedStoreFragment | null => {
+    packeteryPickupPoint: StoreOrPacketeryPoint | null,
+): StoreOrPacketeryPoint | null => {
     if (!transport || !pickupPlaceIdentifier) {
         return null;
     }

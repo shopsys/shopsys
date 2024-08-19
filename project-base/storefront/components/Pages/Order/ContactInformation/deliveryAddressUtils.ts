@@ -1,7 +1,7 @@
 import { TypeCreateOrderMutationVariables } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type DeliveryInfo = Pick<
     TypeCreateOrderMutationVariables,
@@ -47,7 +47,7 @@ export const getSelectedDeliveryAddressForLoggedInUser = (
 
 export const getDeliveryInfoFromSelectedPickupPlace = (
     formValues: ContactInformation,
-    selectedPickupPlace: TypeListedStoreFragment,
+    selectedPickupPlace: StoreOrPacketeryPoint,
 ): DeliveryInfo => ({
     deliveryFirstName: formValues.isDeliveryAddressDifferentFromBilling
         ? formValues.deliveryFirstName

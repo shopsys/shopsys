@@ -7,10 +7,10 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedStoreConnectionFragment } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
-import { TypeListedStoreFragment } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo, useState } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type StoresContentProps = {
     stores: TypeListedStoreConnectionFragment;
@@ -20,7 +20,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
     const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
     const [activeStoreIdentifier, setActiveStoreIdentifier] = useState<string>();
-    const mappedStores = useMemo(() => mapConnectionEdges<TypeListedStoreFragment>(stores.edges), [stores.edges]);
+    const mappedStores = useMemo(() => mapConnectionEdges<StoreOrPacketeryPoint>(stores.edges), [stores.edges]);
 
     const activeMarkerHandler = (id: string) => setActiveStoreIdentifier(activeStoreIdentifier !== id ? id : undefined);
 
