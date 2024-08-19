@@ -135,8 +135,8 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             <div
                 className={twJoin(
                     'inline-flex overflow-hidden rounded border-[3px] items-center',
-                    'bg-inputBackground hover:bg-inputBackgroundHovered active:bg-inputBackgroundActive',
-                    'border-inputBorder hover:border-inputBorderHovered active:border-inputBorderActive',
+                    'bg-inputBackground',
+                    'border-inputBorder',
                     size === 'small' ? 'w-20 [&>button]:translate-y-0 [&>button]:text-2xl' : 'h-12 w-32',
                 )}
             >
@@ -160,7 +160,7 @@ type SpinboxButtonProps = {
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, ...props }) => (
     <button
         className={twMergeCustom([
-            'flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-inputBorder outline-none',
+            'flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-inputBorder hover:text-inputBorderHovered outline-none',
             disabled && 'pointer-events-none text-inputBorderDisabled',
         ])}
         {...props}

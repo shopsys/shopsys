@@ -120,8 +120,8 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                     'flex h-12 w-12 items-center justify-center rounded border-2 font-bold no-underline hover:no-underline',
                     (isActive || isDotButton) && 'hover:cursor-default',
                     isActive
-                        ? 'bg-actionInvertedBackgroundActive text-actionInvertedTextActive border-actionInvertedBorderActive'
-                        : 'bg-actionInvertedBackground text-actionInvertedText border-actionInvertedBackground hover:border-actionInvertedBorderHovered hover:text-actionInvertedTextHovered',
+                        ? 'bg-actionInvertedBackgroundActive border-actionInvertedBorderActive text-actionInvertedTextActive'
+                        : 'bg-actionInvertedBackground border-actionInvertedBorder text-actionInvertedText hover:bg-actionInvertedBackgroundHovered hover:border-actionInvertedBorderHovered hover:text-actionInvertedTextHovered',
                 )}
                 onClick={handleOnClick}
             >

@@ -50,7 +50,7 @@ export const MenuIconic: FC = () => {
             <MenuIconicItem>
                 <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
                     <HeartIcon
-                        className={twJoin('w-6 lg:w-4', wishlist?.products.length ? 'text-heartIconFull' : '')}
+                        className={twJoin('w-6 lg:w-4', wishlist?.products.length ? 'text-activeIconFull' : '')}
                         isFull={!!wishlist?.products.length}
                     />
                     <span className="max-lg:hidden">
