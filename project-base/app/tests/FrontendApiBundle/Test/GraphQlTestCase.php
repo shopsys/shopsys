@@ -388,4 +388,25 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
         return $uploadedFiles;
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function resolveReferenceDataAccessors(array $data): array
+    {
+        array_walk_recursive($data, function (&$value) {
+            if ($value instanceof ReferenceDataAccessor) {
+                $refName = $value->reference;
+                $domainId = $value->domainId;
+                $callback = $value->callback;
+
+                $entity = $domainId ? $this->getReferenceForDomain($refName, $domainId) : $this->getReference($refName);
+
+                $value = $callback($entity);
+            }
+        });
+
+        return $data;
+    }
 }
