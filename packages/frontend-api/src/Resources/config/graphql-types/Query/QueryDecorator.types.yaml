@@ -291,6 +291,14 @@ QueryDecorator:
                 resolve: "@=query('customerUserRoleGroupsQuery')"
                 access: "@=isGranted('is_company_owner_voter')"
                 description: "Returns all customer user role groups"
+            complaint:
+                type: "Complaint!"
+                args:
+                    number:
+                        type: "String!"
+                        description: "Complaint number"
+                resolve: "@=query('complaintQuery', args)"
+                description: "Returns complaint filtered using UUID"
             complaints:
                 type: "ComplaintConnection!"
                 argsBuilder: "Relay::Connection"

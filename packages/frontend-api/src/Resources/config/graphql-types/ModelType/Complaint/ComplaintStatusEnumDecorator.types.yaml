@@ -1,0 +1,12 @@
+ComplaintStatusEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Status of complaint"
+        values:
+            new:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\ComplaintStatusEnum::STATUS_NEW")'
+                description: "New"
+            resolved:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Complaint\\ComplaintStatusEnum::STATUS_RESOLVED")'
+                description: "Resolved"

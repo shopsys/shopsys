@@ -141,6 +141,7 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
+    * [ComplaintStatusEnum](#complaintstatusenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
@@ -533,6 +534,24 @@ Returns category filtered using UUID or URL slug
 <td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
 <td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>complaint</strong></td>
+<td valign="top"><a href="#complaint">Complaint</a>!</td>
+<td>
+
+Returns complaint filtered using UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">number</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Complaint number
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>complaints</strong></td>
@@ -4047,6 +4066,15 @@ All items in the complaint
 <td>
 
 Unique complaint number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#complaintstatusenum">ComplaintStatusEnum</a>!</td>
+<td>
+
+Status of the complaint
 
 </td>
 </tr>
@@ -10997,6 +11025,35 @@ Product availability status in stock
 <td>
 
 Product availability status out of stock
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintStatusEnum
+
+Status of complaint
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>new</strong></td>
+<td>
+
+New
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>resolved</strong></td>
+<td>
+
+Resolved
 
 </td>
 </tr>
