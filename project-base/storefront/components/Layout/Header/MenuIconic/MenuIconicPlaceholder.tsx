@@ -32,7 +32,7 @@ export const MenuIconicPlaceholder: FC = () => {
             </li>
 
             <li className={twJoin('max-lg:hidden', placeholderItemTwClass)}>
-                <CompareIcon className="w-4" />
+                <CompareIcon className="w-4" isFull={false} />
             </li>
 
             <li className={twJoin('max-lg:hidden', placeholderItemTwClass)}>

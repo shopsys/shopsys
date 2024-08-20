@@ -1,6 +1,7 @@
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -26,7 +27,10 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
             onClick={toggleProductInWishlist}
         >
-            <HeartIcon className={isProductInWishlist ? 'text-linkHovered' : ''} isFull={isProductInWishlist} />
+            <HeartIcon
+                className={twJoin('w-5', isProductInWishlist ? 'text-heartIconFull' : '')}
+                isFull={isProductInWishlist}
+            />
             {isWithText && (
                 <span className="text-sm">
                     {isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}

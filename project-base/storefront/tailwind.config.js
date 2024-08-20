@@ -73,6 +73,8 @@ module.exports = {
             actionInvertedBorderHovered: '#004EB6',
             actionInvertedTextHovered: '#004EB6',
 
+            heartIconFull: '#EC5353',
+
             availabilityInStock: '#00CDBE',
             availabilityOutOfStock: '#EC5353',
 
