@@ -536,6 +536,24 @@ Returns category filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>complaint</strong></td>
+<td valign="top"><a href="#complaint">Complaint</a>!</td>
+<td>
+
+Returns complaint filtered using UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">number</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Complaint number
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>complaints</strong></td>
 <td valign="top"><a href="#complaintconnection">ComplaintConnection</a>!</td>
 <td>
@@ -4048,6 +4066,15 @@ All items in the complaint
 <td>
 
 Unique complaint number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Status of the complaint
 
 </td>
 </tr>

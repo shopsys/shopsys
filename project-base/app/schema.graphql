@@ -628,6 +628,8 @@ type Complaint {
   items: [ComplaintItem!]!
   "Unique complaint number"
   number: String!
+  "Status of the complaint"
+  status: String!
   "UUID"
   uuid: Uuid!
 }
@@ -1904,6 +1906,11 @@ type Query {
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
+  "Returns complaint filtered using UUID"
+  complaint(
+    "Complaint number"
+    number: String!
+  ): Complaint!
   "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
   complaints(after: String, before: String, first: Int, last: Int): ComplaintConnection!
   "Returns available countries"

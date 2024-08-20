@@ -195,4 +195,16 @@ class ComplaintApiFacade
     {
         return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser);
     }
+
+    /**
+     * @param string $complaintNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
+     */
+    public function findByComplaintNumberAndCustomerUser(
+        string $complaintNumber,
+        CustomerUser $customerUser,
+    ): ?Complaint {
+        return $this->complaintRepository->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
+    }
 }

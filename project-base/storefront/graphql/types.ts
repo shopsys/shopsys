@@ -765,6 +765,8 @@ export type TypeComplaint = {
   items: Array<TypeComplaintItem>;
   /** Unique complaint number */
   number: Scalars['String']['output'];
+  /** Status of the complaint */
+  status: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -2337,6 +2339,8 @@ export type TypeQuery = {
   categoriesSearch: TypeCategoryConnection;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<TypeCategory>;
+  /** Returns complaint filtered using UUID */
+  complaint: TypeComplaint;
   /** Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords */
   complaints: TypeComplaintConnection;
   /** Returns available countries */
@@ -2505,6 +2509,11 @@ export type TypeQueryCategoryArgs = {
   orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryComplaintArgs = {
+  number: Scalars['String']['input'];
 };
 
 

@@ -58,9 +58,34 @@ class ComplaintRepository
     protected function createCustomerUserComplaintsQueryBuilder(
         CustomerUser $customerUser,
     ): QueryBuilder {
+        return $this->createQueryBuilder()
+            ->andWhere('c.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser);
+    }
+
+    /**
+     * @param string $complaintNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
+     */
+    public function findByComplaintNumberAndCustomerUser(
+        string $complaintNumber,
+        CustomerUser $customerUser,
+    ): ?Complaint {
+        return $this->createQueryBuilder()
+            ->andWhere('c.number = :complaintNumber')->setParameter('complaintNumber', $complaintNumber)
+            ->andWhere('c.customerUser = :customerUser')->setParameter('customerUser', $customerUser)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createQueryBuilder(): QueryBuilder
+    {
         return $this->em->createQueryBuilder()
             ->from(Complaint::class, 'c')
-            ->select('c')
-            ->andWhere('c.customerUser = :customerUser')->setParameter('customerUser', $customerUser);
+            ->select('c');
     }
 }
