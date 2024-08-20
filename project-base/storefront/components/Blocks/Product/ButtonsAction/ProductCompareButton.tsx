@@ -1,5 +1,6 @@
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import useTranslation from 'next-translate/useTranslation';
+import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductCompareButtonProps = {
@@ -22,7 +23,10 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             onClick={toggleProductInComparison}
         >
-            <CompareIcon className={isProductInComparison ? 'text-linkHovered' : ''} />
+            <CompareIcon
+                className={twJoin('w-5', isProductInComparison ? 'text-link' : '')}
+                isFull={isProductInComparison}
+            />
             {isWithText && (
                 <span className="text-sm">{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>
             )}
