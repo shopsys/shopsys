@@ -13,6 +13,7 @@ import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
+import { SkeletonPageRegistration } from './SkeletonPageRegistration';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
@@ -54,46 +55,46 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     }
 
     switch (pageType) {
-        case 'homepage':
-            return <SkeletonPageHome />;
-        case 'product':
-            return <SkeletonPageProductDetail />;
-        case 'productMainVariant':
-            return <SkeletonPageProductDetailMainVariant />;
-        case 'category':
-        case 'seo_category':
-            return <SkeletonPageProductsList />;
-        case 'brand':
-        case 'flag':
-            return <SkeletonPageProductsListSimple />;
         case 'article':
             return <SkeletonPageArticle />;
         case 'blogArticle':
             return <SkeletonPageBlogArticle />;
         case 'blogCategory':
             return <SkeletonPageBlogCategory />;
-        case 'stores':
-            return <SkeletonPageStores />;
-        case 'store':
-            return <SkeletonPageStore />;
-        case 'wishlist':
-            return <SkeletonPageWishlist />;
-        case 'comparison':
-            return <SkeletonPageComparison />;
-        case 'orders':
-            return <SkeletonPageOrders />;
-        case 'order':
-            return <SkeletonPageOrder />;
-        case 'transport-and-payment':
-            return <SkeletonPageTransportAndPayment />;
-        case 'contact-information':
-            return <SkeletonPageContactInformation />;
         case 'cart':
             return <SkeletonPageCart />;
+        case 'comparison':
+            return <SkeletonPageComparison />;
+        case 'contact-information':
+            return <SkeletonPageContactInformation />;
+        case 'flag':
+            return <SkeletonPageProductsListSimple />;
+        case 'homepage':
+            return <SkeletonPageHome />;
         case 'order-confirmation':
             return <SkeletonPageConfirmation />;
         case 'contact':
             return <SkeletonPageContact />;
+        case 'order':
+            return <SkeletonPageOrder />;
+        case 'orders':
+            return <SkeletonPageOrders />;
+        case 'product':
+            return <SkeletonPageProductDetail />;
+        case 'productMainVariant':
+            return <SkeletonPageProductDetailMainVariant />;
+        case 'registration':
+            return <SkeletonPageRegistration />;
+        case 'seo_category':
+            return <SkeletonPageProductsList />;
+        case 'store':
+            return <SkeletonPageStore />;
+        case 'stores':
+            return <SkeletonPageStores />;
+        case 'transport-and-payment':
+            return <SkeletonPageTransportAndPayment />;
+        case 'wishlist':
+            return <SkeletonPageWishlist />;
         default:
             return null;
     }

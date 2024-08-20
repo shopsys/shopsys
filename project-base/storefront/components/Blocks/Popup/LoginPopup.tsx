@@ -1,5 +1,6 @@
-import { Link } from 'components/Basic/Link/Link';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { LoginForm, LoginFormProps } from 'components/Blocks/Login/LoginForm';
+import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -34,14 +35,13 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
                         {t('Your addresses prefilled and you can check your order history.')}
                     </p>
 
-                    <Link
-                        isButton
-                        buttonVariant="inverted"
+                    <ExtendedNextLink
                         href={registrationUrl}
+                        skeletonType="registration"
                         tid={TIDs.login_popup_register_button}
                     >
-                        {t('Register')}
-                    </Link>
+                        <Button variant="inverted">{t('Register')}</Button>
+                    </ExtendedNextLink>
                 </div>
             </div>
         </Popup>
