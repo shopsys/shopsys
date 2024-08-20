@@ -195,4 +195,13 @@ class ComplaintApiFacade
     {
         return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser);
     }
+
+    /**
+     * @param string $complaintNumber
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function findByComplaintNumberAndCustomerUser(string $complaintNumber, CustomerUser $customerUser)
+    {
+        return $this->complaintRepository->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
+    }
 }

@@ -765,6 +765,8 @@ export type TypeComplaint = {
   items: Array<TypeComplaintItem>;
   /** Unique complaint number */
   number: Scalars['String']['output'];
+  /** Status of the complaint */
+  status: TypeComplaintStatusEnum;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -829,6 +831,14 @@ export type TypeComplaintItemInput = {
   /** Quantity of the complaint item */
   quantity: Scalars['Int']['input'];
 };
+
+/** Status of complaint */
+export enum TypeComplaintStatusEnum {
+  /** New */
+  New = 'new',
+  /** Resolved */
+  Resolved = 'resolved'
+}
 
 export type TypeContactFormInput = {
   /** Email address of the sender */
@@ -2338,6 +2348,8 @@ export type TypeQuery = {
   categoriesSearch: TypeCategoryConnection;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<TypeCategory>;
+  /** Returns complaint filtered using UUID */
+  complaint: TypeComplaint;
   /** Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords */
   complaints: TypeComplaintConnection;
   /** Returns available countries */
@@ -2506,6 +2518,11 @@ export type TypeQueryCategoryArgs = {
   orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryComplaintArgs = {
+  number: Scalars['String']['input'];
 };
 
 
