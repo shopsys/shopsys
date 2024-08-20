@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
-use stdClass;
 
 /**
  * @method \App\Model\Product\Search\FilterQuery applyOrdering(string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
@@ -26,6 +23,7 @@ use stdClass;
  * @method \App\Model\Product\Search\FilterQuery filterOutVariants()
  * @method \App\Model\Product\Search\FilterQuery restrictFields(string[] $fields)
  * @method \App\Model\Product\Search\FilterQuery filterBySliderParameters(\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData)
+ * @method \App\Model\Product\Search\FilterQuery filterByPrices(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice = null, \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice = null)
  */
 class FilterQuery extends BaseFilterQuery
 {
@@ -129,140 +127,6 @@ class FilterQuery extends BaseFilterQuery
         $clone->filters[] = [
             'term' => [
                 'is_sale_exclusion' => false,
-            ],
-        ];
-
-        return $clone;
-    }
-
-    /**
-     * Answers question "If I add this parameter value, how many products will be added?"
-     * We are looking for count of products that meet all filters and don't have already selected parameter value
-     *
-     * This query makes sense only within a single parameter, so it have to be executed for all parameters
-     * (that have selected value and can have plus numbers)
-     *
-     * @see https://github.com/shopsys/shopsys/pull/1794
-     * @param int $selectedParameterId
-     * @param array $selectedValuesIds
-     * @return array
-     */
-    public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
-    {
-        return [
-            'index' => $this->indexName,
-            'body' => [
-                'size' => 0,
-                'aggs' => [
-                    'parameters' => [
-                        'nested' => [
-                            'path' => 'parameters',
-                        ],
-                        'aggs' => [
-                            'filtered_for_parameter' => [
-                                'filter' => [
-                                    'term' => [
-                                        'parameters.parameter_id' => $selectedParameterId,
-                                    ],
-                                ],
-                                'aggs' => [
-                                    'by_parameters' => [
-                                        'terms' => [
-                                            'field' => 'parameters.parameter_id',
-                                            'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
-                                        ],
-                                        'aggs' => [
-                                            'by_value' => [
-                                                'terms' => [
-                                                    'field' => 'parameters.parameter_value_id',
-                                                    'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'query' => [
-                    'bool' => [
-                        'filter' => $this->filters,
-                        'must' => [
-                            [
-                                'nested' => [
-                                    'path' => 'parameters',
-                                    'query' => [
-                                        'bool' => [
-                                            'must_not' => [
-                                                'terms' => [
-                                                    'parameters.parameter_value_id' => $selectedValuesIds,
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function filterByPrices(
-        PricingGroup $pricingGroup,
-        ?Money $minimalPrice = null,
-        ?Money $maximalPrice = null,
-    ): self {
-        $clone = clone $this;
-        $priceGte = null;
-        $priceLte = null;
-
-        if ($minimalPrice !== null) {
-            $priceGte = (float)$minimalPrice->getAmount();
-        }
-
-        if ($maximalPrice !== null) {
-            $priceLte = (float)$maximalPrice->getAmount();
-        }
-
-        $clone->filters[] = [
-            'nested' => [
-                'path' => 'prices',
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            'match_all' => new stdClass(),
-                        ],
-                        'filter' => [
-                            'bool' => [
-                                'must' => [
-                                    [
-                                        'range' => [
-                                            'prices.filtering_minimal_price' => [
-                                                'gte' => $priceGte,
-                                            ],
-                                        ],
-                                    ],
-                                    [
-                                        'range' => [
-                                            'prices.filtering_maximal_price' => [
-                                                'lte' => $priceLte,
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
             ],
         ];
 
