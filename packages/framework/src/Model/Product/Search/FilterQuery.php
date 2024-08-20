@@ -229,15 +229,15 @@ class FilterQuery
         ?Money $maximalPrice = null,
     ): self {
         $clone = clone $this;
-
-        $prices = [];
+        $priceGte = null;
+        $priceLte = null;
 
         if ($minimalPrice !== null) {
-            $prices['gte'] = (float)$minimalPrice->getAmount();
+            $priceGte = (float)$minimalPrice->getAmount();
         }
 
         if ($maximalPrice !== null) {
-            $prices['lte'] = (float)$maximalPrice->getAmount();
+            $priceLte = (float)$maximalPrice->getAmount();
         }
 
         $clone->filters[] = [
@@ -249,14 +249,27 @@ class FilterQuery
                             'match_all' => new stdClass(),
                         ],
                         'filter' => [
-                            [
-                                'term' => [
-                                    'prices.pricing_group_id' => $pricingGroup->getId(),
-                                ],
-                            ],
-                            [
-                                'range' => [
-                                    'prices.price_with_vat' => $prices,
+                            'bool' => [
+                                'must' => [
+                                    [
+                                        'range' => [
+                                            'prices.filtering_minimal_price' => [
+                                                'gte' => $priceGte,
+                                            ],
+                                        ],
+                                    ],
+                                    [
+                                        'range' => [
+                                            'prices.filtering_maximal_price' => [
+                                                'lte' => $priceLte,
+                                            ],
+                                        ],
+                                    ],
+                                    [
+                                        'term' => [
+                                            'prices.pricing_group_id' => $pricingGroup->getId(),
+                                        ],
+                                    ],
                                 ],
                             ],
                         ],
