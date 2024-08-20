@@ -320,7 +320,7 @@
         </exec>
     </target>
 
-    <target name="db-demo" depends="production-protection,frontend-api-generate-new-keys,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data" hidden="true"/>
+    <target name="db-demo" depends="production-protection,frontend-api-generate-new-keys,db-wipe-public-schema,clean,clean-redis,dirs-create,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data" hidden="true"/>
 
     <target name="db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1130,7 +1130,7 @@
         </exec>
     </target>
 
-    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
+    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-dirs-create,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
     <target name="test-db-dump" depends="production-protection" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
