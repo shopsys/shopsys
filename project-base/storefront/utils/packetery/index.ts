@@ -38,7 +38,6 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
     openingHours: mapPacketeryOpeningHoursToInternalOpeningHours(packeteryExtendedPoint),
 });
 
-// {date: '2024-08-29', hours: '12:00–22:00'}
 const mapPacketeryOpeningHoursToInternalOpeningHours = (
     packeteryExtendedPoint: PacketeryExtendedPoint,
 ): StoreOrPacketeryPoint['openingHours'] => {
@@ -98,3 +97,4 @@ const mapPacketeryOpeningHoursToInternalOpeningHours = (
 
     return { ...internalOpeningHours, exceptionDays: packeteryExtendedPoint.exceptionDays };
 };
+export const isPacketeryTransport = (transportTypeCode: string | undefined) => transportTypeCode === 'packetery';

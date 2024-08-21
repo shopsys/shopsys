@@ -11,6 +11,7 @@ import { PaymentTypeEnum } from 'types/payment';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPacketeryTransport } from 'utils/packetery';
 
 type OrderDetailContentProps = {
     order: TypeOrderDetailFragment;
@@ -137,17 +138,24 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             <Cell>{order.deliveryLastName}</Cell>
                         </Row>
 
+                        <Row>
+                            <CellMinor>{t('Phone')}:</CellMinor>
+                            <Cell>{order.deliveryTelephone}</Cell>
+                        </Row>
+
+                        {(order.transport.isPersonalPickup ||
+                            isPacketeryTransport(order.transport.transportType.code)) && (
+                            <Row>
+                                <CellHead colSpan={2}>{t('Pickup place')}</CellHead>
+                            </Row>
+                        )}
+
                         {!!order.deliveryCompanyName && (
                             <Row>
                                 <CellMinor>{t('Company name')}</CellMinor>
                                 <Cell>{order.deliveryCompanyName}</Cell>
                             </Row>
                         )}
-
-                        <Row>
-                            <CellMinor>{t('Phone')}:</CellMinor>
-                            <Cell>{order.deliveryTelephone}</Cell>
-                        </Row>
 
                         <Row>
                             <CellMinor>{t('Street and house no.')}:</CellMinor>

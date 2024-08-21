@@ -276,9 +276,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 )}
 
                 {!!pickupPlace && (
-                    <div>
-                        <strong>{t('Pickup place')}:</strong> {pickupPlace.street}, {pickupPlace.postcode}{' '}
-                        {pickupPlace.city}, {pickupPlace.country.name}
+                    <div className="mt-2">
+                        <strong>{t('Pickup place')}:</strong> {pickupPlace.name}, {pickupPlace.street},{' '}
+                        {pickupPlace.postcode} {pickupPlace.city}, {pickupPlace.country.name}
                     </div>
                 )}
             </div>

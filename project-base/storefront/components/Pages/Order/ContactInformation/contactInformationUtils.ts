@@ -33,6 +33,7 @@ import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { getIsPaymentWithPaymentGate } from 'utils/mappers/payment';
+import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
@@ -76,7 +77,13 @@ export const useCreateOrder = (
         updatePageLoadingState({ isPageLoading: true, redirectPageType: 'order-confirmation' });
 
         const createOrderResult = await createOrderMutation(
-            getCreateOrderMutationVariables(cartUuid, formValues, currentCart.pickupPlace, user),
+            getCreateOrderMutationVariables(
+                cartUuid,
+                formValues,
+                currentCart.pickupPlace,
+                user,
+                isPacketeryTransport(currentCart.transport?.transportType.code),
+            ),
         );
 
         handleCreateOrderResult(formProviderMethods, formMeta, createOrderResult, formValues);
@@ -90,6 +97,7 @@ const getCreateOrderMutationVariables = (
     formValues: ContactInformation,
     selectedPickupPlace: StoreOrPacketeryPoint | null,
     user: CurrentCustomerType | undefined | null,
+    isPacketeryTransport: boolean,
 ) => {
     const country = formValues.country.value;
     let deliveryCountry = formValues.isDeliveryAddressDifferentFromBilling ? formValues.deliveryCountry.value : null;
@@ -97,13 +105,19 @@ const getCreateOrderMutationVariables = (
     const formValuesWithoutDeliveryInfo = getFormValuesWithoutDeliveryInfo(formValues);
     let deliveryInfo = getEmptyDeliveryInfo();
 
-    if (formValues.isDeliveryAddressDifferentFromBilling) {
+    if (formValues.isDeliveryAddressDifferentFromBilling || isPacketeryTransport) {
         deliveryInfo = getDeliveryInfoFromFormValues(formValues);
         const savedAndSelectedDeliveryAddress = getSelectedDeliveryAddressForLoggedInUser(user, formValues);
         const savedAndSelectedDeliveryAddressUuid = savedAndSelectedDeliveryAddress?.uuid ?? null;
+        const packeteryPickupPointName =
+            isPacketeryTransport && selectedPickupPlace?.name ? selectedPickupPlace.name : null;
 
         if (selectedPickupPlace) {
-            deliveryInfo = getDeliveryInfoFromSelectedPickupPlace(formValues, selectedPickupPlace);
+            deliveryInfo = getDeliveryInfoFromSelectedPickupPlace(
+                formValues,
+                selectedPickupPlace,
+                packeteryPickupPointName,
+            );
             deliveryCountry = selectedPickupPlace.country.code;
         } else if (savedAndSelectedDeliveryAddressUuid) {
             deliveryInfo = getDeliveryInfoFromSavedAndSelectedDeliveryAddress(savedAndSelectedDeliveryAddressUuid);

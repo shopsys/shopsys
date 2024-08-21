@@ -9,6 +9,10 @@ fragment OrderDetailFragment on Order {
     transport {
         __typename
         name
+        isPersonalPickup
+        transportType {
+            code
+        }
     }
     payment {
         __typename

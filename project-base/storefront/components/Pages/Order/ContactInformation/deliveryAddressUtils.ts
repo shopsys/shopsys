@@ -48,6 +48,7 @@ export const getSelectedDeliveryAddressForLoggedInUser = (
 export const getDeliveryInfoFromSelectedPickupPlace = (
     formValues: ContactInformation,
     selectedPickupPlace: StoreOrPacketeryPoint,
+    packeteryPickupPointName: string | null,
 ): DeliveryInfo => ({
     deliveryFirstName: formValues.isDeliveryAddressDifferentFromBilling
         ? formValues.deliveryFirstName
@@ -61,7 +62,7 @@ export const getDeliveryInfoFromSelectedPickupPlace = (
     deliveryStreet: selectedPickupPlace.street,
     deliveryCity: selectedPickupPlace.city,
     deliveryPostcode: selectedPickupPlace.postcode,
-    deliveryCompanyName: null,
+    deliveryCompanyName: packeteryPickupPointName,
     isDeliveryAddressDifferentFromBilling: true,
     deliveryAddressUuid: null,
 });

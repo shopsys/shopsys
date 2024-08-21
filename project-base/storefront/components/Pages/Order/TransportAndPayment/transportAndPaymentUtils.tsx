@@ -30,7 +30,7 @@ import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import { logException } from 'utils/errors/logException';
-import { mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
+import { isPacketeryTransport, mapPacketeryExtendedPoint, packeteryPick } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -97,7 +97,7 @@ export const useTransportChangeInSelect = (
             return;
         }
 
-        if (updatedTransport.isPersonalPickup || updatedTransport.transportType.code === 'packetery') {
+        if (updatedTransport.isPersonalPickup || isPacketeryTransport(updatedTransport.transportType.code)) {
             if (!preSelectedPickupPlace) {
                 openPersonalPickupPopup(updatedTransport);
 
@@ -139,7 +139,7 @@ export const useTransportChangeInSelect = (
     };
 
     const openPersonalPickupPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
-        if (newTransport.transportType.code === 'packetery') {
+        if (isPacketeryTransport(newTransport.transportType.code)) {
             openPacketeryPopup(newTransport);
 
             return;
@@ -266,7 +266,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         }
 
         let lastOrderPickupPlaceDataFromApi;
-        if (lastOrder.lastOrder.transport.transportType.code !== 'packetery') {
+        if (!isPacketeryTransport(lastOrder.lastOrder.transport.transportType.code)) {
             lastOrderPickupPlaceDataFromApi = (
                 await client
                     .query<TypeStoreQuery, TypeStoreQueryVariables>(StoreQueryDocument, {
