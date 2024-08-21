@@ -34,3 +34,6 @@ OrderItemDecorator:
             type:
                 type: "OrderItemTypeEnum!"
                 description: "Type of the order item"
+            productMainImage:
+                type: "Image"
+                description: "Product main image by params"

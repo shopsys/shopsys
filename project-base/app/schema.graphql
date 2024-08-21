@@ -1370,6 +1370,8 @@ type OrderItem {
   name: String!
   "Order to which the order item belongs"
   order: Order!
+  "Product main image by params"
+  productMainImage: Image
   "Quantity of order items in the order"
   quantity: Int!
   "Total price for the quantity of order item"

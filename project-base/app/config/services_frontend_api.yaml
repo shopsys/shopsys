@@ -145,3 +145,7 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
         alias: App\FrontendApi\Resolver\Products\ProductsQuery
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderItemResolverMap:
+        arguments:
+            $firstImageBatchLoader: '@first_image_batch_loader'
