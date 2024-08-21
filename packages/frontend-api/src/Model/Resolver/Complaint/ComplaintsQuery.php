@@ -39,17 +39,20 @@ class ComplaintsQuery extends AbstractQuery
             throw new InvalidTokenUserMessageException();
         }
 
-        $paginator = new Paginator(function (int $offset, int $limit) use ($customerUser) {
+        $search = $argument['searchInput']['search'] ?? null;
+
+        $paginator = new Paginator(function (int $offset, int $limit) use ($customerUser, $search) {
             return $this->complaintApiFacade->getCustomerUserComplaintsLimitedList(
                 $customerUser,
                 $limit,
                 $offset,
+                $search,
             );
         });
 
         return $paginator->auto(
             $argument,
-            $this->complaintApiFacade->getCustomerUserComplaintsLimitedListCount($customerUser),
+            $this->complaintApiFacade->getCustomerUserComplaintsLimitedListCount($customerUser, $search),
         );
     }
 }

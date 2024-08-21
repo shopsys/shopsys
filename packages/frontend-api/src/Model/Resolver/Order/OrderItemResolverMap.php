@@ -8,7 +8,6 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
 
 class OrderItemResolverMap extends ResolverMap
 {
