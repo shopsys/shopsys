@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 
 class IndependentPaymentVisibilityCalculation
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider $customerUserRoleProvider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly CustomerUserRoleProvider $customerUserRoleProvider,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -43,7 +43,7 @@ class IndependentPaymentVisibilityCalculation
             return false;
         }
 
-        if (!$this->customerUserRoleProvider->canCurrentCustomerUserSeePrices()) {
+        if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
             return !$payment->isGatewayPayment();
         }
 

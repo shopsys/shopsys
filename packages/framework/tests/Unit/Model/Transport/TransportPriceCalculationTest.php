@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
@@ -68,11 +68,11 @@ class TransportPriceCalculationTest extends TestCase
         $pricingSettingMock
             ->expects($this->any())->method('getInputPriceType')
                 ->willReturn($inputPriceType);
-        $customerUserRoleProviderMock = $this->getMockBuilder(CustomerUserRoleProvider::class)
+        $customerUserRoleResolverMock = $this->getMockBuilder(CustomerUserRoleResolver::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['canCurrentCustomerUserSeePrices'])
             ->getMock();
-        $customerUserRoleProviderMock
+        $customerUserRoleResolverMock
             ->expects($this->any())->method('canCurrentCustomerUserSeePrices')
                 ->willReturn(true);
 
@@ -80,7 +80,7 @@ class TransportPriceCalculationTest extends TestCase
         $priceCalculation = new PriceCalculation($rounding);
         $basePriceCalculation = new BasePriceCalculation($priceCalculation, $rounding);
 
-        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingMock, $customerUserRoleProviderMock);
+        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingMock, $customerUserRoleResolverMock);
 
         $vatData = new VatData();
         $vatData->name = 'vat';

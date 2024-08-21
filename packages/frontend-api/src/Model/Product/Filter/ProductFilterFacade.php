@@ -7,7 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
@@ -28,7 +28,7 @@ class ProductFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider $customerUserRoleProvider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -36,7 +36,7 @@ class ProductFilterFacade
         protected readonly ProductFilterNormalizer $productFilterNormalizer,
         protected readonly ProductFilterConfigFactory $productFilterConfigFactory,
         protected readonly ProductFilterDataFactory $productFilterDataFactory,
-        protected readonly CustomerUserRoleProvider $customerUserRoleProvider,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -109,7 +109,7 @@ class ProductFilterFacade
 
         $this->productFilterNormalizer->removeExcessiveFilters($productFilterData, $productFilterConfig);
 
-        if (!$this->customerUserRoleProvider->canCurrentCustomerUserSeePrices()) {
+        if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
             if ($productFilterData->maximalPrice !== null || $productFilterData->minimalPrice !== null) {
                 throw new CustomerUserAccessDeniedUserError('Filtering by price is not allowed for current user.');
             }

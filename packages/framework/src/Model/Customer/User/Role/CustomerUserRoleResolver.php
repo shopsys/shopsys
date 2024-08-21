@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\Security;
 
-class CustomerUserRoleProvider
+class CustomerUserRoleResolver
 {
     /**
      * @param \Symfony\Component\Security\Core\Role\RoleHierarchyInterface $roleHierarchy
