@@ -1736,6 +1736,8 @@ export type TypeOrderItem = {
   name: Scalars['String']['output'];
   /** Order to which the order item belongs */
   order: TypeOrder;
+  /** Product main image by params */
+  productMainImage: Maybe<TypeImage>;
   /** Quantity of order items in the order */
   quantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
