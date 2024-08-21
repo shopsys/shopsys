@@ -302,6 +302,9 @@ QueryDecorator:
             complaints:
                 type: "ComplaintConnection!"
                 argsBuilder: "Relay::Connection"
+                args:
+                    searchInput:
+                        type: "SearchInput"
                 resolve: "@=query('complaintsQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"

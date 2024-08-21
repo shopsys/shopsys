@@ -2529,6 +2529,7 @@ export type TypeQueryComplaintsArgs = {
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
+  searchInput: InputMaybe<TypeSearchInput>;
 };
 
 
