@@ -64,6 +64,7 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                 draggable: false,
                 copyable: false,
                 droppable: false,
+                resizable: false,
                 propagate: ['removable', 'draggable', 'copyable', 'droppable'],
                 attributes: {
                     [IMAGE_POSITION_DATA_ATTRIBUTE]: IMAGE_POSITION_LEFT,

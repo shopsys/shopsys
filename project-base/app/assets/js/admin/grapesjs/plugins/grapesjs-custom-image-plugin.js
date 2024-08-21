@@ -32,6 +32,7 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
             },
 
             defaults: {
+                resizable: false,
                 attributes: {
                     [imagePositionDataAttribute]: 'left',
                     class: ['image-position-left']
