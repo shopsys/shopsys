@@ -23,7 +23,7 @@ check-schema:
 
 define prepare-data-for-acceptance-tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
-	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
+	docker compose exec php-fpm php phing test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
 endef
 
 .PHONY: prepare-data-for-acceptance-tests
