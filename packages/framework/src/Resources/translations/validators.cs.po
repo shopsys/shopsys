@@ -361,6 +361,9 @@ msgstr "Vyplňte prosím promo kód"
 msgid "Please enter quantity"
 msgstr "Vyplňte prosím množství"
 
+msgid "Please enter role name"
+msgstr "Vyplňte prosím název"
+
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 

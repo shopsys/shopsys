@@ -17,9 +17,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class CustomerUserRoleGroup extends AbstractTranslatableEntity
 {
-    public const DEFAULT_ROLE_GROUP_NAME = 'Owner';
-    public const USER_ROLE_GROUP_NAME = 'User';
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -51,8 +48,24 @@ class CustomerUserRoleGroup extends AbstractTranslatableEntity
     public function __construct(CustomerUserRoleGroupData $customerUserRoleGroupData)
     {
         $this->translations = new ArrayCollection();
-        $this->roles = $customerUserRoleGroupData->roles;
         $this->uuid = $customerUserRoleGroupData->uuid ?: Uuid::uuid4()->toString();
+        $this->setData($customerUserRoleGroupData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
+     */
+    public function edit(CustomerUserRoleGroupData $customerUserRoleGroupData): void
+    {
+        $this->setData($customerUserRoleGroupData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData $customerUserRoleGroupData
+     */
+    protected function setData(CustomerUserRoleGroupData $customerUserRoleGroupData): void
+    {
+        $this->roles = $customerUserRoleGroupData->roles;
         $this->setTranslations($customerUserRoleGroupData);
     }
 

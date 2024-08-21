@@ -187,6 +187,25 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
+            $roleGroupMenu = $menu->addChild('customer_user_role_group', [
+                'route' => 'admin_superadmin_customer_user_role_group_list',
+                'label' => t('Customer user role groups'),
+            ]);
+
+            $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_new', [
+                'route' => 'admin_superadmin_customer_user_role_group_new',
+                'display' => false,
+                'label' => t('New customer user role group'),
+            ]);
+            $roleGroupMenu->addChild('admin_superadmin_customer_user_role_group_edit', [
+                'route' => 'admin_superadmin_customer_user_role_group_edit',
+                'display' => false,
+                'label' => t('Editing customer user role group'),
+            ]);
+            $roleGroupMenu->setExtra('superadmin', true);
+        }
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);
 
         return $menu;

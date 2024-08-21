@@ -171,9 +171,16 @@ class RouteConfigCustomization
                 if (preg_match('~^admin_(superadmin_|translation_list$)~', $info->getRouteName())) {
                     $config->changeDefaultRequestDataSet('Only superadmin should be able to see this route.')
                         ->setExpectedStatusCode(403);
-                    $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
-                        ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
-                        ->setExpectedStatusCode(200);
+
+                    if (preg_match('~(_delete$)~', $info->getRouteName())) {
+                        $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
+                            ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                            ->setExpectedStatusCode(302);
+                    } else {
+                        $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
+                            ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                            ->setExpectedStatusCode(200);
+                    }
                 }
             })
             ->customizeByRouteName('admin_login', function (RouteConfig $config) {
