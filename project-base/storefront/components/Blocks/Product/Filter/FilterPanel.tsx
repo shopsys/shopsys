@@ -9,6 +9,7 @@ import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilter
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { ParametersType } from 'types/productFilter';
+import { isPriceVisible } from 'utils/mappers/price';
 
 export type FilterPanelProps = {
     productFilterOptions: TypeProductFilterOptionsFragment;
@@ -48,11 +49,13 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             </div>
 
             <div className="h-full divide-y divide-borderAccent overflow-y-scroll px-5 vl:static vl:overflow-visible">
-                <FilterGroupPrice
-                    initialMaxPrice={filterOptions.maximalPrice}
-                    initialMinPrice={filterOptions.minimalPrice}
-                    title={t('Price')}
-                />
+                {isPriceVisible(filterOptions.minimalPrice) && (
+                    <FilterGroupPrice
+                        initialMaxPrice={filterOptions.maximalPrice}
+                        initialMinPrice={filterOptions.minimalPrice}
+                        title={t('Price')}
+                    />
+                )}
 
                 {!!filterOptions.inStock && (
                     <FilterGroupInStock inStockCount={filterOptions.inStock} title={t('Availability')} />

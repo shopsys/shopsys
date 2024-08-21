@@ -3,6 +3,7 @@ import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_SORT } from 'config/constants';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -30,6 +31,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const currentSort = useCurrentSortQuery();
     const updateSort = useUpdateSortQuery();
+    const currentCustomerUser = useCurrentCustomerData();
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
     const sortOptionsLabels = {
@@ -41,7 +43,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
         [TypeProductOrderingModeEnum.NameDesc]: t('name descending'),
     };
 
-    const sortOptions = customSortOptions || DEFAULT_SORT_OPTIONS;
+    const sortOptions = (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>
+        currentCustomerUser?.arePricesHidden ? !getIsPriceRelatedSortOption(sortOption) : true,
+    );
     const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
 
     const handleChangeSort = (sortOption: TypeProductOrderingModeEnum) => {
@@ -96,3 +100,6 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
         </>
     );
 };
+
+const getIsPriceRelatedSortOption = (sortOption: TypeProductOrderingModeEnum) =>
+    sortOption === TypeProductOrderingModeEnum.PriceAsc || sortOption === TypeProductOrderingModeEnum.PriceDesc;
