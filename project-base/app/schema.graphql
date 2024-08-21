@@ -1923,7 +1923,7 @@ type Query {
     number: String!
   ): Complaint!
   "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
-  complaints(after: String, before: String, first: Int, last: Int): ComplaintConnection!
+  complaints(after: String, before: String, first: Int, last: Int, searchInput: SearchInput): ComplaintConnection!
   "Returns available countries"
   countries: [Country!]!
   "Returns currently logged in customer user"

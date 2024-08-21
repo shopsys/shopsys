@@ -583,6 +583,11 @@ Returns list of complaints that can be paginated using `first`, `last`, `before`
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>countries</strong></td>
 <td valign="top">[<a href="#country">Country</a>!]!</td>
 <td>

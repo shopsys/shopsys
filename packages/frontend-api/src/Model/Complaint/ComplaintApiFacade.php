@@ -177,23 +177,28 @@ class ComplaintApiFacade
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
      * @param int $offset
+     * @param string|null $search
      * @return array
      */
     public function getCustomerUserComplaintsLimitedList(
         CustomerUser $customerUser,
         int $limit,
         int $offset,
+        ?string $search = null,
     ): array {
-        return $this->complaintRepository->getCustomerUserComplaintsLimitedList($customerUser, $limit, $offset);
+        return $this->complaintRepository->getCustomerUserComplaintsLimitedList($customerUser, $limit, $offset, $search);
     }
 
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $search
      * @return int
      */
-    public function getCustomerUserComplaintsLimitedListCount(CustomerUser $customerUser): int
-    {
-        return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser);
+    public function getCustomerUserComplaintsLimitedListCount(
+        CustomerUser $customerUser,
+        ?string $search = null,
+    ): int {
+        return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser, $search);
     }
 
     /**
