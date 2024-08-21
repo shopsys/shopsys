@@ -20,7 +20,8 @@ type ProductsListProps = {
     category?: TypeCategoryDetailFragment;
 };
 
-const productListTwClass = 'relative mb-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 gap-y-6 pt-6';
+export const productListTwClass =
+    'relative mb-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 gap-y-6 pt-6';
 
 export const ProductsList: FC<ProductsListProps> = ({
     products,
@@ -55,10 +56,13 @@ export const ProductsList: FC<ProductsListProps> = ({
                     )}
                 </ProductsListContent>
 
-                {isLoadingMoreProducts &&
-                    createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
-                        <SkeletonModuleProductListItem key={index} />
-                    ))}
+                {isLoadingMoreProducts && (
+                    <div className={productListTwClass}>
+                        {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
+                            <SkeletonModuleProductListItem key={index} />
+                        ))}
+                    </div>
+                )}
             </>
         );
     }
