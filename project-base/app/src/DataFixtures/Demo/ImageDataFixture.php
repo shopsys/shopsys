@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -305,7 +306,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
      * @param int $imageId
      * @param array $names
      * @param string|null $type
-     * @param int|null $position
+     * @param int $position
      */
     private function saveImageIntoDb(
         int $entityId,
@@ -313,7 +314,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         int $imageId,
         array $names = [],
         ?string $type = null,
-        ?int $position = null,
+        int $position = Image::DEFAULT_IMAGE_POSITION,
     ): void {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)

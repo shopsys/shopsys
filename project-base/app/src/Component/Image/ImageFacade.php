@@ -22,7 +22,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 /**
  * @property \App\Component\Image\ImageRepository $imageRepository
- * @property \App\Component\FileUpload\FileUpload $fileUpload
  * @method \Shopsys\FrameworkBundle\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\Shopsys\FrameworkBundle\Component\Image\Image $image)
  * @method \Shopsys\FrameworkBundle\Component\Image\Image getImageByObject(object $imageOrEntity, string|null $type = null)
@@ -39,7 +38,7 @@ class ImageFacade extends BaseImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \App\Component\FileUpload\FileUpload $fileUpload
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
@@ -147,19 +146,6 @@ class ImageFacade extends BaseImageFacade
             }
         }
         $this->em->flush();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
-     */
-    protected function setImagePositionsByOrder(array $orderedImages): void
-    {
-        $position = 0;
-
-        foreach ($orderedImages as $image) {
-            $image->setPosition($position);
-            $position++;
-        }
     }
 
     /**
