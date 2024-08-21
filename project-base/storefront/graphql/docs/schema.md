@@ -6146,6 +6146,15 @@ Product of the order item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>productMainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product main image by params
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

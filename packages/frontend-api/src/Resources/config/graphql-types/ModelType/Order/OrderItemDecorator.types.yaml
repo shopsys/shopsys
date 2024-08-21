@@ -37,3 +37,6 @@ OrderItemDecorator:
             order:
                 type: "Order!"
                 description: "Order to which the order item belongs"
+            productMainImage:
+                type: "Image"
+                description: "Product main image by params"

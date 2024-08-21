@@ -1366,6 +1366,8 @@ type OrderItem {
   order: Order!
   "Product of the order item"
   product: Product
+  "Product main image by params"
+  productMainImage: Image
   "Quantity of order items in the order"
   quantity: Int!
   "Total price for the quantity of order item"
