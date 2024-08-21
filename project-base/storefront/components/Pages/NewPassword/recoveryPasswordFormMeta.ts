@@ -14,8 +14,8 @@ export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, 
             newPassword: validateNewPassword(t),
             newPasswordConfirm: Yup.string().when('newPassword', {
                 is: (newPassword: string) => newPassword.length > 0,
-                then: validateNewPasswordConfirm(t),
-                otherwise: Yup.string(),
+                then: () => validateNewPasswordConfirm(t),
+                otherwise: (schema) => schema,
             }),
         }),
     );

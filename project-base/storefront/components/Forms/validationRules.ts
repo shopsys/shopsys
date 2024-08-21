@@ -1,9 +1,9 @@
 import { VALIDATION_CONSTANTS } from './validationConstants';
 import { Translate } from 'next-translate';
 import * as Yup from 'yup';
-import { BaseSchema } from 'yup';
+import { Schema } from 'yup';
 
-export const validateEmail = (t: Translate): BaseSchema => {
+export const validateEmail = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter email'))
         .email(t('This value is not a valid email'))
@@ -13,11 +13,11 @@ export const validateEmail = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateCustomer = (): BaseSchema => {
+export const validateCustomer = (): Schema => {
     return Yup.string().oneOf(['commonCustomer', 'companyCustomer']);
 };
 
-export const validateTelephone = (t: Translate): BaseSchema => {
+export const validateTelephone = (t: Translate): Schema => {
     return Yup.string()
         .matches(/^[0-9+]*$/, t('Please enter only numbers and the + character'))
         .test(
@@ -35,11 +35,11 @@ export const validateTelephone = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateTelephoneRequired = (t: Translate): BaseSchema => {
+export const validateTelephoneRequired = (t: Translate): Schema => {
     return validateTelephone(t).required(t('Please enter phone number'));
 };
 
-export const validateFirstName = (t: Translate): BaseSchema => {
+export const validateFirstName = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter first name'))
         .max(
@@ -50,7 +50,7 @@ export const validateFirstName = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateLastName = (t: Translate): BaseSchema => {
+export const validateLastName = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter last name'))
         .max(
@@ -61,7 +61,7 @@ export const validateLastName = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateStreet = (t: Translate): BaseSchema => {
+export const validateStreet = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter street'))
         .matches(/\D/, t('The street must contain a letter'))
@@ -72,7 +72,7 @@ export const validateStreet = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateCity = (t: Translate): BaseSchema => {
+export const validateCity = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter city'))
         .max(
@@ -81,7 +81,7 @@ export const validateCity = (t: Translate): BaseSchema => {
         );
 };
 
-export const validatePostcode = (t: Translate): BaseSchema => {
+export const validatePostcode = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter zip code'))
         .test(
@@ -89,11 +89,11 @@ export const validatePostcode = (t: Translate): BaseSchema => {
             t('Zip code cannot be longer than {{ postcodeLength }} characters', {
                 postcodeLength: VALIDATION_CONSTANTS.postcodeLength,
             }),
-            (value) => value !== undefined && value.length <= VALIDATION_CONSTANTS.postcodeLength,
+            (value) => value.length <= VALIDATION_CONSTANTS.postcodeLength,
         );
 };
 
-export const validateCountry = (t: Translate): BaseSchema => {
+export const validateCountry = (t: Translate): Schema => {
     return Yup.object()
         .shape({
             label: Yup.string().required(),
@@ -107,7 +107,7 @@ export const validateCountry = (t: Translate): BaseSchema => {
         );
 };
 
-export const validateCompanyName = (t: Translate): BaseSchema => {
+export const validateCompanyName = (t: Translate): Schema => {
     return Yup.string().max(
         VALIDATION_CONSTANTS.companyNameMaxLength,
         t('Company name must be at most {{ max }} characters', {
@@ -116,11 +116,11 @@ export const validateCompanyName = (t: Translate): BaseSchema => {
     );
 };
 
-export const validateCompanyNameRequired = (t: Translate): BaseSchema => {
+export const validateCompanyNameRequired = (t: Translate): Schema => {
     return validateCompanyName(t).required(t('Please enter company name'));
 };
 
-export const validateCompanyNumber = (t: Translate): BaseSchema => {
+export const validateCompanyNumber = (t: Translate): Schema => {
     return Yup.string()
         .required(t('Please enter identification number'))
         .matches(/^[0-9]*$/, t('Please enter only numbers'))
@@ -129,11 +129,11 @@ export const validateCompanyNumber = (t: Translate): BaseSchema => {
             t('This value must be exactly {{ companyNumberLength }} characters', {
                 companyNumberLength: VALIDATION_CONSTANTS.companyNumberExactLength,
             }),
-            (value) => value !== undefined && value.length === VALIDATION_CONSTANTS.companyNumberExactLength,
+            (value) => value.length === VALIDATION_CONSTANTS.companyNumberExactLength,
         );
 };
 
-export const validateCompanyTaxNumber = (t: Translate): BaseSchema => {
+export const validateCompanyTaxNumber = (t: Translate): Schema => {
     return Yup.string()
         .defined()
         .matches(/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/, {
@@ -148,7 +148,7 @@ export const validateCompanyTaxNumber = (t: Translate): BaseSchema => {
         );
 };
 
-export const validatePrivacyPolicy = (t: Translate): BaseSchema => {
+export const validatePrivacyPolicy = (t: Translate): Schema => {
     return Yup.boolean().isTrue(t('You have to agree with our privacy policy'));
 };
 
@@ -166,21 +166,21 @@ const passwordValidationSchema = (t: Translate, requiredMessage: string) => {
 const passwordConfirmValidationSchema = (t: Translate, passwordFieldName: string, requiredMessage: string) => {
     return Yup.string()
         .required(requiredMessage)
-        .oneOf([Yup.ref(passwordFieldName), null], t('Passwords must match'));
+        .oneOf([Yup.ref(passwordFieldName)], t('Passwords must match'));
 };
 
-export const validatePassword = (t: Translate): BaseSchema => {
+export const validatePassword = (t: Translate): Schema => {
     return passwordValidationSchema(t, t('Please enter password'));
 };
 
-export const validatePasswordConfirm = (t: Translate): BaseSchema => {
+export const validatePasswordConfirm = (t: Translate): Schema => {
     return passwordConfirmValidationSchema(t, 'password', t('Please enter password again'));
 };
 
-export const validateNewPassword = (t: Translate): BaseSchema => {
+export const validateNewPassword = (t: Translate): Schema => {
     return passwordValidationSchema(t, t('Please enter new password'));
 };
 
-export const validateNewPasswordConfirm = (t: Translate): BaseSchema => {
+export const validateNewPasswordConfirm = (t: Translate): Schema => {
     return passwordConfirmValidationSchema(t, 'newPassword', t('Please enter new password again'));
 };
