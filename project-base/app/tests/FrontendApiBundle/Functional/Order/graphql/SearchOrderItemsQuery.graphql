@@ -10,6 +10,7 @@ query SearchOrderItemsQuery($first: Int, $searchInput: SearchInput!, $filter: Or
                 quantity
                 unit
                 uuid
+                type
                 order {
                     uuid
                     number

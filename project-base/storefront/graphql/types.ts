@@ -1710,6 +1710,8 @@ export type TypeOrderItem = {
   quantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
   totalPrice: TypePrice;
+  /** Type of the order item */
+  type: TypeOrderItemTypeEnum;
   /** Unit of measurement used for the order item */
   unit: Maybe<Scalars['String']['output']>;
   /** Order item price per unit */

@@ -5990,6 +5990,15 @@ Total price for the quantity of order item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#orderitemtypeenum">OrderItemTypeEnum</a>!</td>
+<td>
+
+Type of the order item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>unit</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
