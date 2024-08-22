@@ -4,9 +4,5 @@
 {% block h1 %}{{ 'Complaint statuses overview'|trans }}{% endblock %}
 
 {% block main_content %}
-    <div id="js-complaint-status-delete-window"></div>
-
-    <div id="js-complaint-status-grid">
-        {{ gridView.render() }}
-    </div>
+    {{ gridView.render() }}
 {% endblock %}
