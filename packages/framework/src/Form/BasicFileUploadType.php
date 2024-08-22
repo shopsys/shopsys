@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Symfony\Component\Form\AbstractType;
@@ -37,7 +37,7 @@ class BasicFileUploadType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UploadedFileData::class,
+            'data_class' => AbstractUploadedFileData::class,
             'multiple' => false,
             'allow_filenames_input' => false,
             'allow_localized_names' => false,

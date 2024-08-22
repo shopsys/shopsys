@@ -283,11 +283,11 @@ class Complaint
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection|\Doctrine\Common\Collections\Collection
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[]
      */
     public function getItems()
     {
-        return $this->items;
+        return $this->items->getValues();
     }
 
     /**

@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,6 +47,7 @@ class ComplaintFormType extends AbstractType
     {
         $builder->add($this->createBasicInformationGroup($builder, $options['complaint']));
         $builder->add($this->createDeliveryAddressGroup($builder));
+        $builder->add($this->createItemsGroup($builder, $options['complaint']->getItems()));
 
         $builder->add('save', SubmitType::class);
     }
@@ -230,5 +232,30 @@ class ComplaintFormType extends AbstractType
             ]);
 
         return $builderDeliveryAddressGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createItemsGroup(FormBuilderInterface $builder, array $complaintItems): FormBuilderInterface
+    {
+        $builderItemsGroup = $builder->create('itemsGroup', GroupType::class, [
+            'label' => t('Complaint items'),
+        ]);
+
+        $builderItemsGroup
+            ->add('complaintItems', CollectionType::class, [
+                'entry_type' => ComplaintItemFormType::class,
+                'entry_options' => [
+                    'complaintItem' => reset($complaintItems),
+                ],
+                'error_bubbling' => false,
+                'allow_add' => false,
+                'allow_delete' => false,
+            ]);
+
+        return $builderItemsGroup;
     }
 }

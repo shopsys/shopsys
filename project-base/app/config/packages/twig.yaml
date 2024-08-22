@@ -9,6 +9,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/blogCategoriesType.html.twig'
         - '@ShopsysFramework/Admin/Form/blogCategoryCheckboxType.html.twig'
         - '@ShopsysFramework/Admin/Form/colorpickerFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/complaintItem.html.twig'
         - '@ShopsysFramework/Admin/Form/customerUserListFields.html.twig'
         - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyCompanyName.html.twig'
