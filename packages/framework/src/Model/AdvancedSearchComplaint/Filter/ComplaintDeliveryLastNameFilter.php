@@ -17,7 +17,7 @@ class ComplaintDeliveryLastNameFilter extends AbstractComplaintContainsFilter
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     protected function getFieldName(): string
     {
