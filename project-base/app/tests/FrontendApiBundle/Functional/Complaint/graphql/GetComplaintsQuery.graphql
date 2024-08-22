@@ -1,0 +1,32 @@
+query GetComplaintsQuery ($first: Int, $last: Int, $searchInput: SearchInput) {
+    complaints(
+        first: $first,
+        last: $last,
+        searchInput: $searchInput
+    ) {
+        totalCount
+        edges {
+            cursor
+            node {
+                uuid
+                number
+                createdAt
+                deliveryFirstName
+                deliveryLastName
+                deliveryCompanyName
+                deliveryTelephone
+                deliveryStreet
+                deliveryCity
+                deliveryPostcode
+                status
+                items {
+                    quantity
+                    description
+                    orderItem {
+                        uuid
+                    }
+                }
+            }
+        }
+    }
+}
