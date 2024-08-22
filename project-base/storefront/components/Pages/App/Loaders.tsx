@@ -3,6 +3,7 @@ import { useAfterUserEntry } from 'utils/app/useAfterUserEntry';
 import { useAuthLoader } from 'utils/app/useAuthLoader';
 import { usePageLoader } from 'utils/app/usePageLoader';
 import { useReloadCart } from 'utils/cart/useReloadCart';
+import { useRefetchComparison } from 'utils/productLists/comparison/useRefetchComparison';
 import { useBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export const Loaders = () => {
@@ -15,6 +16,7 @@ export const Loaders = () => {
     useBroadcastChannel('reloadPage', () => {
         router.reload();
     });
+    useRefetchComparison();
 
     return null;
 };

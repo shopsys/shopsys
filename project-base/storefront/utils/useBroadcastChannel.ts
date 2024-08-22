@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { isClient } from 'utils/isClient';
 import { v4 as uuid } from 'uuid';
 
-type BroadcastChannelsType = 'reloadPage' | 'refetchCart';
+type BroadcastChannelsType = 'reloadPage' | 'refetchCart' | 'refetchComparison';
 const tabId = uuid();
 
 const broadcastChannelSameTabConfig: Record<BroadcastChannelsType, boolean> = {
     refetchCart: false,
     reloadPage: false,
+    refetchComparison: false,
 };
 
 export const dispatchBroadcastChannel = (name: BroadcastChannelsType, messageEventPayloadData?: any) => {
