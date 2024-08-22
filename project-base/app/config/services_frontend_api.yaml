@@ -2,21 +2,6 @@ services:
     _defaults:
         autoconfigure: true
         autowire: true
-        bind:
-            Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $filesBatchLoader: '@files_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader: '@first_image_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader: '@category_children_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader: '@flags_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader: '@brands_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $storesBatchLoader: '@stores_batch_loader'
         public: false
 
     resolverMaps:
@@ -35,6 +20,47 @@ services:
     App\FrontendApi\Mutation\Login\LoginMutation:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
+
+    App\FrontendApi\Resolver\Category\CategoryResolverMap:
+        arguments:
+            $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
+            $categoryChildrenBatchLoader: '@category_children_batch_loader'
+            $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
+    App\FrontendApi\Resolver\Image\CategoryOrReadyCategorySeoMixImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    App\FrontendApi\Resolver\Products\BestsellingProductsQuery:
+        arguments:
+            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+
+    App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper:
+        arguments:
+            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            $categoriesBatchLoader: '@categories_batch_loader'
+            $flagsBatchLoader: '@flags_batch_loader'
+            $brandsBatchLoader: '@brands_batch_loader'
+
+    App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper:
+        arguments:
+            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            $categoriesBatchLoader: '@categories_batch_loader'
+            $brandsBatchLoader: '@brands_batch_loader'
+
+    App\FrontendApi\Resolver\Products\ProductsQuery:
+        arguments:
+            $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
+            $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
+
+    App\FrontendApi\Resolver\Store\StoreAvailabilityResolverMap:
+        arguments:
+            $storesBatchLoader: '@stores_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
 
     Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
         alias: App\FrontendApi\Model\Category\CategoryFacade

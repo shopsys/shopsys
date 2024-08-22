@@ -2,11 +2,6 @@ services:
     _defaults:
         autoconfigure: true
         autowire: true
-        bind:
-            Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $filesBatchLoader: '@files_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader: '@first_image_batch_loader'
-            Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
         public: false
 
     Shopsys\FrontendApiBundle\:
@@ -19,7 +14,7 @@ services:
             - { name: overblog_graphql.resolver_map, schema: default }
 
     Lcobucci\JWT\Configuration:
-        factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
+        factory: [ '@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create ]
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider:
         alias: Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserLoginInformationProvider
@@ -40,14 +35,14 @@ services:
         tags: [ 'controller.service_arguments' ]
 
     Shopsys\FrontendApiBundle\Controller\FrontendApiController:
-        tags: ['controller.service_arguments']
+        tags: [ 'controller.service_arguments' ]
 
     Shopsys\FrontendApiBundle\Controller\SocialNetworkController:
         tags: [ 'controller.service_arguments' ]
 
     Shopsys\FrontendApiBundle\Model\Error\ErrorHandlerListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20 }
 
     Shopsys\FrontendApiBundle\Model\GraphqlConfigurator: ~
 
@@ -61,6 +56,12 @@ services:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertResolverMap:
+        arguments:
+            $categoriesBatchLoader: '@categories_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
 
     Shopsys\FrontendApiBundle\Model\Resolver\Article\Search\ArticlesSearchResultsProvider:
         tags:
@@ -86,6 +87,40 @@ services:
         arguments:
             $categoriesSearchResultsProviders: !tagged 'shopsys.frontend_api.categories_search_results_provider'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\AdvertImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\BlogArticleImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\ProductImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\SeoPageImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\StoreImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
+        arguments:
+            $filesBatchLoader: '@files_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 1 }
@@ -102,7 +137,7 @@ services:
         arguments:
             $logger: '@monolog.logger.socialNetwork'
 
-    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
+    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator: ~
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory: ~
 
