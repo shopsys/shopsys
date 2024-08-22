@@ -8,7 +8,6 @@ import { TypeProductListTypeEnum } from 'graphql/types';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
-import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 
 export const useProductList = (
     productListType: TypeProductListTypeEnum,
@@ -27,7 +26,6 @@ export const useProductList = (
     const authLoading = usePersistStore((s) => s.authLoading);
     const updateProductListUuid = useUpdateProductListUuid(productListType);
     const productListUuid = productListUuids[productListType] ?? null;
-    const isUserLoggedIn = useIsUserLoggedIn();
 
     const [, TypeAddProductToListMutation] = useAddProductToListMutation();
     const [, TypeRemoveProductFromListMutation] = useRemoveProductFromListMutation();
@@ -40,7 +38,15 @@ export const useProductList = (
                 uuid: productListUuid,
             },
         },
-        pause: !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null,
+        /**
+         * Pokud uz odebiram posledni produkt (podobne to asi bude i v situaci, pokud volam
+         * mutaci na odebrani vsech produktu), tak mi to normalne nefunguje. Sice se updatne cache
+         * v cache exchange, ale ten vysledek, ktery se vraci z hooku useProductListQuery se
+         * nezmeni. Tohleto (odebrani podminky, ze musi byt budto UUID seznamu nebo prihlaseny
+         * uzivatel) je takovy hotfix v tom danem pripade, ale melo by se to dat vyresit i elegantneji,
+         * protoze jinak budeme volat tu query zbytecne i kdyz uzivatel jeste nema ten seznam vubec.
+         */
+        pause: !isProductListHydrated || authLoading !== null,
     });
 
     useEffect(() => {
