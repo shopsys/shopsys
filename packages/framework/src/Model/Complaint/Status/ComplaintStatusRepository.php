@@ -12,14 +12,12 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusNotF
 
 class ComplaintStatusRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
