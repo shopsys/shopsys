@@ -349,6 +349,9 @@ msgstr "Ověřovací kód"
 msgid "Authenticator key"
 msgstr "Ověřovací klíč"
 
+msgid "Available"
+msgstr "Dostupné"
+
 msgid "Available immediately"
 msgstr "Ihned k odběru"
 
@@ -1818,6 +1821,9 @@ msgstr "Skryté"
 
 msgid "Hidden copy"
 msgstr "Skrytá kopie"
+
+msgid "Hidden in GoPay"
+msgstr "Skryté v GoPay"
 
 msgid "Hide"
 msgstr "Skrýt"

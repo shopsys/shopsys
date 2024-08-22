@@ -136,6 +136,10 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
         if ($paymentData->type !== self::TYPE_GOPAY) {
             $this->resetGopayPaymentMethods();
+        } else {
+            foreach ($this->domains as $paymentDomain) {
+                $paymentDomain->setHiddenByGoPay(!$paymentDomain->getGoPayPaymentMethod()?->isAvailable());
+            }
         }
 
         $this->setTranslations($paymentData);

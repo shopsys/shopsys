@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
 use Shopsys\FrameworkBundle\Form\WarningMessageType;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
@@ -214,6 +215,12 @@ class PaymentFormType extends AbstractType
 
         foreach ($allGoPayPaymentMethods as $goPayPaymentMethod) {
             $optionsByDomainId[$goPayPaymentMethod->getDomainId()]['choices'][] = $goPayPaymentMethod;
+        }
+
+        foreach ($optionsByDomainId as $domainId => $options) {
+            $optionsByDomainId[$domainId]['group_by'] = function (GoPayPaymentMethod $goPayPaymentMethod): string {
+                return $goPayPaymentMethod->isAvailable() ? t('Available') : t('Hidden in GoPay');
+            };
         }
 
         return $optionsByDomainId;

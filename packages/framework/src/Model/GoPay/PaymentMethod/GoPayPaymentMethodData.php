@@ -40,4 +40,9 @@ class GoPayPaymentMethodData
      * @var int
      */
     public $domainId;
+
+    /**
+     * @var bool
+     */
+    public $available;
 }

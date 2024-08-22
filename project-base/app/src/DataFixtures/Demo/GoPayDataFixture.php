@@ -166,6 +166,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         $goPayPaymentMethodData->imageLargeUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_large_url'] . '.png';
         $goPayPaymentMethodData->paymentGroup = $data['payment_group'];
         $goPayPaymentMethodData->domainId = $domainId;
+        $goPayPaymentMethodData->available = true;
 
         return $goPayPaymentMethodData;
     }

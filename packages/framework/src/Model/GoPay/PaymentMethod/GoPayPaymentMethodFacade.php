@@ -96,8 +96,11 @@ class GoPayPaymentMethodFacade
         }
 
         foreach ($paymentMethodByIdentifier as $paymentMethod) {
+            $paymentMethod->setUnavailable();
             $this->paymentFacade->hideByGoPayPaymentMethod($paymentMethod, $domainConfig->getId());
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -131,6 +134,7 @@ class GoPayPaymentMethodFacade
         $goPayPaymentMethodData->imageNormalUrl = $goPayMethodRawData['image']['normal'];
         $goPayPaymentMethodData->imageLargeUrl = $goPayMethodRawData['image']['large'];
         $goPayPaymentMethodData->paymentGroup = $goPayMethodRawData['group'];
+        $goPayPaymentMethodData->available = true;
     }
 
     /**

@@ -72,6 +72,12 @@ class GoPayPaymentMethod
     protected $paymentGroup;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $available;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $paymentMethodData
      */
     public function __construct(GoPayPaymentMethodData $paymentMethodData)
@@ -100,6 +106,7 @@ class GoPayPaymentMethod
         $this->imageLargeUrl = $goPayPaymentMethodData->imageLargeUrl;
         $this->paymentGroup = $goPayPaymentMethodData->paymentGroup;
         $this->domainId = $goPayPaymentMethodData->domainId;
+        $this->available = $goPayPaymentMethodData->available;
     }
 
     /**
@@ -164,5 +171,18 @@ class GoPayPaymentMethod
     public function getDomainId()
     {
         return $this->domainId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAvailable()
+    {
+        return $this->available;
+    }
+
+    public function setUnavailable()
+    {
+        $this->available = false;
     }
 }

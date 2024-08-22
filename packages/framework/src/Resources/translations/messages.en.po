@@ -349,6 +349,9 @@ msgstr ""
 msgid "Authenticator key"
 msgstr ""
 
+msgid "Available"
+msgstr ""
+
 msgid "Available immediately"
 msgstr ""
 
@@ -1817,6 +1820,9 @@ msgid "Hidden"
 msgstr ""
 
 msgid "Hidden copy"
+msgstr ""
+
+msgid "Hidden in GoPay"
 msgstr ""
 
 msgid "Hide"

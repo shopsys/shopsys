@@ -31,7 +31,7 @@ class GoPayPaymentMethodRepository
      */
     public function getAll(): array
     {
-        return $this->getPaymentMethodRepository()->findAll();
+        return $this->getPaymentMethodRepository()->findBy([], ['available' => 'desc']);
     }
 
     /**
