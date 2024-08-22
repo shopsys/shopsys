@@ -44,6 +44,7 @@ class ComplaintGridFactory
         $grid->setDefaultOrder('created_at', DataSourceInterface::ORDER_DESC);
 
         $grid->addColumn('number', 'cmp.number', t('Complaint Nr.'), true);
+        $grid->addColumn('order_number', 'orderNumber', t('Order Nr.'), true);
         $grid->addColumn('created_at', 'cmp.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
 

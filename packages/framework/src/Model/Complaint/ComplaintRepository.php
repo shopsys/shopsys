@@ -35,6 +35,8 @@ class ComplaintRepository
     {
         return $this->getComplaintRepository()->createQueryBuilder('cmp')
             ->select('cmp')
+            ->addSelect('o.number as orderNumber')
+            ->addSelect('o.id as orderId')
             ->join('cmp.order', 'o')
             ->addSelect(
                 '(CASE WHEN o.companyName IS NOT NULL
@@ -47,6 +49,8 @@ class ComplaintRepository
             ->join('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
             ->groupBy('cmp.id')
             ->addGroupBy('o.companyName')
+            ->addGroupBy('o.number')
+            ->addGroupBy('o.id')
             ->addGroupBy('o.lastName')
             ->addGroupBy('o.firstName')
             ->setParameter('locale', $locale);
