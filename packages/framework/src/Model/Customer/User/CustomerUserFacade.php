@@ -9,15 +9,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
@@ -30,7 +27,6 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
@@ -38,8 +34,6 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
@@ -48,7 +42,6 @@ class CustomerUserFacade
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         protected readonly CustomerMailFacade $customerMailFacade,
-        protected readonly BillingAddressDataFactoryInterface $billingAddressDataFactory,
         protected readonly CustomerUserFactoryInterface $customerUserFactory,
         protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         protected readonly CustomerFacade $customerFacade,
@@ -56,8 +49,6 @@ class CustomerUserFacade
         protected readonly CustomerDataFactoryInterface $customerDataFactory,
         protected readonly BillingAddressFacade $billingAddressFacade,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
-        protected readonly DeliveryAddressFactory $deliveryAddressFactory,
-        protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly HashGenerator $hashGenerator,
     ) {
@@ -364,7 +355,6 @@ class CustomerUserFacade
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->newsletterSubscription = $isSubscribeToNewsletter;
         $this->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
-        $deliveryAddress = $deliveryAddress ?? $this->createDeliveryAddressForAmendingCustomerUserData($order);
         $this->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
     }
 
@@ -385,36 +375,6 @@ class CustomerUserFacade
             $deliveryAddressUuid,
             $customerUser->getCustomer(),
         );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
-     */
-    protected function createDeliveryAddressForAmendingCustomerUserData(Order $order): ?DeliveryAddress
-    {
-        $orderTransport = $order->getTransportItem()->getTransport();
-
-        if (
-            $orderTransport->isPersonalPickup() ||
-            $orderTransport->isPacketery() ||
-            $order->isDeliveryAddressSameAsBillingAddress()
-        ) {
-            return null;
-        }
-
-        $deliveryAddressData = $this->deliveryAddressDataFactory->create();
-        $deliveryAddressData->firstName = $order->getDeliveryFirstName();
-        $deliveryAddressData->lastName = $order->getDeliveryLastName();
-        $deliveryAddressData->companyName = $order->getDeliveryCompanyName();
-        $deliveryAddressData->street = $order->getDeliveryStreet();
-        $deliveryAddressData->city = $order->getDeliveryCity();
-        $deliveryAddressData->postcode = $order->getDeliveryPostcode();
-        $deliveryAddressData->country = $order->getDeliveryCountry();
-        $deliveryAddressData->postcode = $order->getDeliveryPostcode();
-        $deliveryAddressData->customer = $order->getCustomerUser()?->getCustomer();
-
-        return $this->deliveryAddressFactory->create($deliveryAddressData);
     }
 
     /**
