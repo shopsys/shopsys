@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 class ComplaintStatusDataFixture extends AbstractReferenceFixture
 {
     public const string COMPLAINT_STATUS_NEW = 'complaint_status_new';
-    public const string COMPLAINT_STATUS_RESOLVED = 'complaint_status_RESOLVED';
+    public const string COMPLAINT_STATUS_RESOLVED = 'complaint_status_resolved';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
