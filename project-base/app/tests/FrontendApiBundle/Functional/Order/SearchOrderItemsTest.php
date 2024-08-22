@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
+use Tests\FrontendApiBundle\Test\SearchInputTestUtils;
 
 class SearchOrderItemsTest extends GraphQlWithLoginTestCase
 {
@@ -48,18 +49,21 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
     public static function getOrderItemsDataProvider(): iterable
     {
         // first 4 order items
-        yield [['first' => 4, ...self::createSearchInput('')], [1, 2, 3, 4]];
+        yield [['first' => 4, ...SearchInputTestUtils::createSearchInputQueryVariables('')], [1, 2, 3, 4]];
 
         // search by name and filter by order item type
         yield [
-            [...self::createSearchInput('Hello Kitty'), 'filter' => ['type' => OrderItemTypeEnum::TYPE_PRODUCT]],
+            [
+                ...SearchInputTestUtils::createSearchInputQueryVariables('Hello Kitty'),
+                'filter' => ['type' => OrderItemTypeEnum::TYPE_PRODUCT],
+            ],
             [15, 20],
         ];
 
         // search by name and filter by order uuid
         yield [
             [
-                ...self::createSearchInput('A4tech'),
+                ...SearchInputTestUtils::createSearchInputQueryVariables('A4tech'),
                 'filter' => [
                     'orderUuid' => new ReferenceDataAccessor(
                         OrderDataFixture::ORDER_PREFIX . 3,
@@ -73,7 +77,7 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         // search by name and filter by order created after
         yield [
             [
-                ...self::createSearchInput('Hello Kitty'),
+                ...SearchInputTestUtils::createSearchInputQueryVariables('Hello Kitty'),
                 'filter' => ['orderCreatedAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)],
             ],
             [15, 20],
@@ -81,14 +85,17 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
 
         // search by catnum and filter by order status
         yield [
-            [...self::createSearchInput('9177759'), 'filter' => ['orderStatus' => OrderStatusTypeEnum::TYPE_DONE]],
+            [
+                ...SearchInputTestUtils::createSearchInputQueryVariables('9177759'),
+                'filter' => ['orderStatus' => OrderStatusTypeEnum::TYPE_DONE],
+            ],
             [20],
         ];
 
         // search by name and filter by order item catnum
         yield [
             [
-                ...self::createSearchInput('Hello Kitty'),
+                ...SearchInputTestUtils::createSearchInputQueryVariables('Hello Kitty'),
                 'filter' => [
                     'catnum' => new ReferenceDataAccessor(
                         ProductDataFixture::PRODUCT_PREFIX . 1,
@@ -102,7 +109,7 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
         // search by catnum and filter by order item product uuid
         yield [
             [
-                ...self::createSearchInput('9177759'),
+                ...SearchInputTestUtils::createSearchInputQueryVariables('9177759'),
                 'filter' => [
                     'productUuid' => new ReferenceDataAccessor(
                         ProductDataFixture::PRODUCT_PREFIX . 1,
@@ -112,14 +119,5 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
             ],
             [15, 20],
         ];
-    }
-
-    /**
-     * @param string $search
-     * @return array
-     */
-    private static function createSearchInput(string $search): array
-    {
-        return ['searchInput' => ['search' => $search, 'isAutocomplete' => false, 'userIdentifier' => Uuid::uuid4()]];
     }
 }
