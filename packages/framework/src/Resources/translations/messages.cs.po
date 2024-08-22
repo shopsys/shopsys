@@ -397,6 +397,9 @@ msgstr "Základní informace"
 msgid "Batch ID"
 msgstr "ID dávky"
 
+msgid "Because status \"%name%\" is used with other complaints also, you have to choose a new status which will replace the existing one. Which status you want to set to these complaints? When changing this, there won't be emails sent to customers."
+msgstr "Jelikož stav \"%name%\" je používán ještě u některých reklamací, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto reklamacím nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
+
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
 
@@ -664,6 +667,24 @@ msgstr "Název firmy"
 msgid "Company number"
 msgstr "IČ"
 
+msgid "Complaint Nr."
+msgstr "Reklamace č."
+
+msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr "Byla upravena reklamace č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong>"
+
+msgid "Complaint number"
+msgstr "Číslo reklamace"
+
+msgid "Complaint statuses overview"
+msgstr "Přehled stavů reklamací"
+
+msgid "Complaints"
+msgstr "Reklamace"
+
+msgid "Complaints overview"
+msgstr "Přehled reklamací"
+
 msgid "Complement to title"
 msgstr "Doplněk k titulku"
 
@@ -774,6 +795,9 @@ msgstr "Vytvořit novou značku"
 
 msgid "Create new category"
 msgstr "Vytvořit novou kategorii"
+
+msgid "Create new complaint status"
+msgstr "Vytvořit nový stav reklamace"
 
 msgid "Create new country"
 msgstr "Vytvořit nový stát"
@@ -1060,6 +1084,18 @@ msgstr "Detail dodací adresy"
 msgid "Delivery address is the same as billing address"
 msgstr "Doručovací adresa je stejná jako fakturační adresa"
 
+msgid "Delivery city"
+msgstr "Město pro doručení"
+
+msgid "Delivery last name"
+msgstr "Příjmení pro doručení"
+
+msgid "Delivery phone number"
+msgstr "Telefonní číslo pro doručení"
+
+msgid "Delivery street"
+msgstr "Ulice pro doručení"
+
 msgid "Department stores"
 msgstr "Obchodní domy"
 
@@ -1137,6 +1173,9 @@ msgstr "Opravdu si přejete trvale odstranit cenovou skupinu \"%name%\"? Nikde n
 
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit sazbu \"%name%\"? Nikde není použita."
+
+msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
+msgstr "Opravdu si přejete trvale odstranit stav reklamace \"%name%\"? Nikde není použitý."
 
 msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav objednávek \"%name%\"? Nikde není použitý."
@@ -1353,6 +1392,12 @@ msgstr "Editace kategorie"
 
 msgid "Editing category - %name%"
 msgstr "Editace kategorie - %name%"
+
+msgid "Editing complaint"
+msgstr "Editace reklamace"
+
+msgid "Editing complaint - Nr. %number%"
+msgstr "Editace reklamace - č. %number%"
 
 msgid "Editing country"
 msgstr "Editace státu"
@@ -2329,6 +2374,12 @@ msgstr "Nebyly nalezeny žádné články blogu."
 msgid "No brands found. You have to create some first."
 msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
 
+msgid "No complaint statuses found."
+msgstr "Nebyly nalezeny žádné stavy reklamací."
+
+msgid "No complaints found."
+msgstr "Nebyly nalezeny žádné reklamace."
+
 msgid "No countries found. You have to create some first."
 msgstr "Nebyly nalezeny žádné státy. Nejprve musíte nějaké vytvořit."
 
@@ -2487,6 +2538,9 @@ msgstr "Informace o provozovateli - vše"
 
 msgid "Operator information - view"
 msgstr "Informace o provozovateli - zobrazení"
+
+msgid "Order"
+msgstr "Objednávka"
 
 msgid "Order Nr."
 msgstr "Objednávka č."
@@ -3109,6 +3163,9 @@ msgstr "Vyhledávání ve nahraných souborech podle názvu souboru, přípony n
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
 
+msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá v čísle reklamace, čísle objednávky, příjmení pro doručení, názvu firmy pro doručení, příjmení z objednávky a e-mailu objednávky. Je možné používat operátory * a ?."
+
 msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v příjmení, názvu firmy, e-mailu a telefonu. Je možné používat operátory * a ?."
 
@@ -3162,6 +3219,9 @@ msgstr "Zvolená značka neexistuje."
 
 msgid "Selected category doesn't exist."
 msgstr "Zvolená kategorie neexistuje"
+
+msgid "Selected complaint status doesn't exist."
+msgstr "Zvolený stav reklamace neexistuje."
 
 msgid "Selected currency doesn't exist."
 msgstr "Zvolená měna neexistuje."
@@ -3346,6 +3406,18 @@ msgstr "Začátek"
 msgid "Status"
 msgstr "Stav"
 
+msgid "Status of complaints"
+msgstr "Stavy reklamací"
+
+msgid "Status of complaints <strong>{{ name }}</strong> deleted"
+msgstr "Stav reklamací <strong>{{ name }}</strong> byl smazán"
+
+msgid "Status of complaints <strong>{{ name }}</strong> is reserved and can't be deleted"
+msgstr "Stav reklamací <strong>{{ name }}</strong> je rezervovaný a nelze jej smazat"
+
+msgid "Status of complaints <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
+msgstr "Stav reklamací <strong>{{ oldName }}</strong> byl nahrazen stavem <strong>{{ newName }}</strong> a byl smazán."
+
 msgid "Status of order"
 msgstr "Stav objednávky"
 
@@ -3472,11 +3544,17 @@ msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 msgid "This payment method is hidden by GoPay on domains: %domains%"
 msgstr "Tento způsob platby je skrytý systémem GoPay na doménách: %domains%"
 
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
+msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje reklamace, které nebyly úspěšně vyřízeny."
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které byly úspěšně vyřízeny."
+
+msgid "This status can't be deleted. This is automatically assigned status to all new complaints."
+msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým reklamacím."
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým objednávkám."
@@ -3960,6 +4038,12 @@ msgstr "článků blogu"
 
 msgid "brands"
 msgstr "značek"
+
+msgid "complaint statuses"
+msgstr "stavy reklamací"
+
+msgid "complaints"
+msgstr "reklamace"
 
 msgid "countries"
 msgstr "státy"

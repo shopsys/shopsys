@@ -238,6 +238,9 @@ msgstr ""
 msgid "Please enter company name"
 msgstr ""
 
+msgid "Please enter complaint status name in all languages"
+msgstr ""
+
 msgid "Please enter country code"
 msgstr ""
 

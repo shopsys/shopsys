@@ -238,6 +238,9 @@ msgstr "Vyplňte prosím kód"
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název firmy"
 
+msgid "Please enter complaint status name in all languages"
+msgstr "Vyplňte prosím název stavu reklamace ve všech jazycích"
+
 msgid "Please enter country code"
 msgstr "Vyplňte prosím kód země"
 
