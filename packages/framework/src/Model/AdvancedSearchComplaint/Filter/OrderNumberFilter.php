@@ -67,7 +67,6 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
 
                 $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
                 $parameterName = 'orderNumber_' . $index;
-                $queryBuilder->join('cmp.number', 'o');
                 $queryBuilder->andWhere('o.number ' . $dqlOperator . ' :' . $parameterName);
                 $queryBuilder->setParameter($parameterName, $searchValue);
             }
