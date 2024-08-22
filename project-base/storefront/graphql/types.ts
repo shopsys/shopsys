@@ -2348,8 +2348,6 @@ export type TypeQuery = {
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
   orders: Maybe<TypeOrderConnection>;
-  /** Returns list of searched orders that can be paginated using `first`, `last`, `before` and `after` keywords */
-  ordersSearch: TypeOrderConnection;
   /** Returns payment filtered using UUID */
   payment: Maybe<TypePayment>;
   /** Returns complete list of payment methods */
@@ -2545,16 +2543,6 @@ export type TypeQueryOrdersArgs = {
   filter: InputMaybe<TypeOrderFilterInput>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type TypeQueryOrdersSearchArgs = {
-  after: InputMaybe<Scalars['String']['input']>;
-  before: InputMaybe<Scalars['String']['input']>;
-  filter: InputMaybe<TypeOrderFilterInput>;
-  first: InputMaybe<Scalars['Int']['input']>;
-  last: InputMaybe<Scalars['Int']['input']>;
-  searchInput: TypeSearchInput;
 };
 
 
