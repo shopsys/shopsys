@@ -1342,6 +1342,8 @@ type OrderItem {
   quantity: Int!
   "Total price for the quantity of order item"
   totalPrice: Price!
+  "Type of the order item"
+  type: OrderItemTypeEnum!
   "Unit of measurement used for the order item"
   unit: String
   "Order item price per unit"

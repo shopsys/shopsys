@@ -31,3 +31,6 @@ OrderItemDecorator:
             order:
                 type: "Order!"
                 description: "Order to which the order item belongs"
+            type:
+                type: "OrderItemTypeEnum!"
+                description: "Type of the order item"

@@ -48,30 +48,33 @@ trait OrderItemsTestTrait
         );
 
         foreach ($responseData['edges'] as $orderIndex => $edge) {
-            $orderMessage = sprintf(
+            $orderItemMessage = sprintf(
                 'Hint: check data and sort of order item with ID #%d',
                 $expectedOrderItemsIds[$orderIndex],
             );
 
-            $this->assertArrayHasKey('node', $edge, $orderMessage);
+            $this->assertArrayHasKey('node', $edge, $orderItemMessage);
 
             /** @var \App\Model\Order\Item\OrderItem $expectedOrderItem */
             $expectedOrderItem = array_shift($expectedOrderItems);
             $node = $edge['node'];
 
-            $this->assertArrayHasKey('uuid', $node, $orderMessage);
-            $this->assertSame($expectedOrderItem->getUuid(), $node['uuid'], $orderMessage);
-            $this->assertArrayHasKey('name', $node, $orderMessage);
-            $this->assertSame($expectedOrderItem->getName(), $node['name'], $orderMessage);
-            $this->assertArrayHasKey('vatRate', $node, $orderMessage);
-            $this->assertSame($expectedOrderItem->getVatPercent(), $node['vatRate'], $orderMessage);
-            $this->assertArrayHasKey('quantity', $node, $orderMessage);
-            $this->assertSame($expectedOrderItem->getQuantity(), $node['quantity'], $orderMessage);
-            $this->assertArrayHasKey('unit', $node, $orderMessage);
+            $this->assertArrayHasKey('uuid', $node, $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getUuid(), $node['uuid'], $orderItemMessage);
+            $this->assertArrayHasKey('name', $node, $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getName(), $node['name'], $orderItemMessage);
+            $this->assertArrayHasKey('vatRate', $node, $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getVatPercent(), $node['vatRate'], $orderItemMessage);
+            $this->assertArrayHasKey('quantity', $node, $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getQuantity(), $node['quantity'], $orderItemMessage);
+            $this->assertArrayHasKey('unit', $node, $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getUnitName(), $node['unit'], $orderItemMessage);
+            $this->assertArrayHasKey('type', $node, $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getType(), $node['type'], $orderItemMessage);
 
-            $this->assertArrayHasKey('order', $node, $orderMessage);
-            $this->assertArrayHasKey('number', $node['order'], $orderMessage);
-            $this->assertSame($expectedOrderItem->getOrder()->getNumber(), $node['order']['number'], $orderMessage);
+            $this->assertArrayHasKey('order', $node, $orderItemMessage);
+            $this->assertArrayHasKey('number', $node['order'], $orderItemMessage);
+            $this->assertSame($expectedOrderItem->getOrder()->getNumber(), $node['order']['number'], $orderItemMessage);
         }
     }
 }
