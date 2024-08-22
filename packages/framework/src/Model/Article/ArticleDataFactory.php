@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
-class ArticleDataFactory implements ArticleDataFactoryInterface
+class ArticleDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
