@@ -138,7 +138,7 @@ class GetAdvertsTest extends GraphQlTestCase
     public function testGetElectronicsAdverts(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetAdvertsQuery.graphql', [
-            'positionNames' => ['productListMiddle'],
+            'positionNames' => ['productListSecondRow'],
             'categoryUuid' => $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class)->getUuid(),
         ]);
 
@@ -196,7 +196,7 @@ class GetAdvertsTest extends GraphQlTestCase
             [
                 'name' => t('Demo category advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'type' => Advert::TYPE_CODE,
-                'positionName' => 'productListMiddle',
+                'positionName' => 'productListSecondRow',
                 'categories' => [
                     ['name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],

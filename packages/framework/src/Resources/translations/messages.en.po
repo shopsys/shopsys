@@ -3910,12 +3910,6 @@ msgstr ""
 msgid "higher than"
 msgstr ""
 
-msgid "in category (above the category name)"
-msgstr ""
-
-msgid "in category (above the product list)"
-msgstr ""
-
 msgid "in category (between first and second row of products)"
 msgstr ""
 

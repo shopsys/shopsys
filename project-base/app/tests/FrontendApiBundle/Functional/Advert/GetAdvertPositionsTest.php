@@ -57,14 +57,6 @@ class GetAdvertPositionsTest extends GraphQlTestCase
                 'positionName' => 'footer',
             ],
             [
-                'description' => t('in category (above the category name)', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'positionName' => 'productList',
-            ],
-            [
-                'description' => t('in category (above the product list)', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'positionName' => 'productListMiddle',
-            ],
-            [
                 'description' => t('in category (between first and second row of products)', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'positionName' => 'productListSecondRow',
             ],

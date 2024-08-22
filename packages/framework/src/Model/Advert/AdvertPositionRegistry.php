@@ -8,8 +8,6 @@ use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertPositionNotKnownExcepti
 
 class AdvertPositionRegistry
 {
-    public const POSITION_PRODUCT_LIST = 'productList';
-    public const POSITION_CATEGORIES_ABOVE_PRODUCT_LIST = 'productListMiddle';
     public const POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST = 'productListSecondRow';
     public const POSITION_CART_PREVIEW = 'cartPreview';
     public const POSITION_HEADER = 'header';
@@ -23,8 +21,6 @@ class AdvertPositionRegistry
         return [
             self::POSITION_HEADER => t('under heading'),
             self::POSITION_FOOTER => t('above footer'),
-            self::POSITION_PRODUCT_LIST => t('in category (above the category name)'),
-            self::POSITION_CATEGORIES_ABOVE_PRODUCT_LIST => t('in category (above the product list)'),
             self::POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST => t('in category (between first and second row of products)'),
             self::POSITION_CART_PREVIEW => t('above order summary in cart'),
         ];
@@ -36,8 +32,6 @@ class AdvertPositionRegistry
     public static function getCategoryPosition(): array
     {
         return [
-            self::POSITION_PRODUCT_LIST,
-            self::POSITION_CATEGORIES_ABOVE_PRODUCT_LIST,
             self::POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST,
         ];
     }

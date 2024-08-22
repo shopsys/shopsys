@@ -4,13 +4,7 @@ import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.g
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
 
-type PositionNameType =
-    | 'productList'
-    | 'footer'
-    | 'header'
-    | 'productListMiddle'
-    | 'cartPreview'
-    | 'productListSecondRow';
+type PositionNameType = 'footer' | 'header' | 'cartPreview' | 'productListSecondRow';
 
 type AdvertsProps = {
     positionName: PositionNameType;
@@ -66,12 +60,8 @@ const getPositionNames = (positionName: PositionNameType) => {
         return ['header', 'footer'];
     }
 
-    if (
-        positionName === 'productList' ||
-        positionName === 'productListMiddle' ||
-        positionName === 'productListSecondRow'
-    ) {
-        return ['productList', 'productListMiddle', 'productListSecondRow'];
+    if (positionName === 'productListSecondRow') {
+        return ['productListSecondRow'];
     }
 
     return ['cartPreview'];
