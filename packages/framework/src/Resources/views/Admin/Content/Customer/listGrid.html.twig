@@ -2,9 +2,15 @@
 
 {% block grid_value_cell_id_name %}
     {% if not row.showEditBillingAddressLink %}
-        <a href="{{ url('admin_customer_edit', { id: row.id }) }}">{{ value }}</a>
+        <a href="{{ url('admin_customer_edit', { id: row.id }) }}">
+            <i class="svg svg-user" title="{{ 'User'|trans }}"></i>
+            {{ value }}
+        </a>
     {% else %}
-        <a href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}">{{ value }}</a>
+        <a href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}">
+            <i class="svg svg-company" title="{{ 'Company'|trans }}"></i>
+            {{ value }}
+        </a>
     {% endif %}
 {% endblock %}
 
