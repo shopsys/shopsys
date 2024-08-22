@@ -874,6 +874,9 @@ msgstr ""
 msgid "Customer <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Customer ID"
+msgstr ""
+
 msgid "Customer activation"
 msgstr ""
 
@@ -904,9 +907,6 @@ msgstr ""
 msgid "Customer name"
 msgstr ""
 
-msgid "Customer orders"
-msgstr ""
-
 msgid "Customer phone number"
 msgstr ""
 
@@ -932,6 +932,9 @@ msgid "Customer user role groups"
 msgstr ""
 
 msgid "Customer users"
+msgstr ""
+
+msgid "Customer with ID %customerId% not found."
 msgstr ""
 
 msgid "Customers"
@@ -1931,6 +1934,9 @@ msgid "Language constants - full"
 msgstr ""
 
 msgid "Language constants - view"
+msgstr ""
+
+msgid "Last %limit% customer orders"
 msgstr ""
 
 msgid "Last action time"
@@ -3941,6 +3947,9 @@ msgid "not"
 msgstr ""
 
 msgid "not entered"
+msgstr ""
+
+msgid "not registered customer"
 msgstr ""
 
 msgid "numbers"

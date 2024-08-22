@@ -20,6 +20,7 @@ class AdvancedSearchOperatorTranslation
             AdvancedSearchFilterInterface::OPERATOR_CONTAINS => t('include'),
             AdvancedSearchFilterInterface::OPERATOR_NOT_CONTAINS => t('doesn\'t include'),
             AdvancedSearchFilterInterface::OPERATOR_NOT_SET => t('not entered'),
+            AdvancedSearchFilterInterface::OPERATOR_NOT_REGISTERED => t('not registered customer'),
             AdvancedSearchFilterInterface::OPERATOR_IS => t('is'),
             AdvancedSearchFilterInterface::OPERATOR_IS_NOT => t('not'),
             AdvancedSearchFilterInterface::OPERATOR_BEFORE => t('before'),

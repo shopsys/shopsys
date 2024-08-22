@@ -1,53 +1,67 @@
 {% block order_list_row %}
     <div class="wrap-divider">
-        <h2>{{ 'Customer orders'|trans }}</h2>
-            {% if orders|length == 0 %}
-                <div class="form-line">
-                    {{ 'Customer has no orders so far.'|trans }}
-                </div>
-            {% else %}
-                <div class="form-line form-line--no-padd">
-                    <div class="table-touch-always">
-                        <div class="table-touch-always__in">
-                            <table class="table-main">
-                                <thead>
-                                <tr>
-                                    <th>{{ 'Order number'|trans }}</th>
-                                    <th>{{ 'Created on'|trans }}</th>
-                                    <th>{{ 'Billing address'|trans }}</th>
-                                    <th>{{ 'Delivery address'|trans }}</th>
-                                    <th>{{ 'Total price including VAT'|trans }}</th>
-                                    <th>{{ 'Status'|trans }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for order in orders %}
-                                    <tr>
-                                        <td>
-                                            <a href="{{ url('admin_order_edit', { id: order.id }) }}" target="_blank">
-                                                {{ order.number }}<i class="svg svg-arrow-simple in-icon in-icon--detail margin-left-5"></i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            {{ order.createdAt|formatDateTime }}
-                                        </td>
-                                        <td>
-                                            {{ order.street }}<br />
-                                            {{ order.city }}, {{ order.postcode }}
-                                        </td>
-                                        <td>
-                                            {{ order.deliveryStreet }}<br />
-                                            {{ order.deliveryCity }}, {{ order.deliveryPostcode }}
-                                        </td>
-                                        <td>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
-                                        <td>{{ order.status.name }}</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <div class="wrap-bar">
+            <h2 class="wrap-bar__heading">{{ 'Last %limit% customer orders'|trans({'%limit%': limit}) }}</h2>
+            {% if orders|length > 0 %}
+                <div class="wrap-bar__buttons">
+                    <a href="{{ url('admin_order_list', {
+                        'as[0][subject]': 'customerId',
+                        'as[0][operator]': 'is',
+                        'as[0][value]': customer.id,
+                    }) }}" class="btn btn--secondary wrap-bar__btn">
+                        {{ 'Show all customer orders' }}
+                    </a>
                 </div>
             {% endif %}
+        </div>
+
+        {% if orders|length == 0 %}
+            <div class="form-line">
+                {{ 'Customer has no orders so far.'|trans }}
+            </div>
+        {% else %}
+            <div class="form-line form-line--no-padd">
+                <div class="table-touch-always">
+                    <div class="table-touch-always__in">
+                        <table class="table-main">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Order number'|trans }}</th>
+                                <th>{{ 'Created on'|trans }}</th>
+                                <th>{{ 'Billing address'|trans }}</th>
+                                <th>{{ 'Delivery address'|trans }}</th>
+                                <th>{{ 'Total price including VAT'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url('admin_order_edit', { id: order.id }) }}" target="_blank">
+                                            {{ order.number }}<i class="svg svg-arrow-simple in-icon in-icon--detail margin-left-5"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ order.createdAt|formatDateTime }}
+                                    </td>
+                                    <td>
+                                        {{ order.street }}<br />
+                                        {{ order.city }}, {{ order.postcode }}
+                                    </td>
+                                    <td>
+                                        {{ order.deliveryStreet }}<br />
+                                        {{ order.deliveryCity }}, {{ order.deliveryPostcode }}
+                                    </td>
+                                    <td>{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
+                                    <td>{{ order.status.name }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

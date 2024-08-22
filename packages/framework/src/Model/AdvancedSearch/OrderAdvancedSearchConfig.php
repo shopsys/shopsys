@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCreateDateFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCustomerIdFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderLastNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderNameFilter;
@@ -30,6 +31,7 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderLastNameFilter $orderLastNameFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter $orderEmailFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter $orderCityFilter
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCustomerIdFilter $orderCustomerIdFilter
      * @throws \Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterAlreadyExistsException
      */
     public function __construct(
@@ -44,6 +46,7 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         OrderLastNameFilter $orderLastNameFilter,
         OrderEmailFilter $orderEmailFilter,
         OrderCityFilter $orderCityFilter,
+        OrderCustomerIdFilter $orderCustomerIdFilter,
     ) {
         parent::__construct();
 
@@ -58,5 +61,6 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($orderPhoneNumberFilter);
         $this->registerFilter($orderStreetFilter);
         $this->registerFilter($orderCityFilter);
+        $this->registerFilter($orderCustomerIdFilter);
     }
 }

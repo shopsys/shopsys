@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCreateDateFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCustomerIdFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderLastNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderNameFilter;
@@ -33,5 +34,6 @@ class AdvancedSearchOrderFilterTranslation extends AdvancedSearchFilterTranslati
         $this->addFilterTranslation(OrderLastNameFilter::NAME, t('Customer last name'));
         $this->addFilterTranslation(OrderEmailFilter::NAME, t('Customer email address'));
         $this->addFilterTranslation(OrderCityFilter::NAME, t('Customer city'));
+        $this->addFilterTranslation(OrderCustomerIdFilter::NAME, t('Customer ID'));
     }
 }

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueBillingAddress;
 use Shopsys\FrameworkBundle\Form\CustomerUserListType;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressListType;
+use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -35,6 +36,9 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
                 'allowEdit' => true,
                 'allowAdd' => true,
                 'deleteConfirmMessage' => t('Do you really want to remove this delivery address?'),
+            ])
+            ->add('orders', OrderListType::class, [
+                'customer' => $options['customer'],
             ])
             ->add('save', SubmitType::class);
     }

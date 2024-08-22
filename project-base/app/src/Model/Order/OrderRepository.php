@@ -25,6 +25,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
  * @method bool isOrderStatusUsed(\App\Model\Order\Status\OrderStatus $orderStatus)
  * @method \App\Model\Order\Order getByUuid(string $uuid)
  * @method \App\Model\Order\Order[] getAllWithoutTrackingNumberByTransportType(\Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType)
+ * @method \App\Model\Order\Order[] getLastTenCustomerOrders(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer)
+ * @method \App\Model\Order\Order[] getLastCustomerOrdersByLimit(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, int $limit, string $locale)
  */
 class OrderRepository extends BaseOrderRepository
 {
