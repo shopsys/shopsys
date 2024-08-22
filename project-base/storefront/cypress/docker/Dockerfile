@@ -1,4 +1,4 @@
-FROM cypress/base:18.16.0
+FROM --platform=linux/amd64 cypress/base:18.16.0
 
 WORKDIR /app
 
