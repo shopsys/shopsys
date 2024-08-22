@@ -1,0 +1,10 @@
+query PaymentsQuery {
+    payments {
+        uuid
+        type
+        price {
+            priceWithVat
+            priceWithoutVat
+        }
+    }
+}
