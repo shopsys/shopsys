@@ -61,7 +61,7 @@ class ComplaintStatusRepository
      */
     public function getDefault(): ComplaintStatus
     {
-        $complaintStatus = $this->getComplaintStatusRepository()->findOneBy(['status' => ComplaintStatusEnum::STATUS_NEW]);
+        $complaintStatus = $this->getComplaintStatusRepository()->findOneBy(['statusType' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW]);
 
         if ($complaintStatus === null) {
             $message = 'Default complaint status not found.';
@@ -120,7 +120,7 @@ class ComplaintStatusRepository
             ->from(Complaint::class, 'c')
             ->setMaxResults(1)
             ->where('c.status = :status')
-            ->setParameter('status', $complaintStatus->getId());
+            ->setParameter('status', $complaintStatus);
 
         return $queryBuilder->getQuery()->getOneOrNullResult(AbstractQuery::HYDRATE_SCALAR) !== null;
     }

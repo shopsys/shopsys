@@ -51,6 +51,7 @@ class ComplaintStatusController extends AdminBaseController
     public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
+        $newId = $newId !== null ? (int)$newId : null;
 
         try {
             $complaintStatus = $this->complaintStatusFacade->getById($id);
@@ -80,7 +81,7 @@ class ComplaintStatusController extends AdminBaseController
                     'name' => $e->getComplaintStatus()->getName(),
                 ],
             );
-        } catch (ComplaintStatusNotFoundException $ex) {
+        } catch (ComplaintStatusNotFoundException) {
             $this->addErrorFlash(t('Selected complaint status doesn\'t exist.'));
         }
 

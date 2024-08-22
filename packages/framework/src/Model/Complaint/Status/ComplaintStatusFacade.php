@@ -28,7 +28,7 @@ class ComplaintStatusFacade
     {
         $complaintStatus = $this->complaintStatusFactory->create(
             $complaintStatusData,
-            ComplaintStatusEnum::STATUS_IN_PROGRESS,
+            ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS,
         );
         $this->em->persist($complaintStatus);
         $this->em->flush();

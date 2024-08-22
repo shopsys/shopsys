@@ -35,16 +35,16 @@ class ComplaintStatus extends AbstractTranslatableEntity
      * @var string
      * @ORM\Column(type="string", length=25)
      */
-    protected $status;
+    protected $statusType;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
-     * @param string $status
+     * @param string $statusType
      */
-    public function __construct(ComplaintStatusData $complaintStatusData, string $status)
+    public function __construct(ComplaintStatusData $complaintStatusData, string $statusType)
     {
         $this->translations = new ArrayCollection();
-        $this->status = $status;
+        $this->statusType = $statusType;
         $this->setData($complaintStatusData);
     }
 
@@ -102,14 +102,14 @@ class ComplaintStatus extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getStatus()
+    public function getStatusType()
     {
-        return $this->status;
+        return $this->statusType;
     }
 
     public function checkForDelete(): void
     {
-        if ($this->status !== ComplaintStatusEnum::STATUS_IN_PROGRESS) {
+        if ($this->statusType !== ComplaintStatusTypeEnum::STATUS_TYPE_IN_PROGRESS) {
             throw new ComplaintStatusDeletionForbiddenException($this);
         }
     }

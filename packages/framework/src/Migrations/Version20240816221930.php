@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20240816221930 extends AbstractMigration
@@ -15,7 +15,7 @@ class Version20240816221930 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('CREATE TABLE complaint_statuses (id SERIAL NOT NULL, status VARCHAR(25) NOT NULL, PRIMARY KEY(id))');
+        $this->sql('CREATE TABLE complaint_statuses (id SERIAL NOT NULL, status_type VARCHAR(25) NOT NULL, PRIMARY KEY(id))');
         $this->sql('
             CREATE TABLE complaint_status_translations (
                 id SERIAL NOT NULL,
@@ -35,7 +35,7 @@ class Version20240816221930 extends AbstractMigration
 
         $this->createComplaintStatusWithEnglishAndCzechTranslations(
             1,
-            ComplaintStatusEnum::STATUS_NEW,
+            ComplaintStatusTypeEnum::STATUS_TYPE_NEW,
             'New',
             'Nová',
         );
@@ -75,9 +75,9 @@ class Version20240816221930 extends AbstractMigration
         string $complaintStatusEnglishName,
         string $complaintStatusCzechName,
     ): void {
-        $this->sql('INSERT INTO complaint_statuses (id, status) VALUES (:id, :status)', [
+        $this->sql('INSERT INTO complaint_statuses (id, status_type) VALUES (:id, :statusType)', [
             'id' => $complaintStatusId,
-            'status' => $complaintStatus,
+            'statusType' => $complaintStatus,
         ]);
         $this->sql(
             'INSERT INTO complaint_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',

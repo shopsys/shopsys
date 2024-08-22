@@ -10,24 +10,24 @@ class ComplaintStatusFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum $complaintStatusEnum
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum $complaintStatusTypeEnum
      */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly ComplaintStatusEnum $complaintStatusEnum,
+        protected readonly ComplaintStatusTypeEnum $complaintStatusTypeEnum,
     ) {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $data
-     * @param string $status
+     * @param string $statusType
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
      */
-    public function create(ComplaintStatusData $data, string $status): ComplaintStatus
+    public function create(ComplaintStatusData $data, string $statusType): ComplaintStatus
     {
-        $this->complaintStatusEnum->validateCase($status);
+        $this->complaintStatusTypeEnum->validateCase($statusType);
         $entityClassName = $this->entityNameResolver->resolve(ComplaintStatus::class);
 
-        return new $entityClassName($data, $status);
+        return new $entityClassName($data, $statusType);
     }
 }

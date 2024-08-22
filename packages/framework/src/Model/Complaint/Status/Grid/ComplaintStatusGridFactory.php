@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
-use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ComplaintStatusGridFactory implements GridFactoryInterface
@@ -51,8 +51,8 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
             ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/ComplaintStatus/listGrid.html.twig', [
-            'STATUS_NEW' => ComplaintStatusEnum::STATUS_NEW,
-            'STATUS_RESOLVED' => ComplaintStatusEnum::STATUS_RESOLVED,
+            'STATUS_TYPE_NEW' => ComplaintStatusTypeEnum::STATUS_TYPE_NEW,
+            'STATUS_TYPE_RESOLVED' => ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED,
         ]);
 
         return $grid;
