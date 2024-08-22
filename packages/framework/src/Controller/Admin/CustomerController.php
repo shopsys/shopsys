@@ -417,7 +417,7 @@ class CustomerController extends AdminBaseController
     {
         $domain = $this->domain->getDomainConfigById($row['domainId']);
 
-        $row['showEditBillingAddressLink'] = $domain->isB2b() && $row['isCompanyCustomer'];
+        $row['isB2bCompany'] = $domain->isB2b() && $row['isCompanyCustomer'];
 
         return $row;
     }
