@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
-use App\Model\Customer\User\CustomerUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
@@ -25,6 +24,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
 use Symfony\Component\Security\Core\Security;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintApiFacade
 {
@@ -174,7 +174,7 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
      * @param int $offset
      * @param string|null $search
@@ -190,7 +190,7 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string|null $search
      * @return int
      */
