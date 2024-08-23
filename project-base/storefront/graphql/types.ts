@@ -766,7 +766,7 @@ export type TypeComplaint = {
   /** Unique complaint number */
   number: Scalars['String']['output'];
   /** Status of the complaint */
-  status: TypeComplaintStatusEnum;
+  status: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -827,14 +827,6 @@ export type TypeComplaintItemInput = {
   /** Quantity of the complaint item */
   quantity: Scalars['Int']['input'];
 };
-
-/** Status of complaint */
-export enum TypeComplaintStatusEnum {
-  /** New */
-  New = 'new',
-  /** Resolved */
-  Resolved = 'resolved'
-}
 
 export type TypeContactFormInput = {
   /** Email address of the sender */

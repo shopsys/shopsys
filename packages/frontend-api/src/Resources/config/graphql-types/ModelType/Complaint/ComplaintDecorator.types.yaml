@@ -40,5 +40,5 @@ ComplaintDecorator:
                 type: "[ComplaintItem!]!"
                 description: "All items in the complaint"
             status:
-                type: "ComplaintStatusEnum!"
+                type: "String!"
                 description: "Status of the complaint"

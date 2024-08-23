@@ -629,7 +629,7 @@ type Complaint {
   "Unique complaint number"
   number: String!
   "Status of the complaint"
-  status: ComplaintStatusEnum!
+  status: String!
   "UUID"
   uuid: Uuid!
 }
@@ -681,14 +681,6 @@ input ComplaintItemInput {
   orderItemUuid: Uuid!
   "Quantity of the complaint item"
   quantity: Int!
-}
-
-"Status of complaint"
-enum ComplaintStatusEnum {
-  "New"
-  new
-  "Resolved"
-  resolved
 }
 
 input ContactFormInput {

@@ -141,7 +141,6 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
-    * [ComplaintStatusEnum](#complaintstatusenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
@@ -4076,7 +4075,7 @@ Unique complaint number
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>status</strong></td>
-<td valign="top"><a href="#complaintstatusenum">ComplaintStatusEnum</a>!</td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Status of the complaint
@@ -11039,35 +11038,6 @@ Product availability status in stock
 <td>
 
 Product availability status out of stock
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### ComplaintStatusEnum
-
-Status of complaint
-
-<table>
-<thead>
-<th align="left">Value</th>
-<th align="left">Description</th>
-</thead>
-<tbody>
-<tr>
-<td valign="top"><strong>new</strong></td>
-<td>
-
-New
-
-</td>
-</tr>
-<tr>
-<td valign="top"><strong>resolved</strong></td>
-<td>
-
-Resolved
 
 </td>
 </tr>
