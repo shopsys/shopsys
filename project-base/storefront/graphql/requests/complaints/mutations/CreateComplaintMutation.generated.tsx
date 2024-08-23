@@ -1,8 +1,15 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
-export type TypeOrderDetailItemFragment = { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+import { CreateComplaintFragment } from '../fragments/CreateComplaintFragment.generated';
+import * as Urql from 'urql';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type TypeCreateComplaintVariables = Types.Exact<{
+  input: Types.TypeComplaintInput;
+}>;
+
+
+export type TypeCreateComplaint = { __typename?: 'Mutation', CreateComplaint: { __typename?: 'Complaint', uuid: string, number: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, createdAt: any, deliveryCountry: { __typename: 'Country', name: string, code: string }, items: Array<{ __typename?: 'ComplaintItem', quantity: number, description: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } }> } };
 
 
       export interface PossibleTypesResultData {
@@ -81,20 +88,15 @@ export type TypeOrderDetailItemFragment = { __typename: 'OrderItem', uuid: strin
 };
       export default result;
     
-export const OrderDetailItemFragment = gql`
-    fragment OrderDetailItemFragment on OrderItem {
-  __typename
-  uuid
-  name
-  unitPrice {
-    ...PriceFragment
+
+export const CreateComplaintDocument = gql`
+    mutation CreateComplaint($input: ComplaintInput!) {
+  CreateComplaint(input: $input) {
+    ...CreateComplaintFragment
   }
-  totalPrice {
-    ...PriceFragment
-  }
-  vatRate
-  quantity
-  unit
-  type
 }
-    ${PriceFragment}`;
+    ${CreateComplaintFragment}`;
+
+export function useCreateComplaint() {
+  return Urql.useMutation<TypeCreateComplaint, TypeCreateComplaintVariables>(CreateComplaintDocument);
+};

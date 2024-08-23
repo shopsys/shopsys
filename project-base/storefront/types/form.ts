@@ -88,3 +88,17 @@ export type LoginFormType = {
 export type DeliveryAddressFormType = Omit<DeliveryAddressType, 'uuid' | 'country'> & {
     country: SelectOptionType;
 };
+
+export type ComplaintFormType = {
+    quantity: string;
+    description: string;
+    deliveryAddressUuid: string | null;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    telephone: string;
+    street: string;
+    city: string;
+    postcode: string;
+    country: SelectOptionType;
+};

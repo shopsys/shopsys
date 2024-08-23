@@ -6,12 +6,23 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
+import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
+import { TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+import { useSessionStore } from 'store/useSessionStore';
 import { PaymentTypeEnum } from 'types/payment';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPacketeryTransport } from 'utils/packetery';
+
+const CreateComplaintPopup = dynamic(
+    () => import('components/Blocks/Popup/CreateComplaintPopup').then((component) => component.CreateComplaintPopup),
+    {
+        ssr: false,
+    },
+);
 
 type OrderDetailContentProps = {
     order: TypeOrderDetailFragment;
@@ -22,6 +33,16 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+
+    const openCreateComplaintPopup = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        orderUuid: string,
+        orderItem: TypeOrderDetailItemFragment,
+    ) => {
+        e.stopPropagation();
+        updatePortalContent(<CreateComplaintPopup orderItem={orderItem} orderUuid={orderUuid} />);
+    };
 
     return (
         <>
@@ -251,7 +272,6 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                 {!!order.items.length && (
                     <div className="mt-10">
                         <div className="h2 mb-3 text-center">{t('Your purchase')}</div>
-
                         <div className="overflow-x-auto">
                             <Table
                                 className="min-w-[700px]"
@@ -263,6 +283,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                         <CellHead className="text-right min-w-16">{t('VAT')}</CellHead>
                                         <CellHead className="text-right">{t('Total price excl. VAT')}</CellHead>
                                         <CellHead className="text-right">{t('Total price incl. VAT')}</CellHead>
+                                        <CellHead className="text-right">{t('Actions')}</CellHead>
                                     </Row>
                                 }
                             >
@@ -278,6 +299,17 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                             {formatPrice(item.totalPrice.priceWithoutVat)}
                                         </Cell>
                                         <Cell className="text-right">{formatPrice(item.totalPrice.priceWithVat)}</Cell>
+                                        {item.type === TypeOrderItemTypeEnum.Product && (
+                                            <Cell className="text-right">
+                                                <Button
+                                                    size="small"
+                                                    variant="inverted"
+                                                    onClick={(e) => openCreateComplaintPopup(e, order.uuid, item)}
+                                                >
+                                                    {t('Create complaint')}
+                                                </Button>
+                                            </Cell>
+                                        )}
                                     </Row>
                                 ))}
                             </Table>

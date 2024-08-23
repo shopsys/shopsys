@@ -1,0 +1,10 @@
+fragment ComplaintItemFragment on ComplaintItem {
+    quantity
+    description
+    orderItem {
+        ...OrderDetailItemFragment
+    }
+    # files {
+    #     ...FileFragment
+    # }
+}
