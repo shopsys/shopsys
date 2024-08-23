@@ -119,7 +119,11 @@ trait ComplaintTestTrait
         );
 
         $this->assertArrayHasKey('status', $actualComplaintData, $complaintMessage);
-        $this->assertSame($expectedComplaint->getStatus(), $actualComplaintData['status'], $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getStatus()->getName($this->getFirstDomainLocale()),
+            $actualComplaintData['status'],
+            $complaintMessage,
+        );
 
         $this->assertArrayHasKey('items', $actualComplaintData, $complaintMessage);
 
