@@ -1,4 +1,4 @@
-# Changelog for 15.0.x
+# Changelog for 16.0.x
 
 All notable changes that change in some way the behavior of any of our packages are maintained by the monorepo repository.
 
