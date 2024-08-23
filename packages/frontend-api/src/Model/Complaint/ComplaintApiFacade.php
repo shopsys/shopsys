@@ -92,10 +92,13 @@ class ComplaintApiFacade
 
     /**
      * @param string $complaintNumber
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
      */
-    public function findByComplaintNumberAndCustomerUser(string $complaintNumber, CustomerUser $customerUser)
-    {
+    public function findByComplaintNumberAndCustomerUser(
+        string $complaintNumber,
+        CustomerUser $customerUser,
+    ): ?Complaint {
         return $this->complaintRepository->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
     }
 }
