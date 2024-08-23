@@ -1,5 +1,6 @@
 fragment OrderDetailItemFragment on OrderItem {
     __typename
+    uuid
     name
     unitPrice {
         ...PriceFragment

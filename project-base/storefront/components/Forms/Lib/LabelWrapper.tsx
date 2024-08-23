@@ -55,7 +55,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         selectBoxLabelIsFloated && 'top-[9px] text-sm',
                     ],
                     inputType === 'textarea' &&
-                        'top-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-md font-semibold peer-focus:top-1 peer-focus:text-sm',
+                        'top-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-md font-semibold peer-focus:top-1 peer-focus:text-sm bg-background pr-1',
                     disabled && 'text-inputTextDisabled',
                     className,
                 )}

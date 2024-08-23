@@ -1,0 +1,18 @@
+fragment CreateComplaintFragment on Complaint {
+    uuid
+    number
+    deliveryFirstName
+    deliveryLastName
+    deliveryCompanyName
+    deliveryTelephone
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+        ...CountryFragment
+    }
+    createdAt
+    items {
+        ...ComplaintItemFragment
+    }
+}

@@ -96,6 +96,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         key={orderItem.name}
                         isDiscount={orderItem.type === TypeOrderItemTypeEnum.Discount}
                         orderItem={orderItem}
+                        orderUuid={order.uuid}
                     />
                 ))}
             </div>

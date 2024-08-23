@@ -117,7 +117,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                                 <PhoneIcon className="w-4" />
                             </div>
                         )}
-                        <div className="flex space-between gap-2 mt-2">
+                        <div className="flex space-between gap-2 mt-auto pt-2">
                             <Button
                                 className="flex-1"
                                 size="small"

@@ -33,6 +33,7 @@ const ApplicationErrors = {
     'article-not-found-terms-and-conditions': 'no-flash-message',
     'article-not-found-privacy-policy': 'no-flash-message',
     'article-not-found-user-consent-policy': 'no-flash-message',
+    'invalid-quantity': 'flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {
