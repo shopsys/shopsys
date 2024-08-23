@@ -12,24 +12,32 @@ trait ComplaintTestTrait
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem $expectedComplaintItem
-     * @param array $complaintItem
+     * @param array $actualComplaintItemData
      */
-    protected function assertComplaintItem(ComplaintItem $expectedComplaintItem, array $complaintItem): void
+    protected function assertComplaintItem(ComplaintItem $expectedComplaintItem, array $actualComplaintItemData): void
     {
         $complaintItemMessage = sprintf(
             'Hint: check data of complaint item with ID #%d',
             $expectedComplaintItem->getId(),
         );
 
-        $this->assertArrayHasKey('quantity', $complaintItem, $complaintItemMessage);
-        $this->assertSame($expectedComplaintItem->getQuantity(), $complaintItem['quantity'], $complaintItemMessage);
+        $this->assertArrayHasKey('quantity', $actualComplaintItemData, $complaintItemMessage);
+        $this->assertSame(
+            $expectedComplaintItem->getQuantity(),
+            $actualComplaintItemData['quantity'],
+            $complaintItemMessage,
+        );
 
-        $this->assertArrayHasKey('description', $complaintItem, $complaintItemMessage);
-        $this->assertSame($expectedComplaintItem->getDescription(), $complaintItem['description'], $complaintItemMessage);
+        $this->assertArrayHasKey('description', $actualComplaintItemData, $complaintItemMessage);
+        $this->assertSame(
+            $expectedComplaintItem->getDescription(),
+            $actualComplaintItemData['description'],
+            $complaintItemMessage,
+        );
 
-        $this->assertArrayHasKey('orderItem', $complaintItem, $complaintItemMessage);
+        $this->assertArrayHasKey('orderItem', $actualComplaintItemData, $complaintItemMessage);
 
-        $orderItem = $complaintItem['orderItem'];
+        $orderItem = $actualComplaintItemData['orderItem'];
         $expectedOrderItem = $expectedComplaintItem->getOrderItem();
 
         $this->assertArrayHasKey('uuid', $orderItem, $complaintItemMessage);
@@ -38,9 +46,9 @@ trait ComplaintTestTrait
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $expectedComplaint
-     * @param array $complaint
+     * @param array $actualComplaintData
      */
-    protected function assertComplaint(Complaint $expectedComplaint, array $complaint): void
+    protected function assertComplaint(Complaint $expectedComplaint, array $actualComplaintData): void
     {
         $complaintMessage = sprintf(
             'Hint: check data and sort of complaint with ID #%d',
@@ -48,46 +56,78 @@ trait ComplaintTestTrait
         );
 
 
-        $this->assertArrayHasKey('uuid', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getUuid(), $complaint['uuid'], $complaintMessage);
+        $this->assertArrayHasKey('uuid', $actualComplaintData, $complaintMessage);
+        $this->assertSame($expectedComplaint->getUuid(), $actualComplaintData['uuid'], $complaintMessage);
 
-        $this->assertArrayHasKey('number', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getNumber(), $complaint['number'], $complaintMessage);
+        $this->assertArrayHasKey('number', $actualComplaintData, $complaintMessage);
+        $this->assertSame($expectedComplaint->getNumber(), $actualComplaintData['number'], $complaintMessage);
 
-        $this->assertArrayHasKey('createdAt', $complaint, $complaintMessage);
-        $this->assertSame(DateTimeType::serialize($expectedComplaint->getCreatedAt()), $complaint['createdAt'], $complaintMessage);
+        $this->assertArrayHasKey('createdAt', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            DateTimeType::serialize($expectedComplaint->getCreatedAt()),
+            $actualComplaintData['createdAt'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryFirstName', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryFirstName(), $complaint['deliveryFirstName'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryFirstName', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryFirstName(),
+            $actualComplaintData['deliveryFirstName'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryLastName', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryLastName(), $complaint['deliveryLastName'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryLastName', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryLastName(),
+            $actualComplaintData['deliveryLastName'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryCompanyName', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryCompanyName(), $complaint['deliveryCompanyName'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryCompanyName', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryCompanyName(),
+            $actualComplaintData['deliveryCompanyName'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryTelephone', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryTelephone(), $complaint['deliveryTelephone'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryTelephone', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryTelephone(),
+            $actualComplaintData['deliveryTelephone'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryStreet', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryStreet(), $complaint['deliveryStreet'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryStreet', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryStreet(),
+            $actualComplaintData['deliveryStreet'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryCity', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryCity(), $complaint['deliveryCity'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryCity', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryCity(),
+            $actualComplaintData['deliveryCity'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('deliveryPostcode', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getDeliveryPostcode(), $complaint['deliveryPostcode'], $complaintMessage);
+        $this->assertArrayHasKey('deliveryPostcode', $actualComplaintData, $complaintMessage);
+        $this->assertSame(
+            $expectedComplaint->getDeliveryPostcode(),
+            $actualComplaintData['deliveryPostcode'],
+            $complaintMessage,
+        );
 
-        $this->assertArrayHasKey('status', $complaint, $complaintMessage);
-        $this->assertSame($expectedComplaint->getStatus(), $complaint['status'], $complaintMessage);
+        $this->assertArrayHasKey('status', $actualComplaintData, $complaintMessage);
+        $this->assertSame($expectedComplaint->getStatus(), $actualComplaintData['status'], $complaintMessage);
 
-        $this->assertArrayHasKey('items', $complaint, $complaintMessage);
+        $this->assertArrayHasKey('items', $actualComplaintData, $complaintMessage);
 
         $expectedComplaintItems = $expectedComplaint->getItems();
 
-        $this->assertSameSize($expectedComplaintItems, $complaint['items'], $complaintMessage);
+        $this->assertSameSize($expectedComplaintItems, $actualComplaintData['items'], $complaintMessage);
 
-        foreach ($complaint['items'] as $itemIndex => $complaintItem) {
+        foreach ($actualComplaintData['items'] as $itemIndex => $complaintItem) {
             $expectedComplaintItem = $expectedComplaintItems[$itemIndex];
 
             $this->assertComplaintItem($expectedComplaintItem, $complaintItem);
