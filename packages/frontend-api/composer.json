@@ -28,10 +28,10 @@
         "overblog/graphql-bundle": "1.3.2",
         "overblog/graphiql-bundle": "^0.3",
         "overblog/dataloader-bundle": "^0.6.0",
-        "shopsys/form-types-bundle": "15.0.x-dev",
-        "shopsys/framework": "15.0.x-dev",
-        "shopsys/migrations": "15.0.x-dev",
-        "shopsys/plugin-interface": "15.0.x-dev",
+        "shopsys/form-types-bundle": "16.0.x-dev",
+        "shopsys/framework": "16.0.x-dev",
+        "shopsys/migrations": "16.0.x-dev",
+        "shopsys/plugin-interface": "16.0.x-dev",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/http-foundation": "^5.4",
@@ -45,7 +45,7 @@
         "phpstan/phpstan-phpunit": "^1.4.0",
         "phpstan/phpstan-symfony": "^1.4.6",
         "phpunit/phpunit": "^11.2.1",
-        "shopsys/coding-standards": "15.0.x-dev"
+        "shopsys/coding-standards": "16.0.x-dev"
     },
     "config": {
         "allow-plugins": {

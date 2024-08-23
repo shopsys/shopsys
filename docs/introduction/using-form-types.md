@@ -194,11 +194,11 @@ Required option that needs to be string or null and is a text that is shown unde
 
 Defines which entity should the files be assigned to.
 
-### [MultiLocaleFileUploadType](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Form/MultiLocaleFileUploadType.php)
+### [MultiLocaleFileUploadType](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Form/MultiLocaleFileUploadType.php)
 
 Extends `FileUploadType` with additional support for translated file names.
 
-### [BasicFileUploadType](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Form/BasicFileUploadType.php)
+### [BasicFileUploadType](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Form/BasicFileUploadType.php)
 
 Uses `AbstractFileUploadType` to display a widget for file uploads and manage them without associating them with any entity.
 
@@ -210,7 +210,7 @@ Allows multiple files to be uploaded.
 
 Allows to input custom filenames for uploaded files.
 
-### [MultiLocaleBasicFileUploadType](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Form/MultiLocaleBasicFileUploadType.php)
+### [MultiLocaleBasicFileUploadType](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Form/MultiLocaleBasicFileUploadType.php)
 
 Extends `BasicFileUploadType` with additional support for translated file names.
 

@@ -234,9 +234,9 @@ Exports only changed data for index to Elasticsearch.
 
 #### annotations-check
 
-Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
+Checks whether annotations of extended classes in the project match the actual types according to [`ClassExtensionRegistry`](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Component/ClassExtension/ClassExtensionRegistry.php).
 Reported problems can be fixed using [`annotations-fix` phing target](#annotations-fix).
-Annotations fixing tool uses [`packages_registry.yaml`](https://github.com/shopsys/shopsys/blob/15.0/packages/framework/src/Resources/config/packages_registry.yaml) configuration file to determine namespace of the extended classes in the project.
+Annotations fixing tool uses [`packages_registry.yaml`](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Resources/config/packages_registry.yaml) configuration file to determine namespace of the extended classes in the project.
 If you want to change this namespace, you need to extend this configuration in your project.
 
 #### annotations-fix

@@ -1,4 +1,4 @@
-# UPGRADING FROM 14.x to 15.0
+# UPGRADING FROM 15.x to 16.0
 
 The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
