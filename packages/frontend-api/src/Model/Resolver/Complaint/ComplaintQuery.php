@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Complaint;
 
-use App\Model\Customer\User\CurrentCustomerUser;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\ComplaintNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -16,7 +16,7 @@ class ComplaintQuery extends AbstractQuery
 {
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
-     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,

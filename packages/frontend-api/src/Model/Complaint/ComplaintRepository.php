@@ -76,7 +76,7 @@ class ComplaintRepository
 
     /**
      * @param string $complaintNumber
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
      */
     public function findByComplaintNumberAndCustomerUser(
