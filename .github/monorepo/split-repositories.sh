@@ -14,6 +14,10 @@ set -u
 assert_split_branch_variable
 assert_remote_template_variable
 
+if [[ "$FORCE" == true ]]; then
+    assert_split_branch_is_not_protected
+fi
+
 echo -e "${BLUE}Splitting branch '$SPLIT_BRANCH'...${NC}"
 
 WORKSPACE=`pwd`
