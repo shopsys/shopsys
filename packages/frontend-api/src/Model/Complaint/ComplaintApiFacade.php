@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
-use App\Model\Customer\User\CustomerUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintApiFacade
 {
@@ -63,7 +63,7 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
      * @param int $offset
      * @param string|null $search
@@ -79,7 +79,7 @@ class ComplaintApiFacade
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string|null $search
      * @return int
      */

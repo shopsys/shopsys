@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
-use App\Model\Customer\User\CustomerUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintRepository
 {
@@ -21,7 +21,7 @@ class ComplaintRepository
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
      * @param int $offset
      * @param string|null $search
@@ -46,7 +46,7 @@ class ComplaintRepository
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string|null $search
      * @return int
      */
@@ -63,7 +63,7 @@ class ComplaintRepository
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function createCustomerUserComplaintsQueryBuilder(
